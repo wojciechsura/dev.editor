@@ -1,6 +1,4 @@
-﻿using Dev.Editor.BusinessLogic.ViewModels;
-using Fluent;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,23 +12,17 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using Unity;
 
-namespace Dev.Editor
+namespace Dev.Editor.Controls
 {
     /// <summary>
-    /// Logika interakcji dla klasy MainWindow.xaml
+    /// Logika interakcji dla klasy DocumentView.xaml
     /// </summary>
-    public partial class MainWindow : RibbonWindow
+    public partial class DocumentView : UserControl
     {
-        private MainWindowViewModel viewModel;
-
-        public MainWindow()
+        public DocumentView()
         {
             InitializeComponent();
-
-            viewModel = Dependencies.Container.Instance.Resolve<MainWindowViewModel>();
-            DataContext = viewModel;
         }
     }
 }

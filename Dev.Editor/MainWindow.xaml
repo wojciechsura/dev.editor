@@ -6,7 +6,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:p="clr-namespace:Dev.Editor.Properties"
+    xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
     xmlns:local="clr-namespace:Dev.Editor"
+    xmlns:controls="clr-namespace:Dev.Editor.Controls"
+    xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -31,6 +34,16 @@
                 </f:RibbonGroupBox>
             </f:RibbonTabItem>
         </f:Ribbon>
+
+        <ad:DockingManager Grid.Row="1">
+            <ad:DockingManager.Resources>
+                <DataTemplate DataType="{x:Type vm:DocumentViewModel}">
+                    <controls:DocumentView>
+                        
+                    </controls:DocumentView>
+                </DataTemplate>
+            </ad:DockingManager.Resources>
+        </ad:DockingManager>
         
     </Grid>
 </f:RibbonWindow>
