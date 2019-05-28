@@ -1,4 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Services.Documents;
+using Dev.Editor.BusinessLogic.Services.FileService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,7 @@ namespace Dev.Editor.BusinessLogic.Dependencies
         public static void Configure(IUnityContainer container)
         {
             container.RegisterType<IDocumentManager, DocumentManager>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IFileService, FileService>(new ContainerControlledLifetimeManager());
         }
     }
 }
