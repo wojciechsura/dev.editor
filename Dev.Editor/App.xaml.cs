@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dev.Editor.Dependencies;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +14,9 @@ namespace Dev.Editor
     /// </summary>
     public partial class App : Application
     {
+        public App()
+        {
+            Configuration.Configure(Container.Instance);
+        }
     }
 }

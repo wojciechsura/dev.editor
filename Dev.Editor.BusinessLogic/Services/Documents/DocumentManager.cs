@@ -19,6 +19,11 @@ namespace Dev.Editor.BusinessLogic.Services.Documents
             documentsWrapper = new ReadOnlyObservableCollection<DocumentViewModel>(documents);
         }
 
+        public void AddNewDocument()
+        {
+            documents.Add(new DocumentViewModel());
+        }
+
         public ReadOnlyObservableCollection<DocumentViewModel> Documents => documentsWrapper;
     }
 }

@@ -10,6 +10,8 @@ namespace Dev.Editor.BusinessLogic.Services.Documents
 {
     public interface IDocumentManager
     {
+        void AddNewDocument();
+
         ReadOnlyObservableCollection<DocumentViewModel> Documents { get; }
     }
 }

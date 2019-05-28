@@ -15,6 +15,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels
         public MainWindowViewModel(IDocumentManager documentManager)
         {
             this.documentManager = documentManager;
+
+            documentManager.AddNewDocument();
         }
 
         public ReadOnlyObservableCollection<DocumentViewModel> Documents => documentManager.Documents;
