@@ -1,4 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Services.Documents;
+using Dev.Editor.BusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,9 +17,9 @@ namespace Dev.Editor.BusinessLogic.Services.FileService
             this.documentManager = documentManager;
         }
 
-        public void NewDocument()
+        public DocumentViewModel NewDocument()
         {
-            documentManager.AddNewDocument();
+            return documentManager.AddNewDocument();
         }
     }
 }

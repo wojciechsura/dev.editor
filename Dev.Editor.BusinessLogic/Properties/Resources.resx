@@ -117,43 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Ribbon.File.New" xml:space="preserve">
-    <value>Nowy</value>
-  </data>
-  <data name="Ribbon.File.Open" xml:space="preserve">
-    <value>Otwórz</value>
-  </data>
-  <data name="Ribbon.File.Save" xml:space="preserve">
-    <value>Zapisz</value>
-  </data>
-  <data name="Ribbon.File.SaveAs" xml:space="preserve">
-    <value>Zapisz jako</value>
-  </data>
-  <data name="Ribbon.Group.Edit" xml:space="preserve">
-    <value>Edycja</value>
-  </data>
-  <data name="Ribbon.Group.File" xml:space="preserve">
-    <value>Plik</value>
-  </data>
-  <data name="Ribbon.Tab.Home" xml:space="preserve">
-    <value>Narzędzia główne</value>
-  </data>
-  <data name="Ribbon.Edit.Copy" xml:space="preserve">
-    <value>Kopiuj</value>
-  </data>
-  <data name="Ribbon.Edit.Cut" xml:space="preserve">
-    <value>Wytnij</value>
-  </data>
-  <data name="Ribbon.Edit.Paste" xml:space="preserve">
-    <value>Wklej</value>
-  </data>
-  <data name="Ribbon.Edit.Redo" xml:space="preserve">
-    <value>Ponów</value>
-  </data>
-  <data name="Ribbon.Edit.Undo" xml:space="preserve">
-    <value>Cofnij</value>
-  </data>
-  <data name="BlankDocName" xml:space="preserve">
-    <value>Dokument</value>
+  <data name="BlankDocumentName" xml:space="preserve">
+    <value>Document</value>
   </data>
 </root>

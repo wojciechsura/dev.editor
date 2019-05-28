@@ -61,6 +61,96 @@ namespace Dev.Editor.Properties {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Document.
+        /// </summary>
+        public static string BlankDocName {
+            get {
+                return ResourceManager.GetString("BlankDocName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Copy.
+        /// </summary>
+        public static string Ribbon_Edit_Copy {
+            get {
+                return ResourceManager.GetString("Ribbon.Edit.Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cut.
+        /// </summary>
+        public static string Ribbon_Edit_Cut {
+            get {
+                return ResourceManager.GetString("Ribbon.Edit.Cut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Paste.
+        /// </summary>
+        public static string Ribbon_Edit_Paste {
+            get {
+                return ResourceManager.GetString("Ribbon.Edit.Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Redo.
+        /// </summary>
+        public static string Ribbon_Edit_Redo {
+            get {
+                return ResourceManager.GetString("Ribbon.Edit.Redo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Undo.
+        /// </summary>
+        public static string Ribbon_Edit_Undo {
+            get {
+                return ResourceManager.GetString("Ribbon.Edit.Undo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu New.
+        /// </summary>
+        public static string Ribbon_File_New {
+            get {
+                return ResourceManager.GetString("Ribbon.File.New", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Open.
+        /// </summary>
+        public static string Ribbon_File_Open {
+            get {
+                return ResourceManager.GetString("Ribbon.File.Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Save.
+        /// </summary>
+        public static string Ribbon_File_Save {
+            get {
+                return ResourceManager.GetString("Ribbon.File.Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Save as.
+        /// </summary>
+        public static string Ribbon_File_SaveAs {
+            get {
+                return ResourceManager.GetString("Ribbon.File.SaveAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Edit.
         /// </summary>
         public static string Ribbon_Group_Edit {

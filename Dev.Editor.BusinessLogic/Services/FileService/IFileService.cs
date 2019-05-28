@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dev.Editor.BusinessLogic.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace Dev.Editor.BusinessLogic.Services.FileService
 {
     public interface IFileService
     {
-        void NewDocument();
+        DocumentViewModel NewDocument();
     }
 }

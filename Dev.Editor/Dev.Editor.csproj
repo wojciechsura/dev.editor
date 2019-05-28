@@ -149,7 +149,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Resources\" />
+    <Resource Include="Resources\Images\New32.png" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dev.Editor.BusinessLogic\Dev.Editor.BusinessLogic.csproj">
@@ -160,6 +160,31 @@
       <Project>{d7a60cdd-0b9b-4655-a67e-403da8b5b6a9}</Project>
       <Name>Dev.Editor.Dependencies</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\New16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Open32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Open16.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Save16.png" />
+    <Resource Include="Resources\Images\Save32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Copy16.png" />
+    <Resource Include="Resources\Images\Copy32.png" />
+    <Resource Include="Resources\Images\Cut16.png" />
+    <Resource Include="Resources\Images\Cut32.png" />
+    <Resource Include="Resources\Images\Paste16.png" />
+    <Resource Include="Resources\Images\Paste32.png" />
+    <Resource Include="Resources\Images\Redo16.png" />
+    <Resource Include="Resources\Images\Redo32.png" />
+    <Resource Include="Resources\Images\Undo16.png" />
+    <Resource Include="Resources\Images\Undo32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

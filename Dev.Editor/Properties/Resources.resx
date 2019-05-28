@@ -126,4 +126,34 @@
   <data name="Ribbon.Tab.Home" xml:space="preserve">
     <value>Home</value>
   </data>
+  <data name="Ribbon.File.New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Ribbon.File.Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Ribbon.File.Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Ribbon.File.SaveAs" xml:space="preserve">
+    <value>Save as</value>
+  </data>
+  <data name="Ribbon.Edit.Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Ribbon.Edit.Cut" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="Ribbon.Edit.Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="Ribbon.Edit.Redo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="Ribbon.Edit.Undo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="BlankDocName" xml:space="preserve">
+    <value>Document</value>
+  </data>
 </root>

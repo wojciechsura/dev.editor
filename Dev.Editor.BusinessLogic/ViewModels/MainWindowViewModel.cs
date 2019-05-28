@@ -1,4 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Services.Documents;
+using Dev.Editor.BusinessLogic.Services.FileService;
 using Dev.Editor.Common.Commands;
 using System;
 using System.Collections.Generic;
@@ -11,11 +12,13 @@ using System.Windows.Input;
 
 namespace Dev.Editor.BusinessLogic.ViewModels
 {
-    public class MainWindowViewModel : INotifyPropertyChanged
+    public class MainWindowViewModel : BaseViewModel
     {
         // Private fields -----------------------------------------------------
 
         private readonly IDocumentManager documentManager;
+        private readonly IFileService fileService;
+        private DocumentViewModel activeDocument;
 
         // Private methods ----------------------------------------------------
 
@@ -36,7 +39,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels
 
         private void DoNew()
         {
-            throw new NotImplementedException();
+            var newDoc = fileService.NewDocument();
+            InternalSet(ref activeDocument, () => ActiveDocument, newDoc);
         }
 
         // Protected methods --------------------------------------------------
@@ -48,9 +52,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels
 
         // Public methods -----------------------------------------------------
 
-        public MainWindowViewModel(IDocumentManager documentManager)
+        public MainWindowViewModel(IDocumentManager documentManager,
+            IFileService fileService)
         {
             this.documentManager = documentManager;
+            this.fileService = fileService;
 
             NewCommand = new AppCommand(obj => DoNew());
             OpenCommand = new AppCommand(obj => DoOpen());
@@ -64,7 +70,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels
         // Public properties --------------------------------------------------
 
         public ReadOnlyObservableCollection<DocumentViewModel> Documents => documentManager.Documents;
-        public DocumentViewModel ActiveDocument { get; set; }
+        public DocumentViewModel ActiveDocument
+        {
+            get => activeDocument;
+            set => Set(ref activeDocument, () => ActiveDocument, value);
+        }
 
         public ICommand NewCommand { get; }
         public ICommand OpenCommand { get; }
