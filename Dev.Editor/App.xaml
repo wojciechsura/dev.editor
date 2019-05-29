@@ -4,6 +4,11 @@
              xmlns:local="clr-namespace:Dev.Editor"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-        <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Generic.xaml" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Generic.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        </ResourceDictionary>
     </Application.Resources>
 </Application>

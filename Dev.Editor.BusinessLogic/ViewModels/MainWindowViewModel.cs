@@ -43,13 +43,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels
             InternalSet(ref activeDocument, () => ActiveDocument, newDoc);
         }
 
-        // Protected methods --------------------------------------------------
-
-        protected void OnPropertyChanged(string name)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
-        }
-
         // Public methods -----------------------------------------------------
 
         public MainWindowViewModel(IDocumentManager documentManager,
@@ -80,7 +73,5 @@ namespace Dev.Editor.BusinessLogic.ViewModels
         public ICommand OpenCommand { get; }
         public ICommand SaveCommand { get; }
         public ICommand SaveAsCommand { get; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

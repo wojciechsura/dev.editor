@@ -105,12 +105,19 @@
                            ActiveContent="{Binding ActiveDocument, Mode=TwoWay}">
             <ad:DockingManager.Resources>
                 <DataTemplate DataType="{x:Type vm:DocumentViewModel}">
-                    <controls:DocumentView>
-
-                    </controls:DocumentView>
+                    <controls:DocumentView />
                 </DataTemplate>
             </ad:DockingManager.Resources>
 
+            <ad:DockingManager.DocumentHeaderTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" MaxWidth="200" Margin="2"/>
+                        <TextBlock Text="•" Margin="2" Visibility="{Binding Content.Changed, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                    </StackPanel>
+                </DataTemplate>
+            </ad:DockingManager.DocumentHeaderTemplate>
+            
             <ad:DockingManager.LayoutItemContainerStyle>
                 <Style TargetType="{x:Type dc:LayoutItem}" >
                     <Setter Property="Title" Value="{Binding Model.FileName}" />

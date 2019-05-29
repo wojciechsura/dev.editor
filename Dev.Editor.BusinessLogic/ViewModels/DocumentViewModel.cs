@@ -13,6 +13,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels
     public class DocumentViewModel : BaseViewModel
     {
         private readonly TextDocument document;
+        private bool changed;
 
         private void HandleFileNameChanged(object sender, EventArgs e)
         {
@@ -22,11 +23,20 @@ namespace Dev.Editor.BusinessLogic.ViewModels
         public DocumentViewModel()
         {
             document = new TextDocument();
-            document.FileNameChanged += HandleFileNameChanged;
+            document.FileNameChanged += HandleFileNameChanged;                        
         }
 
         public TextDocument Document => document;
 
         public string FileName => Path.GetFileName(document.FileName);
+            
+        public bool Changed
+        {
+            get => changed;
+            set  
+            {
+                Set(ref changed, () => Changed, value);
+            }
+        }
     }
 }
