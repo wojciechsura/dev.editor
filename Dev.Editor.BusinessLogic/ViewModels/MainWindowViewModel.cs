@@ -1,5 +1,6 @@
 ﻿using Dev.Editor.BusinessLogic.Services.Documents;
 using Dev.Editor.BusinessLogic.Services.FileService;
+using Dev.Editor.BusinessLogic.ViewModels.Interfaces;
 using Dev.Editor.Common.Commands;
 using System;
 using System.Collections.Generic;
@@ -72,6 +73,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels
         public ICommand NewCommand { get; }
         public ICommand OpenCommand { get; }
         public ICommand SaveCommand { get; }
-        public ICommand SaveAsCommand { get; }
+        public ICommand SaveAsCommand { get; }        
     }
 }

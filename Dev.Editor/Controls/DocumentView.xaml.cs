@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dev.Editor.BusinessLogic.ViewModels;
+using Dev.Editor.BusinessLogic.ViewModels.Interfaces;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,11 +20,25 @@ namespace Dev.Editor.Controls
     /// <summary>
     /// Logika interakcji dla klasy DocumentView.xaml
     /// </summary>
-    public partial class DocumentView : UserControl
+    public partial class DocumentView : UserControl, ITextEditorAccess
     {
+        private void HandleDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.OldValue is DocumentViewModel oldViewModel)
+            {
+                oldViewModel.TextEditorAccess = null;
+            }
+
+            if (e.NewValue is DocumentViewModel newViewModel)
+            {
+                newViewModel.TextEditorAccess = this;
+            }
+        }
+
         public DocumentView()
         {
             InitializeComponent();
-        }
+            DataContextChanged += HandleDataContextChanged;
+        }        
     }
 }

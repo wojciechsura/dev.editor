@@ -67,6 +67,7 @@
     <Compile Include="Services\FileService\IFileService.cs" />
     <Compile Include="ViewModels\BaseViewModel.cs" />
     <Compile Include="ViewModels\DocumentViewModel.cs" />
+    <Compile Include="ViewModels\Interfaces\ITextEditorAccess.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

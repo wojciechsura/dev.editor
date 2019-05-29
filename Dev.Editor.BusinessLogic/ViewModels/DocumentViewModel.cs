@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dev.Editor.BusinessLogic.ViewModels.Interfaces;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 
@@ -38,5 +39,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels
                 Set(ref changed, () => Changed, value);
             }
         }
+
+        public ITextEditorAccess TextEditorAccess { get; set; }
     }
 }
