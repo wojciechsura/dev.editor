@@ -3,6 +3,7 @@ using Dev.Editor.BusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -34,6 +35,16 @@ namespace Dev.Editor.BusinessLogic.Services.Documents
             var newDocument = new DocumentViewModel();
             newDocument.Document.FileName = GenerateBlankFileName(i);
             
+            documents.Add(newDocument);
+
+            return newDocument;
+        }
+
+        public DocumentViewModel AddNewDocument(Stream stream, string filename)
+        {
+            var newDocument = new DocumentViewModel(stream);
+            newDocument.Document.FileName = filename;
+
             documents.Add(newDocument);
 
             return newDocument;

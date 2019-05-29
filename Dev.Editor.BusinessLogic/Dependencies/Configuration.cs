@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.Services.Documents;
+﻿using Dev.Editor.BusinessLogic.Services.Dialogs;
+using Dev.Editor.BusinessLogic.Services.Documents;
 using Dev.Editor.BusinessLogic.Services.FileService;
 using System;
 using System.Collections.Generic;
@@ -16,6 +17,7 @@ namespace Dev.Editor.BusinessLogic.Dependencies
         {
             container.RegisterType<IDocumentManager, DocumentManager>(new ContainerControlledLifetimeManager());
             container.RegisterType<IFileService, FileService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IDialogService, DialogService>(new ContainerControlledLifetimeManager());
         }
     }
 }

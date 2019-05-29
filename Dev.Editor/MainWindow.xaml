@@ -101,7 +101,7 @@
             </f:RibbonTabItem>
         </f:Ribbon>
 
-        <ad:DockingManager Grid.Row="1" DocumentsSource="{Binding Documents}"
+        <ad:DockingManager x:Name="dmManager" Grid.Row="1" DocumentsSource="{Binding Documents}"
                            ActiveContent="{Binding ActiveDocument, Mode=TwoWay}">
             <ad:DockingManager.Resources>
                 <DataTemplate DataType="{x:Type vm:DocumentViewModel}">

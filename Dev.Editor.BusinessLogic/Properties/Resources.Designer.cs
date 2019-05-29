@@ -68,5 +68,32 @@ namespace Dev.Editor.BusinessLogic.Properties {
                 return ResourceManager.GetString("BlankDocumentName", resourceCulture);
             }
         }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Dev.Editor.
+        /// </summary>
+        internal static string DefaultDialogTitle {
+            get {
+                return ResourceManager.GetString("DefaultDialogTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu All files (*.*)|*.*.
+        /// </summary>
+        internal static string DefaultFilter {
+            get {
+                return ResourceManager.GetString("DefaultFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cannot open file {0}. Error: {1}.
+        /// </summary>
+        internal static string Message_CannotOpenFile {
+            get {
+                return ResourceManager.GetString("Message.CannotOpenFile", resourceCulture);
+            }
+        }
     }
 }
