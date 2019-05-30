@@ -158,7 +158,7 @@
       <Name>Dev.Editor.Dependencies</Name>
     </ProjectReference>
     <ProjectReference Include="..\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
-      <Project>{6c55b776-26d4-4db3-a6ab-87e783b2f3d1}</Project>
+      <Project>{7df2e8a9-9eb7-442c-91b4-073dac5eb54c}</Project>
       <Name>ICSharpCode.AvalonEdit</Name>
     </ProjectReference>
   </ItemGroup>

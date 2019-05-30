@@ -8,8 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Dev.Editor.BusinessLogic.Properties {
-    using System;
+namespace ICSharpCode.AvalonEdit.Properties {
     
     
     /// <summary>
@@ -19,7 +18,7 @@ namespace Dev.Editor.BusinessLogic.Properties {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     internal class Resources {
@@ -38,8 +37,8 @@ namespace Dev.Editor.BusinessLogic.Properties {
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
-                if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Dev.Editor.BusinessLogic.Properties.Resources", typeof(Resources).Assembly);
+                if ((resourceMan == null)) {
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("ICSharpCode.AvalonEdit.Properties.Resources", typeof(Resources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -57,42 +56,6 @@ namespace Dev.Editor.BusinessLogic.Properties {
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Document.
-        /// </summary>
-        internal static string BlankDocumentName {
-            get {
-                return ResourceManager.GetString("BlankDocumentName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Dev.Editor.
-        /// </summary>
-        internal static string DefaultDialogTitle {
-            get {
-                return ResourceManager.GetString("DefaultDialogTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to All files (*.*)|*.*.
-        /// </summary>
-        internal static string DefaultFilter {
-            get {
-                return ResourceManager.GetString("DefaultFilter", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cannot open file {0}. Error: {1}.
-        /// </summary>
-        internal static string Message_CannotOpenFile {
-            get {
-                return ResourceManager.GetString("Message.CannotOpenFile", resourceCulture);
             }
         }
     }
