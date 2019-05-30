@@ -34,9 +34,6 @@
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
-      <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
-    </Reference>
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -81,6 +78,10 @@
     <ProjectReference Include="..\Dev.Editor.Common\Dev.Editor.Common.csproj">
       <Project>{B40F69AF-B0C3-4153-B68D-8945787242C7}</Project>
       <Name>Dev.Editor.Common</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
+      <Project>{7df2e8a9-9eb7-442c-91b4-073dac5eb54c}</Project>
+      <Name>ICSharpCode.AvalonEdit</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
