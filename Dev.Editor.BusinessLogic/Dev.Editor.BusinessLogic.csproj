@@ -57,6 +57,7 @@
     <Compile Include="Dependencies\Configuration.cs" />
     <Compile Include="Models\Dialogs\OpenDialogModel.cs" />
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
+    <Compile Include="Models\Documents\DocumentState.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dev.Editor.BusinessLogic.Models.Documents;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 
@@ -16,6 +17,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels
 
         private readonly TextDocument document;
         private bool changed;
+        private DocumentState storedState;
 
         // Private methods ----------------------------------------------------
 
@@ -29,7 +31,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels
         public DocumentViewModel()
         {
             document = new TextDocument();
-            document.FileNameChanged += HandleFileNameChanged;                        
+            document.FileNameChanged += HandleFileNameChanged;
+
+            storedState = null;
         }
 
         public DocumentViewModel(Stream stream)
@@ -39,6 +43,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels
             {
                 document.Text = reader.ReadToEnd();
             }
+        }
+
+        public DocumentState LoadState()
+        {
+            return storedState;
+        }
+
+        public void SaveState(DocumentState state)
+        {
+            storedState = state;
         }
 
         // Public properties --------------------------------------------------

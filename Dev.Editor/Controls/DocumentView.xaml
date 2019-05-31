@@ -10,7 +10,9 @@
     <ae:TextEditor x:Name="teEditor"
                    Document="{Binding Document}" 
                    FontFamily="Consolas"
-                   IsModified="{Binding Changed, Mode=TwoWay}">
+                   IsModified="{Binding Changed, Mode=TwoWay}"
+                   Loaded="HandleLoaded"
+                   Unloaded="HandleUnloaded">
         
     </ae:TextEditor>
 </UserControl>

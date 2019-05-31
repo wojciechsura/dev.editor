@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.ViewModels;
+﻿using Dev.Editor.BusinessLogic.Models.Documents;
+using Dev.Editor.BusinessLogic.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -22,17 +23,31 @@ namespace Dev.Editor.Controls
     /// </summary>
     public partial class DocumentView : UserControl
     {
-        public void Load(Stream documentStream)
-        {
-            teEditor.Load(documentStream);
-
-            if (documentStream is IDisposable disposableStream)
-                disposableStream.Dispose();
-        }
-
         public DocumentView()
         {
             InitializeComponent();
+        }
+
+        private void HandleLoaded(object sender, RoutedEventArgs e)
+        {
+            var state = ((DocumentViewModel)DataContext).LoadState();
+
+            if (state != null)
+            {
+                teEditor.CaretOffset = state.CaretOffset;
+                teEditor.SelectionStart = state.SelectionStart;
+                teEditor.SelectionLength = state.SelectionLength;
+                teEditor.ScrollToVerticalOffset(state.VerticalOffset);
+                teEditor.ScrollToHorizontalOffset(state.HorizontalOffset);
+            }
+
+            teEditor.Focus();
+        }
+
+        private void HandleUnloaded(object sender, RoutedEventArgs e)
+        {
+            var state = new DocumentState(teEditor.CaretOffset, teEditor.SelectionStart, teEditor.SelectionLength, teEditor.HorizontalOffset, teEditor.VerticalOffset);
+            ((DocumentViewModel)DataContext).SaveState(state);
         }
     }
 }

@@ -44,7 +44,7 @@ namespace ICSharpCode.AvalonEdit
 	/// Contains a scrollable TextArea.
 	/// </summary>
 	[Localizability(LocalizationCategory.Text), ContentProperty("Text")]
-	public class TextEditor : Control, ITextEditorComponent, IServiceProvider, IWeakEventListener
+	public partial class TextEditor : Control, ITextEditorComponent, IServiceProvider, IWeakEventListener
 	{
 		#region Constructors
 		static TextEditor()
