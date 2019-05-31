@@ -13,7 +13,7 @@ namespace Dev.Editor.BusinessLogic.Services.Documents
     {
         DocumentViewModel AddNewDocument();
 
-        DocumentViewModel AddNewDocument(Stream stream, string filename);
+        DocumentViewModel AddDocumentFromFile(Stream stream, string filename);
 
         ReadOnlyObservableCollection<DocumentViewModel> Documents { get; }
     }

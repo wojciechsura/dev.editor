@@ -40,11 +40,10 @@ namespace Dev.Editor.BusinessLogic.Services.Documents
             return newDocument;
         }
 
-        public DocumentViewModel AddNewDocument(Stream stream, string filename)
+        public DocumentViewModel AddDocumentFromFile(Stream stream, string filename)
         {
-            var newDocument = new DocumentViewModel(stream);
-            newDocument.Document.FileName = filename;
-
+            var newDocument = DocumentViewModel.CreateFromFile(stream, filename);
+            
             documents.Add(newDocument);
 
             return newDocument;

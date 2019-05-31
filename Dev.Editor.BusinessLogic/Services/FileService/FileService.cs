@@ -25,7 +25,7 @@ namespace Dev.Editor.BusinessLogic.Services.FileService
 
         public DocumentViewModel OpenDocument(Stream stream, string filename)
         {
-            return documentManager.AddNewDocument(stream, filename);
+            return documentManager.AddDocumentFromFile(stream, filename);
         }
     }
 }

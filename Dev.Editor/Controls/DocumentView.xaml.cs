@@ -46,7 +46,11 @@ namespace Dev.Editor.Controls
 
         private void HandleUnloaded(object sender, RoutedEventArgs e)
         {
-            var state = new DocumentState(teEditor.CaretOffset, teEditor.SelectionStart, teEditor.SelectionLength, teEditor.HorizontalOffset, teEditor.VerticalOffset);
+            var state = new DocumentState(teEditor.CaretOffset, 
+                teEditor.SelectionStart, 
+                teEditor.SelectionLength, 
+                teEditor.HorizontalOffset, 
+                teEditor.VerticalOffset);
             ((DocumentViewModel)DataContext).SaveState(state);
         }
     }
