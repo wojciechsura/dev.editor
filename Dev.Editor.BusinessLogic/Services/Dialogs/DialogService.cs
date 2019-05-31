@@ -32,6 +32,26 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
                 return new OpenDialogResult(false, null);
         }
 
+        public SaveDialogResult SaveDialog(string filter = null, string title = null, string filename = null)
+        {
+            SaveFileDialog dialog = new SaveFileDialog();
+            if (filename != null)
+                dialog.FileName = filename;
+
+            if (filter != null)
+                dialog.Filter = filter;
+            else
+                dialog.Filter = Resources.DefaultFilter;
+
+            if (title != null)
+                dialog.Title = title;
+
+            if (dialog.ShowDialog() == true)
+                return new SaveDialogResult(true, dialog.FileName);
+            else
+                return new SaveDialogResult(false, null);
+        }
+
         public void ShowError(string message, string title = null)
         {
             if (title == null)

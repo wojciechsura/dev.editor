@@ -4,6 +4,7 @@ using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.Services.Documents;
 using Dev.Editor.BusinessLogic.Services.FileService;
 using Dev.Editor.Common.Commands;
+using Dev.Editor.Common.Conditions;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels
         private readonly IDialogService dialogService;
         private DocumentViewModel activeDocument;
 
+        private readonly Condition documentExistsCondition;
+
         // Private methods ----------------------------------------------------
+
+        private void HandleActiveDocumentChanged()
+        {
+            documentExistsCondition.Value = activeDocument != null;
+        }
 
         private void DoPaste()
         {
@@ -55,12 +63,33 @@ namespace Dev.Editor.BusinessLogic.ViewModels
 
         private void DoSaveAs()
         {
-            throw new NotImplementedException();
+            var fileDialogResult = dialogService.SaveDialog();
+            if (fileDialogResult.Result)
+            {
+                try
+                {
+                    fileService.SaveDocumentAs(activeDocument, fileDialogResult.FileName);
+                }
+                catch (Exception e)
+                {
+                    dialogService.ShowError(String.Format(Resources.Message_CannotSaveFile, fileDialogResult.FileName, e.Message));
+                }
+            }
         }
 
         private void DoSave()
         {
-            throw new NotImplementedException();
+            if (activeDocument.FilenameVirtual)
+                DoSaveAs();
+
+            try
+            {
+                fileService.SaveDocument(activeDocument);
+            }
+            catch (Exception e)
+            {
+                dialogService.ShowError(String.Format(Resources.Message_CannotSaveFile, activeDocument.FileName, e.Message));
+            }
         }
 
         private void DoOpen()
@@ -70,15 +99,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels
             {
                 try
                 {
-                    using (FileStream fs = new FileStream(dialogResult.FileName, FileMode.Open, FileAccess.Read))
-                    {
-                        var ms = new MemoryStream();
-                        fs.CopyTo(ms);
-                        ms.Seek(0, SeekOrigin.Begin);
-
-                        var newDoc = fileService.OpenDocument(ms, dialogResult.FileName);
-                        InternalSet(ref activeDocument, () => ActiveDocument, newDoc);
-                    }
+                    var newDoc = fileService.OpenDocument(dialogResult.FileName);
+                    InternalSet(ref activeDocument, () => ActiveDocument, newDoc);
                 }
                 catch (Exception e)
                 {
@@ -103,10 +125,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels
             this.fileService = fileService;
             this.dialogService = dialogService;
 
+            documentExistsCondition = new Condition(activeDocument != null);
+
             NewCommand = new AppCommand(obj => DoNew());
             OpenCommand = new AppCommand(obj => DoOpen());
-            SaveCommand = new AppCommand(obj => DoSave());
-            SaveAsCommand = new AppCommand(obj => DoSaveAs());
+            SaveCommand = new AppCommand(obj => DoSave(), documentExistsCondition);
+            SaveAsCommand = new AppCommand(obj => DoSaveAs(), documentExistsCondition);
             UndoCommand = new AppCommand(obj => DoUndo());
             RedoCommand = new AppCommand(obj => DoRedo());
             CopyCommand = new AppCommand(obj => DoCopy());
@@ -123,7 +147,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels
         public DocumentViewModel ActiveDocument
         {
             get => activeDocument;
-            set => Set(ref activeDocument, () => ActiveDocument, value);
+            set => Set(ref activeDocument, () => ActiveDocument, value, HandleActiveDocumentChanged);
         }
 
         public ICommand NewCommand { get; }

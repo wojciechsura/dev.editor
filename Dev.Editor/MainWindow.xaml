@@ -120,7 +120,7 @@
             
             <ad:DockingManager.LayoutItemContainerStyle>
                 <Style TargetType="{x:Type dc:LayoutItem}" >
-                    <Setter Property="Title" Value="{Binding Model.FileName}" />
+                    <Setter Property="Title" Value="{Binding Model.Title}" />
                     <!--
                     <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand}" />
                     <Setter Property="CanClose" Value="{Binding Model.CanClose}" />

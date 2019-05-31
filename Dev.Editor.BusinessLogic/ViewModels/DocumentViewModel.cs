@@ -71,7 +71,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels
 
         public TextDocument Document => document;
 
-        public string FileName => Path.GetFileName(document.FileName);
+        public string FileName
+        {
+            get => document.FileName;
+            set
+            {
+                document.FileName = value;
+                OnPropertyChanged(() => FileName);
+                OnPropertyChanged(() => Title);
+            }
+        }
+
+        public string Title => Path.GetFileName(document.FileName);
             
         public bool Changed
         {
