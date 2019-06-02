@@ -132,4 +132,7 @@
   <data name="Message.CannotSaveFile" xml:space="preserve">
     <value>Cannot save file {0}. Error: {1}</value>
   </data>
+  <data name="Message.FileNotSaved" xml:space="preserve">
+    <value>Do you want to save document {0} before closing?</value>
+  </data>
 </root>

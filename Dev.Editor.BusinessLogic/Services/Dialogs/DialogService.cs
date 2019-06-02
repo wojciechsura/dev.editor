@@ -25,6 +25,8 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
 
             if (title != null)
                 dialog.Title = title;
+            else
+                dialog.Title = Resources.DefaultDialogTitle;
 
             if (dialog.ShowDialog() == true)
                 return new OpenDialogResult(true, dialog.FileName);
@@ -45,19 +47,13 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
 
             if (title != null)
                 dialog.Title = title;
+            else
+                dialog.Title = Resources.DefaultDialogTitle;
 
             if (dialog.ShowDialog() == true)
                 return new SaveDialogResult(true, dialog.FileName);
             else
                 return new SaveDialogResult(false, null);
-        }
-
-        public void ShowError(string message, string title = null)
-        {
-            if (title == null)
-                title = Resources.DefaultDialogTitle;
-
-            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
         }
     }
 }

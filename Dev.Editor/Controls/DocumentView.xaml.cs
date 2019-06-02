@@ -1,5 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Documents;
-using Dev.Editor.BusinessLogic.ViewModels;
+using Dev.Editor.BusinessLogic.ViewModels.Document;
 using System;
 using System.Collections.Generic;
 using System.IO;

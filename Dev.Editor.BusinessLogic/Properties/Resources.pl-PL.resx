@@ -132,4 +132,7 @@
   <data name="Message.CannotSaveFile" xml:space="preserve">
     <value>Nie mogę zapisać pliku {0}. Błąd: {1}</value>
   </data>
+  <data name="Message.FileNotSaved" xml:space="preserve">
+    <value>Czy chcesz zapisać {0} przed zamknięciem?</value>
+  </data>
 </root>

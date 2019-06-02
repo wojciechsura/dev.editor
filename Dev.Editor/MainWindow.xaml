@@ -10,7 +10,7 @@
     xmlns:dc="clr-namespace:Xceed.Wpf.AvalonDock.Controls;assembly=Xceed.Wpf.AvalonDock"
     xmlns:local="clr-namespace:Dev.Editor"
     xmlns:controls="clr-namespace:Dev.Editor.Controls"
-    xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels;assembly=Dev.Editor.BusinessLogic"
+    xmlns:vmd="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="MainWindow" Height="450" Width="800">
     <Grid>
@@ -102,9 +102,11 @@
         </f:Ribbon>
 
         <ad:DockingManager x:Name="dmManager" Grid.Row="1" DocumentsSource="{Binding Documents}"
-                           ActiveContent="{Binding ActiveDocument, Mode=TwoWay}">
+                           ActiveContent="{Binding ActiveDocument, Mode=TwoWay}"
+                           DocumentClosing="HandleDocumentClosing"
+                           DocumentClosed="HandleDocumentClosed">
             <ad:DockingManager.Resources>
-                <DataTemplate DataType="{x:Type vm:DocumentViewModel}">
+                <DataTemplate DataType="{x:Type vmd:DocumentViewModel}">
                     <controls:DocumentView />
                 </DataTemplate>
             </ad:DockingManager.Resources>
@@ -121,10 +123,8 @@
             <ad:DockingManager.LayoutItemContainerStyle>
                 <Style TargetType="{x:Type dc:LayoutItem}" >
                     <Setter Property="Title" Value="{Binding Model.Title}" />
-                    <!--
                     <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand}" />
-                    <Setter Property="CanClose" Value="{Binding Model.CanClose}" />
-                    -->
+                    <!-- <Setter Property="CanClose" Value="" /> -->
                 </Style>
             </ad:DockingManager.LayoutItemContainerStyle>
         </ad:DockingManager>

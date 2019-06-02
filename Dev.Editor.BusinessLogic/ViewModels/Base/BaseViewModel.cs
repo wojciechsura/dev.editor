@@ -7,7 +7,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BusinessLogic.ViewModels
+namespace Dev.Editor.BusinessLogic.ViewModels.Base
 {
     public class BaseViewModel : INotifyPropertyChanged
     {
@@ -26,7 +26,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels
 
         protected void InternalSet<T>(ref T field, Expression<Func<T>> property, T value, bool force = false)
         {
-            if (!field.Equals(value) || force)
+            if (!Equals(field, value) || force)
             {
                 field = value;
                 OnPropertyChanged(property);
@@ -35,7 +35,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels
 
         protected void Set<T>(ref T field, Expression<Func<T>> property, T value, bool force = false)
         {
-            if (!object.Equals(field, value) || force)
+            if (!Equals(field, value) || force)
             {
                 field = value;
                 OnPropertyChanged(property);
@@ -44,7 +44,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels
 
         protected void Set<T>(ref T field, Expression<Func<T>> property, T value, Action changeHandler, bool force = false)
         {
-            if (!object.Equals(field, value) || force)
+            if (!Equals(field, value) || force)
             {
                 field = value;
                 OnPropertyChanged(property);

@@ -104,5 +104,14 @@ namespace Dev.Editor.BusinessLogic.Properties {
                 return ResourceManager.GetString("Message.CannotSaveFile", resourceCulture);
             }
         }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Do you want to save document {0} before closing?.
+        /// </summary>
+        internal static string Message_FileNotSaved {
+            get {
+                return ResourceManager.GetString("Message.FileNotSaved", resourceCulture);
+            }
+        }
     }
 }

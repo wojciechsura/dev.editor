@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.ViewModels;
+﻿using Dev.Editor.BusinessLogic.ViewModels.Document;
+using Dev.Editor.BusinessLogic.ViewModels.Main;
 using Fluent;
 using System;
 using System.Collections.Generic;
@@ -31,6 +32,16 @@ namespace Dev.Editor
 
             viewModel = Dependencies.Container.Instance.Resolve<MainWindowViewModel>();
             DataContext = viewModel;
+        }
+
+        private void HandleDocumentClosing(object sender, Xceed.Wpf.AvalonDock.DocumentClosingEventArgs e)
+        {
+            e.Cancel = !viewModel.CanCloseDocument(e.Document.Content as DocumentViewModel);
+        }
+
+        private void HandleDocumentClosed(object sender, Xceed.Wpf.AvalonDock.DocumentClosedEventArgs e)
+        {
+            viewModel.NotifyClosedDocument(e.Document.Content as DocumentViewModel);
         }
     }
 }

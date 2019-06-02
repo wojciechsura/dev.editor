@@ -6,11 +6,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dev.Editor.BusinessLogic.Models.Documents;
+using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.Common.Conditions;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 
-namespace Dev.Editor.BusinessLogic.ViewModels
+namespace Dev.Editor.BusinessLogic.ViewModels.Document
 {
     public class DocumentViewModel : BaseViewModel
     {

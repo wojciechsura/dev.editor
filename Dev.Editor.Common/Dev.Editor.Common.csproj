@@ -42,7 +42,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Commands\AppCommand.cs" />
-    <Compile Include="Commands\IAppCommand.cs" />
     <Compile Include="Conditions\BaseCondition.cs" />
     <Compile Include="Conditions\CompositeCondition.cs" />
     <Compile Include="Conditions\Condition.cs" />
