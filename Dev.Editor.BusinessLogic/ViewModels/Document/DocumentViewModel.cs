@@ -35,6 +35,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             {
                 document.Text = reader.ReadToEnd();
                 document.FileName = filename;
+                document.UndoStack.MarkAsOriginalFile();
             }
         }
 
