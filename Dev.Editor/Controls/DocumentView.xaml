@@ -9,8 +9,7 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <ae:TextEditor x:Name="teEditor"
                    Document="{Binding Document}" 
-                   FontFamily="Consolas"
-                   IsModified="{Binding Changed, UpdateSourceTrigger=PropertyChanged}"
+                   FontFamily="Consolas"                   
                    Loaded="HandleLoaded"
                    Unloaded="HandleUnloaded">
         

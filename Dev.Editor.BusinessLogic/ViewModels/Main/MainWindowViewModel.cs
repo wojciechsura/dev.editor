@@ -32,6 +32,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly Condition documentExistsCondition;
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> canUndoCondition;
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> canRedoCondition;
+        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> selectionAvailableCondition;
 
         // Private methods ----------------------------------------------------
 
@@ -70,6 +71,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             canUndoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanUndo, false);
             canRedoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanRedo, false);
+            selectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => ActiveDocument, doc => doc.SelectionAvailable, false);
 
             NewCommand = new AppCommand(obj => DoNew());
             OpenCommand = new AppCommand(obj => DoOpen());
@@ -77,8 +79,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             SaveAsCommand = new AppCommand(obj => DoSaveAs(), documentExistsCondition);
             UndoCommand = new AppCommand(obj => DoUndo(), canUndoCondition);
             RedoCommand = new AppCommand(obj => DoRedo(), canRedoCondition);
-            CopyCommand = new AppCommand(obj => DoCopy());
-            CutCommand = new AppCommand(obj => DoCut());
+            CopyCommand = new AppCommand(obj => DoCopy(), selectionAvailableCondition);
+            CutCommand = new AppCommand(obj => DoCut(), selectionAvailableCondition);
             PasteCommand = new AppCommand(obj => DoPaste());
 
             // TODO (if not opened with parameters)

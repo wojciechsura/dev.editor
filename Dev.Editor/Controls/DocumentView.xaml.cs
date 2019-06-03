@@ -23,13 +23,13 @@ namespace Dev.Editor.Controls
     /// </summary>
     public partial class DocumentView : UserControl
     {
-        public DocumentView()
-        {
-            InitializeComponent();
-        }
+        private void UpdateSelectionInfo() => ((DocumentViewModel)DataContext).NotifySelectionAvailable(teEditor.SelectionLength > 0);
+
+        private void HandleSelectionChanged(object sender, EventArgs e) => UpdateSelectionInfo();
 
         private void HandleLoaded(object sender, RoutedEventArgs e)
         {
+            // Restoring state from the viewmodel
             var state = ((DocumentViewModel)DataContext).LoadState();
 
             if (state != null)
@@ -41,17 +41,30 @@ namespace Dev.Editor.Controls
                 teEditor.ScrollToHorizontalOffset(state.HorizontalOffset);
             }
 
+            // Hooking text editor
+            teEditor.TextArea.SelectionChanged += HandleSelectionChanged;
+            UpdateSelectionInfo();
+
+            // Focusing editor
             teEditor.Focus();
         }
 
         private void HandleUnloaded(object sender, RoutedEventArgs e)
         {
-            var state = new DocumentState(teEditor.CaretOffset, 
-                teEditor.SelectionStart, 
-                teEditor.SelectionLength, 
-                teEditor.HorizontalOffset, 
+            // Unhooking editor
+            teEditor.TextArea.SelectionChanged -= HandleSelectionChanged;
+
+            var state = new DocumentState(teEditor.CaretOffset,
+                teEditor.SelectionStart,
+                teEditor.SelectionLength,
+                teEditor.HorizontalOffset,
                 teEditor.VerticalOffset);
-            ((DocumentViewModel)DataContext).SaveState(state);
+            ((DocumentViewModel)DataContext).SaveState(state);            
+        }
+
+        public DocumentView()
+        {
+            InitializeComponent();
         }
     }
 }

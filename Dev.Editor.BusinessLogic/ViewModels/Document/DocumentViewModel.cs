@@ -22,6 +22,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private bool filenameVirtual;
         private bool canUndo;
         private bool canRedo;
+        private bool selectionAvailable;
         private DocumentState storedState;
 
         // Private methods ----------------------------------------------------
@@ -36,7 +37,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             if (e.PropertyName == nameof(document.UndoStack.CanUndo))
                 this.CanUndo = document.UndoStack.CanUndo;
             else if (e.PropertyName == nameof(document.UndoStack.CanRedo))
-                this.CanRedo = document.UndoStack.CanRedo;           
+                this.CanRedo = document.UndoStack.CanRedo;
+            else if (e.PropertyName == nameof(document.UndoStack.IsOriginalFile))
+                this.Changed = !document.UndoStack.IsOriginalFile;
         }
 
         // Public methods -----------------------------------------------------
@@ -49,11 +52,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
             canUndo = document.UndoStack.CanUndo;
             canRedo = document.UndoStack.CanRedo;
+            changed = document.UndoStack.IsOriginalFile;
+            selectionAvailable = false;
 
             storedState = null;
             changed = false;
             filenameVirtual = true;
         }
+
+        public void NotifySelectionAvailable(bool selectionAvailable) => SelectionAvailable = selectionAvailable;
 
         public DocumentState LoadState()
         {
@@ -115,6 +122,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             set
             {
                 Set(ref canRedo, () => CanRedo, value);
+            }
+        }
+
+        public bool SelectionAvailable
+        {
+            get => selectionAvailable;
+            set
+            {
+                Set(ref selectionAvailable, () => SelectionAvailable, value);
             }
         }
     }
