@@ -30,7 +30,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     }
                 }
 
-                document.Changed = false;
+                document.Document.UndoStack.MarkAsOriginalFile();
                 return true;
             }
 			catch (Exception e)
@@ -83,7 +83,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 {
                     using (FileStream fs = new FileStream(dialogResult.FileName, FileMode.Open, FileAccess.Read))
                     {
-                        var newDocument = DocumentViewModel.CreateFromFile(fs, dialogResult.FileName);
+                        var newDocument = new DocumentViewModel();
+
+                        using (StreamReader reader = new StreamReader(fs))
+                        {
+                            newDocument.Document.Text = reader.ReadToEnd();
+                            newDocument.Document.FileName = dialogResult.FileName;
+                            newDocument.Document.UndoStack.MarkAsOriginalFile();
+                            newDocument.FilenameVirtual = false;
+                        }
 
                         documents.Add(newDocument);
 

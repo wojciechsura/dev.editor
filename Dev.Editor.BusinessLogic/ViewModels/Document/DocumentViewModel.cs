@@ -29,16 +29,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             OnPropertyChanged(() => FileName);
         }
 
-        private void LoadFile(Stream stream, string filename)
-        {
-            using (StreamReader reader = new StreamReader(stream))
-            {
-                document.Text = reader.ReadToEnd();
-                document.FileName = filename;
-                document.UndoStack.MarkAsOriginalFile();
-            }
-        }
-
         // Public methods -----------------------------------------------------
 
         public DocumentViewModel()
@@ -49,14 +39,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             storedState = null;
             changed = false;
             filenameVirtual = true;
-        }
-
-        public static DocumentViewModel CreateFromFile(Stream stream, string filename)
-        {
-            var result = new DocumentViewModel();
-            result.LoadFile(stream, filename);
-
-            return result;
         }
 
         public DocumentState LoadState()
