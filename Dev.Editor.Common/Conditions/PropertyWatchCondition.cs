@@ -30,6 +30,8 @@ namespace Dev.Editor.Common.Conditions
 
             if (source != null)
                 source.PropertyChanged += HandleSourcePropertyChanged;
+
+            OnValueChanged(GetValue());
         }
 
         private PropertyInfo GetPropertyInfo<TSource, TProperty>(Expression<Func<TSource, TProperty>> propertyLambda)
@@ -61,7 +63,7 @@ namespace Dev.Editor.Common.Conditions
         private void HandleSourcePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals(valuePropertyName))
-                OnValueChanged(getValueFunc(source));
+                OnValueChanged(GetValue());
         }
 
         public PropertyWatchCondition(TSource source, Expression<Func<TSource, bool>> expression, bool defaultValue)

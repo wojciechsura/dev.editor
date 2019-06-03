@@ -72,13 +72,15 @@ namespace Dev.Editor.Common.Conditions
                 source = getSourceFunc(sourceProvider);
 
                 Attach(source);
+
+                OnValueChanged(GetValue());
             }
         }
 
         private void HandleSourcePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals(valuePropertyName))
-                OnValueChanged(getValueFunc(source));
+                OnValueChanged(GetValue());
         }
 
         public MutableSourcePropertyWatchCondition(TSourceProvider sourceProvider,
