@@ -30,6 +30,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private DocumentViewModel activeDocument;
 
         private readonly Condition documentExistsCondition;
+        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> canUndoCondition;
+        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> canRedoCondition;
 
         // Private methods ----------------------------------------------------
 
@@ -66,12 +68,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             documentExistsCondition = new Condition(activeDocument != null);
 
+            canUndoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanUndo, false);
+            canRedoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanRedo, false);
+
             NewCommand = new AppCommand(obj => DoNew());
             OpenCommand = new AppCommand(obj => DoOpen());
             SaveCommand = new AppCommand(obj => DoSave(), documentExistsCondition);
             SaveAsCommand = new AppCommand(obj => DoSaveAs(), documentExistsCondition);
-            UndoCommand = new AppCommand(obj => DoUndo());
-            RedoCommand = new AppCommand(obj => DoRedo());
+            UndoCommand = new AppCommand(obj => DoUndo(), canUndoCondition);
+            RedoCommand = new AppCommand(obj => DoRedo(), canRedoCondition);
             CopyCommand = new AppCommand(obj => DoCopy());
             CutCommand = new AppCommand(obj => DoCut());
             PasteCommand = new AppCommand(obj => DoPaste());

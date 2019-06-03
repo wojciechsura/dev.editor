@@ -10,7 +10,7 @@
     <ae:TextEditor x:Name="teEditor"
                    Document="{Binding Document}" 
                    FontFamily="Consolas"
-                   IsModified="{Binding Changed, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                   IsModified="{Binding Changed, UpdateSourceTrigger=PropertyChanged}"
                    Loaded="HandleLoaded"
                    Unloaded="HandleUnloaded">
         

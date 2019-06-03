@@ -45,7 +45,9 @@
     <Compile Include="Conditions\BaseCondition.cs" />
     <Compile Include="Conditions\CompositeCondition.cs" />
     <Compile Include="Conditions\Condition.cs" />
+    <Compile Include="Conditions\MutableSourcePropertyWatchCondition.cs" />
     <Compile Include="Conditions\NegateCondition.cs" />
+    <Compile Include="Conditions\PropertyWatchCondition.cs" />
     <Compile Include="Conditions\SwitchCondition.cs" />
     <Compile Include="Conditions\ValueChangedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

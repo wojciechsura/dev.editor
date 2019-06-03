@@ -27,12 +27,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoRedo()
         {
-            throw new NotImplementedException();
+            activeDocument.Document.UndoStack.Redo();
         }
 
         private void DoUndo()
         {
-            throw new NotImplementedException();
+            activeDocument.Document.UndoStack.Undo();
         }
     }
 }

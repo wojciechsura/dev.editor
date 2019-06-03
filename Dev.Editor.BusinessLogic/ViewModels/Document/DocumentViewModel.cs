@@ -20,6 +20,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private readonly TextDocument document;
         private bool changed;
         private bool filenameVirtual;
+        private bool canUndo;
+        private bool canRedo;
         private DocumentState storedState;
 
         // Private methods ----------------------------------------------------
@@ -29,12 +31,24 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             OnPropertyChanged(() => FileName);
         }
 
+        private void HandleUndoStackPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(document.UndoStack.CanUndo))
+                this.CanUndo = document.UndoStack.CanUndo;
+            else if (e.PropertyName == nameof(document.UndoStack.CanRedo))
+                this.CanRedo = document.UndoStack.CanRedo;           
+        }
+
         // Public methods -----------------------------------------------------
 
         public DocumentViewModel()
         {
             document = new TextDocument();
             document.FileNameChanged += HandleFileNameChanged;
+            document.UndoStack.PropertyChanged += HandleUndoStackPropertyChanged;
+
+            canUndo = document.UndoStack.CanUndo;
+            canRedo = document.UndoStack.CanRedo;
 
             storedState = null;
             changed = false;
@@ -84,6 +98,24 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             {
                 Set(ref filenameVirtual, () => FilenameVirtual, value);
             } 
+        }
+
+        public bool CanUndo
+        {
+            get => canUndo;
+            set
+            {
+                Set(ref canUndo, () => CanUndo, value);
+            }
+        }
+
+        public bool CanRedo
+        {
+            get => canRedo;
+            set
+            {
+                Set(ref canRedo, () => CanRedo, value);
+            }
         }
     }
 }
