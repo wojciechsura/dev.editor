@@ -71,6 +71,7 @@
     <Compile Include="Services\Messaging\MessagingService.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Document\DocumentViewModel.cs" />
+    <Compile Include="ViewModels\Document\IEditorAccess.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Commands.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />
   </ItemGroup>

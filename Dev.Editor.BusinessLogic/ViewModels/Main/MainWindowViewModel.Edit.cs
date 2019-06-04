@@ -12,17 +12,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoPaste()
         {
-            throw new NotImplementedException();
+            activeDocument.Paste();
         }
 
         private void DoCut()
         {
-            throw new NotImplementedException();
+            activeDocument.Cut();
         }
 
         private void DoCopy()
         {
-            throw new NotImplementedException();
+            activeDocument.Copy();
         }
 
         private void DoRedo()

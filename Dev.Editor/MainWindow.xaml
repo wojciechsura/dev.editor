@@ -13,13 +13,41 @@
     xmlns:vmd="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="MainWindow" Height="450" Width="800">
+    <f:RibbonWindow.Resources>
+        <ResourceDictionary>
+            <!-- Prevent stealing focus from document by the ribbon -->
+            
+            <Style TargetType="f:Ribbon">
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+            <Style TargetType="f:RibbonTabControl">
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+            <Style TargetType="f:RibbonTabItem">
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+            <Style TargetType="f:RibbonGroupBox">
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+            <Style TargetType="f:RibbonGroupsContainer">
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+            <Style TargetType="f:Button">
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+            <Style TargetType="f:ApplicationMenu">
+                <Setter Property="Focusable" Value="False" />
+            </Style>
+            
+        </ResourceDictionary>
+    </f:RibbonWindow.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <f:Ribbon>
+        <f:Ribbon Focusable="False">
             <f:Ribbon.Menu>
                 <f:ApplicationMenu>
                     

@@ -25,6 +25,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private bool selectionAvailable;
         private DocumentState storedState;
 
+        private IEditorAccess editorAccess;
+
         // Private methods ----------------------------------------------------
 
         private void HandleFileNameChanged(object sender, EventArgs e)
@@ -42,6 +44,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
                 this.Changed = !document.UndoStack.IsOriginalFile;
         }
 
+        private void ValidateEditoAccess()
+        {
+            if (editorAccess == null)
+                throw new InvalidOperationException("No editor attached!");
+        }
+
         // Public methods -----------------------------------------------------
 
         public DocumentViewModel()
@@ -49,6 +57,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             document = new TextDocument();
             document.FileNameChanged += HandleFileNameChanged;
             document.UndoStack.PropertyChanged += HandleUndoStackPropertyChanged;
+
+            editorAccess = null;
 
             canUndo = document.UndoStack.CanUndo;
             canRedo = document.UndoStack.CanRedo;
@@ -70,6 +80,24 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         public void SaveState(DocumentState state)
         {
             storedState = state;
+        }
+
+        public void Copy()
+        {
+            ValidateEditoAccess();
+            editorAccess.Copy();
+        }
+
+        public void Cut()
+        {
+            ValidateEditoAccess();
+            editorAccess.Cut();
+        }
+
+        public void Paste()
+        {
+            ValidateEditoAccess();
+            editorAccess.Paste();
         }
 
         // Public properties --------------------------------------------------
@@ -132,6 +160,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             {
                 Set(ref selectionAvailable, () => SelectionAvailable, value);
             }
+        }
+
+        public IEditorAccess EditorAccess
+        {
+            get => editorAccess;
+            set => editorAccess = value;
         }
     }
 }

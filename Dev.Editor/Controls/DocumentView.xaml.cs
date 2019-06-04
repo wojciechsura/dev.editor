@@ -21,16 +21,20 @@ namespace Dev.Editor.Controls
     /// <summary>
     /// Logika interakcji dla klasy DocumentView.xaml
     /// </summary>
-    public partial class DocumentView : UserControl
+    public partial class DocumentView : UserControl, IEditorAccess
     {
-        private void UpdateSelectionInfo() => ((DocumentViewModel)DataContext).NotifySelectionAvailable(teEditor.SelectionLength > 0);
+        private DocumentViewModel viewModel;
+
+        private void UpdateSelectionInfo() => viewModel.NotifySelectionAvailable(teEditor.SelectionLength > 0);
 
         private void HandleSelectionChanged(object sender, EventArgs e) => UpdateSelectionInfo();
 
         private void HandleLoaded(object sender, RoutedEventArgs e)
         {
+            viewModel = (DocumentViewModel)DataContext;
+
             // Restoring state from the viewmodel
-            var state = ((DocumentViewModel)DataContext).LoadState();
+            var state = viewModel.LoadState();
 
             if (state != null)
             {
@@ -47,6 +51,8 @@ namespace Dev.Editor.Controls
 
             // Focusing editor
             teEditor.Focus();
+
+            viewModel.EditorAccess = this;
         }
 
         private void HandleUnloaded(object sender, RoutedEventArgs e)
@@ -59,8 +65,14 @@ namespace Dev.Editor.Controls
                 teEditor.SelectionLength,
                 teEditor.HorizontalOffset,
                 teEditor.VerticalOffset);
-            ((DocumentViewModel)DataContext).SaveState(state);            
+            viewModel.SaveState(state);
+
+            viewModel.EditorAccess = null;
         }
+
+        public void Copy() => teEditor.Copy();
+        public void Cut() => teEditor.Cut();
+        public void Paste() => teEditor.Paste();
 
         public DocumentView()
         {

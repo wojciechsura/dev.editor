@@ -81,7 +81,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             RedoCommand = new AppCommand(obj => DoRedo(), canRedoCondition);
             CopyCommand = new AppCommand(obj => DoCopy(), selectionAvailableCondition);
             CutCommand = new AppCommand(obj => DoCut(), selectionAvailableCondition);
-            PasteCommand = new AppCommand(obj => DoPaste());
+            PasteCommand = new AppCommand(obj => DoPaste(), documentExistsCondition);
 
             // TODO (if not opened with parameters)
             DoNew();
