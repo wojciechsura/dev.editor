@@ -12,7 +12,7 @@
     xmlns:controls="clr-namespace:Dev.Editor.Controls"
     xmlns:vmd="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
-    Title="MainWindow" Height="450" Width="800">
+    Title="Dev.Editor" Height="450" Width="800">
     <f:RibbonWindow.Resources>
         <ResourceDictionary>
             <!-- Prevent stealing focus from document by the ribbon -->
@@ -60,12 +60,12 @@
                 <!-- File -->
                 
                 <f:RibbonGroupBox x:Name="grHomeFile" Header="{x:Static p:Resources.Ribbon_Group_File}">
-                    <f:Button Header="{x:Static p:Resources.Ribbon_File_New}" Command="{Binding NewCommand}" SizeDefinition="Large" 
-                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/New32.png"
-                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/New16.png"/>
-                    <f:Button Header="{x:Static p:Resources.Ribbon_File_Open}" Command="{Binding OpenCommand}" SizeDefinition="Middle, Small" 
+                    <f:Button Header="{x:Static p:Resources.Ribbon_File_Open}" Command="{Binding OpenCommand}" SizeDefinition="Large" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open16.png"/>
+                    <f:Button Header="{x:Static p:Resources.Ribbon_File_New}" Command="{Binding NewCommand}" SizeDefinition="Middle, Small" 
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/New32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/New16.png"/>
                     <f:Button Header="{x:Static p:Resources.Ribbon_File_Save}" Command="{Binding SaveCommand}" SizeDefinition="Middle, Small"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save16.png"/>

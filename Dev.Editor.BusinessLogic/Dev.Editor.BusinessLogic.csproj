@@ -74,6 +74,10 @@
     <Compile Include="ViewModels\Document\IEditorAccess.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Commands.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchOperations\BaseSearchOperationViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchOperations\ReplaceOperationViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchOperations\SearchOperationViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dev.Editor.Common\Dev.Editor.Common.csproj">
