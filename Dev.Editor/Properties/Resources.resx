@@ -171,4 +171,10 @@
   <data name="DefaultFilter" xml:space="preserve">
     <value>All files (*.*)|*.*</value>
   </data>
+  <data name="SearchWindow.Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchWindow.SearchedText" xml:space="preserve">
+    <value>Text to search</value>
+  </data>
 </root>

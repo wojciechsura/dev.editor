@@ -4,9 +4,51 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dev.Editor"
+        xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Search.SearchOperations;assembly=Dev.Editor.BusinessLogic"
+        xmlns:p="clr-namespace:Dev.Editor.Properties"
         mc:Ignorable="d"
-        Title="SearchReplaceWindow" SizeToContent="WidthAndHeight" Closing="HandleWindowClosing">
-    <TabControl Margin="10" ItemsSource="{Binding SearchOperations}">
-        
+        Title="SearchReplaceWindow" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Closing="HandleWindowClosing">
+    <TabControl Margin="10" ItemsSource="{Binding SearchOperations}" SelectedItem="{Binding CurrentOperation}">
+        <TabControl.ItemContainerStyle>
+            <Style TargetType="TabItem">
+                <Setter Property="Header" Value="{Binding Title}" />
+            </Style>
+        </TabControl.ItemContainerStyle>
+        <TabControl.Resources>
+            <ResourceDictionary>
+                <DataTemplate DataType="{x:Type vm:SearchOperationViewModel}">
+                    <GroupBox Header="{x:Static p:Resources.SearchWindow_Search}" Padding="4">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{x:Static p:Resources.SearchWindow_SearchedText}" Margin="0,0,10,0"/>
+                                    <TextBox Width="250" />
+                                </StackPanel>
+                                <GroupBox Header="Opcje szukania" Padding="4">
+                                    <StackPanel Orientation="Vertical">
+                                        <CheckBox>Uwzględniaj wielkość liter</CheckBox>
+                                        <CheckBox>Tylko całe wyrazy</CheckBox>
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="Tryb szukania" Padding="4">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton>Normalny</RadioButton>
+                                        <RadioButton>Rozszerzony (\n, \t etc.)</RadioButton>
+                                        <RadioButton>Wyrażenia regularne</RadioButton>
+                                    </StackPanel>
+                                </GroupBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                                <Button Width="150" Margin="0,0,0,4">Znajdź następny</Button>
+                                <Button Width="150">Anuluj</Button>
+                            </StackPanel>                                        
+                        </StackPanel>
+                    </GroupBox>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:ReplaceOperationViewModel}">
+                    <Label>Replace</Label>
+                </DataTemplate>
+            </ResourceDictionary>
+        </TabControl.Resources>
     </TabControl>
 </Window>
