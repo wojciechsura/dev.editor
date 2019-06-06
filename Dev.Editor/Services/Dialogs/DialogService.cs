@@ -1,5 +1,7 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Dialogs;
 using Dev.Editor.BusinessLogic.Properties;
+using Dev.Editor.BusinessLogic.Services.Dialogs;
+using Dev.Editor.BusinessLogic.ViewModels.Search;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -8,10 +10,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 
-namespace Dev.Editor.BusinessLogic.Services.Dialogs
+namespace Dev.Editor.Services.Dialogs
 {
     class DialogService : IDialogService
     {
+        private readonly Dictionary<ISearchHost, SearchReplaceWindow> searchWindows = new Dictionary<ISearchHost, SearchReplaceWindow>();
+
         public OpenDialogResult OpenDialog(string filter = null, string title = null, string filename = null)
         {
             OpenFileDialog dialog = new OpenFileDialog();
@@ -21,17 +25,25 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
             if (filter != null)
                 dialog.Filter = filter;
             else
-                dialog.Filter = Resources.DefaultFilter;
+                dialog.Filter = Properties.Resources.DefaultFilter;
 
             if (title != null)
                 dialog.Title = title;
             else
-                dialog.Title = Resources.DefaultDialogTitle;
+                dialog.Title = Properties.Resources.DefaultDialogTitle;
 
             if (dialog.ShowDialog() == true)
                 return new OpenDialogResult(true, dialog.FileName);
             else
                 return new OpenDialogResult(false, null);
+        }
+
+        public SearchReplaceWindowViewModel RequestSearchReplace(ISearchHost searchHost)
+        {
+            if (!searchWindows.ContainsKey(searchHost))
+                searchWindows.Add(searchHost, new SearchReplaceWindow(searchHost));
+
+            return searchWindows[searchHost].ViewModel;
         }
 
         public SaveDialogResult SaveDialog(string filter = null, string title = null, string filename = null)
@@ -43,12 +55,12 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
             if (filter != null)
                 dialog.Filter = filter;
             else
-                dialog.Filter = Resources.DefaultFilter;
+                dialog.Filter = Properties.Resources.DefaultFilter;
 
             if (title != null)
                 dialog.Title = title;
             else
-                dialog.Title = Resources.DefaultDialogTitle;
+                dialog.Title = Properties.Resources.DefaultDialogTitle;
 
             if (dialog.ShowDialog() == true)
                 return new SaveDialogResult(true, dialog.FileName);

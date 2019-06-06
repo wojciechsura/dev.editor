@@ -16,7 +16,7 @@
     <f:RibbonWindow.Resources>
         <ResourceDictionary>
             <!-- Prevent stealing focus from document by the ribbon -->
-            
+            <!--
             <Style TargetType="f:Ribbon">
                 <Setter Property="Focusable" Value="False" />
             </Style>
@@ -38,7 +38,7 @@
             <Style TargetType="f:ApplicationMenu">
                 <Setter Property="Focusable" Value="False" />
             </Style>
-            
+            -->            
         </ResourceDictionary>
     </f:RibbonWindow.Resources>
     <Grid>
@@ -47,7 +47,7 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <f:Ribbon Focusable="False">
+        <f:Ribbon Focusable="False" FocusManager.IsFocusScope="True">
             <f:Ribbon.Menu>
                 <f:ApplicationMenu>
                     
@@ -126,6 +126,18 @@
                     </f:RibbonToolBar>
 
                 </f:RibbonGroupBox>
+                
+                <!-- Search -->
+
+                <f:RibbonGroupBox x:Name="grSearch" Header="{x:Static p:Resources.Ribbon_Group_Search}">
+                    <f:Button Header="{x:Static p:Resources.Ribbon_Search_Search}" Command="{Binding SearchCommand}" SizeDefinition="Large"
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search16.png"/>
+                    <f:Button Header="{x:Static p:Resources.Ribbon_Search_Replace}" Command="{Binding ReplaceCommand}" SizeDefinition="Large"
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace16.png"/>
+                </f:RibbonGroupBox>
+                
             </f:RibbonTabItem>
         </f:Ribbon>
 

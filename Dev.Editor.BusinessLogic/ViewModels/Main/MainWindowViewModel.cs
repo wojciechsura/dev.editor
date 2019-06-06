@@ -4,6 +4,7 @@ using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.Services.Messaging;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
+using Dev.Editor.BusinessLogic.ViewModels.Search;
 using Dev.Editor.Common.Commands;
 using Dev.Editor.Common.Conditions;
 using Microsoft.Win32;
@@ -19,10 +20,11 @@ using System.Windows.Input;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
-    public partial class MainWindowViewModel : BaseViewModel
+    public partial class MainWindowViewModel : BaseViewModel, ISearchHost
     {
         // Private fields -----------------------------------------------------
 
+        private readonly IMainWindowAccess access;
         private readonly IDialogService dialogService;
         private readonly IMessagingService messagingService;
 
@@ -60,8 +62,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // Public methods -----------------------------------------------------
 
-        public MainWindowViewModel(IDialogService dialogService, IMessagingService messagingService)
+        public MainWindowViewModel(IMainWindowAccess access, IDialogService dialogService, IMessagingService messagingService)
         {
+            this.access = access;
             this.dialogService = dialogService;
             this.messagingService = messagingService;
 
@@ -77,13 +80,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             OpenCommand = new AppCommand(obj => DoOpen());
             SaveCommand = new AppCommand(obj => DoSave(), documentExistsCondition);
             SaveAsCommand = new AppCommand(obj => DoSaveAs(), documentExistsCondition);
+
             UndoCommand = new AppCommand(obj => DoUndo(), canUndoCondition);
             RedoCommand = new AppCommand(obj => DoRedo(), canRedoCondition);
             CopyCommand = new AppCommand(obj => DoCopy(), selectionAvailableCondition);
             CutCommand = new AppCommand(obj => DoCut(), selectionAvailableCondition);
             PasteCommand = new AppCommand(obj => DoPaste(), documentExistsCondition);
 
+            SearchCommand = new AppCommand(obj => DoSearch(), documentExistsCondition);
+            ReplaceCommand = new AppCommand(obj => DoReplace(), documentExistsCondition);
+
             // TODO (if not opened with parameters)
+
             DoNew();
         }
 

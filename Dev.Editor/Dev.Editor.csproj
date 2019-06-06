@@ -100,6 +100,7 @@
     <Compile Include="SearchReplaceWindow.xaml.cs">
       <DependentUpon>SearchReplaceWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\Dialogs\DialogService.cs" />
     <Page Include="Controls\DocumentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -193,6 +194,14 @@
     <Resource Include="Resources\Images\Redo32.png" />
     <Resource Include="Resources\Images\Undo16.png" />
     <Resource Include="Resources\Images\Undo32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Search16.png" />
+    <Resource Include="Resources\Images\Search32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Replace16.png" />
+    <Resource Include="Resources\Images\Replace32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

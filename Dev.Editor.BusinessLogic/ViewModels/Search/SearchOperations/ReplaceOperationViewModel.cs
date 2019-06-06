@@ -6,7 +6,14 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Search.SearchOperations
 {
-    public class ReplaceOperationViewModel
+    public class ReplaceOperationViewModel : BaseSearchOperationViewModel
     {
+        public ReplaceOperationViewModel(ISearchOperationHost searchOperationHost) 
+            : base(searchOperationHost)
+        {
+
+        }
+
+        public override string Title => Properties.Resources.Search_ReplaceTitle;
     }
 }

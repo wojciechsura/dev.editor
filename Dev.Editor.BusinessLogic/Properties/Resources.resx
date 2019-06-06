@@ -120,19 +120,22 @@
   <data name="BlankDocumentName" xml:space="preserve">
     <value>Document</value>
   </data>
-  <data name="DefaultFilter" xml:space="preserve">
-    <value>All files (*.*)|*.*</value>
-  </data>
   <data name="Message.CannotOpenFile" xml:space="preserve">
     <value>Cannot open file {0}. Error: {1}</value>
-  </data>
-  <data name="DefaultDialogTitle" xml:space="preserve">
-    <value>Dev.Editor</value>
   </data>
   <data name="Message.CannotSaveFile" xml:space="preserve">
     <value>Cannot save file {0}. Error: {1}</value>
   </data>
   <data name="Message.FileNotSaved" xml:space="preserve">
     <value>Do you want to save document {0} before closing?</value>
+  </data>
+  <data name="Search.SearchTitle" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Search.ReplaceTitle" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="DefaultMessageboxTitle" xml:space="preserve">
+    <value>Dev.Editor</value>
   </data>
 </root>

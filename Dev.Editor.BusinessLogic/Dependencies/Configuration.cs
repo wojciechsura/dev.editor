@@ -14,7 +14,6 @@ namespace Dev.Editor.BusinessLogic.Dependencies
     {
         public static void Configure(IUnityContainer container)
         {
-            container.RegisterType<IDialogService, DialogService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IMessagingService, MessagingService>(new ContainerControlledLifetimeManager());
         }
     }

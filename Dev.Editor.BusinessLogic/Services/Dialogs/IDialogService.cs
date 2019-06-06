@@ -1,4 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Dialogs;
+using Dev.Editor.BusinessLogic.ViewModels.Search;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
     {
         OpenDialogResult OpenDialog(string filter = null, string title = null, string filename = null);
         SaveDialogResult SaveDialog(string filter = null, string title = null, string filename = null);
+
+        SearchReplaceWindowViewModel RequestSearchReplace(ISearchHost searchHost);
     }
 }

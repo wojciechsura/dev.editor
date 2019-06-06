@@ -25,9 +25,9 @@ namespace Dev.Editor.Common.Conditions
         private readonly string valuePropertyName;
         private readonly bool defaultValue;
         
-        private PropertyInfo GetPropertyInfo<TSource1, TProperty>(Expression<Func<TSource1, TProperty>> propertyLambda)
+        private PropertyInfo GetPropertyInfo<TClass, TProperty>(Expression<Func<TClass, TProperty>> propertyLambda)
         {
-            Type type = typeof(TSource1);
+            Type type = typeof(TClass);
 
             var member = propertyLambda.Body as MemberExpression;
             if (member == null)

@@ -1,9 +1,12 @@
-﻿using System;
+﻿using Dev.Editor.BusinessLogic.Services.Dialogs;
+using Dev.Editor.Services.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unity;
+using Unity.Lifetime;
 
 namespace Dev.Editor.Dependencies
 {
@@ -15,6 +18,8 @@ namespace Dev.Editor.Dependencies
         {
             if (configured)
                 return;
+
+            container.RegisterType<IDialogService, DialogService>(new ContainerControlledLifetimeManager());
 
             Dev.Editor.BusinessLogic.Dependencies.Configuration.Configure(container);
 

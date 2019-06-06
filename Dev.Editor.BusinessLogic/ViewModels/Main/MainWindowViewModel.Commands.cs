@@ -25,5 +25,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand CopyCommand { get; }
         public ICommand CutCommand { get; }
         public ICommand PasteCommand { get; }
+
+        // Search
+
+        public ICommand SearchCommand { get; }
+        public ICommand ReplaceCommand { get; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.BusinessLogic.ViewModels.Main;
+using Dev.Editor.BusinessLogic.ViewModels.Search;
 using Fluent;
 using System;
 using System.Collections.Generic;
@@ -16,21 +17,26 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using Unity;
+using Unity.Resolution;
 
 namespace Dev.Editor
 {
     /// <summary>
     /// Logika interakcji dla klasy MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : RibbonWindow
+    public partial class MainWindow : RibbonWindow, IMainWindowAccess
     {
+        // Private fields -----------------------------------------------------
+
         private MainWindowViewModel viewModel;
+
+        // Public methods -----------------------------------------------------
 
         public MainWindow()
         {
             InitializeComponent();
 
-            viewModel = Dependencies.Container.Instance.Resolve<MainWindowViewModel>();
+            viewModel = Dependencies.Container.Instance.Resolve<MainWindowViewModel>(new ParameterOverride("access", this));
             DataContext = viewModel;
         }
 

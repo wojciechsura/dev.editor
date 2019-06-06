@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dev.Editor.BusinessLogic.ViewModels.Search;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +18,30 @@ namespace Dev.Editor
     /// <summary>
     /// Logika interakcji dla klasy SearchReplaceWindow.xaml
     /// </summary>
-    public partial class SearchReplaceWindow : Window
+    public partial class SearchReplaceWindow : Window, ISearchReplaceWindowAccess
     {
-        public SearchReplaceWindow()
+        private readonly SearchReplaceWindowViewModel viewModel;
+
+        public SearchReplaceWindow(ISearchHost searchHost)
         {
             InitializeComponent();
+
+            viewModel = new SearchReplaceWindowViewModel(searchHost, this);
+            DataContext = viewModel;
+        }
+
+        public SearchReplaceWindowViewModel ViewModel => viewModel;
+
+        public void ShowAndFocus()
+        {
+            Show();
+            Focus();
+        }
+
+        private void HandleWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
         }
     }
 }

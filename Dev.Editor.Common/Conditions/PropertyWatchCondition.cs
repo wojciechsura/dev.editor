@@ -34,9 +34,9 @@ namespace Dev.Editor.Common.Conditions
             OnValueChanged(GetValue());
         }
 
-        private PropertyInfo GetPropertyInfo<TSource, TProperty>(Expression<Func<TSource, TProperty>> propertyLambda)
+        private PropertyInfo GetPropertyInfo<TClass, TProperty>(Expression<Func<TClass, TProperty>> propertyLambda)
         {
-            Type type = typeof(TSource);
+            Type type = typeof(TClass);
 
             MemberExpression member = propertyLambda.Body as MemberExpression;
             if (member == null)
@@ -69,6 +69,8 @@ namespace Dev.Editor.Common.Conditions
         public PropertyWatchCondition(TSource source, Expression<Func<TSource, bool>> expression, bool defaultValue)
         {
             this.source = source;
+            this.defaultValue = defaultValue;
+
             if (source != null)
                 source.PropertyChanged += HandleSourcePropertyChanged;
 

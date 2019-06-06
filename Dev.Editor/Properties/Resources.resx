@@ -156,4 +156,19 @@
   <data name="BlankDocName" xml:space="preserve">
     <value>Document</value>
   </data>
+  <data name="Ribbon.Group.Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Ribbon.Search.Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Ribbon.Search.Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="DefaultDialogTitle" xml:space="preserve">
+    <value>Dev.Editor</value>
+  </data>
+  <data name="DefaultFilter" xml:space="preserve">
+    <value>All files (*.*)|*.*</value>
+  </data>
 </root>
