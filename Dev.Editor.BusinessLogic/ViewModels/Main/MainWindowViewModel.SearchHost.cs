@@ -35,13 +35,32 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         }
 
         public void Replace(ReplaceModel replaceModel)
-        {
-			// TODO
+        {            
+            string input = activeDocument.GetSelectedText();
+
+            Match match = replaceModel.Regex.Match(input);
+
+            if (match.Success && match.Index == 0 && match.Length == input.Length)
+            {
+                (int selStart, int selLength) = activeDocument.GetSelection();
+                activeDocument.Document.Replace(selStart, selLength, replaceModel.Replace);
+            }
+
+            FindNext(replaceModel);
         }
 
         public void ReplaceAll(ReplaceModel replaceModel)
         {
-			// TODO
+            int offset = 0;
+
+            activeDocument.RunAsSingleHistoryEntry(() =>
+            {
+                foreach (Match match in replaceModel.Regex.Matches(activeDocument.Document.Text))
+                {
+                    activeDocument.Document.Replace(offset + match.Index, match.Length, replaceModel.Replace);
+                    offset += replaceModel.Replace.Length - match.Length;
+                }
+            });
         }
 
         public BaseCondition CanSearchCondition => documentExistsCondition;

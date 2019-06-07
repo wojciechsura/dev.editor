@@ -70,6 +70,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             filenameVirtual = true;
         }
 
+        public void RunAsSingleHistoryEntry(Action action)
+        {
+            try
+            {
+                editorAccess.BeginChange();
+                action();
+            }
+            finally
+            {
+                editorAccess.EndChange();
+            }
+        }
+
         public void NotifySelectionAvailable(bool selectionAvailable) => SelectionAvailable = selectionAvailable;
 
         public DocumentState LoadState()
@@ -114,6 +127,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
                 var location = document.GetLocation(selStart);
                 editorAccess.ScrollTo(location.Line, location.Column);
             }
+        }
+
+        public string GetSelectedText()
+        {
+            return editorAccess.GetSelectedText();
         }
 
         // Public properties --------------------------------------------------

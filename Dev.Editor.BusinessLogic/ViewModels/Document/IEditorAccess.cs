@@ -16,5 +16,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         (int selStart, int selLength) GetSelection();
         void SetSelection(int selStart, int selLength);
         void ScrollTo(int line, int column);
+        string GetSelectedText();
+        void BeginChange();
+        void EndChange();
     }
 }

@@ -33,7 +33,7 @@
                             <StackPanel Orientation="Vertical">
                                 <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Resources.SearchWindow_CaseSensitive}" 
                                           IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                <CheckBox Content="{x:Static p:Resources.SearchWindow_OnlyFullWords}" 
+                                <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Resources.SearchWindow_OnlyFullWords}" 
                                           IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <CheckBox Content="{x:Static p:Resources.SearchWindow_SearchBackwards}" 
                                           IsChecked="{Binding SearchBackwards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
@@ -85,7 +85,7 @@
                             <StackPanel Orientation="Vertical">
                                 <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Resources.SearchWindow_CaseSensitive}" 
                                           IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <CheckBox Content="{x:Static p:Resources.SearchWindow_OnlyFullWords}" 
+                                <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Resources.SearchWindow_OnlyFullWords}" 
                                           IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <CheckBox Content="{x:Static p:Resources.SearchWindow_SearchBackwards}" 
                                           IsChecked="{Binding SearchBackwards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>

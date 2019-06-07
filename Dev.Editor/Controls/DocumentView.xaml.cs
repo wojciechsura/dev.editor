@@ -85,6 +85,21 @@ namespace Dev.Editor.Controls
             teEditor.SelectionLength = selLength;
         }
 
+        public string GetSelectedText()
+        {
+            return teEditor.SelectedText;
+        }
+
+        public void BeginChange()
+        {
+            teEditor.BeginChange();
+        }
+
+        public void EndChange()
+        {
+            teEditor.EndChange();
+        }
+
         public void ScrollTo(int line, int column)
         {
             teEditor.ScrollTo(line, column);
