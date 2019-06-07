@@ -16,6 +16,9 @@
         </TabControl.ItemContainerStyle>
         <TabControl.Resources>
             <ResourceDictionary>
+                
+                <!-- Search template -->
+                
                 <DataTemplate DataType="{x:Type vm:SearchOperationViewModel}">
                     <GroupBox Header="{x:Static p:Resources.SearchWindow_Search}" Padding="4">
                         <StackPanel Orientation="Horizontal">
@@ -24,29 +27,62 @@
                                     <Label Content="{x:Static p:Resources.SearchWindow_SearchedText}" Margin="0,0,10,0"/>
                                     <TextBox Width="250" />
                                 </StackPanel>
-                                <GroupBox Header="Opcje szukania" Padding="4">
+                                <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchOptions}" Padding="4">
                                     <StackPanel Orientation="Vertical">
-                                        <CheckBox>Uwzględniaj wielkość liter</CheckBox>
-                                        <CheckBox>Tylko całe wyrazy</CheckBox>
+                                        <CheckBox Content="{x:Static p:Resources.SearchWindow_CaseSensitive}" />
+                                        <CheckBox Content="{x:Static p:Resources.SearchWindow_OnlyFullWords}" />
                                     </StackPanel>
                                 </GroupBox>
-                                <GroupBox Header="Tryb szukania" Padding="4">
+                                <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchMode}" Padding="4">
                                     <StackPanel Orientation="Vertical">
-                                        <RadioButton>Normalny</RadioButton>
-                                        <RadioButton>Rozszerzony (\n, \t etc.)</RadioButton>
-                                        <RadioButton>Wyrażenia regularne</RadioButton>
+                                        <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeNormal}"/>
+                                        <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeExtended}"/>
+                                        <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeRegex}" />
                                     </StackPanel>
                                 </GroupBox>
                             </StackPanel>
                             <StackPanel Orientation="Vertical" Margin="10,0,0,0">
-                                <Button Width="150" Margin="0,0,0,4">Znajdź następny</Button>
-                                <Button Width="150">Anuluj</Button>
+                                <Button Content="{x:Static p:Resources.SearchWindow_FindNext}" Width="150" Margin="0,0,0,4" />
+                                <Button Content="{x:Static p:Resources.SearchWindow_Close}" Width="150"></Button>
                             </StackPanel>                                        
                         </StackPanel>
                     </GroupBox>
                 </DataTemplate>
+                
+                <!-- Replace template -->
+                
                 <DataTemplate DataType="{x:Type vm:ReplaceOperationViewModel}">
-                    <Label>Replace</Label>
+                    <GroupBox Header="{x:Static p:Resources.SearchWindow_Replace}" Padding="4">
+                        <StackPanel Orientation="Horizontal">
+                            <StackPanel Orientation="Vertical">
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{x:Static p:Resources.SearchWindow_SearchedText}" Margin="0,0,10,0"/>
+                                    <TextBox Width="250" />
+                                </StackPanel>
+                                <StackPanel Orientation="Horizontal">
+                                    <Label Content="{x:Static p:Resources.SearchWindow_ReplaceWith}" Margin="0,0,10,0"/>
+                                    <TextBox Width="250" />
+                                </StackPanel>
+                                <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchOptions}" Padding="4">
+                                    <StackPanel Orientation="Vertical">
+                                        <CheckBox Content="{x:Static p:Resources.SearchWindow_CaseSensitive}" />
+                                        <CheckBox Content="{x:Static p:Resources.SearchWindow_OnlyFullWords}" />
+                                    </StackPanel>
+                                </GroupBox>
+                                <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchMode}" Padding="4">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeNormal}"/>
+                                        <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeExtended}"/>
+                                        <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeRegex}" />
+                                    </StackPanel>
+                                </GroupBox>
+                            </StackPanel>
+                            <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                                <Button Content="{x:Static p:Resources.SearchWindow_FindNext}" Width="150" Margin="0,0,0,4" />
+                                <Button Content="{x:Static p:Resources.SearchWindow_Close}" Width="150"></Button>
+                            </StackPanel>
+                        </StackPanel>
+                    </GroupBox>
                 </DataTemplate>
             </ResourceDictionary>
         </TabControl.Resources>
