@@ -304,6 +304,15 @@ namespace Dev.Editor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search backwards.
+        /// </summary>
+        public static string SearchWindow_SearchBackwards {
+            get {
+                return ResourceManager.GetString("SearchWindow.SearchBackwards", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text to search.
         /// </summary>
         public static string SearchWindow_SearchedText {

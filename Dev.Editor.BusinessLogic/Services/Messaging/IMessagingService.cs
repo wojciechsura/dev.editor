@@ -11,6 +11,7 @@ namespace Dev.Editor.BusinessLogic.Services.Messaging
         bool AskYesNo(string message, string title = null);
         bool? AskYesNoCancel(string message, string title = null);
         void Warn(string message, string title = null);
-        void ShowError(string message, string title = null);        
+        void ShowError(string message, string title = null);
+        void Inform(string message, string title = null);
     }
 }

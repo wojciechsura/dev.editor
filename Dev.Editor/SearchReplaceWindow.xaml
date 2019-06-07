@@ -35,6 +35,8 @@
                                           IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <CheckBox Content="{x:Static p:Resources.SearchWindow_OnlyFullWords}" 
                                           IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox Content="{x:Static p:Resources.SearchWindow_SearchBackwards}" 
+                                          IsChecked="{Binding SearchBackwards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchMode}" Padding="4">
@@ -50,7 +52,7 @@
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Margin="10,0,0,0">
                         <Button Content="{x:Static p:Resources.SearchWindow_FindNext}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindNextCommand}" />
-                        <Button Content="{x:Static p:Resources.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}"></Button>
+                        <Button Content="{x:Static p:Resources.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" />
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
@@ -85,6 +87,8 @@
                                           IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <CheckBox Content="{x:Static p:Resources.SearchWindow_OnlyFullWords}" 
                                           IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <CheckBox Content="{x:Static p:Resources.SearchWindow_SearchBackwards}" 
+                                          IsChecked="{Binding SearchBackwards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchMode}" Padding="4">

@@ -138,4 +138,10 @@
   <data name="DefaultMessageboxTitle" xml:space="preserve">
     <value>Dev.Editor</value>
   </data>
+  <data name="Message.InvalidSearchPattern" xml:space="preserve">
+    <value>Invalid search pattern!</value>
+  </data>
+  <data name="Message.NoMorePatternsFound" xml:space="preserve">
+    <value>Cannot find any occurrences of entered text.</value>
+  </data>
 </root>

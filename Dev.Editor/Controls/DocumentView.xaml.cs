@@ -1,5 +1,6 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Documents;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
+using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -73,6 +74,21 @@ namespace Dev.Editor.Controls
         public void Copy() => teEditor.Copy();
         public void Cut() => teEditor.Cut();
         public void Paste() => teEditor.Paste();
+        public (int selStart, int selLength) GetSelection()
+        {
+            return (teEditor.SelectionStart, teEditor.SelectionLength);
+        }
+
+        public void SetSelection(int selStart, int selLength)
+        {
+            teEditor.SelectionStart = selStart;
+            teEditor.SelectionLength = selLength;
+        }
+
+        public void ScrollTo(int line, int column)
+        {
+            teEditor.ScrollTo(line, column);
+        }
 
         public DocumentView()
         {

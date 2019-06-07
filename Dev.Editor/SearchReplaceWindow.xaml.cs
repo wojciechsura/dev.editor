@@ -12,6 +12,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using Unity;
+using Unity.Resolution;
 
 namespace Dev.Editor
 {
@@ -37,7 +39,9 @@ namespace Dev.Editor
         {
             InitializeComponent();
 
-            viewModel = new SearchReplaceWindowViewModel(searchHost, this);
+            viewModel = Dependencies.Container.Instance.Resolve<SearchReplaceWindowViewModel>(new ParameterOverride("searchHost", searchHost),
+                new ParameterOverride("access", this));
+
             DataContext = viewModel;
         }
 

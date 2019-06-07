@@ -222,4 +222,7 @@
   <data name="SearchWindow.ReplaceTab" xml:space="preserve">
     <value>Replace all</value>
   </data>
+  <data name="SearchWindow.SearchBackwards" xml:space="preserve">
+    <value>Szukaj wstecz</value>
+  </data>
 </root>

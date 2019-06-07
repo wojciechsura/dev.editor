@@ -106,6 +106,24 @@ namespace Dev.Editor.BusinessLogic.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid search pattern!.
+        /// </summary>
+        internal static string Message_InvalidSearchPattern {
+            get {
+                return ResourceManager.GetString("Message.InvalidSearchPattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot find any occurrences of entered text..
+        /// </summary>
+        internal static string Message_NoMorePatternsFound {
+            get {
+                return ResourceManager.GetString("Message.NoMorePatternsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Replace.
         /// </summary>
         internal static string Search_ReplaceTitle {

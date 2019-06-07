@@ -100,6 +100,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             editorAccess.Paste();
         }
 
+        public (int selStart, int selLength) GetSelection()
+        {
+            return editorAccess.GetSelection();
+        }
+
+        public void SetSelection(int selStart, int selLength, bool scrollTo = true)
+        {
+            editorAccess.SetSelection(selStart, selLength);
+
+            if (scrollTo)
+            {
+                var location = document.GetLocation(selStart);
+                editorAccess.ScrollTo(location.Line, location.Column);
+            }
+        }
+
         // Public properties --------------------------------------------------
 
         public TextDocument Document => document;

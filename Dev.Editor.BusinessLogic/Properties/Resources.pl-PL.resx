@@ -138,4 +138,10 @@
   <data name="DefaultMessageboxTitle" xml:space="preserve">
     <value>Dev.Editor</value>
   </data>
+  <data name="Message.InvalidSearchPattern" xml:space="preserve">
+    <value>Nieprawidłowy ciąg do wyszukania!</value>
+  </data>
+  <data name="Message.NoMorePatternsFound" xml:space="preserve">
+    <value>Nie znaleziono wystąpień wprowadzonego ciągu.</value>
+  </data>
 </root>

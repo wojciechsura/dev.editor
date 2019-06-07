@@ -57,5 +57,13 @@ namespace Dev.Editor.BusinessLogic.Services.Messaging
 
             MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
         }
+
+        public void Inform(string message, string title = null)
+        {
+            if (title == null)
+                title = Resources.DefaultMessageboxTitle;
+
+            MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Information);
+        }
     }
 }
