@@ -268,6 +268,24 @@ namespace Dev.Editor.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Replace all.
+        /// </summary>
+        public static string SearchWindow_ReplaceAll {
+            get {
+                return ResourceManager.GetString("SearchWindow.ReplaceAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replace.
+        /// </summary>
+        public static string SearchWindow_ReplaceTab {
+            get {
+                return ResourceManager.GetString("SearchWindow.ReplaceTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Replace with.
         /// </summary>
         public static string SearchWindow_ReplaceWith {
@@ -304,7 +322,7 @@ namespace Dev.Editor.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Extended.
+        ///   Looks up a localized string similar to Extended (\n, \t etc.).
         /// </summary>
         public static string SearchWindow_SearchModeExtended {
             get {
@@ -336,6 +354,24 @@ namespace Dev.Editor.Properties {
         public static string SearchWindow_SearchOptions {
             get {
                 return ResourceManager.GetString("SearchWindow.SearchOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string SearchWindow_SearchTab {
+            get {
+                return ResourceManager.GetString("SearchWindow.SearchTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string SearchWindow_Title {
+            get {
+                return ResourceManager.GetString("SearchWindow.Title", resourceCulture);
             }
         }
     }

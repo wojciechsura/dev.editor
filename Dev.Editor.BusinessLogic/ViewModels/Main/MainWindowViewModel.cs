@@ -20,7 +20,7 @@ using System.Windows.Input;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
-    public partial class MainWindowViewModel : BaseViewModel, ISearchHost
+    public partial class MainWindowViewModel : BaseViewModel
     {
         // Private fields -----------------------------------------------------
 

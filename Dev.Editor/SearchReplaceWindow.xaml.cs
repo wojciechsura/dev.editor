@@ -22,6 +22,17 @@ namespace Dev.Editor
     {
         private readonly SearchReplaceWindowViewModel viewModel;
 
+        private void HandleWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = true;
+            Hide();
+        }
+
+        void ISearchReplaceWindowAccess.Close()
+        {
+            Hide();
+        }
+
         public SearchReplaceWindow(ISearchHost searchHost)
         {
             InitializeComponent();
@@ -32,16 +43,16 @@ namespace Dev.Editor
 
         public SearchReplaceWindowViewModel ViewModel => viewModel;
 
+        public void ChooseReplaceTab() => 
+            tcTabs.SelectedItem = tReplace;
+
+        public void ChooseSearchTab() => 
+            tcTabs.SelectedItem = tSearch;
+
         public void ShowAndFocus()
         {
             Show();
             Focus();
-        }
-
-        private void HandleWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            e.Cancel = true;
-            Hide();
         }
     }
 }

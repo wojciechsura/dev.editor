@@ -2,6 +2,7 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Dev.Editor"
+             xmlns:c="clr-namespace:Dev.Editor.Converters"
              StartupUri="MainWindow.xaml" ShutdownMode="OnMainWindowClose">
     <Application.Resources>
         <ResourceDictionary>
@@ -9,6 +10,10 @@
                 <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <c:RadioToEnumConverter x:Key="RadioToEnumConverter" />
+
+            <Thickness x:Key="DialogWindowPadding" Top="10" Left="10" Right="10" Bottom="10" />
+            <Thickness x:Key="DialogItemsVMargin" Bottom="4" />
         </ResourceDictionary>
     </Application.Resources>
 </Application>

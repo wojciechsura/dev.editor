@@ -4,87 +4,108 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dev.Editor"
-        xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Search.SearchOperations;assembly=Dev.Editor.BusinessLogic"
         xmlns:p="clr-namespace:Dev.Editor.Properties"
+        xmlns:t="clr-namespace:Dev.Editor.BusinessLogic.Types.Search;assembly=Dev.Editor.BusinessLogic"
         mc:Ignorable="d"
-        Title="SearchReplaceWindow" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Closing="HandleWindowClosing">
-    <TabControl Margin="10" ItemsSource="{Binding SearchOperations}" SelectedItem="{Binding CurrentOperation}">
-        <TabControl.ItemContainerStyle>
-            <Style TargetType="TabItem">
-                <Setter Property="Header" Value="{Binding Title}" />
-            </Style>
-        </TabControl.ItemContainerStyle>
-        <TabControl.Resources>
-            <ResourceDictionary>
-                
-                <!-- Search template -->
-                
-                <DataTemplate DataType="{x:Type vm:SearchOperationViewModel}">
-                    <GroupBox Header="{x:Static p:Resources.SearchWindow_Search}" Padding="4">
-                        <StackPanel Orientation="Horizontal">
+        Title="{x:Static p:Resources.SearchWindow_Title}" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Closing="HandleWindowClosing">
+    <TabControl x:Name="tcTabs" Margin="{StaticResource DialogWindowPadding}">
+        
+        <!-- Search -->
+        
+        <TabItem x:Name="tSearch" Header="{x:Static p:Resources.SearchWindow_SearchTab}">
+            <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchTab}" Padding="4">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="250" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Resources.SearchWindow_SearchedText}"/>
+                            <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </Grid>
+                        
+                        <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchOptions}" Padding="4">
                             <StackPanel Orientation="Vertical">
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="{x:Static p:Resources.SearchWindow_SearchedText}" Margin="0,0,10,0"/>
-                                    <TextBox Width="250" />
-                                </StackPanel>
-                                <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchOptions}" Padding="4">
-                                    <StackPanel Orientation="Vertical">
-                                        <CheckBox Content="{x:Static p:Resources.SearchWindow_CaseSensitive}" />
-                                        <CheckBox Content="{x:Static p:Resources.SearchWindow_OnlyFullWords}" />
-                                    </StackPanel>
-                                </GroupBox>
-                                <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchMode}" Padding="4">
-                                    <StackPanel Orientation="Vertical">
-                                        <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeNormal}"/>
-                                        <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeExtended}"/>
-                                        <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeRegex}" />
-                                    </StackPanel>
-                                </GroupBox>
+                                <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Resources.SearchWindow_CaseSensitive}" 
+                                          IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                <CheckBox Content="{x:Static p:Resources.SearchWindow_OnlyFullWords}" 
+                                          IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
-                            <StackPanel Orientation="Vertical" Margin="10,0,0,0">
-                                <Button Content="{x:Static p:Resources.SearchWindow_FindNext}" Width="150" Margin="0,0,0,4" />
-                                <Button Content="{x:Static p:Resources.SearchWindow_Close}" Width="150"></Button>
-                            </StackPanel>                                        
-                        </StackPanel>
-                    </GroupBox>
-                </DataTemplate>
-                
-                <!-- Replace template -->
-                
-                <DataTemplate DataType="{x:Type vm:ReplaceOperationViewModel}">
-                    <GroupBox Header="{x:Static p:Resources.SearchWindow_Replace}" Padding="4">
-                        <StackPanel Orientation="Horizontal">
+                        </GroupBox>
+                        <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchMode}" Padding="4">
                             <StackPanel Orientation="Vertical">
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="{x:Static p:Resources.SearchWindow_SearchedText}" Margin="0,0,10,0"/>
-                                    <TextBox Width="250" />
-                                </StackPanel>
-                                <StackPanel Orientation="Horizontal">
-                                    <Label Content="{x:Static p:Resources.SearchWindow_ReplaceWith}" Margin="0,0,10,0"/>
-                                    <TextBox Width="250" />
-                                </StackPanel>
-                                <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchOptions}" Padding="4">
-                                    <StackPanel Orientation="Vertical">
-                                        <CheckBox Content="{x:Static p:Resources.SearchWindow_CaseSensitive}" />
-                                        <CheckBox Content="{x:Static p:Resources.SearchWindow_OnlyFullWords}" />
-                                    </StackPanel>
-                                </GroupBox>
-                                <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchMode}" Padding="4">
-                                    <StackPanel Orientation="Vertical">
-                                        <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeNormal}"/>
-                                        <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeExtended}"/>
-                                        <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeRegex}" />
-                                    </StackPanel>
-                                </GroupBox>
+                                <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Resources.SearchWindow_SearchModeNormal}" 
+                                             IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Normal}}"/>
+                                <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Resources.SearchWindow_SearchModeExtended}" 
+                                             IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Extended}}"/>
+                                <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeRegex}" 
+                                             IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.RegularExpressions}}"/>
                             </StackPanel>
-                            <StackPanel Orientation="Vertical" Margin="10,0,0,0">
-                                <Button Content="{x:Static p:Resources.SearchWindow_FindNext}" Width="150" Margin="0,0,0,4" />
-                                <Button Content="{x:Static p:Resources.SearchWindow_Close}" Width="150"></Button>
+                        </GroupBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                        <Button Content="{x:Static p:Resources.SearchWindow_FindNext}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindNextCommand}" />
+                        <Button Content="{x:Static p:Resources.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}"></Button>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </TabItem>
+        
+        <TabItem x:Name="tReplace" Header="{x:Static p:Resources.SearchWindow_ReplaceTab}">
+            <GroupBox Header="{x:Static p:Resources.SearchWindow_ReplaceTab}" Padding="4">
+                <StackPanel Orientation="Horizontal">
+                    <StackPanel Orientation="Vertical">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="100" />
+                                <ColumnDefinition Width="250" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label Margin="{StaticResource DialogItemsVMargin}" Grid.Row="0" Grid.Column="0" Content="{x:Static p:Resources.SearchWindow_SearchedText}"/>
+                            <TextBox Margin="{StaticResource DialogItemsVMargin}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
+                                     Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
+                            <Label Grid.Row="1" Grid.Column="0" Content="{x:Static p:Resources.SearchWindow_ReplaceWith}" />
+                            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" 
+                                     Text="{Binding Replace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        </Grid>
+
+                        <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchOptions}" Padding="4">
+                            <StackPanel Orientation="Vertical">
+                                <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Resources.SearchWindow_CaseSensitive}" 
+                                          IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <CheckBox Content="{x:Static p:Resources.SearchWindow_OnlyFullWords}" 
+                                          IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                             </StackPanel>
-                        </StackPanel>
-                    </GroupBox>
-                </DataTemplate>
-            </ResourceDictionary>
-        </TabControl.Resources>
+                        </GroupBox>
+                        <GroupBox Header="{x:Static p:Resources.SearchWindow_SearchMode}" Padding="4">
+                            <StackPanel Orientation="Vertical">
+                                <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Resources.SearchWindow_SearchModeNormal}" 
+                                             IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Normal}}"/>
+                                <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Resources.SearchWindow_SearchModeExtended}" 
+                                             IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Extended}}"/>
+                                <RadioButton Content="{x:Static p:Resources.SearchWindow_SearchModeRegex}" 
+                                             IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.RegularExpressions}}"/>
+                            </StackPanel>
+                        </GroupBox>
+                    </StackPanel>
+                    <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                        <Button Content="{x:Static p:Resources.SearchWindow_FindNext}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindNextCommand}" />
+                        <Button Content="{x:Static p:Resources.SearchWindow_Replace}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding ReplaceCommand}"/>
+                        <Button Content="{x:Static p:Resources.SearchWindow_ReplaceAll}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding ReplaceAllCommand}"/>
+                        <Button Content="{x:Static p:Resources.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}"></Button>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </TabItem>
     </TabControl>
 </Window>

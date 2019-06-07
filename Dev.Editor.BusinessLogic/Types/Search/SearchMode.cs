@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BusinessLogic.ViewModels.Search.SearchOperations
+namespace Dev.Editor.BusinessLogic.Types.Search
 {
-    public interface ISearchOperationHost
+    public enum SearchMode
     {
+        Normal,
+        Extended,
+        RegularExpressions
     }
 }

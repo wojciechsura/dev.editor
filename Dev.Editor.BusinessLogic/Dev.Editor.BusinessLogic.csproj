@@ -58,6 +58,9 @@
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
     <Compile Include="Models\Dialogs\SaveDialogResult.cs" />
     <Compile Include="Models\Documents\DocumentState.cs" />
+    <Compile Include="Models\Search\BaseSearchModel.cs" />
+    <Compile Include="Models\Search\ReplaceModel.cs" />
+    <Compile Include="Models\Search\SearchModel.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -68,6 +71,7 @@
     <Compile Include="Services\Dialogs\IDialogService.cs" />
     <Compile Include="Services\Messaging\IMessagingService.cs" />
     <Compile Include="Services\Messaging\MessagingService.cs" />
+    <Compile Include="Types\Search\SearchMode.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Document\DocumentViewModel.cs" />
     <Compile Include="ViewModels\Document\IEditorAccess.cs" />
@@ -76,10 +80,6 @@
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Search\ISearchHost.cs" />
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />
-    <Compile Include="ViewModels\Search\SearchOperations\BaseSearchOperationViewModel.cs" />
-    <Compile Include="ViewModels\Search\SearchOperations\ISearchOperationHost.cs" />
-    <Compile Include="ViewModels\Search\SearchOperations\ReplaceOperationViewModel.cs" />
-    <Compile Include="ViewModels\Search\SearchOperations\SearchOperationViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -97,10 +97,9 @@
     <Compile Include="ViewModels\Main\MainWindowViewModel.Edit.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.File.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Search.cs" />
+    <Compile Include="ViewModels\Main\MainWindowViewModel.SearchHost.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Types\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.pl-PL.resx" />
     <EmbeddedResource Include="Properties\Resources.resx">

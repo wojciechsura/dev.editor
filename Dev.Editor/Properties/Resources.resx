@@ -199,7 +199,7 @@
     <value>Search mode</value>
   </data>
   <data name="SearchWindow.SearchModeExtended" xml:space="preserve">
-    <value>Extended</value>
+    <value>Extended (\n, \t etc.)</value>
   </data>
   <data name="SearchWindow.SearchModeNormal" xml:space="preserve">
     <value>Normal</value>
@@ -209,5 +209,17 @@
   </data>
   <data name="SearchWindow.SearchOptions" xml:space="preserve">
     <value>Search options</value>
+  </data>
+  <data name="SearchWindow.Title" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchWindow.ReplaceAll" xml:space="preserve">
+    <value>Replace all</value>
+  </data>
+  <data name="SearchWindow.SearchTab" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchWindow.ReplaceTab" xml:space="preserve">
+    <value>Replace</value>
   </data>
 </root>

@@ -177,4 +177,49 @@
   <data name="SearchWindow.SearchedText" xml:space="preserve">
     <value>Szukany tekst</value>
   </data>
+  <data name="SearchWindow.CaseSensitive" xml:space="preserve">
+    <value>Uwzględniaj wielkość liter</value>
+  </data>
+  <data name="SearchWindow.Close" xml:space="preserve">
+    <value>Zamknij</value>
+  </data>
+  <data name="SearchWindow.FindNext" xml:space="preserve">
+    <value>Znajdź następny</value>
+  </data>
+  <data name="SearchWindow.OnlyFullWords" xml:space="preserve">
+    <value>Tylko pełne wyrażenia</value>
+  </data>
+  <data name="SearchWindow.Replace" xml:space="preserve">
+    <value>Zamień</value>
+  </data>
+  <data name="SearchWindow.ReplaceWith" xml:space="preserve">
+    <value>Zamień na</value>
+  </data>
+  <data name="SearchWindow.SearchMode" xml:space="preserve">
+    <value>Tryb szukania</value>
+  </data>
+  <data name="SearchWindow.SearchModeExtended" xml:space="preserve">
+    <value>Rozszerzony (\n, \t itp.)</value>
+  </data>
+  <data name="SearchWindow.SearchModeNormal" xml:space="preserve">
+    <value>Normalny</value>
+  </data>
+  <data name="SearchWindow.SearchModeRegex" xml:space="preserve">
+    <value>Wyrażenia regularne</value>
+  </data>
+  <data name="SearchWindow.SearchOptions" xml:space="preserve">
+    <value>Opcje szukania</value>
+  </data>
+  <data name="SearchWindow.Title" xml:space="preserve">
+    <value>Szukaj</value>
+  </data>
+  <data name="SearchWindow.ReplaceAll" xml:space="preserve">
+    <value>Zamień wszystkie</value>
+  </data>
+  <data name="SearchWindow.SearchTab" xml:space="preserve">
+    <value>Szukaj</value>
+  </data>
+  <data name="SearchWindow.ReplaceTab" xml:space="preserve">
+    <value>Replace all</value>
+  </data>
 </root>
