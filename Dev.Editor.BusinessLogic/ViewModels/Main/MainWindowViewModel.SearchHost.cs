@@ -12,7 +12,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
     public partial class MainWindowViewModel : ISearchHost
     {
-        public void FindNext(SearchModel searchModel)
+        private void InternalFindNext(SearchModel searchModel)
         {
             (int selStart, int selLength) = activeDocument.GetSelection();
 
@@ -34,6 +34,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 messagingService.Inform(Properties.Resources.Message_NoMorePatternsFound);
         }
 
+        public void FindNext(SearchModel searchModel)
+        {
+            activeDocument.LastSearch = searchModel;
+            InternalFindNext(searchModel);
+        }
+
         public void Replace(ReplaceModel replaceModel)
         {            
             string input = activeDocument.GetSelectedText();
@@ -51,8 +57,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public void ReplaceAll(ReplaceModel replaceModel)
         {
-            int offset = 0;
+            activeDocument.LastSearch = replaceModel;
 
+            int offset = 0;
             activeDocument.RunAsSingleHistoryEntry(() =>
             {
                 foreach (Match match in replaceModel.Regex.Matches(activeDocument.Document.Text))

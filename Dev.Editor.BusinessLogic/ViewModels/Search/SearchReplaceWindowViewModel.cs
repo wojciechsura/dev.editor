@@ -56,7 +56,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 var model = new ReplaceModel(regex, replace, searchBackwards);
                 searchHost.Replace(model);
             }
-            catch (Exception e)
+            catch
             {
                 messagingService.ShowError(Properties.Resources.Message_InvalidSearchPattern);
                 return;
@@ -72,7 +72,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 var model = new SearchModel(regex, searchBackwards);
                 searchHost.FindNext(model);
             }
-            catch (Exception e)
+            catch
             {
                 messagingService.ShowError(Properties.Resources.Message_InvalidSearchPattern);
                 return;

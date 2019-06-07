@@ -220,9 +220,12 @@
     <value>Szukaj</value>
   </data>
   <data name="SearchWindow.ReplaceTab" xml:space="preserve">
-    <value>Replace all</value>
+    <value>Zamień</value>
   </data>
   <data name="SearchWindow.SearchBackwards" xml:space="preserve">
     <value>Szukaj wstecz</value>
+  </data>
+  <data name="Ribbon.Search.FindNext" xml:space="preserve">
+    <value>Znajdź następny</value>
   </data>
 </root>

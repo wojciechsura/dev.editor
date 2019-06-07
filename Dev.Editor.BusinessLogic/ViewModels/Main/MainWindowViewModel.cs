@@ -35,6 +35,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> canUndoCondition;
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> canRedoCondition;
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> selectionAvailableCondition;
+        private readonly MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, DocumentViewModel> searchPerformedCondition;
 
         // Private methods ----------------------------------------------------
 
@@ -75,6 +76,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             canUndoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanUndo, false);
             canRedoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanRedo, false);
             selectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => ActiveDocument, doc => doc.SelectionAvailable, false);
+            searchPerformedCondition = new MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => ActiveDocument, doc => doc.LastSearch);
 
             NewCommand = new AppCommand(obj => DoNew());
             OpenCommand = new AppCommand(obj => DoOpen());
@@ -89,6 +91,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             SearchCommand = new AppCommand(obj => DoSearch(), documentExistsCondition);
             ReplaceCommand = new AppCommand(obj => DoReplace(), documentExistsCondition);
+            FindNextCommand = new AppCommand(obj => DoFindNext(), documentExistsCondition & searchPerformedCondition);
 
             // TODO (if not opened with parameters)
 
@@ -113,14 +116,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 {
                     if (!document.FilenameVirtual)
                     {
-                        if (DoSaveDocument(document))
+                        if (InternalSaveDocument(document))
                         {
                             return true;
                         }
                     }
                     else
                     {
-                        if (DoSaveDocumentAs(document))
+                        if (InternalSaveDocumentAs(document))
                         {
                             return true;
                         }

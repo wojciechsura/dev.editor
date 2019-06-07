@@ -197,12 +197,16 @@
     <Resource Include="Resources\Images\Undo32.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Resources\Images\Search16.png" />
-    <Resource Include="Resources\Images\Search32.png" />
+    <Resource Include="Resources\Images\FindNext16.png" />
+    <Resource Include="Resources\Images\FindNext32.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\Replace16.png" />
     <Resource Include="Resources\Images\Replace32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Search16.png" />
+    <Resource Include="Resources\Images\Search32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

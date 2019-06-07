@@ -225,4 +225,7 @@
   <data name="SearchWindow.SearchBackwards" xml:space="preserve">
     <value>Search backwards</value>
   </data>
+  <data name="Ribbon.Search.FindNext" xml:space="preserve">
+    <value>Find next</value>
+  </data>
 </root>

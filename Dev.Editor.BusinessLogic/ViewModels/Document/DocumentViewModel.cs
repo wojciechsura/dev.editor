@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dev.Editor.BusinessLogic.Models.Documents;
+using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.Common.Conditions;
 using ICSharpCode.AvalonEdit;
@@ -23,9 +24,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private bool canUndo;
         private bool canRedo;
         private bool selectionAvailable;
+
         private DocumentState storedState;
 
         private IEditorAccess editorAccess;
+        private SearchModel lastSearch;
 
         // Private methods ----------------------------------------------------
 
@@ -68,6 +71,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             storedState = null;
             changed = false;
             filenameVirtual = true;
+
+            lastSearch = null;
         }
 
         public void RunAsSingleHistoryEntry(Action action)
@@ -200,6 +205,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         {
             get => editorAccess;
             set => editorAccess = value;
+        }
+        public SearchModel LastSearch
+        {
+            get => lastSearch;
+            set => Set(ref lastSearch, () => LastSearch, value);
         }
     }
 }

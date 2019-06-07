@@ -24,5 +24,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             var searchViewModel = dialogService.RequestSearchReplace(this);
             searchViewModel.ShowReplace();
         }
+
+        private void DoFindNext()
+        {
+            InternalFindNext(activeDocument.LastSearch);
+        }
     }
 }

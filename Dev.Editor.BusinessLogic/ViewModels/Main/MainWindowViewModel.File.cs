@@ -18,7 +18,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return $"{Resources.BlankDocumentName}{i}.txt";
         }
 
-        private bool InternalSaveDocument(DocumentViewModel document, string filename)
+        private bool InternalWriteDocument(DocumentViewModel document, string filename)
         {
             try
             {
@@ -40,18 +40,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
-		private bool DoSaveDocument(DocumentViewModel document)
+		private bool InternalSaveDocument(DocumentViewModel document)
         {
             if (document.FilenameVirtual)
                 throw new InvalidOperationException("Cannot save document with virtual filename!");
 
-            return InternalSaveDocument(document, document.FileName);
+            return InternalWriteDocument(document, document.FileName);
         }
 
-		private bool DoSaveDocumentAs(DocumentViewModel document)
+		private bool InternalSaveDocumentAs(DocumentViewModel document)
         {
             var fileDialogResult = dialogService.SaveDialog();
-            if (fileDialogResult.Result && InternalSaveDocument(activeDocument, fileDialogResult.FileName))
+            if (fileDialogResult.Result && InternalWriteDocument(activeDocument, fileDialogResult.FileName))
             {
                 activeDocument.FileName = fileDialogResult.FileName;
                 return true;
@@ -89,6 +89,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                         {
                             newDocument.Document.Text = reader.ReadToEnd();
                             newDocument.Document.FileName = dialogResult.FileName;
+                            newDocument.Document.UndoStack.ClearAll();
                             newDocument.Document.UndoStack.MarkAsOriginalFile();
                             newDocument.FilenameVirtual = false;
                         }
@@ -110,12 +111,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             if (activeDocument.FilenameVirtual)
                 DoSaveAs();
             else
-                DoSaveDocument(activeDocument);
+                InternalSaveDocument(activeDocument);
         }
 
         private void DoSaveAs()
         {
-            DoSaveDocumentAs(activeDocument);
+            InternalSaveDocumentAs(activeDocument);
         }
     }
 }
