@@ -3,6 +3,7 @@ using Dev.Editor.BusinessLogic.Services.Messaging;
 using Dev.Editor.BusinessLogic.Types.Search;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.Common.Commands;
+using Dev.Editor.Common.Conditions;
 using Dev.Editor.Resources;
 using System;
 using System.Collections.Generic;
@@ -21,12 +22,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         private readonly ISearchHost searchHost;
         private readonly ISearchReplaceWindowAccess access;
         private readonly IMessagingService messagingService;
+
         private string search;
         private string replace;
         private bool caseSensitive;
         private bool wholeWordsOnly;
         private bool searchBackwards;
         private SearchMode searchMode;
+
+        private bool selectionAvailable;
+        private bool replaceAllInSelection;
 
         // Private methods ----------------------------------------------------
 
@@ -38,7 +43,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             {
                 Regex regex = GetRegEx(search);
 
-                var model = new ReplaceModel(regex, replace, searchBackwards);
+                var model = new ReplaceAllModel(regex, replace, searchBackwards, replaceAllInSelection);
                 searchHost.ReplaceAll(model);
             }
             catch
@@ -113,9 +118,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             }
         }
 
+        private void HandleSelectionAvailableChanged(object sender, ValueChangedEventArgs e)
+        {
+            SelectionAvailable = searchHost.SelectionAvailableCondition.GetValue();
+            if (!SelectionAvailable)
+                ReplaceAllInSelection = false;
+        }
+
         // Public methods -----------------------------------------------------
 
-        public SearchReplaceWindowViewModel(ISearchHost searchHost, ISearchReplaceWindowAccess access, IMessagingService messagingService)
+        public SearchReplaceWindowViewModel(ISearchHost searchHost, 
+            ISearchReplaceWindowAccess access, 
+            IMessagingService messagingService)
         {
             this.searchHost = searchHost;
             this.access = access;
@@ -126,6 +140,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             caseSensitive = false;
             wholeWordsOnly = false;
             searchMode = SearchMode.Normal;
+
+            selectionAvailable = searchHost.SelectionAvailableCondition.GetValue();
+            searchHost.SelectionAvailableCondition.ValueChanged += HandleSelectionAvailableChanged;
 
             FindNextCommand = new AppCommand(obj => DoFindNext(), searchHost.CanSearchCondition);
             ReplaceCommand = new AppCommand(obj => DoReplace(), searchHost.CanSearchCondition);
@@ -141,6 +158,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         public void ShowReplace()
         {
+            replaceAllInSelection = searchHost.SelectionAvailableCondition.GetValue();
+
             access.ChooseReplaceTab();
             access.ShowAndFocus();
         }
@@ -175,6 +194,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         {
             get => searchBackwards;
             set => Set(ref searchBackwards, () => SearchBackwards, value);
+        }
+
+        public bool SelectionAvailable
+        {
+            get => selectionAvailable;
+            set => Set(ref selectionAvailable, () => SelectionAvailable, value);
+        }
+
+        public bool ReplaceAllInSelection
+        {
+            get => replaceAllInSelection;
+            set => Set(ref replaceAllInSelection, () => ReplaceAllInSelection, value);
         }
 
         public SearchMode SearchMode

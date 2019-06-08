@@ -10,10 +10,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 {
     public interface ISearchHost
     {
-        void ReplaceAll(ReplaceModel replaceModel);
+        void ReplaceAll(ReplaceAllModel replaceModel);
         void Replace(ReplaceModel replaceModel);
         void FindNext(SearchModel searchModel);
 
         BaseCondition CanSearchCondition { get; }
+        BaseCondition SelectionAvailableCondition { get; }
     }
 }

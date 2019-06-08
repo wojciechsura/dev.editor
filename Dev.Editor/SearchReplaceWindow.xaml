@@ -107,7 +107,8 @@
                         <Button Content="{x:Static p:Strings.SearchWindow_Replace}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding ReplaceCommand}"/>
                         <Separator Margin="{StaticResource DialogItemsVMargin}" />
                         <Button Content="{x:Static p:Strings.SearchWindow_ReplaceAll}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding ReplaceAllCommand}"/>
-                        <CheckBox Content="W zaznaczeniu" Margin="{StaticResource DialogItemsVMargin}" />
+                        <CheckBox Content="{x:Static p:Strings.SearchWindow_InSelection}" Margin="{StaticResource DialogItemsVMargin}" 
+                                  IsEnabled="{Binding SelectionAvailable}" IsChecked="{Binding ReplaceAllInSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <Separator Margin="{StaticResource DialogItemsVMargin}" />
                         <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}"></Button>
                     </StackPanel>

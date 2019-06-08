@@ -255,4 +255,7 @@
   <data name="Message.NoMorePatternsFound" xml:space="preserve">
     <value>Nie znaleziono wystąpień wprowadzonego ciągu.</value>
   </data>
+  <data name="SearchWindow.InSelection" xml:space="preserve">
+    <value>W zaznaczeniu</value>
+  </data>
 </root>

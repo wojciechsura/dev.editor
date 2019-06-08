@@ -12,6 +12,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
     public partial class MainWindowViewModel : ISearchHost
     {
+        BaseCondition ISearchHost.CanSearchCondition => documentExistsCondition;
+
+        BaseCondition ISearchHost.SelectionAvailableCondition => selectionAvailableCondition;
+
         private void InternalFindNext(SearchModel searchModel)
         {
             (int selStart, int selLength) = activeDocument.GetSelection();
@@ -55,21 +59,38 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             FindNext(replaceModel);
         }
 
-        public void ReplaceAll(ReplaceModel replaceModel)
+        public void ReplaceAll(ReplaceAllModel replaceModel)
         {
             activeDocument.LastSearch = replaceModel;
 
-            int offset = 0;
-            activeDocument.RunAsSingleHistoryEntry(() =>
+            if (!replaceModel.InSelection)
             {
-                foreach (Match match in replaceModel.Regex.Matches(activeDocument.Document.Text))
+                int offset = 0;
+                activeDocument.RunAsSingleHistoryEntry(() =>
                 {
-                    activeDocument.Document.Replace(offset + match.Index, match.Length, replaceModel.Replace);
-                    offset += replaceModel.Replace.Length - match.Length;
-                }
-            });
-        }
+                    foreach (Match match in replaceModel.Regex.Matches(activeDocument.Document.Text))
+                    {
+                        activeDocument.Document.Replace(offset + match.Index, match.Length, replaceModel.Replace);
+                        offset += replaceModel.Replace.Length - match.Length;
+                    }
+                });
+            }
+            else
+            {
+                (int selStart, int selLen) = activeDocument.GetSelection();
+                string selection = activeDocument.GetSelectedText();
 
-        public BaseCondition CanSearchCondition => documentExistsCondition;
+                int offset = 0;
+
+                activeDocument.RunAsSingleHistoryEntry(() =>
+                {
+                    foreach (Match match in replaceModel.Regex.Matches(selection))
+                    {
+                        activeDocument.Document.Replace(offset + selStart + match.Index, match.Length, replaceModel.Replace);
+                        offset += replaceModel.Replace.Length - match.Length;
+                    }
+                });
+            }
+        }
     }
 }

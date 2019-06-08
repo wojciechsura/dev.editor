@@ -340,6 +340,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu In selection.
+        /// </summary>
+        public static string SearchWindow_InSelection {
+            get {
+                return ResourceManager.GetString("SearchWindow.InSelection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Only full words.
         /// </summary>
         public static string SearchWindow_OnlyFullWords {

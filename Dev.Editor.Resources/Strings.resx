@@ -255,4 +255,7 @@
   <data name="Message.NoMorePatternsFound" xml:space="preserve">
     <value>Cannot find any occurrences of entered text.</value>
   </data>
+  <data name="SearchWindow.InSelection" xml:space="preserve">
+    <value>In selection</value>
+  </data>
 </root>

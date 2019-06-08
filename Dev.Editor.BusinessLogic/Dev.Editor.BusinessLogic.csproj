@@ -58,6 +58,7 @@
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
     <Compile Include="Models\Dialogs\SaveDialogResult.cs" />
     <Compile Include="Models\Documents\DocumentState.cs" />
+    <Compile Include="Models\Search\ReplaceAllModel.cs" />
     <Compile Include="Models\Search\ReplaceModel.cs" />
     <Compile Include="Models\Search\SearchModel.cs" />
     <Compile Include="Services\Commands\AppCommandRepositoryService.cs" />
