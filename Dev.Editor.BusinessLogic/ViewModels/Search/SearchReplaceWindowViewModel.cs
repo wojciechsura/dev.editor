@@ -4,6 +4,7 @@ using Dev.Editor.BusinessLogic.Types.Search;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.Common.Commands;
 using Dev.Editor.Common.Conditions;
+using Dev.Editor.Common.Tools;
 using Dev.Editor.Resources;
 using System;
 using System.Collections.Generic;
@@ -100,7 +101,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 case SearchMode.Extended:
                     {
                         // TODO fix
-                        string pattern = textToFind;
+                        string pattern = Regex.Escape(textToFind.Unescape());
+
                         if (wholeWordsOnly)
                             pattern = "\\b" + pattern + "\\b";
                         return new Regex(pattern, options);
