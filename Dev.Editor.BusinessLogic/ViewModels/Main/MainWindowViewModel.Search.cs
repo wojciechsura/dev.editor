@@ -1,4 +1,4 @@
-﻿using Dev.Editor.BusinessLogic.Properties;
+﻿using Dev.Editor.Resources;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
 using System;
 using System.Collections.Generic;

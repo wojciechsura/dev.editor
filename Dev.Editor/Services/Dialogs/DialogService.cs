@@ -1,5 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Dialogs;
-using Dev.Editor.BusinessLogic.Properties;
+using Dev.Editor.Resources;
 using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
 using Microsoft.Win32;
@@ -25,12 +25,12 @@ namespace Dev.Editor.Services.Dialogs
             if (filter != null)
                 dialog.Filter = filter;
             else
-                dialog.Filter = Properties.Resources.DefaultFilter;
+                dialog.Filter = Strings.DefaultFilter;
 
             if (title != null)
                 dialog.Title = title;
             else
-                dialog.Title = Properties.Resources.DefaultDialogTitle;
+                dialog.Title = Strings.DefaultDialogTitle;
 
             if (dialog.ShowDialog() == true)
                 return new OpenDialogResult(true, dialog.FileName);
@@ -55,12 +55,12 @@ namespace Dev.Editor.Services.Dialogs
             if (filter != null)
                 dialog.Filter = filter;
             else
-                dialog.Filter = Properties.Resources.DefaultFilter;
+                dialog.Filter = Strings.DefaultFilter;
 
             if (title != null)
                 dialog.Title = title;
             else
-                dialog.Title = Properties.Resources.DefaultDialogTitle;
+                dialog.Title = Strings.DefaultDialogTitle;
 
             if (dialog.ShowDialog() == true)
                 return new SaveDialogResult(true, dialog.FileName);

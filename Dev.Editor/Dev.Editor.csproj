@@ -93,11 +93,6 @@
     </Compile>
     <Compile Include="Converters\RadioToEnumConverter.cs" />
     <Compile Include="Dependencies\Configuration.cs" />
-    <Compile Include="Properties\Resources.pl-PL.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.pl-PL.resx</DependentUpon>
-    </Compile>
     <Compile Include="SearchReplaceWindow.xaml.cs">
       <DependentUpon>SearchReplaceWindow.xaml</DependentUpon>
     </Compile>
@@ -127,24 +122,11 @@
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.pl-PL.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.pl-PL.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -165,6 +147,10 @@
     <ProjectReference Include="..\Dev.Editor.Dependencies\Dev.Editor.Dependencies.csproj">
       <Project>{d7a60cdd-0b9b-4655-a67e-403da8b5b6a9}</Project>
       <Name>Dev.Editor.Dependencies</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Dev.Editor.Resources\Dev.Editor.Resources.csproj">
+      <Project>{6f537829-9bf6-428c-95fd-00170e8acc60}</Project>
+      <Name>Dev.Editor.Resources</Name>
     </ProjectReference>
     <ProjectReference Include="..\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
       <Project>{7df2e8a9-9eb7-442c-91b4-073dac5eb54c}</Project>

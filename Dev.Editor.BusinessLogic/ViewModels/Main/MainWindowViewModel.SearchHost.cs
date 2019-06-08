@@ -31,7 +31,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             if (match.Success)
                 activeDocument.SetSelection(match.Index, match.Length, true);
             else
-                messagingService.Inform(Properties.Resources.Message_NoMorePatternsFound);
+                messagingService.Inform(Resources.Strings.Message_NoMorePatternsFound);
         }
 
         public void FindNext(SearchModel searchModel)

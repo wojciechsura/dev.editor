@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Dev.Editor.Properties {
+namespace Dev.Editor.Resources {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Dev.Editor.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    public class Strings {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal Strings() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Dev.Editor.Properties {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Dev.Editor.Properties.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Dev.Editor.Resources.Strings", typeof(Strings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -70,6 +70,15 @@ namespace Dev.Editor.Properties {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Document.
+        /// </summary>
+        public static string BlankDocumentName {
+            get {
+                return ResourceManager.GetString("BlankDocumentName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Dev.Editor.
         /// </summary>
         public static string DefaultDialogTitle {
@@ -84,6 +93,60 @@ namespace Dev.Editor.Properties {
         public static string DefaultFilter {
             get {
                 return ResourceManager.GetString("DefaultFilter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Dev.Editor.
+        /// </summary>
+        public static string DefaultMessageboxTitle {
+            get {
+                return ResourceManager.GetString("DefaultMessageboxTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cannot open file {0}. Error: {1}.
+        /// </summary>
+        public static string Message_CannotOpenFile {
+            get {
+                return ResourceManager.GetString("Message.CannotOpenFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cannot save file {0}. Error: {1}.
+        /// </summary>
+        public static string Message_CannotSaveFile {
+            get {
+                return ResourceManager.GetString("Message.CannotSaveFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Do you want to save document {0} before closing?.
+        /// </summary>
+        public static string Message_FileNotSaved {
+            get {
+                return ResourceManager.GetString("Message.FileNotSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Invalid search pattern!.
+        /// </summary>
+        public static string Message_InvalidSearchPattern {
+            get {
+                return ResourceManager.GetString("Message.InvalidSearchPattern", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cannot find any occurrences of entered text..
+        /// </summary>
+        public static string Message_NoMorePatternsFound {
+            get {
+                return ResourceManager.GetString("Message.NoMorePatternsFound", resourceCulture);
             }
         }
         
@@ -228,6 +291,24 @@ namespace Dev.Editor.Properties {
         public static string Ribbon_Tab_Home {
             get {
                 return ResourceManager.GetString("Ribbon.Tab.Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Replace.
+        /// </summary>
+        public static string Search_ReplaceTitle {
+            get {
+                return ResourceManager.GetString("Search.ReplaceTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Search.
+        /// </summary>
+        public static string Search_SearchTitle {
+            get {
+                return ResourceManager.GetString("Search.SearchTitle", resourceCulture);
             }
         }
         

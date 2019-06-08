@@ -5,7 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:p="clr-namespace:Dev.Editor.Properties"
+    xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
     xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
     xmlns:dc="clr-namespace:Xceed.Wpf.AvalonDock.Controls;assembly=Xceed.Wpf.AvalonDock"
     xmlns:local="clr-namespace:Dev.Editor"
@@ -54,30 +54,30 @@
                 </f:ApplicationMenu>
             </f:Ribbon.Menu>
 
-            <f:RibbonTabItem Header="{x:Static p:Resources.Ribbon_Tab_Home}"
+            <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_Home}"
                              ReduceOrder="grHomeEdit, grHomeFile">
                 
                 <!-- File -->
                 
-                <f:RibbonGroupBox x:Name="grHomeFile" Header="{x:Static p:Resources.Ribbon_Group_File}">
-                    <f:Button Header="{x:Static p:Resources.Ribbon_File_Open}" Command="{Binding OpenCommand}" SizeDefinition="Large" 
+                <f:RibbonGroupBox x:Name="grHomeFile" Header="{x:Static p:Strings.Ribbon_Group_File}">
+                    <f:Button Header="{x:Static p:Strings.Ribbon_File_Open}" Command="{Binding OpenCommand}" SizeDefinition="Large" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open16.png"/>
-                    <f:Button Header="{x:Static p:Resources.Ribbon_File_New}" Command="{Binding NewCommand}" SizeDefinition="Middle, Small" 
+                    <f:Button Header="{x:Static p:Strings.Ribbon_File_New}" Command="{Binding NewCommand}" SizeDefinition="Middle, Small" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/New32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/New16.png"/>
-                    <f:Button Header="{x:Static p:Resources.Ribbon_File_Save}" Command="{Binding SaveCommand}" SizeDefinition="Middle, Small"
+                    <f:Button Header="{x:Static p:Strings.Ribbon_File_Save}" Command="{Binding SaveCommand}" SizeDefinition="Middle, Small"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save16.png"/>
-                    <f:Button Header="{x:Static p:Resources.Ribbon_File_SaveAs}" Command="{Binding SaveAsCommand}" SizeDefinition="Middle, Small"
+                    <f:Button Header="{x:Static p:Strings.Ribbon_File_SaveAs}" Command="{Binding SaveAsCommand}" SizeDefinition="Middle, Small"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save16.png"/>
                 </f:RibbonGroupBox>
                 
                 <!-- Edit -->
                 
-                <f:RibbonGroupBox x:Name="grHomeEdit" Header="{x:Static p:Resources.Ribbon_Group_Edit}">
-                    <f:Button Header="{x:Static p:Resources.Ribbon_Edit_Paste}" Command="{Binding PasteCommand}" SizeDefinition="Large" 
+                <f:RibbonGroupBox x:Name="grHomeEdit" Header="{x:Static p:Strings.Ribbon_Group_Edit}">
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Edit_Paste}" Command="{Binding PasteCommand}" SizeDefinition="Large" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Paste32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Paste16.png"/>
 
@@ -110,16 +110,16 @@
 
                         </f:RibbonToolBar.LayoutDefinitions>
 
-                        <f:Button x:Name="bEditUndo" Header="{x:Static p:Resources.Ribbon_Edit_Undo}" Command="{Binding UndoCommand}" 
+                        <f:Button x:Name="bEditUndo" Header="{x:Static p:Strings.Ribbon_Edit_Undo}" Command="{Binding UndoCommand}" 
                                   LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Undo32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Undo16.png"/>
-                        <f:Button x:Name="bEditRedo" Header="{x:Static p:Resources.Ribbon_Edit_Redo}" Command="{Binding RedoCommand}" 
+                        <f:Button x:Name="bEditRedo" Header="{x:Static p:Strings.Ribbon_Edit_Redo}" Command="{Binding RedoCommand}" 
                                   LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Redo32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Redo16.png"/>
-                        <f:Button x:Name="bEditCopy" Header="{x:Static p:Resources.Ribbon_Edit_Copy}" Command="{Binding CopyCommand}" 
+                        <f:Button x:Name="bEditCopy" Header="{x:Static p:Strings.Ribbon_Edit_Copy}" Command="{Binding CopyCommand}" 
                                   LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Copy32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Copy16.png"/>
-                        <f:Button x:Name="bEditCut" Header="{x:Static p:Resources.Ribbon_Edit_Cut}" Command="{Binding CutCommand}" 
+                        <f:Button x:Name="bEditCut" Header="{x:Static p:Strings.Ribbon_Edit_Cut}" Command="{Binding CutCommand}" 
                                   LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Cut32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Cut16.png"/>
 
@@ -129,14 +129,14 @@
                 
                 <!-- Search -->
 
-                <f:RibbonGroupBox x:Name="grSearch" Header="{x:Static p:Resources.Ribbon_Group_Search}">
-                    <f:Button Header="{x:Static p:Resources.Ribbon_Search_Search}" Command="{Binding SearchCommand}" SizeDefinition="Large"
+                <f:RibbonGroupBox x:Name="grSearch" Header="{x:Static p:Strings.Ribbon_Group_Search}">
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Search_Search}" Command="{Binding SearchCommand}" SizeDefinition="Large"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search16.png"/>
-                    <f:Button Header="{x:Static p:Resources.Ribbon_Search_Replace}" Command="{Binding ReplaceCommand}" SizeDefinition="Middle"
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Search_Replace}" Command="{Binding ReplaceCommand}" SizeDefinition="Middle"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace16.png"/>
-                    <f:Button Header="{x:Static p:Resources.Ribbon_Search_FindNext}" Command="{Binding FindNextCommand}" SizeDefinition="Middle"
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Search_FindNext}" Command="{Binding FindNextCommand}" SizeDefinition="Middle"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/FindNext32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/FindNext16.png"/>
                 </f:RibbonGroupBox>

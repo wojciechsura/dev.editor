@@ -1,4 +1,4 @@
-﻿using Dev.Editor.BusinessLogic.Properties;
+﻿using Dev.Editor.Resources;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
 using System;
 using System.Collections.Generic;
@@ -15,7 +15,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private static string GenerateBlankFileName(int i)
         {
-            return $"{Resources.BlankDocumentName}{i}.txt";
+            return $"{Strings.BlankDocumentName}{i}.txt";
         }
 
         private bool InternalWriteDocument(DocumentViewModel document, string filename)
@@ -35,7 +35,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
 			catch (Exception e)
             {
-                messagingService.ShowError(String.Format(Resources.Message_CannotSaveFile, activeDocument.FileName, e.Message));
+                messagingService.ShowError(String.Format(Strings.Message_CannotSaveFile, activeDocument.FileName, e.Message));
                 return false;
             }
         }
@@ -101,7 +101,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 }
                 catch (Exception e)
                 {
-                    messagingService.ShowError(string.Format(Resources.Message_CannotOpenFile, dialogResult.FileName, e.Message));
+                    messagingService.ShowError(string.Format(Strings.Message_CannotOpenFile, dialogResult.FileName, e.Message));
                 }
             }
         }

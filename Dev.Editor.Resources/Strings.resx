@@ -117,6 +117,117 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Ribbon.Group.Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Ribbon.Group.File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Ribbon.Tab.Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Ribbon.File.New" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="Ribbon.File.Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Ribbon.File.Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Ribbon.File.SaveAs" xml:space="preserve">
+    <value>Save as</value>
+  </data>
+  <data name="Ribbon.Edit.Copy" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="Ribbon.Edit.Cut" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="Ribbon.Edit.Paste" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="Ribbon.Edit.Redo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="Ribbon.Edit.Undo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="BlankDocName" xml:space="preserve">
+    <value>Document</value>
+  </data>
+  <data name="Ribbon.Group.Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Ribbon.Search.Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Ribbon.Search.Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="DefaultDialogTitle" xml:space="preserve">
+    <value>Dev.Editor</value>
+  </data>
+  <data name="DefaultFilter" xml:space="preserve">
+    <value>All files (*.*)|*.*</value>
+  </data>
+  <data name="SearchWindow.Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchWindow.SearchedText" xml:space="preserve">
+    <value>Text to search</value>
+  </data>
+  <data name="SearchWindow.CaseSensitive" xml:space="preserve">
+    <value>Case sensitive</value>
+  </data>
+  <data name="SearchWindow.Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="SearchWindow.FindNext" xml:space="preserve">
+    <value>Find next</value>
+  </data>
+  <data name="SearchWindow.OnlyFullWords" xml:space="preserve">
+    <value>Only full words</value>
+  </data>
+  <data name="SearchWindow.Replace" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="SearchWindow.ReplaceWith" xml:space="preserve">
+    <value>Replace with</value>
+  </data>
+  <data name="SearchWindow.SearchMode" xml:space="preserve">
+    <value>Search mode</value>
+  </data>
+  <data name="SearchWindow.SearchModeExtended" xml:space="preserve">
+    <value>Extended (\n, \t etc.)</value>
+  </data>
+  <data name="SearchWindow.SearchModeNormal" xml:space="preserve">
+    <value>Normal</value>
+  </data>
+  <data name="SearchWindow.SearchModeRegex" xml:space="preserve">
+    <value>Regular expressions</value>
+  </data>
+  <data name="SearchWindow.SearchOptions" xml:space="preserve">
+    <value>Search options</value>
+  </data>
+  <data name="SearchWindow.Title" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchWindow.ReplaceAll" xml:space="preserve">
+    <value>Replace all</value>
+  </data>
+  <data name="SearchWindow.SearchTab" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="SearchWindow.ReplaceTab" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="SearchWindow.SearchBackwards" xml:space="preserve">
+    <value>Search backwards</value>
+  </data>
+  <data name="Ribbon.Search.FindNext" xml:space="preserve">
+    <value>Find next</value>
+  </data>
   <data name="BlankDocumentName" xml:space="preserve">
     <value>Document</value>
   </data>

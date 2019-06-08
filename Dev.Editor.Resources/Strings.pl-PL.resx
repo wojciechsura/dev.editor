@@ -228,4 +228,31 @@
   <data name="Ribbon.Search.FindNext" xml:space="preserve">
     <value>Znajdź następny</value>
   </data>
+  <data name="BlankDocumentName" xml:space="preserve">
+    <value>Dokument</value>
+  </data>
+  <data name="Message.CannotOpenFile" xml:space="preserve">
+    <value>Nie mogę otworzyć pliku {0}. Błąd: {1}</value>
+  </data>
+  <data name="Message.CannotSaveFile" xml:space="preserve">
+    <value>Nie mogę zapisać pliku {0}. Błąd: {1}</value>
+  </data>
+  <data name="Message.FileNotSaved" xml:space="preserve">
+    <value>Czy chcesz zapisać {0} przed zamknięciem?</value>
+  </data>
+  <data name="Search.SearchTitle" xml:space="preserve">
+    <value>Szukaj</value>
+  </data>
+  <data name="Search.ReplaceTitle" xml:space="preserve">
+    <value>Zamień</value>
+  </data>
+  <data name="DefaultMessageboxTitle" xml:space="preserve">
+    <value>Dev.Editor</value>
+  </data>
+  <data name="Message.InvalidSearchPattern" xml:space="preserve">
+    <value>Nieprawidłowy ciąg do wyszukania!</value>
+  </data>
+  <data name="Message.NoMorePatternsFound" xml:space="preserve">
+    <value>Nie znaleziono wystąpień wprowadzonego ciągu.</value>
+  </data>
 </root>

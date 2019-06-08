@@ -1,4 +1,4 @@
-﻿using Dev.Editor.BusinessLogic.Properties;
+﻿using Dev.Editor.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,7 @@ namespace Dev.Editor.BusinessLogic.Services.Messaging
         public bool AskYesNo(string message, string title = null)
         {
             if (title == null)
-                title = Resources.DefaultMessageboxTitle;
+                title = Strings.DefaultMessageboxTitle;
 
             var result = MessageBox.Show(message, title, MessageBoxButton.YesNo, MessageBoxImage.Question);
 
@@ -28,7 +28,7 @@ namespace Dev.Editor.BusinessLogic.Services.Messaging
         public bool? AskYesNoCancel(string message, string title = null)
         {
             if (title == null)
-                title = Resources.DefaultMessageboxTitle;
+                title = Strings.DefaultMessageboxTitle;
 
             var result = MessageBox.Show(message, title, MessageBoxButton.YesNoCancel, MessageBoxImage.Question);
 
@@ -45,7 +45,7 @@ namespace Dev.Editor.BusinessLogic.Services.Messaging
         public void Warn(string message, string title = null)
         {
             if (title == null)
-                title = Resources.DefaultMessageboxTitle;
+                title = Strings.DefaultMessageboxTitle;
 
             MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Warning);
         }
@@ -53,7 +53,7 @@ namespace Dev.Editor.BusinessLogic.Services.Messaging
         public void ShowError(string message, string title = null)
         {
             if (title == null)
-                title = Resources.DefaultMessageboxTitle;
+                title = Strings.DefaultMessageboxTitle;
 
             MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Error);
         }
@@ -61,7 +61,7 @@ namespace Dev.Editor.BusinessLogic.Services.Messaging
         public void Inform(string message, string title = null)
         {
             if (title == null)
-                title = Resources.DefaultMessageboxTitle;
+                title = Strings.DefaultMessageboxTitle;
 
             MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Information);
         }

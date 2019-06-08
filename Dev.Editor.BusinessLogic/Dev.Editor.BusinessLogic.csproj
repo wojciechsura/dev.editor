@@ -60,11 +60,6 @@
     <Compile Include="Models\Documents\DocumentState.cs" />
     <Compile Include="Models\Search\ReplaceModel.cs" />
     <Compile Include="Models\Search\SearchModel.cs" />
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="Services\Commands\AppCommandRepositoryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Dialogs\IDialogService.cs" />
@@ -86,6 +81,10 @@
       <Project>{B40F69AF-B0C3-4153-B68D-8945787242C7}</Project>
       <Name>Dev.Editor.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Dev.Editor.Resources\Dev.Editor.Resources.csproj">
+      <Project>{6f537829-9bf6-428c-95fd-00170e8acc60}</Project>
+      <Name>Dev.Editor.Resources</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
       <Project>{7df2e8a9-9eb7-442c-91b4-073dac5eb54c}</Project>
       <Name>ICSharpCode.AvalonEdit</Name>
@@ -99,12 +98,5 @@
     <Compile Include="ViewModels\Main\MainWindowViewModel.SearchHost.cs" />
   </ItemGroup>
   <ItemGroup />
-  <ItemGroup>
-    <EmbeddedResource Include="Properties\Resources.pl-PL.resx" />
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

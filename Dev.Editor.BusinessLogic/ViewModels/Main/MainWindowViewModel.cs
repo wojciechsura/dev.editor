@@ -1,5 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Dialogs;
-using Dev.Editor.BusinessLogic.Properties;
+using Dev.Editor.Resources;
 using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.Services.Messaging;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
@@ -106,7 +106,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
             else
             {
-                var decision = messagingService.AskYesNoCancel(String.Format(Resources.Message_FileNotSaved, document.FileName));
+                var decision = messagingService.AskYesNoCancel(String.Format(Strings.Message_FileNotSaved, document.FileName));
 
                 if (decision == false)
                 {

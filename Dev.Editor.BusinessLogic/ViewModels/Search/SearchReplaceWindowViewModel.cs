@@ -3,6 +3,7 @@ using Dev.Editor.BusinessLogic.Services.Messaging;
 using Dev.Editor.BusinessLogic.Types.Search;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.Common.Commands;
+using Dev.Editor.Resources;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -42,7 +43,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             }
             catch
             {
-                messagingService.ShowError(Properties.Resources.Message_InvalidSearchPattern);
+                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
                 return;
             }
         }
@@ -58,7 +59,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             }
             catch
             {
-                messagingService.ShowError(Properties.Resources.Message_InvalidSearchPattern);
+                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
                 return;
             }
         }
@@ -74,7 +75,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             }
             catch
             {
-                messagingService.ShowError(Properties.Resources.Message_InvalidSearchPattern);
+                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
                 return;
             }
         }
