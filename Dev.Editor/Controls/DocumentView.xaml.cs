@@ -26,7 +26,11 @@ namespace Dev.Editor.Controls
     {
         private DocumentViewModel viewModel;
 
-        private void UpdateSelectionInfo() => viewModel.NotifySelectionAvailable(teEditor.SelectionLength > 0);
+        private void UpdateSelectionInfo()
+        {
+            viewModel.NotifySelectionAvailable(teEditor.SelectionLength > 0);
+            viewModel.NotifyRegularSelectionAvailable(teEditor.SelectionLength > 0 && teEditor.TextArea.Selection.Segments.Count() == 1);
+        }
 
         private void HandleSelectionChanged(object sender, EventArgs e) => UpdateSelectionInfo();
 

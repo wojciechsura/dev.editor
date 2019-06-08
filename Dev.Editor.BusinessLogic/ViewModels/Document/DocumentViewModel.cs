@@ -24,6 +24,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private bool canUndo;
         private bool canRedo;
         private bool selectionAvailable;
+        private bool regularSelectionAvailable;
 
         private DocumentState storedState;
 
@@ -89,6 +90,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         }
 
         public void NotifySelectionAvailable(bool selectionAvailable) => SelectionAvailable = selectionAvailable;
+
+        public void NotifyRegularSelectionAvailable(bool regularSelectionAvailable) => RegularSelectionAvailable = regularSelectionAvailable;        
 
         public DocumentState LoadState()
         {
@@ -159,46 +162,37 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         public bool Changed
         {
             get => changed;
-            set  
-            {
-                Set(ref changed, () => Changed, value);
-            }
+            set => Set(ref changed, () => Changed, value);
         }
 
         public bool FilenameVirtual
         {
             get => filenameVirtual;
-            set
-            {
-                Set(ref filenameVirtual, () => FilenameVirtual, value);
-            } 
+            set => Set(ref filenameVirtual, () => FilenameVirtual, value);
         }
 
         public bool CanUndo
         {
             get => canUndo;
-            set
-            {
-                Set(ref canUndo, () => CanUndo, value);
-            }
+            set => Set(ref canUndo, () => CanUndo, value);
         }
 
         public bool CanRedo
         {
             get => canRedo;
-            set
-            {
-                Set(ref canRedo, () => CanRedo, value);
-            }
+            set => Set(ref canRedo, () => CanRedo, value);
         }
 
         public bool SelectionAvailable
         {
             get => selectionAvailable;
-            set
-            {
-                Set(ref selectionAvailable, () => SelectionAvailable, value);
-            }
+            set => Set(ref selectionAvailable, () => SelectionAvailable, value);
+        }
+
+        public bool RegularSelectionAvailable
+        {
+            get => regularSelectionAvailable;
+            set => Set(ref regularSelectionAvailable, () => RegularSelectionAvailable, value);
         }
 
         public IEditorAccess EditorAccess

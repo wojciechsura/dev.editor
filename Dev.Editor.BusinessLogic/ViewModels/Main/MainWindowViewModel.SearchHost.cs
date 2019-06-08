@@ -14,7 +14,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
     {
         BaseCondition ISearchHost.CanSearchCondition => documentExistsCondition;
 
-        BaseCondition ISearchHost.SelectionAvailableCondition => selectionAvailableCondition;
+        BaseCondition ISearchHost.SelectionAvailableCondition => regularSelectionAvailableCondition;
 
         private void InternalFindNext(SearchModel searchModel)
         {
