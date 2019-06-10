@@ -42,8 +42,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseCollectionItem.cs" />
-    <Compile Include="BaseConfiguration.cs" />
-    <Compile Include="BaseItem.cs" />
+    <Compile Include="ConfigRoot.cs" />
+    <Compile Include="ConfigItem.cs" />
     <Compile Include="BaseItemCollection.cs" />
     <Compile Include="BaseItemContainer.cs" />
     <Compile Include="BaseObject.cs" />

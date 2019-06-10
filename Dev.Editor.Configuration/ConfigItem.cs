@@ -2,7 +2,7 @@
 
 namespace Dev.Editor.Configuration
 {
-    public class BaseItem : BaseItemContainer
+    public class ConfigItem : BaseItemContainer
     {
         // Private fields -----------------------------------------------------
 
@@ -10,7 +10,7 @@ namespace Dev.Editor.Configuration
 
         // Public methods -----------------------------------------------------
 
-        public BaseItem(string xmlName, BaseItemContainer parent) 
+        public ConfigItem(string xmlName, BaseItemContainer parent) 
             : base(xmlName)
         {
             this.parent = parent ?? throw new ArgumentNullException(nameof(parent));

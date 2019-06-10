@@ -8,7 +8,7 @@ using System.Xml;
 
 namespace Dev.Editor.Configuration
 {
-    public abstract class BaseTypedValue<T> : BaseValue 
+    public abstract class BaseTypedValue<T> : BaseValue, INotifyPropertyChanged
     {
         // Private fields -----------------------------------------------------
 
@@ -23,7 +23,7 @@ namespace Dev.Editor.Configuration
             if (Value != null)
             {
                 XmlAttribute attr = rootNode.OwnerDocument.CreateAttribute(XmlName);
-                attr.InnerText = SerializeValue(value);
+                attr.InnerText = SerializeValue(Value);
                 rootNode.Attributes.Append(attr);
             }
         }
@@ -52,6 +52,11 @@ namespace Dev.Editor.Configuration
 
         // Protected methods --------------------------------------------------
 
+        protected void OnPropertyChanged(string name)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+
         protected abstract string SerializeValue(T value);
 
         protected abstract T DeserializeValue(string text);
@@ -61,16 +66,16 @@ namespace Dev.Editor.Configuration
             if (node != null)
             {
                 try {
-                    value = DeserializeValue(node.InnerText);
+                    Value = DeserializeValue(node.InnerText);
                 }
                 catch
                 {
-                    value = defaultValue;
+                    Value = defaultValue;
                 }
             }
             else
             {
-                value = defaultValue;
+                Value = defaultValue;
             }
         }
 
@@ -119,6 +124,7 @@ namespace Dev.Editor.Configuration
         {
             this.xmlStoragePlace = xmlStoragePlace;
             this.defaultValue = defaultValue;
+            this.value = defaultValue;
         }
 
         public override sealed void SetDefaults()
@@ -136,8 +142,14 @@ namespace Dev.Editor.Configuration
             }
             set
             {
-                this.value = value;
+                if (!object.Equals(this.value, value))
+                {
+                    this.value = value;
+                    OnPropertyChanged(nameof(Value));
+                }
             }
         }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

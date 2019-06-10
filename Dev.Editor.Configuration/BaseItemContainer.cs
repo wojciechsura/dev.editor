@@ -11,13 +11,13 @@ namespace Dev.Editor.Configuration
     {
         // Private fields -----------------------------------------------------
 
-        private List<BaseItem> subItems;
+        private List<ConfigItem> subItems;
 
         private List<BaseValue> values;
 
         // Internal methods ---------------------------------------------------
 
-        internal virtual void RegisterSubItem(BaseItem subItem)
+        internal virtual void RegisterSubItem(ConfigItem subItem)
         {
             if (subItem == null)
                 throw new ArgumentNullException(nameof(subItem));
@@ -88,7 +88,7 @@ namespace Dev.Editor.Configuration
         public BaseItemContainer(string xmlName)
             : base(xmlName)
         {
-            subItems = new List<BaseItem>();
+            subItems = new List<ConfigItem>();
             values = new List<BaseValue>();
         }
 

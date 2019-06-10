@@ -246,7 +246,7 @@ namespace Dev.Editor.Configuration
 
         // Internal methods ---------------------------------------------------
 
-        internal override void RegisterSubItem(BaseItem subItem)
+        internal override void RegisterSubItem(ConfigItem subItem)
         {
             if (IsChildNodeName(subItem.XmlName))
                 throw new InvalidOperationException("Cannot register subitem with the same XML node name as collection's child's XML node name!");

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.Configuration
 {
-    public abstract class BaseItemCollection : BaseItem
+    public abstract class BaseItemCollection : ConfigItem
     {
         // Public methods -----------------------------------------------------
 

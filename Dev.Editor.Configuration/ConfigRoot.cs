@@ -8,11 +8,11 @@ using System.Xml;
 
 namespace Dev.Editor.Configuration
 {
-    public class BaseConfiguration : BaseItemContainer
+    public class ConfigRoot : BaseItemContainer
     {
         // Public methods -----------------------------------------------------
 
-        public BaseConfiguration(string XmlName)
+        public ConfigRoot(string XmlName)
             : base(XmlName)
         {
 
