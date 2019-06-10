@@ -8,18 +8,18 @@ namespace Dev.Editor.Configuration
 {
     public class BaseObject
     {
-        private readonly string xmlName;
+        private readonly string name;
 
-        public BaseObject(string xmlName)
+        public BaseObject(string name)
         {
-            this.xmlName = xmlName;
+            this.name = name;
         }
 
-        public string XmlName
+        public string Name
         {
             get
             {
-                return xmlName;
+                return name;
             }
         }
     }

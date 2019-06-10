@@ -30,8 +30,8 @@ namespace Dev.Editor.Configuration
 
         // Public methods -----------------------------------------------------
 
-        public BaseCollectionItem(string xmlName)
-            : base(xmlName)
+        public BaseCollectionItem(string name)
+            : base(name)
         {
 
         }

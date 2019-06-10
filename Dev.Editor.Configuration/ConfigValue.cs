@@ -29,9 +29,8 @@ namespace Dev.Editor.Configuration
 
         public ConfigValue(string xmlName, 
             BaseItemContainer owner,             
-            T defaultValue = default(T),
-            XmlStoragePlace xmlStoragePlace = XmlStoragePlace.Subnode) 
-            : base(xmlName, owner, defaultValue, xmlStoragePlace)
+            T defaultValue = default(T)) 
+            : base(xmlName, owner, defaultValue)
         {
         }
     }

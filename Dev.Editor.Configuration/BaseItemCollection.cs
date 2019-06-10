@@ -11,8 +11,8 @@ namespace Dev.Editor.Configuration
     {
         // Public methods -----------------------------------------------------
 
-        public BaseItemCollection(string xmlName, BaseItemContainer parent)
-            : base(xmlName, parent)
+        public BaseItemCollection(string name, BaseItemContainer parent)
+            : base(name, parent)
         {
 
         }

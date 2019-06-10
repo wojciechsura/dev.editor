@@ -27,7 +27,7 @@ namespace Dev.Editor.Configuration
                 throw new ArgumentNullException(nameof(newItem));
             if (items.Contains(newItem))
                 throw new InvalidOperationException("Already contains this item!");
-            if (!IsChildNodeName(newItem.XmlName))
+            if (!IsChildNodeName(newItem.Name))
                 throw new ArgumentException("Cannot add item, its XML node name does not match names registered in the collection", nameof(newItem));
         }
 
@@ -248,16 +248,16 @@ namespace Dev.Editor.Configuration
 
         internal override void RegisterSubItem(ConfigItem subItem)
         {
-            if (IsChildNodeName(subItem.XmlName))
-                throw new InvalidOperationException("Cannot register subitem with the same XML node name as collection's child's XML node name!");
+            if (IsChildNodeName(subItem.Name))
+                throw new InvalidOperationException("Cannot register subitem with the same node name as collection's child's node name!");
 
             base.RegisterSubItem(subItem);
         }
 
         internal override void RegisterValue(BaseValue value)
         {
-            if (IsChildNodeName(value.XmlName))
-                throw new InvalidOperationException("Cannot register value with the same XML node name as collection's child's XML node name!");
+            if (IsChildNodeName(value.Name))
+                throw new InvalidOperationException("Cannot register value with the same node name as collection's child's node name!");
 
             base.RegisterValue(value);
         }
@@ -295,7 +295,7 @@ namespace Dev.Editor.Configuration
 
             for (int i = 0; i < items.Count; i++)
             {
-                var childNodeName = items[i].XmlName;
+                var childNodeName = items[i].Name;
                 if (!IsChildNodeName(childNodeName))
                     throw new InvalidOperationException("Item stored in the collection doesn't have XmlName matching the names registered in the collection!");
 

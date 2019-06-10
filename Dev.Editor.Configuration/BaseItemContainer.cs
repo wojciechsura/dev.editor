@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,8 +23,10 @@ namespace Dev.Editor.Configuration
         {
             if (subItem == null)
                 throw new ArgumentNullException(nameof(subItem));
-            if (subItems.Any(s => s.XmlName == subItem.XmlName))
-                throw new InvalidOperationException("Duplicated XmlName!");
+            if (subItems.Any(s => s.Name == subItem.Name))
+                throw new InvalidOperationException("There is already a subitem with the same name!");
+            if (values.Any(v => v.Name == subItem.Name))
+                throw new InvalidOperationException("There is already a value with the same name!");
 
             subItems.Add(subItem);
         }
@@ -31,8 +35,10 @@ namespace Dev.Editor.Configuration
         {
             if (value == null)
                 throw new ArgumentNullException(nameof(value));
-            if (values.Any(v => v.XmlName == value.XmlName))
-                throw new InvalidOperationException("Duplicated XmlName!");
+            if (subItems.Any(s => s.Name == value.Name))
+                throw new InvalidOperationException("There is already a subitem with the same name!");
+            if (values.Any(v => v.Name == value.Name))
+                throw new InvalidOperationException("There is already a value with the same name!");
 
             values.Add(value);
         }
@@ -53,7 +59,7 @@ namespace Dev.Editor.Configuration
         {
             foreach (BaseItemContainer item in subItems)
             {
-                string tagName = item.XmlName;
+                string tagName = item.Name;
                 XmlNode itemNode = node[tagName];
                 if (itemNode != null)
                     item.Load(itemNode);
@@ -71,7 +77,7 @@ namespace Dev.Editor.Configuration
         {
             foreach (BaseItemContainer item in subItems)
             {
-                string tagName = item.XmlName;
+                string tagName = item.Name;
                 XmlElement element = node.OwnerDocument.CreateElement(tagName);
                 item.Save(element);
                 node.AppendChild(element);
@@ -85,8 +91,8 @@ namespace Dev.Editor.Configuration
 
         // Public methods -----------------------------------------------------
 
-        public BaseItemContainer(string xmlName)
-            : base(xmlName)
+        public BaseItemContainer(string name)
+            : base(name)
         {
             subItems = new List<ConfigItem>();
             values = new List<BaseValue>();

@@ -29,8 +29,8 @@ namespace Dev.Editor.Configuration
 
         // Public methods -----------------------------------------------------
 
-        public BaseValue(string xmlName, BaseItemContainer owner)
-            : base(xmlName)
+        public BaseValue(string name, BaseItemContainer owner)
+            : base(name)
         {
             this.owner = owner ?? throw new ArgumentNullException(nameof(owner));
             owner.RegisterValue(this);

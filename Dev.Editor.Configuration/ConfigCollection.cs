@@ -18,8 +18,8 @@ namespace Dev.Editor.Configuration
             }
         }
 
-        public ConfigCollection(string xmlName, BaseItemContainer parent, string childName)
-            : base(xmlName, parent)
+        public ConfigCollection(string name, BaseItemContainer parent, string childName)
+            : base(name, parent)
         {
             childInfos = new List<ChildInfo<T>>
             {

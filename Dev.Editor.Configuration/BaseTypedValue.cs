@@ -14,31 +14,14 @@ namespace Dev.Editor.Configuration
 
         private T value;
         private readonly T defaultValue;
-        private readonly XmlStoragePlace xmlStoragePlace;
 
         // Private methods ----------------------------------------------------
-
-        private void SaveToAttribute(XmlNode rootNode)
-        {
-            if (Value != null)
-            {
-                XmlAttribute attr = rootNode.OwnerDocument.CreateAttribute(XmlName);
-                attr.InnerText = SerializeValue(Value);
-                rootNode.Attributes.Append(attr);
-            }
-        }
-
-        private void LoadFromAttribute(XmlNode rootNode)
-        {
-            var attr = rootNode.Attributes[XmlName];
-            InternalLoadFromNode(attr);
-        }
 
         private void SaveToSubnode(XmlNode rootNode)
         {
             if (Value != null)
             {
-                XmlElement element = rootNode.OwnerDocument.CreateElement(XmlName);
+                XmlElement element = rootNode.OwnerDocument.CreateElement(Name);
                 element.InnerText = Value.ToString();
                 rootNode.AppendChild(element);
             }
@@ -46,7 +29,7 @@ namespace Dev.Editor.Configuration
 
         private void LoadFromSubnode(XmlNode rootNode)
         {
-            var element = rootNode[XmlName];
+            var element = rootNode[Name];
             InternalLoadFromNode(element);
         }
 
@@ -81,48 +64,19 @@ namespace Dev.Editor.Configuration
 
         protected override void InternalLoad(XmlNode rootNode)
         {
-            switch (xmlStoragePlace)
-            {
-                case XmlStoragePlace.Attribute:
-                    {
-                        LoadFromAttribute(rootNode);
-                        break;
-                    }
-                case XmlStoragePlace.Subnode:
-                    {
-                        LoadFromSubnode(rootNode);
-                        break;
-                    }
-                default:
-                    throw new InvalidEnumArgumentException("Unsupported XML storage place!");
-            }
+            LoadFromSubnode(rootNode);
         }
 
         protected override void InternalSave(XmlNode rootNode)
         {
-            switch (xmlStoragePlace)
-            {
-                case XmlStoragePlace.Attribute:
-                    {
-                        SaveToAttribute(rootNode);
-                        break;
-                    }
-                case XmlStoragePlace.Subnode:
-                    {
-                        SaveToSubnode(rootNode);
-                        break;
-                    }
-                default:
-                    throw new InvalidEnumArgumentException("Unsupported XML storage place!");
-            }
+            SaveToSubnode(rootNode);
         }
 
         // Public methods -----------------------------------------------------
 
-        public BaseTypedValue(string xmlName, BaseItemContainer owner, T defaultValue = default(T), XmlStoragePlace xmlStoragePlace = XmlStoragePlace.Subnode)
+        public BaseTypedValue(string xmlName, BaseItemContainer owner, T defaultValue = default)
             : base(xmlName, owner)
         {
-            this.xmlStoragePlace = xmlStoragePlace;
             this.defaultValue = defaultValue;
             this.value = defaultValue;
         }

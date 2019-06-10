@@ -12,8 +12,8 @@ namespace Dev.Editor.Configuration
     {
         // Public methods -----------------------------------------------------
 
-        public ConfigRoot(string XmlName)
-            : base(XmlName)
+        public ConfigRoot(string name)
+            : base(name)
         {
 
         }
@@ -40,7 +40,7 @@ namespace Dev.Editor.Configuration
                 throw new FileLoadException("Cannot load configuration file!", e);
             }
 
-            XmlNode root = document[XmlName];
+            XmlNode root = document[Name];
             if (root != null)
             {
                 InternalLoad(root);
@@ -63,7 +63,7 @@ namespace Dev.Editor.Configuration
         {
             XmlDocument document = new XmlDocument();
 
-            XmlElement root = document.CreateElement(XmlName);
+            XmlElement root = document.CreateElement(Name);
             document.AppendChild(root);
 
             InternalSave(root);

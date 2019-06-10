@@ -10,8 +10,8 @@ namespace Dev.Editor.Configuration
 
         // Public methods -----------------------------------------------------
 
-        public ConfigItem(string xmlName, BaseItemContainer parent) 
-            : base(xmlName)
+        public ConfigItem(string name, BaseItemContainer parent) 
+            : base(name)
         {
             this.parent = parent ?? throw new ArgumentNullException(nameof(parent));
             parent.RegisterSubItem(this);
