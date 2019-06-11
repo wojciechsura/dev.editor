@@ -1,5 +1,7 @@
-﻿using Dev.Editor.BusinessLogic.Services.Dialogs;
+﻿using Dev.Editor.BusinessLogic.Services.Config;
+using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.Services.Messaging;
+using Dev.Editor.BusinessLogic.Services.Paths;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +17,8 @@ namespace Dev.Editor.BusinessLogic.Dependencies
         public static void Configure(IUnityContainer container)
         {
             container.RegisterType<IMessagingService, MessagingService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IConfigurationService, ConfigrationService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IPathService, PathService>(new ContainerControlledLifetimeManager());
         }
     }
 }

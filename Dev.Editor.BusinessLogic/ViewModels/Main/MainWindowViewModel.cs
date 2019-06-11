@@ -17,6 +17,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Dev.Editor.BusinessLogic.Services.Config;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -27,6 +28,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly IMainWindowAccess access;
         private readonly IDialogService dialogService;
         private readonly IMessagingService messagingService;
+        private readonly IConfigurationService configurationService;
 
         private readonly ObservableCollection<DocumentViewModel> documents;
         private DocumentViewModel activeDocument;
@@ -64,11 +66,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // Public methods -----------------------------------------------------
 
-        public MainWindowViewModel(IMainWindowAccess access, IDialogService dialogService, IMessagingService messagingService)
+        public MainWindowViewModel(IMainWindowAccess access, 
+            IDialogService dialogService, 
+            IMessagingService messagingService,
+            IConfigurationService configurationService)
         {
             this.access = access;
             this.dialogService = dialogService;
             this.messagingService = messagingService;
+            this.configurationService = configurationService;
 
             documents = new ObservableCollection<DocumentViewModel>();
 
