@@ -19,6 +19,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         // Private fields -----------------------------------------------------
 
         private readonly TextDocument document;
+        private readonly IDocumentHandler handler;
+
         private bool changed;
         private bool filenameVirtual;
         private bool canUndo;
@@ -56,8 +58,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         // Public methods -----------------------------------------------------
 
-        public DocumentViewModel()
+        public DocumentViewModel(IDocumentHandler handler)
         {
+            this.handler = handler;
+
             document = new TextDocument();
             document.FileNameChanged += HandleFileNameChanged;
             document.UndoStack.PropertyChanged += HandleUndoStackPropertyChanged;
@@ -194,6 +198,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             get => regularSelectionAvailable;
             set => Set(ref regularSelectionAvailable, () => RegularSelectionAvailable, value);
         }
+
+        public IDocumentHandler Handler => handler;
 
         public IEditorAccess EditorAccess
         {

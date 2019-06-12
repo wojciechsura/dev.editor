@@ -11,7 +11,9 @@
                    Document="{Binding Document}" 
                    FontFamily="Consolas"                   
                    Loaded="HandleLoaded"
-                   Unloaded="HandleUnloaded">
+                   Unloaded="HandleUnloaded"
+                   WordWrap="{Binding Handler.WordWrap}"
+                   ShowLineNumbers="{Binding Handler.LineNumbers}">
         
     </ae:TextEditor>
 </UserControl>

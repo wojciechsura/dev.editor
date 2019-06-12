@@ -30,15 +30,7 @@ namespace Dev.Editor
 
         private MainWindowViewModel viewModel;
 
-        // Public methods -----------------------------------------------------
-
-        public MainWindow()
-        {
-            InitializeComponent();
-
-            viewModel = Dependencies.Container.Instance.Resolve<MainWindowViewModel>(new ParameterOverride("access", this));
-            DataContext = viewModel;
-        }
+        // Private methods ----------------------------------------------------
 
         private void HandleDocumentClosing(object sender, Xceed.Wpf.AvalonDock.DocumentClosingEventArgs e)
         {
@@ -48,6 +40,21 @@ namespace Dev.Editor
         private void HandleDocumentClosed(object sender, Xceed.Wpf.AvalonDock.DocumentClosedEventArgs e)
         {
             viewModel.NotifyClosedDocument(e.Document.Content as DocumentViewModel);
+        }
+
+        private void HandleWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            e.Cancel = !viewModel.CanCloseApplication();
+        }
+
+        // Public methods -----------------------------------------------------
+
+        public MainWindow()
+        {
+            InitializeComponent();
+
+            viewModel = Dependencies.Container.Instance.Resolve<MainWindowViewModel>(new ParameterOverride("access", this));
+            DataContext = viewModel;
         }
     }
 }

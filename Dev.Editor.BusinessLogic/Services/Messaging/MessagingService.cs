@@ -42,6 +42,21 @@ namespace Dev.Editor.BusinessLogic.Services.Messaging
                 throw new InvalidOperationException("Invalid result!");
         }
 
+        public bool WarnYesNo(string message, string title = null)
+        {
+            if (title == null)
+                title = Strings.DefaultMessageboxTitle;
+
+            var result = MessageBox.Show(message, title, MessageBoxButton.YesNo, MessageBoxImage.Warning);
+
+            if (result == MessageBoxResult.Yes)
+                return true;
+            else if (result == MessageBoxResult.No)
+                return false;
+            else
+                throw new InvalidOperationException("Invalid result!");
+        }
+
         public void Warn(string message, string title = null)
         {
             if (title == null)

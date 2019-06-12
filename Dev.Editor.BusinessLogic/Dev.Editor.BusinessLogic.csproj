@@ -78,10 +78,12 @@
     <Compile Include="Types\Search\SearchMode.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Document\DocumentViewModel.cs" />
+    <Compile Include="ViewModels\Document\IDocumentHandler.cs" />
     <Compile Include="ViewModels\Document\IEditorAccess.cs" />
     <Compile Include="ViewModels\Main\IMainWindowAccess.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Commands.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\Main\MainWindowViewModel.View.Editor.cs" />
     <Compile Include="ViewModels\Search\ISearchHost.cs" />
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />

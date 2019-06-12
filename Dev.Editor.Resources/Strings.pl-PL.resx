@@ -258,4 +258,19 @@
   <data name="SearchWindow.InSelection" xml:space="preserve">
     <value>W zaznaczeniu</value>
   </data>
+  <data name="Ribbon.Tab.View" xml:space="preserve">
+    <value>Widok</value>
+  </data>
+  <data name="Ribbon.Group.Editor" xml:space="preserve">
+    <value>Edytor</value>
+  </data>
+  <data name="Ribbon.Editor.WordWrap" xml:space="preserve">
+    <value>Zawijaj wiersze</value>
+  </data>
+  <data name="Ribbon.Editor.ShowLineNumbers" xml:space="preserve">
+    <value>Numery wierszy</value>
+  </data>
+  <data name="Message.CannotSaveConfiguration" xml:space="preserve">
+    <value>Nie udało się zapisać konfiguracji. Czy na pewno chcesz wyjść?</value>
+  </data>
 </root>

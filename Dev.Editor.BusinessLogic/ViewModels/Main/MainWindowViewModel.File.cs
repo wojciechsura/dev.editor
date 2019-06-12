@@ -66,7 +66,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             while (documents.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
                 i++;
 
-            var newDocument = new DocumentViewModel();
+            var newDocument = new DocumentViewModel(this);
             newDocument.Document.FileName = GenerateBlankFileName(i);
 
             documents.Add(newDocument);
@@ -83,7 +83,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 {
                     using (FileStream fs = new FileStream(dialogResult.FileName, FileMode.Open, FileAccess.Read))
                     {
-                        var newDocument = new DocumentViewModel();
+                        var newDocument = new DocumentViewModel(this);
 
                         using (StreamReader reader = new StreamReader(fs))
                         {

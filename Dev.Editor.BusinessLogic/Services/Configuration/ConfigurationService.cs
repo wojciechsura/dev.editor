@@ -28,5 +28,20 @@ namespace Dev.Editor.BusinessLogic.Services.Config
                 config.SetDefaults();
             }
         }
+
+        public bool Save()
+        {
+            try
+            {
+                config.Save(pathService.ConfigPath);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public ConfigurationModel Configuration => config;
     }
 }

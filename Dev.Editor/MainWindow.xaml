@@ -12,7 +12,7 @@
     xmlns:controls="clr-namespace:Dev.Editor.Controls"
     xmlns:vmd="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
-    Title="Dev.Editor" Height="450" Width="800">
+    Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing">
     <f:RibbonWindow.Resources>
         <ResourceDictionary>
             <!-- Prevent stealing focus from document by the ribbon -->
@@ -54,6 +54,8 @@
                 </f:ApplicationMenu>
             </f:Ribbon.Menu>
 
+            <!-- Home tab -->
+            
             <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_Home}"
                              ReduceOrder="grHomeEdit, grHomeFile">
                 
@@ -142,6 +144,22 @@
                 </f:RibbonGroupBox>
                 
             </f:RibbonTabItem>
+        
+            <!-- View tab -->
+
+            <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_View}">
+                
+                <!-- Editor -->
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Group_Editor}">
+
+                    <f:CheckBox Header="{x:Static p:Strings.Ribbon_Editor_WordWrap}" IsChecked="{Binding WordWrap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <f:CheckBox Header="{x:Static p:Strings.Ribbon_Editor_ShowLineNumbers}" IsChecked="{Binding LineNumbers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+
+                </f:RibbonGroupBox>
+                
+            </f:RibbonTabItem>
+        
         </f:Ribbon>
 
         <ad:DockingManager x:Name="dmManager" Grid.Row="1" DocumentsSource="{Binding Documents}"

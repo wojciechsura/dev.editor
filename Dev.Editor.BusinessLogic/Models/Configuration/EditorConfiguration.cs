@@ -14,10 +14,10 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration
         public EditorConfiguration(BaseItemContainer parent) : base(NAME, parent)
         {
             WordWrap = new ConfigValue<bool>("WordWrap", this, false);
-            ShowLineNumbers = new ConfigValue<bool>("ShowLineNumbers", this, false);
+            LineNumbers = new ConfigValue<bool>("LineNumbers", this, false);
         }
 
         public ConfigValue<bool> WordWrap { get; }
-        public ConfigValue<bool> ShowLineNumbers { get; }
+        public ConfigValue<bool> LineNumbers { get; }
     }
 }

@@ -21,7 +21,7 @@ using Dev.Editor.BusinessLogic.Services.Config;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
-    public partial class MainWindowViewModel : BaseViewModel
+    public partial class MainWindowViewModel : BaseViewModel, IDocumentHandler
     {
         // Private fields -----------------------------------------------------
 
@@ -39,6 +39,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> selectionAvailableCondition;
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> regularSelectionAvailableCondition;
         private readonly MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, DocumentViewModel> searchPerformedCondition;
+
+        private bool wordWrap;
+        private bool lineNumbers;
 
         // Private methods ----------------------------------------------------
 
@@ -75,6 +78,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             this.dialogService = dialogService;
             this.messagingService = messagingService;
             this.configurationService = configurationService;
+
+            wordWrap = configurationService.Configuration.Editor.WordWrap.Value;
+            lineNumbers = configurationService.Configuration.Editor.LineNumbers.Value;
 
             documents = new ObservableCollection<DocumentViewModel>();
 
@@ -140,6 +146,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
 
             return false;
+        }
+
+        public bool CanCloseApplication()
+        {
+            var configSaved = configurationService.Save();
+
+            if (!configSaved)
+            {
+                if (!messagingService.WarnYesNo(Resources.Strings.Message_CannotSaveConfiguration))
+                    return false;
+            }
+
+            return true;
         }
 
         public void NotifyClosedDocument(DocumentViewModel document)
