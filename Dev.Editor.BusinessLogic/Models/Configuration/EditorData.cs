@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BusinessLogic.Models.Configuration
 {
-    public class EditorConfiguration : ConfigItem
+    public class EditorData : ConfigItem
     {
-        private const string NAME = "Editor";
+        internal const string NAME = "Editor";
 
-        public EditorConfiguration(BaseItemContainer parent) : base(NAME, parent)
+        public EditorData(BaseItemContainer parent) : base(NAME, parent)
         {
             WordWrap = new ConfigValue<bool>("WordWrap", this, false);
             LineNumbers = new ConfigValue<bool>("LineNumbers", this, false);

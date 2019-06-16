@@ -9,13 +9,21 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration
 {
     public class ConfigurationModel : ConfigRoot
     {
-        private const string NAME = "DevEditor";
+        internal const string NAME = "DevEditor";
+
+        private readonly EditorData editorConfiguration;
+        private readonly BehaviorData behaviorConfiguration;
+        private readonly InternalData internalConfiguration;
 
         public ConfigurationModel() : base(NAME)
         {
-            Editor = new EditorConfiguration(this);
+            editorConfiguration = new EditorData(this);
+            behaviorConfiguration = new BehaviorData(this);
+            internalConfiguration = new InternalData(this);
         }
 
-        public EditorConfiguration Editor { get; }
+        public EditorData Editor => editorConfiguration;
+        public BehaviorData Behavior => behaviorConfiguration;
+        public InternalData Internal => internalConfiguration;
     }
 }

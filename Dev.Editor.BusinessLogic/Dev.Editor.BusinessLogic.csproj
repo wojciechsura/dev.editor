@@ -58,8 +58,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dependencies\Configuration.cs" />
+    <Compile Include="Models\Configuration\BehaviorData.cs" />
     <Compile Include="Models\Configuration\ConfigurationModel.cs" />
-    <Compile Include="Models\Configuration\EditorConfiguration.cs" />
+    <Compile Include="Models\Configuration\EditorData.cs" />
+    <Compile Include="Models\Configuration\InternalData.cs" />
+    <Compile Include="Models\Configuration\StoredFile.cs" />
+    <Compile Include="Models\Configuration\StoredFiles.cs" />
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
     <Compile Include="Models\Dialogs\SaveDialogResult.cs" />
     <Compile Include="Models\Documents\DocumentState.cs" />
@@ -75,6 +79,7 @@
     <Compile Include="Services\Messaging\MessagingService.cs" />
     <Compile Include="Services\Paths\IPathService.cs" />
     <Compile Include="Services\Paths\PathService.cs" />
+    <Compile Include="Types\Behavior\CloseBehavior.cs" />
     <Compile Include="Types\Search\SearchMode.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Document\DocumentViewModel.cs" />
