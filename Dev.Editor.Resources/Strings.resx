@@ -273,4 +273,7 @@
   <data name="Message.CannotSaveConfiguration" xml:space="preserve">
     <value>Cannot save configuration file. Are you sure you want to exit?</value>
   </data>
+  <data name="Message.CannotRestoreFile" xml:space="preserve">
+    <value>Cannot restore file {0}. Error message: {1}</value>
+  </data>
 </root>

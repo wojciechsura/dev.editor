@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BusinessLogic.Models.Configuration
+namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
 {
     public class StoredFile : BaseCollectionItem
     {
@@ -13,7 +13,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration
 
         private readonly ConfigValue<string> filename;
         private readonly ConfigValue<bool> isDirty;
-        private readonly ConfigValue<bool> nameIsVirtual;
+        private readonly ConfigValue<bool> flienameIsVirtual;
         private readonly ConfigValue<string> storedFilename;
 
         public StoredFile() 
@@ -21,7 +21,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration
         {
             filename = new ConfigValue<string>("Filename", this);
             isDirty = new ConfigValue<bool>("IsDirty", this);
-            nameIsVirtual = new ConfigValue<bool>("NameIsVirtual", this);
+            flienameIsVirtual = new ConfigValue<bool>("FilenameIsVirtual", this);
             storedFilename = new ConfigValue<string>("StoredFilename", this);
         }
 
@@ -29,7 +29,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration
 
         public ConfigValue<bool> IsDirty => isDirty;
 
-        public ConfigValue<bool> NameIsVirtual => nameIsVirtual;
+        public ConfigValue<bool> FilenameIsVirtual => flienameIsVirtual;
 
         public ConfigValue<string> StoredFilename => storedFilename;
     }

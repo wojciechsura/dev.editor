@@ -18,17 +18,44 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return $"{Strings.BlankDocumentName}{i}.txt";
         }
 
-        private bool InternalWriteDocument(DocumentViewModel document, string filename)
+        private void InternalAddDocument(Action<DocumentViewModel> initAction)
+        {
+            var document = new DocumentViewModel(this);
+
+            initAction(document);
+
+            documents.Add(document);
+
+            ActiveDocument = document;
+        }
+
+        private void InternalWriteDocument(DocumentViewModel document, string filename)
+        {
+            using (var fs = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write))
+            {
+                using (var writer = new StreamWriter(fs))
+                {
+                    document.Document.WriteTextTo(writer);
+                }
+            }
+        }
+       
+        private void InternalReadDocument(DocumentViewModel document, string filename)
+        {
+            using (var fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = new StreamReader(fs))
+                {
+                    document.Document.Text = reader.ReadToEnd();
+                }
+            }
+        }
+
+        private bool InternalSaveDocument(DocumentViewModel document, string filename)
         {
             try
             {
-                using (var fs = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write))
-                {
-                    using (var writer = new StreamWriter(fs))
-                    {
-                        document.Document.WriteTextTo(writer);
-                    }
-                }
+                InternalWriteDocument(document, filename);
 
                 document.Document.UndoStack.MarkAsOriginalFile();
                 return true;
@@ -38,20 +65,30 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 messagingService.ShowError(String.Format(Strings.Message_CannotSaveFile, activeDocument.FileName, e.Message));
                 return false;
             }
+        }        
+
+        private void InternalLoadDocument(DocumentViewModel document, string filename)
+        {
+            InternalReadDocument(document, filename);
+
+            document.Document.FileName = filename;
+            document.Document.UndoStack.ClearAll();
+            document.Document.UndoStack.MarkAsOriginalFile();
+            document.FilenameVirtual = false;
         }
 
-		private bool InternalSaveDocument(DocumentViewModel document)
+		private bool SaveDocument(DocumentViewModel document)
         {
             if (document.FilenameVirtual)
                 throw new InvalidOperationException("Cannot save document with virtual filename!");
 
-            return InternalWriteDocument(document, document.FileName);
+            return InternalSaveDocument(document, document.FileName);
         }
 
-		private bool InternalSaveDocumentAs(DocumentViewModel document)
+		private bool SaveDocumentAs(DocumentViewModel document)
         {
             var fileDialogResult = dialogService.SaveDialog();
-            if (fileDialogResult.Result && InternalWriteDocument(activeDocument, fileDialogResult.FileName))
+            if (fileDialogResult.Result && InternalSaveDocument(activeDocument, fileDialogResult.FileName))
             {
                 activeDocument.FileName = fileDialogResult.FileName;
                 return true;
@@ -62,16 +99,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoNew()
         {
-            int i = 1;
-            while (documents.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
-                i++;
+            InternalAddDocument(newDocument =>
+            {
+                int i = 1;
+                while (documents.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
+                    i++;
 
-            var newDocument = new DocumentViewModel(this);
-            newDocument.Document.FileName = GenerateBlankFileName(i);
-
-            documents.Add(newDocument);
-
-            ActiveDocument = newDocument;
+                newDocument.Document.FileName = GenerateBlankFileName(i);
+            });            
         }
 
         private void DoOpen()
@@ -81,23 +116,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             {
                 try
                 {
-                    using (FileStream fs = new FileStream(dialogResult.FileName, FileMode.Open, FileAccess.Read))
+                    InternalAddDocument(document =>
                     {
-                        var newDocument = new DocumentViewModel(this);
-
-                        using (StreamReader reader = new StreamReader(fs))
-                        {
-                            newDocument.Document.Text = reader.ReadToEnd();
-                            newDocument.Document.FileName = dialogResult.FileName;
-                            newDocument.Document.UndoStack.ClearAll();
-                            newDocument.Document.UndoStack.MarkAsOriginalFile();
-                            newDocument.FilenameVirtual = false;
-                        }
-
-                        documents.Add(newDocument);
-
-                        ActiveDocument = newDocument;
-                    }
+                        InternalLoadDocument(document, dialogResult.FileName);
+                    });
                 }
                 catch (Exception e)
                 {
@@ -111,12 +133,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             if (activeDocument.FilenameVirtual)
                 DoSaveAs();
             else
-                InternalSaveDocument(activeDocument);
+                SaveDocument(activeDocument);
         }
 
         private void DoSaveAs()
         {
-            InternalSaveDocumentAs(activeDocument);
+            SaveDocumentAs(activeDocument);
         }
     }
 }

@@ -18,6 +18,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Dev.Editor.BusinessLogic.Services.Config;
+using Dev.Editor.BusinessLogic.Types.Behavior;
+using Dev.Editor.BusinessLogic.Models.Configuration.Internal;
+using Dev.Editor.BusinessLogic.Services.Paths;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -29,6 +32,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly IDialogService dialogService;
         private readonly IMessagingService messagingService;
         private readonly IConfigurationService configurationService;
+        private readonly IPathService pathService;
 
         private readonly ObservableCollection<DocumentViewModel> documents;
         private DocumentViewModel activeDocument;
@@ -67,17 +71,75 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
+        private bool StoreFiles()
+        {
+            configurationService.Configuration.Internal.StoredFiles.Clear();
+            var storedFilesPath = pathService.StoredFilesPath;
+
+            for (int i = 0; i < documents.Count; i++)
+            {
+                var document = documents[i];
+                var storedFilename = Path.Combine(storedFilesPath, $"{i}.txt");
+                
+                try
+                {
+                    InternalWriteDocument(document, storedFilename);
+                }
+                catch (Exception e)
+                {
+                    messagingService.ShowError(String.Format(Resources.Strings.Message_CannotSaveFile, e.Message));
+                    return false;
+                }
+
+                var storedFile = new StoredFile();
+                storedFile.Filename.Value = document.FileName;
+                storedFile.FilenameIsVirtual.Value = document.FilenameVirtual;
+                storedFile.IsDirty.Value = document.Changed;
+                storedFile.StoredFilename.Value = storedFilename;
+
+                configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
+            }
+
+            return true;
+        }
+
+        private void RestoreFiles()
+        {
+            for (int i = 0; i < configurationService.Configuration.Internal.StoredFiles.Count; i++)
+            {
+                var storedFile = configurationService.Configuration.Internal.StoredFiles[i];
+
+                try
+                {
+                    InternalAddDocument(document =>
+                    {
+                        InternalReadDocument(document, storedFile.StoredFilename.Value);
+
+                        document.FileName = storedFile.Filename.Value;
+                        document.FilenameVirtual = storedFile.FilenameIsVirtual.Value;
+                        document.Changed = storedFile.IsDirty.Value;
+                    });
+                }
+                catch (Exception e)
+                {
+                    messagingService.ShowError(string.Format(Resources.Strings.Message_CannotRestoreFile, storedFile.Filename, e.Message));
+                }
+            }
+        }
+
         // Public methods -----------------------------------------------------
 
         public MainWindowViewModel(IMainWindowAccess access, 
             IDialogService dialogService, 
             IMessagingService messagingService,
-            IConfigurationService configurationService)
+            IConfigurationService configurationService,
+            IPathService pathService)
         {
             this.access = access;
             this.dialogService = dialogService;
             this.messagingService = messagingService;
             this.configurationService = configurationService;
+            this.pathService = pathService;
 
             wordWrap = configurationService.Configuration.Editor.WordWrap.Value;
             lineNumbers = configurationService.Configuration.Editor.LineNumbers.Value;
@@ -107,9 +169,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             ReplaceCommand = new AppCommand(obj => DoReplace(), documentExistsCondition);
             FindNextCommand = new AppCommand(obj => DoFindNext(), documentExistsCondition & searchPerformedCondition);
 
-            // TODO (if not opened with parameters)
+            if (configurationService.Configuration.Behavior.CloseBehavior.Value == CloseBehavior.Fluent)
+            {
+                RestoreFiles();
 
-            DoNew();
+                // OpenParameters();
+            }
+            else if (configurationService.Configuration.Behavior.CloseBehavior.Value == CloseBehavior.Standard)
+            {
+                // if (!OpenParameters())
+                DoNew();
+            }
+            else
+                throw new InvalidOperationException("Invalid close behavior!");
         }
 
         public bool CanCloseDocument(DocumentViewModel document)
@@ -130,14 +202,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 {
                     if (!document.FilenameVirtual)
                     {
-                        if (InternalSaveDocument(document))
+                        if (SaveDocument(document))
                         {
                             return true;
                         }
                     }
                     else
                     {
-                        if (InternalSaveDocumentAs(document))
+                        if (SaveDocumentAs(document))
                         {
                             return true;
                         }
@@ -150,6 +222,35 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public bool CanCloseApplication()
         {
+            switch (configurationService.Configuration.Behavior.CloseBehavior.Value)
+            {
+                case CloseBehavior.Standard:
+                    {
+                        while (documents.Count > 0)
+                        {
+                            ActiveDocument = documents[0];
+                            if (CanCloseDocument(documents[0]))
+                            {
+                                RemoveDocument(documents[0]);
+                            }
+                            else
+                            {
+                                return false;
+                            }
+                        }
+
+                        break;
+                    }
+                case CloseBehavior.Fluent:
+                    {
+                        StoreFiles();
+
+                        break;
+                    }
+                default:
+                    throw new InvalidOperationException("Unsupported close behavior!");
+            }
+
             var configSaved = configurationService.Save();
 
             if (!configSaved)

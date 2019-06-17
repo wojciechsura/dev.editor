@@ -273,4 +273,7 @@
   <data name="Message.CannotSaveConfiguration" xml:space="preserve">
     <value>Nie udało się zapisać konfiguracji. Czy na pewno chcesz wyjść?</value>
   </data>
+  <data name="Message.CannotRestoreFile" xml:space="preserve">
+    <value>Nie mogę odtworzyć pliku {0}. Błąd: {1}</value>
+  </data>
 </root>

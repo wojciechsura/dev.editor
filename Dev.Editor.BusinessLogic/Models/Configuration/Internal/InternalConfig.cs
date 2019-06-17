@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BusinessLogic.Models.Configuration
+namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
 {
-    public class InternalData : ConfigItem
+    public class InternalConfig : ConfigItem
     {
         internal const string NAME = "Internal";
 
         private readonly StoredFiles storedFiles;
 
-        public InternalData(BaseItemContainer parent) : base(NAME, parent)
+        public InternalConfig(BaseItemContainer parent) : base(NAME, parent)
         {
             storedFiles = new StoredFiles(this);
         }

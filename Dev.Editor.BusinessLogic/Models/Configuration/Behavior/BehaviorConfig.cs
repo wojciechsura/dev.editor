@@ -5,15 +5,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BusinessLogic.Models.Configuration
+namespace Dev.Editor.BusinessLogic.Models.Configuration.Behavior
 {
-    public class BehaviorData : ConfigItem
+    public class BehaviorConfig : ConfigItem
     {
         internal const string NAME = "Behavior";
 
         private readonly ConfigValue<Types.Behavior.CloseBehavior> closeBehavior;
 
-        public BehaviorData(BaseItemContainer parent) 
+        public BehaviorConfig(BaseItemContainer parent) 
             : base(NAME, parent)
         {
             closeBehavior = new ConfigValue<Types.Behavior.CloseBehavior>("CloseBehavior", this, Types.Behavior.CloseBehavior.Standard);

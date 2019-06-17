@@ -11,12 +11,12 @@ namespace Dev.Editor.BusinessLogic.Services.Config
     class ConfigrationService : IConfigurationService
     {
         private readonly IPathService pathService;
-        private readonly ConfigurationModel config;
+        private readonly ConfigModel config;
 
         public ConfigrationService(IPathService pathService)
         {
             this.pathService = pathService;
-            this.config = new ConfigurationModel();
+            this.config = new ConfigModel();
 
             var configPath = pathService.ConfigPath;
             try
@@ -42,6 +42,6 @@ namespace Dev.Editor.BusinessLogic.Services.Config
             }
         }
 
-        public ConfigurationModel Configuration => config;
+        public ConfigModel Configuration => config;
     }
 }

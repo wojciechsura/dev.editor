@@ -5,13 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BusinessLogic.Models.Configuration
+namespace Dev.Editor.BusinessLogic.Models.Configuration.Editor
 {
-    public class EditorData : ConfigItem
+    public class EditorConfig : ConfigItem
     {
         internal const string NAME = "Editor";
 
-        public EditorData(BaseItemContainer parent) : base(NAME, parent)
+        public EditorConfig(BaseItemContainer parent) : base(NAME, parent)
         {
             WordWrap = new ConfigValue<bool>("WordWrap", this, false);
             LineNumbers = new ConfigValue<bool>("LineNumbers", this, false);

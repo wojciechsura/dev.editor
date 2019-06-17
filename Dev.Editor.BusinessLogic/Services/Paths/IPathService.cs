@@ -9,5 +9,6 @@ namespace Dev.Editor.BusinessLogic.Services.Paths
     public interface IPathService
     {
         string ConfigPath { get; }
+        string StoredFilesPath { get; }
     }
 }

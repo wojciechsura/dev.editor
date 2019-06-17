@@ -9,7 +9,7 @@ namespace Dev.Editor.BusinessLogic.Services.Config
 {
     public interface IConfigurationService
     {
-        ConfigurationModel Configuration { get; }
+        ConfigModel Configuration { get; }
 
         bool Save();
     }

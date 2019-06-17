@@ -115,6 +115,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot restore file {0}. Error message: {1}.
+        /// </summary>
+        public static string Message_CannotRestoreFile {
+            get {
+                return ResourceManager.GetString("Message.CannotRestoreFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot save configuration file. Are you sure you want to exit?.
         /// </summary>
         public static string Message_CannotSaveConfiguration {

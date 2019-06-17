@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BusinessLogic.Models.Configuration
+namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
 {
     public class StoredFiles : ConfigCollection<StoredFile>
     {
