@@ -79,6 +79,8 @@
     <Compile Include="Services\Messaging\MessagingService.cs" />
     <Compile Include="Services\Paths\IPathService.cs" />
     <Compile Include="Services\Paths\PathService.cs" />
+    <Compile Include="Services\StartupInfo\IStartupInfoService.cs" />
+    <Compile Include="Services\StartupInfo\StartupInfoService.cs" />
     <Compile Include="Types\Behavior\CloseBehavior.cs" />
     <Compile Include="Types\Search\SearchMode.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />

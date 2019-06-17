@@ -21,6 +21,7 @@ using Dev.Editor.BusinessLogic.Services.Config;
 using Dev.Editor.BusinessLogic.Types.Behavior;
 using Dev.Editor.BusinessLogic.Models.Configuration.Internal;
 using Dev.Editor.BusinessLogic.Services.Paths;
+using Dev.Editor.BusinessLogic.Services.StartupInfo;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -33,6 +34,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly IMessagingService messagingService;
         private readonly IConfigurationService configurationService;
         private readonly IPathService pathService;
+        private readonly IStartupInfoService startupInfoService;
 
         private readonly ObservableCollection<DocumentViewModel> documents;
         private DocumentViewModel activeDocument;
@@ -127,19 +129,46 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
+        private bool OpenParameters()
+        {
+            bool anyDocumentLoaded = false;
+
+            for (int i = 0; i < startupInfoService.Parameters.Length; i++)
+            {
+                string param = startupInfoService.Parameters[i];
+
+                if (File.Exists(param))
+                {
+                    try
+                    {
+                        LoadDocument(param);
+                        anyDocumentLoaded = true;
+                    }
+                    catch (Exception e)
+                    {
+                        messagingService.ShowError(string.Format(Strings.Message_CannotOpenFile, param, e.Message));
+                    }
+                }
+            }
+
+            return anyDocumentLoaded;
+        }
+
         // Public methods -----------------------------------------------------
 
         public MainWindowViewModel(IMainWindowAccess access, 
             IDialogService dialogService, 
             IMessagingService messagingService,
             IConfigurationService configurationService,
-            IPathService pathService)
+            IPathService pathService,
+            IStartupInfoService startupInfoService)
         {
             this.access = access;
             this.dialogService = dialogService;
             this.messagingService = messagingService;
             this.configurationService = configurationService;
             this.pathService = pathService;
+            this.startupInfoService = startupInfoService;
 
             wordWrap = configurationService.Configuration.Editor.WordWrap.Value;
             lineNumbers = configurationService.Configuration.Editor.LineNumbers.Value;
@@ -173,12 +202,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             {
                 RestoreFiles();
 
-                // OpenParameters();
+                OpenParameters();
+
+                if (documents.Count == 0)
+                    DoNew();
             }
             else if (configurationService.Configuration.Behavior.CloseBehavior.Value == CloseBehavior.Standard)
             {
-                // if (!OpenParameters())
-                DoNew();
+                if (!OpenParameters())
+                    DoNew();
             }
             else
                 throw new InvalidOperationException("Invalid close behavior!");

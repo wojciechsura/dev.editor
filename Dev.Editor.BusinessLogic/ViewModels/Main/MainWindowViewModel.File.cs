@@ -77,6 +77,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             document.FilenameVirtual = false;
         }
 
+        private void LoadDocument(string filename)
+        {
+            foreach (var document in documents)
+            {
+                if (string.Equals(document.FileName.ToLower(), filename.ToLower()))
+                {
+                    ActiveDocument = document;
+                    return;
+                }
+            }
+
+            InternalAddDocument(document =>
+            {
+                InternalLoadDocument(document, filename);
+            });
+        }
+
 		private bool SaveDocument(DocumentViewModel document)
         {
             if (document.FilenameVirtual)
@@ -116,10 +133,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             {
                 try
                 {
-                    InternalAddDocument(document =>
-                    {
-                        InternalLoadDocument(document, dialogResult.FileName);
-                    });
+                    LoadDocument(dialogResult.FileName);                    
                 }
                 catch (Exception e)
                 {

@@ -51,7 +51,7 @@ namespace Dev.Editor
 
         public MainWindow()
         {
-            InitializeComponent();
+            InitializeComponent();            
 
             viewModel = Dependencies.Container.Instance.Resolve<MainWindowViewModel>(new ParameterOverride("access", this));
             DataContext = viewModel;
