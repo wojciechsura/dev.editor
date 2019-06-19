@@ -22,6 +22,7 @@ using Dev.Editor.BusinessLogic.Types.Behavior;
 using Dev.Editor.BusinessLogic.Models.Configuration.Internal;
 using Dev.Editor.BusinessLogic.Services.Paths;
 using Dev.Editor.BusinessLogic.Services.StartupInfo;
+using Dev.Editor.BusinessLogic.Services.Highlighting;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -35,6 +36,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly IConfigurationService configurationService;
         private readonly IPathService pathService;
         private readonly IStartupInfoService startupInfoService;
+        private readonly IHighlightingProvider highlightingProvider;
 
         private readonly ObservableCollection<DocumentViewModel> documents;
         private DocumentViewModel activeDocument;
@@ -161,7 +163,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             IMessagingService messagingService,
             IConfigurationService configurationService,
             IPathService pathService,
-            IStartupInfoService startupInfoService)
+            IStartupInfoService startupInfoService,
+            IHighlightingProvider highlightingProvider)
         {
             this.access = access;
             this.dialogService = dialogService;
@@ -169,6 +172,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             this.configurationService = configurationService;
             this.pathService = pathService;
             this.startupInfoService = startupInfoService;
+            this.highlightingProvider = highlightingProvider;
 
             wordWrap = configurationService.Configuration.Editor.WordWrap.Value;
             lineNumbers = configurationService.Configuration.Editor.LineNumbers.Value;

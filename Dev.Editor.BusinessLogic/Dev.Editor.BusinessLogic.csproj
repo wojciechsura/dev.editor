@@ -37,6 +37,7 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -67,6 +68,7 @@
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
     <Compile Include="Models\Dialogs\SaveDialogResult.cs" />
     <Compile Include="Models\Documents\DocumentState.cs" />
+    <Compile Include="Models\Highlighting\HighlightingInfo.cs" />
     <Compile Include="Models\Search\ReplaceAllModel.cs" />
     <Compile Include="Models\Search\ReplaceModel.cs" />
     <Compile Include="Models\Search\SearchModel.cs" />
@@ -75,6 +77,8 @@
     <Compile Include="Services\Configuration\ConfigurationService.cs" />
     <Compile Include="Services\Configuration\IConfigurationService.cs" />
     <Compile Include="Services\Dialogs\IDialogService.cs" />
+    <Compile Include="Services\Highlighting\HighlightingProvider.cs" />
+    <Compile Include="Services\Highlighting\IHighlightingProvider.cs" />
     <Compile Include="Services\Messaging\IMessagingService.cs" />
     <Compile Include="Services\Messaging\MessagingService.cs" />
     <Compile Include="Services\Paths\IPathService.cs" />
@@ -119,6 +123,25 @@
     <Compile Include="ViewModels\Main\MainWindowViewModel.File.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Search.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.SearchHost.cs" />
+    <EmbeddedResource Include="Resources\Highlighting\ASPX.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\Boo.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\Coco-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\CPP-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\CSharp-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\CSS-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\HTML-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\Java-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\JavaScript-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\MarkDown-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\Patch-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\PHP-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\PowerShell.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\Python-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\Tex-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\TSQL-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\VB-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\XML-Mode.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\XmlDoc.xshd" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
