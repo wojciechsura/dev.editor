@@ -75,6 +75,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             document.Document.UndoStack.ClearAll();
             document.Document.UndoStack.MarkAsOriginalFile();
             document.FilenameVirtual = false;
+            document.Highlighting = highlightingProvider.GetDefinitionByExtension(Path.GetExtension(filename));
         }
 
         private void LoadDocument(string filename)

@@ -10,6 +10,7 @@
                 <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Generic.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <c:NullToBoolConverter x:Key="NullToBoolConverter" />
             <c:RadioToEnumConverter x:Key="RadioToEnumConverter" />
 
             <Thickness x:Key="DialogWindowPadding" Top="10" Left="10" Right="10" Bottom="10" />

@@ -92,6 +92,7 @@
     <Compile Include="Controls\DocumentView.xaml.cs">
       <DependentUpon>DocumentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\NullToBoolConverter.cs" />
     <Compile Include="Converters\RadioToEnumConverter.cs" />
     <Compile Include="Dependencies\Configuration.cs" />
     <Compile Include="SearchReplaceWindow.xaml.cs">
