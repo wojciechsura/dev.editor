@@ -158,6 +158,24 @@
 
                 </f:RibbonGroupBox>
                 
+                <!-- Syntax highlighting -->
+
+                <f:RibbonGroupBox Header="#Syntax highlighting">
+
+                    <f:Gallery ItemsSource="{Binding Highlightings}" ItemWidth="64" ScrollViewer.VerticalScrollBarVisibility="Auto"
+                               Orientation="Horizontal" MinItemsInRow="8" MaxItemsInRow="12">
+                        <f:Gallery.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel Orientation="Vertical">
+                                    <Image Width="32" Height="32" Source="{Binding Icon}"/>
+                                    <Label Content="{Binding Name}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </f:Gallery.ItemTemplate>
+                    </f:Gallery>
+
+                </f:RibbonGroupBox>
+                
             </f:RibbonTabItem>
         
         </f:Ribbon>

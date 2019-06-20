@@ -282,31 +282,31 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Highlighting\Resources\ASPX.xshd" />
-    <None Include="Highlighting\Resources\Boo.xshd" />
-    <None Include="Highlighting\Resources\Coco-Mode.xshd" />
-    <None Include="Highlighting\Resources\CPP-Mode.xshd" />
-    <None Include="Highlighting\Resources\CSharp-Mode.xshd" />
-    <None Include="Highlighting\Resources\CSS-Mode.xshd" />
-    <None Include="Highlighting\Resources\HTML-Mode.xshd" />
-    <None Include="Highlighting\Resources\Java-Mode.xshd" />
-    <None Include="Highlighting\Resources\JavaScript-Mode.xshd" />
-    <None Include="Highlighting\Resources\MarkDown-Mode.xshd" />
-    <None Include="Highlighting\Resources\ModeV1.xsd">
+    <EmbeddedResource Include="Highlighting\Resources\ASPX.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\Boo.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\Coco-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\CPP-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\CSharp-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\CSS-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\HTML-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\Java-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\JavaScript-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\MarkDown-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\ModeV1.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Highlighting\Resources\ModeV2.xsd">
+    </EmbeddedResource>
+    <EmbeddedResource Include="Highlighting\Resources\ModeV2.xsd">
       <SubType>Designer</SubType>
-    </None>
-    <None Include="Highlighting\Resources\Patch-Mode.xshd" />
-    <None Include="Highlighting\Resources\PHP-Mode.xshd" />
-    <None Include="Highlighting\Resources\PowerShell.xshd" />
-    <None Include="Highlighting\Resources\Python-Mode.xshd" />
-    <None Include="Highlighting\Resources\Tex-Mode.xshd" />
-    <None Include="Highlighting\Resources\TSQL-Mode.xshd" />
-    <None Include="Highlighting\Resources\VB-Mode.xshd" />
-    <None Include="Highlighting\Resources\XML-Mode.xshd" />
-    <None Include="Highlighting\Resources\XmlDoc.xshd" />
+    </EmbeddedResource>
+    <EmbeddedResource Include="Highlighting\Resources\Patch-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\PHP-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\PowerShell.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\Python-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\Tex-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\TSQL-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\VB-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\XML-Mode.xshd" />
+    <EmbeddedResource Include="Highlighting\Resources\XmlDoc.xshd" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -345,6 +345,12 @@
     <Resource Include="Search\next.png" />
     <Resource Include="Search\prev.png" />
     <Resource Include="themes\RightArrow.cur" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Highlighting\html.png" />
+    <Resource Include="Highlighting\js.png" />
+    <Resource Include="Highlighting\php.png" />
+    <Resource Include="Highlighting\python.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

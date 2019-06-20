@@ -23,6 +23,7 @@ using Dev.Editor.BusinessLogic.Models.Configuration.Internal;
 using Dev.Editor.BusinessLogic.Services.Paths;
 using Dev.Editor.BusinessLogic.Services.StartupInfo;
 using Dev.Editor.BusinessLogic.Services.Highlighting;
+using Dev.Editor.BusinessLogic.Models.Highlighting;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -40,6 +41,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private readonly ObservableCollection<DocumentViewModel> documents;
         private DocumentViewModel activeDocument;
+        private readonly List<HighlightingInfo> highlightings;
 
         private readonly Condition documentExistsCondition;
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> canUndoCondition;
@@ -179,6 +181,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             documents = new ObservableCollection<DocumentViewModel>();
 
+            highlightings = new List<HighlightingInfo>(highlightingProvider.HighlightingDefinitions);
+            highlightings.Sort((h1, h2) => h1.Name.CompareTo(h2.Name));
+
             documentExistsCondition = new Condition(activeDocument != null);
 
             canUndoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanUndo, false);
@@ -312,5 +317,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             get => activeDocument;
             set => Set(ref activeDocument, () => ActiveDocument, value, HandleActiveDocumentChanged);
         }
+
+        public IReadOnlyList<HighlightingInfo> Highlightings => highlightings;
     }
 }
