@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dev.Editor.BusinessLogic.Models.Documents;
+using Dev.Editor.BusinessLogic.Models.Highlighting;
 using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.Common.Conditions;
@@ -32,6 +33,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         private IEditorAccess editorAccess;
         private SearchModel lastSearch;
+        private HighlightingInfo highlighting;
 
         // Private methods ----------------------------------------------------
 
@@ -50,7 +52,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
                 this.Changed = !document.UndoStack.IsOriginalFile;
         }
 
-        private void ValidateEditoAccess()
+        private void ValidateEditorAccess()
         {
             if (editorAccess == null)
                 throw new InvalidOperationException("No editor attached!");
@@ -109,19 +111,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         public void Copy()
         {
-            ValidateEditoAccess();
+            ValidateEditorAccess();
             editorAccess.Copy();
         }
 
         public void Cut()
         {
-            ValidateEditoAccess();
+            ValidateEditorAccess();
             editorAccess.Cut();
         }
 
         public void Paste()
         {
-            ValidateEditoAccess();
+            ValidateEditorAccess();
             editorAccess.Paste();
         }
 
@@ -197,6 +199,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         {
             get => regularSelectionAvailable;
             set => Set(ref regularSelectionAvailable, () => RegularSelectionAvailable, value);
+        }
+
+        public HighlightingInfo Highlighting
+        {
+            get => highlighting;
+            set => Set(ref highlighting, () => Highlighting, value);
         }
 
         public IDocumentHandler Handler => handler;

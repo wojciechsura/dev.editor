@@ -102,6 +102,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 storedFile.FilenameIsVirtual.Value = document.FilenameVirtual;
                 storedFile.IsDirty.Value = document.Changed;
                 storedFile.StoredFilename.Value = storedFilename;
+                storedFile.HighlightingName.Value = document.Highlighting?.Name;
 
                 configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
             }
@@ -124,6 +125,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                         document.FileName = storedFile.Filename.Value;
                         document.FilenameVirtual = storedFile.FilenameIsVirtual.Value;
                         document.Changed = storedFile.IsDirty.Value;
+                        document.Highlighting = highlightingProvider.GetDefinitionByName(storedFile.HighlightingName.Value);
                     });
                 }
                 catch (Exception e)

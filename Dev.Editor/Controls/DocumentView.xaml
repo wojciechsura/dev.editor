@@ -13,7 +13,8 @@
                    Loaded="HandleLoaded"
                    Unloaded="HandleUnloaded"
                    WordWrap="{Binding Handler.WordWrap}"
-                   ShowLineNumbers="{Binding Handler.LineNumbers}">
+                   ShowLineNumbers="{Binding Handler.LineNumbers}"
+                   SyntaxHighlighting="{Binding Highlighting.Definition}">
         
     </ae:TextEditor>
 </UserControl>

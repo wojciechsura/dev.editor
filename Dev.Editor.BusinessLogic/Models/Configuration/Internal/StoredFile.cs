@@ -15,6 +15,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
         private readonly ConfigValue<bool> isDirty;
         private readonly ConfigValue<bool> flienameIsVirtual;
         private readonly ConfigValue<string> storedFilename;
+        private readonly ConfigValue<string> highlightingName;
 
         public StoredFile() 
             : base(NAME)
@@ -23,6 +24,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
             isDirty = new ConfigValue<bool>("IsDirty", this);
             flienameIsVirtual = new ConfigValue<bool>("FilenameIsVirtual", this);
             storedFilename = new ConfigValue<string>("StoredFilename", this);
+            highlightingName = new ConfigValue<string>("HighlightingName", this);
         }
 
         public ConfigValue<string> Filename => filename;
@@ -32,5 +34,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
         public ConfigValue<bool> FilenameIsVirtual => flienameIsVirtual;
 
         public ConfigValue<string> StoredFilename => storedFilename;
+
+        public ConfigValue<string> HighlightingName => highlightingName;
     }
 }

@@ -276,4 +276,10 @@
   <data name="Message.CannotRestoreFile" xml:space="preserve">
     <value>Cannot restore file {0}. Error message: {1}</value>
   </data>
+  <data name="Ribbon.View.SyntaxHighlighting" xml:space="preserve">
+    <value>Syntax highlighting</value>
+  </data>
+  <data name="SyntaxHighlighting.None" xml:space="preserve">
+    <value>(none)</value>
+  </data>
 </root>

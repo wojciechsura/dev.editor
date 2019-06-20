@@ -123,6 +123,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     i++;
 
                 newDocument.Document.FileName = GenerateBlankFileName(i);
+                newDocument.Highlighting = highlightingProvider.EmptyHighlighting;
             });            
         }
 

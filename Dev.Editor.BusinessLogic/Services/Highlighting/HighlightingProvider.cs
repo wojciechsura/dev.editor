@@ -191,8 +191,17 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
             return emptyHighlighting;
         }
 
+        public HighlightingInfo GetDefinitionByName(string name)
+        {
+            return highlightingInfos
+                .FirstOrDefault(hi => String.Equals(hi.Name, name))
+                ?? emptyHighlighting;
+        }
+
         // Public properties --------------------------------------------------
 
         public IReadOnlyList<HighlightingInfo> HighlightingDefinitions => highlightingInfos;
+
+        public HighlightingInfo EmptyHighlighting => emptyHighlighting;
     }
 }

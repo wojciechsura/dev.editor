@@ -276,4 +276,10 @@
   <data name="Message.CannotRestoreFile" xml:space="preserve">
     <value>Nie mogę odtworzyć pliku {0}. Błąd: {1}</value>
   </data>
+  <data name="Ribbon.View.SyntaxHighlighting" xml:space="preserve">
+    <value>Kolorowanie składni</value>
+  </data>
+  <data name="SyntaxHighlighting.None" xml:space="preserve">
+    <value>(brak)</value>
+  </data>
 </root>

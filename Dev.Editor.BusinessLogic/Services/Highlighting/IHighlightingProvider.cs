@@ -10,7 +10,9 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
 {
     public interface IHighlightingProvider
     {
-        HighlightingInfo GetDefinitionByExtension(string extension);        
+        HighlightingInfo GetDefinitionByExtension(string extension);
+        HighlightingInfo GetDefinitionByName(string value);
         IReadOnlyList<HighlightingInfo> HighlightingDefinitions { get; }
+        HighlightingInfo EmptyHighlighting { get; }
     }
 }
