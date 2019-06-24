@@ -1,4 +1,5 @@
-﻿using ICSharpCode.AvalonEdit.Highlighting;
+﻿using Dev.Editor.BusinessLogic.Types.Folding;
+using ICSharpCode.AvalonEdit.Highlighting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,11 +11,12 @@ namespace Dev.Editor.BusinessLogic.Models.Highlighting
 {
     public class HighlightingInfo
     {
-        public HighlightingInfo(string name, IHighlightingDefinition definition, ImageSource icon)
+        public HighlightingInfo(string name, IHighlightingDefinition definition, ImageSource icon, FoldingKind foldingKind)
         {
             Name = name;
             Definition = definition;
             Icon = icon;
+            FoldingKind = foldingKind;
         }
 
         public string Name { get; }
@@ -22,5 +24,7 @@ namespace Dev.Editor.BusinessLogic.Models.Highlighting
         public IHighlightingDefinition Definition { get; }
 
         public ImageSource Icon { get; }
+
+        public FoldingKind FoldingKind { get; }
     }
 }

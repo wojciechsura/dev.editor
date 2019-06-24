@@ -69,6 +69,7 @@
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
     <Compile Include="Models\Dialogs\SaveDialogResult.cs" />
     <Compile Include="Models\Documents\DocumentState.cs" />
+    <Compile Include="Models\Documents\FoldSectionState.cs" />
     <Compile Include="Models\Highlighting\HighlightingInfo.cs" />
     <Compile Include="Models\Search\ReplaceAllModel.cs" />
     <Compile Include="Models\Search\ReplaceModel.cs" />
@@ -87,6 +88,7 @@
     <Compile Include="Services\StartupInfo\IStartupInfoService.cs" />
     <Compile Include="Services\StartupInfo\StartupInfoService.cs" />
     <Compile Include="Types\Behavior\CloseBehavior.cs" />
+    <Compile Include="Types\Folding\FoldingKind.cs" />
     <Compile Include="Types\Search\SearchMode.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Document\DocumentViewModel.cs" />
@@ -125,8 +127,6 @@
     <Compile Include="ViewModels\Main\MainWindowViewModel.Search.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.SearchHost.cs" />
     <EmbeddedResource Include="Resources\Highlighting\ASPX.xshd" />
-    <EmbeddedResource Include="Resources\Highlighting\Boo.xshd" />
-    <EmbeddedResource Include="Resources\Highlighting\Coco-Mode.xshd" />
     <EmbeddedResource Include="Resources\Highlighting\CPP-Mode.xshd" />
     <EmbeddedResource Include="Resources\Highlighting\CSharp-Mode.xshd" />
     <EmbeddedResource Include="Resources\Highlighting\CSS-Mode.xshd" />
@@ -152,6 +152,17 @@
     <EmbeddedResource Include="Resources\Highlighting\js.png" />
     <EmbeddedResource Include="Resources\Highlighting\php.png" />
     <EmbeddedResource Include="Resources\Highlighting\python.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Highlighting\asp.png" />
+    <EmbeddedResource Include="Resources\Highlighting\java.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Highlighting\powershell.png" />
+    <EmbeddedResource Include="Resources\Highlighting\sql.png" />
+    <EmbeddedResource Include="Resources\Highlighting\tex.png" />
+    <EmbeddedResource Include="Resources\Highlighting\vb.png" />
+    <EmbeddedResource Include="Resources\Highlighting\xml.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -73,7 +73,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 if (index > 0 && index < documents.Count)
                     ActiveDocument = documents[index];
                 else
-                    ActiveDocument = null;
+                    ActiveDocument = null;                
             }
         }
 

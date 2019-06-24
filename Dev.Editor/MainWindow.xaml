@@ -160,7 +160,7 @@
                 
                 <!-- Syntax highlighting -->
 
-                <f:RibbonGroupBox Header="#Syntax highlighting">
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_SyntaxHighlighting}">
 
                     <f:Gallery ItemsSource="{Binding Highlightings}" ItemWidth="64" ScrollViewer.VerticalScrollBarVisibility="Auto"
                                Orientation="Horizontal" MinItemsInRow="8" MaxItemsInRow="12" SelectedItem="{Binding ActiveDocument.Highlighting}"

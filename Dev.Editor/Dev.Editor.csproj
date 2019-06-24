@@ -154,6 +154,10 @@
       <Project>{6f537829-9bf6-428c-95fd-00170e8acc60}</Project>
       <Name>Dev.Editor.Resources</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ICSharpCode.AvalonEdit.Dev.Editor\ICSharpCode.AvalonEdit.Dev.Editor.csproj">
+      <Project>{6E2C1F8C-8858-4F4B-B0F6-DD13DB8DDF73}</Project>
+      <Name>ICSharpCode.AvalonEdit.Dev.Editor</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
       <Project>{7df2e8a9-9eb7-442c-91b4-073dac5eb54c}</Project>
       <Name>ICSharpCode.AvalonEdit</Name>

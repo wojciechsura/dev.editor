@@ -8,13 +8,19 @@ namespace Dev.Editor.BusinessLogic.Models.Documents
 {
     public class DocumentState
     {
-        public DocumentState(int caretOffset, int selectionStart, int selectionLength, double horizontalOffset, double verticalOffset)
+        public DocumentState(int caretOffset, 
+            int selectionStart, 
+            int selectionLength, 
+            double horizontalOffset, 
+            double verticalOffset,
+            List<FoldSectionState> foldSections)
         {
             CaretOffset = caretOffset;
             SelectionStart = selectionStart;
             SelectionLength = selectionLength;
             HorizontalOffset = horizontalOffset;
             VerticalOffset = verticalOffset;
+            FoldSections = foldSections;
         }
 
         public int CaretOffset { get; }
@@ -26,5 +32,7 @@ namespace Dev.Editor.BusinessLogic.Models.Documents
         public double HorizontalOffset { get; }
 
         public double VerticalOffset { get; }
+
+        public List<FoldSectionState> FoldSections { get; }
     }
 }

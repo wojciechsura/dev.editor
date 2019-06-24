@@ -1,4 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Highlighting;
+using Dev.Editor.BusinessLogic.Types.Folding;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using System;
@@ -44,7 +45,11 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
             return HighlightingLoader.Load(xshd, this);
         }
 
-        private void RegisterHighlighting(string name, string[] extensions, string resourceName, string iconResourceName)
+        private void RegisterHighlighting(string name, 
+            string[] extensions, 
+            string resourceName, 
+            string iconResourceName, 
+            FoldingKind foldingKind)
         {
             ImageSource icon = null;
             if (iconResourceName != null)
@@ -62,7 +67,7 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
                 }
             }
 
-            var info = new HighlightingInfo(name, LoadDefinition(resourceName), icon);
+            var info = new HighlightingInfo(name, LoadDefinition(resourceName), icon, foldingKind);
             highlightingInfos.Add(info);
 
             if (extensions != null)
@@ -82,103 +87,110 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
 
         public HighlightingProvider()
         {
-            emptyHighlighting = new HighlightingInfo("#(none)", null, null);
+            emptyHighlighting = new HighlightingInfo("#(none)", null, null, FoldingKind.None);
             highlightingInfos.Add(emptyHighlighting);
 
             RegisterHighlighting("XmlDoc", 
                 null, 
                 "XmlDoc.xshd",
-                null);
+                null,
+                FoldingKind.None);
 
             RegisterHighlighting("C#", 
                 new[] { ".cs" },
                 "CSharp-Mode.xshd",
-                "cs.png");
+                "cs.png",
+                FoldingKind.Braces);
 
             RegisterHighlighting("JavaScript", 
                 new[] { ".js" },
                 "JavaScript-Mode.xshd",
-                "js.png");
+                "js.png",
+                FoldingKind.Braces);
 
             RegisterHighlighting("HTML", 
                 new[] { ".htm", ".html" },
                 "HTML-Mode.xshd",
-                "html.png");
+                "html.png",
+                FoldingKind.None);
 
             RegisterHighlighting("ASP", 
                 new[] { ".asp", ".aspx", ".asax", ".asmx", ".ascx", ".master" },
                 "ASPX.xshd",
-                null);
-
-            RegisterHighlighting("Boo", 
-                new[] { ".boo" },
-                "Boo.xshd",
-                null);
-
-            RegisterHighlighting("Coco", 
-                new[] { ".atg" },
-                "Coco-Mode.xshd",
-                null);
+                "asp.png",
+                FoldingKind.None);
 
             RegisterHighlighting("CSS", 
                 new[] { ".css" },
                 "CSS-Mode.xshd",
-                "css.png");
+                "css.png",
+                FoldingKind.Braces);
 
             RegisterHighlighting("C++", 
                 new[] { ".c", ".h", ".cc", ".cpp", ".hpp" },
                 "CPP-Mode.xshd",
-                "cpp.png");
+                "cpp.png",
+                FoldingKind.Braces);
 
             RegisterHighlighting("Java", 
                 new[] { ".java" },
                 "Java-Mode.xshd",
-                null);
+                "java.png",
+                FoldingKind.Braces);
 
             RegisterHighlighting("Patch", 
                 new[] { ".patch", ".diff" },
                 "Patch-Mode.xshd",
-                null);
+                null,
+                FoldingKind.None);
 
             RegisterHighlighting("PowerShell", 
                 new[] { ".ps1", ".psm1", ".psd1" },
                 "PowerShell.xshd",
-                null);
+                "powershell.png",
+                FoldingKind.Braces);
 
             RegisterHighlighting("PHP", 
                 new[] { ".php" },
                 "PHP-Mode.xshd",
-                "php.png");
+                "php.png",
+                FoldingKind.Braces);
 
             RegisterHighlighting("Python", 
                 new[] { ".py", ".pyw" },
                 "Python-Mode.xshd",
-                "python.png");
+                "python.png",
+                FoldingKind.None);
 
             RegisterHighlighting("TeX", 
                 new[] { ".tex" },
                 "Tex-Mode.xshd",
-                null);
+                "tex.png",
+                FoldingKind.None);
 
             RegisterHighlighting("TSQL", 
                 new[] { ".sql" },
                 "TSQL-Mode.xshd",
-                null);
+                "sql.png",
+                FoldingKind.None);
 
             RegisterHighlighting("VB", 
                 new[] { ".vb" },
                 "VB-Mode.xshd",
-                null);
+                "vb.png",
+                FoldingKind.None);
 
             RegisterHighlighting("XML", 
                 new[] {".xml", ".xsl", ".xslt", ".xsd", ".manifest", ".config", ".addin", ".xshd", ".wxs", ".wxi", ".wxl", ".proj", ".csproj", ".vbproj", ".ilproj", ".booproj", ".build", ".xfrm", ".targets", ".xaml", ".xpt", ".xft", ".map", ".wsdl", ".disco", ".ps1xml", ".nuspec" },
                 "XML-Mode.xshd",
-                null);
+                "xml.png",
+                FoldingKind.Xml);
 
             RegisterHighlighting("MarkDown", 
                 new[] { ".md" },
                 "MarkDown-Mode.xshd",
-                null);
+                null,
+                FoldingKind.None);
 
             highlightingInfos.Sort((i1, i2) => i1.Name.CompareTo(i2.Name));
         }
