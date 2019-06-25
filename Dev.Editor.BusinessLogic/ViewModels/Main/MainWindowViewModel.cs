@@ -124,7 +124,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                         document.FileName = storedFile.Filename.Value;
                         document.FilenameVirtual = storedFile.FilenameIsVirtual.Value;
-                        document.Changed = storedFile.IsDirty.Value;
+
+                        if (!storedFile.IsDirty.Value)
+                        {
+                            document.Document.UndoStack.MarkAsOriginalFile();
+                        }
+                        else
+                        {
+                            document.Document.UndoStack.DiscardOriginalFileMarker();
+                        }
                         document.Highlighting = highlightingProvider.GetDefinitionByName(storedFile.HighlightingName.Value);
                     });
                 }
