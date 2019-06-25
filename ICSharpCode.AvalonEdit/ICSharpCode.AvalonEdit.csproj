@@ -346,11 +346,5 @@
     <Resource Include="Search\prev.png" />
     <Resource Include="themes\RightArrow.cur" />
   </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Highlighting\html.png" />
-    <Resource Include="Highlighting\js.png" />
-    <Resource Include="Highlighting\php.png" />
-    <Resource Include="Highlighting\python.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

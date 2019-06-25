@@ -11,12 +11,13 @@ namespace Dev.Editor.BusinessLogic.Models.Highlighting
 {
     public class HighlightingInfo
     {
-        public HighlightingInfo(string name, IHighlightingDefinition definition, ImageSource icon, FoldingKind foldingKind)
+        public HighlightingInfo(string name, IHighlightingDefinition definition, ImageSource icon, FoldingKind foldingKind, bool hidden)
         {
             Name = name;
             Definition = definition;
             Icon = icon;
             FoldingKind = foldingKind;
+            Hidden = hidden;
         }
 
         public string Name { get; }
@@ -26,5 +27,9 @@ namespace Dev.Editor.BusinessLogic.Models.Highlighting
         public ImageSource Icon { get; }
 
         public FoldingKind FoldingKind { get; }
+
+        public bool Hidden { get; }
+
+        public string Initial => Name.Substring(0, 1);
     }
 }

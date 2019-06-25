@@ -162,18 +162,23 @@
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_SyntaxHighlighting}">
 
-                    <f:Gallery ItemsSource="{Binding Highlightings}" ItemWidth="64" ScrollViewer.VerticalScrollBarVisibility="Auto"
-                               Orientation="Horizontal" MinItemsInRow="8" MaxItemsInRow="12" SelectedItem="{Binding ActiveDocument.Highlighting}"
-                               IsEnabled="{Binding ActiveDocument, Converter={StaticResource NullToBoolConverter}}">
-                        <f:Gallery.ItemTemplate>
+                    <f:InRibbonGallery ItemsSource="{Binding Highlightings}" 
+                                       ItemWidth="80"
+                                       ItemHeight="58"
+                                       MinItemsInRow="6" 
+                                       MaxItemsInRow="8" 
+                                       SelectedItem="{Binding ActiveDocument.Highlighting}"
+                                       IsEnabled="{Binding ActiveDocument, Converter={StaticResource NullToBoolConverter}}"
+                                       GroupBy="Initial">
+                        <f:InRibbonGallery.ItemTemplate>
                             <DataTemplate>
                                 <StackPanel Orientation="Vertical">
                                     <Image Width="32" Height="32" Source="{Binding Icon}"/>
                                     <Label Content="{Binding Name}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
                                 </StackPanel>
                             </DataTemplate>
-                        </f:Gallery.ItemTemplate>
-                    </f:Gallery>
+                        </f:InRibbonGallery.ItemTemplate>
+                    </f:InRibbonGallery>
 
                 </f:RibbonGroupBox>
                 

@@ -31,7 +31,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void InternalWriteDocument(DocumentViewModel document, string filename)
         {
-            using (var fs = new FileStream(filename, FileMode.OpenOrCreate, FileAccess.Write))
+            using (var fs = new FileStream(filename, FileMode.Create, FileAccess.Write))
             {
                 using (var writer = new StreamWriter(fs))
                 {
