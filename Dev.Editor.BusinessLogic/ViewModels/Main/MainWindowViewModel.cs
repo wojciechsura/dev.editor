@@ -209,6 +209,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             ReplaceCommand = new AppCommand(obj => DoReplace(), documentExistsCondition);
             FindNextCommand = new AppCommand(obj => DoFindNext(), documentExistsCondition & searchPerformedCondition);
 
+            SortLinesAscendingCommand = new AppCommand(obj => DoSortAscending(), documentExistsCondition);
+            SortLinesDescendingCommand = new AppCommand(obj => DoSortDescending(), documentExistsCondition);
+                
             if (configurationService.Configuration.Behavior.CloseBehavior.Value == CloseBehavior.Fluent)
             {
                 RestoreFiles();

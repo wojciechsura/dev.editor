@@ -97,6 +97,7 @@
     <Compile Include="ViewModels\Main\IMainWindowAccess.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Commands.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\Main\MainWindowViewModel.Lines.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.View.Editor.cs" />
     <Compile Include="ViewModels\Search\ISearchHost.cs" />
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />

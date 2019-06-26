@@ -1,0 +1,17 @@
+Icons
+
+* Gloss: Basic by Momenticons (cc-by)
+http://momentumdesignlab.com/
+
+* Must Have by VisualPharm (Ivan Boyko) (cc-by)
+http://www.visualpharm.com/
+
+Libraries
+
+* AvalonEdit (MIT)
+* AvalonDock (MS-PL)
+
+Used code
+
+* Edi (MIT)
+https://github.com/Dirkster99/Edi

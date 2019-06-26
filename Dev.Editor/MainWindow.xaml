@@ -184,6 +184,28 @@
                 
             </f:RibbonTabItem>
         
+            <!-- Lines tab -->
+
+            <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_Lines}">
+                
+                <!-- Ordering -->
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Group_Ordering}">
+
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Ordering_SortAscending}" Command="{Binding SortLinesAscendingCommand}"
+                              SizeDefinition="Large" 
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/SortAscending32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/SortAscending16.png"/>
+
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Ordering_SortDescending}" Command="{Binding SortLinesDescendingCommand}" 
+                              SizeDefinition="Large" 
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/SortDescending32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/SortDescending16.png"/>
+
+                </f:RibbonGroupBox>
+                
+            </f:RibbonTabItem>
+            
         </f:Ribbon>
 
         <ad:DockingManager x:Name="dmManager" Grid.Row="1" DocumentsSource="{Binding Documents}"

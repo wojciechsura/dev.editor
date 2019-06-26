@@ -282,4 +282,16 @@
   <data name="SyntaxHighlighting.None" xml:space="preserve">
     <value>(none)</value>
   </data>
+  <data name="Ribbon.Tab.Lines" xml:space="preserve">
+    <value>Lines</value>
+  </data>
+  <data name="Ribbon.Group.Ordering" xml:space="preserve">
+    <value>Ordering</value>
+  </data>
+  <data name="Ribbon.Ordering.SortAscending" xml:space="preserve">
+    <value>Sort ascending</value>
+  </data>
+  <data name="Ribbon.Ordering.SortDescending" xml:space="preserve">
+    <value>Sort descending</value>
+  </data>
 </root>

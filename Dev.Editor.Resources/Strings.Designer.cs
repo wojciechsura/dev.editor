@@ -295,11 +295,38 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Ordering.
+        /// </summary>
+        public static string Ribbon_Group_Ordering {
+            get {
+                return ResourceManager.GetString("Ribbon.Group.Ordering", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Search.
         /// </summary>
         public static string Ribbon_Group_Search {
             get {
                 return ResourceManager.GetString("Ribbon.Group.Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Sort ascending.
+        /// </summary>
+        public static string Ribbon_Ordering_SortAscending {
+            get {
+                return ResourceManager.GetString("Ribbon.Ordering.SortAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Sort descending.
+        /// </summary>
+        public static string Ribbon_Ordering_SortDescending {
+            get {
+                return ResourceManager.GetString("Ribbon.Ordering.SortDescending", resourceCulture);
             }
         }
         
@@ -336,6 +363,15 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Tab_Home {
             get {
                 return ResourceManager.GetString("Ribbon.Tab.Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Lines.
+        /// </summary>
+        public static string Ribbon_Tab_Lines {
+            get {
+                return ResourceManager.GetString("Ribbon.Tab.Lines", resourceCulture);
             }
         }
         
