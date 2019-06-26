@@ -99,6 +99,7 @@
       <DependentUpon>SearchReplaceWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Services\Dialogs\DialogService.cs" />
+    <Compile Include="Services\ImageResources\ImageResources.cs" />
     <Page Include="Controls\DocumentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

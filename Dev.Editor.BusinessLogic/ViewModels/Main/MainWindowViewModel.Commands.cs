@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dev.Editor.BusinessLogic.ViewModels.Document;
+using Dev.Editor.Common.Conditions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,6 +11,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
     public partial class MainWindowViewModel
     {
+        // Private fields -----------------------------------------------------
+
+        private readonly Condition documentExistsCondition;
+        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> canUndoCondition;
+        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> canRedoCondition;
+        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> selectionAvailableCondition;
+        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> regularSelectionAvailableCondition;
+        private readonly MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, DocumentViewModel> searchPerformedCondition;
+
         // Public properties --------------------------------------------------
 
         // File

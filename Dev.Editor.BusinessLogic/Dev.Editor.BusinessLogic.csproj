@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Dependencies\Configuration.cs" />
+    <Compile Include="Models\Commands\CommandModel.cs" />
     <Compile Include="Models\Configuration\Behavior\BehaviorConfig.cs" />
     <Compile Include="Models\Configuration\ConfigModel.cs" />
     <Compile Include="Models\Configuration\Editor\EditorConfig.cs" />
@@ -74,13 +75,15 @@
     <Compile Include="Models\Search\ReplaceAllModel.cs" />
     <Compile Include="Models\Search\ReplaceModel.cs" />
     <Compile Include="Models\Search\SearchModel.cs" />
-    <Compile Include="Services\Commands\AppCommandRepositoryService.cs" />
+    <Compile Include="Services\Commands\CommandRepositoryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Services\Commands\ICommandRepositoryService.cs" />
     <Compile Include="Services\Configuration\ConfigurationService.cs" />
     <Compile Include="Services\Configuration\IConfigurationService.cs" />
     <Compile Include="Services\Dialogs\IDialogService.cs" />
     <Compile Include="Services\Highlighting\HighlightingProvider.cs" />
     <Compile Include="Services\Highlighting\IHighlightingProvider.cs" />
+    <Compile Include="Services\ImageResources\IImageResources.cs" />
     <Compile Include="Services\Messaging\IMessagingService.cs" />
     <Compile Include="Services\Messaging\MessagingService.cs" />
     <Compile Include="Services\Paths\IPathService.cs" />

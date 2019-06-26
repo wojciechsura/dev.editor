@@ -24,6 +24,11 @@ using Dev.Editor.BusinessLogic.Services.Paths;
 using Dev.Editor.BusinessLogic.Services.StartupInfo;
 using Dev.Editor.BusinessLogic.Services.Highlighting;
 using Dev.Editor.BusinessLogic.Models.Highlighting;
+using Dev.Editor.BusinessLogic.Services.Commands;
+using System.Windows.Media;
+using System.Reflection;
+using System.Windows.Media.Imaging;
+using Dev.Editor.BusinessLogic.Services.ImageResources;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -38,17 +43,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly IPathService pathService;
         private readonly IStartupInfoService startupInfoService;
         private readonly IHighlightingProvider highlightingProvider;
-
+        private readonly ICommandRepositoryService commandRepositoryService;
+        private readonly IImageResources imageResources;
         private readonly ObservableCollection<DocumentViewModel> documents;
         private DocumentViewModel activeDocument;
-        private readonly List<HighlightingInfo> highlightings;
 
-        private readonly Condition documentExistsCondition;
-        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> canUndoCondition;
-        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> canRedoCondition;
-        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> selectionAvailableCondition;
-        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> regularSelectionAvailableCondition;
-        private readonly MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, DocumentViewModel> searchPerformedCondition;
+        private readonly List<HighlightingInfo> highlightings;
 
         private bool wordWrap;
         private bool lineNumbers;
@@ -176,7 +176,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             IConfigurationService configurationService,
             IPathService pathService,
             IStartupInfoService startupInfoService,
-            IHighlightingProvider highlightingProvider)
+            IHighlightingProvider highlightingProvider,
+            ICommandRepositoryService commandRepositoryService,
+            IImageResources imageResources)
         {
             this.access = access;
             this.dialogService = dialogService;
@@ -185,6 +187,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             this.pathService = pathService;
             this.startupInfoService = startupInfoService;
             this.highlightingProvider = highlightingProvider;
+            this.commandRepositoryService = commandRepositoryService;
+            this.imageResources = imageResources;
 
             wordWrap = configurationService.Configuration.Editor.WordWrap.Value;
             lineNumbers = configurationService.Configuration.Editor.LineNumbers.Value;
@@ -196,30 +200,36 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             documentExistsCondition = new Condition(activeDocument != null);
 
+            // Initializing conditions
+
             canUndoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanUndo, false);
             canRedoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanRedo, false);
             selectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => ActiveDocument, doc => doc.SelectionAvailable, false);
             regularSelectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => ActiveDocument, doc => doc.RegularSelectionAvailable, false);
             searchPerformedCondition = new MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => ActiveDocument, doc => doc.LastSearch);
 
-            NewCommand = new AppCommand(obj => DoNew());
-            OpenCommand = new AppCommand(obj => DoOpen());
-            SaveCommand = new AppCommand(obj => DoSave(), documentExistsCondition);
-            SaveAsCommand = new AppCommand(obj => DoSaveAs(), documentExistsCondition);
+            // Initializing commands
 
-            UndoCommand = new AppCommand(obj => DoUndo(), canUndoCondition);
-            RedoCommand = new AppCommand(obj => DoRedo(), canRedoCondition);
-            CopyCommand = new AppCommand(obj => DoCopy(), selectionAvailableCondition);
-            CutCommand = new AppCommand(obj => DoCut(), selectionAvailableCondition);
-            PasteCommand = new AppCommand(obj => DoPaste(), documentExistsCondition);
+            NewCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_New, "New16.png", obj => DoNew());
+            OpenCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Open, "Open16.png", obj => DoOpen());
+            SaveCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Save, "Save16.png", obj => DoSave(), documentExistsCondition);
+            SaveAsCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_SaveAs, "Save16.png", obj => DoSaveAs(), documentExistsCondition);
 
-            SearchCommand = new AppCommand(obj => DoSearch(), documentExistsCondition);
-            ReplaceCommand = new AppCommand(obj => DoReplace(), documentExistsCondition);
-            FindNextCommand = new AppCommand(obj => DoFindNext(), documentExistsCondition & searchPerformedCondition);
+            UndoCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Undo, "Undo16.png", obj => DoUndo(), canUndoCondition);
+            RedoCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Redo, "Redo16.png", obj => DoRedo(), canRedoCondition);
+            CopyCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Copy, "Copy16.png", obj => DoCopy(), selectionAvailableCondition);
+            CutCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Cut, "Cut16.png", obj => DoCut(), selectionAvailableCondition);
+            PasteCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Paste, "Paste16.png", obj => DoPaste(), documentExistsCondition);
 
-            SortLinesAscendingCommand = new AppCommand(obj => DoSortAscending(), documentExistsCondition);
-            SortLinesDescendingCommand = new AppCommand(obj => DoSortDescending(), documentExistsCondition);
+            SearchCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Search_Search, "Search16.png", obj => DoSearch(), documentExistsCondition);
+            ReplaceCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Search_Replace, "Replace16.png", obj => DoReplace(), documentExistsCondition);
+            FindNextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Search_FindNext, "FindNext16.png", obj => DoFindNext(), documentExistsCondition & searchPerformedCondition);
+
+            SortLinesAscendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Ordering_SortAscending, "SortAscending16.png", obj => DoSortAscending(), documentExistsCondition);
+            SortLinesDescendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Ordering_SortDescending, "SortDescending16.png", obj => DoSortDescending(), documentExistsCondition);
                 
+            // Applying current close behavior
+
             if (configurationService.Configuration.Behavior.CloseBehavior.Value == CloseBehavior.Fluent)
             {
                 RestoreFiles();
