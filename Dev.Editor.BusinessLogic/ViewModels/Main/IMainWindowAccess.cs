@@ -9,5 +9,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
     public interface IMainWindowAccess
     {
+        void ShowNavigationPopup();
+        void EnsureSelectedNavigationItemVisible();
     }
 }

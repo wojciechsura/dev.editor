@@ -23,15 +23,18 @@ namespace Dev.Editor.BusinessLogic.Services.Commands
         {
             int i = 0, j = 0;
 
-            while (i < target.Length && j < text.Length)
+            var lowerTarget = target.ToLowerInvariant();
+            var lowerText = text.ToLowerInvariant();
+
+            while (i < lowerTarget.Length && j < lowerText.Length)
             {
-                if (target[i] == text[j])
+                if (lowerTarget[i] == lowerText[j])
                     j++;
 
                 i++;
             }
 
-            return j == text.Length;
+            return j == lowerText.Length;
         }
 
         // Public methods -----------------------------------------------------

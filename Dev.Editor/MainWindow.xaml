@@ -11,6 +11,7 @@
     xmlns:local="clr-namespace:Dev.Editor"
     xmlns:controls="clr-namespace:Dev.Editor.Controls"
     xmlns:vmd="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
+    xmlns:nav="clr-namespace:Dev.Editor.BusinessLogic.Models.Navigation;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing">
     <f:RibbonWindow.Resources>
@@ -143,6 +144,15 @@
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/FindNext16.png"/>
                 </f:RibbonGroupBox>
                 
+                <!-- Navigation -->
+
+                <f:RibbonGroupBox x:Name="grNavigation" Header="{x:Static p:Strings.Ribbon_Group_Navigation}">
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Navigation_Navigate}" Command="{Binding NavigateCommand}" SizeDefinition="Large" 
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Navigation32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Navigation16.png"/>
+
+                </f:RibbonGroupBox>
+                
             </f:RibbonTabItem>
         
             <!-- View tab -->
@@ -235,6 +245,56 @@
                 </Style>
             </ad:DockingManager.LayoutItemContainerStyle>
         </ad:DockingManager>
-        
+
+        <Popup x:Name="pNavigation" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" StaysOpen="False"
+               Placement="Center" AllowsTransparency="True" Closed="HandleNavigationPopupClosed" PreviewKeyDown="HandleNavigationPreviewKeyDown" >
+            <StackPanel Orientation="Vertical" Background="#80000000">
+                <StackPanel Orientation="Horizontal">
+                    <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Navigation16.png" 
+                           Margin="4,4,0,4"/>
+                    <Label Content="{x:Static p:Strings.NavigationPopup_Header}" Foreground="White"/>
+                </StackPanel>
+
+                <Rectangle HorizontalAlignment="Stretch" Height="1" Fill="White" />
+
+                <TextBox x:Name="tbNavigation" Width="300" Margin="10" Text="{Binding NavigationText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         TextChanged="HandleNavigationTextboxTextChanged" />
+
+                <ListBox x:Name="lbNavigation" Width="300" Height="200" Margin="10,0,10,10" ItemsSource="{Binding NavigationItems}"
+                         SelectedItem="{Binding SelectedNavigationItem}" Focusable="False">
+                    <ListBox.Resources>
+                        <Style TargetType="{x:Type ListBoxItem}">
+                            <Setter Property="Background" Value="Transparent"></Setter>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="ListBoxItem">
+                                        <Border Name="SelectionBorder" Background="Transparent" CornerRadius="1">
+                                            <ContentPresenter />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Trigger.Setters>
+                                                    <Setter Property="Foreground" Value="{x:Static SystemColors.HighlightTextBrush}" />
+                                                    <Setter TargetName="SelectionBorder" Property="Background" Value="{x:Static SystemColors.HighlightBrush}" />
+                                                </Trigger.Setters>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </ListBox.Resources>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type nav:BaseNavigationModel}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="16" Height="16" Margin="4" Source="{Binding Icon}" />
+                                <TextBlock x:Name="lNavItem" Text="{Binding Title}" Margin="4" />
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </StackPanel>
+        </Popup>
+
     </Grid>
 </f:RibbonWindow>

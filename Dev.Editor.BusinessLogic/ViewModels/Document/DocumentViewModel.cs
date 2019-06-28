@@ -148,6 +148,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             return editorAccess.GetSelectedText();
         }
 
+        public void FocusDocument()
+        {
+            editorAccess.FocusDocument();
+        }
+
         // Public properties --------------------------------------------------
 
         public TextDocument Document => document;

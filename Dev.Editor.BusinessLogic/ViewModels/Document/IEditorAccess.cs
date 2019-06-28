@@ -19,5 +19,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         string GetSelectedText();
         void BeginChange();
         void EndChange();
+        void FocusDocument();
     }
 }

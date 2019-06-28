@@ -278,5 +278,10 @@ namespace Dev.Editor.Controls
         {
             teEditor.ScrollTo(line, column);
         }
+
+        public void FocusDocument()
+        {
+            teEditor.Focus();
+        }
     }
 }

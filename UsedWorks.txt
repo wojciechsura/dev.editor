@@ -6,6 +6,9 @@ http://momentumdesignlab.com/
 * Must Have by VisualPharm (Ivan Boyko) (cc-by)
 http://www.visualpharm.com/
 
+* Crystal Clear by Everaldo Coelho (LGPL)
+http://www.everaldo.com/
+
 Libraries
 
 * AvalonEdit (MIT)

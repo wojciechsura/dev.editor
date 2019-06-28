@@ -72,6 +72,8 @@
     <Compile Include="Models\Documents\DocumentState.cs" />
     <Compile Include="Models\Documents\FoldSectionState.cs" />
     <Compile Include="Models\Highlighting\HighlightingInfo.cs" />
+    <Compile Include="Models\Navigation\BaseNavigationModel.cs" />
+    <Compile Include="Models\Navigation\CommandNavigationModel.cs" />
     <Compile Include="Models\Search\ReplaceAllModel.cs" />
     <Compile Include="Models\Search\ReplaceModel.cs" />
     <Compile Include="Models\Search\SearchModel.cs" />
@@ -101,6 +103,7 @@
     <Compile Include="ViewModels\Main\MainWindowViewModel.Commands.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Lines.cs" />
+    <Compile Include="ViewModels\Main\MainWindowViewModel.Navigation.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.View.Editor.cs" />
     <Compile Include="ViewModels\Search\ISearchHost.cs" />
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />

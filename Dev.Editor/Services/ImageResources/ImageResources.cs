@@ -12,21 +12,16 @@ namespace Dev.Editor.Services.ImageResources
 {
     public class ImageResources : IImageResources
     {
-        private string Prefix = "Dev.Editor.Resources.Images.";
+        private string Prefix = "pack://application:,,,/Dev.Editor;component/Resources/Images/";
 
-        public ImageSource GetImageFromResource(string resourceName)
+        public ImageSource GetIconByName(string resourceName)
         {
-            using (var imageStream = Assembly.GetExecutingAssembly().GetManifestResourceStream(Prefix + resourceName))
-            {
-                BitmapImage image = new BitmapImage();
-                image.BeginInit();
-                image.StreamSource = imageStream;
-                image.CacheOption = BitmapCacheOption.OnLoad;
-                image.EndInit();
-                image.Freeze();
+            BitmapImage image = new BitmapImage();
+            image.BeginInit();
+            image.UriSource = new Uri(Prefix + resourceName);
+            image.EndInit();
 
-                return image;
-            }
+            return image;            
         }
     }
 }

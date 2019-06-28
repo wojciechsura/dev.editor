@@ -169,6 +169,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Navigation.
+        /// </summary>
+        public static string NavigationPopup_Header {
+            get {
+                return ResourceManager.GetString("NavigationPopup.Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Copy.
         /// </summary>
         public static string Ribbon_Edit_Copy {
@@ -295,6 +304,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Navigation.
+        /// </summary>
+        public static string Ribbon_Group_Navigation {
+            get {
+                return ResourceManager.GetString("Ribbon.Group.Navigation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Ordering.
         /// </summary>
         public static string Ribbon_Group_Ordering {
@@ -309,6 +327,15 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Group_Search {
             get {
                 return ResourceManager.GetString("Ribbon.Group.Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Navigation.
+        /// </summary>
+        public static string Ribbon_Navigation_Navigate {
+            get {
+                return ResourceManager.GetString("Ribbon.Navigation.Navigate", resourceCulture);
             }
         }
         

@@ -43,6 +43,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand ReplaceCommand { get; }
         public ICommand FindNextCommand { get; }
 
+        // Navigation
+
+        public ICommand NavigateCommand { get; }
+
         // Lines
 
         public ICommand SortLinesAscendingCommand { get; }

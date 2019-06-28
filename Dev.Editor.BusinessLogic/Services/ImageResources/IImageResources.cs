@@ -9,6 +9,6 @@ namespace Dev.Editor.BusinessLogic.Services.ImageResources
 {
     public interface IImageResources
     {
-        ImageSource GetImageFromResource(string resourceName);
+        ImageSource GetIconByName(string resourceName);
     }
 }

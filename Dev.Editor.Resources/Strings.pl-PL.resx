@@ -294,4 +294,13 @@
   <data name="Ribbon.Ordering.SortDescending" xml:space="preserve">
     <value>Sortuj malejąco</value>
   </data>
+  <data name="Ribbon.Group.Navigation" xml:space="preserve">
+    <value>Nawigacja</value>
+  </data>
+  <data name="Ribbon.Navigation.Navigate" xml:space="preserve">
+    <value>Nawigacja</value>
+  </data>
+  <data name="NavigationPopup.Header" xml:space="preserve">
+    <value>Nawigacja</value>
+  </data>
 </root>

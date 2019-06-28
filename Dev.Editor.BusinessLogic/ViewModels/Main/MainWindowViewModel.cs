@@ -29,6 +29,7 @@ using System.Windows.Media;
 using System.Reflection;
 using System.Windows.Media.Imaging;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
+using Dev.Editor.BusinessLogic.Models.Navigation;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -52,6 +53,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private bool wordWrap;
         private bool lineNumbers;
+
+        private string navigationText;
+        private readonly ObservableCollection<BaseNavigationModel> navigationItems;
+        private BaseNavigationModel selectedNavigationItem;
 
         // Private methods ----------------------------------------------------
 
@@ -168,6 +173,28 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return anyDocumentLoaded;
         }
 
+        public void SelectPreviousNavigationItem()
+        {
+            if (selectedNavigationItem != null)
+            {
+                int index = navigationItems.IndexOf(selectedNavigationItem);
+                if (index > 0)
+                    SelectedNavigationItem = navigationItems[index - 1];
+                access.EnsureSelectedNavigationItemVisible();
+            }
+        }
+
+        public void SelectNextNavigationItem()
+        {
+            if (selectedNavigationItem != null)
+            {
+                int index = navigationItems.IndexOf(selectedNavigationItem);
+                if (index < navigationItems.Count - 1)
+                    SelectedNavigationItem = navigationItems[index + 1];
+                access.EnsureSelectedNavigationItemVisible();
+            }
+        }
+
         // Public methods -----------------------------------------------------
 
         public MainWindowViewModel(IMainWindowAccess access, 
@@ -210,6 +237,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             // Initializing commands
 
+            // This command should not be registered in command repository service
+            NavigateCommand = new AppCommand(obj => DoNavigate());
+
             NewCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_New, "New16.png", obj => DoNew());
             OpenCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Open, "Open16.png", obj => DoOpen());
             SaveCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Save, "Save16.png", obj => DoSave(), documentExistsCondition);
@@ -227,7 +257,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             SortLinesAscendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Ordering_SortAscending, "SortAscending16.png", obj => DoSortAscending(), documentExistsCondition);
             SortLinesDescendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Ordering_SortDescending, "SortDescending16.png", obj => DoSortDescending(), documentExistsCondition);
-                
+
+            // Navigation
+
+            navigationText = String.Empty;
+            navigationItems = new ObservableCollection<BaseNavigationModel>();
+
             // Applying current close behavior
 
             if (configurationService.Configuration.Behavior.CloseBehavior.Value == CloseBehavior.Fluent)
@@ -331,6 +366,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             RemoveDocument(document);
         }
 
+        public void FocusActiveDocument()
+        {
+            activeDocument?.FocusDocument();
+        }
+
         // Public properties --------------------------------------------------
 
         public ObservableCollection<DocumentViewModel> Documents => documents;
@@ -342,5 +382,25 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         }
 
         public IReadOnlyList<HighlightingInfo> Highlightings => highlightings;
+
+        public string NavigationText
+        {
+            get => navigationText;
+            set
+            {
+                Set(ref navigationText, () => NavigationText, value);
+            }
+        }
+
+        public ObservableCollection<BaseNavigationModel> NavigationItems => navigationItems;
+
+        public BaseNavigationModel SelectedNavigationItem
+        {
+            get => selectedNavigationItem;
+            set
+            {
+                Set(ref selectedNavigationItem, () => SelectedNavigationItem, value);
+            }
+        }
     }
 }

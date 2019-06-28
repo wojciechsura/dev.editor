@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -16,6 +17,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Unity;
 using Unity.Resolution;
 
@@ -29,6 +31,8 @@ namespace Dev.Editor
         // Private fields -----------------------------------------------------
 
         private MainWindowViewModel viewModel;
+
+        private readonly Lazy<DispatcherTimer> navigationTimer;
 
         // Private methods ----------------------------------------------------
 
@@ -47,14 +51,75 @@ namespace Dev.Editor
             e.Cancel = !viewModel.CanCloseApplication();
         }
 
+        private void ShowNavigationPopup()
+        {
+            pNavigation.IsOpen = true;
+            tbNavigation.Focus();
+        }
+
+        private void HideNavigationPopup()
+        {
+            pNavigation.IsOpen = false;
+        }
+
+        private void HandleNavigationPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                HideNavigationPopup();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Up)
+            {
+                viewModel.SelectPreviousNavigationItem();
+                e.Handled = true;
+            }
+            else if (e.Key == Key.Down)
+            {
+                viewModel.SelectNextNavigationItem();
+                e.Handled = true;
+            }
+        }
+
+        private void HandleNavigationPopupClosed(object sender, EventArgs e)
+        {
+            viewModel.FocusActiveDocument();
+        }
+
+        private void HandleNavigationTextboxTextChanged(object sender, TextChangedEventArgs e)
+        {
+            navigationTimer.Value.Start();
+        }
+
+        private void NavigationSearch(object sender, EventArgs e)
+        {
+            navigationTimer.Value.Stop();
+            viewModel.PerformNavigationSearch();
+        }
+
+        // IMainWindowAccess implementation -----------------------------------
+
+        void IMainWindowAccess.ShowNavigationPopup()
+        {
+            ShowNavigationPopup();
+        }
+
+        void IMainWindowAccess.EnsureSelectedNavigationItemVisible()
+        {
+            if (viewModel.SelectedNavigationItem != null)
+                lbNavigation.ScrollIntoView(viewModel.SelectedNavigationItem);
+        }
+
         // Public methods -----------------------------------------------------
 
         public MainWindow()
         {
-            InitializeComponent();            
+            InitializeComponent();
 
             viewModel = Dependencies.Container.Instance.Resolve<MainWindowViewModel>(new ParameterOverride("access", this));
             DataContext = viewModel;
+
+            navigationTimer = new Lazy<DispatcherTimer>(() => new DispatcherTimer(TimeSpan.FromMilliseconds(500), DispatcherPriority.Normal, NavigationSearch, this.Dispatcher));
         }
     }
 }
