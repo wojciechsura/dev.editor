@@ -14,6 +14,7 @@
     xmlns:nav="clr-namespace:Dev.Editor.BusinessLogic.Models.Navigation;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing">
+    
     <f:RibbonWindow.Resources>
         <ResourceDictionary>
             <!-- Prevent stealing focus from document by the ribbon -->
@@ -42,6 +43,11 @@
             -->            
         </ResourceDictionary>
     </f:RibbonWindow.Resources>
+
+    <f:RibbonWindow.InputBindings>
+        <KeyBinding Key="P" Modifiers="Ctrl" Command="{Binding NavigateCommand}" />
+    </f:RibbonWindow.InputBindings>
+    
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -218,6 +224,8 @@
             
         </f:Ribbon>
 
+        <!-- Docking host -->
+        
         <ad:DockingManager x:Name="dmManager" Grid.Row="1" DocumentsSource="{Binding Documents}"
                            ActiveContent="{Binding ActiveDocument, Mode=TwoWay}"
                            DocumentClosing="HandleDocumentClosing"
@@ -246,8 +254,10 @@
             </ad:DockingManager.LayoutItemContainerStyle>
         </ad:DockingManager>
 
+        <!-- Navigation popup -->
+        
         <Popup x:Name="pNavigation" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" StaysOpen="False"
-               Placement="Center" AllowsTransparency="True" Closed="HandleNavigationPopupClosed" PreviewKeyDown="HandleNavigationPreviewKeyDown" >
+               Placement="Center" AllowsTransparency="True" PreviewKeyDown="HandleNavigationPreviewKeyDown" FocusManager.IsFocusScope="True">
             <StackPanel Orientation="Vertical" Background="#80000000">
                 <StackPanel Orientation="Horizontal">
                     <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Navigation16.png" 
@@ -261,7 +271,7 @@
                          TextChanged="HandleNavigationTextboxTextChanged" />
 
                 <ListBox x:Name="lbNavigation" Width="300" Height="200" Margin="10,0,10,10" ItemsSource="{Binding NavigationItems}"
-                         SelectedItem="{Binding SelectedNavigationItem}" Focusable="False">
+                         SelectedItem="{Binding SelectedNavigationItem}" Focusable="False" MouseDoubleClick="HandleNavigationListMouseDoubleClick">
                     <ListBox.Resources>
                         <Style TargetType="{x:Type ListBoxItem}">
                             <Setter Property="Background" Value="Transparent"></Setter>
@@ -287,8 +297,8 @@
                     <ListBox.ItemTemplate>
                         <DataTemplate DataType="{x:Type nav:BaseNavigationModel}">
                             <StackPanel Orientation="Horizontal">
-                                <Image Width="16" Height="16" Margin="4" Source="{Binding Icon}" />
-                                <TextBlock x:Name="lNavItem" Text="{Binding Title}" Margin="4" />
+                                <Image Width="16" Height="16" Margin="4" Source="{Binding Icon}" Opacity="{Binding Enabled, Converter={StaticResource EnabledToOpactityConverter}}" />
+                                <TextBlock x:Name="lNavItem" Text="{Binding Title}" Margin="4" Opacity="{Binding Enabled, Converter={StaticResource EnabledToOpactityConverter}}" />
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>

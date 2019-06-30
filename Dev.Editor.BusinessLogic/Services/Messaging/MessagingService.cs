@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -79,6 +80,11 @@ namespace Dev.Editor.BusinessLogic.Services.Messaging
                 title = Strings.DefaultMessageboxTitle;
 
             MessageBox.Show(message, title, MessageBoxButton.OK, MessageBoxImage.Information);
+        }
+
+        public void Beep()
+        {
+            SystemSounds.Beep.Play();
         }
     }
 }

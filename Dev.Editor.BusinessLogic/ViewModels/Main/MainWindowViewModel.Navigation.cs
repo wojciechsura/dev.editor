@@ -35,11 +35,24 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 foreach (var result in results)
                 {
-                    var model = new CommandNavigationModel(result.Title, imageResources.GetIconByName(result.IconResource), result.Command);
+                    var model = new CommandNavigationModel(result.Title, imageResources.GetIconByName(result.IconResource), result.Command.CanExecute(null), result.Command);
                     navigationItems.Add(model);
 
                     SelectedNavigationItem = navigationItems.FirstOrDefault();
                 }
+            }
+        }
+
+        public void NavigationItemChosen()
+        {
+            if (selectedNavigationItem == null || !selectedNavigationItem.Enabled)
+            {
+                messagingService.Beep();
+            }
+            else if (selectedNavigationItem is CommandNavigationModel commandItem)
+            {
+                access.HideNavigationPopup();
+                commandItem.Command.Execute(null);
             }
         }
     }

@@ -69,6 +69,10 @@ namespace Dev.Editor
                 HideNavigationPopup();
                 e.Handled = true;
             }
+            else if (e.Key == Key.Enter)
+            {
+                viewModel.NavigationItemChosen();
+            }
             else if (e.Key == Key.Up)
             {
                 viewModel.SelectPreviousNavigationItem();
@@ -79,11 +83,6 @@ namespace Dev.Editor
                 viewModel.SelectNextNavigationItem();
                 e.Handled = true;
             }
-        }
-
-        private void HandleNavigationPopupClosed(object sender, EventArgs e)
-        {
-            viewModel.FocusActiveDocument();
         }
 
         private void HandleNavigationTextboxTextChanged(object sender, TextChangedEventArgs e)
@@ -97,11 +96,21 @@ namespace Dev.Editor
             viewModel.PerformNavigationSearch();
         }
 
+        private void HandleNavigationListMouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            viewModel.NavigationItemChosen();
+        }
+
         // IMainWindowAccess implementation -----------------------------------
 
         void IMainWindowAccess.ShowNavigationPopup()
         {
             ShowNavigationPopup();
+        }
+
+        void IMainWindowAccess.HideNavigationPopup()
+        {
+            HideNavigationPopup();
         }
 
         void IMainWindowAccess.EnsureSelectedNavigationItemVisible()

@@ -14,5 +14,6 @@ namespace Dev.Editor.BusinessLogic.Services.Messaging
         bool WarnYesNo(string message, string title = null);
         void ShowError(string message, string title = null);
         void Inform(string message, string title = null);
+        void Beep();
     }
 }

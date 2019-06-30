@@ -9,13 +9,15 @@ namespace Dev.Editor.BusinessLogic.Models.Navigation
 {
     public class BaseNavigationModel
     {
-        public BaseNavigationModel(string title, ImageSource icon)
+        public BaseNavigationModel(string title, ImageSource icon, bool enabled)
         {
             Title = title;
             Icon = icon;
+            Enabled = enabled;
         }
 
         public string Title { get; }
         public ImageSource Icon { get; }
+        public bool Enabled { get; }
     }
 }

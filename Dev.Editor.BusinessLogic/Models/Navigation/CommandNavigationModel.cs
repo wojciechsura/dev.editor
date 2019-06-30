@@ -10,8 +10,8 @@ namespace Dev.Editor.BusinessLogic.Models.Navigation
 {
     public class CommandNavigationModel : BaseNavigationModel
     {
-        public CommandNavigationModel(string title, ImageSource icon, ICommand command)
-            : base(title, icon)
+        public CommandNavigationModel(string title, ImageSource icon, bool enabled, ICommand command)
+            : base(title, icon, enabled)
         {
             Command = command;
         }

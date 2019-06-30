@@ -11,5 +11,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
     {
         void ShowNavigationPopup();
         void EnsureSelectedNavigationItemVisible();
+        void HideNavigationPopup();
     }
 }
