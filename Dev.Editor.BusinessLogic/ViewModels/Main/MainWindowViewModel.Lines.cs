@@ -27,23 +27,45 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return (startOffset, endOffset);
         }
 
-        private void SortSelectedLines(bool ascending)
+        private void TransformLines(Func<string, string> func)
         {
             (int startOffset, int endOffset) = ExpandSelectionToFullLines();
 
-            var textToSort = activeDocument.Document.GetText(startOffset, endOffset - startOffset + 1);
-            var lines = textToSort.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None).ToList();
+            var textToTransform = activeDocument.Document.GetText(startOffset, endOffset - startOffset + 1);
 
-            if (ascending)
-                lines.Sort((s1, s2) => s1.CompareTo(s2));
-            else
-                lines.Sort((s1, s2) => -s1.CompareTo(s2));
-
-            string sorted = string.Join("\r\n", lines);
+            var result = func(textToTransform);
 
             activeDocument.RunAsSingleHistoryEntry(() =>
             {
-                activeDocument.Document.Replace(startOffset, endOffset - startOffset + 1, sorted);
+                activeDocument.Document.Replace(startOffset, endOffset - startOffset + 1, result);
+            });
+        }
+
+        private void SortSelectedLines(bool ascending)
+        {
+            TransformLines(textToSort =>
+            {
+                var lines = textToSort.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None).ToList();
+
+                if (ascending)
+                    lines.Sort((s1, s2) => s1.CompareTo(s2));
+                else
+                    lines.Sort((s1, s2) => -s1.CompareTo(s2));
+
+                return string.Join("\r\n", lines);
+            });            
+        }
+
+        private void RemoveLines(bool withTrim)
+        {
+            TransformLines(textToRemove =>
+            {
+                var lines = textToRemove.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None).ToList();
+
+                if (withTrim)
+                    return string.Join("\r\n", lines.Where(l => !String.IsNullOrWhiteSpace(l)));
+                else
+                    return string.Join("\r\n", lines.Where(l => !String.IsNullOrEmpty(l)));
             });
         }
 
@@ -57,5 +79,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             SortSelectedLines(true);
         }
 
+        private void DoRemoveWhitespaceLines()
+        {
+            RemoveLines(true);
+        }
+
+        private void DoRemoveEmptyLines()
+        {
+            RemoveLines(false);
+        }
     }
 }

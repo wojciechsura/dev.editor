@@ -51,5 +51,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public ICommand SortLinesAscendingCommand { get; }
         public ICommand SortLinesDescendingCommand { get; }
+        public ICommand RemoveEmptyLinesCommand { get; }
+        public ICommand RemoveWhitespaceLinesCommand { get; }
     }
 }

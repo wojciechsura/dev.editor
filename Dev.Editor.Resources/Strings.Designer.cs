@@ -178,6 +178,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Remove empty lines.
+        /// </summary>
+        public static string Ribbon_Cleanup_RemoveEmptyLines {
+            get {
+                return ResourceManager.GetString("Ribbon.Cleanup.RemoveEmptyLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Remove whitespace lines.
+        /// </summary>
+        public static string Ribbon_Cleanup_RemoveWhitespaceLines {
+            get {
+                return ResourceManager.GetString("Ribbon.Cleanup.RemoveWhitespaceLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Copy.
         /// </summary>
         public static string Ribbon_Edit_Copy {
@@ -273,6 +291,15 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_File_SaveAs {
             get {
                 return ResourceManager.GetString("Ribbon.File.SaveAs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cleanup.
+        /// </summary>
+        public static string Ribbon_Group_Cleanup {
+            get {
+                return ResourceManager.GetString("Ribbon.Group.Cleanup", resourceCulture);
             }
         }
         

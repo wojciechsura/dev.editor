@@ -257,6 +257,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             SortLinesAscendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Ordering_SortAscending, "SortAscending16.png", obj => DoSortAscending(), documentExistsCondition);
             SortLinesDescendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Ordering_SortDescending, "SortDescending16.png", obj => DoSortDescending(), documentExistsCondition);
+            RemoveEmptyLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Cleanup_RemoveEmptyLines, null, obj => DoRemoveEmptyLines(), documentExistsCondition);
+            RemoveWhitespaceLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Cleanup_RemoveWhitespaceLines, null, obj => DoRemoveWhitespaceLines(), documentExistsCondition);
 
             // Navigation
 

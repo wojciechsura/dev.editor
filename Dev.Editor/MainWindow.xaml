@@ -155,7 +155,7 @@
                 <f:RibbonGroupBox x:Name="grNavigation" Header="{x:Static p:Strings.Ribbon_Group_Navigation}">
                     <f:Button Header="{x:Static p:Strings.Ribbon_Navigation_Navigate}" Command="{Binding NavigateCommand}" SizeDefinition="Large" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Navigation32.png"
-                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Navigation16.png"/>
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Navigation16.png" />
 
                 </f:RibbonGroupBox>
                 
@@ -217,6 +217,17 @@
                               SizeDefinition="Large" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/SortDescending32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/SortDescending16.png"/>
+
+                </f:RibbonGroupBox>
+                
+                <!-- Cleanup -->
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Group_Cleanup}">
+
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Cleanup_RemoveEmptyLines}" Command="{Binding RemoveEmptyLinesCommand}"
+                              SizeDefinition="Middle" />
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Cleanup_RemoveWhitespaceLines}" Command="{Binding RemoveWhitespaceLinesCommand}"
+                              SizeDefinition="Middle" />
 
                 </f:RibbonGroupBox>
                 

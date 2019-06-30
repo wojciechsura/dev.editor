@@ -303,4 +303,13 @@
   <data name="NavigationPopup.Header" xml:space="preserve">
     <value>Nawigacja</value>
   </data>
+  <data name="Ribbon.Group.Cleanup" xml:space="preserve">
+    <value>Czyszczenie</value>
+  </data>
+  <data name="Ribbon.Cleanup.RemoveEmptyLines" xml:space="preserve">
+    <value>Usuń puste linie</value>
+  </data>
+  <data name="Ribbon.Cleanup.RemoveWhitespaceLines" xml:space="preserve">
+    <value>Usuń linie z białymi znakami</value>
+  </data>
 </root>
