@@ -146,6 +146,10 @@ namespace Dev.Editor.Common.Tools
                         case 'c':
                             sb.Append(ScanControl(input, ref pos));
                             continue;
+                        case '\\':
+                            sb.Append('\\');
+                            pos++;
+                            continue;
                         default:
                             throw new ArgumentException("Invalid escape sequence!");
                     }

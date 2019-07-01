@@ -100,7 +100,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                     return new Regex(textToFind, options);
                 case SearchMode.Extended:
                     {
-                        // TODO fix
                         string pattern = Regex.Escape(textToFind.Unescape());
 
                         if (wholeWordsOnly)
