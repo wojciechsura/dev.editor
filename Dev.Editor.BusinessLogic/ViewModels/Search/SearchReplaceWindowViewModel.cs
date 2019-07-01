@@ -36,57 +36,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         // Private methods ----------------------------------------------------
 
-        private void DoClose() => access.Close();
-
-        private void DoReplaceAll()
-        {
-            try
-            {
-                Regex regex = GetRegEx(search);
-
-                var model = new ReplaceAllModel(regex, replace, searchBackwards, replaceAllInSelection);
-                searchHost.ReplaceAll(model);
-            }
-            catch
-            {
-                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
-                return;
-            }
-        }
-
-        private void DoReplace()
-        {
-            try
-            {
-                Regex regex = GetRegEx(search);
-
-                var model = new ReplaceModel(regex, replace, searchBackwards);
-                searchHost.Replace(model);
-            }
-            catch
-            {
-                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
-                return;
-            }
-        }
-
-        private void DoFindNext()
-        {
-            try
-            {
-                Regex regex = GetRegEx(search);
-
-                var model = new SearchModel(regex, searchBackwards);
-                searchHost.FindNext(model);
-            }
-            catch
-            {
-                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
-                return;
-            }
-        }
-
-        private Regex GetRegEx(string textToFind)
+        private Regex GetSearchRegex(string textToFind)
         {
             RegexOptions options = RegexOptions.None;
             if (searchBackwards)
@@ -116,6 +66,73 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
                 default:
                     throw new InvalidOperationException("Unsupported search mode!");
+            }
+        }
+
+        private string GetReplaceText(string replace)
+        {
+            switch (searchMode)
+            {
+                case SearchMode.Normal:
+                    return replace;
+                case SearchMode.Extended:
+                    return replace.Unescape();
+                case SearchMode.RegularExpressions:
+                    return replace;
+                default:
+                    throw new InvalidOperationException("Unsupported search mode!");
+            }
+        }
+
+        private void DoClose() => access.Close();
+
+        private void DoReplaceAll()
+        {
+            try
+            {
+                Regex searchRegex = GetSearchRegex(search);
+                string replaceText = GetReplaceText(replace);
+
+                var model = new ReplaceAllModel(searchRegex, replaceText, searchBackwards, replaceAllInSelection);
+                searchHost.ReplaceAll(model);
+            }
+            catch
+            {
+                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
+                return;
+            }
+        }
+
+        private void DoReplace()
+        {
+            try
+            {
+                Regex searchRegex = GetSearchRegex(search);
+                string replaceText = GetReplaceText(replace);
+
+                var model = new ReplaceModel(searchRegex, replaceText, searchBackwards);
+                searchHost.Replace(model);
+            }
+            catch
+            {
+                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
+                return;
+            }
+        }
+
+        private void DoFindNext()
+        {
+            try
+            {
+                Regex regex = GetSearchRegex(search);
+
+                var model = new SearchModel(regex, searchBackwards);
+                searchHost.FindNext(model);
+            }
+            catch
+            {
+                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
+                return;
             }
         }
 
