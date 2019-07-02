@@ -12,7 +12,7 @@
         
         <!-- Search -->
         
-        <TabItem x:Name="tSearch" Header="{x:Static p:Strings.SearchWindow_SearchTab}">
+        <TabItem x:Name="tSearch" Header="{x:Static p:Strings.SearchWindow_SearchTab}" >
             <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchTab}" Padding="4">
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical">
@@ -26,27 +26,27 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_SearchedText}"/>
-                            <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox x:Name="tbSearchSearch" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
                         
                         <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchOptions}" Padding="4">
                             <StackPanel Orientation="Vertical">
                                 <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_CaseSensitive}" 
-                                          IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_OnlyFullWords}" 
-                                          IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <CheckBox Content="{x:Static p:Strings.SearchWindow_SearchBackwards}" 
-                                          IsChecked="{Binding SearchBackwards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            IsChecked="{Binding SearchBackwards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchMode}" Padding="4">
                             <StackPanel Orientation="Vertical">
                                 <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeNormal}" 
-                                             IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Normal}}"/>
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Normal}}"/>
                                 <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeExtended}" 
-                                             IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Extended}}"/>
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Extended}}"/>
                                 <RadioButton Content="{x:Static p:Strings.SearchWindow_SearchModeRegex}" 
-                                             IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.RegularExpressions}}"/>
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.RegularExpressions}}"/>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
@@ -57,7 +57,7 @@
                 </StackPanel>
             </GroupBox>
         </TabItem>
-        
+
         <TabItem x:Name="tReplace" Header="{x:Static p:Strings.SearchWindow_ReplaceTab}">
             <GroupBox Header="{x:Static p:Strings.SearchWindow_ReplaceTab}" Padding="4">
                 <StackPanel Orientation="Horizontal">
@@ -73,32 +73,32 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Margin="{StaticResource DialogItemsVMargin}" Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_SearchedText}"/>
-                            <TextBox Margin="{StaticResource DialogItemsVMargin}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
-                                     Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                            <TextBox x:Name="tbReplaceSearch" Margin="{StaticResource DialogItemsVMargin}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
+                                        Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                             <Label Grid.Row="1" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_ReplaceWith}" />
                             <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" 
-                                     Text="{Binding Replace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        Text="{Binding Replace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                         </Grid>
 
                         <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchOptions}" Padding="4">
                             <StackPanel Orientation="Vertical">
                                 <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_CaseSensitive}" 
-                                          IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_OnlyFullWords}" 
-                                          IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                            IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                 <CheckBox Content="{x:Static p:Strings.SearchWindow_SearchBackwards}" 
-                                          IsChecked="{Binding SearchBackwards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            IsChecked="{Binding SearchBackwards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                             </StackPanel>
                         </GroupBox>
                         <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchMode}" Padding="4">
                             <StackPanel Orientation="Vertical">
                                 <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeNormal}" 
-                                             IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Normal}}"/>
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Normal}}"/>
                                 <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeExtended}" 
-                                             IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Extended}}"/>
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Extended}}"/>
                                 <RadioButton Content="{x:Static p:Strings.SearchWindow_SearchModeRegex}" 
-                                             IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.RegularExpressions}}"/>
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.RegularExpressions}}"/>
                             </StackPanel>
                         </GroupBox>
                     </StackPanel>
@@ -108,7 +108,7 @@
                         <Separator Margin="{StaticResource DialogItemsVMargin}" />
                         <Button Content="{x:Static p:Strings.SearchWindow_ReplaceAll}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding ReplaceAllCommand}"/>
                         <CheckBox Content="{x:Static p:Strings.SearchWindow_InSelection}" Margin="{StaticResource DialogItemsVMargin}" 
-                                  IsEnabled="{Binding SelectionAvailable}" IsChecked="{Binding ReplaceAllInSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    IsEnabled="{Binding SelectionAvailable}" IsChecked="{Binding ReplaceAllInSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <Separator Margin="{StaticResource DialogItemsVMargin}" />
                         <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}"></Button>
                     </StackPanel>

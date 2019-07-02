@@ -12,6 +12,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Unity;
 using Unity.Resolution;
 
@@ -47,11 +48,30 @@ namespace Dev.Editor
 
         public SearchReplaceWindowViewModel ViewModel => viewModel;
 
-        public void ChooseReplaceTab() => 
+        public void ChooseReplaceTab()
+        {
             tcTabs.SelectedItem = tReplace;
 
-        public void ChooseSearchTab() => 
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
+                new Action(delegate()
+                {
+                    FocusManager.SetFocusedElement(this, tbReplaceSearch);
+                    tbReplaceSearch.Focus();
+                }));
+            
+        }
+
+        public void ChooseSearchTab()
+        {
             tcTabs.SelectedItem = tSearch;
+
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
+                new Action(delegate ()
+                {
+                    FocusManager.SetFocusedElement(this, tbSearchSearch);
+                    tbSearchSearch.Focus();
+                }));
+        }
 
         public void ShowAndFocus()
         {

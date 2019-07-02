@@ -16,6 +16,17 @@
 
             <Thickness x:Key="DialogWindowPadding" Top="10" Left="10" Right="10" Bottom="10" />
             <Thickness x:Key="DialogItemsVMargin" Bottom="4" />
+    
+           
+            <Style TargetType="TextBox">
+                <Style.Triggers>
+                    <Trigger Property="TextWrapping" Value="NoWrap">
+                        <Trigger.Setters>
+                            <Setter Property="VerticalContentAlignment" Value="Center" />
+                        </Trigger.Setters>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
         </ResourceDictionary>
     </Application.Resources>
 </Application>
