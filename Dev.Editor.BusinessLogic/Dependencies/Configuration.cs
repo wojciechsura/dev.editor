@@ -1,6 +1,7 @@
 ﻿using Dev.Editor.BusinessLogic.Services.Commands;
 using Dev.Editor.BusinessLogic.Services.Config;
 using Dev.Editor.BusinessLogic.Services.Dialogs;
+using Dev.Editor.BusinessLogic.Services.FileIcons;
 using Dev.Editor.BusinessLogic.Services.Highlighting;
 using Dev.Editor.BusinessLogic.Services.Messaging;
 using Dev.Editor.BusinessLogic.Services.Paths;
@@ -25,6 +26,7 @@ namespace Dev.Editor.BusinessLogic.Dependencies
             container.RegisterType<IStartupInfoService, StartupInfoService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IHighlightingProvider, HighlightingProvider>(new ContainerControlledLifetimeManager());
             container.RegisterType<ICommandRepositoryService, CommandRepositoryService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IFileIconProvider, FileIconProvider>(new ContainerControlledLifetimeManager());
         }
     }
 }

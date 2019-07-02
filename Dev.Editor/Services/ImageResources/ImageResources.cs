@@ -16,6 +16,9 @@ namespace Dev.Editor.Services.ImageResources
 
         public ImageSource GetIconByName(string resourceName)
         {
+            if (String.IsNullOrEmpty(resourceName))
+                return null;
+
             BitmapImage image = new BitmapImage();
             image.BeginInit();
             image.UriSource = new Uri(Prefix + resourceName);
