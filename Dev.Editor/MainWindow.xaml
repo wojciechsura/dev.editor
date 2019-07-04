@@ -12,6 +12,7 @@
     xmlns:controls="clr-namespace:Dev.Editor.Controls"
     xmlns:vmd="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
     xmlns:nav="clr-namespace:Dev.Editor.BusinessLogic.Models.Navigation;assembly=Dev.Editor.BusinessLogic"
+    xmlns:te="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Dockable.Tools.Explorer;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing">
     
@@ -220,13 +221,21 @@
 
         <!-- Docking host -->
         
-        <ad:DockingManager x:Name="dmManager" Grid.Row="1" DocumentsSource="{Binding Documents}"
-                           ActiveContent="{Binding ActiveDocument, Mode=TwoWay}"
+        <ad:DockingManager x:Name="dmManager" Grid.Row="1" 
+                           DocumentsSource="{Binding Documents}"
+                           AnchorablesSource="{Binding Tools}"
+                           ActiveContent="{Binding ActiveDockable, Mode=TwoWay}"
                            DocumentClosing="HandleDocumentClosing"
                            DocumentClosed="HandleDocumentClosed">
             <ad:DockingManager.Resources>
                 <DataTemplate DataType="{x:Type vmd:DocumentViewModel}">
                     <controls:DocumentView />
+                </DataTemplate>
+
+                <DataTemplate DataType="{x:Type te:ExplorerViewModel}">
+                    <Grid>
+                        <TextBlock Text="Explorer here :)" />
+                    </Grid>
                 </DataTemplate>
             </ad:DockingManager.Resources>
 

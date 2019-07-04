@@ -9,13 +9,14 @@ using Dev.Editor.BusinessLogic.Models.Documents;
 using Dev.Editor.BusinessLogic.Models.Highlighting;
 using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
+using Dev.Editor.BusinessLogic.ViewModels.Dockable;
 using Dev.Editor.Common.Conditions;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Document
 {
-    public class DocumentViewModel : BaseViewModel
+    public class DocumentViewModel : BaseDockableViewModel
     {
         // Private fields -----------------------------------------------------
 

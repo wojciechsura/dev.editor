@@ -96,9 +96,12 @@
     <Compile Include="Types\Folding\FoldingKind.cs" />
     <Compile Include="Types\Search\SearchMode.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
-    <Compile Include="ViewModels\Document\DocumentViewModel.cs" />
-    <Compile Include="ViewModels\Document\IDocumentHandler.cs" />
-    <Compile Include="ViewModels\Document\IEditorAccess.cs" />
+    <Compile Include="ViewModels\Dockable\BaseDockableViewModel.cs" />
+    <Compile Include="ViewModels\Dockable\Document\DocumentViewModel.cs" />
+    <Compile Include="ViewModels\Dockable\Document\IDocumentHandler.cs" />
+    <Compile Include="ViewModels\Dockable\Document\IEditorAccess.cs" />
+    <Compile Include="ViewModels\Dockable\Tools\BaseToolViewModel.cs" />
+    <Compile Include="ViewModels\Dockable\Tools\Explorer\ExplorerViewModel.cs" />
     <Compile Include="ViewModels\Main\IMainWindowAccess.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Commands.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />

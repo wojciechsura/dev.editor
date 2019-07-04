@@ -30,6 +30,9 @@ using System.Reflection;
 using System.Windows.Media.Imaging;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
 using Dev.Editor.BusinessLogic.Models.Navigation;
+using Dev.Editor.BusinessLogic.ViewModels.Dockable.Tools.Explorer;
+using Dev.Editor.BusinessLogic.ViewModels.Dockable;
+using Dev.Editor.BusinessLogic.ViewModels.Dockable.Tools;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -46,8 +49,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly IHighlightingProvider highlightingProvider;
         private readonly ICommandRepositoryService commandRepositoryService;
         private readonly IImageResources imageResources;
+
         private readonly ObservableCollection<DocumentViewModel> documents;
         private DocumentViewModel activeDocument;
+        private BaseDockableViewModel activeDockable;
+
+        private readonly ExplorerViewModel explorerViewModel;
 
         private readonly List<HighlightingInfo> highlightings;
 
@@ -59,6 +66,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private BaseNavigationModel selectedNavigationItem;
 
         // Private methods ----------------------------------------------------
+
+        private void HandleActiveDockableChanged()
+        {
+            System.Diagnostics.Debug.WriteLine($"Active dockable: {activeDockable}");
+
+            if (activeDockable is DocumentViewModel activatedDocument)
+                ActiveDocument = activatedDocument;
+            else
+                ActiveDocument = null;
+        }
 
         private void HandleActiveDocumentChanged()
         {
@@ -195,6 +212,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
+        private IEnumerable<BaseToolViewModel> GetTools()
+        {
+            yield return explorerViewModel;
+            yield break;
+        }
+
         // Public methods -----------------------------------------------------
 
         public MainWindowViewModel(IMainWindowAccess access, 
@@ -283,6 +306,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
             else
                 throw new InvalidOperationException("Invalid close behavior!");
+
+            // Creating tool viewmodels
+
+            explorerViewModel = new ExplorerViewModel();
         }
 
         public bool CanCloseDocument(DocumentViewModel document)
@@ -376,6 +403,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         // Public properties --------------------------------------------------
 
         public ObservableCollection<DocumentViewModel> Documents => documents;
+
+        public IEnumerable<BaseToolViewModel> Tools => GetTools();
+
+        public BaseDockableViewModel ActiveDockable
+        {
+            get => activeDockable;
+            set => Set(ref activeDockable, () => ActiveDockable, value, HandleActiveDockableChanged);            
+        }
 
         public DocumentViewModel ActiveDocument
         {
