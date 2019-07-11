@@ -8,15 +8,22 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Generic.xaml" />
+                <ResourceDictionary Source="Resources/DocumentTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
+
+            <!-- Converters -->
+            
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
             <c:NullToBoolConverter x:Key="NullToBoolConverter" />
             <c:RadioToEnumConverter x:Key="RadioToEnumConverter" />
             <c:EnabledToOpacityConverter x:Key="EnabledToOpactityConverter" />
 
+            <!-- Layout -->
+            
             <Thickness x:Key="DialogWindowPadding" Top="10" Left="10" Right="10" Bottom="10" />
             <Thickness x:Key="DialogItemsVMargin" Bottom="4" />
     
+            <!-- Styles -->
            
             <Style TargetType="TextBox">
                 <Style.Triggers>

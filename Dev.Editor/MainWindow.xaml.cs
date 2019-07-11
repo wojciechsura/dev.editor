@@ -36,16 +36,6 @@ namespace Dev.Editor
 
         // Private methods ----------------------------------------------------
 
-        private void HandleDocumentClosing(object sender, Xceed.Wpf.AvalonDock.DocumentClosingEventArgs e)
-        {
-            e.Cancel = !viewModel.CanCloseDocument(e.Document.Content as DocumentViewModel);
-        }
-
-        private void HandleDocumentClosed(object sender, Xceed.Wpf.AvalonDock.DocumentClosedEventArgs e)
-        {
-            viewModel.NotifyClosedDocument(e.Document.Content as DocumentViewModel);
-        }
-
         private void HandleWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !viewModel.CanCloseApplication();

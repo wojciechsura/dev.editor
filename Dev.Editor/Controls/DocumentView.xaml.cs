@@ -28,7 +28,7 @@ namespace Dev.Editor.Controls
     /// <summary>
     /// Logika interakcji dla klasy DocumentView.xaml
     /// </summary>
-    public partial class DocumentView : UserControl, IEditorAccess
+    public partial class DocumentView : UserControl, IEditorAccess, INotifyPropertyChanged
     {
         // Private classes ----------------------------------------------------
 
@@ -55,8 +55,11 @@ namespace Dev.Editor.Controls
         private DocumentViewModel viewModel;
         private FoldingManager foldingManager;
         private BaseFoldingStrategy foldingStrategy;
+        private IDocumentHandler handler;
 
         private DispatcherTimer foldingTimer;
+
+        private bool isLoaded = false;
 
         // Private methods ----------------------------------------------------
 
@@ -195,9 +198,12 @@ namespace Dev.Editor.Controls
             }
         }
 
-        private void HandleLoaded(object sender, RoutedEventArgs e)
+        private void InitializeViewModel(DocumentViewModel newViewModel)
         {
-            viewModel = (DocumentViewModel)DataContext;
+            Handler = newViewModel.Handler;
+
+            teEditor.Document = viewModel.Document;
+            teEditor.SyntaxHighlighting = viewModel.Highlighting.Definition;
 
             viewModel.EditorAccess = this;
             viewModel.PropertyChanged += HandleViewModelPropertyChanged;
@@ -213,12 +219,9 @@ namespace Dev.Editor.Controls
             // Hooking text editor
             teEditor.TextArea.SelectionChanged += HandleSelectionChanged;
             UpdateSelectionInfo();
-
-            // Focusing editor
-            teEditor.Focus();
         }
 
-        private void HandleUnloaded(object sender, RoutedEventArgs e)
+        private void DeinitializeViewModel(DocumentViewModel viewModel)
         {
             // Unhooking editor
             teEditor.TextArea.SelectionChanged -= HandleSelectionChanged;
@@ -233,6 +236,41 @@ namespace Dev.Editor.Controls
 
             viewModel.PropertyChanged -= HandleViewModelPropertyChanged;
             viewModel.EditorAccess = null;
+
+            teEditor.SyntaxHighlighting = null;
+            teEditor.Document = null;
+
+            Handler = null;
+        }
+
+        private void HandleLoaded(object sender, RoutedEventArgs e)
+        {
+            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => teEditor.Focus()), DispatcherPriority.Normal);            
+        }
+
+        private void HandleDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            if (e.NewValue != null && !(e.NewValue is DocumentViewModel))
+                throw new InvalidOperationException("Invalid data context for DocumentView!");
+
+            if (viewModel != null)
+            {
+                DeinitializeViewModel(viewModel);
+                viewModel = null;
+            }
+
+            if (e.NewValue != null)
+            {
+                viewModel = e.NewValue as DocumentViewModel;
+                InitializeViewModel(viewModel);
+            }
+        }
+
+        // Protected methods --------------------------------------------------
+
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         // Public methods -----------------------------------------------------
@@ -283,5 +321,19 @@ namespace Dev.Editor.Controls
         {
             teEditor.Focus();
         }
+
+        // Public properties --------------------------------------------------
+
+        public IDocumentHandler Handler
+        {
+            get => handler;
+            set
+            {
+                handler = value;
+                OnPropertyChanged(nameof(Handler));
+            }
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
     }
 }

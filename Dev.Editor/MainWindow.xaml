@@ -6,15 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
-    xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"
-    xmlns:dc="clr-namespace:Xceed.Wpf.AvalonDock.Controls;assembly=Xceed.Wpf.AvalonDock"
+    xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"    
     xmlns:local="clr-namespace:Dev.Editor"
     xmlns:controls="clr-namespace:Dev.Editor.Controls"
     xmlns:vmd="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
     xmlns:nav="clr-namespace:Dev.Editor.BusinessLogic.Models.Navigation;assembly=Dev.Editor.BusinessLogic"
+    xmlns:wpf="clr-namespace:Dev.Editor.Wpf"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing">
-    
+
     <f:RibbonWindow.InputBindings>
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NewCommand}" />
         <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding OpenCommand}" />
@@ -30,7 +30,13 @@
         <KeyBinding Key="F3" Command="{Binding FindNextCommand}" />
         <KeyBinding Key="P" Modifiers="Ctrl" Command="{Binding NavigateCommand}" />
     </f:RibbonWindow.InputBindings>
-    
+
+    <f:RibbonWindow.Resources>
+        <ResourceDictionary>
+            <wpf:DocumentTemplateSelector x:Key="DocumentTemplateSelector" />
+        </ResourceDictionary>
+    </f:RibbonWindow.Resources>
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -40,17 +46,17 @@
         <f:Ribbon Focusable="False" FocusManager.IsFocusScope="True">
             <f:Ribbon.Menu>
                 <f:ApplicationMenu>
-                    
+
                 </f:ApplicationMenu>
             </f:Ribbon.Menu>
 
             <!-- Home tab -->
-            
+
             <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_Home}"
                              ReduceOrder="grHomeEdit, grHomeFile">
-                
+
                 <!-- File -->
-                
+
                 <f:RibbonGroupBox x:Name="grHomeFile" Header="{x:Static p:Strings.Ribbon_Group_File}">
                     <f:Button Header="{x:Static p:Strings.Ribbon_File_Open}" Command="{Binding OpenCommand}" SizeDefinition="Large" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open32.png"
@@ -65,9 +71,9 @@
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save16.png"/>
                 </f:RibbonGroupBox>
-                
+
                 <!-- Edit -->
-                
+
                 <f:RibbonGroupBox x:Name="grHomeEdit" Header="{x:Static p:Strings.Ribbon_Group_Edit}">
                     <f:Button Header="{x:Static p:Strings.Ribbon_Edit_Paste}" Command="{Binding PasteCommand}" SizeDefinition="Large" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Paste32.png"
@@ -118,7 +124,7 @@
                     </f:RibbonToolBar>
 
                 </f:RibbonGroupBox>
-                
+
                 <!-- Search -->
 
                 <f:RibbonGroupBox x:Name="grSearch" Header="{x:Static p:Strings.Ribbon_Group_Search}">
@@ -132,7 +138,7 @@
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/FindNext32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/FindNext16.png"/>
                 </f:RibbonGroupBox>
-                
+
                 <!-- Navigation -->
 
                 <f:RibbonGroupBox x:Name="grNavigation" Header="{x:Static p:Strings.Ribbon_Group_Navigation}">
@@ -141,13 +147,13 @@
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Navigation16.png" />
 
                 </f:RibbonGroupBox>
-                
+
             </f:RibbonTabItem>
-        
+
             <!-- View tab -->
 
             <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_View}">
-                
+
                 <!-- Editor -->
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Group_Editor}">
@@ -156,7 +162,7 @@
                     <f:CheckBox Header="{x:Static p:Strings.Ribbon_Editor_ShowLineNumbers}" IsChecked="{Binding LineNumbers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 </f:RibbonGroupBox>
-                
+
                 <!-- Syntax highlighting -->
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_SyntaxHighlighting}">
@@ -180,13 +186,13 @@
                     </f:InRibbonGallery>
 
                 </f:RibbonGroupBox>
-                
+
             </f:RibbonTabItem>
-        
+
             <!-- Lines tab -->
 
             <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_Lines}">
-                
+
                 <!-- Ordering -->
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Group_Ordering}">
@@ -202,7 +208,7 @@
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/SortDescending16.png"/>
 
                 </f:RibbonGroupBox>
-                
+
                 <!-- Cleanup -->
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Group_Cleanup}">
@@ -213,43 +219,92 @@
                               SizeDefinition="Middle" />
 
                 </f:RibbonGroupBox>
-                
+
             </f:RibbonTabItem>
-            
+
         </f:Ribbon>
 
         <!-- Docking host -->
-        
-        <ad:DockingManager x:Name="dmManager" Grid.Row="1" DocumentsSource="{Binding Documents}"
-                           ActiveContent="{Binding ActiveDocument, Mode=TwoWay}"
-                           DocumentClosing="HandleDocumentClosing"
-                           DocumentClosed="HandleDocumentClosed">
-            <ad:DockingManager.Resources>
-                <DataTemplate DataType="{x:Type vmd:DocumentViewModel}">
-                    <controls:DocumentView />
-                </DataTemplate>
-            </ad:DockingManager.Resources>
 
-            <ad:DockingManager.DocumentHeaderTemplate>
+        <TabControl Grid.Row="1" ItemsSource="{Binding Documents}" SelectedItem="{Binding ActiveDocument}"
+                    ContentTemplateSelector="{StaticResource DocumentTemplateSelector}">
+            <TabControl.Resources>
+                <ResourceDictionary>
+                    <Style TargetType="Button" x:Key="TabCloseButtonStyle">
+                        <Style.Setters>
+                            <Setter Property="BorderThickness" Value="0" />
+                            <Setter Property="Background" Value="Transparent" />
+                            <Setter Property="Padding" Value="2" />
+                        </Style.Setters>
+                    </Style>
+                </ResourceDictionary>
+            </TabControl.Resources>
+
+            <TabControl.Template>
+                <ControlTemplate TargetType="{x:Type TabControl}">
+                    <Grid x:Name="Grid" KeyboardNavigation.TabNavigation="Local">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition x:Name="ColumnDefinition0"/>
+                            <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+                            <RowDefinition x:Name="RowDefinition1" Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="1" Grid.Column="0" x:Name="ContentPanel" BorderBrush="#FFD0CEBF" BorderThickness="0,0,1,1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Contained">
+                            <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
+                                <Border Background="{TemplateBinding Background}" x:Name="Border1">
+                                    <ContentPresenter DataContext="{x:Null}" Margin="{TemplateBinding Padding}" x:Name="PART_SelectedContentHost" Content="{TemplateBinding SelectedContent}" ContentTemplate="{TemplateBinding SelectedContentTemplate}" ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" ContentSource="SelectedContent"/>
+                                </Border>
+                            </Border>
+                        </Border>
+
+                        <ScrollViewer x:Name="HeaderPanel" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" 
+                                      VerticalAlignment="Stretch" Margin="0,0,0,0" 
+                                      HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                            <ScrollViewer.Style>
+                                <Style TargetType="{x:Type ScrollViewer}">
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate>
+                                                <Grid Margin="0,0,0,0" Grid.Row="0" Grid.Column="0" x:Name="HeaderPanel">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                        <ColumnDefinition Width="Auto"/>
+                                                    </Grid.ColumnDefinitions>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="Auto"/>
+                                                    </Grid.RowDefinitions>
+                                                    <ScrollContentPresenter Grid.Column="0" Content="{TemplateBinding ScrollViewer.Content}" />
+                                                    <RepeatButton Grid.Column="1" Content="3" FontFamily="Marlett" FontSize="12" Padding="2" Command="ScrollBar.LineLeftCommand" Style="{DynamicResource TabScrollerRepeatButtonStyle}"/>
+                                                    <RepeatButton Grid.Column="2" Content="4" FontFamily="Marlett" FontSize="12" Padding="2" Command="ScrollBar.LineRightCommand" Style="{DynamicResource TabScrollerRepeatButtonStyle}"/>
+                                                </Grid>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style>
+                            </ScrollViewer.Style>
+                            <StackPanel IsItemsHost="true" Orientation="Horizontal" Background="{x:Null}" KeyboardNavigation.TabIndex="1" />
+                        </ScrollViewer>
+                    </Grid>
+                </ControlTemplate>
+            </TabControl.Template>
+            
+            <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
                         <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" MaxWidth="200" Margin="2"/>
                         <TextBlock Text="•" Margin="2" Visibility="{Binding Content.Changed, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <Button Content="r" FontFamily="Marlett" FontSize="10" Command="{Binding CloseCommand}" Style="{StaticResource TabCloseButtonStyle}"/>
                     </StackPanel>
                 </DataTemplate>
-            </ad:DockingManager.DocumentHeaderTemplate>
-            
-            <ad:DockingManager.LayoutItemContainerStyle>
-                <Style TargetType="{x:Type dc:LayoutItem}" >
-                    <Setter Property="Title" Value="{Binding Model.Title}" />
-                    <Setter Property="CloseCommand" Value="{Binding Model.CloseCommand}" />
-                    <!-- <Setter Property="CanClose" Value="" /> -->
-                </Style>
-            </ad:DockingManager.LayoutItemContainerStyle>
-        </ad:DockingManager>
+            </TabControl.ItemTemplate>
+        </TabControl>
 
         <!-- Navigation popup -->
-        
+
         <Popup x:Name="pNavigation" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" StaysOpen="False"
                Placement="Center" AllowsTransparency="True" PreviewKeyDown="HandleNavigationPreviewKeyDown" FocusManager.IsFocusScope="True">
             <StackPanel Orientation="Vertical" Background="#80000000">

@@ -5,10 +5,12 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Dev.Editor.BusinessLogic.Models.Documents;
 using Dev.Editor.BusinessLogic.Models.Highlighting;
 using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
+using Dev.Editor.Common.Commands;
 using Dev.Editor.Common.Conditions;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
@@ -58,11 +60,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
                 throw new InvalidOperationException("No editor attached!");
         }
 
+        private void DoClose()
+        {
+            handler.RequestClose(this);
+        }
+
         // Public methods -----------------------------------------------------
 
         public DocumentViewModel(IDocumentHandler handler)
         {
             this.handler = handler;
+
+            CloseCommand = new AppCommand(obj => DoClose());
 
             document = new TextDocument();
             document.FileNameChanged += HandleFileNameChanged;
@@ -155,6 +164,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         // Public properties --------------------------------------------------
 
+        public ICommand CloseCommand { get; }
+
         public TextDocument Document => document;
 
         public string FileName
@@ -219,6 +230,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             get => editorAccess;
             set => editorAccess = value;
         }
+
         public SearchModel LastSearch
         {
             get => lastSearch;

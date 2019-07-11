@@ -11,5 +11,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
     {
         bool WordWrap { get; }
         bool LineNumbers { get; }
+
+        void RequestClose(DocumentViewModel documentViewModel);
     }
 }

@@ -173,26 +173,48 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return anyDocumentLoaded;
         }
 
-        public void SelectPreviousNavigationItem()
+        private bool CanCloseDocument(DocumentViewModel document)
         {
-            if (selectedNavigationItem != null)
+            if (!document.Changed)
             {
-                int index = navigationItems.IndexOf(selectedNavigationItem);
-                if (index > 0)
-                    SelectedNavigationItem = navigationItems[index - 1];
-                access.EnsureSelectedNavigationItemVisible();
+                return true;
             }
+            else
+            {
+                var decision = messagingService.AskYesNoCancel(String.Format(Strings.Message_FileNotSaved, document.FileName));
+
+                if (decision == false)
+                {
+                    return true;
+                }
+                else if (decision == true)
+                {
+                    if (!document.FilenameVirtual)
+                    {
+                        if (SaveDocument(document))
+                        {
+                            return true;
+                        }
+                    }
+                    else
+                    {
+                        if (SaveDocumentAs(document))
+                        {
+                            return true;
+                        }
+                    }
+                }
+            }
+
+            return false;
         }
 
-        public void SelectNextNavigationItem()
+        // IDocumentHandler implementation ------------------------------------
+
+        void IDocumentHandler.RequestClose(DocumentViewModel documentViewModel)
         {
-            if (selectedNavigationItem != null)
-            {
-                int index = navigationItems.IndexOf(selectedNavigationItem);
-                if (index < navigationItems.Count - 1)
-                    SelectedNavigationItem = navigationItems[index + 1];
-                access.EnsureSelectedNavigationItemVisible();
-            }
+            if (CanCloseDocument(documentViewModel))
+                RemoveDocument(documentViewModel);
         }
 
         // Public methods -----------------------------------------------------
@@ -285,42 +307,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 throw new InvalidOperationException("Invalid close behavior!");
         }
 
-        public bool CanCloseDocument(DocumentViewModel document)
-        {
-            if (!document.Changed)
-            {
-                return true;
-            }
-            else
-            {
-                var decision = messagingService.AskYesNoCancel(String.Format(Strings.Message_FileNotSaved, document.FileName));
-
-                if (decision == false)
-                {
-                    return true;
-                }
-                else if (decision == true)
-                {
-                    if (!document.FilenameVirtual)
-                    {
-                        if (SaveDocument(document))
-                        {
-                            return true;
-                        }
-                    }
-                    else
-                    {
-                        if (SaveDocumentAs(document))
-                        {
-                            return true;
-                        }
-                    }
-                }
-            }
-
-            return false;
-        }
-
         public bool CanCloseApplication()
         {
             switch (configurationService.Configuration.Behavior.CloseBehavior.Value)
@@ -363,14 +349,31 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return true;
         }
 
-        public void NotifyClosedDocument(DocumentViewModel document)
-        {
-            RemoveDocument(document);
-        }
-
         public void FocusActiveDocument()
         {
             activeDocument?.FocusDocument();
+        }
+
+        public void SelectPreviousNavigationItem()
+        {
+            if (selectedNavigationItem != null)
+            {
+                int index = navigationItems.IndexOf(selectedNavigationItem);
+                if (index > 0)
+                    SelectedNavigationItem = navigationItems[index - 1];
+                access.EnsureSelectedNavigationItemVisible();
+            }
+        }
+
+        public void SelectNextNavigationItem()
+        {
+            if (selectedNavigationItem != null)
+            {
+                int index = navigationItems.IndexOf(selectedNavigationItem);
+                if (index < navigationItems.Count - 1)
+                    SelectedNavigationItem = navigationItems[index + 1];
+                access.EnsureSelectedNavigationItemVisible();
+            }
         }
 
         // Public properties --------------------------------------------------
