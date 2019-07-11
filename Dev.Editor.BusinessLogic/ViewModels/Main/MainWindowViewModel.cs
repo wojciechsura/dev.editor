@@ -48,6 +48,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly ICommandRepositoryService commandRepositoryService;
         private readonly IImageResources imageResources;
         private readonly IFileIconProvider fileIconProvider;
+
         private readonly ObservableCollection<DocumentViewModel> documents;
         private DocumentViewModel activeDocument;
 
