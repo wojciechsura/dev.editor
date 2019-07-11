@@ -59,8 +59,6 @@ namespace Dev.Editor.Controls
 
         private DispatcherTimer foldingTimer;
 
-        private bool isLoaded = false;
-
         // Private methods ----------------------------------------------------
 
         private void UpdateSelectionInfo()
@@ -73,6 +71,7 @@ namespace Dev.Editor.Controls
         {
             if (e.PropertyName == nameof(viewModel.Highlighting))
             {
+                teEditor.SyntaxHighlighting = viewModel.Highlighting.Definition;
                 SetupFolding();
             }
         }
@@ -85,8 +84,6 @@ namespace Dev.Editor.Controls
 
         private void UpdateFolding(object sender, EventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Updating folding...");
-
             if (foldingManager != null && foldingStrategy != null)
                 foldingStrategy.UpdateFoldings(foldingManager, viewModel.Document);
 
@@ -245,7 +242,8 @@ namespace Dev.Editor.Controls
 
         private void HandleLoaded(object sender, RoutedEventArgs e)
         {
-            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => teEditor.Focus()), DispatcherPriority.Normal);            
+            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => teEditor.Focus()), 
+                DispatcherPriority.Normal);            
         }
 
         private void HandleDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
