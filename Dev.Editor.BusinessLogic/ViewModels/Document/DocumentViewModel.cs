@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.Windows.Media;
 using Dev.Editor.BusinessLogic.Models.Documents;
 using Dev.Editor.BusinessLogic.Models.Highlighting;
 using Dev.Editor.BusinessLogic.Models.Search;
@@ -36,6 +37,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private IEditorAccess editorAccess;
         private SearchModel lastSearch;
         private HighlightingInfo highlighting;
+        private ImageSource icon;
 
         // Private methods ----------------------------------------------------
 
@@ -168,15 +170,24 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         public TextDocument Document => document;
 
+        public void SetFilename(string filename, ImageSource icon)
+        {
+            document.FileName = filename;
+            this.icon = icon;
+
+            OnPropertyChanged(() => FileName);
+            OnPropertyChanged(() => Title);
+            OnPropertyChanged(() => Icon);
+        }
+
         public string FileName
         {
             get => document.FileName;
-            set
-            {
-                document.FileName = value;
-                OnPropertyChanged(() => FileName);
-                OnPropertyChanged(() => Title);
-            }
+        }
+
+        public ImageSource Icon
+        {
+            get => icon;
         }
 
         public string Title => Path.GetFileName(document.FileName);

@@ -1,9 +1,0 @@
-﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Dev.Editor.Resources"
-                    xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
-                    xmlns:c="clr-namespace:Dev.Editor.Controls">
-    <DataTemplate x:Key="TextDocumentTemplate" x:Shared="False" DataType="{x:Type vm:DocumentViewModel}">
-        <c:DocumentView />
-    </DataTemplate>
-</ResourceDictionary>

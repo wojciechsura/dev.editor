@@ -71,7 +71,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         {
             InternalReadDocument(document, filename);
 
-            document.Document.FileName = filename;
+            document.SetFilename(filename, fileIconProvider.GetImageForFile(filename));
             document.Document.UndoStack.ClearAll();
             document.Document.UndoStack.MarkAsOriginalFile();
             document.FilenameVirtual = false;
@@ -108,7 +108,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             var fileDialogResult = dialogService.SaveDialog();
             if (fileDialogResult.Result && InternalSaveDocument(activeDocument, fileDialogResult.FileName))
             {
-                activeDocument.FileName = fileDialogResult.FileName;
+                activeDocument.SetFilename(fileDialogResult.FileName, fileIconProvider.GetImageForFile(fileDialogResult.FileName));
                 return true;
             }
 
@@ -123,7 +123,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 while (documents.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
                     i++;
 
-                newDocument.Document.FileName = GenerateBlankFileName(i);
+                string newFilename = GenerateBlankFileName(i);
+                newDocument.SetFilename(newFilename, fileIconProvider.GetImageForFile(newFilename));
                 newDocument.Highlighting = highlightingProvider.EmptyHighlighting;
             });            
         }

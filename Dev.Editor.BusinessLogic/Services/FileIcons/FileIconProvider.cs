@@ -283,7 +283,7 @@ namespace Dev.Editor.BusinessLogic.Services.FileIcons
         {
             {".bowerrc", ""},
             {".esformatter", ""},
-            {".eslintrc", ""},
+            { ".eslintrc", ""},
             {".npmignore", ""},
             {".tfignore", ""},
             {".travis.yml", ""},
@@ -321,7 +321,6 @@ namespace Dev.Editor.BusinessLogic.Services.FileIcons
             {".jscsrc", "JSONScript_16x.png"},
             {".jshintrc", "JSONScript_16x.png"},
             {".babelrc", "JSONScript_16x.png"},
-            {"CMakeLists.txt", "MakeFile_16x.png"},
             {"cmakelists.txt", "MakeFile_16x.png"},
             {"gnumakefile", "MakeFile_16x.png"},
             {"web.debug.config", "NextDocument_16x.png"},
@@ -387,7 +386,7 @@ namespace Dev.Editor.BusinessLogic.Services.FileIcons
 
         public ImageSource GetImageForFile(string filename)
         {
-            var result = FindImage(filename, fileNameCache, fileNames);
+            var result = FindImage(Path.GetFileName(filename), fileNameCache, fileNames);
             if (result != null)
                 return result;
 
@@ -400,7 +399,7 @@ namespace Dev.Editor.BusinessLogic.Services.FileIcons
 
         public ImageSource GetImageForFolder(string folderName)
         {
-            var result = FindImage(folderName, folderNameCache, folderNames);
+            var result = FindImage(Path.GetFileName(folderName), folderNameCache, folderNames);
             if (result != null)
                 return result;
 

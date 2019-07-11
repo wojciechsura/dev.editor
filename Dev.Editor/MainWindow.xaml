@@ -12,8 +12,9 @@
     xmlns:vmd="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
     xmlns:nav="clr-namespace:Dev.Editor.BusinessLogic.Models.Navigation;assembly=Dev.Editor.BusinessLogic"
     xmlns:wpf="clr-namespace:Dev.Editor.Wpf"
+    xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
-    Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing">
+    Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True">
 
     <f:RibbonWindow.InputBindings>
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NewCommand}" />
@@ -224,7 +225,7 @@
 
         </f:Ribbon>
 
-        <!-- Docking host -->
+        <!-- Tabs -->
 
         <TabControl Grid.Row="1" ItemsSource="{Binding Documents}" SelectedItem="{Binding ActiveDocument}"
                     ContentTemplateSelector="{StaticResource DocumentTemplateSelector}">
@@ -240,6 +241,12 @@
                 </ResourceDictionary>
             </TabControl.Resources>
 
+            <TabControl.ContentTemplate>
+                <DataTemplate DataType="{x:Type vm:DocumentViewModel}">
+                    <controls:DocumentView />
+                </DataTemplate>
+            </TabControl.ContentTemplate>
+            
             <TabControl.Template>
                 <ControlTemplate TargetType="{x:Type TabControl}">
                     <Grid x:Name="Grid" KeyboardNavigation.TabNavigation="Local">
@@ -295,6 +302,7 @@
             <TabControl.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="{Binding Icon}"/>
                         <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" MaxWidth="200" Margin="2"/>
                         <TextBlock Text="•" Margin="2" Visibility="{Binding Content.Changed, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         <Button Content="r" FontFamily="Marlett" FontSize="10" Command="{Binding CloseCommand}" Style="{StaticResource TabCloseButtonStyle}"/>

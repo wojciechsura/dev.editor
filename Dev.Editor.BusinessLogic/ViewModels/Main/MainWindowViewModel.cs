@@ -30,6 +30,7 @@ using System.Reflection;
 using System.Windows.Media.Imaging;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
 using Dev.Editor.BusinessLogic.Models.Navigation;
+using Dev.Editor.BusinessLogic.Services.FileIcons;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -46,6 +47,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly IHighlightingProvider highlightingProvider;
         private readonly ICommandRepositoryService commandRepositoryService;
         private readonly IImageResources imageResources;
+        private readonly IFileIconProvider fileIconProvider;
         private readonly ObservableCollection<DocumentViewModel> documents;
         private DocumentViewModel activeDocument;
 
@@ -127,7 +129,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     {
                         InternalReadDocument(document, storedFile.StoredFilename.Value);
 
-                        document.FileName = storedFile.Filename.Value;
+                        document.SetFilename(storedFile.Filename.Value, fileIconProvider.GetImageForFile(storedFile.Filename.Value));
                         document.FilenameVirtual = storedFile.FilenameIsVirtual.Value;
 
                         if (!storedFile.IsDirty.Value)
@@ -227,7 +229,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             IStartupInfoService startupInfoService,
             IHighlightingProvider highlightingProvider,
             ICommandRepositoryService commandRepositoryService,
-            IImageResources imageResources)
+            IImageResources imageResources,
+            IFileIconProvider fileIconProvider)
         {
             this.access = access;
             this.dialogService = dialogService;
@@ -238,6 +241,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             this.highlightingProvider = highlightingProvider;
             this.commandRepositoryService = commandRepositoryService;
             this.imageResources = imageResources;
+            this.fileIconProvider = fileIconProvider;
 
             wordWrap = configurationService.Configuration.Editor.WordWrap.Value;
             lineNumbers = configurationService.Configuration.Editor.LineNumbers.Value;
