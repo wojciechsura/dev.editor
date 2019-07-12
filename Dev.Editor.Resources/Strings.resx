@@ -312,4 +312,7 @@
   <data name="Ribbon.Cleanup.RemoveWhitespaceLines" xml:space="preserve">
     <value>Remove whitespace lines</value>
   </data>
+  <data name="Tool.Explorer.Title" xml:space="preserve">
+    <value>Files</value>
+  </data>
 </root>

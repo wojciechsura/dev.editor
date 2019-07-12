@@ -312,4 +312,7 @@
   <data name="Ribbon.Cleanup.RemoveWhitespaceLines" xml:space="preserve">
     <value>Usuń linie z białymi znakami</value>
   </data>
+  <data name="Tool.Explorer.Title" xml:space="preserve">
+    <value>Pliki</value>
+  </data>
 </root>

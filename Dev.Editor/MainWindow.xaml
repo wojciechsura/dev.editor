@@ -9,13 +9,23 @@
     xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"    
     xmlns:local="clr-namespace:Dev.Editor"
     xmlns:controls="clr-namespace:Dev.Editor.Controls"
+    xmlns:converters="clr-namespace:Dev.Editor.Converters"
     xmlns:vmd="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
     xmlns:nav="clr-namespace:Dev.Editor.BusinessLogic.Models.Navigation;assembly=Dev.Editor.BusinessLogic"
     xmlns:wpf="clr-namespace:Dev.Editor.Wpf"
     xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
+    xmlns:uit="clr-namespace:Dev.Editor.BusinessLogic.Types.UI;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True">
 
+    <f:RibbonWindow.Resources>
+        <ResourceDictionary>
+            <converters:SidePanelToColumnConverter x:Key="SidePanelToColumnConverter" />
+            <converters:SidePanelToVisibilityConverter x:Key="SidePanelToVisibilityConverter" />
+            <converters:SidePanelToTabPlacement x:Key="SidePanelToTabPlacement" />
+        </ResourceDictionary>
+    </f:RibbonWindow.Resources>
+    
     <f:RibbonWindow.InputBindings>
         <KeyBinding Key="N" Modifiers="Ctrl" Command="{Binding NewCommand}" />
         <KeyBinding Key="O" Modifiers="Ctrl" Command="{Binding OpenCommand}" />
@@ -31,12 +41,6 @@
         <KeyBinding Key="F3" Command="{Binding FindNextCommand}" />
         <KeyBinding Key="P" Modifiers="Ctrl" Command="{Binding NavigateCommand}" />
     </f:RibbonWindow.InputBindings>
-
-    <f:RibbonWindow.Resources>
-        <ResourceDictionary>
-            <wpf:DocumentTemplateSelector x:Key="DocumentTemplateSelector" />
-        </ResourceDictionary>
-    </f:RibbonWindow.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -227,8 +231,28 @@
 
         <!-- Tabs -->
 
-        <TabControl Grid.Row="1" ItemsSource="{Binding Documents}" SelectedItem="{Binding ActiveDocument}"
-                    ContentTemplateSelector="{StaticResource DocumentTemplateSelector}" Margin="0,4,0,0">
+        <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TabControl x:Name="rightPanel" Grid.Column="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToColumnConverter}}" 
+                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinWidth="100"
+                        Visibility="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToVisibilityConverter}}"
+                        TabStripPlacement="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToTabPlacement}}"
+                        ItemsSource="{Binding Tools}">
+            </TabControl>
+
+            <GridSplitter x:Name="leftPanelSplitter" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="4" 
+                          Visibility="{Binding SidePanelPlacement, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static uit:SidePanelPlacement.Left}}"/>
+
+            <TabControl Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                        ItemsSource="{Binding Documents}" SelectedItem="{Binding ActiveDocument}"
+                        Margin="0,4,0,0">
             <TabControl.Resources>
                 <ResourceDictionary>
                     <Style TargetType="Button" x:Key="TabCloseButtonStyle">
@@ -355,6 +379,10 @@
                 </DataTemplate>
             </TabControl.ItemTemplate>
         </TabControl>
+
+            <GridSplitter x:Name="rightPanelSplitter" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="4" 
+                          Visibility="{Binding SidePanelPlacement, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static uit:SidePanelPlacement.Right}}"/>
+        </Grid>
 
         <!-- Navigation popup -->
 

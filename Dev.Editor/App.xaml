@@ -16,6 +16,7 @@
             <c:NullToBoolConverter x:Key="NullToBoolConverter" />
             <c:RadioToEnumConverter x:Key="RadioToEnumConverter" />
             <c:EnabledToOpacityConverter x:Key="EnabledToOpactityConverter" />
+            <c:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
 
             <!-- Layout -->
             

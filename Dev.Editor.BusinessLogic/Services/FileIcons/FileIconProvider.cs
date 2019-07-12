@@ -405,5 +405,8 @@ namespace Dev.Editor.BusinessLogic.Services.FileIcons
 
             return genericFolder;
         }
+
+        public ImageSource GenericFileIcon { get; }
+        public ImageSource GenericFolderIcon { get; }
     }
 }

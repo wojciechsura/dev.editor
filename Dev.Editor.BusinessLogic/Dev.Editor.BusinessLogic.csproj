@@ -67,6 +67,7 @@
     <Compile Include="Models\Configuration\Internal\InternalConfig.cs" />
     <Compile Include="Models\Configuration\Internal\StoredFile.cs" />
     <Compile Include="Models\Configuration\Internal\StoredFiles.cs" />
+    <Compile Include="Models\Configuration\UI\UIConfig.cs" />
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
     <Compile Include="Models\Dialogs\SaveDialogResult.cs" />
     <Compile Include="Models\Documents\DocumentState.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="Types\Behavior\CloseBehavior.cs" />
     <Compile Include="Types\Folding\FoldingKind.cs" />
     <Compile Include="Types\Search\SearchMode.cs" />
+    <Compile Include="Types\UI\SidePanelPlacement.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Document\DocumentViewModel.cs" />
     <Compile Include="ViewModels\Document\IDocumentHandler.cs" />
@@ -110,6 +112,8 @@
     <Compile Include="ViewModels\Search\ISearchHost.cs" />
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />
+    <Compile Include="ViewModels\Tools\Base\BaseToolViewModel.cs" />
+    <Compile Include="ViewModels\Tools\Explorer\ExplorerToolViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dev.Editor.Common\Dev.Editor.Common.csproj">

@@ -31,6 +31,9 @@ using System.Windows.Media.Imaging;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
 using Dev.Editor.BusinessLogic.Models.Navigation;
 using Dev.Editor.BusinessLogic.Services.FileIcons;
+using Dev.Editor.BusinessLogic.Types.UI;
+using Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;
+using Dev.Editor.BusinessLogic.ViewModels.Tools.Base;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -60,6 +63,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private string navigationText;
         private readonly ObservableCollection<BaseNavigationModel> navigationItems;
         private BaseNavigationModel selectedNavigationItem;
+
+        private SidePanelPlacement sidePanelPlacement;
+
+        // Tools
+
+        private readonly ExplorerToolViewModel explorerToolViewModel;
 
         // Private methods ----------------------------------------------------
 
@@ -212,6 +221,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return false;
         }
 
+        private IEnumerable<BaseToolViewModel> GetToolViewModels()
+        {
+            yield return explorerToolViewModel;
+        }
+
         // IDocumentHandler implementation ------------------------------------
 
         void IDocumentHandler.RequestClose(DocumentViewModel documentViewModel)
@@ -246,6 +260,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             wordWrap = configurationService.Configuration.Editor.WordWrap.Value;
             lineNumbers = configurationService.Configuration.Editor.LineNumbers.Value;
+            sidePanelPlacement = configurationService.Configuration.UI.SidePanelPlacement.Value;
 
             documents = new ObservableCollection<DocumentViewModel>();
 
@@ -261,6 +276,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             selectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => ActiveDocument, doc => doc.SelectionAvailable, false);
             regularSelectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => ActiveDocument, doc => doc.RegularSelectionAvailable, false);
             searchPerformedCondition = new MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => ActiveDocument, doc => doc.LastSearch);
+
+            // Initializing tools
+
+            explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources);
 
             // Initializing commands
 
@@ -412,5 +431,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 Set(ref selectedNavigationItem, () => SelectedNavigationItem, value);
             }
         }
+
+        public SidePanelPlacement SidePanelPlacement
+        {
+            get => sidePanelPlacement;
+            set
+            {
+                Set(ref sidePanelPlacement, () => SidePanelPlacement, value);
+            }
+        }
+
+        public IEnumerable<BaseToolViewModel> Tools => GetToolViewModels();
     }
 }
