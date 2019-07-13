@@ -14,6 +14,7 @@
     xmlns:nav="clr-namespace:Dev.Editor.BusinessLogic.Models.Navigation;assembly=Dev.Editor.BusinessLogic"
     xmlns:wpf="clr-namespace:Dev.Editor.Wpf"
     xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
+    xmlns:vmtb="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.Base;assembly=Dev.Editor.BusinessLogic"
     xmlns:uit="clr-namespace:Dev.Editor.BusinessLogic.Types.UI;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True">
@@ -245,6 +246,65 @@
                         Visibility="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToVisibilityConverter}}"
                         TabStripPlacement="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToTabPlacement}}"
                         ItemsSource="{Binding Tools}">
+                <TabControl.Resources>
+                    <Style TargetType="TabItem">
+                        <Style.Setters>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TabItem">
+                                        <Border x:Name="TabBorder" BorderBrush="Transparent">
+                                            <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="TabStripPlacement" Value="Left">
+                                                <Trigger.Setters>
+                                                    <Setter TargetName="TabBorder" Property="BorderThickness">
+                                                        <Setter.Value>
+                                                            <Thickness Left="1" Top="1" Right="0" Bottom="1" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger.Setters>
+                                            </Trigger>
+                                            <Trigger Property="TabStripPlacement" Value="Right">
+                                                <Trigger.Setters>
+                                                    <Setter TargetName="TabBorder" Property="BorderThickness">
+                                                        <Setter.Value>
+                                                            <Thickness Left="0" Top="1" Right="1" Bottom="1" />
+                                                        </Setter.Value>
+                                                    </Setter>
+                                                </Trigger.Setters>
+                                            </Trigger>
+
+                                            <Trigger Property="IsSelected" Value="True">
+                                                <Trigger.Setters>
+                                                    <Setter TargetName="TabBorder" Property="BorderBrush" Value="#c0c0c0" />
+                                                    <Setter TargetName="TabBorder" Property="TextElement.Foreground" Value="#086f9e" />
+                                                </Trigger.Setters>
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style.Setters>
+                    </Style>
+                </TabControl.Resources>
+
+                <TabControl.ItemTemplate>
+                    <DataTemplate DataType="{x:Type vmtb:BaseToolViewModel}">
+                        <StackPanel Orientation="Vertical">
+
+                            <Image Width="16" Height="16" Source="{Binding Icon}" Margin="2" />
+
+                            <TextBlock Text="{Binding Title}" Margin="2">
+                                <TextBlock.LayoutTransform>
+                                    <RotateTransform Angle="90" />
+                                </TextBlock.LayoutTransform>
+                            </TextBlock>
+                            
+                        </StackPanel>
+                        
+                    </DataTemplate>
+                </TabControl.ItemTemplate>
             </TabControl>
 
             <GridSplitter x:Name="leftPanelSplitter" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="4" 
