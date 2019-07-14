@@ -1,6 +1,8 @@
-﻿using Dev.Editor.BusinessLogic.ViewModels.Document;
+﻿using Dev.Editor.BusinessLogic.Types.UI;
+using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.BusinessLogic.ViewModels.Main;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
+using Dev.Editor.Converters;
 using Fluent;
 using System;
 using System.Collections.Generic;
@@ -35,6 +37,39 @@ namespace Dev.Editor
         private readonly Lazy<DispatcherTimer> navigationTimer;
 
         // Private methods ----------------------------------------------------
+
+        private void SetupSidePanel()
+        {
+            if (viewModel.SidePanelPlacement == SidePanelPlacement.Left)
+            {
+                BindingOperations.SetBinding(leftPanelColumn, ColumnDefinition.WidthProperty, new Binding
+                {
+                    Path = new PropertyPath(nameof(MainWindowViewModel.PanelSize)),
+                    Mode = BindingMode.TwoWay,
+                    Converter = new DoubleToGridLengthConverter()
+                });
+            }
+            else
+            {
+                BindingOperations.ClearBinding(leftPanelColumn, ColumnDefinition.WidthProperty);
+                leftPanelColumn.Width = new GridLength(0.0, GridUnitType.Auto);
+            }
+
+            if (viewModel.SidePanelPlacement == SidePanelPlacement.Right)
+            {
+                BindingOperations.SetBinding(rightPanelColumn, ColumnDefinition.WidthProperty, new Binding
+                {
+                    Path = new PropertyPath(nameof(MainWindowViewModel.PanelSize)),
+                    Mode = BindingMode.TwoWay,
+                    Converter = new DoubleToGridLengthConverter()
+                });
+            }
+            else
+            {
+                BindingOperations.ClearBinding(rightPanelColumn, ColumnDefinition.WidthProperty);
+                rightPanelColumn.Width = new GridLength(0.0, GridUnitType.Auto);
+            }
+        }
 
         private void HandleWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
@@ -78,6 +113,20 @@ namespace Dev.Editor
         private void HandleNavigationTextboxTextChanged(object sender, TextChangedEventArgs e)
         {
             navigationTimer.Value.Start();
+        }
+
+        private void HandleLoaded(object sender, RoutedEventArgs e)
+        {
+            viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+            SetupSidePanel();
+        }
+
+        private void HandleViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(MainWindowViewModel.SidePanelPlacement))
+            {
+                SetupSidePanel();
+            }
         }
 
         private void NavigationSearch(object sender, EventArgs e)

@@ -73,6 +73,7 @@
     <Compile Include="Models\Documents\DocumentState.cs" />
     <Compile Include="Models\Documents\FoldSectionState.cs" />
     <Compile Include="Models\Highlighting\HighlightingInfo.cs" />
+    <Compile Include="Models\UI\SidePanelPlacementModel.cs" />
     <Compile Include="Models\Navigation\BaseNavigationModel.cs" />
     <Compile Include="Models\Navigation\CommandNavigationModel.cs" />
     <Compile Include="Models\Search\ReplaceAllModel.cs" />

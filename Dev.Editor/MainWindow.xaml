@@ -18,7 +18,8 @@
     xmlns:vme="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;assembly=Dev.Editor.BusinessLogic"
     xmlns:uit="clr-namespace:Dev.Editor.BusinessLogic.Types.UI;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
-    Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True">
+    Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True"
+    Loaded="HandleLoaded">
 
     <f:RibbonWindow.Resources>
         <ResourceDictionary>
@@ -170,6 +171,13 @@
 
                 </f:RibbonGroupBox>
 
+                <f:RibbonGroupBox Header="#Interface">
+
+                    <f:ComboBox Header="#Side panel" ItemsSource="{Binding SidePanelPlacements}" DisplayMemberPath="Display" SelectedValuePath="Value"
+                                SelectedValue="{Binding SidePanelPlacement}" IsEditable="False" />
+
+                </f:RibbonGroupBox>
+                
                 <!-- Syntax highlighting -->
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_SyntaxHighlighting}">
@@ -235,11 +243,11 @@
 
         <Grid Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition x:Name="leftPanelColumn" />
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition x:Name="rightPanelColumn" />
             </Grid.ColumnDefinitions>
 
             <TabControl x:Name="rightPanel" Grid.Column="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToColumnConverter}}" 

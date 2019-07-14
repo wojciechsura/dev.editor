@@ -15,8 +15,10 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.UI
         public UIConfig(BaseItemContainer parent) : base(NAME, parent)
         {
             SidePanelPlacement = new ConfigValue<SidePanelPlacement>("SidePanelPlacement", this, Types.UI.SidePanelPlacement.Right);
+            SidePanelSize = new ConfigValue<double>("SidePanelSize", this, 200.0);
         }
 
         public ConfigValue<SidePanelPlacement> SidePanelPlacement { get; }
+        public ConfigValue<double> SidePanelSize { get; }
     }
 }

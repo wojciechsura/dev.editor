@@ -34,6 +34,7 @@ using Dev.Editor.BusinessLogic.Services.FileIcons;
 using Dev.Editor.BusinessLogic.Types.UI;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.Base;
+using Dev.Editor.BusinessLogic.Models.UI;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -65,6 +66,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private BaseNavigationModel selectedNavigationItem;
 
         private SidePanelPlacement sidePanelPlacement;
+        private List<SidePanelPlacementModel> sidePanelPlacements;
+        private double panelSize;
 
         // Tools
 
@@ -262,6 +265,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             lineNumbers = configurationService.Configuration.Editor.LineNumbers.Value;
             sidePanelPlacement = configurationService.Configuration.UI.SidePanelPlacement.Value;
 
+            sidePanelPlacements = new List<SidePanelPlacementModel>
+            {
+                new SidePanelPlacementModel("#Left", SidePanelPlacement.Left),
+                new SidePanelPlacementModel("#Right", SidePanelPlacement.Right),
+                new SidePanelPlacementModel("#Hidden", SidePanelPlacement.Hidden)
+            };
+
             documents = new ObservableCollection<DocumentViewModel>();
 
             highlightings = new List<HighlightingInfo>(highlightingProvider.HighlightingDefinitions);
@@ -438,6 +448,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             set
             {
                 Set(ref sidePanelPlacement, () => SidePanelPlacement, value);
+            }
+        }
+
+        public IEnumerable<SidePanelPlacementModel> SidePanelPlacements => sidePanelPlacements;
+
+        public double PanelSize
+        {
+            get => panelSize;
+            set
+            {
+                Set(ref panelSize, () => PanelSize, value);
             }
         }
 
