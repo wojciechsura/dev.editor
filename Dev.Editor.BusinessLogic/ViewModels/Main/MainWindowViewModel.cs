@@ -67,7 +67,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private SidePanelPlacement sidePanelPlacement;
         private List<SidePanelPlacementModel> sidePanelPlacements;
-        private double panelSize;
+        private double sidePanelSize;
 
         // Tools
 
@@ -272,6 +272,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 new SidePanelPlacementModel("#Hidden", SidePanelPlacement.Hidden)
             };
 
+            sidePanelSize = configurationService.Configuration.UI.SidePanelSize.Value;
+
             documents = new ObservableCollection<DocumentViewModel>();
 
             highlightings = new List<HighlightingInfo>(highlightingProvider.HighlightingDefinitions);
@@ -453,12 +455,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public IEnumerable<SidePanelPlacementModel> SidePanelPlacements => sidePanelPlacements;
 
-        public double PanelSize
+        public double SidePanelSize
         {
-            get => panelSize;
+            get => sidePanelSize;
             set
             {
-                Set(ref panelSize, () => PanelSize, value);
+                Set(ref sidePanelSize, () => SidePanelSize, value);
             }
         }
 

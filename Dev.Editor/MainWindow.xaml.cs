@@ -44,13 +44,16 @@ namespace Dev.Editor
             {
                 BindingOperations.SetBinding(leftPanelColumn, ColumnDefinition.WidthProperty, new Binding
                 {
-                    Path = new PropertyPath(nameof(MainWindowViewModel.PanelSize)),
+                    Path = new PropertyPath(nameof(MainWindowViewModel.SidePanelSize)),
                     Mode = BindingMode.TwoWay,
                     Converter = new DoubleToGridLengthConverter()
                 });
+
+                leftPanelColumn.MinWidth = 150.0;
             }
             else
             {
+                leftPanelColumn.MinWidth = 0.0;
                 BindingOperations.ClearBinding(leftPanelColumn, ColumnDefinition.WidthProperty);
                 leftPanelColumn.Width = new GridLength(0.0, GridUnitType.Auto);
             }
@@ -59,13 +62,15 @@ namespace Dev.Editor
             {
                 BindingOperations.SetBinding(rightPanelColumn, ColumnDefinition.WidthProperty, new Binding
                 {
-                    Path = new PropertyPath(nameof(MainWindowViewModel.PanelSize)),
+                    Path = new PropertyPath(nameof(MainWindowViewModel.SidePanelSize)),
                     Mode = BindingMode.TwoWay,
                     Converter = new DoubleToGridLengthConverter()
                 });
+                rightPanelColumn.MinWidth = 150.0;
             }
             else
             {
+                rightPanelColumn.MinWidth = 0.0;
                 BindingOperations.ClearBinding(rightPanelColumn, ColumnDefinition.WidthProperty);
                 rightPanelColumn.Width = new GridLength(0.0, GridUnitType.Auto);
             }
