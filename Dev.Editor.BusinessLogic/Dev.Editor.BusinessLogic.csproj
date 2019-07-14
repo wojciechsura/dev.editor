@@ -98,6 +98,7 @@
     <Compile Include="Types\Behavior\CloseBehavior.cs" />
     <Compile Include="Types\Folding\FoldingKind.cs" />
     <Compile Include="Types\Search\SearchMode.cs" />
+    <Compile Include="Types\Tools\Explorer\FileItemType.cs" />
     <Compile Include="Types\UI\SidePanelPlacement.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\Document\DocumentViewModel.cs" />
@@ -113,6 +114,7 @@
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />
     <Compile Include="ViewModels\Tools\Base\BaseToolViewModel.cs" />
+    <Compile Include="ViewModels\Tools\Explorer\FileItemViewModel.cs" />
     <Compile Include="ViewModels\Tools\Explorer\FolderItemViewModel.cs" />
     <Compile Include="ViewModels\Tools\Explorer\ExplorerToolViewModel.cs" />
     <Compile Include="ViewModels\Tools\Explorer\IFileItemHandler.cs" />

@@ -217,5 +217,9 @@
     <Resource Include="Resources\Images\Explorer16.png" />
     <Resource Include="Resources\Images\Explorer32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Up16.png" />
+    <Resource Include="Resources\Images\Up32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

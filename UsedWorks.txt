@@ -8,6 +8,7 @@ http://www.visualpharm.com/
 
 * Crystal Clear by Everaldo Coelho (LGPL)
 http://www.everaldo.com/
+https://www.iconfinder.com/iconsets/CrystalClear
 
 * Visual Studio icons from Jordan Lowe's Studio Icons extension for VS Code (MIT)
 https://marketplace.visualstudio.com/items?itemName=jtlowe.vscode-icon-theme

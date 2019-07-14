@@ -1,5 +1,6 @@
 ﻿using Dev.Editor.BusinessLogic.Services.FileIcons;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
+using Dev.Editor.BusinessLogic.Types.Tools.Explorer;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.Base;
 using Dev.Editor.Common.Tools;
 using Dev.Editor.Resources;
@@ -20,6 +21,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         private readonly ImageSource icon;
 
         private readonly ObservableCollection<FolderItemViewModel> folders;
+        private FolderItemViewModel selectedFolder;
+        private readonly ObservableCollection<FileItemViewModel> files;
 
         private void InitializeFolders()
         {
@@ -30,6 +33,43 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 .ForEach(x => folders.Add(x));            
         }
 
+        private void HandleSelectedFolderChanged()
+        {
+            files.Clear();
+
+            try
+            {
+                if (selectedFolder != null)
+                {
+                    if (selectedFolder.Parent != null)
+                    {
+                        files.Add(new FileItemViewModel(null, "..", imageResources.GetIconByName("Up16.png"), FileItemType.ParentFolder));
+                    }
+
+                    System.IO.Directory.EnumerateDirectories(selectedFolder.GetFullPath())
+                        .Select(x => new { Path = x, Display = System.IO.Path.GetFileName(x) })
+                        .OrderBy(x => x.Display, StringComparer.OrdinalIgnoreCase)
+                        .Select(x => new FileItemViewModel(x.Path, x.Display, fileIconProvider.GetImageForFolder(x.Display), FileItemType.Folder))
+                        .ForEach(x => files.Add(x));
+
+                    System.IO.Directory.EnumerateFiles(selectedFolder.GetFullPath())
+                        .Select(x => new { Path = x, Display = System.IO.Path.GetFileName(x) })
+                        .OrderBy(x => x.Display, StringComparer.OrdinalIgnoreCase)
+                        .Select(x => new FileItemViewModel(x.Path, x.Display, fileIconProvider.GetImageForFile(x.Display), FileItemType.File))
+                        .ForEach(x => files.Add(x));
+                }
+            }
+            catch (Exception)
+            {
+                // Don't display files from this folder if it is not possible
+            }
+        }
+
+        public void NotifyItemSelected(FolderItemViewModel folderItemViewModel)
+        {
+            SelectedFolder = folderItemViewModel;
+        }
+
         public ExplorerToolViewModel(IFileIconProvider fileIconProvider, IImageResources imageResources)
         {
             this.fileIconProvider = fileIconProvider;
@@ -38,6 +78,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             this.icon = imageResources.GetIconByName("Explorer16.png");
 
             folders = new ObservableCollection<FolderItemViewModel>();
+            files = new ObservableCollection<FileItemViewModel>();
             InitializeFolders();
         }
 
@@ -51,5 +92,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         public override ImageSource Icon => icon;
 
         public ObservableCollection<FolderItemViewModel> Folders => folders;
+
+        public FolderItemViewModel SelectedFolder
+        {
+            get => selectedFolder;
+            set
+            {
+                Set(ref selectedFolder, () => SelectedFolder, value, HandleSelectedFolderChanged);
+            }
+        }
+
+        public ObservableCollection<FileItemViewModel> Files => files;
     }
 }

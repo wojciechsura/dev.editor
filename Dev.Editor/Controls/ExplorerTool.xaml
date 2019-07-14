@@ -14,40 +14,16 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
 
-        <TreeView Grid.Row="0" HorizontalAlignment="Stretch" MinHeight="200" ItemsSource="{Binding Folders}">
+        <TreeView Grid.Row="0" HorizontalAlignment="Stretch" MinHeight="200" ItemsSource="{Binding Folders}" >
             <TreeView.Resources>
                 <Style TargetType="TreeViewItem">
                     <Style.Setters>
                         <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                        <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
                     </Style.Setters>
                 </Style>
             </TreeView.Resources>
 
-            <TreeView.Style>
-                <Style TargetType="{x:Type TreeView}">
-                    <Setter Property="TreeView.Background" Value="Transparent"/>
-                    <Setter Property="VirtualizingStackPanel.IsVirtualizing" Value="True"/>
-                    <Setter Property="VirtualizingStackPanel.VirtualizationMode" Value="Recycling"/>
-                    <Setter Property="TreeView.SnapsToDevicePixels" Value="True" />
-                    <Setter Property="TreeView.OverridesDefaultStyle" Value="True" />
-                    <Setter Property="ItemsControl.ItemsPanel">
-                        <Setter.Value>
-                            <ItemsPanelTemplate>
-                                <VirtualizingStackPanel IsItemsHost="True"/>
-                            </ItemsPanelTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter Property="TreeView.Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="TreeView">
-                                <ScrollViewer Focusable="False" CanContentScroll="True" Padding="3">
-                                    <ItemsPresenter HorizontalAlignment="Stretch"/>
-                                </ScrollViewer>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </TreeView.Style>
             
             <TreeView.ItemTemplate>
                 <HierarchicalDataTemplate DataType="{x:Type vme:FolderItemViewModel}" ItemsSource="{Binding Children}">
@@ -61,6 +37,15 @@
 
         <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="4" />
 
-        <ListBox Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" />
+        <ListBox Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Files}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type vme:FileItemViewModel}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="{Binding Icon}" VerticalAlignment="Center" Margin="1,1,4,1"/>
+                        <TextBlock Text="{Binding Display}" VerticalAlignment="Center"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
     </Grid>
 </UserControl>

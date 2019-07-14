@@ -23,12 +23,21 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 
         private bool isInitialized;
         private bool isExpanded;
+        private bool isSelected;
 
         // Private methods ----------------------------------------------------
 
         private void HandleIsExpandedChanged()
         {
             if (isExpanded && !isInitialized)
+            {
+                Initialize();
+            }
+        }
+
+        private void Initialize()
+        {
+            if (!isInitialized)
             {
                 children.Clear();
 
@@ -42,7 +51,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                         .Select(x => new FolderItemViewModel(this, x, x, handler.GetFolderIcon(x), handler))
                         .ForEach(item => children.Add(item));
                 }
-                catch (Exception e)
+                catch (Exception)
                 {
                     // Ignore - don't load items if not possible
                 }
@@ -50,6 +59,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 isInitialized = true;
             }
         }
+
+        private void HandleIsSelectedChanged()
+        {
+            if (isSelected)
+                handler.NotifyItemSelected(this);
+        }
+
 
         // Public methods -----------------------------------------------------
 
@@ -90,6 +106,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 Set(ref isExpanded, () => IsExpanded, value, HandleIsExpandedChanged);
             }
         }
+
+        public bool IsSelected
+        {
+            get => isSelected;
+            set
+            {
+                Set(ref isSelected, () => IsSelected, value, HandleIsSelectedChanged);
+            }
+        }
+
+        public FolderItemViewModel Parent => parent;
 
         public ObservableCollection<FolderItemViewModel> Children => children;
     }

@@ -10,5 +10,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
     public interface IFileItemHandler
     {
         ImageSource GetFolderIcon(string name);
+        void NotifyItemSelected(FolderItemViewModel folderItemViewModel);
     }
 }
