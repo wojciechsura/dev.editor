@@ -84,10 +84,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 
         public string GetFullPath()
         {
+            string path;
+
             if (parent != null)
-                return System.IO.Path.Combine(parent.GetFullPath(), myPath);
+                path = System.IO.Path.Combine(parent.GetFullPath(), myPath);
             else
-                return myPath;
+                path = myPath;
+
+            if (!path.EndsWith(@"\"))
+                path += @"\";
+
+            return path;
         }
 
         // Public properties --------------------------------------------------

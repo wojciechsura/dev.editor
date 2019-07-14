@@ -28,6 +28,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         {
             folders.Clear();
             System.IO.Directory.GetLogicalDrives()
+                .Select(x => $"{x[0]}:")
                 .OrderBy(x => x.ToLower())
                 .Select(x => new FolderItemViewModel(null, x, x, fileIconProvider.GetImageForFolder(x), this))
                 .ForEach(x => folders.Add(x));            
@@ -43,7 +44,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 {
                     if (selectedFolder.Parent != null)
                     {
-                        files.Add(new FileItemViewModel(null, "..", imageResources.GetIconByName("Up16.png"), FileItemType.ParentFolder));
+                        files.Add(new FileItemViewModel(selectedFolder.Parent.GetFullPath(), "..", imageResources.GetIconByName("Up16.png"), FileItemType.ParentFolder));
                     }
 
                     System.IO.Directory.EnumerateDirectories(selectedFolder.GetFullPath())
