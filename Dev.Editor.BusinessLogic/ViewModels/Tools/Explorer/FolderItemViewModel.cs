@@ -1,11 +1,8 @@
 ﻿using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.Common.Tools;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Media;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
@@ -16,7 +13,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 
         private readonly FolderItemViewModel parent;
         private readonly string display;
-        private readonly string myPath;
+        private readonly string path;
         private readonly ImageSource icon;
         private readonly IFileItemHandler handler;
         private readonly ObservableCollection<FolderItemViewModel> children;
@@ -35,7 +32,44 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             }
         }
 
-        private void Initialize()
+        private void HandleIsSelectedChanged()
+        {
+            if (isSelected)
+                handler.NotifyItemSelected(this);
+        }
+
+
+        // Public methods -----------------------------------------------------
+
+        public FolderItemViewModel(FolderItemViewModel parent, string display, string myPath, ImageSource icon, IFileItemHandler handler)
+        {
+            this.parent = parent;
+            this.display = display;
+            this.path = myPath;
+            this.icon = icon;
+            this.handler = handler;
+            this.children = new ObservableCollection<FolderItemViewModel> { null };
+
+            isExpanded = false;
+            isInitialized = false;
+        }
+
+        public string GetFullPath()
+        {
+            string result;
+
+            if (parent != null)
+                result = System.IO.Path.Combine(parent.GetFullPath(), path);
+            else
+                result = path;
+
+            if (!result.EndsWith(@"\"))
+                result += @"\";
+
+            return result;
+        }
+
+        public void Initialize()
         {
             if (!isInitialized)
             {
@@ -60,46 +94,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             }
         }
 
-        private void HandleIsSelectedChanged()
-        {
-            if (isSelected)
-                handler.NotifyItemSelected(this);
-        }
-
-
-        // Public methods -----------------------------------------------------
-
-        public FolderItemViewModel(FolderItemViewModel parent, string display, string myPath, ImageSource icon, IFileItemHandler handler)
-        {
-            this.parent = parent;
-            this.display = display;
-            this.myPath = myPath;
-            this.icon = icon;
-            this.handler = handler;
-            this.children = new ObservableCollection<FolderItemViewModel> { null };
-
-            isExpanded = false;
-            isInitialized = false;
-        }
-
-        public string GetFullPath()
-        {
-            string path;
-
-            if (parent != null)
-                path = System.IO.Path.Combine(parent.GetFullPath(), myPath);
-            else
-                path = myPath;
-
-            if (!path.EndsWith(@"\"))
-                path += @"\";
-
-            return path;
-        }
-
         // Public properties --------------------------------------------------
 
-        public string Path => myPath;
+        public string Path => path;
 
         public string Display => display;
 

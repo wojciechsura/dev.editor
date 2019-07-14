@@ -19,10 +19,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         private readonly IFileIconProvider fileIconProvider;
         private readonly IImageResources imageResources;
         private readonly ImageSource icon;
+        private IExplorerToolAccess access;
 
         private readonly ObservableCollection<FolderItemViewModel> folders;
         private FolderItemViewModel selectedFolder;
         private readonly ObservableCollection<FileItemViewModel> files;
+        private FileItemViewModel selectedFile;
 
         private void InitializeFolders()
         {
@@ -44,25 +46,61 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 {
                     if (selectedFolder.Parent != null)
                     {
-                        files.Add(new FileItemViewModel(selectedFolder.Parent.GetFullPath(), "..", imageResources.GetIconByName("Up16.png"), FileItemType.ParentFolder));
+                        files.Add(new FileItemViewModel(selectedFolder, "..", "..", imageResources.GetIconByName("Up16.png"), FileItemType.ParentFolder));
                     }
 
                     System.IO.Directory.EnumerateDirectories(selectedFolder.GetFullPath())
-                        .Select(x => new { Path = x, Display = System.IO.Path.GetFileName(x) })
-                        .OrderBy(x => x.Display, StringComparer.OrdinalIgnoreCase)
-                        .Select(x => new FileItemViewModel(x.Path, x.Display, fileIconProvider.GetImageForFolder(x.Display), FileItemType.Folder))
+                        .Select(x => System.IO.Path.GetFileName(x))
+                        .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
+                        .Select(x => new FileItemViewModel(selectedFolder, x, $"[ {x} ]", fileIconProvider.GetImageForFolder(x), FileItemType.Folder))
                         .ForEach(x => files.Add(x));
 
                     System.IO.Directory.EnumerateFiles(selectedFolder.GetFullPath())
-                        .Select(x => new { Path = x, Display = System.IO.Path.GetFileName(x) })
-                        .OrderBy(x => x.Display, StringComparer.OrdinalIgnoreCase)
-                        .Select(x => new FileItemViewModel(x.Path, x.Display, fileIconProvider.GetImageForFile(x.Display), FileItemType.File))
+                        .Select(x => System.IO.Path.GetFileName(x))
+                        .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
+                        .Select(x => new FileItemViewModel(selectedFolder, x, x, fileIconProvider.GetImageForFile(x), FileItemType.File))
                         .ForEach(x => files.Add(x));
                 }
             }
             catch (Exception)
             {
                 // Don't display files from this folder if it is not possible
+            }
+
+            SelectedFile = files.FirstOrDefault();
+        }
+
+        private void OpenSubfolder(string name)
+        {
+            if (selectedFolder != null)
+            {
+                selectedFolder.IsExpanded = true;
+
+                var subfolder = selectedFolder.Children
+                    .FirstOrDefault(x => x.Path.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+                if (subfolder != null)
+                {
+                    subfolder.IsSelected = true;
+                }
+
+                SelectedFile = files.FirstOrDefault();
+            }
+        }
+
+        private void OpenParentFolder()
+        {
+            if (selectedFolder != null && selectedFolder.Parent != null)
+            {
+                string subfolderName = selectedFolder.Path;
+
+                selectedFolder.Parent.IsSelected = true;
+
+                var file = files.FirstOrDefault(f => f.Path.Equals(subfolderName, StringComparison.OrdinalIgnoreCase));
+                if (file != null)
+                    SelectedFile = file;
+                else
+                    SelectedFile = files.FirstOrDefault();
             }
         }
 
@@ -88,6 +126,30 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             return fileIconProvider.GetImageForFolder(name);
         }
 
+        public void FileItemChosen()
+        {
+            if (selectedFile != null)
+            {
+                switch (selectedFile.ItemType)
+                {
+                    case FileItemType.File:
+                        {
+                            break;
+                        }
+                    case FileItemType.Folder:
+                        {
+                            OpenSubfolder(System.IO.Path.GetFileName(selectedFile.Path));
+                            break;
+                        }
+                    case FileItemType.ParentFolder:
+                        {
+                            OpenParentFolder();
+                            break;
+                        }
+                }
+            }
+        }
+
         public override string Title => Strings.Tool_Explorer_Title;
 
         public override ImageSource Icon => icon;
@@ -104,5 +166,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         }
 
         public ObservableCollection<FileItemViewModel> Files => files;
+
+        public FileItemViewModel SelectedFile
+        {
+            get => selectedFile;
+            set
+            {
+                Set(ref selectedFile, () => SelectedFile, value);
+            }
+        }
+
+        public IExplorerToolAccess Access
+        {
+            get => access;
+            set
+            {
+                access = value;
+            }
+        }
     }
 }

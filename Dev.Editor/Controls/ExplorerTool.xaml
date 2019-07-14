@@ -6,7 +6,7 @@
              xmlns:vme="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;assembly=Dev.Editor.BusinessLogic"
              xmlns:local="clr-namespace:Dev.Editor.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" DataContextChanged="HandleDataContextChanged">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="200" />
@@ -37,7 +37,8 @@
 
         <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="4" />
 
-        <ListBox Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Files}">
+        <ListBox x:Name="lbFiles" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}"                 
+                 MouseDoubleClick="HandleFileListDoubleClick" KeyDown="HandleFileListKeyDown">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type vme:FileItemViewModel}">
                     <StackPanel Orientation="Horizontal">

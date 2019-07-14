@@ -80,6 +80,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             documentExistsCondition.Value = activeDocument != null;
         }
 
+        private void HandleSidePanelSizeChanged()
+        {
+            configurationService.Configuration.UI.SidePanelSize.Value = sidePanelSize;
+        }
+
         private void RemoveDocument(DocumentViewModel document)
         {
             int index = documents.IndexOf(document);
@@ -460,7 +465,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             get => sidePanelSize;
             set
             {
-                Set(ref sidePanelSize, () => SidePanelSize, value);
+                Set(ref sidePanelSize, () => SidePanelSize, value, HandleSidePanelSizeChanged);
             }
         }
 
