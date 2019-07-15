@@ -85,6 +85,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             configurationService.Configuration.UI.SidePanelSize.Value = sidePanelSize;
         }
 
+        private void HandleSidePanelPlacementChanged()
+        {
+            configurationService.Configuration.UI.SidePanelPlacement.Value = sidePanelPlacement;
+        }
+
         private void RemoveDocument(DocumentViewModel document)
         {
             int index = documents.IndexOf(document);
@@ -454,7 +459,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             get => sidePanelPlacement;
             set
             {
-                Set(ref sidePanelPlacement, () => SidePanelPlacement, value);
+                Set(ref sidePanelPlacement, () => SidePanelPlacement, value, HandleSidePanelPlacementChanged);
             }
         }
 
