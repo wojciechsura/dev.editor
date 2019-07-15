@@ -254,7 +254,7 @@
                         VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinWidth="100"
                         Visibility="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToVisibilityConverter}}"
                         TabStripPlacement="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToTabPlacement}}"
-                        ItemsSource="{Binding Tools}">
+                        ItemsSource="{Binding Tools}" SelectedItem="{Binding SelectedTool, Mode=TwoWay}">
                 <TabControl.Resources>
                     <Style TargetType="TabItem">
                         <Style.Setters>

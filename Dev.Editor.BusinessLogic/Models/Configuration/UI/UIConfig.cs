@@ -16,9 +16,11 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.UI
         {
             SidePanelPlacement = new ConfigValue<SidePanelPlacement>("SidePanelPlacement", this, Types.UI.SidePanelPlacement.Right);
             SidePanelSize = new ConfigValue<double>("SidePanelSize", this, 200.0);
+            SidePanelActiveTab = new ConfigValue<string>("SidePanelActiveTab", this, ViewModels.Tools.Base.BaseToolViewModel.ExplorerUid);
         }
 
         public ConfigValue<SidePanelPlacement> SidePanelPlacement { get; }
         public ConfigValue<double> SidePanelSize { get; }
+        public ConfigValue<string> SidePanelActiveTab { get; }
     }
 }

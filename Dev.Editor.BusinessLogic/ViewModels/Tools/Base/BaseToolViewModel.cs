@@ -10,7 +10,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Base
 {
     public abstract class BaseToolViewModel : BaseViewModel
     {
+        public static string ExplorerUid = "explorer";
+
         public abstract string Title { get; }
         public abstract ImageSource Icon { get; }
+        public abstract string Uid { get; }
     }
 }

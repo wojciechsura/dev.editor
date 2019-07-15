@@ -71,7 +71,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // Tools
 
+        private readonly List<BaseToolViewModel> tools;
         private readonly ExplorerToolViewModel explorerToolViewModel;
+        private BaseToolViewModel selectedTool;
 
         // Private methods ----------------------------------------------------
 
@@ -88,6 +90,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private void HandleSidePanelPlacementChanged()
         {
             configurationService.Configuration.UI.SidePanelPlacement.Value = sidePanelPlacement;
+        }
+
+        private void HandleSelcetedToolChanged()
+        {
+            configurationService.Configuration.UI.SidePanelActiveTab.Value = selectedTool.Uid;
         }
 
         private void RemoveDocument(DocumentViewModel document)
@@ -234,11 +241,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return false;
         }
 
-        private IEnumerable<BaseToolViewModel> GetToolViewModels()
-        {
-            yield return explorerToolViewModel;
-        }
-
         // IDocumentHandler implementation ------------------------------------
 
         void IDocumentHandler.RequestClose(DocumentViewModel documentViewModel)
@@ -301,7 +303,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             // Initializing tools
 
+            tools = new List<BaseToolViewModel>();
+
             explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources);
+            tools.Add(explorerToolViewModel);
+
+            selectedTool = tools.FirstOrDefault(t => t.Uid.Equals(configurationService.Configuration.UI.SidePanelActiveTab.Value));
 
             // Initializing commands
 
@@ -474,6 +481,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
-        public IEnumerable<BaseToolViewModel> Tools => GetToolViewModels();
+        public IEnumerable<BaseToolViewModel> Tools => tools;
+
+        public BaseToolViewModel SelectedTool
+        {
+            get => selectedTool;
+            set
+            {
+                Set(ref selectedTool, () => SelectedTool, value, HandleSelcetedToolChanged);
+            }
+        }
     }
 }

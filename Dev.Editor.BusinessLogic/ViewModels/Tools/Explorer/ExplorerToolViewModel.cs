@@ -187,5 +187,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 access = value;
             }
         }
+
+        public override string Uid => ExplorerUid;
     }
 }
