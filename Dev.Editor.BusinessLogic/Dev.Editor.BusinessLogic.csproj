@@ -278,5 +278,9 @@
     <EmbeddedResource Include="Resources\FileTypeIcons\ZipFile_16x.png" />
     <EmbeddedResource Include="Resources\Highlighting\test.php" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\FileTypeIcons\Folder_Bin_16x.png" />
+    <EmbeddedResource Include="Resources\FileTypeIcons\Folder_Obj_16x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -336,6 +336,8 @@ namespace Dev.Editor.BusinessLogic.Services.FileIcons
 
         private Dictionary<string, string> folderNames = new Dictionary<string, string>(StringComparer.InvariantCultureIgnoreCase)
         {
+            {"bin", "Folder_Bin_16x.png" },
+            {"obj", "Folder_Obj_16x.png" },
             {"properties", "Property_16x.png" },
             {"references", "Reference_16x.png" },
             {"rootFolder", "SpecialFolder_16x.png" },
