@@ -85,6 +85,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 }
 
                 SelectedFile = files.FirstOrDefault();
+                access.FixListboxFocus();
             }
         }
 
@@ -101,6 +102,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                     SelectedFile = file;
                 else
                     SelectedFile = files.FirstOrDefault();
+
+                access.FixListboxFocus();
             }
         }
 

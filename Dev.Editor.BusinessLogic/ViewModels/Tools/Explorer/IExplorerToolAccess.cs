@@ -8,6 +8,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 {
     public interface IExplorerToolAccess
     {
-
+        void FixListboxFocus();
     }
 }

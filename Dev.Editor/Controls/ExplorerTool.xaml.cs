@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -50,6 +51,19 @@ namespace Dev.Editor.Controls
 
             if (viewModel != null)
                 viewModel.Access = this;
+        }
+
+        public void FixListboxFocus()
+        {
+            if (lbFiles.SelectedItem != null)
+            {
+                lbFiles.ScrollIntoView(lbFiles.SelectedItem);
+                lbFiles.UpdateLayout();
+
+                var item = lbFiles.ItemContainerGenerator.ContainerFromItem(viewModel.SelectedFile);
+                if (item != null && item is ListBoxItem listBoxItem && !listBoxItem.IsFocused)
+                    listBoxItem.Focus();
+            }
         }
     }
 }
