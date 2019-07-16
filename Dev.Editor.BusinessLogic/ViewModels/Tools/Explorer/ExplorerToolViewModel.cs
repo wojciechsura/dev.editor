@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.Services.FileIcons;
+﻿using Dev.Editor.BusinessLogic.Services.Config;
+using Dev.Editor.BusinessLogic.Services.FileIcons;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
 using Dev.Editor.BusinessLogic.Types.Tools.Explorer;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.Base;
@@ -18,6 +19,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
     {
         private readonly IFileIconProvider fileIconProvider;
         private readonly IImageResources imageResources;
+        private readonly IConfigurationService configurationService;
         private readonly ImageSource icon;
         private IExplorerToolAccess access;
 
@@ -25,6 +27,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         private FolderItemViewModel selectedFolder;
         private readonly ObservableCollection<FileItemViewModel> files;
         private FileItemViewModel selectedFile;
+
+        private double folderTreeHeight;
 
         private void InitializeFolders()
         {
@@ -107,21 +111,30 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             }
         }
 
+        private void HandleFolderTreeHeightChanged()
+        {
+            configurationService.Configuration.Tools.Explorer.FolderTreeHeight.Value = folderTreeHeight;
+        }
+
         public void NotifyItemSelected(FolderItemViewModel folderItemViewModel)
         {
             SelectedFolder = folderItemViewModel;
         }
 
-        public ExplorerToolViewModel(IFileIconProvider fileIconProvider, IImageResources imageResources)
+        public ExplorerToolViewModel(IFileIconProvider fileIconProvider, 
+            IImageResources imageResources, 
+            IConfigurationService configurationService)
         {
             this.fileIconProvider = fileIconProvider;
             this.imageResources = imageResources;
-
+            this.configurationService = configurationService;
             this.icon = imageResources.GetIconByName("Explorer16.png");
 
             folders = new ObservableCollection<FolderItemViewModel>();
             files = new ObservableCollection<FileItemViewModel>();
             InitializeFolders();
+
+            folderTreeHeight = configurationService.Configuration.Tools.Explorer.FolderTreeHeight.Value;
         }
 
         public ImageSource GetFolderIcon(string name)
@@ -185,6 +198,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             set
             {
                 access = value;
+            }
+        }
+
+        public double FolderTreeHeight
+        {
+            get => folderTreeHeight;
+            set
+            {
+                Set(ref folderTreeHeight, () => FolderTreeHeight, value, HandleFolderTreeHeightChanged);
             }
         }
 

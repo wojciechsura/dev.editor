@@ -305,7 +305,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             tools = new List<BaseToolViewModel>();
 
-            explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources);
+            explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources, configurationService);
             tools.Add(explorerToolViewModel);
 
             selectedTool = tools.FirstOrDefault(t => t.Uid.Equals(configurationService.Configuration.UI.SidePanelActiveTab.Value));

@@ -67,6 +67,8 @@
     <Compile Include="Models\Configuration\Internal\InternalConfig.cs" />
     <Compile Include="Models\Configuration\Internal\StoredFile.cs" />
     <Compile Include="Models\Configuration\Internal\StoredFiles.cs" />
+    <Compile Include="Models\Configuration\Tools\Explorer\ExplorerConfig.cs" />
+    <Compile Include="Models\Configuration\Tools\ToolsConfig.cs" />
     <Compile Include="Models\Configuration\UI\UIConfig.cs" />
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
     <Compile Include="Models\Dialogs\SaveDialogResult.cs" />
