@@ -446,7 +446,7 @@
                     <StackPanel Orientation="Horizontal">
                         <Image Width="16" Height="16" Source="{Binding Icon}"/>
                         <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" MaxWidth="200" Margin="2"/>
-                        <TextBlock Text="•" Margin="2" Visibility="{Binding Content.Changed, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                        <TextBlock Text="•" Margin="2" Visibility="{Binding Changed, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         <Button Content="r" FontFamily="Marlett" FontSize="10" Command="{Binding CloseCommand}" Style="{StaticResource TabCloseButtonStyle}"/>
                     </StackPanel>
                 </DataTemplate>

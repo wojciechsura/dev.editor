@@ -120,6 +120,7 @@
     <Compile Include="ViewModels\Tools\Explorer\FileItemViewModel.cs" />
     <Compile Include="ViewModels\Tools\Explorer\FolderItemViewModel.cs" />
     <Compile Include="ViewModels\Tools\Explorer\ExplorerToolViewModel.cs" />
+    <Compile Include="ViewModels\Tools\Explorer\IExplorerHandler.cs" />
     <Compile Include="ViewModels\Tools\Explorer\IExplorerToolAccess.cs" />
     <Compile Include="ViewModels\Tools\Explorer\IFileItemHandler.cs" />
   </ItemGroup>

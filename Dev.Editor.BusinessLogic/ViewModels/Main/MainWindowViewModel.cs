@@ -38,7 +38,7 @@ using Dev.Editor.BusinessLogic.Models.UI;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
-    public partial class MainWindowViewModel : BaseViewModel, IDocumentHandler
+    public partial class MainWindowViewModel : BaseViewModel, IDocumentHandler, IExplorerHandler
     {
         // Private fields -----------------------------------------------------
 
@@ -249,6 +249,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 RemoveDocument(documentViewModel);
         }
 
+        // IExplorerHandler implementation ------------------------------------
+
+        void IExplorerHandler.OpenFile(string path)
+        {
+            LoadDocument(path);
+        }
+
         // Public methods -----------------------------------------------------
 
         public MainWindowViewModel(IMainWindowAccess access, 
@@ -305,7 +312,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             tools = new List<BaseToolViewModel>();
 
-            explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources, configurationService);
+            explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources, configurationService, this);
             tools.Add(explorerToolViewModel);
 
             selectedTool = tools.FirstOrDefault(t => t.Uid.Equals(configurationService.Configuration.UI.SidePanelActiveTab.Value));

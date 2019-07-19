@@ -20,6 +20,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         private readonly IFileIconProvider fileIconProvider;
         private readonly IImageResources imageResources;
         private readonly IConfigurationService configurationService;
+        private readonly IExplorerHandler handler;
+
         private readonly ImageSource icon;
         private IExplorerToolAccess access;
 
@@ -123,11 +125,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 
         public ExplorerToolViewModel(IFileIconProvider fileIconProvider, 
             IImageResources imageResources, 
-            IConfigurationService configurationService)
+            IConfigurationService configurationService,
+            IExplorerHandler handler)
         {
             this.fileIconProvider = fileIconProvider;
             this.imageResources = imageResources;
             this.configurationService = configurationService;
+            this.handler = handler;
             this.icon = imageResources.GetIconByName("Explorer16.png");
 
             folders = new ObservableCollection<FolderItemViewModel>();
@@ -150,6 +154,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 {
                     case FileItemType.File:
                         {
+                            handler.OpenFile(selectedFile.GetFullPath());
                             break;
                         }
                     case FileItemType.Folder:

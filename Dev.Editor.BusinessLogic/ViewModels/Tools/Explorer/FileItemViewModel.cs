@@ -28,9 +28,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             else
                 result = Path;
 
-            if (!result.EndsWith(@"\"))
-                result += @"\";
-
             return result;
         }
 
