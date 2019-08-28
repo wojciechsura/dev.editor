@@ -74,11 +74,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\DocumentView.xaml.cs">
-      <DependentUpon>DocumentView.xaml</DependentUpon>
+    <Compile Include="Controls\TextDocumentView.xaml.cs">
+      <DependentUpon>TextDocumentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ExplorerTool.xaml.cs">
       <DependentUpon>ExplorerTool.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\HexDocumentView.xaml.cs">
+      <DependentUpon>HexDocumentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DoubleToGridLengthConverter.cs" />
     <Compile Include="Converters\EnabledToOpacityConverter.cs" />
@@ -88,6 +91,7 @@
     <Compile Include="Converters\SidePanelToColumnConverter.cs" />
     <Compile Include="Converters\SidePanelToTabPlacement.cs" />
     <Compile Include="Converters\SidePanelToVisibilityConverter.cs" />
+    <Compile Include="Converters\TextDocToBoolConverter.cs" />
     <Compile Include="Dependencies\Configuration.cs" />
     <Compile Include="SearchReplaceWindow.xaml.cs">
       <DependentUpon>SearchReplaceWindow.xaml</DependentUpon>
@@ -95,11 +99,15 @@
     <Compile Include="Services\Dialogs\DialogService.cs" />
     <Compile Include="Services\ImageResources\ImageResources.cs" />
     <Compile Include="Wpf\DocumentTemplateSelector.cs" />
-    <Page Include="Controls\DocumentView.xaml">
+    <Page Include="Controls\TextDocumentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\ExplorerTool.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\HexDocumentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -157,6 +165,10 @@
     <ProjectReference Include="..\Dev.Editor.Resources\Dev.Editor.Resources.csproj">
       <Project>{6f537829-9bf6-428c-95fd-00170e8acc60}</Project>
       <Name>Dev.Editor.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HexEditor\HexEditor.csproj">
+      <Project>{ca78f85a-b71f-4afc-ba97-124d9c47c38f}</Project>
+      <Name>HexEditor</Name>
     </ProjectReference>
     <ProjectReference Include="..\ICSharpCode.AvalonEdit.Dev.Editor\ICSharpCode.AvalonEdit.Dev.Editor.csproj">
       <Project>{6E2C1F8C-8858-4F4B-B0F6-DD13DB8DDF73}</Project>

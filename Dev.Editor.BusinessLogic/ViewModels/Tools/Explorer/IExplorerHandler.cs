@@ -8,6 +8,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 {
     public interface IExplorerHandler
     {
-        void OpenFile(string path);
+        void OpenTextFile(string path);
     }
 }

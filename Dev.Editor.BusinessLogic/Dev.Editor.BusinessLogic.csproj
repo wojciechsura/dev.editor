@@ -64,15 +64,18 @@
     <Compile Include="Models\Configuration\Behavior\BehaviorConfig.cs" />
     <Compile Include="Models\Configuration\ConfigModel.cs" />
     <Compile Include="Models\Configuration\Editor\EditorConfig.cs" />
+    <Compile Include="Models\Configuration\Internal\HexStoredFile.cs" />
     <Compile Include="Models\Configuration\Internal\InternalConfig.cs" />
-    <Compile Include="Models\Configuration\Internal\StoredFile.cs" />
+    <Compile Include="Models\Configuration\Internal\BaseStoredFile.cs" />
     <Compile Include="Models\Configuration\Internal\StoredFiles.cs" />
+    <Compile Include="Models\Configuration\Internal\TextStoredFile.cs" />
     <Compile Include="Models\Configuration\Tools\Explorer\ExplorerConfig.cs" />
     <Compile Include="Models\Configuration\Tools\ToolsConfig.cs" />
     <Compile Include="Models\Configuration\UI\UIConfig.cs" />
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
     <Compile Include="Models\Dialogs\SaveDialogResult.cs" />
-    <Compile Include="Models\Documents\DocumentState.cs" />
+    <Compile Include="Models\Documents\HexDocumentState.cs" />
+    <Compile Include="Models\Documents\TextDocumentState.cs" />
     <Compile Include="Models\Documents\FoldSectionState.cs" />
     <Compile Include="Models\Highlighting\HighlightingInfo.cs" />
     <Compile Include="Models\UI\SidePanelPlacementModel.cs" />
@@ -104,9 +107,12 @@
     <Compile Include="Types\Tools\Explorer\FileItemType.cs" />
     <Compile Include="Types\UI\SidePanelPlacement.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
-    <Compile Include="ViewModels\Document\DocumentViewModel.cs" />
+    <Compile Include="ViewModels\Document\BaseDocumentViewModel.cs" />
+    <Compile Include="ViewModels\Document\IHexEditorAccess.cs" />
+    <Compile Include="ViewModels\Document\TextDocumentViewModel.cs" />
+    <Compile Include="ViewModels\Document\HexDocumentViewModel.cs" />
     <Compile Include="ViewModels\Document\IDocumentHandler.cs" />
-    <Compile Include="ViewModels\Document\IEditorAccess.cs" />
+    <Compile Include="ViewModels\Document\ITextEditorAccess.cs" />
     <Compile Include="ViewModels\Main\IMainWindowAccess.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Commands.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />
@@ -136,6 +142,10 @@
     <ProjectReference Include="..\Dev.Editor.Resources\Dev.Editor.Resources.csproj">
       <Project>{6f537829-9bf6-428c-95fd-00170e8acc60}</Project>
       <Name>Dev.Editor.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HexEditor\HexEditor.csproj">
+      <Project>{ca78f85a-b71f-4afc-ba97-124d9c47c38f}</Project>
+      <Name>HexEditor</Name>
     </ProjectReference>
     <ProjectReference Include="..\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
       <Project>{7df2e8a9-9eb7-442c-91b4-073dac5eb54c}</Project>

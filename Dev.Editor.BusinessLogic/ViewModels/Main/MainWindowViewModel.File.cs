@@ -18,9 +18,25 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return $"{Strings.BlankDocumentName}{i}.txt";
         }
 
-        private void InternalAddDocument(Action<DocumentViewModel> initAction)
+        private bool CheckIsAlreadyOpened(string filename)
         {
-            var document = new DocumentViewModel(this);
+            foreach (var document in documents)
+            {
+                if (string.Equals(document.FileName.ToLower(), filename.ToLower()))
+                {
+                    ActiveDocument = document;
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // *** Text document ***
+
+        private void InternalAddTextDocument(Action<TextDocumentViewModel> initAction)
+        {
+            var document = new TextDocumentViewModel(this);
 
             initAction(document);
 
@@ -29,7 +45,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             ActiveDocument = document;
         }
 
-        private void InternalWriteDocument(DocumentViewModel document, string filename)
+        private void InternalWriteTextDocument(TextDocumentViewModel document, string filename)
         {
             using (var fs = new FileStream(filename, FileMode.Create, FileAccess.Write))
             {
@@ -39,8 +55,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 }
             }
         }
-       
-        private void InternalReadDocument(DocumentViewModel document, string filename)
+
+        private void InternalReadTextDocument(TextDocumentViewModel document, string filename)
         {
             using (var fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
@@ -51,25 +67,25 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
-        private bool InternalSaveDocument(DocumentViewModel document, string filename)
+        private bool InternalSaveTextDocument(TextDocumentViewModel document, string filename)
         {
             try
             {
-                InternalWriteDocument(document, filename);
+                InternalWriteTextDocument(document, filename);
 
                 document.Document.UndoStack.MarkAsOriginalFile();
                 return true;
             }
-			catch (Exception e)
+            catch (Exception e)
             {
-                messagingService.ShowError(String.Format(Strings.Message_CannotSaveFile, activeDocument.FileName, e.Message));
+                messagingService.ShowError(String.Format(Strings.Message_CannotSaveFile, document.FileName, e.Message));
                 return false;
             }
-        }        
+        }
 
-        private void InternalLoadDocument(DocumentViewModel document, string filename)
+        private void InternalLoadTextDocument(TextDocumentViewModel document, string filename)
         {
-            InternalReadDocument(document, filename);
+            InternalReadTextDocument(document, filename);
 
             document.SetFilename(filename, fileIconProvider.GetImageForFile(filename));
             document.Document.UndoStack.ClearAll();
@@ -78,46 +94,40 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             document.Highlighting = highlightingProvider.GetDefinitionByExtension(Path.GetExtension(filename));
         }
 
-        private void LoadDocument(string filename)
+        private void LoadTextDocument(string filename)
         {
-            foreach (var document in documents)
-            {
-                if (string.Equals(document.FileName.ToLower(), filename.ToLower()))
-                {
-                    ActiveDocument = document;
-                    return;
-                }
-            }
+            if (CheckIsAlreadyOpened(filename))
+                return;
 
-            InternalAddDocument(document =>
+            InternalAddTextDocument(document =>
             {
-                InternalLoadDocument(document, filename);
+                InternalLoadTextDocument(document, filename);
             });
         }
 
-		private bool SaveDocument(DocumentViewModel document)
+		private bool SaveTextDocument(TextDocumentViewModel document)
         {
             if (document.FilenameVirtual)
                 throw new InvalidOperationException("Cannot save document with virtual filename!");
 
-            return InternalSaveDocument(document, document.FileName);
+            return InternalSaveTextDocument(document, document.FileName);
         }
 
-		private bool SaveDocumentAs(DocumentViewModel document)
+		private bool SaveTextDocumentAs(TextDocumentViewModel document)
         {
             var fileDialogResult = dialogService.SaveDialog();
-            if (fileDialogResult.Result && InternalSaveDocument(activeDocument, fileDialogResult.FileName))
+            if (fileDialogResult.Result && InternalSaveTextDocument(document, fileDialogResult.FileName))
             {
-                activeDocument.SetFilename(fileDialogResult.FileName, fileIconProvider.GetImageForFile(fileDialogResult.FileName));
+                document.SetFilename(fileDialogResult.FileName, fileIconProvider.GetImageForFile(fileDialogResult.FileName));
                 return true;
             }
 
             return false;
         }
 
-        private void DoNew()
+        private void DoNewTextDocument()
         {
-            InternalAddDocument(newDocument =>
+            InternalAddTextDocument(newDocument =>
             {
                 int i = 1;
                 while (documents.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
@@ -129,14 +139,129 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             });            
         }
 
-        private void DoOpen()
+        private void DoOpenTextDocument()
         {
             var dialogResult = dialogService.OpenDialog();
             if (dialogResult.Result)
             {
                 try
                 {
-                    LoadDocument(dialogResult.FileName);                    
+                    LoadTextDocument(dialogResult.FileName);                    
+                }
+                catch (Exception e)
+                {
+                    messagingService.ShowError(string.Format(Strings.Message_CannotOpenFile, dialogResult.FileName, e.Message));
+                }
+            }
+        }
+       
+        // *** Hex document ***
+
+        private void InternalAddHexDocument(Action<HexDocumentViewModel> initAction)
+        {
+            var document = new HexDocumentViewModel(this);
+
+            initAction(document);
+
+            documents.Add(document);
+
+            ActiveDocument = document;
+        }
+
+        private void InternalWriteHexDocument(HexDocumentViewModel document, string filename)
+        {
+            using (var fs = new FileStream(filename, FileMode.Create, FileAccess.Write))
+            {
+                document.Document.SaveToStream(fs);
+            }
+        }
+
+        private void InternalReadHexDocument(HexDocumentViewModel document, string filename)
+        {
+            using (var fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+            {
+                document.Document.LoadFromStream(fs);
+            }
+        }
+
+        private bool InternalSaveHexDocument(HexDocumentViewModel document, string filename)
+        {
+            try
+            {
+                InternalWriteHexDocument(document, filename);
+
+                document.Changed = false;
+                return true;
+            }
+            catch (Exception e)
+            {
+                messagingService.ShowError(String.Format(Strings.Message_CannotSaveFile, document.FileName, e.Message));
+                return false;
+            }
+        }
+
+        private void InternalLoadHexDocument(HexDocumentViewModel document, string filename)
+        {
+            InternalReadHexDocument(document, filename);
+
+            document.SetFilename(filename, fileIconProvider.GetImageForFile(filename));
+            document.Document.ClearUndoHistory();
+            document.Changed = false;
+            document.FilenameVirtual = false;
+        }
+
+        private void LoadHexDocument(string filename)
+        {
+            if (CheckIsAlreadyOpened(filename))
+                return;
+
+            InternalAddHexDocument(document =>
+            {
+                InternalLoadHexDocument(document, filename);
+            });
+        }
+
+        private bool SaveHexDocument(HexDocumentViewModel document)
+        {
+            if (document.FilenameVirtual)
+                throw new InvalidOperationException("Cannot save document with virtual filename!");
+
+            return InternalSaveHexDocument(document, document.FileName);
+        }
+
+        private bool SaveHexDocumentAs(HexDocumentViewModel document)
+        {
+            var fileDialogResult = dialogService.SaveDialog();
+            if (fileDialogResult.Result && InternalSaveHexDocument(document, fileDialogResult.FileName))
+            {
+                document.SetFilename(fileDialogResult.FileName, fileIconProvider.GetImageForFile(fileDialogResult.FileName));
+                return true;
+            }
+
+            return false;
+        }
+
+        private void DoNewHexDocument()
+        {
+            InternalAddHexDocument(newDocument =>
+            {
+                int i = 1;
+                while (documents.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
+                    i++;
+
+                string newFilename = GenerateBlankFileName(i);
+                newDocument.SetFilename(newFilename, fileIconProvider.GetImageForFile(newFilename));
+            });
+        }
+
+        private void DoOpenHexDocument()
+        {
+            var dialogResult = dialogService.OpenDialog();
+            if (dialogResult.Result)
+            {
+                try
+                {
+                    LoadHexDocument(dialogResult.FileName);
                 }
                 catch (Exception e)
                 {
@@ -145,17 +270,88 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
-        private void DoSave()
+        // *** General ***
+
+        private void InternalWriteDocument(BaseDocumentViewModel document, string filename)
         {
-            if (activeDocument.FilenameVirtual)
-                DoSaveAs();
-            else
-                SaveDocument(activeDocument);
+            switch (document)
+            {
+                case TextDocumentViewModel textDocument:
+                    {
+                        InternalWriteTextDocument(textDocument, filename);
+                        break;
+                    }
+                case HexDocumentViewModel hexDocument:
+                    {
+                        InternalWriteHexDocument(hexDocument, filename);
+                        break;
+                    }
+                default:
+                    throw new InvalidOperationException("Unsupported document type!");
+            }
         }
 
-        private void DoSaveAs()
+        private void DoSaveDocument()
         {
-            SaveDocumentAs(activeDocument);
+            if (activeDocument.FilenameVirtual)
+            {
+                DoSaveDocumentAs();
+            }
+            else
+            {
+                switch (activeDocument)
+                {
+                    case TextDocumentViewModel textDocument:
+                        SaveTextDocument(textDocument);
+                        break;
+                    case HexDocumentViewModel hexDocument:
+                        SaveHexDocument(hexDocument);
+                        break;
+                    default:
+                        throw new InvalidOperationException("Unsupported document type!");
+                }
+            }
+        }
+
+        private void DoSaveDocumentAs()
+        {
+            switch (activeDocument)
+            {
+                case TextDocumentViewModel textDocument:
+                    SaveTextDocumentAs(textDocument);
+                    break;
+                case HexDocumentViewModel hexDocument:
+                    SaveHexDocumentAs(hexDocument);
+                    break;
+                default:
+                    throw new InvalidOperationException("Unsupported document type!");
+            }            
+        }
+
+        private bool SaveDocument(BaseDocumentViewModel document)
+        {
+            switch (document)
+            {
+                case TextDocumentViewModel textDocument:
+                    return SaveTextDocument(textDocument);
+                case HexDocumentViewModel hexDocument:
+                    return SaveHexDocument(hexDocument);
+                default:
+                    throw new InvalidOperationException("Unsupported document type!");
+            }
+        }
+
+        private bool SaveDocumentAs(BaseDocumentViewModel document)
+        {
+            switch (document)
+            {
+                case TextDocumentViewModel textDocument:
+                    return SaveTextDocumentAs(textDocument);
+                case HexDocumentViewModel hexDocument:
+                    return SaveHexDocumentAs(hexDocument);
+                default:
+                    throw new InvalidOperationException("Unsupported document type!");
+            }
         }
     }
 }

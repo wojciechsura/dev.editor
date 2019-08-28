@@ -18,34 +18,19 @@ using ICSharpCode.AvalonEdit.Document;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Document
 {
-    public class DocumentViewModel : BaseViewModel
+    public class TextDocumentViewModel : BaseDocumentViewModel
     {
         // Private fields -----------------------------------------------------
 
         private readonly TextDocument document;
-        private readonly IDocumentHandler handler;
 
-        private bool changed;
-        private bool filenameVirtual;
-        private bool canUndo;
-        private bool canRedo;
-        private bool selectionAvailable;
-        private bool regularSelectionAvailable;
+        private TextDocumentState storedState;
 
-        private DocumentState storedState;
-
-        private IEditorAccess editorAccess;
-        private SearchModel lastSearch;
+        private ITextEditorAccess editorAccess;
         private HighlightingInfo highlighting;
-        private ImageSource icon;
 
         // Private methods ----------------------------------------------------
-
-        private void HandleFileNameChanged(object sender, EventArgs e)
-        {
-            OnPropertyChanged(() => FileName);
-        }
-
+        
         private void HandleUndoStackPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(document.UndoStack.CanUndo))
@@ -60,34 +45,26 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         {
             if (editorAccess == null)
                 throw new InvalidOperationException("No editor attached!");
-        }
-
-        private void DoClose()
-        {
-            handler.RequestClose(this);
-        }
+        }        
 
         // Public methods -----------------------------------------------------
 
-        public DocumentViewModel(IDocumentHandler handler)
+        public TextDocumentViewModel(IDocumentHandler handler)
+            : base(handler)
         {
-            this.handler = handler;
-
-            CloseCommand = new AppCommand(obj => DoClose());
-
             document = new TextDocument();
-            document.FileNameChanged += HandleFileNameChanged;
             document.UndoStack.PropertyChanged += HandleUndoStackPropertyChanged;
 
             editorAccess = null;
 
             canUndo = document.UndoStack.CanUndo;
             canRedo = document.UndoStack.CanRedo;
-            changed = document.UndoStack.IsOriginalFile;
+            changed = false;
+
             selectionAvailable = false;
+            regularSelectionAvailable = false;
 
             storedState = null;
-            changed = false;
             filenameVirtual = true;
 
             lastSearch = null;
@@ -110,32 +87,42 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         public void NotifyRegularSelectionAvailable(bool regularSelectionAvailable) => RegularSelectionAvailable = regularSelectionAvailable;        
 
-        public DocumentState LoadState()
+        public TextDocumentState LoadState()
         {
             return storedState;
         }
 
-        public void SaveState(DocumentState state)
+        public void SaveState(TextDocumentState state)
         {
             storedState = state;
         }
 
-        public void Copy()
+        public override void Copy()
         {
             ValidateEditorAccess();
             editorAccess.Copy();
         }
 
-        public void Cut()
+        public override void Cut()
         {
             ValidateEditorAccess();
             editorAccess.Cut();
         }
 
-        public void Paste()
+        public override void Paste()
         {
             ValidateEditorAccess();
             editorAccess.Paste();
+        }
+
+        public override void Undo()
+        {
+            Document.UndoStack.Undo();
+        }
+
+        public override void Redo()
+        {
+            Document.UndoStack.Redo();
         }
 
         public (int selStart, int selLength) GetSelection()
@@ -159,93 +146,25 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             return editorAccess.GetSelectedText();
         }
 
-        public void FocusDocument()
+        public override void FocusDocument()
         {
             editorAccess.FocusDocument();
         }
 
         // Public properties --------------------------------------------------
 
-        public ICommand CloseCommand { get; }
-
         public TextDocument Document => document;
 
-        public void SetFilename(string filename, ImageSource icon)
-        {
-            document.FileName = filename;
-            this.icon = icon;
-
-            OnPropertyChanged(() => FileName);
-            OnPropertyChanged(() => Title);
-            OnPropertyChanged(() => Icon);
-        }
-
-        public string FileName
-        {
-            get => document.FileName;
-        }
-
-        public ImageSource Icon
-        {
-            get => icon;
-        }
-
-        public string Title => Path.GetFileName(document.FileName);
-            
-        public bool Changed
-        {
-            get => changed;
-            set => Set(ref changed, () => Changed, value);
-        }
-
-        public bool FilenameVirtual
-        {
-            get => filenameVirtual;
-            set => Set(ref filenameVirtual, () => FilenameVirtual, value);
-        }
-
-        public bool CanUndo
-        {
-            get => canUndo;
-            set => Set(ref canUndo, () => CanUndo, value);
-        }
-
-        public bool CanRedo
-        {
-            get => canRedo;
-            set => Set(ref canRedo, () => CanRedo, value);
-        }
-
-        public bool SelectionAvailable
-        {
-            get => selectionAvailable;
-            set => Set(ref selectionAvailable, () => SelectionAvailable, value);
-        }
-
-        public bool RegularSelectionAvailable
-        {
-            get => regularSelectionAvailable;
-            set => Set(ref regularSelectionAvailable, () => RegularSelectionAvailable, value);
-        }
-
-        public HighlightingInfo Highlighting
+        public override HighlightingInfo Highlighting
         {
             get => highlighting;
             set => Set(ref highlighting, () => Highlighting, value);
         }
 
-        public IDocumentHandler Handler => handler;
-
-        public IEditorAccess EditorAccess
+        public ITextEditorAccess EditorAccess
         {
             get => editorAccess;
             set => editorAccess = value;
-        }
-
-        public SearchModel LastSearch
-        {
-            get => lastSearch;
-            set => Set(ref lastSearch, () => LastSearch, value);
         }
     }
 }

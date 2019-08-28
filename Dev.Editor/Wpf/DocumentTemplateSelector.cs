@@ -13,9 +13,16 @@ namespace Dev.Editor.Wpf
     {
         public override DataTemplate SelectTemplate(object item, DependencyObject container)
         {
-            if (container is FrameworkElement element && item is DocumentViewModel)
+            if (container is FrameworkElement element)
             {
-                return element.FindResource("TextDocumentTemplate") as DataTemplate;
+                if (item is TextDocumentViewModel)
+                {
+                    return element.FindResource("TextDocumentTemplate") as DataTemplate;
+                }
+                else if (item is HexDocumentViewModel)
+                {
+                    return element.FindResource("HexDocumentTemplate") as DataTemplate;
+                }
             }
 
             return null;

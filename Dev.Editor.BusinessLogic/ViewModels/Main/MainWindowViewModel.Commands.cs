@@ -14,18 +14,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         // Private fields -----------------------------------------------------
 
         private readonly Condition documentExistsCondition;
-        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> canUndoCondition;
-        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> canRedoCondition;
-        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> selectionAvailableCondition;
-        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel> regularSelectionAvailableCondition;
-        private readonly MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, DocumentViewModel> searchPerformedCondition;
+        private readonly Condition documentIsTextCondition;
+        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel> canUndoCondition;
+        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel> canRedoCondition;
+        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel> selectionAvailableCondition;
+        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel> regularSelectionAvailableCondition;
+        private readonly MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, BaseDocumentViewModel> searchPerformedCondition;
 
         // Public properties --------------------------------------------------
 
         // File
 
-        public ICommand NewCommand { get; }
-        public ICommand OpenCommand { get; }
+        public ICommand NewTextCommand { get; }
+        public ICommand OpenTextCommand { get; }
         public ICommand SaveCommand { get; }
         public ICommand SaveAsCommand { get; }
 

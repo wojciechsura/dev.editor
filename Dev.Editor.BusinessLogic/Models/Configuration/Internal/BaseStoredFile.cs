@@ -7,24 +7,20 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
 {
-    public class StoredFile : BaseCollectionItem
+    public class BaseStoredFile : BaseCollectionItem
     {
-        internal const string NAME = "StoredFile";
-
         private readonly ConfigValue<string> filename;
         private readonly ConfigValue<bool> isDirty;
         private readonly ConfigValue<bool> flienameIsVirtual;
         private readonly ConfigValue<string> storedFilename;
-        private readonly ConfigValue<string> highlightingName;
 
-        public StoredFile() 
-            : base(NAME)
+        public BaseStoredFile(string name)             
+            : base(name)
         {
             filename = new ConfigValue<string>("Filename", this);
             isDirty = new ConfigValue<bool>("IsDirty", this);
             flienameIsVirtual = new ConfigValue<bool>("FilenameIsVirtual", this);
             storedFilename = new ConfigValue<string>("StoredFilename", this);
-            highlightingName = new ConfigValue<string>("HighlightingName", this);
         }
 
         public ConfigValue<string> Filename => filename;
@@ -34,7 +30,5 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
         public ConfigValue<bool> FilenameIsVirtual => flienameIsVirtual;
 
         public ConfigValue<string> StoredFilename => storedFilename;
-
-        public ConfigValue<string> HighlightingName => highlightingName;
     }
 }

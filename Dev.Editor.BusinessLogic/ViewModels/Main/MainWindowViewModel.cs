@@ -53,8 +53,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly IImageResources imageResources;
         private readonly IFileIconProvider fileIconProvider;
 
-        private readonly ObservableCollection<DocumentViewModel> documents;
-        private DocumentViewModel activeDocument;
+        private readonly ObservableCollection<BaseDocumentViewModel> documents;
+        private BaseDocumentViewModel activeDocument;
 
         private readonly List<HighlightingInfo> highlightings;
 
@@ -80,6 +80,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private void HandleActiveDocumentChanged()
         {
             documentExistsCondition.Value = activeDocument != null;
+            documentIsTextCondition.Value = activeDocument is TextDocumentViewModel;
         }
 
         private void HandleSidePanelSizeChanged()
@@ -97,7 +98,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             configurationService.Configuration.UI.SidePanelActiveTab.Value = selectedTool.Uid;
         }
 
-        private void RemoveDocument(DocumentViewModel document)
+        private void RemoveDocument(BaseDocumentViewModel document)
         {
             int index = documents.IndexOf(document);
 
@@ -125,7 +126,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 var storedFilename = Path.Combine(storedFilesPath, $"{i}.txt");
                 
                 try
-                {
+                {                    
                     InternalWriteDocument(document, storedFilename);
                 }
                 catch (Exception e)
@@ -134,14 +135,34 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     return false;
                 }
 
-                var storedFile = new StoredFile();
-                storedFile.Filename.Value = document.FileName;
-                storedFile.FilenameIsVirtual.Value = document.FilenameVirtual;
-                storedFile.IsDirty.Value = document.Changed;
-                storedFile.StoredFilename.Value = storedFilename;
-                storedFile.HighlightingName.Value = document.Highlighting?.Name;
+                switch (document)
+                {
+                    case TextDocumentViewModel textDocument:
+                        {
+                            var storedFile = new TextStoredFile();
+                            storedFile.Filename.Value = textDocument.FileName;
+                            storedFile.FilenameIsVirtual.Value = textDocument.FilenameVirtual;
+                            storedFile.IsDirty.Value = textDocument.Changed;
+                            storedFile.StoredFilename.Value = storedFilename;
+                            storedFile.HighlightingName.Value = textDocument.Highlighting?.Name;
 
-                configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
+                            configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
+                            break;
+                        }
+                    case HexDocumentViewModel hexDocument:
+                        {
+                            var storedFile = new HexStoredFile();
+                            storedFile.Filename.Value = hexDocument.FileName;
+                            storedFile.FilenameIsVirtual.Value = hexDocument.FilenameVirtual;
+                            storedFile.IsDirty.Value = hexDocument.Changed;
+                            storedFile.StoredFilename.Value = storedFilename;
+
+                            configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
+                            break;
+                        }
+                    default:
+                        throw new InvalidOperationException("Unsupported document type!");
+                }                
             }
 
             return true;
@@ -151,32 +172,62 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         {
             for (int i = 0; i < configurationService.Configuration.Internal.StoredFiles.Count; i++)
             {
-                var storedFile = configurationService.Configuration.Internal.StoredFiles[i];
+                var file = configurationService.Configuration.Internal.StoredFiles[i];
 
-                try
+                switch (file)
                 {
-                    InternalAddDocument(document =>
-                    {
-                        InternalReadDocument(document, storedFile.StoredFilename.Value);
-
-                        document.SetFilename(storedFile.Filename.Value, fileIconProvider.GetImageForFile(storedFile.Filename.Value));
-                        document.FilenameVirtual = storedFile.FilenameIsVirtual.Value;
-
-                        if (!storedFile.IsDirty.Value)
+                    case TextStoredFile textStoredFile:
                         {
-                            document.Document.UndoStack.MarkAsOriginalFile();
+                            try
+                            {
+                                InternalAddTextDocument(document =>
+                                {
+                                    InternalReadTextDocument(document, textStoredFile.StoredFilename.Value);
+
+                                    document.SetFilename(textStoredFile.Filename.Value, fileIconProvider.GetImageForFile(textStoredFile.Filename.Value));
+                                    document.FilenameVirtual = textStoredFile.FilenameIsVirtual.Value;
+
+                                    if (!textStoredFile.IsDirty.Value)
+                                    {
+                                        document.Document.UndoStack.MarkAsOriginalFile();
+                                    }
+                                    else
+                                    {
+                                        document.Document.UndoStack.DiscardOriginalFileMarker();
+                                    }
+                                    document.Highlighting = highlightingProvider.GetDefinitionByName(textStoredFile.HighlightingName.Value);
+                                });
+                            }
+                            catch (Exception e)
+                            {
+                                messagingService.ShowError(string.Format(Resources.Strings.Message_CannotRestoreFile, textStoredFile.Filename, e.Message));
+                            }
+
+                            break;
                         }
-                        else
+                    case HexStoredFile hexStoredFile:
                         {
-                            document.Document.UndoStack.DiscardOriginalFileMarker();
+                            try
+                            {
+                                InternalAddHexDocument(document =>
+                                {
+                                    InternalReadHexDocument(document, hexStoredFile.StoredFilename.Value);
+
+                                    document.SetFilename(hexStoredFile.Filename.Value, fileIconProvider.GetImageForFile(hexStoredFile.Filename.Value));
+                                    document.FilenameVirtual = hexStoredFile.FilenameIsVirtual.Value;
+                                    document.Changed = hexStoredFile.IsDirty.Value;
+                                });
+                            }
+                            catch (Exception e)
+                            {
+                                messagingService.ShowError(string.Format(Resources.Strings.Message_CannotRestoreFile, hexStoredFile.Filename, e.Message));
+                            }
+
+                            break;
                         }
-                        document.Highlighting = highlightingProvider.GetDefinitionByName(storedFile.HighlightingName.Value);
-                    });
-                }
-                catch (Exception e)
-                {
-                    messagingService.ShowError(string.Format(Resources.Strings.Message_CannotRestoreFile, storedFile.Filename, e.Message));
-                }
+                    default:
+                        throw new InvalidOperationException("Unsupported document type!");
+                }                
             }
         }
 
@@ -192,7 +243,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 {
                     try
                     {
-                        LoadDocument(param);
+                        LoadTextDocument(param);
                         anyDocumentLoaded = true;
                     }
                     catch (Exception e)
@@ -205,7 +256,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return anyDocumentLoaded;
         }
 
-        private bool CanCloseDocument(DocumentViewModel document)
+        private bool CanCloseDocument(BaseDocumentViewModel document)
         {
             if (!document.Changed)
             {
@@ -243,7 +294,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // IDocumentHandler implementation ------------------------------------
 
-        void IDocumentHandler.RequestClose(DocumentViewModel documentViewModel)
+        void IDocumentHandler.RequestClose(BaseDocumentViewModel documentViewModel)
         {
             if (CanCloseDocument(documentViewModel))
                 RemoveDocument(documentViewModel);
@@ -251,9 +302,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // IExplorerHandler implementation ------------------------------------
 
-        void IExplorerHandler.OpenFile(string path)
+        void IExplorerHandler.OpenTextFile(string path)
         {
-            LoadDocument(path);
+            LoadTextDocument(path);
         }
 
         // Public methods -----------------------------------------------------
@@ -293,20 +344,21 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             sidePanelSize = configurationService.Configuration.UI.SidePanelSize.Value;
 
-            documents = new ObservableCollection<DocumentViewModel>();
+            documents = new ObservableCollection<BaseDocumentViewModel>();
 
             highlightings = new List<HighlightingInfo>(highlightingProvider.HighlightingDefinitions);
             highlightings.Sort((h1, h2) => h1.Name.CompareTo(h2.Name));
 
             documentExistsCondition = new Condition(activeDocument != null);
+            documentIsTextCondition = new Condition(activeDocument is TextDocumentViewModel);
 
             // Initializing conditions
 
-            canUndoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanUndo, false);
-            canRedoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanRedo, false);
-            selectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => ActiveDocument, doc => doc.SelectionAvailable, false);
-            regularSelectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => ActiveDocument, doc => doc.RegularSelectionAvailable, false);
-            searchPerformedCondition = new MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, DocumentViewModel>(this, vm => ActiveDocument, doc => doc.LastSearch);
+            canUndoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanUndo, false);
+            canRedoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanRedo, false);
+            selectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.SelectionAvailable, false);
+            regularSelectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.RegularSelectionAvailable, false);
+            searchPerformedCondition = new MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.LastSearch);
 
             // Initializing tools
 
@@ -322,10 +374,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             // This command should not be registered in command repository service
             NavigateCommand = new AppCommand(obj => DoNavigate());
 
-            NewCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_New, "New16.png", obj => DoNew());
-            OpenCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Open, "Open16.png", obj => DoOpen());
-            SaveCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Save, "Save16.png", obj => DoSave(), documentExistsCondition);
-            SaveAsCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_SaveAs, "Save16.png", obj => DoSaveAs(), documentExistsCondition);
+            NewTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_New, "New16.png", obj => DoNewTextDocument());
+            OpenTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Open, "Open16.png", obj => DoOpenTextDocument());
+            SaveCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Save, "Save16.png", obj => DoSaveDocument(), documentExistsCondition);
+            SaveAsCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_SaveAs, "Save16.png", obj => DoSaveDocumentAs(), documentExistsCondition);
 
             UndoCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Undo, "Undo16.png", obj => DoUndo(), canUndoCondition);
             RedoCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Redo, "Redo16.png", obj => DoRedo(), canRedoCondition);
@@ -333,14 +385,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             CutCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Cut, "Cut16.png", obj => DoCut(), selectionAvailableCondition);
             PasteCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Paste, "Paste16.png", obj => DoPaste(), documentExistsCondition);
 
-            SearchCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Search_Search, "Search16.png", obj => DoSearch(), documentExistsCondition);
-            ReplaceCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Search_Replace, "Replace16.png", obj => DoReplace(), documentExistsCondition);
-            FindNextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Search_FindNext, "FindNext16.png", obj => DoFindNext(), documentExistsCondition & searchPerformedCondition);
+            SearchCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Search_Search, "Search16.png", obj => DoSearch(), documentIsTextCondition);
+            ReplaceCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Search_Replace, "Replace16.png", obj => DoReplace(), documentIsTextCondition);
+            FindNextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Search_FindNext, "FindNext16.png", obj => DoFindNext(), documentIsTextCondition & searchPerformedCondition);
 
-            SortLinesAscendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Ordering_SortAscending, "SortAscending16.png", obj => DoSortAscending(), documentExistsCondition);
-            SortLinesDescendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Ordering_SortDescending, "SortDescending16.png", obj => DoSortDescending(), documentExistsCondition);
-            RemoveEmptyLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Cleanup_RemoveEmptyLines, null, obj => DoRemoveEmptyLines(), documentExistsCondition);
-            RemoveWhitespaceLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Cleanup_RemoveWhitespaceLines, null, obj => DoRemoveWhitespaceLines(), documentExistsCondition);
+            SortLinesAscendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Ordering_SortAscending, "SortAscending16.png", obj => DoSortAscending(), documentIsTextCondition);
+            SortLinesDescendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Ordering_SortDescending, "SortDescending16.png", obj => DoSortDescending(), documentIsTextCondition);
+            RemoveEmptyLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Cleanup_RemoveEmptyLines, null, obj => DoRemoveEmptyLines(), documentIsTextCondition);
+            RemoveWhitespaceLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Cleanup_RemoveWhitespaceLines, null, obj => DoRemoveWhitespaceLines(), documentIsTextCondition);
 
             // Navigation
 
@@ -356,12 +408,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 OpenParameters();
 
                 if (documents.Count == 0)
-                    DoNew();
+                    DoNewTextDocument();
             }
             else if (configurationService.Configuration.Behavior.CloseBehavior.Value == CloseBehavior.Standard)
             {
                 if (!OpenParameters())
-                    DoNew();
+                    DoNewTextDocument();
             }
             else
                 throw new InvalidOperationException("Invalid close behavior!");
@@ -438,9 +490,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // Public properties --------------------------------------------------
 
-        public ObservableCollection<DocumentViewModel> Documents => documents;
+        public ObservableCollection<BaseDocumentViewModel> Documents => documents;
 
-        public DocumentViewModel ActiveDocument
+        public BaseDocumentViewModel ActiveDocument
         {
             get => activeDocument;
             set => Set(ref activeDocument, () => ActiveDocument, value, HandleActiveDocumentChanged);

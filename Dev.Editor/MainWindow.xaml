@@ -26,7 +26,9 @@
             <converters:SidePanelToColumnConverter x:Key="SidePanelToColumnConverter" />
             <converters:SidePanelToVisibilityConverter x:Key="SidePanelToVisibilityConverter" />
             <converters:SidePanelToTabPlacement x:Key="SidePanelToTabPlacement" />
-        </ResourceDictionary>
+
+            <wpf:DocumentTemplateSelector x:Key="DocumentTemplateSelector" />
+        </ResourceDictionary> 
     </f:RibbonWindow.Resources>
     
     <f:RibbonWindow.InputBindings>
@@ -166,8 +168,10 @@
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Group_Editor}">
 
-                    <f:CheckBox Header="{x:Static p:Strings.Ribbon_Editor_WordWrap}" IsChecked="{Binding WordWrap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <f:CheckBox Header="{x:Static p:Strings.Ribbon_Editor_ShowLineNumbers}" IsChecked="{Binding LineNumbers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <f:CheckBox Header="{x:Static p:Strings.Ribbon_Editor_WordWrap}" IsChecked="{Binding WordWrap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                IsEnabled="{Binding ActiveDocument, Converter={StaticResource TextDocToBoolConverter}}"/>
+                    <f:CheckBox Header="{x:Static p:Strings.Ribbon_Editor_ShowLineNumbers}" IsChecked="{Binding LineNumbers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                IsEnabled="{Binding ActiveDocument, Converter={StaticResource TextDocToBoolConverter}}"/>
 
                 </f:RibbonGroupBox>
 
@@ -188,7 +192,7 @@
                                        MinItemsInRow="6" 
                                        MaxItemsInRow="8" 
                                        SelectedItem="{Binding ActiveDocument.Highlighting}"
-                                       IsEnabled="{Binding ActiveDocument, Converter={StaticResource NullToBoolConverter}}"
+                                       IsEnabled="{Binding ActiveDocument, Converter={StaticResource TextDocToBoolConverter}}"
                                        GroupBy="Initial">
                         <f:InRibbonGallery.ItemTemplate>
                             <DataTemplate>
@@ -325,7 +329,7 @@
 
             <TabControl Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
                         ItemsSource="{Binding Documents}" SelectedItem="{Binding ActiveDocument}"
-                        Margin="0,4,0,0">
+                        Margin="0,4,0,0" ContentTemplateSelector="{StaticResource DocumentTemplateSelector}">
             <TabControl.Resources>
                 <ResourceDictionary>
                     <Style TargetType="Button" x:Key="TabCloseButtonStyle">
@@ -382,12 +386,6 @@
                     </Style>
                 </ResourceDictionary>
             </TabControl.Resources>
-
-            <TabControl.ContentTemplate>
-                <DataTemplate DataType="{x:Type vm:DocumentViewModel}">
-                    <controls:DocumentView />
-                </DataTemplate>
-            </TabControl.ContentTemplate>
             
             <TabControl.Template>
                 <ControlTemplate TargetType="{x:Type TabControl}">

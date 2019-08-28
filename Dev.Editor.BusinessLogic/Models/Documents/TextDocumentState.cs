@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BusinessLogic.Models.Documents
 {
-    public class DocumentState
+    public class TextDocumentState
     {
-        public DocumentState(int caretOffset, 
+        public TextDocumentState(int caretOffset, 
             int selectionStart, 
             int selectionLength, 
             double horizontalOffset, 

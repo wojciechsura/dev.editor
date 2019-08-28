@@ -28,7 +28,7 @@ namespace Dev.Editor.Controls
     /// <summary>
     /// Logika interakcji dla klasy DocumentView.xaml
     /// </summary>
-    public partial class DocumentView : UserControl, IEditorAccess, INotifyPropertyChanged
+    public partial class TextDocumentView : UserControl, ITextEditorAccess, INotifyPropertyChanged
     {
         // Private classes ----------------------------------------------------
 
@@ -52,7 +52,7 @@ namespace Dev.Editor.Controls
 
         // Private fields -----------------------------------------------------
 
-        private DocumentViewModel viewModel;
+        private TextDocumentViewModel viewModel;
         private FoldingManager foldingManager;
         private BaseFoldingStrategy foldingStrategy;
         private IDocumentHandler handler;
@@ -149,7 +149,7 @@ namespace Dev.Editor.Controls
 
         private void HandleSelectionChanged(object sender, EventArgs e) => UpdateSelectionInfo();
 
-        private DocumentState BuildCurrentState()
+        private TextDocumentState BuildCurrentState()
         {
             List<FoldSectionState> foldSections = null;
 
@@ -158,7 +158,7 @@ namespace Dev.Editor.Controls
                     .Select(f => new FoldSectionState(f))
                     .ToList();
 
-            var state = new DocumentState(teEditor.CaretOffset,
+            var state = new TextDocumentState(teEditor.CaretOffset,
                 teEditor.SelectionStart,
                 teEditor.SelectionLength,
                 teEditor.HorizontalOffset,
@@ -168,7 +168,7 @@ namespace Dev.Editor.Controls
             return state;
         }
 
-        private void RestoreCurrentState(DocumentState state)
+        private void RestoreCurrentState(TextDocumentState state)
         {
             if (state != null)
             {
@@ -195,22 +195,22 @@ namespace Dev.Editor.Controls
             }
         }
 
-        private void InitializeViewModel(DocumentViewModel newViewModel)
+        private void InitializeViewModel(TextDocumentViewModel newViewModel)
         {
             Handler = newViewModel.Handler;
 
-            teEditor.Document = viewModel.Document;
-            teEditor.SyntaxHighlighting = viewModel.Highlighting.Definition;
+            teEditor.Document = newViewModel.Document;
+            teEditor.SyntaxHighlighting = newViewModel.Highlighting.Definition;
 
-            viewModel.EditorAccess = this;
-            viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+            newViewModel.EditorAccess = this;
+            newViewModel.PropertyChanged += HandleViewModelPropertyChanged;
 
             // Setting folding strategy
             SetupFolding();
             teEditor.TextChanged += HandleTextChanged;
 
             // Restoring state from the viewmodel
-            var state = viewModel.LoadState();
+            var state = newViewModel.LoadState();
             RestoreCurrentState(state);
 
             // Hooking text editor
@@ -218,13 +218,13 @@ namespace Dev.Editor.Controls
             UpdateSelectionInfo();
         }
 
-        private void DeinitializeViewModel(DocumentViewModel viewModel)
+        private void DeinitializeViewModel(TextDocumentViewModel viewModel)
         {
             // Unhooking editor
             teEditor.TextArea.SelectionChanged -= HandleSelectionChanged;
 
             // Storing current state in the viewmodel
-            DocumentState state = BuildCurrentState();
+            TextDocumentState state = BuildCurrentState();
             viewModel.SaveState(state);
 
             // Clearing folding
@@ -248,7 +248,7 @@ namespace Dev.Editor.Controls
 
         private void HandleDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (e.NewValue != null && !(e.NewValue is DocumentViewModel))
+            if (e.NewValue != null && !(e.NewValue is TextDocumentViewModel))
                 throw new InvalidOperationException("Invalid data context for DocumentView!");
 
             if (viewModel != null)
@@ -259,7 +259,7 @@ namespace Dev.Editor.Controls
 
             if (e.NewValue != null)
             {
-                viewModel = e.NewValue as DocumentViewModel;
+                viewModel = e.NewValue as TextDocumentViewModel;
                 InitializeViewModel(viewModel);
             }
         }
@@ -268,12 +268,12 @@ namespace Dev.Editor.Controls
 
         protected void OnPropertyChanged(string propertyName)
         {
-            PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         // Public methods -----------------------------------------------------
 
-        public DocumentView()
+        public TextDocumentView()
         {
             InitializeComponent();
         }

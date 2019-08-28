@@ -1,4 +1,5 @@
-﻿using ICSharpCode.AvalonEdit.Document;
+﻿using Dev.Editor.BusinessLogic.ViewModels.Document;
+using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,19 +10,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
     public partial class MainWindowViewModel
     {
-        private (int startOffset, int endOffset) ExpandSelectionToFullLines()
+        private (int startOffset, int endOffset) ExpandSelectionToFullLines(TextDocumentViewModel document)
         {
-            (int selStart, int selLength) = activeDocument.GetSelection();
+            (int selStart, int selLength) = document.GetSelection();
 
             if (selLength == 0)
             {
                 selStart = 0;
-                selLength = activeDocument.Document.TextLength;
+                selLength = document.Document.TextLength;
             }
 
-            DocumentLine startLine = activeDocument.Document.GetLineByOffset(selStart);
+            DocumentLine startLine = document.Document.GetLineByOffset(selStart);
             var startOffset = startLine.Offset;
-            DocumentLine endLine = activeDocument.Document.GetLineByOffset(selStart + selLength - 1);
+            DocumentLine endLine = document.Document.GetLineByOffset(selStart + selLength - 1);
             var endOffset = endLine.Offset + endLine.Length - 1;
 
             return (startOffset, endOffset);
@@ -29,15 +30,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void TransformLines(Func<string, string> func)
         {
-            (int startOffset, int endOffset) = ExpandSelectionToFullLines();
+            var document = (TextDocumentViewModel)activeDocument;
 
-            var textToTransform = activeDocument.Document.GetText(startOffset, endOffset - startOffset + 1);
+            (int startOffset, int endOffset) = ExpandSelectionToFullLines(document);
+
+            var textToTransform = document.Document.GetText(startOffset, endOffset - startOffset + 1);
 
             var result = func(textToTransform);
 
-            activeDocument.RunAsSingleHistoryEntry(() =>
+            document.RunAsSingleHistoryEntry(() =>
             {
-                activeDocument.Document.Replace(startOffset, endOffset - startOffset + 1, result);
+                document.Document.Replace(startOffset, endOffset - startOffset + 1, result);
             });
         }
 

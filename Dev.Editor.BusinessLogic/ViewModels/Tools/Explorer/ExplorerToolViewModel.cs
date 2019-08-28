@@ -154,7 +154,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 {
                     case FileItemType.File:
                         {
-                            handler.OpenFile(selectedFile.GetFullPath());
+                            handler.OpenTextFile(selectedFile.GetFullPath());
                             break;
                         }
                     case FileItemType.Folder:

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using Dev.Editor.BusinessLogic.ViewModels.Document;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -18,22 +19,24 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void InternalFindNext(SearchModel searchModel)
         {
-            (int selStart, int selLength) = activeDocument.GetSelection();
+            var document = (TextDocumentViewModel)activeDocument;
+
+            (int selStart, int selLength) = document.GetSelection();
 
             int start = searchModel.SearchBackwards ? selStart : selStart + selLength;
 
-            Match match = searchModel.Regex.Match(activeDocument.Document.Text, start);
+            Match match = searchModel.Regex.Match(document.Document.Text, start);
 
             if (!match.Success)  // start again from beginning or end
             {
                 if (searchModel.SearchBackwards)
-                    match = searchModel.Regex.Match(activeDocument.Document.Text, activeDocument.Document.Text.Length);
+                    match = searchModel.Regex.Match(document.Document.Text, document.Document.Text.Length);
                 else
-                    match = searchModel.Regex.Match(activeDocument.Document.Text, 0);
+                    match = searchModel.Regex.Match(document.Document.Text, 0);
             }
 
             if (match.Success)
-                activeDocument.SetSelection(match.Index, match.Length, true);
+                document.SetSelection(match.Index, match.Length, true);
             else
                 messagingService.Inform(Resources.Strings.Message_NoMorePatternsFound);
         }
@@ -45,15 +48,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         }
 
         public void Replace(ReplaceModel replaceModel)
-        {            
-            string input = activeDocument.GetSelectedText();
+        {
+            var document = (TextDocumentViewModel)activeDocument;
+
+            string input = document.GetSelectedText();
 
             Match match = replaceModel.Regex.Match(input);
 
             if (match.Success && match.Index == 0 && match.Length == input.Length)
             {
-                (int selStart, int selLength) = activeDocument.GetSelection();
-                activeDocument.Document.Replace(selStart, selLength, replaceModel.Replace);
+                (int selStart, int selLength) = document.GetSelection();
+                document.Document.Replace(selStart, selLength, replaceModel.Replace);
             }
 
             FindNext(replaceModel);
@@ -61,32 +66,34 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public void ReplaceAll(ReplaceAllModel replaceModel)
         {
-            activeDocument.LastSearch = replaceModel;
+            var document = (TextDocumentViewModel)activeDocument;
+
+            document.LastSearch = replaceModel;
 
             if (!replaceModel.InSelection)
             {
                 int offset = 0;
-                activeDocument.RunAsSingleHistoryEntry(() =>
+                document.RunAsSingleHistoryEntry(() =>
                 {
-                    foreach (Match match in replaceModel.Regex.Matches(activeDocument.Document.Text))
+                    foreach (Match match in replaceModel.Regex.Matches(document.Document.Text))
                     {
-                        activeDocument.Document.Replace(offset + match.Index, match.Length, replaceModel.Replace);
+                        document.Document.Replace(offset + match.Index, match.Length, replaceModel.Replace);
                         offset += replaceModel.Replace.Length - match.Length;
                     }
                 });
             }
             else
             {
-                (int selStart, int selLen) = activeDocument.GetSelection();
-                string selection = activeDocument.GetSelectedText();
+                (int selStart, int selLen) = document.GetSelection();
+                string selection = document.GetSelectedText();
 
                 int offset = 0;
 
-                activeDocument.RunAsSingleHistoryEntry(() =>
+                document.RunAsSingleHistoryEntry(() =>
                 {
                     foreach (Match match in replaceModel.Regex.Matches(selection))
                     {
-                        activeDocument.Document.Replace(offset + selStart + match.Index, match.Length, replaceModel.Replace);
+                        document.Document.Replace(offset + selStart + match.Index, match.Length, replaceModel.Replace);
                         offset += replaceModel.Replace.Length - match.Length;
                     }
                 });

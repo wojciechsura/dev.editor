@@ -7,7 +7,7 @@ using ICSharpCode.AvalonEdit.Document;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Document
 {
-    public interface IEditorAccess
+    public interface ITextEditorAccess
     {
         void Copy();
         void Cut();

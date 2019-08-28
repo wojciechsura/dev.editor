@@ -7,14 +7,20 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
 {
-    public class StoredFiles : ConfigCollection<StoredFile>
+    public class StoredFiles : BaseTypedItemCollection<BaseStoredFile>
     {
         internal const string NAME = "StoredFiles";
 
-        public StoredFiles(BaseItemContainer parent) 
-            : base(NAME, parent, StoredFile.NAME)
+        public StoredFiles(BaseItemContainer parent)
+            : base(NAME, parent)
         {
-
+            ChildInfos = new List<BaseChildInfo>
+            {
+                new ChildInfo<TextStoredFile>(TextStoredFile.NAME, () => new TextStoredFile()),
+                new ChildInfo<HexStoredFile>(HexStoredFile.NAME, () => new HexStoredFile())
+            };
         }
+
+        protected override IEnumerable<BaseChildInfo> ChildInfos { get; }
     }
 }
