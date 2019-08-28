@@ -26,7 +26,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         // File
 
         public ICommand NewTextCommand { get; }
+        public ICommand NewHexCommand { get; }
         public ICommand OpenTextCommand { get; }
+        public ICommand OpenHexCommand { get; }
         public ICommand SaveCommand { get; }
         public ICommand SaveAsCommand { get; }
 

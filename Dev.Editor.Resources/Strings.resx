@@ -315,4 +315,10 @@
   <data name="Tool.Explorer.Title" xml:space="preserve">
     <value>Files</value>
   </data>
+  <data name="Ribbon.File.NewHex" xml:space="preserve">
+    <value>New hex editor</value>
+  </data>
+  <data name="Ribbon.File.OpenHex" xml:space="preserve">
+    <value>Open in hex editor</value>
+  </data>
 </root>

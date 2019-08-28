@@ -375,7 +375,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             NavigateCommand = new AppCommand(obj => DoNavigate());
 
             NewTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_New, "New16.png", obj => DoNewTextDocument());
+            NewHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_NewHex, "New16.png", obj => DoNewHexDocument());
             OpenTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Open, "Open16.png", obj => DoOpenTextDocument());
+            OpenHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_OpenHex, "Open16.png", obj => DoOpenHexDocument());
             SaveCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Save, "Save16.png", obj => DoSaveDocument(), documentExistsCondition);
             SaveAsCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_SaveAs, "Save16.png", obj => DoSaveDocumentAs(), documentExistsCondition);
 

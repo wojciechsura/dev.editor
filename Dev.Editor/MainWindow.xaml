@@ -68,12 +68,20 @@
                 <!-- File -->
 
                 <f:RibbonGroupBox x:Name="grHomeFile" Header="{x:Static p:Strings.Ribbon_Group_File}">
-                    <f:Button Header="{x:Static p:Strings.Ribbon_File_Open}" Command="{Binding OpenCommand}" SizeDefinition="Large" 
+                    <f:SplitButton Header="{x:Static p:Strings.Ribbon_File_Open}" Command="{Binding OpenCommand}" SizeDefinition="Large" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open32.png"
-                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open16.png"/>
-                    <f:Button Header="{x:Static p:Strings.Ribbon_File_New}" Command="{Binding NewCommand}" SizeDefinition="Middle, Small" 
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open16.png">
+                        <f:MenuItem Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open16.png"
+                                    Header="{x:Static p:Strings.Ribbon_File_OpenHex}"
+                                    Command="{Binding OpenHexCommand}" />
+                    </f:SplitButton>
+                    <f:SplitButton Header="{x:Static p:Strings.Ribbon_File_New}" Command="{Binding NewCommand}" SizeDefinition="Middle, Small" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/New32.png"
-                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/New16.png"/>
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/New16.png">
+                        <f:MenuItem Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/New16.png"
+                                    Header="{x:Static p:Strings.Ribbon_File_NewHex}"
+                                    Command="{Binding NewHexCommand}" />
+                    </f:SplitButton>
                     <f:Button Header="{x:Static p:Strings.Ribbon_File_Save}" Command="{Binding SaveCommand}" SizeDefinition="Middle, Small"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save16.png"/>
