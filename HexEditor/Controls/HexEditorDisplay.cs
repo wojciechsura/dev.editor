@@ -186,6 +186,12 @@ namespace HexEditor.Controls
             }
         }
 
+        private void ResetSelection()
+        {
+            selection = null;
+            SelectionChanged?.Invoke(this, EventArgs.Empty);
+        }
+
         private void SetSelection(BaseSelectionInfo selection)
         {
             if (Document != null)
@@ -236,15 +242,7 @@ namespace HexEditor.Controls
             }
             else
             {
-                // Null selection is valid for no document
-                if (selection == null)
-                {
-                    this.selection = null;
-                }
-                else
-                {
-                    throw new InvalidOperationException("Cannot set selection without active document!");
-                }
+                throw new InvalidOperationException("Cannot set selection without active document!");
             }
 
             SelectionChanged?.Invoke(this, EventArgs.Empty);
@@ -380,7 +378,7 @@ namespace HexEditor.Controls
                 newDocument.BytesPerRowChanged += HandleBytesPerRowChanged;
             }
 
-            Selection = null;
+            ResetSelection();
             ScrollPosition = 0;
             mouseMode = MouseMode.Idle;
             mouseData = null;
