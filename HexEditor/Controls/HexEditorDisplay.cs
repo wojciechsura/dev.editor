@@ -236,7 +236,15 @@ namespace HexEditor.Controls
             }
             else
             {
-                throw new InvalidOperationException("Cannot set selection without active document!");
+                // Null selection is valid for no document
+                if (selection == null)
+                {
+                    this.selection = null;
+                }
+                else
+                {
+                    throw new InvalidOperationException("Cannot set selection without active document!");
+                }
             }
 
             SelectionChanged?.Invoke(this, EventArgs.Empty);
