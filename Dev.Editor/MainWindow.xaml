@@ -60,7 +60,7 @@
                     <f:MenuItem Header="{x:Static p:Strings.Ribbon_File_Open}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open32.png" Command="{Binding OpenTextCommand}" />
                     <f:MenuItem Header="{x:Static p:Strings.Ribbon_File_Save}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save32.png" Command="{Binding SaveCommand}" />
                     <Separator />
-                    <f:MenuItem Header="#Configuration" Command="{Binding ConfigCommand}" />
+                    <f:MenuItem Header="{x:Static p:Strings.Configuration}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Settings32.png" Command="{Binding ConfigCommand}" />
                 </f:ApplicationMenu>
             </f:Ribbon.Menu>
 

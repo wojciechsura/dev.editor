@@ -379,7 +379,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             // This command should not be registered in command repository service
             NavigateCommand = new AppCommand(obj => DoNavigate());
 
-            ConfigCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Configuration, "New16.png", obj => DoOpenConfiguration());
+            ConfigCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Configuration, "Settings16.png", obj => DoOpenConfiguration());
 
             NewTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_New, "New16.png", obj => DoNewTextDocument());
             NewHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_NewHex, "New16.png", obj => DoNewHexDocument());

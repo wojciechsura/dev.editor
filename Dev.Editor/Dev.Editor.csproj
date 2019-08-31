@@ -241,5 +241,9 @@
     <Resource Include="Resources\Images\Up16.png" />
     <Resource Include="Resources\Images\Up32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Settings16.png" />
+    <Resource Include="Resources\Images\Settings32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
