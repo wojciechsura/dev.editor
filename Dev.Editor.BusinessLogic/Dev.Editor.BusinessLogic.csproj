@@ -107,6 +107,10 @@
     <Compile Include="Types\Tools\Explorer\FileItemType.cs" />
     <Compile Include="Types\UI\SidePanelPlacement.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
+    <Compile Include="ViewModels\Configuration\BaseConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\Configuration\BehaviorConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\Configuration\ConfigurationWindowViewModel.cs" />
+    <Compile Include="ViewModels\Configuration\IConfigurationWindowAccess.cs" />
     <Compile Include="ViewModels\Document\BaseDocumentViewModel.cs" />
     <Compile Include="ViewModels\Document\IHexEditorAccess.cs" />
     <Compile Include="ViewModels\Document\TextDocumentViewModel.cs" />

@@ -115,7 +115,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
 		private bool SaveTextDocumentAs(TextDocumentViewModel document)
         {
-            var fileDialogResult = dialogService.SaveDialog();
+            var fileDialogResult = dialogService.ShowSaveDialog();
             if (fileDialogResult.Result && InternalSaveTextDocument(document, fileDialogResult.FileName))
             {
                 document.SetFilename(fileDialogResult.FileName, fileIconProvider.GetImageForFile(fileDialogResult.FileName));
@@ -141,7 +141,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoOpenTextDocument()
         {
-            var dialogResult = dialogService.OpenDialog();
+            var dialogResult = dialogService.ShowOpenDialog();
             if (dialogResult.Result)
             {
                 try
@@ -231,7 +231,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private bool SaveHexDocumentAs(HexDocumentViewModel document)
         {
-            var fileDialogResult = dialogService.SaveDialog();
+            var fileDialogResult = dialogService.ShowSaveDialog();
             if (fileDialogResult.Result && InternalSaveHexDocument(document, fileDialogResult.FileName))
             {
                 document.SetFilename(fileDialogResult.FileName, fileIconProvider.GetImageForFile(fileDialogResult.FileName));
@@ -256,7 +256,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoOpenHexDocument()
         {
-            var dialogResult = dialogService.OpenDialog();
+            var dialogResult = dialogService.ShowOpenDialog();
             if (dialogResult.Result)
             {
                 try

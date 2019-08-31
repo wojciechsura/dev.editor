@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dev.Editor.Configuration;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,7 +19,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void HandleLineNumbersChanged()
         {
-            Configuration.ConfigValue<bool> lineNumbersSetting = configurationService.Configuration.Editor.LineNumbers;
+            ConfigValue<bool> lineNumbersSetting = configurationService.Configuration.Editor.LineNumbers;
 
             if (lineNumbersSetting.Value != lineNumbers)
                 lineNumbersSetting.Value = lineNumbers;

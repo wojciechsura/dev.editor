@@ -23,6 +23,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // Public properties --------------------------------------------------
 
+        // General
+
+        public ICommand ConfigCommand { get; }
+
         // File
 
         public ICommand NewTextCommand { get; }

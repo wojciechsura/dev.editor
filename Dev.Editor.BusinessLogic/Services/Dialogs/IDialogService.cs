@@ -10,8 +10,9 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
 {
     public interface IDialogService
     {
-        OpenDialogResult OpenDialog(string filter = null, string title = null, string filename = null);
-        SaveDialogResult SaveDialog(string filter = null, string title = null, string filename = null);
+        OpenDialogResult ShowOpenDialog(string filter = null, string title = null, string filename = null);
+        SaveDialogResult ShowSaveDialog(string filter = null, string title = null, string filename = null);
+        void ShowConfigurationDialog();
 
         SearchReplaceWindowViewModel RequestSearchReplace(ISearchHost searchHost);
     }

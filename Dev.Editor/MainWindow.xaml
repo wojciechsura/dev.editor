@@ -56,7 +56,11 @@
         <f:Ribbon Focusable="False" FocusManager.IsFocusScope="True">
             <f:Ribbon.Menu>
                 <f:ApplicationMenu>
-
+                    <f:MenuItem Header="{x:Static p:Strings.Ribbon_File_New}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/New32.png" Command="{Binding NewTextCommand}" />
+                    <f:MenuItem Header="{x:Static p:Strings.Ribbon_File_Open}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open32.png" Command="{Binding OpenTextCommand}" />
+                    <f:MenuItem Header="{x:Static p:Strings.Ribbon_File_Save}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save32.png" Command="{Binding SaveCommand}" />
+                    <Separator />
+                    <f:MenuItem Header="#Configuration" Command="{Binding ConfigCommand}" />
                 </f:ApplicationMenu>
             </f:Ribbon.Menu>
 

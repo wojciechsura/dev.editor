@@ -321,4 +321,13 @@
   <data name="Ribbon.File.OpenHex" xml:space="preserve">
     <value>Otwórz w hexedytorze</value>
   </data>
+  <data name="Configuration.Behavior" xml:space="preserve">
+    <value>Zachowanie</value>
+  </data>
+  <data name="Configuration.Title" xml:space="preserve">
+    <value>Konfiguracja</value>
+  </data>
+  <data name="Configuration" xml:space="preserve">
+    <value>Konfiguracja</value>
+  </data>
 </root>

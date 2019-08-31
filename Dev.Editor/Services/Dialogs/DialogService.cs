@@ -16,7 +16,7 @@ namespace Dev.Editor.Services.Dialogs
     {
         private readonly Dictionary<ISearchHost, SearchReplaceWindow> searchWindows = new Dictionary<ISearchHost, SearchReplaceWindow>();
 
-        public OpenDialogResult OpenDialog(string filter = null, string title = null, string filename = null)
+        public OpenDialogResult ShowOpenDialog(string filter = null, string title = null, string filename = null)
         {
             OpenFileDialog dialog = new OpenFileDialog();
             if (filename != null)
@@ -46,7 +46,7 @@ namespace Dev.Editor.Services.Dialogs
             return searchWindows[searchHost].ViewModel;
         }
 
-        public SaveDialogResult SaveDialog(string filter = null, string title = null, string filename = null)
+        public SaveDialogResult ShowSaveDialog(string filter = null, string title = null, string filename = null)
         {
             SaveFileDialog dialog = new SaveFileDialog();
             if (filename != null)
@@ -66,6 +66,12 @@ namespace Dev.Editor.Services.Dialogs
                 return new SaveDialogResult(true, dialog.FileName);
             else
                 return new SaveDialogResult(false, null);
+        }
+
+        public void ShowConfigurationDialog()
+        {
+            ConfigurationWindow configurationWindow = new ConfigurationWindow();
+            configurationWindow.ShowDialog();
         }
     }
 }

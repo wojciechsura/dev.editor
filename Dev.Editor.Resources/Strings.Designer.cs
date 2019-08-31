@@ -79,6 +79,33 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Configuration.
+        /// </summary>
+        public static string Configuration {
+            get {
+                return ResourceManager.GetString("Configuration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Behavior.
+        /// </summary>
+        public static string Configuration_Behavior {
+            get {
+                return ResourceManager.GetString("Configuration.Behavior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Configuration.
+        /// </summary>
+        public static string Configuration_Title {
+            get {
+                return ResourceManager.GetString("Configuration.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Dev.Editor.
         /// </summary>
         public static string DefaultDialogTitle {
