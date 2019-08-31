@@ -79,6 +79,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Configuration.
         /// </summary>
         public static string Configuration {
@@ -93,6 +102,60 @@ namespace Dev.Editor.Resources {
         public static string Configuration_Behavior {
             get {
                 return ResourceManager.GetString("Configuration.Behavior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Closing behavior.
+        /// </summary>
+        public static string Configuration_Behavior_ClosingBehavior {
+            get {
+                return ResourceManager.GetString("Configuration.Behavior.ClosingBehavior", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Choose, how application should behave when closing:.
+        /// </summary>
+        public static string Configuration_Behavior_ClosingBehavior_Comment {
+            get {
+                return ResourceManager.GetString("Configuration.Behavior.ClosingBehavior.Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Fluent.
+        /// </summary>
+        public static string Configuration_Behavior_ClosingBehavior_Fluent {
+            get {
+                return ResourceManager.GetString("Configuration.Behavior.ClosingBehavior.Fluent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Dev.Editor will store all open documents and restore them on startup (including unsaved changes).
+        /// </summary>
+        public static string Configuration_Behavior_ClosingBehavior_Fluent_Comment {
+            get {
+                return ResourceManager.GetString("Configuration.Behavior.ClosingBehavior.Fluent.Comment", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Standard.
+        /// </summary>
+        public static string Configuration_Behavior_ClosingBehavior_Standard {
+            get {
+                return ResourceManager.GetString("Configuration.Behavior.ClosingBehavior.Standard", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Dev.Editor will close all documents upon closing and start with blank new document.
+        /// </summary>
+        public static string Configuration_Behavior_ClosingBehavior_Standard_Comment {
+            get {
+                return ResourceManager.GetString("Configuration.Behavior.ClosingBehavior.Standard.Comment", resourceCulture);
             }
         }
         
@@ -201,6 +264,15 @@ namespace Dev.Editor.Resources {
         public static string NavigationPopup_Header {
             get {
                 return ResourceManager.GetString("NavigationPopup.Header", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Ok.
+        /// </summary>
+        public static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
             }
         }
         
@@ -403,6 +475,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Side panel.
+        /// </summary>
+        public static string Ribbon_Interface_SidePanel {
+            get {
+                return ResourceManager.GetString("Ribbon.Interface.SidePanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Navigation.
         /// </summary>
         public static string Ribbon_Navigation_Navigate {
@@ -480,6 +561,42 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Tab_View {
             get {
                 return ResourceManager.GetString("Ribbon.Tab.View", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Interface.
+        /// </summary>
+        public static string Ribbon_View_Interface {
+            get {
+                return ResourceManager.GetString("Ribbon.View.Interface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Hidden.
+        /// </summary>
+        public static string Ribbon_View_SidePanelPlacement_Hidden {
+            get {
+                return ResourceManager.GetString("Ribbon.View.SidePanelPlacement.Hidden", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Left.
+        /// </summary>
+        public static string Ribbon_View_SidePanelPlacement_Left {
+            get {
+                return ResourceManager.GetString("Ribbon.View.SidePanelPlacement.Left", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Right.
+        /// </summary>
+        public static string Ribbon_View_SidePanelPlacement_Right {
+            get {
+                return ResourceManager.GetString("Ribbon.View.SidePanelPlacement.Right", resourceCulture);
             }
         }
         

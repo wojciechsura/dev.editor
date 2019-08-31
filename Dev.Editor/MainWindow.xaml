@@ -187,9 +187,9 @@
 
                 </f:RibbonGroupBox>
 
-                <f:RibbonGroupBox Header="#Interface">
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_Interface}">
 
-                    <f:ComboBox Header="#Side panel" ItemsSource="{Binding SidePanelPlacements}" DisplayMemberPath="Display" SelectedValuePath="Value"
+                    <f:ComboBox Header="{x:Static p:Strings.Ribbon_Interface_SidePanel}" ItemsSource="{Binding SidePanelPlacements}" DisplayMemberPath="Display" SelectedValuePath="Value"
                                 SelectedValue="{Binding SidePanelPlacement}" IsEditable="False" Width="150" />
 
                 </f:RibbonGroupBox>

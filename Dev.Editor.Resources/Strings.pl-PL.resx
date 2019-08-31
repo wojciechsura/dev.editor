@@ -330,4 +330,43 @@
   <data name="Configuration" xml:space="preserve">
     <value>Konfiguracja</value>
   </data>
+  <data name="Configuration.Behavior.ClosingBehavior" xml:space="preserve">
+    <value>Sposób zamykania</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="Configuration.Behavior.ClosingBehavior.Comment" xml:space="preserve">
+    <value>Wybierz, jak aplikacja powinna zachowywać się podczas zamykania:</value>
+  </data>
+  <data name="Configuration.Behavior.ClosingBehavior.Standard" xml:space="preserve">
+    <value>Standardowo</value>
+  </data>
+  <data name="Configuration.Behavior.ClosingBehavior.Fluent" xml:space="preserve">
+    <value>Płynnie</value>
+  </data>
+  <data name="Configuration.Behavior.ClosingBehavior.Fluent.Comment" xml:space="preserve">
+    <value>Dev.Editor zapisze wszystkie dokumenty i odtworzy je po ponownym uruchomieniu (łącznie z niezapisanymi zmianami)</value>
+  </data>
+  <data name="Configuration.Behavior.ClosingBehavior.Standard.Comment" xml:space="preserve">
+    <value>Dev.Editor zamknie wszystkie dokumenty podczas kończenia pracy i uruchomi się z nowym, pustym dokumentem</value>
+  </data>
+  <data name="Ribbon.View.Interface" xml:space="preserve">
+    <value>Interfejs</value>
+  </data>
+  <data name="Ribbon.Interface.SidePanel" xml:space="preserve">
+    <value>Panel boczny</value>
+  </data>
+  <data name="Ribbon.View.SidePanelPlacement.Hidden" xml:space="preserve">
+    <value>Ukryj</value>
+  </data>
+  <data name="Ribbon.View.SidePanelPlacement.Left" xml:space="preserve">
+    <value>Lewo</value>
+  </data>
+  <data name="Ribbon.View.SidePanelPlacement.Right" xml:space="preserve">
+    <value>Prawo</value>
+  </data>
 </root>

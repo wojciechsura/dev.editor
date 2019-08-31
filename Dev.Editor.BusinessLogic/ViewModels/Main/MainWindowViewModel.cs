@@ -342,9 +342,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             sidePanelPlacements = new List<SidePanelPlacementModel>
             {
-                new SidePanelPlacementModel("#Left", SidePanelPlacement.Left),
-                new SidePanelPlacementModel("#Right", SidePanelPlacement.Right),
-                new SidePanelPlacementModel("#Hidden", SidePanelPlacement.Hidden)
+                new SidePanelPlacementModel(Strings.Ribbon_View_SidePanelPlacement_Left, SidePanelPlacement.Left),
+                new SidePanelPlacementModel(Strings.Ribbon_View_SidePanelPlacement_Right, SidePanelPlacement.Right),
+                new SidePanelPlacementModel(Strings.Ribbon_View_SidePanelPlacement_Hidden, SidePanelPlacement.Hidden)
             };
 
             sidePanelSize = configurationService.Configuration.UI.SidePanelSize.Value;

@@ -330,4 +330,43 @@
   <data name="Configuration" xml:space="preserve">
     <value>Configuration</value>
   </data>
+  <data name="Configuration.Behavior.ClosingBehavior" xml:space="preserve">
+    <value>Closing behavior</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Configuration.Behavior.ClosingBehavior.Comment" xml:space="preserve">
+    <value>Choose, how application should behave when closing:</value>
+  </data>
+  <data name="Configuration.Behavior.ClosingBehavior.Standard" xml:space="preserve">
+    <value>Standard</value>
+  </data>
+  <data name="Configuration.Behavior.ClosingBehavior.Standard.Comment" xml:space="preserve">
+    <value>Dev.Editor will close all documents upon closing and start with blank new document</value>
+  </data>
+  <data name="Configuration.Behavior.ClosingBehavior.Fluent" xml:space="preserve">
+    <value>Fluent</value>
+  </data>
+  <data name="Configuration.Behavior.ClosingBehavior.Fluent.Comment" xml:space="preserve">
+    <value>Dev.Editor will store all open documents and restore them on startup (including unsaved changes)</value>
+  </data>
+  <data name="Ribbon.View.Interface" xml:space="preserve">
+    <value>Interface</value>
+  </data>
+  <data name="Ribbon.Interface.SidePanel" xml:space="preserve">
+    <value>Side panel</value>
+  </data>
+  <data name="Ribbon.View.SidePanelPlacement.Left" xml:space="preserve">
+    <value>Left</value>
+  </data>
+  <data name="Ribbon.View.SidePanelPlacement.Right" xml:space="preserve">
+    <value>Right</value>
+  </data>
+  <data name="Ribbon.View.SidePanelPlacement.Hidden" xml:space="preserve">
+    <value>Hidden</value>
+  </data>
 </root>

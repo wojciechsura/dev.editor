@@ -6,8 +6,9 @@
         xmlns:local="clr-namespace:Dev.Editor"
         xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Configuration;assembly=Dev.Editor.BusinessLogic"
         xmlns:b="clr-namespace:Dev.Editor.BusinessLogic.Types.Behavior;assembly=Dev.Editor.BusinessLogic"
+        xmlns:res="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
         mc:Ignorable="d"
-        Title="ConfigWindow" Height="450" Width="800">
+        Title="{x:Static res:Strings.Configuration_Title}" Height="450" Width="800">
     <Window.Resources>
         <ResourceDictionary>
             <Style TargetType="TextBlock" x:Key="Header">
@@ -45,8 +46,8 @@
     <DockPanel>
         <Grid DockPanel.Dock="Bottom">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Margin="6" Width="150" Height="24" Command="{Binding OkCommand}">OK</Button>
-                <Button Margin="6" Width="150" Height="24" Command="{Binding CancelCommand}" IsCancel="True">Cancel</Button>
+                <Button Margin="6" Width="150" Height="24" Command="{Binding OkCommand}" Content="{x:Static res:Strings.Ok}" />
+                <Button Margin="6" Width="150" Height="24" Command="{Binding CancelCommand}" Content="{x:Static res:Strings.Cancel}" IsCancel="True" />
             </StackPanel>
         </Grid>
         <ListBox DockPanel.Dock="Left" Width="200" ItemsSource="{Binding Pages}" SelectedItem="{Binding ActivePage}">
@@ -61,19 +62,16 @@
                 <ResourceDictionary>
                     <DataTemplate DataType="{x:Type vm:BehaviorConfigurationViewModel}">
                         <StackPanel Orientation="Vertical" Style="{StaticResource ConfigurationPage}">
-                            <TextBlock Margin="3" Style="{StaticResource Header}">#Closing behavior</TextBlock>
+                            <TextBlock Margin="3" Style="{StaticResource Header}" Text="{x:Static res:Strings.Configuration_Behavior_ClosingBehavior}" />
                             <Separator />
-                            <TextBlock Margin="3" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="#Choose, how application should behave when closing:" />
+                            <TextBlock Margin="3" HorizontalAlignment="Stretch" TextWrapping="Wrap" Text="{x:Static res:Strings.Configuration_Behavior_ClosingBehavior_Comment}" />
                             <DockPanel Style="{StaticResource ItemBlock}">
-                                <TextBlock DockPanel.Dock="Left" Style="{StaticResource ItemDesc}">#Closing behavior</TextBlock>
+                                <TextBlock DockPanel.Dock="Left" Style="{StaticResource ItemDesc}" Text="{x:Static res:Strings.Configuration_Behavior_ClosingBehavior}" />
                                 <StackPanel Orientation="Vertical">
-                                    <RadioButton IsChecked="{Binding CloseBehavior, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static b:CloseBehavior.Standard}}">#Standard</RadioButton>
-                                    <TextBlock Margin="20,8,0,8" TextWrapping="Wrap">
-                                    #Dev.Editor will close all documents upon closing and start with blank new document
-                                    </TextBlock>
-                                    <RadioButton IsChecked="{Binding CloseBehavior, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static b:CloseBehavior.Fluent}}">#Fluent</RadioButton>
-                                    <TextBlock Margin="20,8,0,8" TextWrapping="Wrap">
-                                    #Dev.Editor will store all open documents and restore them on startup (including unsaved changes)
+                                    <RadioButton IsChecked="{Binding CloseBehavior, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static b:CloseBehavior.Standard}}" Content="{x:Static res:Strings.Configuration_Behavior_ClosingBehavior_Standard}" />
+                                    <TextBlock Margin="20,8,0,8" TextWrapping="Wrap" Text="{x:Static res:Strings.Configuration_Behavior_ClosingBehavior_Standard_Comment}" />
+                                    <RadioButton IsChecked="{Binding CloseBehavior, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static b:CloseBehavior.Fluent}}" Content="{x:Static res:Strings.Configuration_Behavior_ClosingBehavior_Fluent}" />
+                                    <TextBlock Margin="20,8,0,8" TextWrapping="Wrap" Text="{x:Static res:Strings.Configuration_Behavior_ClosingBehavior_Fluent_Comment}">
                                     </TextBlock>
                                 </StackPanel>
                             </DockPanel>
