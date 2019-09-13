@@ -1,0 +1,172 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.IO;
+using Dev.Editor.BinAnalyzer.Data;
+using Dev.Editor.BinAnalyzer.ProgramItems.Expressions;
+<#
+    (string type, string name, string readerMethod)[] data = new (string type, string name, string readerMethod)[] 
+    {
+        ("byte", "Byte", "ReadByte"),
+        ("sbyte", "Sbyte", "ReadSByte"),
+        ("short", "Short", "ReadInt16"),
+        ("ushort", "Ushort", "ReadUInt16"),
+        ("int", "Int", "ReadInt32"),
+        ("uint", "Uint", "ReadUInt32"),
+        ("long", "Long", "ReadInt64"),
+        ("ulong", "Ulong", "ReadUInt64"),
+        ("float", "Float", "ReadSingle"),
+        ("double", "Double", "ReadDouble")
+    };  
+#>
+
+namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
+{
+<#    
+foreach (var item in data)
+{
+#>
+     class <#=item.name#>FieldStatement : BaseFieldStatement
+     {
+         public <#=item.name#>FieldStatement(string name)
+             : base(name)
+         {
+            
+         }
+
+         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+         {
+             try
+             {
+                 <#=item.type#> value = reader.<#=item.readerMethod#>();
+
+                 var data = new <#=item.name#>Data(name, value);
+                 result.Add(data);
+                 scope.Contents.Add(name, data);
+             }
+             catch
+             {
+                 throw new InvalidOperationException("Cannot load data!");
+             }
+         }
+     }
+
+<#
+}
+
+    foreach (var item in data)
+    {
+#>
+     class <#=item.name#>ArrayFieldStatement : BaseFieldStatement
+     {
+         private readonly Expression count;
+
+         public <#=item.name#>ArrayFieldStatement(string name, Expression count)
+             : base(name)
+         {
+             this.count = count;
+         }
+     }
+
+<#
+     }
+#>
+    class FieldFactory
+    {
+        public static BaseFieldStatement FromTypeName(string typeName, string name)
+        {
+            switch (typeName)
+            {
+<#
+foreach (var item in data)
+{
+#>
+                case "<#=item.type#>":
+                    return new <#=item.name#>FieldStatement(name);
+<#
+}
+#>
+                case "skip":
+                    return new SkipFieldStatement(name);
+                default:
+                    throw new InvalidEnumArgumentException("Unsupported type name!");
+            }
+        }
+    }
+
+    class ArrayFieldFactory
+    {
+        public static BaseFieldStatement FromTypeName(string typeName, string name, Expression count)
+        {
+            switch (typeName)
+            {
+<#
+foreach (var item in data)
+{
+#>
+                case "<#=item.type#>":
+                    return new <#=item.name#>ArrayFieldStatement(name, count);
+<#
+}
+#>
+                case "skip":
+                    return new SkipArrayFieldStatement(name, count);
+                default:
+                    throw new InvalidEnumArgumentException("Unsupported type name!");
+            }
+        }
+    }
+}
+
+namespace Dev.Editor.BinAnalyzer.Data
+{
+<#  
+    foreach (var item in data)
+    {
+        var t = item.type;
+        var n = item.name;
+#>
+    public class <#=n#>Data : BaseValueData
+    {       
+        public <#=n#>Data(string name, <#=t#> value)
+            : base(name)
+        {
+            Value = value;
+        }
+
+        public override dynamic GetValue()
+        {
+            return Value;
+        }
+
+        public <#=t#> Value { get; }
+    }
+
+<#
+    }
+#>
+
+    public class DataFactory
+    {
+        public static BaseData DataFromDynamic(string name, dynamic d)
+        {
+            <#
+            foreach (var item in data)
+            {
+#>
+if (d is <#=item.type#> <#=item.type#>Dynamic)
+                return new <#=item.name#>Data(name, <#=item.type#>Dynamic);
+            else <#
+            }
+#>
+
+                throw new InvalidOperationException("Unsupported type!");
+        }
+    }
+}

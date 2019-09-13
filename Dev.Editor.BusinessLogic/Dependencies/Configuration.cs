@@ -18,8 +18,14 @@ namespace Dev.Editor.BusinessLogic.Dependencies
 {
     public static class Configuration
     {
+        private static bool isConfigured = false;
+
         public static void Configure(IUnityContainer container)
         {
+            if (isConfigured)
+                return;
+            isConfigured = true;
+
             container.RegisterType<IMessagingService, MessagingService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IConfigurationService, ConfigrationService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IPathService, PathService>(new ContainerControlledLifetimeManager());

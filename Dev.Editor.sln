@@ -36,6 +36,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "AvalonEdit", "AvalonEdit", 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HexEditor", "HexEditor", "{664E29B8-1E2B-4236-A54A-CA175394C328}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dev.Editor.BinAnalyzer", "Dev.Editor.BinAnalyzer\Dev.Editor.BinAnalyzer.csproj", "{A8D1529F-2CA1-4F58-86B6-7A3F69E49575}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -86,6 +88,10 @@ Global
 		{D36385EE-5FA0-4EAD-A06A-581896244356}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D36385EE-5FA0-4EAD-A06A-581896244356}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D36385EE-5FA0-4EAD-A06A-581896244356}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A8D1529F-2CA1-4F58-86B6-7A3F69E49575}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A8D1529F-2CA1-4F58-86B6-7A3F69E49575}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A8D1529F-2CA1-4F58-86B6-7A3F69E49575}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A8D1529F-2CA1-4F58-86B6-7A3F69E49575}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
