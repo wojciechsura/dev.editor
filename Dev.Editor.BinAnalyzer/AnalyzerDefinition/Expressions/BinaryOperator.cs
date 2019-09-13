@@ -4,9 +4,10 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Dev.Editor.BinAnalyzer.ProgramItems.Statements;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements;
 
-namespace Dev.Editor.BinAnalyzer.ProgramItems.Expressions
+namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions
 {
     class BinaryOperator : BaseExpressionNode
     {

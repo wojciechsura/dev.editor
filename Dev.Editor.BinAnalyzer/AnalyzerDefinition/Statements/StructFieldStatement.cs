@@ -1,5 +1,5 @@
 ﻿using Dev.Editor.BinAnalyzer.Data;
-using Dev.Editor.BinAnalyzer.ProgramItems.Definitions;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
+namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
     class StructFieldStatement : BaseFieldStatement
     {

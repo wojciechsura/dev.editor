@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BinAnalyzer.ProgramItems.Definitions
+namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
 {
     class Definitions
     {

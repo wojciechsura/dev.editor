@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using Dev.Editor.BinAnalyzer.Data;
 
-namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
+namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
     internal class SkipFieldStatement : BaseFieldStatement
     {

@@ -1,5 +1,5 @@
 ﻿using Dev.Editor.BinAnalyzer.Data;
-using Dev.Editor.BinAnalyzer.ProgramItems.Expressions;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -7,21 +7,21 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
+namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
-    class AssignmentStatement : BaseStatement
+    class ShowStatement : BaseStatement
     {
-        private readonly string identifier;
         private readonly Expression expression;
+        private readonly string alias;
 
         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
         {
             try
             {
                 dynamic value = expression.Eval(scope);
-                var data = DataFactory.DataFromDynamic(identifier, value);
+                var data = DataFactory.DataFromDynamic(alias, value);
 
-                scope.Contents.Add(identifier, data);
+                result.Add(data);
             }
             catch
             {
@@ -29,13 +29,13 @@ namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
             }
         }
 
-        public AssignmentStatement(string identifier, Expression expression)
+        public ShowStatement(Expression expression, string alias)
         {
-            this.identifier = identifier;
             this.expression = expression;
+            this.alias = alias;
         }
 
-        public string Identifier => identifier;
         public Expression Expression => expression;
+        public string Alias => alias;        
     }
 }

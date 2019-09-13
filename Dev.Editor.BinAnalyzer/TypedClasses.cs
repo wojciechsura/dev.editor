@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using Dev.Editor.BinAnalyzer.Data;
-using Dev.Editor.BinAnalyzer.ProgramItems.Expressions;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions;
 
-namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
+namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
     class ByteFieldStatement : BaseFieldStatement
     {

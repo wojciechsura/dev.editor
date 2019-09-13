@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
+namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
 {
-    abstract class BaseFieldStatement : BaseStatement
+    public abstract class BaseDefinition
     {
-        protected readonly string name;
+        private readonly string name;
 
-        public BaseFieldStatement(string name)
+        public BaseDefinition(string name)
         {
             this.name = name;
         }

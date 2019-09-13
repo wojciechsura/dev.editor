@@ -1,10 +1,10 @@
 ﻿using Dev.Editor.BinAnalyzer.Data;
-using Dev.Editor.BinAnalyzer.ProgramItems.Expressions;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions;
 using System;
 using System.Collections.Generic;
 using System.IO;
 
-namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
+namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
     internal class SkipArrayFieldStatement : BaseFieldStatement
     {

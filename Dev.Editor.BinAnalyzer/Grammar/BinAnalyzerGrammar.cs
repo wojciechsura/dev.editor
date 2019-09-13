@@ -44,7 +44,7 @@ namespace Dev.Editor.BinAnalyzer.Grammar
         public const string STRUCT_DEF = "structDef";
         public const string DEFINITION = "definition";
         public const string DEFINITIONS = "definitions";
-        public const string PROGRAM = "program";
+        public const string ANALYZER = "analyzer";
 
         // Public methods -----------------------------------------------------
 
@@ -78,7 +78,7 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             var definition = new NonTerminal(DEFINITION);
             var definitions = new NonTerminal(DEFINITIONS);
 
-            var program = new NonTerminal(PROGRAM);
+            var program = new NonTerminal(ANALYZER);
 
             // Non-terminals
 

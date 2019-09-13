@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dev.Editor.BinAnalyzer.Data;
 
-namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
+namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
     abstract class BaseStatement
     {

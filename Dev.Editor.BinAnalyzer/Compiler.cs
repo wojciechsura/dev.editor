@@ -1,9 +1,9 @@
-﻿using Dev.Editor.BinAnalyzer.Exceptions;
+﻿using Dev.Editor.BinAnalyzer.AnalyzerDefinition;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions;
+using Dev.Editor.BinAnalyzer.Exceptions;
 using Dev.Editor.BinAnalyzer.Grammar;
-using Dev.Editor.BinAnalyzer.ProgramItems;
-using Dev.Editor.BinAnalyzer.ProgramItems.Definitions;
-using Dev.Editor.BinAnalyzer.ProgramItems.Expressions;
-using Dev.Editor.BinAnalyzer.ProgramItems.Statements;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements;
 using Irony.Parsing;
 using System;
 using System.Collections.Generic;

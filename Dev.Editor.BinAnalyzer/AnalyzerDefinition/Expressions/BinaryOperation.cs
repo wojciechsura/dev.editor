@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BinAnalyzer.ProgramItems.Expressions
+namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions
 {
     enum BinaryOperation
     {
