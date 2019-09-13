@@ -7,365 +7,625 @@ using Dev.Editor.BinAnalyzer.ProgramItems.Expressions;
 
 namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
 {
-     class ByteFieldStatement : BaseFieldStatement
-     {
-         public ByteFieldStatement(string name)
-             : base(name)
-         {
+    class ByteFieldStatement : BaseFieldStatement
+    {
+        public ByteFieldStatement(string name)
+            : base(name)
+        {
             
-         }
+        }
 
-         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-         {
-             try
-             {
-                 byte value = reader.ReadByte();
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                byte value = reader.ReadByte();
 
-                 var data = new ByteData(name, value);
-                 result.Add(data);
-                 scope.Contents.Add(name, data);
-             }
-             catch
-             {
-                 throw new InvalidOperationException("Cannot load data!");
-             }
-         }
-     }
+                var data = new ByteData(name, value);
+                result.Add(data);
+                scope.Contents.Add(name, data);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
-     class SbyteFieldStatement : BaseFieldStatement
-     {
-         public SbyteFieldStatement(string name)
-             : base(name)
-         {
+    class SbyteFieldStatement : BaseFieldStatement
+    {
+        public SbyteFieldStatement(string name)
+            : base(name)
+        {
             
-         }
+        }
 
-         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-         {
-             try
-             {
-                 sbyte value = reader.ReadSByte();
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                sbyte value = reader.ReadSByte();
 
-                 var data = new SbyteData(name, value);
-                 result.Add(data);
-                 scope.Contents.Add(name, data);
-             }
-             catch
-             {
-                 throw new InvalidOperationException("Cannot load data!");
-             }
-         }
-     }
+                var data = new SbyteData(name, value);
+                result.Add(data);
+                scope.Contents.Add(name, data);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
-     class ShortFieldStatement : BaseFieldStatement
-     {
-         public ShortFieldStatement(string name)
-             : base(name)
-         {
+    class ShortFieldStatement : BaseFieldStatement
+    {
+        public ShortFieldStatement(string name)
+            : base(name)
+        {
             
-         }
+        }
 
-         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-         {
-             try
-             {
-                 short value = reader.ReadInt16();
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                short value = reader.ReadInt16();
 
-                 var data = new ShortData(name, value);
-                 result.Add(data);
-                 scope.Contents.Add(name, data);
-             }
-             catch
-             {
-                 throw new InvalidOperationException("Cannot load data!");
-             }
-         }
-     }
+                var data = new ShortData(name, value);
+                result.Add(data);
+                scope.Contents.Add(name, data);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
-     class UshortFieldStatement : BaseFieldStatement
-     {
-         public UshortFieldStatement(string name)
-             : base(name)
-         {
+    class UshortFieldStatement : BaseFieldStatement
+    {
+        public UshortFieldStatement(string name)
+            : base(name)
+        {
             
-         }
+        }
 
-         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-         {
-             try
-             {
-                 ushort value = reader.ReadUInt16();
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                ushort value = reader.ReadUInt16();
 
-                 var data = new UshortData(name, value);
-                 result.Add(data);
-                 scope.Contents.Add(name, data);
-             }
-             catch
-             {
-                 throw new InvalidOperationException("Cannot load data!");
-             }
-         }
-     }
+                var data = new UshortData(name, value);
+                result.Add(data);
+                scope.Contents.Add(name, data);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
-     class IntFieldStatement : BaseFieldStatement
-     {
-         public IntFieldStatement(string name)
-             : base(name)
-         {
+    class IntFieldStatement : BaseFieldStatement
+    {
+        public IntFieldStatement(string name)
+            : base(name)
+        {
             
-         }
+        }
 
-         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-         {
-             try
-             {
-                 int value = reader.ReadInt32();
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                int value = reader.ReadInt32();
 
-                 var data = new IntData(name, value);
-                 result.Add(data);
-                 scope.Contents.Add(name, data);
-             }
-             catch
-             {
-                 throw new InvalidOperationException("Cannot load data!");
-             }
-         }
-     }
+                var data = new IntData(name, value);
+                result.Add(data);
+                scope.Contents.Add(name, data);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
-     class UintFieldStatement : BaseFieldStatement
-     {
-         public UintFieldStatement(string name)
-             : base(name)
-         {
+    class UintFieldStatement : BaseFieldStatement
+    {
+        public UintFieldStatement(string name)
+            : base(name)
+        {
             
-         }
+        }
 
-         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-         {
-             try
-             {
-                 uint value = reader.ReadUInt32();
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                uint value = reader.ReadUInt32();
 
-                 var data = new UintData(name, value);
-                 result.Add(data);
-                 scope.Contents.Add(name, data);
-             }
-             catch
-             {
-                 throw new InvalidOperationException("Cannot load data!");
-             }
-         }
-     }
+                var data = new UintData(name, value);
+                result.Add(data);
+                scope.Contents.Add(name, data);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
-     class LongFieldStatement : BaseFieldStatement
-     {
-         public LongFieldStatement(string name)
-             : base(name)
-         {
+    class LongFieldStatement : BaseFieldStatement
+    {
+        public LongFieldStatement(string name)
+            : base(name)
+        {
             
-         }
+        }
 
-         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-         {
-             try
-             {
-                 long value = reader.ReadInt64();
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                long value = reader.ReadInt64();
 
-                 var data = new LongData(name, value);
-                 result.Add(data);
-                 scope.Contents.Add(name, data);
-             }
-             catch
-             {
-                 throw new InvalidOperationException("Cannot load data!");
-             }
-         }
-     }
+                var data = new LongData(name, value);
+                result.Add(data);
+                scope.Contents.Add(name, data);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
-     class UlongFieldStatement : BaseFieldStatement
-     {
-         public UlongFieldStatement(string name)
-             : base(name)
-         {
+    class UlongFieldStatement : BaseFieldStatement
+    {
+        public UlongFieldStatement(string name)
+            : base(name)
+        {
             
-         }
+        }
 
-         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-         {
-             try
-             {
-                 ulong value = reader.ReadUInt64();
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                ulong value = reader.ReadUInt64();
 
-                 var data = new UlongData(name, value);
-                 result.Add(data);
-                 scope.Contents.Add(name, data);
-             }
-             catch
-             {
-                 throw new InvalidOperationException("Cannot load data!");
-             }
-         }
-     }
+                var data = new UlongData(name, value);
+                result.Add(data);
+                scope.Contents.Add(name, data);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
-     class FloatFieldStatement : BaseFieldStatement
-     {
-         public FloatFieldStatement(string name)
-             : base(name)
-         {
+    class FloatFieldStatement : BaseFieldStatement
+    {
+        public FloatFieldStatement(string name)
+            : base(name)
+        {
             
-         }
+        }
 
-         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-         {
-             try
-             {
-                 float value = reader.ReadSingle();
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                float value = reader.ReadSingle();
 
-                 var data = new FloatData(name, value);
-                 result.Add(data);
-                 scope.Contents.Add(name, data);
-             }
-             catch
-             {
-                 throw new InvalidOperationException("Cannot load data!");
-             }
-         }
-     }
+                var data = new FloatData(name, value);
+                result.Add(data);
+                scope.Contents.Add(name, data);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
-     class DoubleFieldStatement : BaseFieldStatement
-     {
-         public DoubleFieldStatement(string name)
-             : base(name)
-         {
+    class DoubleFieldStatement : BaseFieldStatement
+    {
+        public DoubleFieldStatement(string name)
+            : base(name)
+        {
             
-         }
+        }
 
-         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-         {
-             try
-             {
-                 double value = reader.ReadDouble();
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                double value = reader.ReadDouble();
 
-                 var data = new DoubleData(name, value);
-                 result.Add(data);
-                 scope.Contents.Add(name, data);
-             }
-             catch
-             {
-                 throw new InvalidOperationException("Cannot load data!");
-             }
-         }
-     }
+                var data = new DoubleData(name, value);
+                result.Add(data);
+                scope.Contents.Add(name, data);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
-     class ByteArrayFieldStatement : BaseFieldStatement
-     {
-         private readonly Expression count;
+    class ByteArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
 
-         public ByteArrayFieldStatement(string name, Expression count)
-             : base(name)
-         {
-             this.count = count;
-         }
-     }
+        public ByteArrayFieldStatement(string name, Expression count)
+            : base(name)
+        {
+            this.count = count;
+        }
 
-     class SbyteArrayFieldStatement : BaseFieldStatement
-     {
-         private readonly Expression count;
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                ByteData[] data = new ByteData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    byte value = reader.ReadByte();
+                    var element = new ByteData(i.ToString(), value);
+                    data[i] = element;
+                }
 
-         public SbyteArrayFieldStatement(string name, Expression count)
-             : base(name)
-         {
-             this.count = count;
-         }
-     }
+                ArrayData<ByteData> item = new ArrayData<ByteData>(name, "Byte", data);
 
-     class ShortArrayFieldStatement : BaseFieldStatement
-     {
-         private readonly Expression count;
+                result.Add(item);
+                scope.Contents.Add(name, item);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
-         public ShortArrayFieldStatement(string name, Expression count)
-             : base(name)
-         {
-             this.count = count;
-         }
-     }
+    class SbyteArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
 
-     class UshortArrayFieldStatement : BaseFieldStatement
-     {
-         private readonly Expression count;
+        public SbyteArrayFieldStatement(string name, Expression count)
+            : base(name)
+        {
+            this.count = count;
+        }
 
-         public UshortArrayFieldStatement(string name, Expression count)
-             : base(name)
-         {
-             this.count = count;
-         }
-     }
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                SbyteData[] data = new SbyteData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    sbyte value = reader.ReadSByte();
+                    var element = new SbyteData(i.ToString(), value);
+                    data[i] = element;
+                }
 
-     class IntArrayFieldStatement : BaseFieldStatement
-     {
-         private readonly Expression count;
+                ArrayData<SbyteData> item = new ArrayData<SbyteData>(name, "Sbyte", data);
 
-         public IntArrayFieldStatement(string name, Expression count)
-             : base(name)
-         {
-             this.count = count;
-         }
-     }
+                result.Add(item);
+                scope.Contents.Add(name, item);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
-     class UintArrayFieldStatement : BaseFieldStatement
-     {
-         private readonly Expression count;
+    class ShortArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
 
-         public UintArrayFieldStatement(string name, Expression count)
-             : base(name)
-         {
-             this.count = count;
-         }
-     }
+        public ShortArrayFieldStatement(string name, Expression count)
+            : base(name)
+        {
+            this.count = count;
+        }
 
-     class LongArrayFieldStatement : BaseFieldStatement
-     {
-         private readonly Expression count;
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                ShortData[] data = new ShortData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    short value = reader.ReadInt16();
+                    var element = new ShortData(i.ToString(), value);
+                    data[i] = element;
+                }
 
-         public LongArrayFieldStatement(string name, Expression count)
-             : base(name)
-         {
-             this.count = count;
-         }
-     }
+                ArrayData<ShortData> item = new ArrayData<ShortData>(name, "Short", data);
 
-     class UlongArrayFieldStatement : BaseFieldStatement
-     {
-         private readonly Expression count;
+                result.Add(item);
+                scope.Contents.Add(name, item);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
-         public UlongArrayFieldStatement(string name, Expression count)
-             : base(name)
-         {
-             this.count = count;
-         }
-     }
+    class UshortArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
 
-     class FloatArrayFieldStatement : BaseFieldStatement
-     {
-         private readonly Expression count;
+        public UshortArrayFieldStatement(string name, Expression count)
+            : base(name)
+        {
+            this.count = count;
+        }
 
-         public FloatArrayFieldStatement(string name, Expression count)
-             : base(name)
-         {
-             this.count = count;
-         }
-     }
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                UshortData[] data = new UshortData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    ushort value = reader.ReadUInt16();
+                    var element = new UshortData(i.ToString(), value);
+                    data[i] = element;
+                }
 
-     class DoubleArrayFieldStatement : BaseFieldStatement
-     {
-         private readonly Expression count;
+                ArrayData<UshortData> item = new ArrayData<UshortData>(name, "Ushort", data);
 
-         public DoubleArrayFieldStatement(string name, Expression count)
-             : base(name)
-         {
-             this.count = count;
-         }
-     }
+                result.Add(item);
+                scope.Contents.Add(name, item);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
+
+    class IntArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
+
+        public IntArrayFieldStatement(string name, Expression count)
+            : base(name)
+        {
+            this.count = count;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                IntData[] data = new IntData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    int value = reader.ReadInt32();
+                    var element = new IntData(i.ToString(), value);
+                    data[i] = element;
+                }
+
+                ArrayData<IntData> item = new ArrayData<IntData>(name, "Int", data);
+
+                result.Add(item);
+                scope.Contents.Add(name, item);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
+
+    class UintArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
+
+        public UintArrayFieldStatement(string name, Expression count)
+            : base(name)
+        {
+            this.count = count;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                UintData[] data = new UintData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    uint value = reader.ReadUInt32();
+                    var element = new UintData(i.ToString(), value);
+                    data[i] = element;
+                }
+
+                ArrayData<UintData> item = new ArrayData<UintData>(name, "Uint", data);
+
+                result.Add(item);
+                scope.Contents.Add(name, item);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
+
+    class LongArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
+
+        public LongArrayFieldStatement(string name, Expression count)
+            : base(name)
+        {
+            this.count = count;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                LongData[] data = new LongData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    long value = reader.ReadInt64();
+                    var element = new LongData(i.ToString(), value);
+                    data[i] = element;
+                }
+
+                ArrayData<LongData> item = new ArrayData<LongData>(name, "Long", data);
+
+                result.Add(item);
+                scope.Contents.Add(name, item);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
+
+    class UlongArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
+
+        public UlongArrayFieldStatement(string name, Expression count)
+            : base(name)
+        {
+            this.count = count;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                UlongData[] data = new UlongData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    ulong value = reader.ReadUInt64();
+                    var element = new UlongData(i.ToString(), value);
+                    data[i] = element;
+                }
+
+                ArrayData<UlongData> item = new ArrayData<UlongData>(name, "Ulong", data);
+
+                result.Add(item);
+                scope.Contents.Add(name, item);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
+
+    class FloatArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
+
+        public FloatArrayFieldStatement(string name, Expression count)
+            : base(name)
+        {
+            this.count = count;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                FloatData[] data = new FloatData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    float value = reader.ReadSingle();
+                    var element = new FloatData(i.ToString(), value);
+                    data[i] = element;
+                }
+
+                ArrayData<FloatData> item = new ArrayData<FloatData>(name, "Float", data);
+
+                result.Add(item);
+                scope.Contents.Add(name, item);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
+
+    class DoubleArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
+
+        public DoubleArrayFieldStatement(string name, Expression count)
+            : base(name)
+        {
+            this.count = count;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                DoubleData[] data = new DoubleData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    double value = reader.ReadDouble();
+                    var element = new DoubleData(i.ToString(), value);
+                    data[i] = element;
+                }
+
+                ArrayData<DoubleData> item = new ArrayData<DoubleData>(name, "Double", data);
+
+                result.Add(item);
+                scope.Contents.Add(name, item);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
     class FieldFactory
     {

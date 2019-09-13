@@ -16,9 +16,9 @@ namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
             try
             {
                 // Skip byte
-                reader.ReadByte();
+                reader.BaseStream.Seek(1, SeekOrigin.Current);
             }
-            catch (Exception e)
+            catch
             {
                 throw new InvalidOperationException("Cannot read data!");
             }

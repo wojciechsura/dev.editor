@@ -6,16 +6,17 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BinAnalyzer.Data
 {
-    public class StructData : BaseData
-    {
-        public StructData(string name, string type, List<BaseData> members)
+    public class ArrayData<T> : BaseData
+        where T : BaseData
+    {       
+        public ArrayData(string name, string childType, T[] children) 
             : base(name)
         {
-            Type = type;
-            Children = members;
+            Children = children;
         }
 
-        public string Type { get; }
+        public string ChildType { get; }
+
         public override IList<BaseData> Children { get; }
     }
 }

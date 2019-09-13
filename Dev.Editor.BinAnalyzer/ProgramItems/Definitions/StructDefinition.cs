@@ -17,6 +17,6 @@ namespace Dev.Editor.BinAnalyzer.ProgramItems.Definitions
             this.statements = statements;
         }
 
-        public IEnumerable<BaseStatement> Statements => statements;
+        public IList<BaseStatement> Statements => statements;
     }
 }

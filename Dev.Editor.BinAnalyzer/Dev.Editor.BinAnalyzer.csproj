@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Compiler.cs" />
+    <Compile Include="Data\ArrayData.cs" />
     <Compile Include="Data\BaseData.cs" />
     <Compile Include="Data\BaseValueData.cs" />
     <Compile Include="Data\StructData.cs" />
@@ -63,7 +64,7 @@
     <Compile Include="ProgramItems\Statements\AssignmentStatement.cs" />
     <Compile Include="ProgramItems\Statements\BaseFieldStatement.cs" />
     <Compile Include="ProgramItems\Statements\BaseStatement.cs" />
-    <Compile Include="ProgramItems\Statements\Scope.cs" />
+    <Compile Include="ProgramItems\Scope.cs" />
     <Compile Include="ProgramItems\Statements\ShowStatement.cs" />
     <Compile Include="ProgramItems\Statements\SkipArrayFieldStatement.cs" />
     <Compile Include="ProgramItems\Statements\SkipFieldStatement.cs" />

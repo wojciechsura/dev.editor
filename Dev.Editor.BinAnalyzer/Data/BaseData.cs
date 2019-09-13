@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BinAnalyzer.Data
 {
-    public class BaseData
+    public abstract class BaseData
     {
         public BaseData(string name)
         {
@@ -14,5 +14,7 @@ namespace Dev.Editor.BinAnalyzer.Data
         }
 
         public string Name { get; }
+
+        public abstract IList<BaseData> Children { get; }
     }    
 }

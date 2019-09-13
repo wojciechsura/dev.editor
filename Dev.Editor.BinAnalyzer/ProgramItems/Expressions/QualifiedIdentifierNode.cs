@@ -37,7 +37,7 @@ namespace Dev.Editor.BinAnalyzer.ProgramItems.Expressions
                 if (structData == null)
                     throw new InvalidOperationException("Invalid qualified identifier");
 
-                var child = structData.Members.FirstOrDefault(x => x.Name.Equals(identifier[i]));
+                var child = structData.Children.FirstOrDefault(x => x.Name.Equals(identifier[i]));
                 data = child ?? throw new InvalidOperationException("Invalid qualified identifier!");
             }
 

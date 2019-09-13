@@ -13,5 +13,7 @@ namespace Dev.Editor.BinAnalyzer.Data
         }
 
         public abstract dynamic GetValue();
+
+        public override IList<BaseData> Children => null;
     }
 }

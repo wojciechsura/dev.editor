@@ -32,30 +32,30 @@ namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
 foreach (var item in data)
 {
 #>
-     class <#=item.name#>FieldStatement : BaseFieldStatement
-     {
-         public <#=item.name#>FieldStatement(string name)
-             : base(name)
-         {
+    class <#=item.name#>FieldStatement : BaseFieldStatement
+    {
+        public <#=item.name#>FieldStatement(string name)
+            : base(name)
+        {
             
-         }
+        }
 
-         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-         {
-             try
-             {
-                 <#=item.type#> value = reader.<#=item.readerMethod#>();
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                <#=item.type#> value = reader.<#=item.readerMethod#>();
 
-                 var data = new <#=item.name#>Data(name, value);
-                 result.Add(data);
-                 scope.Contents.Add(name, data);
-             }
-             catch
-             {
-                 throw new InvalidOperationException("Cannot load data!");
-             }
-         }
-     }
+                var data = new <#=item.name#>Data(name, value);
+                result.Add(data);
+                scope.Contents.Add(name, data);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
 <#
 }
@@ -63,19 +63,45 @@ foreach (var item in data)
     foreach (var item in data)
     {
 #>
-     class <#=item.name#>ArrayFieldStatement : BaseFieldStatement
-     {
-         private readonly Expression count;
+    class <#=item.name#>ArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
 
-         public <#=item.name#>ArrayFieldStatement(string name, Expression count)
-             : base(name)
-         {
-             this.count = count;
-         }
-     }
+        public <#=item.name#>ArrayFieldStatement(string name, Expression count)
+            : base(name)
+        {
+            this.count = count;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                <#=item.name#>Data[] data = new <#=item.name#>Data[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    <#=item.type#> value = reader.<#=item.readerMethod#>();
+                    var element = new <#=item.name#>Data(i.ToString(), value);
+                    data[i] = element;
+                }
+
+                ArrayData<<#=item.name#>Data> item = new ArrayData<<#=item.name#>Data>(name, "<#=item.name#>", data);
+
+                result.Add(item);
+                scope.Contents.Add(name, item);
+            }
+            catch
+            {
+                throw new InvalidOperationException("Cannot load data!");
+            }
+        }
+    }
 
 <#
-     }
+    }
 #>
     class FieldFactory
     {
@@ -159,7 +185,7 @@ namespace Dev.Editor.BinAnalyzer.Data
             <#
             foreach (var item in data)
             {
-#>
+                #>
 if (d is <#=item.type#> <#=item.type#>Dynamic)
                 return new <#=item.name#>Data(name, <#=item.type#>Dynamic);
             else <#

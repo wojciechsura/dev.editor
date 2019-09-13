@@ -18,7 +18,7 @@ namespace Dev.Editor.BinAnalyzer.ProgramItems.Expressions
 
         public dynamic Eval(Scope scope)
         {
-            root.Eval(scope);
+            return root.Eval(scope);
         }
 
         public BaseExpressionNode Root => root;

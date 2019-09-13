@@ -25,9 +25,7 @@ namespace Dev.Editor.BinAnalyzer.ProgramItems
             List<BaseData> result = new List<BaseData>();
             Scope scope = new Scope();
             for (int i = 0; i < statements.Count; i++)
-            {
                 statements[i].Read(reader, result, scope);
-            }
 
             return result;
         }

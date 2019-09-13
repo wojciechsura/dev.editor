@@ -14,5 +14,7 @@ namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
         {
             this.name = name;
         }
+
+        public string Name => name;
     }
 }
