@@ -14,10 +14,12 @@ namespace Dev.Editor.BusinessLogic.Services.Paths
 
         private const string CONFIG_FILENAME = "Config.xml";
         private const string STORED_FILES_FOLDER = "StoredFiles";
+        private const string BIN_DEFINITIONS_FOLDER = "BinDefinitions";
 
         private string appDataPath;
         private string configPath;
         private string storedFilesPath;
+        private string binDefinitionsPath;
 
         public PathService()
         {
@@ -27,11 +29,16 @@ namespace Dev.Editor.BusinessLogic.Services.Paths
             storedFilesPath = Path.Combine(appDataPath, STORED_FILES_FOLDER);
             Directory.CreateDirectory(storedFilesPath);
 
+            binDefinitionsPath = Path.Combine(appDataPath, BIN_DEFINITIONS_FOLDER);
+            Directory.CreateDirectory(binDefinitionsPath);
+
             configPath = Path.Combine(appDataPath, CONFIG_FILENAME);
         }
 
         public string ConfigPath => configPath;
 
         public string StoredFilesPath => storedFilesPath;
+
+        public string BinDefinitionsPath => binDefinitionsPath;
     }
 }

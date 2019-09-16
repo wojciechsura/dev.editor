@@ -62,6 +62,8 @@
     <Compile Include="Dependencies\Configuration.cs" />
     <Compile Include="Models\Commands\CommandModel.cs" />
     <Compile Include="Models\Configuration\Behavior\BehaviorConfig.cs" />
+    <Compile Include="Models\Configuration\BinDefinitions\BinDefinition.cs" />
+    <Compile Include="Models\Configuration\BinDefinitions\BinDefinitionsConfig.cs" />
     <Compile Include="Models\Configuration\ConfigModel.cs" />
     <Compile Include="Models\Configuration\Editor\EditorConfig.cs" />
     <Compile Include="Models\Configuration\Internal\HexStoredFile.cs" />

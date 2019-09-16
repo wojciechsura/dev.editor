@@ -1,4 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Configuration.Behavior;
+using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
 using Dev.Editor.BusinessLogic.Models.Configuration.Editor;
 using Dev.Editor.BusinessLogic.Models.Configuration.Internal;
 using Dev.Editor.BusinessLogic.Models.Configuration.Tools;
@@ -23,6 +24,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration
             Internal = new InternalConfig(this);
             UI = new UIConfig(this);
             Tools = new ToolsConfig(this);
+            BinDefinitions = new BinDefinitionsConfig(this);
         }
 
         public EditorConfig Editor { get; }
@@ -30,5 +32,6 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration
         public InternalConfig Internal { get; }
         public UIConfig UI { get; }
         public ToolsConfig Tools { get; }
+        public BinDefinitionsConfig BinDefinitions { get; }
     }
 }
