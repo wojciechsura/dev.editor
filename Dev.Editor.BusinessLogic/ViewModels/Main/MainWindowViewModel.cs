@@ -35,6 +35,7 @@ using Dev.Editor.BusinessLogic.Types.UI;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.Base;
 using Dev.Editor.BusinessLogic.Models.UI;
+using Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -73,6 +74,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private readonly List<BaseToolViewModel> tools;
         private readonly ExplorerToolViewModel explorerToolViewModel;
+        private readonly BinDefinitionsToolViewModel binDefinitionsToolViewModel;
         private BaseToolViewModel selectedTool;
 
         // Private methods ----------------------------------------------------
@@ -371,6 +373,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources, configurationService, this);
             tools.Add(explorerToolViewModel);
+            binDefinitionsToolViewModel = new BinDefinitionsToolViewModel(imageResources);
+            tools.Add(binDefinitionsToolViewModel);
 
             selectedTool = tools.FirstOrDefault(t => t.Uid.Equals(configurationService.Configuration.UI.SidePanelActiveTab.Value));
 

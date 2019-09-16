@@ -15,6 +15,10 @@ https://www.iconfinder.com/iconsets/CrystalClear
 http://www.everaldo.com/
 https://www.iconfinder.com/iconsets/crystalproject
 
+* Vista Stock Icons by Lokas Software (cc-by)
+http://www.awicons.com/
+https://findicons.com/pack/2477/vista_stock_icons
+
 * Visual Studio icons from Jordan Lowe's Studio Icons extension for VS Code (MIT)
 https://marketplace.visualstudio.com/items?itemName=jtlowe.vscode-icon-theme
 

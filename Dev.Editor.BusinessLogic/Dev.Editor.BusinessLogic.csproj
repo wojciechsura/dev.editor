@@ -127,6 +127,7 @@
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />
     <Compile Include="ViewModels\Tools\Base\BaseToolViewModel.cs" />
+    <Compile Include="ViewModels\Tools\BinDefinitions\BinDefinitionsToolViewModel.cs" />
     <Compile Include="ViewModels\Tools\Explorer\FileItemViewModel.cs" />
     <Compile Include="ViewModels\Tools\Explorer\FolderItemViewModel.cs" />
     <Compile Include="ViewModels\Tools\Explorer\ExplorerToolViewModel.cs" />
