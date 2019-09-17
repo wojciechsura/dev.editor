@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
 
 namespace Dev.Editor.Services.Dialogs
 {
@@ -73,5 +74,24 @@ namespace Dev.Editor.Services.Dialogs
             ConfigurationWindow configurationWindow = new ConfigurationWindow();
             configurationWindow.ShowDialog();
         }
+
+        public (bool, BinDefinitionDialogResult) ShowBinDefinitionDialog()
+        {
+            var dialog = new BinDefinitionDialog();
+            if (dialog.ShowDialog() == true)
+                return (true, dialog.Result);
+            else
+                return (false, null);
+        }
+
+        public (bool, BinDefinitionDialogResult) ShowBinDefinitionDialog(BinDefinition model)
+        {
+            var dialog = new BinDefinitionDialog(model);
+            if (dialog.ShowDialog() == true)
+                return (true, dialog.Result);
+            else
+                return (false, null);
+        }
+
     }
 }

@@ -74,6 +74,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BinDefinitionDialog.xaml.cs">
+      <DependentUpon>BinDefinitionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ConfigurationWindow.xaml.cs">
       <DependentUpon>ConfigurationWindow.xaml</DependentUpon>
     </Compile>
@@ -105,6 +108,10 @@
     <Compile Include="Services\Dialogs\DialogService.cs" />
     <Compile Include="Services\ImageResources\ImageResources.cs" />
     <Compile Include="Wpf\DocumentTemplateSelector.cs" />
+    <Page Include="BinDefinitionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ConfigurationWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

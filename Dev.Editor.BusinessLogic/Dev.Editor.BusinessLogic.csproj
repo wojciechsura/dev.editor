@@ -74,6 +74,7 @@
     <Compile Include="Models\Configuration\Tools\Explorer\ExplorerConfig.cs" />
     <Compile Include="Models\Configuration\Tools\ToolsConfig.cs" />
     <Compile Include="Models\Configuration\UI\UIConfig.cs" />
+    <Compile Include="Models\Dialogs\BinDefinitionDialogResult.cs" />
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
     <Compile Include="Models\Dialogs\SaveDialogResult.cs" />
     <Compile Include="Models\Documents\HexDocumentState.cs" />
@@ -113,12 +114,15 @@
     <Compile Include="ViewModels\Configuration\BehaviorConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Configuration\ConfigurationWindowViewModel.cs" />
     <Compile Include="ViewModels\Configuration\IConfigurationWindowAccess.cs" />
+    <Compile Include="ViewModels\Dialogs\BinDefinitionDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\IBinDefinitionDialogAccess.cs" />
     <Compile Include="ViewModels\Document\BaseDocumentViewModel.cs" />
     <Compile Include="ViewModels\Document\IHexEditorAccess.cs" />
     <Compile Include="ViewModels\Document\TextDocumentViewModel.cs" />
     <Compile Include="ViewModels\Document\HexDocumentViewModel.cs" />
     <Compile Include="ViewModels\Document\IDocumentHandler.cs" />
     <Compile Include="ViewModels\Document\ITextEditorAccess.cs" />
+    <Compile Include="ViewModels\Main\BinDefinitionViewModel.cs" />
     <Compile Include="ViewModels\Main\IMainWindowAccess.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Commands.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />

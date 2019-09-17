@@ -196,6 +196,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Dialog_BinDefinition_Name {
+            get {
+                return ResourceManager.GetString("Dialog.BinDefinition.Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Binary definition.
+        /// </summary>
+        public static string Dialog_BinDefinition_Title {
+            get {
+                return ResourceManager.GetString("Dialog.BinDefinition.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot open file {0}. Error: {1}.
         /// </summary>
         public static string Message_CannotOpenFile {

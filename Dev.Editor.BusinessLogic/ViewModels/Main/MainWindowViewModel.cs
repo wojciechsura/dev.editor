@@ -36,6 +36,8 @@ using Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.Base;
 using Dev.Editor.BusinessLogic.Models.UI;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions;
+using Dev.Editor.Common.Tools;
+using System.Windows.Data;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -69,6 +71,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private SidePanelPlacement sidePanelPlacement;
         private List<SidePanelPlacementModel> sidePanelPlacements;
         private double sidePanelSize;
+
+        private readonly ObservableCollection<BinDefinitionViewModel> binDefinitions;
 
         // Tools
 
@@ -359,6 +363,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             documentExistsCondition = new Condition(activeDocument != null);
             documentIsTextCondition = new Condition(activeDocument is TextDocumentViewModel);
 
+            // BinDefinitions
+
+            binDefinitions = new ObservableCollection<BinDefinitionViewModel>();
+            configurationService.Configuration.BinDefinitions
+                .Select(bd => new BinDefinitionViewModel(bd))
+                .OrderBy(bd => bd.Name)
+                .ForEach(vm => binDefinitions.Add(vm));
+
             // Initializing conditions
 
             canUndoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanUndo, false);
@@ -563,5 +575,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 Set(ref selectedTool, () => SelectedTool, value, HandleSelcetedToolChanged);
             }
         }
+
+        public ObservableCollection<BinDefinitionViewModel> BinDefinitions => binDefinitions;
     }
 }
