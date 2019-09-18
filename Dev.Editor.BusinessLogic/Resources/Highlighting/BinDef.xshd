@@ -21,6 +21,7 @@
     
 		<Keywords color="BuiltinTypes">
 			<Word>byte</Word>
+      <Word>char</Word>
       <Word>double</Word>
       <Word>float</Word>
       <Word>int</Word>

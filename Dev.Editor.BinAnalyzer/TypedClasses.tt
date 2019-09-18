@@ -120,6 +120,8 @@ foreach (var item in data)
 #>
                 case "skip":
                     return new SkipFieldStatement(name);
+                case "char":
+                    return new CharFieldStatement(name);
                 default:
                     throw new InvalidEnumArgumentException("Unsupported type name!");
             }
@@ -143,6 +145,8 @@ foreach (var item in data)
 #>
                 case "skip":
                     return new SkipArrayFieldStatement(name, count);
+                case "char":
+                    return new CharArrayFieldStatement(name, count);
                 default:
                     throw new InvalidEnumArgumentException("Unsupported type name!");
             }
@@ -190,7 +194,9 @@ if (d is <#=item.type#> <#=item.type#>Dynamic)
                 return new <#=item.name#>Data(name, <#=item.type#>Dynamic);
             else <#
             }
-#>
+#> if (d is string str)
+                return new CharArrayData(name, str);
+            else
 
                 throw new InvalidOperationException("Unsupported type!");
         }

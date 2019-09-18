@@ -19,5 +19,7 @@ namespace Dev.Editor.BinAnalyzer.Data
         public string TypeName { get; }
 
         public abstract IList<BaseData> Children { get; }
+
+        public abstract DataType DataType { get; }
     }    
 }

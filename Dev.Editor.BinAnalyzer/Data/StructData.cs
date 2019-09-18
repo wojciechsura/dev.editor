@@ -17,5 +17,7 @@ namespace Dev.Editor.BinAnalyzer.Data
 
         public string Type { get; }
         public override IList<BaseData> Children { get; }
+
+        public override DataType DataType => DataType.Struct;
     }
 }

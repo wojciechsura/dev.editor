@@ -655,6 +655,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                     return new DoubleFieldStatement(name);
                 case "skip":
                     return new SkipFieldStatement(name);
+                case "char":
+                    return new CharFieldStatement(name);
                 default:
                     throw new InvalidEnumArgumentException("Unsupported type name!");
             }
@@ -689,6 +691,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                     return new DoubleArrayFieldStatement(name, count);
                 case "skip":
                     return new SkipArrayFieldStatement(name, count);
+                case "char":
+                    return new CharArrayFieldStatement(name, count);
                 default:
                     throw new InvalidEnumArgumentException("Unsupported type name!");
             }
@@ -883,7 +887,10 @@ namespace Dev.Editor.BinAnalyzer.Data
                 return new FloatData(name, floatDynamic);
             else if (d is double doubleDynamic)
                 return new DoubleData(name, doubleDynamic);
-            else 
+            else  if (d is string str)
+                return new CharArrayData(name, str);
+            else
+
                 throw new InvalidOperationException("Unsupported type!");
         }
     }

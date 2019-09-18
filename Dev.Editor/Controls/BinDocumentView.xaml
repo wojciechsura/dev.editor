@@ -13,14 +13,16 @@
             <HierarchicalDataTemplate DataType="{x:Type data:BaseData}" ItemsSource="{Binding Children}">
                 <Grid>
                     <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
                         <ColumnDefinition Width="Auto" SharedSizeGroup="Name"/>
                         <ColumnDefinition Width="Auto" SharedSizeGroup="Type"/>
                         <ColumnDefinition Width="Auto" SharedSizeGroup="Value"/>
                     </Grid.ColumnDefinitions>
 
-                    <TextBlock Grid.Column="0" Text="{Binding Name}" Margin="2" />
-                    <TextBlock Grid.Column="1" Text="{Binding TypeName}" Margin="2" />
-                    <TextBlock Grid.Column="2" Text="{Binding Value}" Margin="2" />
+                    <Image Grid.Column="0" Width="16" Height="16" Source="{Binding DataType, Converter={StaticResource DataTypeToImageConverter}}" />
+                    <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="2" />
+                    <TextBlock Grid.Column="2" Text="{Binding TypeName}" Opacity="0.5" Margin="2" />
+                    <TextBlock Grid.Column="3" Text="{Binding Value}" Margin="2" />
                 </Grid>
             </HierarchicalDataTemplate>
         </TreeView.Resources>

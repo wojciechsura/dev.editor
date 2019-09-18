@@ -18,5 +18,7 @@ namespace Dev.Editor.BinAnalyzer.Data
         public string ChildType { get; }
 
         public override IList<BaseData> Children { get; }
+
+        public override DataType DataType => DataType.Field;
     }
 }

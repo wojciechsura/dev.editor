@@ -22,6 +22,7 @@ namespace Dev.Editor.BinAnalyzer.Grammar
         public const string TYPE_SKIP = "skip";
         public const string TYPE_FLOAT = "float";
         public const string TYPE_DOUBLE = "double";
+        public const string TYPE_CHAR = "char";
 
         public const string ONE_LINE_COMMENT = "oneLineComment";
         public const string MULTIPLE_LINE_COMMENT = "multipleLineComment";
@@ -55,14 +56,13 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             var oneLineComment = new CommentTerminal(ONE_LINE_COMMENT, "//", "\r", "\n", "\u2085", "\u2028", "\u2029");
             var multipleLineComment = new CommentTerminal(MULTIPLE_LINE_COMMENT, "/*", "*/");
 
-            var intTypeName = ToTerm(TYPE_BYTE) | TYPE_SBYTE | TYPE_SHORT | TYPE_USHORT | TYPE_INT | TYPE_UINT | TYPE_LONG | TYPE_ULONG | TYPE_SKIP;
+            var intTypeName = ToTerm(TYPE_BYTE) | TYPE_SBYTE | TYPE_SHORT | TYPE_USHORT | TYPE_INT | TYPE_UINT | TYPE_LONG | TYPE_ULONG | TYPE_CHAR | TYPE_SKIP;
             var floatTypeName = ToTerm(TYPE_FLOAT) | TYPE_DOUBLE;
 
             var identifier = new IdentifierTerminal(IDENTIFIER);
-            var qualifiedIdentifier = new NonTerminal(QUALIFIED_IDENTIFIER);
-            var positiveIntNumber = new NumberLiteral(POSITIVE_INT_NUMBER, NumberOptions.IntOnly);
-            var intNumber = new NumberLiteral(INT_NUMBER, NumberOptions.IntOnly | NumberOptions.AllowSign);
-            var floatNumber = new NumberLiteral(FLOAT_NUMBER, NumberOptions.AllowSign | NumberOptions.AllowStartEndDot);
+            var qualifiedIdentifier = new NonTerminal(QUALIFIED_IDENTIFIER);            
+            var intNumber = new RegexBasedTerminal(INT_NUMBER, "[0-9]+");
+            var floatNumber = new RegexBasedTerminal(FLOAT_NUMBER, "[0-9]+\\.[0-9]+f?");
 
             var expression = new NonTerminal(EXPRESSION);
             var component = new NonTerminal(COMPONENT);

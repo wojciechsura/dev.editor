@@ -95,6 +95,7 @@
     <Compile Include="Controls\HexDocumentView.xaml.cs">
       <DependentUpon>HexDocumentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\DataTypeToImageConverter.cs" />
     <Compile Include="Converters\DoubleToGridLengthConverter.cs" />
     <Compile Include="Converters\EnabledToOpacityConverter.cs" />
     <Compile Include="Converters\EnumToVisibilityConverter.cs" />
@@ -285,6 +286,16 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Example16.png" />
     <Resource Include="Resources\Images\Example32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Struct16.png" />
+    <Resource Include="Resources\Images\Struct32.png" />
+    <Resource Include="Resources\Images\Member16.png" />
+    <Resource Include="Resources\Images\Member32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Enum16.png" />
+    <Resource Include="Resources\Images\Enum32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

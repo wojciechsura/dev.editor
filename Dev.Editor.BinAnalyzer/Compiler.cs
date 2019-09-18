@@ -99,11 +99,11 @@ namespace Dev.Editor.BinAnalyzer
 
         private static BaseExpressionNode InternalProcessComponent(ParseTreeNode parseTreeNode)
         {
-            if (parseTreeNode.ChildNodes[0].Term.Equals(BinAnalyzerGrammar.INT_NUMBER))
+            if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.INT_NUMBER))
                 return InternalProcessIntNumber(parseTreeNode.ChildNodes[0]);
-            if (parseTreeNode.ChildNodes[0].Term.Equals(BinAnalyzerGrammar.FLOAT_NUMBER))
+            if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.FLOAT_NUMBER))
                 return InternalProcessFloatNumber(parseTreeNode.ChildNodes[0]);
-            if (parseTreeNode.ChildNodes[0].Term.Equals(BinAnalyzerGrammar.QUALIFIED_IDENTIFIER))
+            if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.QUALIFIED_IDENTIFIER))
                 return InternalProcessQualifiedIdentifier(parseTreeNode.ChildNodes[0]);
 
             if (parseTreeNode.ChildNodes[0].Token.Text.Equals("(") &&

@@ -10,6 +10,7 @@ namespace Dev.Editor.BinAnalyzer.Data
     {
         public BaseValueData(string name, string type) : base(name, type)
         {
+
         }
 
         public abstract dynamic GetValue();
@@ -18,5 +19,6 @@ namespace Dev.Editor.BinAnalyzer.Data
 
         public override IList<BaseData> Children => null;
 
+        public override DataType DataType => DataType.Field;
     }
 }

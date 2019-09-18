@@ -44,7 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnalyzerDefinition\Statements\CharArrayFieldStatement.cs" />
+    <Compile Include="AnalyzerDefinition\Statements\CharFieldStatement.cs" />
     <Compile Include="Compiler.cs" />
+    <Compile Include="Data\CharArrayData.cs" />
+    <Compile Include="Data\CharData.cs" />
+    <Compile Include="Data\DataType.cs" />
     <Compile Include="Data\ArrayData.cs" />
     <Compile Include="Data\BaseData.cs" />
     <Compile Include="Data\BaseValueData.cs" />

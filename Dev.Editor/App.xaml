@@ -34,6 +34,7 @@
             <c:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
             <c:DoubleToGridLengthConverter x:Key="DoubleToGridLengthConverter" />
             <c:TextDocToBoolConverter x:Key="TextDocToBoolConverter" />
+            <c:DataTypeToImageConverter x:Key="DataTypeToImageConverter" />
 
             <!-- Layout -->
             
