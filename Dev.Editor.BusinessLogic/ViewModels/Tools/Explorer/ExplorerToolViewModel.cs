@@ -123,6 +123,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             SelectedFolder = folderItemViewModel;
         }
 
+        // Public metods ------------------------------------------------------
+
         public ExplorerToolViewModel(IFileIconProvider fileIconProvider, 
             IImageResources imageResources, 
             IConfigurationService configurationService,

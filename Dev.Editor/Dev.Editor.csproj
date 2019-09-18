@@ -74,8 +74,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="BinDefinitionDialog.xaml.cs">
+      <DependentUpon>BinDefinitionDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="ConfigurationWindow.xaml.cs">
       <DependentUpon>ConfigurationWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Controls\BinDefinitionsTool.xaml.cs">
+      <DependentUpon>BinDefinitionsTool.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\TextDocumentView.xaml.cs">
       <DependentUpon>TextDocumentView.xaml</DependentUpon>
@@ -102,7 +108,15 @@
     <Compile Include="Services\Dialogs\DialogService.cs" />
     <Compile Include="Services\ImageResources\ImageResources.cs" />
     <Compile Include="Wpf\DocumentTemplateSelector.cs" />
+    <Page Include="BinDefinitionDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ConfigurationWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\BinDefinitionsTool.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -244,6 +258,22 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Settings16.png" />
     <Resource Include="Resources\Images\Settings32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Binary16.png" />
+    <Resource Include="Resources\Images\Binary32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Add16.png" />
+    <Resource Include="Resources\Images\Add32.png" />
+    <Resource Include="Resources\Images\Delete16.png" />
+    <Resource Include="Resources\Images\Delete32.png" />
+    <Resource Include="Resources\Images\Edit16.png" />
+    <Resource Include="Resources\Images\Edit32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Example16.png" />
+    <Resource Include="Resources\Images\Example32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -16,6 +16,7 @@
     xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
     xmlns:vmtb="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.Base;assembly=Dev.Editor.BusinessLogic"
     xmlns:vme="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;assembly=Dev.Editor.BusinessLogic"
+    xmlns:vmb="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions;assembly=Dev.Editor.BusinessLogic"
     xmlns:uit="clr-namespace:Dev.Editor.BusinessLogic.Types.UI;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True"
@@ -315,6 +316,10 @@
 
                     <DataTemplate DataType="{x:Type vme:ExplorerToolViewModel}">
                         <controls:ExplorerTool />
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type vmb:BinDefinitionsToolViewModel}">
+                        <controls:BinDefinitionsTool />
                     </DataTemplate>
                 </TabControl.Resources>
 

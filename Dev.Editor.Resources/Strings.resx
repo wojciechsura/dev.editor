@@ -369,4 +369,13 @@
   <data name="Ribbon.View.SidePanelPlacement.Hidden" xml:space="preserve">
     <value>Hidden</value>
   </data>
+  <data name="Tool.BinDefinitions.Title" xml:space="preserve">
+    <value>Binary definitions</value>
+  </data>
+  <data name="Dialog.BinDefinition.Title" xml:space="preserve">
+    <value>Binary definition</value>
+  </data>
+  <data name="Dialog.BinDefinition.Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
 </root>
