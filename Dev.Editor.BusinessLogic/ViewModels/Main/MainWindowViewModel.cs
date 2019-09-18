@@ -38,10 +38,11 @@ using Dev.Editor.BusinessLogic.Models.UI;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions;
 using Dev.Editor.Common.Tools;
 using System.Windows.Data;
+using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
-    public partial class MainWindowViewModel : BaseViewModel, IDocumentHandler, IExplorerHandler
+    public partial class MainWindowViewModel : BaseViewModel, IDocumentHandler, IExplorerHandler, IBinDefinitionsHandler
     {
         // Private fields -----------------------------------------------------
 
@@ -71,8 +72,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private SidePanelPlacement sidePanelPlacement;
         private List<SidePanelPlacementModel> sidePanelPlacements;
         private double sidePanelSize;
-
-        private readonly ObservableCollection<BinDefinitionViewModel> binDefinitions;
 
         // Tools
 
@@ -117,7 +116,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 if (index > 0 && index < documents.Count)
                     ActiveDocument = documents[index];
                 else
-                    ActiveDocument = null;                
+                    ActiveDocument = null;
             }
         }
 
@@ -130,9 +129,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             {
                 var document = documents[i];
                 var storedFilename = Path.Combine(storedFilesPath, $"{i}.txt");
-                
+
                 try
-                {                    
+                {
                     InternalWriteDocument(document, storedFilename);
                 }
                 catch (Exception e)
@@ -166,9 +165,21 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                             configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                             break;
                         }
+                    case BinDocumentViewModel binDocument:
+                        {
+                            var storedFile = new BinStoredFile();
+                            storedFile.Filename.Value = binDocument.FileName;
+                            storedFile.FilenameIsVirtual.Value = binDocument.FilenameVirtual;
+                            storedFile.IsDirty.Value = binDocument.Changed;
+                            storedFile.StoredFilename.Value = storedFilename;
+                            storedFile.DefinitionUid.Value = binDocument.Definition.Uid.Value;
+
+                            configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
+                            break;
+                        }
                     default:
                         throw new InvalidOperationException("Unsupported document type!");
-                }                
+                }
             }
 
             return true;
@@ -231,9 +242,33 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                             break;
                         }
+                    case BinStoredFile binStoredFile:
+                        {
+                            try
+                            {
+                                var def = configurationService.Configuration.BinDefinitions.FirstOrDefault(bd => bd.Uid.Value == binStoredFile.DefinitionUid.Value);
+                                if (def == null)
+                                    continue;
+
+                                InternalAddBinDocument(document =>
+                                {
+                                    InternalReadBinDocument(document, binStoredFile.StoredFilename.Value, def);
+
+                                    document.SetFilename(binStoredFile.Filename.Value, fileIconProvider.GetImageForFile(binStoredFile.Filename.Value));
+                                    document.FilenameVirtual = binStoredFile.FilenameIsVirtual.Value;
+                                    document.Changed = binStoredFile.IsDirty.Value;
+                                });
+                            }
+                            catch (Exception e)
+                            {
+                                messagingService.ShowError(string.Format(Resources.Strings.Message_CannotRestoreFile, binStoredFile.Filename, e.Message));
+                            }
+
+                            break;
+                        }
                     default:
                         throw new InvalidOperationException("Unsupported document type!");
-                }                
+                }
             }
         }
 
@@ -318,6 +353,25 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             LoadTextDocument(path);
         }
 
+        // IBinDefinitionsHandler implementation ------------------------------
+
+        void IBinDefinitionsHandler.OpenTextFile(string path)
+        {
+            LoadTextDocument(path);
+        }
+
+        void IBinDefinitionsHandler.NewTextDocument(string text)
+        {
+            DoNewTextDocument();
+
+            (ActiveDocument as TextDocumentViewModel).Document.Insert(0, text);
+        }
+
+        void IBinDefinitionsHandler.RequestOpenBinFile(BinDefinition binDefinition)
+        {
+            DoOpenBinDocument(binDefinition);
+        }
+
         // Public methods -----------------------------------------------------
 
         public MainWindowViewModel(IMainWindowAccess access, 
@@ -360,21 +414,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             highlightings = new List<HighlightingInfo>(highlightingProvider.HighlightingDefinitions);
             highlightings.Sort((h1, h2) => h1.Name.CompareTo(h2.Name));
 
-            documentExistsCondition = new Condition(activeDocument != null);
-            documentIsTextCondition = new Condition(activeDocument is TextDocumentViewModel);
-
-            // BinDefinitions
-
-            binDefinitions = new ObservableCollection<BinDefinitionViewModel>();
-            configurationService.Configuration.BinDefinitions
-                .Select(bd => new BinDefinitionViewModel(bd))
-                .OrderBy(bd => bd.Name)
-                .ForEach(vm => binDefinitions.Add(vm));
-
             // Initializing conditions
 
+            documentExistsCondition = new Condition(activeDocument != null);
+            documentIsTextCondition = new Condition(activeDocument is TextDocumentViewModel);
             canUndoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanUndo, false);
             canRedoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanRedo, false);
+            canSaveCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanSave, false);
             selectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.SelectionAvailable, false);
             regularSelectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.RegularSelectionAvailable, false);
             searchPerformedCondition = new MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.LastSearch);
@@ -385,7 +431,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources, configurationService, this);
             tools.Add(explorerToolViewModel);
-            binDefinitionsToolViewModel = new BinDefinitionsToolViewModel(imageResources);
+            binDefinitionsToolViewModel = new BinDefinitionsToolViewModel(this,
+                imageResources, 
+                configurationService,
+                dialogService,
+                messagingService,
+                pathService);
             tools.Add(binDefinitionsToolViewModel);
 
             selectedTool = tools.FirstOrDefault(t => t.Uid.Equals(configurationService.Configuration.UI.SidePanelActiveTab.Value));
@@ -401,8 +452,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             NewHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_NewHex, "New16.png", obj => DoNewHexDocument());
             OpenTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Open, "Open16.png", obj => DoOpenTextDocument());
             OpenHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_OpenHex, "Open16.png", obj => DoOpenHexDocument());
-            SaveCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Save, "Save16.png", obj => DoSaveDocument(), documentExistsCondition);
-            SaveAsCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_SaveAs, "Save16.png", obj => DoSaveDocumentAs(), documentExistsCondition);
+            OpenBinCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_OpenBin, "Open16.png", obj => DoOpenBinDocument());
+            SaveCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Save, "Save16.png", obj => DoSaveDocument(), canSaveCondition);
+            SaveAsCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_SaveAs, "Save16.png", obj => DoSaveDocumentAs(), canSaveCondition);
 
             UndoCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Undo, "Undo16.png", obj => DoUndo(), canUndoCondition);
             RedoCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Redo, "Redo16.png", obj => DoRedo(), canRedoCondition);
@@ -574,8 +626,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             {
                 Set(ref selectedTool, () => SelectedTool, value, HandleSelcetedToolChanged);
             }
-        }
-
-        public ObservableCollection<BinDefinitionViewModel> BinDefinitions => binDefinitions;
+        }       
     }
 }

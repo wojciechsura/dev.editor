@@ -26,7 +26,7 @@
                 </Grid.RowDefinitions>
 
                 <Label Grid.Row="0" Grid.Column="0" Content="{x:Static res:Strings.Dialog_BinDefinition_Name}" Margin="4" />
-                <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="4" />
+                <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="4" />
             </Grid>
         </GroupBox>
     </DockPanel>

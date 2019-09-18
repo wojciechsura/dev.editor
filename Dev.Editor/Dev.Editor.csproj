@@ -83,6 +83,9 @@
     <Compile Include="Controls\BinDefinitionsTool.xaml.cs">
       <DependentUpon>BinDefinitionsTool.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\BinDocumentView.xaml.cs">
+      <DependentUpon>BinDocumentView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TextDocumentView.xaml.cs">
       <DependentUpon>TextDocumentView.xaml</DependentUpon>
     </Compile>
@@ -117,6 +120,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\BinDefinitionsTool.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\BinDocumentView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

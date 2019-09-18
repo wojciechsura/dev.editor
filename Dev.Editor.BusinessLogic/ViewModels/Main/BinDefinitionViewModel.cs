@@ -18,5 +18,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public string Name => binDefinition.DefinitionName.Value;
         public string Path => binDefinition.Filename.Value;
+
+        public BinDefinition BinDefinition => binDefinition;
     }
 }

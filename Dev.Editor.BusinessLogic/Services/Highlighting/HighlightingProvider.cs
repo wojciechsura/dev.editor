@@ -104,6 +104,12 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
 
             // Register regular highlightings
 
+            RegisterHighlighting("BinaryDefinition",
+                new[] { ".bindef" },
+                "BinDef.xshd",
+                null,
+                FoldingKind.Braces);
+
             RegisterHighlighting("C#",
                 new[] { ".cs" },
                 "CSharp.xshd",

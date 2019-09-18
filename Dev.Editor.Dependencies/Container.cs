@@ -9,7 +9,12 @@ namespace Dev.Editor.Dependencies
 {
     public static class Container
     {
-        private static Lazy<UnityContainer> container = new Lazy<UnityContainer>(() => new UnityContainer());
+        private static Lazy<UnityContainer> container = new Lazy<UnityContainer>(() =>
+        {
+            var container = new UnityContainer();
+            container.AddExtension(new Diagnostic());
+            return container;
+        });
 
         public static IUnityContainer Instance
         {

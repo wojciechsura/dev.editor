@@ -13,15 +13,18 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions
 
         private readonly ConfigValue<string> filename;
         private readonly ConfigValue<string> definitionName;
+        private readonly ConfigValue<string> uid;
 
         public BinDefinition() 
             :base(NAME)            
         {
             filename = new ConfigValue<string>("Filename", this);
             definitionName = new ConfigValue<string>("DefinitionName", this);
+            uid = new ConfigValue<string>("Uid", this);
         }
 
-        public ConfigValue<string> Filename { get; }
-        public ConfigValue<string> DefinitionName { get; }
+        public ConfigValue<string> Filename => filename;
+        public ConfigValue<string> DefinitionName => definitionName;
+        public ConfigValue<string> Uid => uid;
     }
 }

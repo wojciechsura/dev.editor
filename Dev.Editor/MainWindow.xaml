@@ -79,6 +79,9 @@
                         <f:MenuItem Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open16.png"
                                     Header="{x:Static p:Strings.Ribbon_File_OpenHex}"
                                     Command="{Binding OpenHexCommand}" />
+                        <f:MenuItem Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open16.png"
+                                    Header="{x:Static p:Strings.Ribbon_File_OpenBin}"
+                                    Command="{Binding OpenBinCommand}" />
                     </f:SplitButton>
                     <f:SplitButton Header="{x:Static p:Strings.Ribbon_File_New}" Command="{Binding NewTextCommand}" SizeDefinition="Middle, Small" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/New32.png"

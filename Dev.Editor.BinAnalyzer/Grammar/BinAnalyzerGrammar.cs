@@ -22,7 +22,9 @@ namespace Dev.Editor.BinAnalyzer.Grammar
         public const string TYPE_SKIP = "skip";
         public const string TYPE_FLOAT = "float";
         public const string TYPE_DOUBLE = "double";
-        
+
+        public const string ONE_LINE_COMMENT = "oneLineComment";
+        public const string MULTIPLE_LINE_COMMENT = "multipleLineComment";
         public const string IDENTIFIER = "identifier";
         public const string QUALIFIED_IDENTIFIER = "qualifiedIdentifier";
         public const string POSITIVE_INT_NUMBER = "positiveIntNumber";
@@ -50,6 +52,9 @@ namespace Dev.Editor.BinAnalyzer.Grammar
 
         public BinAnalyzerGrammar()
         {
+            var oneLineComment = new CommentTerminal(ONE_LINE_COMMENT, "//", "\r", "\n", "\u2085", "\u2028", "\u2029");
+            var multipleLineComment = new CommentTerminal(MULTIPLE_LINE_COMMENT, "/*", "*/");
+
             var intTypeName = ToTerm(TYPE_BYTE) | TYPE_SBYTE | TYPE_SHORT | TYPE_USHORT | TYPE_INT | TYPE_UINT | TYPE_LONG | TYPE_ULONG | TYPE_SKIP;
             var floatTypeName = ToTerm(TYPE_FLOAT) | TYPE_DOUBLE;
 
@@ -79,6 +84,10 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             var definitions = new NonTerminal(DEFINITIONS);
 
             var program = new NonTerminal(ANALYZER);
+
+            // Comments
+            NonGrammarTerminals.Add(oneLineComment);
+            NonGrammarTerminals.Add(multipleLineComment);
 
             // Non-terminals
 

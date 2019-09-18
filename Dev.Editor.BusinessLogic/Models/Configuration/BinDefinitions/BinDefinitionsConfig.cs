@@ -9,7 +9,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions
 {
     public class BinDefinitionsConfig : BaseTypedItemCollection<BinDefinition>
     {
-        internal const string NAME = "StoredFiles";
+        internal const string NAME = "BinDefinitions";
 
         public BinDefinitionsConfig(BaseItemContainer parent)
             : base(NAME, parent)

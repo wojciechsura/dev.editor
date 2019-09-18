@@ -54,6 +54,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
             canUndo = document.CanUndo;
             canRedo = document.CanRedo;
+            canSave = true;
             changed = false;
 
             selectionAvailable = false;

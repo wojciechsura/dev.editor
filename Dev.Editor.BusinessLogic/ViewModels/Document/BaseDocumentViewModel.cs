@@ -31,6 +31,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         protected bool filenameVirtual;
         protected bool canUndo;
         protected bool canRedo;
+        protected bool canSave;
         protected bool selectionAvailable;
         protected bool regularSelectionAvailable;
         protected SearchModel lastSearch;
@@ -108,6 +109,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         {
             get => canRedo;
             set => Set(ref canRedo, () => CanRedo, value);
+        }
+
+        public bool CanSave
+        {
+            get => canSave;
+            set => Set(ref canSave, () => CanSave, value);
         }
 
         public bool SelectionAvailable

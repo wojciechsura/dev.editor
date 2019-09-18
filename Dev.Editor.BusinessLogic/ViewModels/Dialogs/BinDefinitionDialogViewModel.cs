@@ -42,17 +42,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
             access.CloseDialog(new BinDefinitionDialogResult(name), true);
         }
 
-        public BinDefinitionDialogViewModel(IBinDefinitionDialogAccess access)
+        public BinDefinitionDialogViewModel(IBinDefinitionDialogAccess access, BinDefinition model = null)
         {
             this.access = access;
 
-            InitializeCommands();
-        }
-
-        public BinDefinitionDialogViewModel(BinDefinition model, IBinDefinitionDialogAccess access)
-        {
-            this.access = access;
-            Name = model.DefinitionName.Value;
+            if (model != null)
+            {
+                Name = model.DefinitionName.Value;
+            }
 
             InitializeCommands();
         }

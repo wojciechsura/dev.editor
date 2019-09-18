@@ -188,7 +188,7 @@ namespace Dev.Editor.BinAnalyzer
 
             for (int i = 0; i < parseTreeNode.ChildNodes.Count; i++)
             {
-                var current = parseTreeNode.ChildNodes[i];
+                var current = parseTreeNode.ChildNodes[i].ChildNodes[0];
 
                 if (current.Term.Name.Equals(BinAnalyzerGrammar.BUILTIN_FIELD))
                 {
@@ -203,7 +203,7 @@ namespace Dev.Editor.BinAnalyzer
                 }
                 else if (current.Term.Name.Equals(BinAnalyzerGrammar.CUSTOM_FIELD))
                 {
-                    string type = current.ChildNodes[0].ChildNodes[0].Token.Text;
+                    string type = current.ChildNodes[0].Token.Text;
                     string name = current.ChildNodes[1].Token.Text;
 
                     if (result.Any(r => r is BaseFieldStatement fieldStatement && fieldStatement.Name.Equals(name)))

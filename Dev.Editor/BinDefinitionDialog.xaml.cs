@@ -31,7 +31,8 @@ namespace Dev.Editor
             InitializeComponent();
 
             viewModel = Dependencies.Container.Instance.Resolve<BinDefinitionDialogViewModel>(
-                new ParameterOverride("access", this));
+                new ParameterOverride("access", this),
+                new ParameterOverride("model", null));
             DataContext = viewModel;
         }
 

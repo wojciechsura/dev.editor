@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dev.Editor.BinAnalyzer.Data;
+using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -270,6 +272,93 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
+        private void DoOpenBinDocument()
+        {
+            // Show binary definitions pane
+            if (sidePanelPlacement == Types.UI.SidePanelPlacement.Hidden)
+            {
+                SidePanelPlacement = Types.UI.SidePanelPlacement.Right;
+            }
+
+            SelectedTool = binDefinitionsToolViewModel;
+
+            messagingService.Inform(Strings.Message_UseSidePanelToOpenBinFile);
+        }
+
+        // *** Binary Document ***
+
+        private void InternalAddBinDocument(Action<BinDocumentViewModel> initAction)
+        {
+            var document = new BinDocumentViewModel(this);
+
+            initAction(document);
+
+            documents.Add(document);
+
+            ActiveDocument = document;
+        }
+
+        private void InternalReadBinDocument(BinDocumentViewModel document, string filename, BinDefinition binDefinition)
+        {
+            try
+            {
+                // Try compile binary definition
+                string defSource = File.ReadAllText($"{pathService.BinDefinitionsPath}\\{binDefinition.Filename.Value}");
+
+                var analyzer = BinAnalyzer.Compiler.Compile(defSource);
+
+                using (var fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
+                {
+                    var result = analyzer.Analyze(fs);
+
+                    document.Document = result;
+                    document.Definition = binDefinition;
+                }
+            }
+            catch (Exception e)
+            {
+                // TODO
+                messagingService.ShowError($"#Cannot open binary file, error: {e.Message}");
+            }
+        }
+
+        private void InternalLoadBinDocument(BinDocumentViewModel document, string filename, BinDefinition binDefinition)
+        {
+            InternalReadBinDocument(document, filename, binDefinition);
+
+            document.SetFilename(filename, fileIconProvider.GetImageForFile(filename));
+            document.Changed = false;
+            document.FilenameVirtual = false;
+        }
+
+        private void LoadBinDocument(string filename, BinDefinition binDefinition)
+        {
+            if (CheckIsAlreadyOpened(filename))
+                return;
+
+            InternalAddBinDocument(document =>
+            {
+                InternalLoadBinDocument(document, filename, binDefinition);
+            });
+        }
+
+        private void DoOpenBinDocument(BinDefinition binDefinition)
+        {
+            var dialogResult = dialogService.ShowOpenDialog(Strings.DefaultFilter, string.Format(Strings.OpenBinaryFile_Title, binDefinition.DefinitionName.Value));
+            if (dialogResult.Result)
+            {
+                try
+                {
+                    LoadBinDocument(dialogResult.FileName, binDefinition);
+                }
+                catch (Exception e)
+                {
+                    // TODO (more complicated)
+                    messagingService.ShowError(string.Format(Strings.Message_CannotOpenFile, dialogResult.FileName, e.Message));
+                }
+            }
+        }
+
         // *** General ***
 
         private void InternalWriteDocument(BaseDocumentViewModel document, string filename)
@@ -286,6 +375,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                         InternalWriteHexDocument(hexDocument, filename);
                         break;
                     }
+                case BinDocumentViewModel binDocument:
+                    throw new InvalidOperationException("BinDocument doesn't support saving!");
                 default:
                     throw new InvalidOperationException("Unsupported document type!");
             }
@@ -307,6 +398,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     case HexDocumentViewModel hexDocument:
                         SaveHexDocument(hexDocument);
                         break;
+                    case BinDocumentViewModel binDocument:
+                        throw new InvalidOperationException("Bin document doesn't support saving!");
                     default:
                         throw new InvalidOperationException("Unsupported document type!");
                 }
@@ -323,6 +416,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 case HexDocumentViewModel hexDocument:
                     SaveHexDocumentAs(hexDocument);
                     break;
+                case BinDocumentViewModel binDocument:
+                    throw new InvalidOperationException("Bin document doesn't support saving!");
                 default:
                     throw new InvalidOperationException("Unsupported document type!");
             }            
@@ -336,6 +431,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     return SaveTextDocument(textDocument);
                 case HexDocumentViewModel hexDocument:
                     return SaveHexDocument(hexDocument);
+                case BinDocumentViewModel binDocument:
+                    throw new InvalidOperationException("Bin document doesn't support saving!");
                 default:
                     throw new InvalidOperationException("Unsupported document type!");
             }
@@ -349,6 +446,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     return SaveTextDocumentAs(textDocument);
                 case HexDocumentViewModel hexDocument:
                     return SaveHexDocumentAs(hexDocument);
+                case BinDocumentViewModel binDocument:
+                    throw new InvalidOperationException("Bin document doesn't support saving!");
                 default:
                     throw new InvalidOperationException("Unsupported document type!");
             }

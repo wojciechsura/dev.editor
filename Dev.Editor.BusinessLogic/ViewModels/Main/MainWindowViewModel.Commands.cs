@@ -17,6 +17,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly Condition documentIsTextCondition;
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel> canUndoCondition;
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel> canRedoCondition;
+        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel> canSaveCondition;
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel> selectionAvailableCondition;
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel> regularSelectionAvailableCondition;
         private readonly MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, BaseDocumentViewModel> searchPerformedCondition;
@@ -33,6 +34,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand NewHexCommand { get; }
         public ICommand OpenTextCommand { get; }
         public ICommand OpenHexCommand { get; }
+        public ICommand OpenBinCommand { get; }
         public ICommand SaveCommand { get; }
         public ICommand SaveAsCommand { get; }
 
