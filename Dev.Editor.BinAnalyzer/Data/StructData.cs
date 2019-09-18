@@ -9,7 +9,7 @@ namespace Dev.Editor.BinAnalyzer.Data
     public class StructData : BaseData
     {
         public StructData(string name, string type, List<BaseData> members)
-            : base(name)
+            : base(name, $"struct {type}")
         {
             Type = type;
             Children = members;

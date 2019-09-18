@@ -700,162 +700,162 @@ namespace Dev.Editor.BinAnalyzer.Data
 {
     public class ByteData : BaseValueData
     {       
+        private readonly byte value;
+
         public ByteData(string name, byte value)
-            : base(name)
+            : base(name, "byte")
         {
-            Value = value;
+            this.value = value;
         }
 
         public override dynamic GetValue()
         {
-            return Value;
+            return value;
         }
-
-        public byte Value { get; }
     }
 
     public class SbyteData : BaseValueData
     {       
+        private readonly sbyte value;
+
         public SbyteData(string name, sbyte value)
-            : base(name)
+            : base(name, "sbyte")
         {
-            Value = value;
+            this.value = value;
         }
 
         public override dynamic GetValue()
         {
-            return Value;
+            return value;
         }
-
-        public sbyte Value { get; }
     }
 
     public class ShortData : BaseValueData
     {       
+        private readonly short value;
+
         public ShortData(string name, short value)
-            : base(name)
+            : base(name, "short")
         {
-            Value = value;
+            this.value = value;
         }
 
         public override dynamic GetValue()
         {
-            return Value;
+            return value;
         }
-
-        public short Value { get; }
     }
 
     public class UshortData : BaseValueData
     {       
+        private readonly ushort value;
+
         public UshortData(string name, ushort value)
-            : base(name)
+            : base(name, "ushort")
         {
-            Value = value;
+            this.value = value;
         }
 
         public override dynamic GetValue()
         {
-            return Value;
+            return value;
         }
-
-        public ushort Value { get; }
     }
 
     public class IntData : BaseValueData
     {       
+        private readonly int value;
+
         public IntData(string name, int value)
-            : base(name)
+            : base(name, "int")
         {
-            Value = value;
+            this.value = value;
         }
 
         public override dynamic GetValue()
         {
-            return Value;
+            return value;
         }
-
-        public int Value { get; }
     }
 
     public class UintData : BaseValueData
     {       
+        private readonly uint value;
+
         public UintData(string name, uint value)
-            : base(name)
+            : base(name, "uint")
         {
-            Value = value;
+            this.value = value;
         }
 
         public override dynamic GetValue()
         {
-            return Value;
+            return value;
         }
-
-        public uint Value { get; }
     }
 
     public class LongData : BaseValueData
     {       
+        private readonly long value;
+
         public LongData(string name, long value)
-            : base(name)
+            : base(name, "long")
         {
-            Value = value;
+            this.value = value;
         }
 
         public override dynamic GetValue()
         {
-            return Value;
+            return value;
         }
-
-        public long Value { get; }
     }
 
     public class UlongData : BaseValueData
     {       
+        private readonly ulong value;
+
         public UlongData(string name, ulong value)
-            : base(name)
+            : base(name, "ulong")
         {
-            Value = value;
+            this.value = value;
         }
 
         public override dynamic GetValue()
         {
-            return Value;
+            return value;
         }
-
-        public ulong Value { get; }
     }
 
     public class FloatData : BaseValueData
     {       
+        private readonly float value;
+
         public FloatData(string name, float value)
-            : base(name)
+            : base(name, "float")
         {
-            Value = value;
+            this.value = value;
         }
 
         public override dynamic GetValue()
         {
-            return Value;
+            return value;
         }
-
-        public float Value { get; }
     }
 
     public class DoubleData : BaseValueData
     {       
+        private readonly double value;
+
         public DoubleData(string name, double value)
-            : base(name)
+            : base(name, "double")
         {
-            Value = value;
+            this.value = value;
         }
 
         public override dynamic GetValue()
         {
-            return Value;
+            return value;
         }
-
-        public double Value { get; }
     }
 
 

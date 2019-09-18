@@ -8,12 +8,15 @@ namespace Dev.Editor.BinAnalyzer.Data
 {
     public abstract class BaseData
     {
-        public BaseData(string name)
+        public BaseData(string name, string typeName)
         {
             this.Name = name;
+            this.TypeName = typeName;
         }
 
         public string Name { get; }
+
+        public string TypeName { get; }
 
         public abstract IList<BaseData> Children { get; }
     }    

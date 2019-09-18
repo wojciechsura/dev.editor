@@ -10,7 +10,7 @@ namespace Dev.Editor.BinAnalyzer.Data
         where T : BaseData
     {       
         public ArrayData(string name, string childType, T[] children) 
-            : base(name)
+            : base(name, $"{childType}[{children.Length}]")
         {
             Children = children;
         }

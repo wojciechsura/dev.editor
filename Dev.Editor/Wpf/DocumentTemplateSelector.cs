@@ -23,6 +23,10 @@ namespace Dev.Editor.Wpf
                 {
                     return element.FindResource("HexDocumentTemplate") as DataTemplate;
                 }
+                else if (item is BinDocumentViewModel)
+                {
+                    return element.FindResource("BinDocumentTemplate") as DataTemplate;
+                }
             }
 
             return null;

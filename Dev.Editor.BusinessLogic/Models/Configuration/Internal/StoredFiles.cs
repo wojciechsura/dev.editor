@@ -17,7 +17,8 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
             ChildInfos = new List<BaseChildInfo>
             {
                 new ChildInfo<TextStoredFile>(TextStoredFile.NAME, () => new TextStoredFile()),
-                new ChildInfo<HexStoredFile>(HexStoredFile.NAME, () => new HexStoredFile())
+                new ChildInfo<HexStoredFile>(HexStoredFile.NAME, () => new HexStoredFile()),
+                new ChildInfo<BinStoredFile>(BinStoredFile.NAME, () => new BinStoredFile())
             };
         }
 

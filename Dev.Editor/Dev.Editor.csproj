@@ -182,6 +182,10 @@
     <Resource Include="Resources\Images\New32.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Dev.Editor.BinAnalyzer\Dev.Editor.BinAnalyzer.csproj">
+      <Project>{a8d1529f-2ca1-4f58-86b6-7a3f69e49575}</Project>
+      <Name>Dev.Editor.BinAnalyzer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Dev.Editor.BusinessLogic\Dev.Editor.BusinessLogic.csproj">
       <Project>{54F5A82E-A15F-4B68-B074-A3E2EDD7D7EF}</Project>
       <Name>Dev.Editor.BusinessLogic</Name>

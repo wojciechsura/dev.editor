@@ -4,10 +4,25 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dev.Editor.Controls"
+             xmlns:data="clr-namespace:Dev.Editor.BinAnalyzer.Data;assembly=Dev.Editor.BinAnalyzer"
              DataContextChanged="HandleDataContextChanged"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Label>Bin document</Label>     
-    </Grid>
+    <TreeView ItemsSource="{Binding Document}" Grid.IsSharedSizeScope="True">
+        <TreeView.Resources>
+            <HierarchicalDataTemplate DataType="{x:Type data:BaseData}" ItemsSource="{Binding Children}">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Name"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Type"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Value"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Grid.Column="0" Text="{Binding Name}" Margin="2" />
+                    <TextBlock Grid.Column="1" Text="{Binding TypeName}" Margin="2" />
+                    <TextBlock Grid.Column="2" Text="{Binding Value}" Margin="2" />
+                </Grid>
+            </HierarchicalDataTemplate>
+        </TreeView.Resources>
+    </TreeView>
 </UserControl>

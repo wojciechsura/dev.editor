@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
 using Dev.Editor.BinAnalyzer.Data;
-using Dev.Editor.BinAnalyzer.ProgramItems.Expressions;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions;
 <#
     (string type, string name, string readerMethod)[] data = new (string type, string name, string readerMethod)[] 
     {
@@ -26,7 +26,7 @@ using Dev.Editor.BinAnalyzer.ProgramItems.Expressions;
     };  
 #>
 
-namespace Dev.Editor.BinAnalyzer.ProgramItems.Statements
+namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
 <#    
 foreach (var item in data)
@@ -160,18 +160,18 @@ namespace Dev.Editor.BinAnalyzer.Data
 #>
     public class <#=n#>Data : BaseValueData
     {       
+        private readonly <#=t#> value;
+
         public <#=n#>Data(string name, <#=t#> value)
-            : base(name)
+            : base(name, "<#=t#>")
         {
-            Value = value;
+            this.value = value;
         }
 
         public override dynamic GetValue()
         {
-            return Value;
+            return value;
         }
-
-        public <#=t#> Value { get; }
     }
 
 <#

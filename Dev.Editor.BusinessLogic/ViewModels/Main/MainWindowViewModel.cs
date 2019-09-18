@@ -132,7 +132,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 try
                 {
-                    InternalWriteDocument(document, storedFilename);
+                    if (document.CanSave)
+                        InternalWriteDocument(document, storedFilename);
                 }
                 catch (Exception e)
                 {
@@ -171,7 +172,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                             storedFile.Filename.Value = binDocument.FileName;
                             storedFile.FilenameIsVirtual.Value = binDocument.FilenameVirtual;
                             storedFile.IsDirty.Value = binDocument.Changed;
-                            storedFile.StoredFilename.Value = storedFilename;
+                            storedFile.StoredFilename.Value = document.FileName;
                             storedFile.DefinitionUid.Value = binDocument.Definition.Uid.Value;
 
                             configurationService.Configuration.Internal.StoredFiles.Add(storedFile);

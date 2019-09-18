@@ -21,6 +21,10 @@
                 <controls:HexDocumentView />
             </DataTemplate>
 
+            <DataTemplate x:Key="BinDocumentTemplate">
+                <controls:BinDocumentView />
+            </DataTemplate>
+            
             <!-- Converters -->
             
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
