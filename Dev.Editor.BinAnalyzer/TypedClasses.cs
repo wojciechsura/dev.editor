@@ -4,13 +4,15 @@ using System.ComponentModel;
 using System.IO;
 using Dev.Editor.BinAnalyzer.Data;
 using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions;
+using Dev.Editor.BinAnalyzer.Exceptions;
+using Dev.Editor.Resources;
 
 namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
     class ByteFieldStatement : BaseFieldStatement
     {
-        public ByteFieldStatement(string name)
-            : base(name)
+        public ByteFieldStatement(int line, int column, string name)
+            : base(line, column, name)
         {
             
         }
@@ -19,23 +21,30 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                if (reader.BaseStream.Position + sizeof(byte) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 byte value = reader.ReadByte();
 
                 var data = new ByteData(name, value);
                 result.Add(data);
-                scope.Contents.Add(name, data);
+                scope.AddContent(name, data);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
 
     class SbyteFieldStatement : BaseFieldStatement
     {
-        public SbyteFieldStatement(string name)
-            : base(name)
+        public SbyteFieldStatement(int line, int column, string name)
+            : base(line, column, name)
         {
             
         }
@@ -44,23 +53,30 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                if (reader.BaseStream.Position + sizeof(sbyte) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 sbyte value = reader.ReadSByte();
 
                 var data = new SbyteData(name, value);
                 result.Add(data);
-                scope.Contents.Add(name, data);
+                scope.AddContent(name, data);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
 
     class ShortFieldStatement : BaseFieldStatement
     {
-        public ShortFieldStatement(string name)
-            : base(name)
+        public ShortFieldStatement(int line, int column, string name)
+            : base(line, column, name)
         {
             
         }
@@ -69,23 +85,30 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                if (reader.BaseStream.Position + sizeof(short) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 short value = reader.ReadInt16();
 
                 var data = new ShortData(name, value);
                 result.Add(data);
-                scope.Contents.Add(name, data);
+                scope.AddContent(name, data);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
 
     class UshortFieldStatement : BaseFieldStatement
     {
-        public UshortFieldStatement(string name)
-            : base(name)
+        public UshortFieldStatement(int line, int column, string name)
+            : base(line, column, name)
         {
             
         }
@@ -94,23 +117,30 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                if (reader.BaseStream.Position + sizeof(ushort) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 ushort value = reader.ReadUInt16();
 
                 var data = new UshortData(name, value);
                 result.Add(data);
-                scope.Contents.Add(name, data);
+                scope.AddContent(name, data);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
 
     class IntFieldStatement : BaseFieldStatement
     {
-        public IntFieldStatement(string name)
-            : base(name)
+        public IntFieldStatement(int line, int column, string name)
+            : base(line, column, name)
         {
             
         }
@@ -119,23 +149,30 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                if (reader.BaseStream.Position + sizeof(int) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 int value = reader.ReadInt32();
 
                 var data = new IntData(name, value);
                 result.Add(data);
-                scope.Contents.Add(name, data);
+                scope.AddContent(name, data);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
 
     class UintFieldStatement : BaseFieldStatement
     {
-        public UintFieldStatement(string name)
-            : base(name)
+        public UintFieldStatement(int line, int column, string name)
+            : base(line, column, name)
         {
             
         }
@@ -144,23 +181,30 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                if (reader.BaseStream.Position + sizeof(uint) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 uint value = reader.ReadUInt32();
 
                 var data = new UintData(name, value);
                 result.Add(data);
-                scope.Contents.Add(name, data);
+                scope.AddContent(name, data);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
 
     class LongFieldStatement : BaseFieldStatement
     {
-        public LongFieldStatement(string name)
-            : base(name)
+        public LongFieldStatement(int line, int column, string name)
+            : base(line, column, name)
         {
             
         }
@@ -169,23 +213,30 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                if (reader.BaseStream.Position + sizeof(long) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 long value = reader.ReadInt64();
 
                 var data = new LongData(name, value);
                 result.Add(data);
-                scope.Contents.Add(name, data);
+                scope.AddContent(name, data);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
 
     class UlongFieldStatement : BaseFieldStatement
     {
-        public UlongFieldStatement(string name)
-            : base(name)
+        public UlongFieldStatement(int line, int column, string name)
+            : base(line, column, name)
         {
             
         }
@@ -194,23 +245,30 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                if (reader.BaseStream.Position + sizeof(ulong) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 ulong value = reader.ReadUInt64();
 
                 var data = new UlongData(name, value);
                 result.Add(data);
-                scope.Contents.Add(name, data);
+                scope.AddContent(name, data);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
 
     class FloatFieldStatement : BaseFieldStatement
     {
-        public FloatFieldStatement(string name)
-            : base(name)
+        public FloatFieldStatement(int line, int column, string name)
+            : base(line, column, name)
         {
             
         }
@@ -219,23 +277,30 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                if (reader.BaseStream.Position + sizeof(float) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 float value = reader.ReadSingle();
 
                 var data = new FloatData(name, value);
                 result.Add(data);
-                scope.Contents.Add(name, data);
+                scope.AddContent(name, data);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
 
     class DoubleFieldStatement : BaseFieldStatement
     {
-        public DoubleFieldStatement(string name)
-            : base(name)
+        public DoubleFieldStatement(int line, int column, string name)
+            : base(line, column, name)
         {
             
         }
@@ -244,15 +309,22 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                if (reader.BaseStream.Position + sizeof(double) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 double value = reader.ReadDouble();
 
                 var data = new DoubleData(name, value);
                 result.Add(data);
-                scope.Contents.Add(name, data);
+                scope.AddContent(name, data);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
@@ -261,8 +333,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
     {
         private readonly Expression count;
 
-        public ByteArrayFieldStatement(string name, Expression count)
-            : base(name)
+        public ByteArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
         {
             this.count = count;
         }
@@ -274,6 +346,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
+                if (reader.BaseStream.Position + sizeof(byte) * countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 ByteData[] data = new ByteData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
@@ -285,11 +360,15 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 ArrayData<ByteData> item = new ArrayData<ByteData>(name, "Byte", data);
 
                 result.Add(item);
-                scope.Contents.Add(name, item);
+                scope.AddContent(name, item);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
@@ -298,8 +377,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
     {
         private readonly Expression count;
 
-        public SbyteArrayFieldStatement(string name, Expression count)
-            : base(name)
+        public SbyteArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
         {
             this.count = count;
         }
@@ -311,6 +390,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
+                if (reader.BaseStream.Position + sizeof(sbyte) * countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 SbyteData[] data = new SbyteData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
@@ -322,11 +404,15 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 ArrayData<SbyteData> item = new ArrayData<SbyteData>(name, "Sbyte", data);
 
                 result.Add(item);
-                scope.Contents.Add(name, item);
+                scope.AddContent(name, item);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
@@ -335,8 +421,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
     {
         private readonly Expression count;
 
-        public ShortArrayFieldStatement(string name, Expression count)
-            : base(name)
+        public ShortArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
         {
             this.count = count;
         }
@@ -348,6 +434,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
+                if (reader.BaseStream.Position + sizeof(short) * countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 ShortData[] data = new ShortData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
@@ -359,11 +448,15 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 ArrayData<ShortData> item = new ArrayData<ShortData>(name, "Short", data);
 
                 result.Add(item);
-                scope.Contents.Add(name, item);
+                scope.AddContent(name, item);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
@@ -372,8 +465,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
     {
         private readonly Expression count;
 
-        public UshortArrayFieldStatement(string name, Expression count)
-            : base(name)
+        public UshortArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
         {
             this.count = count;
         }
@@ -385,6 +478,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
+                if (reader.BaseStream.Position + sizeof(ushort) * countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 UshortData[] data = new UshortData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
@@ -396,11 +492,15 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 ArrayData<UshortData> item = new ArrayData<UshortData>(name, "Ushort", data);
 
                 result.Add(item);
-                scope.Contents.Add(name, item);
+                scope.AddContent(name, item);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
@@ -409,8 +509,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
     {
         private readonly Expression count;
 
-        public IntArrayFieldStatement(string name, Expression count)
-            : base(name)
+        public IntArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
         {
             this.count = count;
         }
@@ -422,6 +522,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
+                if (reader.BaseStream.Position + sizeof(int) * countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 IntData[] data = new IntData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
@@ -433,11 +536,15 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 ArrayData<IntData> item = new ArrayData<IntData>(name, "Int", data);
 
                 result.Add(item);
-                scope.Contents.Add(name, item);
+                scope.AddContent(name, item);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
@@ -446,8 +553,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
     {
         private readonly Expression count;
 
-        public UintArrayFieldStatement(string name, Expression count)
-            : base(name)
+        public UintArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
         {
             this.count = count;
         }
@@ -459,6 +566,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
+                if (reader.BaseStream.Position + sizeof(uint) * countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 UintData[] data = new UintData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
@@ -470,11 +580,15 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 ArrayData<UintData> item = new ArrayData<UintData>(name, "Uint", data);
 
                 result.Add(item);
-                scope.Contents.Add(name, item);
+                scope.AddContent(name, item);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
@@ -483,8 +597,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
     {
         private readonly Expression count;
 
-        public LongArrayFieldStatement(string name, Expression count)
-            : base(name)
+        public LongArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
         {
             this.count = count;
         }
@@ -496,6 +610,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
+                if (reader.BaseStream.Position + sizeof(long) * countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 LongData[] data = new LongData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
@@ -507,11 +624,15 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 ArrayData<LongData> item = new ArrayData<LongData>(name, "Long", data);
 
                 result.Add(item);
-                scope.Contents.Add(name, item);
+                scope.AddContent(name, item);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
@@ -520,8 +641,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
     {
         private readonly Expression count;
 
-        public UlongArrayFieldStatement(string name, Expression count)
-            : base(name)
+        public UlongArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
         {
             this.count = count;
         }
@@ -533,6 +654,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
+                if (reader.BaseStream.Position + sizeof(ulong) * countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 UlongData[] data = new UlongData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
@@ -544,11 +668,15 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 ArrayData<UlongData> item = new ArrayData<UlongData>(name, "Ulong", data);
 
                 result.Add(item);
-                scope.Contents.Add(name, item);
+                scope.AddContent(name, item);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
@@ -557,8 +685,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
     {
         private readonly Expression count;
 
-        public FloatArrayFieldStatement(string name, Expression count)
-            : base(name)
+        public FloatArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
         {
             this.count = count;
         }
@@ -570,6 +698,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
+                if (reader.BaseStream.Position + sizeof(float) * countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 FloatData[] data = new FloatData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
@@ -581,11 +712,15 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 ArrayData<FloatData> item = new ArrayData<FloatData>(name, "Float", data);
 
                 result.Add(item);
-                scope.Contents.Add(name, item);
+                scope.AddContent(name, item);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
@@ -594,8 +729,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
     {
         private readonly Expression count;
 
-        public DoubleArrayFieldStatement(string name, Expression count)
-            : base(name)
+        public DoubleArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
         {
             this.count = count;
         }
@@ -607,6 +742,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
+                if (reader.BaseStream.Position + sizeof(double) * countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 DoubleData[] data = new DoubleData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
@@ -618,45 +756,49 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 ArrayData<DoubleData> item = new ArrayData<DoubleData>(name, "Double", data);
 
                 result.Add(item);
-                scope.Contents.Add(name, item);
+                scope.AddContent(name, item);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }
 
     class FieldFactory
     {
-        public static BaseFieldStatement FromTypeName(string typeName, string name)
+        public static BaseFieldStatement FromTypeName(int line, int column, string typeName, string name)
         {
             switch (typeName)
             {
                 case "byte":
-                    return new ByteFieldStatement(name);
+                    return new ByteFieldStatement(line, column, name);
                 case "sbyte":
-                    return new SbyteFieldStatement(name);
+                    return new SbyteFieldStatement(line, column, name);
                 case "short":
-                    return new ShortFieldStatement(name);
+                    return new ShortFieldStatement(line, column, name);
                 case "ushort":
-                    return new UshortFieldStatement(name);
+                    return new UshortFieldStatement(line, column, name);
                 case "int":
-                    return new IntFieldStatement(name);
+                    return new IntFieldStatement(line, column, name);
                 case "uint":
-                    return new UintFieldStatement(name);
+                    return new UintFieldStatement(line, column, name);
                 case "long":
-                    return new LongFieldStatement(name);
+                    return new LongFieldStatement(line, column, name);
                 case "ulong":
-                    return new UlongFieldStatement(name);
+                    return new UlongFieldStatement(line, column, name);
                 case "float":
-                    return new FloatFieldStatement(name);
+                    return new FloatFieldStatement(line, column, name);
                 case "double":
-                    return new DoubleFieldStatement(name);
+                    return new DoubleFieldStatement(line, column, name);
                 case "skip":
-                    return new SkipFieldStatement(name);
+                    return new SkipFieldStatement(line, column, name);
                 case "char":
-                    return new CharFieldStatement(name);
+                    return new CharFieldStatement(line, column, name);
                 default:
                     throw new InvalidEnumArgumentException("Unsupported type name!");
             }
@@ -665,34 +807,34 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
     class ArrayFieldFactory
     {
-        public static BaseFieldStatement FromTypeName(string typeName, string name, Expression count)
+        public static BaseFieldStatement FromTypeName(int line, int column, string typeName, string name, Expression count)
         {
             switch (typeName)
             {
                 case "byte":
-                    return new ByteArrayFieldStatement(name, count);
+                    return new ByteArrayFieldStatement(line, column, name, count);
                 case "sbyte":
-                    return new SbyteArrayFieldStatement(name, count);
+                    return new SbyteArrayFieldStatement(line, column, name, count);
                 case "short":
-                    return new ShortArrayFieldStatement(name, count);
+                    return new ShortArrayFieldStatement(line, column, name, count);
                 case "ushort":
-                    return new UshortArrayFieldStatement(name, count);
+                    return new UshortArrayFieldStatement(line, column, name, count);
                 case "int":
-                    return new IntArrayFieldStatement(name, count);
+                    return new IntArrayFieldStatement(line, column, name, count);
                 case "uint":
-                    return new UintArrayFieldStatement(name, count);
+                    return new UintArrayFieldStatement(line, column, name, count);
                 case "long":
-                    return new LongArrayFieldStatement(name, count);
+                    return new LongArrayFieldStatement(line, column, name, count);
                 case "ulong":
-                    return new UlongArrayFieldStatement(name, count);
+                    return new UlongArrayFieldStatement(line, column, name, count);
                 case "float":
-                    return new FloatArrayFieldStatement(name, count);
+                    return new FloatArrayFieldStatement(line, column, name, count);
                 case "double":
-                    return new DoubleArrayFieldStatement(name, count);
+                    return new DoubleArrayFieldStatement(line, column, name, count);
                 case "skip":
-                    return new SkipArrayFieldStatement(name, count);
+                    return new SkipArrayFieldStatement(line, column, name, count);
                 case "char":
-                    return new CharArrayFieldStatement(name, count);
+                    return new CharArrayFieldStatement(line, column, name, count);
                 default:
                     throw new InvalidEnumArgumentException("Unsupported type name!");
             }

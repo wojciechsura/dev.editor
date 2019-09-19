@@ -400,4 +400,61 @@
   <data name="Message.UseSidePanelToOpenBinFile" xml:space="preserve">
     <value>Kliknij podwójnie definicję binarną by otworzyć plik binarny i przeanalizować go.</value>
   </data>
+  <data name="Message.SyntaxError.StructureAlreadyExists" xml:space="preserve">
+    <value>Struktura o nazwie {0} już istnieje!</value>
+  </data>
+  <data name="Message.SyntaxError.InvalidIntegerValue" xml:space="preserve">
+    <value>Nieprawidłowa liczba całkowita: {0}!</value>
+  </data>
+  <data name="Message.SyntaxError.InvalidFloatNumber" xml:space="preserve">
+    <value>Nieprawidłowa liczba zmiennoprzecinkowa: {0} !</value>
+  </data>
+  <data name="Message.SyntaxError.FieldAlreadyExists" xml:space="preserve">
+    <value>Pole o nazwie {0} już istnieje!</value>
+  </data>
+  <data name="Message.SyntaxError.CannotFindTypeName" xml:space="preserve">
+    <value>Nie można znaleźć typu {0} !</value>
+  </data>
+  <data name="Message.SyntaxError.FailedToProcessDefinition" xml:space="preserve">
+    <value>Nie udało się przetworzyć definicji!</value>
+  </data>
+  <data name="Message.SyntaxError.SyntaxError" xml:space="preserve">
+    <value>Błąd składniowy w definicji: {0}</value>
+  </data>
+  <data name="Message.AnalysisError.CannotAssign" xml:space="preserve">
+    <value>Nie można wykonać przypisania do {0}, powód: {1}</value>
+  </data>
+  <data name="Message.AnalysisError.UnexpectedEndOfStream" xml:space="preserve">
+    <value>Niespodziewany koniec pliku!</value>
+  </data>
+  <data name="Message.AnalysisError.FailedToReadField" xml:space="preserve">
+    <value>Nie udało się wczytać pola {0}. Powód: {1}</value>
+  </data>
+  <data name="Message.AnalysisError.CannotShow" xml:space="preserve">
+    <value>Nie można dodać obliczonego pola {0}. Powód: {1}</value>
+  </data>
+  <data name="Message.AnalysisError.FailedToSkip" xml:space="preserve">
+    <value>Nie udało się pominąć bajtów. Powód: {0}</value>
+  </data>
+  <data name="Message.AnalysisError.FailedToReadStructArray" xml:space="preserve">
+    <value>Nie udało się wczytać pola tablicy struktur {0}. Powód: {1}</value>
+  </data>
+  <data name="Message.AnalysisError.FailedToReadStruct" xml:space="preserve">
+    <value>Nie udało się wczytać pola struktury {0}. Powód: {1}</value>
+  </data>
+  <data name="Message.EvalError.CannotFindIdentifier" xml:space="preserve">
+    <value>Nie mogę znaleźć identyfikatora {0} w bieżącym zakresie.</value>
+  </data>
+  <data name="Message.EvalError.CannotAccessMember" xml:space="preserve">
+    <value>Nie można dostać się do składowej {0} pola {1}.</value>
+  </data>
+  <data name="Message.EvalError.MemberIsNotValue" xml:space="preserve">
+    <value>Identyfikator {0} nie wskazuje na pole typu wartościowego.</value>
+  </data>
+  <data name="Message.EvalError.FailedToEvalBinaryOperator" xml:space="preserve">
+    <value>Nie udało się obliczyć binarnego operatora. Powód: {0}</value>
+  </data>
+  <data name="Message.EvalError.FailedToEvalExpression" xml:space="preserve">
+    <value>Nie udało się obliczyć wyrażenia. Powód: {0}</value>
+  </data>
 </root>

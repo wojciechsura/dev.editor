@@ -6,6 +6,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions;
 using Dev.Editor.BinAnalyzer.Data;
+using Dev.Editor.BinAnalyzer.Exceptions;
+using Dev.Editor.Resources;
 
 namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
@@ -13,8 +15,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
     {
         private readonly Expression count;
 
-        public CharArrayFieldStatement(string name, Expression count) 
-            : base(name)
+        public CharArrayFieldStatement(int line, int column, string name, Expression count) 
+            : base(line, column, name)
         {
             this.count = count;
         }
@@ -22,9 +24,12 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
         {
             try
-            {
+            { 
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
+
+                if (reader.BaseStream.Position + countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
                 StringBuilder sb = new StringBuilder();
                 for (int i = 0; i < countInt; i++)
@@ -40,11 +45,16 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 var item = new CharArrayData(name, sb.ToString());
                 
                 result.Add(item);
-                scope.Contents.Add(name, item);
+
+                scope.AddContent(name, item);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot load data!");
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
             }
         }
     }

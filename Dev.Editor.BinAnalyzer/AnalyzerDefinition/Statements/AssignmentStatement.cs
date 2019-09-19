@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dev.Editor.BinAnalyzer.Exceptions;
+using Dev.Editor.Resources;
 
 namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
@@ -16,20 +18,26 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
         {
+            BaseData data;
             try
             {
                 dynamic value = expression.Eval(scope);
-                var data = DataFactory.DataFromDynamic(identifier, value);
-
-                scope.Contents.Add(identifier, data);
+                data = DataFactory.DataFromDynamic(identifier, value);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot perform assignment!");
+                throw new AnalysisException(Line, Column, "Cannot perform assignment!", string.Format(Strings.Message_AnalysisError_CannotAssign, identifier, e.LocalizedErrorMessage));
             }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Cannot perform assignment!", string.Format(Strings.Message_AnalysisError_CannotAssign, identifier, e.Message));
+            }
+
+            scope.AddContent(identifier, data);
         }
 
-        public AssignmentStatement(string identifier, Expression expression)
+        public AssignmentStatement(int line, int column, string identifier, Expression expression)
+            : base(line, column)
         {
             this.identifier = identifier;
             this.expression = expression;

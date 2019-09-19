@@ -10,7 +10,8 @@
              x:Name="Root"
              DataContextChanged="HandleDataContextChanged">
     <ae:TextEditor x:Name="teEditor"
-                   FontFamily="Consolas"                   
+                   FontFamily="Consolas"      
+                   FontSize="11"
                    Loaded="HandleLoaded" 
                    WordWrap="{Binding ElementName=Root, Path=Handler.WordWrap}"
                    ShowLineNumbers="{Binding ElementName=Root, Path=Handler.LineNumbers}" />

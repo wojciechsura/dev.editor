@@ -223,6 +223,69 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cannot perform assignment to {0}, cause: {1}.
+        /// </summary>
+        public static string Message_AnalysisError_CannotAssign {
+            get {
+                return ResourceManager.GetString("Message.AnalysisError.CannotAssign", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cannot add evaluated field {0}. Reason: {1}.
+        /// </summary>
+        public static string Message_AnalysisError_CannotShow {
+            get {
+                return ResourceManager.GetString("Message.AnalysisError.CannotShow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Failed to read field {0}. Reason: {1}.
+        /// </summary>
+        public static string Message_AnalysisError_FailedToReadField {
+            get {
+                return ResourceManager.GetString("Message.AnalysisError.FailedToReadField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Failed to read struct field {0}. Reason: {1}.
+        /// </summary>
+        public static string Message_AnalysisError_FailedToReadStruct {
+            get {
+                return ResourceManager.GetString("Message.AnalysisError.FailedToReadStruct", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Failed to read struct array field {0}. Reason: {1}.
+        /// </summary>
+        public static string Message_AnalysisError_FailedToReadStructArray {
+            get {
+                return ResourceManager.GetString("Message.AnalysisError.FailedToReadStructArray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Failed to skip bytes. Reason: {0}.
+        /// </summary>
+        public static string Message_AnalysisError_FailedToSkip {
+            get {
+                return ResourceManager.GetString("Message.AnalysisError.FailedToSkip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Unexpected end of file!.
+        /// </summary>
+        public static string Message_AnalysisError_UnexpectedEndOfStream {
+            get {
+                return ResourceManager.GetString("Message.AnalysisError.UnexpectedEndOfStream", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Are you sure you want to delete binary definition {0}?.
         /// </summary>
         public static string Message_BinDefinitionDeleteConfirmation {
@@ -277,6 +340,51 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cannot access member {0} of field {1}..
+        /// </summary>
+        public static string Message_EvalError_CannotAccessMember {
+            get {
+                return ResourceManager.GetString("Message.EvalError.CannotAccessMember", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cannot find identifier {0} in current scope..
+        /// </summary>
+        public static string Message_EvalError_CannotFindIdentifier {
+            get {
+                return ResourceManager.GetString("Message.EvalError.CannotFindIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Failed to evaluate binary operator. Reason: {0}.
+        /// </summary>
+        public static string Message_EvalError_FailedToEvalBinaryOperator {
+            get {
+                return ResourceManager.GetString("Message.EvalError.FailedToEvalBinaryOperator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Failed to evaluate expression. Reason: {0}.
+        /// </summary>
+        public static string Message_EvalError_FailedToEvalExpression {
+            get {
+                return ResourceManager.GetString("Message.EvalError.FailedToEvalExpression", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Identifier {0} doesn&apos;t point to value field..
+        /// </summary>
+        public static string Message_EvalError_MemberIsNotValue {
+            get {
+                return ResourceManager.GetString("Message.EvalError.MemberIsNotValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Do you want to save document {0} before closing?.
         /// </summary>
         public static string Message_FileNotSaved {
@@ -300,6 +408,69 @@ namespace Dev.Editor.Resources {
         public static string Message_NoMorePatternsFound {
             get {
                 return ResourceManager.GetString("Message.NoMorePatternsFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cannot find type name {0} !.
+        /// </summary>
+        public static string Message_SyntaxError_CannotFindTypeName {
+            get {
+                return ResourceManager.GetString("Message.SyntaxError.CannotFindTypeName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Failed to process definition!.
+        /// </summary>
+        public static string Message_SyntaxError_FailedToProcessDefinition {
+            get {
+                return ResourceManager.GetString("Message.SyntaxError.FailedToProcessDefinition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Field with name {0} already exists!.
+        /// </summary>
+        public static string Message_SyntaxError_FieldAlreadyExists {
+            get {
+                return ResourceManager.GetString("Message.SyntaxError.FieldAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Invalid floating point value: {0} !.
+        /// </summary>
+        public static string Message_SyntaxError_InvalidFloatNumber {
+            get {
+                return ResourceManager.GetString("Message.SyntaxError.InvalidFloatNumber", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Invalid integer value: {0} !.
+        /// </summary>
+        public static string Message_SyntaxError_InvalidIntegerValue {
+            get {
+                return ResourceManager.GetString("Message.SyntaxError.InvalidIntegerValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Struct with name {0} already exists!.
+        /// </summary>
+        public static string Message_SyntaxError_StructureAlreadyExists {
+            get {
+                return ResourceManager.GetString("Message.SyntaxError.StructureAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Syntax error in definition: {0}.
+        /// </summary>
+        public static string Message_SyntaxError_SyntaxError {
+            get {
+                return ResourceManager.GetString("Message.SyntaxError.SyntaxError", resourceCulture);
             }
         }
         

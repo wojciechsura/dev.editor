@@ -400,4 +400,61 @@
   <data name="Message.UseSidePanelToOpenBinFile" xml:space="preserve">
     <value>Double-click binary definition to open binary file and analyze it.</value>
   </data>
+  <data name="Message.SyntaxError.StructureAlreadyExists" xml:space="preserve">
+    <value>Struct with name {0} already exists!</value>
+  </data>
+  <data name="Message.SyntaxError.InvalidIntegerValue" xml:space="preserve">
+    <value>Invalid integer value: {0} !</value>
+  </data>
+  <data name="Message.SyntaxError.InvalidFloatNumber" xml:space="preserve">
+    <value>Invalid floating point value: {0} !</value>
+  </data>
+  <data name="Message.SyntaxError.FieldAlreadyExists" xml:space="preserve">
+    <value>Field with name {0} already exists!</value>
+  </data>
+  <data name="Message.SyntaxError.CannotFindTypeName" xml:space="preserve">
+    <value>Cannot find type name {0} !</value>
+  </data>
+  <data name="Message.SyntaxError.FailedToProcessDefinition" xml:space="preserve">
+    <value>Failed to process definition!</value>
+  </data>
+  <data name="Message.SyntaxError.SyntaxError" xml:space="preserve">
+    <value>Syntax error in definition: {0}</value>
+  </data>
+  <data name="Message.AnalysisError.CannotAssign" xml:space="preserve">
+    <value>Cannot perform assignment to {0}, cause: {1}</value>
+  </data>
+  <data name="Message.AnalysisError.UnexpectedEndOfStream" xml:space="preserve">
+    <value>Unexpected end of file!</value>
+  </data>
+  <data name="Message.AnalysisError.FailedToReadField" xml:space="preserve">
+    <value>Failed to read field {0}. Reason: {1}</value>
+  </data>
+  <data name="Message.AnalysisError.CannotShow" xml:space="preserve">
+    <value>Cannot add evaluated field {0}. Reason: {1}</value>
+  </data>
+  <data name="Message.AnalysisError.FailedToSkip" xml:space="preserve">
+    <value>Failed to skip bytes. Reason: {0}</value>
+  </data>
+  <data name="Message.AnalysisError.FailedToReadStructArray" xml:space="preserve">
+    <value>Failed to read struct array field {0}. Reason: {1}</value>
+  </data>
+  <data name="Message.AnalysisError.FailedToReadStruct" xml:space="preserve">
+    <value>Failed to read struct field {0}. Reason: {1}</value>
+  </data>
+  <data name="Message.EvalError.CannotFindIdentifier" xml:space="preserve">
+    <value>Cannot find identifier {0} in current scope.</value>
+  </data>
+  <data name="Message.EvalError.CannotAccessMember" xml:space="preserve">
+    <value>Cannot access member {0} of field {1}.</value>
+  </data>
+  <data name="Message.EvalError.MemberIsNotValue" xml:space="preserve">
+    <value>Identifier {0} doesn't point to value field.</value>
+  </data>
+  <data name="Message.EvalError.FailedToEvalBinaryOperator" xml:space="preserve">
+    <value>Failed to evaluate binary operator. Reason: {0}</value>
+  </data>
+  <data name="Message.EvalError.FailedToEvalExpression" xml:space="preserve">
+    <value>Failed to evaluate expression. Reason: {0}</value>
+  </data>
 </root>

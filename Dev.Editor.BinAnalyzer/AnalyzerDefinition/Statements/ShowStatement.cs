@@ -6,6 +6,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dev.Editor.BinAnalyzer.Exceptions;
+using Dev.Editor.Resources;
 
 namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
@@ -23,13 +25,18 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
                 result.Add(data);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot perform assignment!");
+                throw new AnalysisException(Line, Column, "Cannot perform show operation!", string.Format(Strings.Message_AnalysisError_CannotShow, alias, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Cannot perform show operation!", string.Format(Strings.Message_AnalysisError_CannotShow, alias, e.Message));
             }
         }
 
-        public ShowStatement(Expression expression, string alias)
+        public ShowStatement(int line, int column, Expression expression, string alias)
+            : base(line, column)
         {
             this.expression = expression;
             this.alias = alias;

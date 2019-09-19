@@ -10,7 +10,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
     {
         protected readonly string name;
 
-        public BaseFieldStatement(string name)
+        public BaseFieldStatement(int line, int column, string name)
+            : base(line, column)
         {
             this.name = name;
         }

@@ -10,6 +10,15 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions
 {
     abstract class BaseExpressionNode
     {
+        protected BaseExpressionNode(int line, int column)
+        {
+            Line = line;
+            Column = column;
+        }
+
         public abstract dynamic Eval(Scope scope);
+
+        public int Line { get; }
+        public int Column { get; }
     }
 }

@@ -5,12 +5,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dev.Editor.BinAnalyzer.Data;
+using Dev.Editor.BinAnalyzer.Exceptions;
+using Dev.Editor.Resources;
 
 namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
     class CharFieldStatement : BaseFieldStatement
     {
-        public CharFieldStatement(string name) : base(name)
+        public CharFieldStatement(int line, int column, string name) : base(line, column, name)
         {
 
         }
@@ -19,6 +21,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                if (reader.BaseStream.Position + sizeof(byte) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream!", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
                 byte value = reader.ReadByte();
 
                 BaseData data;
@@ -28,7 +33,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                     data = new CharData(name, '?');
 
                 result.Add(data);
-                scope.Contents.Add(name, data);
+               
+                scope.AddContent(name, data);
             }
             catch
             {

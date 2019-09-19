@@ -54,8 +54,6 @@
     <Compile Include="Data\BaseData.cs" />
     <Compile Include="Data\BaseValueData.cs" />
     <Compile Include="Data\StructData.cs" />
-    <Compile Include="Exceptions\ParsingException.cs" />
-    <Compile Include="Exceptions\SyntaxErrorException.cs" />
     <Compile Include="AnalyzerDefinition\Definitions\BaseDefinition.cs" />
     <Compile Include="AnalyzerDefinition\Definitions\Definitions.cs" />
     <Compile Include="AnalyzerDefinition\Definitions\StructDefinition.cs" />
@@ -75,6 +73,11 @@
     <Compile Include="AnalyzerDefinition\Statements\SkipFieldStatement.cs" />
     <Compile Include="AnalyzerDefinition\Statements\StructArrayFieldStatement.cs" />
     <Compile Include="AnalyzerDefinition\Statements\StructFieldStatement.cs" />
+    <Compile Include="Exceptions\AnalysisException.cs" />
+    <Compile Include="Exceptions\BaseLocalizedException.cs" />
+    <Compile Include="Exceptions\BaseSourceReferenceException.cs" />
+    <Compile Include="Exceptions\EvalException.cs" />
+    <Compile Include="Exceptions\SyntaxException.cs" />
     <Compile Include="Grammar\BinAnalyzerGrammar.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TypedClasses.cs">
@@ -86,7 +89,12 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Dev.Editor.Resources\Dev.Editor.Resources.csproj">
+      <Project>{6F537829-9BF6-428C-95FD-00170E8ACC60}</Project>
+      <Name>Dev.Editor.Resources</Name>
+    </ProjectReference>
+  </ItemGroup>
   <ItemGroup>
     <Content Include="TypedClasses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>

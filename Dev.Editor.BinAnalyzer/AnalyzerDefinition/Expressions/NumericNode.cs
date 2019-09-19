@@ -12,7 +12,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions
     {
         private readonly dynamic value;
 
-        public NumericNode(dynamic value)
+        public NumericNode(int line, int column, dynamic value)
+            : base(line, column)
         {
             this.value = value;
         }

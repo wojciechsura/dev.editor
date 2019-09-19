@@ -7,6 +7,8 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Dev.Editor.BinAnalyzer.Exceptions;
+using Dev.Editor.Resources;
 
 namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
@@ -38,16 +40,20 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 ArrayData<StructData> item = new ArrayData<StructData>(name, structDef.Name, data);
 
                 result.Add(item);
-                scope.Contents.Add(name, item);
+                scope.AddContent(name, item);
             }
-            catch
+            catch (BaseLocalizedException e)
             {
-                throw new InvalidOperationException("Cannot read struct array!");
+                throw new AnalysisException(Line, Column, "Failed to read struct array!", string.Format(Strings.Message_AnalysisError_FailedToReadStructArray, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to read struct array!", string.Format(Strings.Message_AnalysisError_FailedToReadStructArray, name, e.Message));
             }
         }
 
-        public StructArrayFieldStatement(string name, StructDefinition structDef, Expression count) 
-            : base(name)
+        public StructArrayFieldStatement(int line, int column, string name, StructDefinition structDef, Expression count) 
+            : base(line, column, name)
         {
             this.structDef = structDef;
             this.count = count;

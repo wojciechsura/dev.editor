@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions;
 using Dev.Editor.BinAnalyzer.Data;
 using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements;
+using Dev.Editor.BinAnalyzer.Exceptions;
+using Dev.Editor.Resources;
 
 namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions
 {
@@ -13,7 +15,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions
     {
         private readonly List<string> identifier;
 
-        public QualifiedIdentifierNode(List<string> identifier)
+        public QualifiedIdentifierNode(int line, int column, List<string> identifier)
+            : base(line, column)
         {
             if (identifier == null || identifier.Count == 0)
                 throw new ArgumentException(nameof(identifier));
@@ -23,29 +26,35 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions
 
         public override dynamic Eval(Scope scope)
         {
-            while (scope != null && !scope.Contents.ContainsKey(identifier[0]))
-                scope = scope.ParentScope;
+            BaseData data = null;
+
+            while (scope != null)
+            {
+                bool result;
+
+                (result, data) = scope.TryGetContent(identifier[0]);
+
+                if (result)
+                    break;
+                else
+                    scope = scope.ParentScope;
+            }
 
             if (scope == null)
-                throw new InvalidOperationException("Cannot find identifier in scope!");
-
-            var data = scope.Contents[identifier[0]];
+                throw new EvalException(Line, Column, "Cannot find identifier!", string.Format(Strings.Message_EvalError_CannotFindIdentifier, String.Join(".", identifier)));
+            
             int i = 1;
             while (i < identifier.Count)
             {
-                var structData = data as StructData;
-
-                if (structData == null)
-                    throw new InvalidOperationException("Invalid qualified identifier");
+                if (!(data is StructData structData))
+                    throw new EvalException(Line, Column, "Cannot access member!", string.Format(Strings.Message_EvalError_CannotAccessMember, identifier[i - 1], identifier[i]));
 
                 var child = structData.Children.FirstOrDefault(x => x.Name.Equals(identifier[i]));
-                data = child ?? throw new InvalidOperationException("Invalid qualified identifier!");
+                data = child ?? throw new EvalException(Line, Column, "Cannot access member!", string.Format(Strings.Message_EvalError_CannotAccessMember, identifier[i - 1], identifier[i]));
             }
 
-            var valueData = data as BaseValueData;
-
-            if (valueData == null)
-                throw new InvalidOperationException("Data is not valued-data!");
+            if (!(data is BaseValueData valueData))
+                throw new EvalException(Line, Column, "Accessed field is not value-type!", string.Format(Strings.Message_EvalError_MemberIsNotValue, String.Join(".", identifier)));
 
             return valueData.GetValue();
         }

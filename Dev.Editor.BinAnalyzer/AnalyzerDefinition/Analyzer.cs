@@ -21,6 +21,11 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition
 
         public List<BaseData> Analyze(Stream stream)
         {
+            if (!stream.CanSeek)
+                throw new ArgumentException("Only seekable streams are supported!");
+            if (!stream.CanRead)
+                throw new ArgumentException("Only readable streams are supported!");
+
             BinaryReader reader = new BinaryReader(stream);
 
             List<BaseData> result = new List<BaseData>();
