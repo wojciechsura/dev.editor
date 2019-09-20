@@ -39,6 +39,8 @@ using Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions;
 using Dev.Editor.Common.Tools;
 using System.Windows.Data;
 using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
+using Dev.Editor.BusinessLogic.ViewModels.BottomTools.Base;
+using Dev.Editor.BusinessLogic.ViewModels.BottomTools.Messages;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -73,12 +75,20 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private List<SidePanelPlacementModel> sidePanelPlacements;
         private double sidePanelSize;
 
+        private BottomPanelVisibility bottomPanelVisibility;
+        private List<BottomPanelVisibilityModel> bottomPanelVisibilities;
+        private double bottomPanelSize;
+
         // Tools
 
         private readonly List<BaseToolViewModel> tools;
         private readonly ExplorerToolViewModel explorerToolViewModel;
         private readonly BinDefinitionsToolViewModel binDefinitionsToolViewModel;
         private BaseToolViewModel selectedTool;
+
+        private readonly List<BaseBottomToolViewModel> bottomTools;
+        private readonly MessagesBottomToolViewModel messagesBottomToolViewModel;
+        private BaseBottomToolViewModel selectedBottomTool;
 
         // Private methods ----------------------------------------------------
 
@@ -98,9 +108,24 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             configurationService.Configuration.UI.SidePanelPlacement.Value = sidePanelPlacement;
         }
 
+        private void HandleBottomPanelSizeChanged()
+        {
+            configurationService.Configuration.UI.BottomPanelSize.Value = bottomPanelSize;
+        }
+
+        private void HandleBottomPanelVisibilityChanged()
+        {
+            configurationService.Configuration.UI.BottomPanelVisibility.Value = bottomPanelVisibility;
+        }
+
         private void HandleSelcetedToolChanged()
         {
             configurationService.Configuration.UI.SidePanelActiveTab.Value = selectedTool.Uid;
+        }
+
+        private void HandleSelectedBottomToolChanged()
+        {
+            configurationService.Configuration.UI.BottomPanelActiveTab.Value = selectedBottomTool.Uid;
         }
 
         private void RemoveDocument(BaseDocumentViewModel document)
@@ -399,6 +424,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             wordWrap = configurationService.Configuration.Editor.WordWrap.Value;
             lineNumbers = configurationService.Configuration.Editor.LineNumbers.Value;
+
+            // Side panel
+
             sidePanelPlacement = configurationService.Configuration.UI.SidePanelPlacement.Value;
 
             sidePanelPlacements = new List<SidePanelPlacementModel>
@@ -409,6 +437,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             };
 
             sidePanelSize = configurationService.Configuration.UI.SidePanelSize.Value;
+
+            // BottomPanel
+
+            bottomPanelVisibility = configurationService.Configuration.UI.BottomPanelVisibility.Value;
+
+            bottomPanelVisibilities = new List<BottomPanelVisibilityModel>
+            {
+                new BottomPanelVisibilityModel(Strings.Ribbon_View_BottomPanelVisibility_Visible, BottomPanelVisibility.Visible),
+                new BottomPanelVisibilityModel(Strings.Ribbon_View_BottomPanelVisibility_Hidden, BottomPanelVisibility.Hidden)
+            };
+
+            bottomPanelSize = configurationService.Configuration.UI.BottomPanelSize.Value;
 
             documents = new ObservableCollection<BaseDocumentViewModel>();
 
@@ -441,6 +481,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             tools.Add(binDefinitionsToolViewModel);
 
             selectedTool = tools.FirstOrDefault(t => t.Uid.Equals(configurationService.Configuration.UI.SidePanelActiveTab.Value));
+
+            // Initializeing bottom tools
+
+            bottomTools = new List<BaseBottomToolViewModel>();
+
+            messagesBottomToolViewModel = new MessagesBottomToolViewModel();
+            bottomTools.Add(messagesBottomToolViewModel);
+
+            selectedBottomTool = bottomTools.FirstOrDefault(t => t.Uid.Equals(configurationService.Configuration.UI.BottomPanelActiveTab.Value));
 
             // Initializing commands
 
@@ -581,10 +630,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public string NavigationText
         {
             get => navigationText;
-            set
-            {
-                Set(ref navigationText, () => NavigationText, value);
-            }
+            set => Set(ref navigationText, () => NavigationText, value);
         }
 
         public ObservableCollection<BaseNavigationModel> NavigationItems => navigationItems;
@@ -592,19 +638,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public BaseNavigationModel SelectedNavigationItem
         {
             get => selectedNavigationItem;
-            set
-            {
-                Set(ref selectedNavigationItem, () => SelectedNavigationItem, value);
-            }
+            set => Set(ref selectedNavigationItem, () => SelectedNavigationItem, value);
         }
 
         public SidePanelPlacement SidePanelPlacement
         {
             get => sidePanelPlacement;
-            set
-            {
-                Set(ref sidePanelPlacement, () => SidePanelPlacement, value, HandleSidePanelPlacementChanged);
-            }
+            set => Set(ref sidePanelPlacement, () => SidePanelPlacement, value, HandleSidePanelPlacementChanged);
         }
 
         public IEnumerable<SidePanelPlacementModel> SidePanelPlacements => sidePanelPlacements;
@@ -612,10 +652,21 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public double SidePanelSize
         {
             get => sidePanelSize;
-            set
-            {
-                Set(ref sidePanelSize, () => SidePanelSize, value, HandleSidePanelSizeChanged);
-            }
+            set => Set(ref sidePanelSize, () => SidePanelSize, value, HandleSidePanelSizeChanged);            
+        }
+
+        public BottomPanelVisibility BottomPanelVisibility
+        {
+            get => bottomPanelVisibility;
+            set => Set(ref bottomPanelVisibility, () => BottomPanelVisibility, value, HandleBottomPanelVisibilityChanged);
+        }
+
+        public IEnumerable<BottomPanelVisibilityModel> BottomPanelVisibilities => bottomPanelVisibilities;
+
+        public double BottomPanelSize
+        {
+            get => bottomPanelSize;
+            set => Set(ref bottomPanelSize, () => BottomPanelSize, value, HandleBottomPanelSizeChanged);            
         }
 
         public IEnumerable<BaseToolViewModel> Tools => tools;
@@ -623,10 +674,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public BaseToolViewModel SelectedTool
         {
             get => selectedTool;
-            set
-            {
-                Set(ref selectedTool, () => SelectedTool, value, HandleSelcetedToolChanged);
-            }
-        }       
+            set => Set(ref selectedTool, () => SelectedTool, value, HandleSelcetedToolChanged);
+        }
+
+        public IEnumerable<BaseBottomToolViewModel> BottomTools => bottomTools;
+
+        public BaseBottomToolViewModel SelectedBottomTool
+        {
+            get => selectedBottomTool;
+            set => Set(ref selectedBottomTool, () => SelectedBottomTool, value, HandleSelectedBottomToolChanged);
+        }
     }
 }

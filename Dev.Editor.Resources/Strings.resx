@@ -457,4 +457,16 @@
   <data name="Message.EvalError.FailedToEvalExpression" xml:space="preserve">
     <value>Failed to evaluate expression. Reason: {0}</value>
   </data>
+  <data name="BottomTool.Messages.Title" xml:space="preserve">
+    <value>Messages</value>
+  </data>
+  <data name="Ribbon.View.BottomPanelVisibility.Visible" xml:space="preserve">
+    <value>Visible</value>
+  </data>
+  <data name="Ribbon.View.BottomPanelVisibility.Hidden" xml:space="preserve">
+    <value>Hidden</value>
+  </data>
+  <data name="Ribbon.Interface.BottomPanel" xml:space="preserve">
+    <value>Bottom panel</value>
+  </data>
 </root>

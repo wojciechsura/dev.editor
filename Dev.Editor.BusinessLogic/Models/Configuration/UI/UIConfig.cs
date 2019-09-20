@@ -17,10 +17,16 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.UI
             SidePanelPlacement = new ConfigValue<SidePanelPlacement>("SidePanelPlacement", this, Types.UI.SidePanelPlacement.Right);
             SidePanelSize = new ConfigValue<double>("SidePanelSize", this, 200.0);
             SidePanelActiveTab = new ConfigValue<string>("SidePanelActiveTab", this, ViewModels.Tools.Base.BaseToolViewModel.ExplorerUid);
+            BottomPanelSize = new ConfigValue<double>("BottomPanelSize", this, 200.0);
+            BottomPanelVisibility = new ConfigValue<BottomPanelVisibility>("BottomPanelVisibility", this, Types.UI.BottomPanelVisibility.Hidden);
+            BottomPanelActiveTab = new ConfigValue<string>("BottomPanelActiveTab", this, ViewModels.BottomTools.Base.BaseBottomToolViewModel.MessagesUid);
         }
 
         public ConfigValue<SidePanelPlacement> SidePanelPlacement { get; }
         public ConfigValue<double> SidePanelSize { get; }
         public ConfigValue<string> SidePanelActiveTab { get; }
+        public ConfigValue<double> BottomPanelSize { get; }
+        public ConfigValue<BottomPanelVisibility> BottomPanelVisibility { get; }
+        public ConfigValue<string> BottomPanelActiveTab { get; }
     }
 }

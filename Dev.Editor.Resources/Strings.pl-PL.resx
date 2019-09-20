@@ -457,4 +457,16 @@
   <data name="Message.EvalError.FailedToEvalExpression" xml:space="preserve">
     <value>Nie udało się obliczyć wyrażenia. Powód: {0}</value>
   </data>
+  <data name="BottomTool.Messages.Title" xml:space="preserve">
+    <value>Komunikaty</value>
+  </data>
+  <data name="Ribbon.View.BottomPanelVisibility.Visible" xml:space="preserve">
+    <value>Pokaż</value>
+  </data>
+  <data name="Ribbon.View.BottomPanelVisibility.Hidden" xml:space="preserve">
+    <value>Ukryj</value>
+  </data>
+  <data name="Ribbon.Interface.BottomPanel" xml:space="preserve">
+    <value>Panel dolny</value>
+  </data>
 </root>

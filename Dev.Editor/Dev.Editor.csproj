@@ -86,6 +86,9 @@
     <Compile Include="Controls\BinDocumentView.xaml.cs">
       <DependentUpon>BinDocumentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\MessagesBottomTool.xaml.cs">
+      <DependentUpon>MessagesBottomTool.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\TextDocumentView.xaml.cs">
       <DependentUpon>TextDocumentView.xaml</DependentUpon>
     </Compile>
@@ -125,6 +128,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Controls\BinDocumentView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Controls\MessagesBottomTool.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -15,8 +15,10 @@
     xmlns:wpf="clr-namespace:Dev.Editor.Wpf"
     xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
     xmlns:vmtb="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.Base;assembly=Dev.Editor.BusinessLogic"
+    xmlns:vmbtb="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.BottomTools.Base;assembly=Dev.Editor.BusinessLogic"
     xmlns:vme="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;assembly=Dev.Editor.BusinessLogic"
     xmlns:vmb="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions;assembly=Dev.Editor.BusinessLogic"
+    xmlns:vmm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.BottomTools.Messages;assembly=Dev.Editor.BusinessLogic"
     xmlns:uit="clr-namespace:Dev.Editor.BusinessLogic.Types.UI;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True"
@@ -52,6 +54,8 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition x:Name="bottomPanelRow" Height="{Binding BottomPanelSize, Mode=TwoWay, Converter={StaticResource DoubleToGridLengthConverter}}" />
         </Grid.RowDefinitions>
 
         <f:Ribbon Focusable="False" FocusManager.IsFocusScope="True">
@@ -193,8 +197,13 @@
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_Interface}">
 
-                    <f:ComboBox Header="{x:Static p:Strings.Ribbon_Interface_SidePanel}" ItemsSource="{Binding SidePanelPlacements}" DisplayMemberPath="Display" SelectedValuePath="Value"
+                    <f:ComboBox Header="{x:Static p:Strings.Ribbon_Interface_SidePanel}" ItemsSource="{Binding SidePanelPlacements}" 
+                                DisplayMemberPath="Display" SelectedValuePath="Value"
                                 SelectedValue="{Binding SidePanelPlacement}" IsEditable="False" Width="150" />
+
+                    <f:ComboBox Header="{x:Static p:Strings.Ribbon_Interface_BottomPanel}" ItemsSource="{Binding BottomPanelVisibilities}" 
+                                DisplayMemberPath="Display" SelectedValuePath="Value"
+                                SelectedValue="{Binding BottomPanelVisibility}" IsEditable="False" Width="150" />
 
                 </f:RibbonGroupBox>
                 
@@ -476,6 +485,50 @@
         </Grid>
 
         <!-- Navigation popup -->
+
+        <GridSplitter x:Name="bottomPanelSplitter" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="4"
+                      Visibility="{Binding BottomPanelVisibility, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static uit:BottomPanelVisibility.Visible}}"/>
+
+        <TabControl x:Name="bottomPanel" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight="100"
+                    Visibility="{Binding BottomPanelVisibility, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static uit:BottomPanelVisibility.Visible}}"
+                    TabStripPlacement="Bottom" ItemsSource="{Binding BottomTools}" SelectedItem="{Binding SelectedBottomTool, Mode=TwoWay}">
+            <TabControl.Resources>
+                <Style TargetType="TabItem">
+                    <Style.Setters>
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="TabItem">
+                                    <Border x:Name="TabBorder" BorderBrush="Transparent" BorderThickness="1,0,1,1">
+                                        <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2" />
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsSelected" Value="True">
+                                            <Trigger.Setters>
+                                                <Setter TargetName="TabBorder" Property="BorderBrush" Value="#c0c0c0" />
+                                                <Setter TargetName="TabBorder" Property="TextElement.Foreground" Value="#086f9e" />
+                                            </Trigger.Setters>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style.Setters>
+                </Style>
+
+                <DataTemplate DataType="{x:Type vmm:MessagesBottomToolViewModel}">
+                    <controls:MessagesBottomTool />
+                </DataTemplate>
+            </TabControl.Resources>
+
+            <TabControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type vmbtb:BaseBottomToolViewModel}">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="{Binding Icon}" Margin="2" />
+                        <TextBlock Text="{Binding Title}" Margin="2" />
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+        </TabControl>
 
         <Popup x:Name="pNavigation" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,40,0,0" StaysOpen="False"
                Placement="Center" AllowsTransparency="True" PreviewKeyDown="HandleNavigationPreviewKeyDown" FocusManager.IsFocusScope="True">
