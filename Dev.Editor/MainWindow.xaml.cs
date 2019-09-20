@@ -76,6 +76,27 @@ namespace Dev.Editor
             }
         }
 
+        private void SetupBottomPanel()
+        {
+            if (viewModel.BottomPanelVisibility == BottomPanelVisibility.Visible)
+            {
+                BindingOperations.SetBinding(bottomPanelRow, RowDefinition.HeightProperty, new Binding
+                {
+                    Path = new PropertyPath(nameof(MainWindowViewModel.BottomPanelSize)),
+                    Mode = BindingMode.TwoWay,
+                    Converter = new DoubleToGridLengthConverter()
+                });
+
+                bottomPanelRow.MinHeight = 150.0;
+            }
+            else
+            {
+                bottomPanelRow.MinHeight = 0.0;
+                BindingOperations.ClearBinding(bottomPanelRow, RowDefinition.HeightProperty);
+                bottomPanelRow.Height = new GridLength(0.0, GridUnitType.Auto);
+            }
+        }
+
         private void HandleWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             e.Cancel = !viewModel.CanCloseApplication();
@@ -124,6 +145,7 @@ namespace Dev.Editor
         {
             viewModel.PropertyChanged += HandleViewModelPropertyChanged;
             SetupSidePanel();
+            SetupBottomPanel();
         }
 
         private void HandleViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -131,6 +153,10 @@ namespace Dev.Editor
             if (e.PropertyName == nameof(MainWindowViewModel.SidePanelPlacement))
             {
                 SetupSidePanel();
+            }
+            else if (e.PropertyName == nameof(MainWindowViewModel.BottomPanelVisibility))
+            {
+                SetupBottomPanel();
             }
         }
 

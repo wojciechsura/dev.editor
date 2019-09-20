@@ -55,7 +55,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition x:Name="bottomPanelRow" Height="{Binding BottomPanelSize, Mode=TwoWay, Converter={StaticResource DoubleToGridLengthConverter}}" />
+            <RowDefinition x:Name="bottomPanelRow" />
         </Grid.RowDefinitions>
 
         <f:Ribbon Focusable="False" FocusManager.IsFocusScope="True">
