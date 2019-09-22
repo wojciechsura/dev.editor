@@ -47,8 +47,8 @@ namespace Dev.Editor.BinAnalyzer
                     var structDef = new StructDefinition(name, statements);
 
                     if (structDefinitions.Any(i => i.Name.Equals(structDef.Name)))
-                        throw new SyntaxException(defNode.Token.Location.Column, 
-                            defNode.Token.Location.Column, 
+                        throw new SyntaxException(defNode.Span.Location.Column, 
+                            defNode.Span.Location.Column, 
                             "Structure with the same name already exists!",
                             string.Format(Strings.Message_SyntaxError_StructureAlreadyExists, structDef.Name));
 
@@ -66,12 +66,12 @@ namespace Dev.Editor.BinAnalyzer
             try
             {
                 var value = long.Parse(parseTreeNode.Token.Text);
-                return new NumericNode(parseTreeNode.Token.Location.Line, parseTreeNode.Token.Location.Column, value);
+                return new NumericNode(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, value);
             }
             catch
             {
-                throw new SyntaxException(parseTreeNode.Token.Location.Line,
-                    parseTreeNode.Token.Location.Column,
+                throw new SyntaxException(parseTreeNode.Span.Location.Line,
+                    parseTreeNode.Span.Location.Column,
                     "Invalid integer value",
                     string.Format(Strings.Message_SyntaxError_InvalidIntegerValue, parseTreeNode.Token.Text));
             }
@@ -82,12 +82,12 @@ namespace Dev.Editor.BinAnalyzer
             try
             {
                 var value = float.Parse(parseTreeNode.Token.Text, CultureInfo.InvariantCulture);
-                return new NumericNode(parseTreeNode.Token.Location.Line, parseTreeNode.Token.Location.Column, value);
+                return new NumericNode(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, value);
             }
             catch
             {
-                throw new SyntaxException(parseTreeNode.Token.Location.Line,
-                    parseTreeNode.Token.Location.Column,
+                throw new SyntaxException(parseTreeNode.Span.Location.Line,
+                    parseTreeNode.Span.Location.Column,
                     "Invalid floating point value",
                     string.Format(Strings.Message_SyntaxError_InvalidFloatNumber, parseTreeNode.Token.Text));
             }
@@ -110,7 +110,7 @@ namespace Dev.Editor.BinAnalyzer
             }
             while (current != null);
 
-            return new QualifiedIdentifierNode(current.Token.Location.Line, current.Token.Location.Column, identifier);
+            return new QualifiedIdentifierNode(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, identifier);
         }
 
 
@@ -136,17 +136,17 @@ namespace Dev.Editor.BinAnalyzer
                 return InternalProcessComponent(parseTreeNode.ChildNodes[0]);
 
             if (parseTreeNode.ChildNodes[1].Token.Text.Equals("|"))
-                return new BinaryOperator(parseTreeNode.Token.Location.Line, parseTreeNode.Token.Location.Column, InternalProcessBitTerm(parseTreeNode.ChildNodes[0]),
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessBitTerm(parseTreeNode.ChildNodes[0]),
                     InternalProcessComponent(parseTreeNode.ChildNodes[2]),
                     BinaryOperation.Or);
 
             if (parseTreeNode.ChildNodes[1].Token.Text.Equals("&"))
-                return new BinaryOperator(parseTreeNode.Token.Location.Line, parseTreeNode.Token.Location.Column, InternalProcessBitTerm(parseTreeNode.ChildNodes[0]),
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessBitTerm(parseTreeNode.ChildNodes[0]),
                     InternalProcessComponent(parseTreeNode.ChildNodes[2]),
                     BinaryOperation.And);
 
             if (parseTreeNode.ChildNodes[1].Token.Text.Equals("^"))
-                return new BinaryOperator(parseTreeNode.Token.Location.Line, parseTreeNode.Token.Location.Column, InternalProcessBitTerm(parseTreeNode.ChildNodes[0]),
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessBitTerm(parseTreeNode.ChildNodes[0]),
                     InternalProcessComponent(parseTreeNode.ChildNodes[2]),
                     BinaryOperation.Xor);
 
@@ -159,17 +159,17 @@ namespace Dev.Editor.BinAnalyzer
                 return InternalProcessBitTerm(parseTreeNode.ChildNodes[0]);
 
             if (parseTreeNode.ChildNodes[1].Token.Text.Equals("*"))
-                return new BinaryOperator(parseTreeNode.Token.Location.Line, parseTreeNode.Token.Location.Column, InternalProcessTerm(parseTreeNode.ChildNodes[0]),
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessTerm(parseTreeNode.ChildNodes[0]),
                     InternalProcessBitTerm(parseTreeNode.ChildNodes[2]),
                     BinaryOperation.Multiply);
 
             if (parseTreeNode.ChildNodes[1].Token.Text.Equals("/"))
-                return new BinaryOperator(parseTreeNode.Token.Location.Line, parseTreeNode.Token.Location.Column, InternalProcessTerm(parseTreeNode.ChildNodes[0]),
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessTerm(parseTreeNode.ChildNodes[0]),
                     InternalProcessBitTerm(parseTreeNode.ChildNodes[2]),
                     BinaryOperation.Divide);
 
             if (parseTreeNode.ChildNodes[1].Token.Text.Equals("%"))
-                return new BinaryOperator(parseTreeNode.Token.Location.Line, parseTreeNode.Token.Location.Column, InternalProcessTerm(parseTreeNode.ChildNodes[0]),
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessTerm(parseTreeNode.ChildNodes[0]),
                     InternalProcessBitTerm(parseTreeNode.ChildNodes[2]),
                     BinaryOperation.Modulo);
 
@@ -182,12 +182,12 @@ namespace Dev.Editor.BinAnalyzer
                 return InternalProcessTerm(parseTreeNode.ChildNodes[0]);
 
             if (parseTreeNode.ChildNodes[1].Token.Text.Equals("+"))
-                return new BinaryOperator(parseTreeNode.Token.Location.Line, parseTreeNode.Token.Location.Column, InternalProcessExpression(parseTreeNode.ChildNodes[0]),
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessExpression(parseTreeNode.ChildNodes[0]),
                     InternalProcessTerm(parseTreeNode.ChildNodes[2]),
                     BinaryOperation.Add);
 
             if (parseTreeNode.ChildNodes[1].Token.Text.Equals("-"))
-                return new BinaryOperator(parseTreeNode.Token.Location.Line, parseTreeNode.Token.Location.Column, InternalProcessExpression(parseTreeNode.ChildNodes[0]),
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessExpression(parseTreeNode.ChildNodes[0]),
                     InternalProcessTerm(parseTreeNode.ChildNodes[2]),
                     BinaryOperation.Subtract);
 
@@ -196,8 +196,8 @@ namespace Dev.Editor.BinAnalyzer
 
         private static Expression ProcessExpression(ParseTreeNode parseTreeNode)
         {
-            return new Expression(parseTreeNode.Token.Location.Line, 
-                parseTreeNode.Token.Location.Position, 
+            return new Expression(parseTreeNode.Span.Location.Line, 
+                parseTreeNode.Span.Location.Position, 
                 InternalProcessExpression(parseTreeNode));
         }
 
@@ -215,12 +215,12 @@ namespace Dev.Editor.BinAnalyzer
                     string name = current.ChildNodes[1].Token.Text;
 
                     if (result.Any(r => r is BaseFieldStatement fieldStatement && fieldStatement.Name.Equals(name)))
-                        throw new SyntaxException(current.Token.Location.Line, 
-                            current.Token.Location.Column, 
+                        throw new SyntaxException(current.Span.Location.Line, 
+                            current.Span.Location.Column, 
                             $"Field with name {name} already exists!",
                             string.Format(Strings.Message_SyntaxError_FieldAlreadyExists, name));
 
-                    BaseFieldStatement statement = FieldFactory.FromTypeName(current.Token.Location.Line, current.Token.Location.Column, type, name);
+                    BaseFieldStatement statement = FieldFactory.FromTypeName(current.Span.Location.Line, current.Span.Location.Column, type, name);
                     result.Add(statement);
                 }
                 else if (current.Term.Name.Equals(BinAnalyzerGrammar.CUSTOM_FIELD))
@@ -229,8 +229,8 @@ namespace Dev.Editor.BinAnalyzer
                     string name = current.ChildNodes[1].Token.Text;
 
                     if (result.Any(r => r is BaseFieldStatement fieldStatement && fieldStatement.Name.Equals(name)))
-                        throw new SyntaxException(current.Token.Location.Line,
-                            current.Token.Location.Column,
+                        throw new SyntaxException(current.Span.Location.Line,
+                            current.Span.Location.Column,
                             $"Field with name {name} already exists!",
                             string.Format(Strings.Message_SyntaxError_FieldAlreadyExists, name));
 
@@ -239,13 +239,13 @@ namespace Dev.Editor.BinAnalyzer
                     var structDef = definitions.StructDefinitions.FirstOrDefault(d => d.Name.Equals(type));
                     if (structDef != null)
                     {
-                        StructFieldStatement statement = new StructFieldStatement(current.Token.Location.Line, current.Token.Location.Column, name, structDef);
+                        StructFieldStatement statement = new StructFieldStatement(current.Span.Location.Line, current.Span.Location.Column, name, structDef);
                         result.Add(statement);
                         continue;
                     }
                     else
-                        throw new SyntaxException(current.Token.Location.Line, 
-                            current.Token.Location.Column, 
+                        throw new SyntaxException(current.Span.Location.Line, 
+                            current.Span.Location.Column, 
                             $"Cannot find type {type} !",
                             string.Format(Strings.Message_SyntaxError_CannotFindTypeName, type));
                 }
@@ -256,11 +256,11 @@ namespace Dev.Editor.BinAnalyzer
                     string name = current.ChildNodes[2].Token.Text;
 
                     if (result.Any(r => r is BaseFieldStatement fieldStatement && fieldStatement.Name.Equals(name)))
-                        throw new SyntaxException(current.Token.Location.Line,
-                            current.Token.Location.Column,
+                        throw new SyntaxException(current.Span.Location.Line,
+                            current.Span.Location.Column,
                             $"Field with name {name} already exists!",
                             string.Format(Strings.Message_SyntaxError_FieldAlreadyExists, name));
-                    BaseFieldStatement statement = ArrayFieldFactory.FromTypeName(current.Token.Location.Line, current.Token.Location.Column, type, name, count);
+                    BaseFieldStatement statement = ArrayFieldFactory.FromTypeName(current.Span.Location.Line, current.Span.Location.Column, type, name, count);
                     result.Add(statement);
                 }
                 else if (current.Term.Name.Equals(BinAnalyzerGrammar.CUSTOM_ARRAY_FIELD))
@@ -270,8 +270,8 @@ namespace Dev.Editor.BinAnalyzer
                     string name = current.ChildNodes[2].Token.Text;
 
                     if (result.Any(r => r is BaseFieldStatement fieldStatement && fieldStatement.Name.Equals(name)))
-                        throw new SyntaxException(current.Token.Location.Line,
-                            current.Token.Location.Column,
+                        throw new SyntaxException(current.Span.Location.Line,
+                            current.Span.Location.Column,
                             $"Field with name {name} already exists!",
                             string.Format(Strings.Message_SyntaxError_FieldAlreadyExists, name));
 
@@ -280,13 +280,13 @@ namespace Dev.Editor.BinAnalyzer
                     var structDef = definitions.StructDefinitions.FirstOrDefault(d => d.Name.Equals(type));
                     if (structDef != null)
                     {
-                        StructArrayFieldStatement statement = new StructArrayFieldStatement(current.Token.Location.Line, current.Token.Location.Column, name, structDef, count);
+                        StructArrayFieldStatement statement = new StructArrayFieldStatement(current.Span.Location.Line, current.Span.Location.Column, name, structDef, count);
                         result.Add(statement);
                         continue;
                     }
                     else
-                        throw new SyntaxException(current.Token.Location.Line,
-                            current.Token.Location.Column,
+                        throw new SyntaxException(current.Span.Location.Line,
+                            current.Span.Location.Column,
                             $"Cannot find type {type} !",
                             string.Format(Strings.Message_SyntaxError_CannotFindTypeName, type));
 
@@ -298,12 +298,12 @@ namespace Dev.Editor.BinAnalyzer
 
                     if (result.Any(r => r is BaseFieldStatement fieldStatement && fieldStatement.Name.Equals(name)))
                         if (result.Any(r => r is BaseFieldStatement fieldStatement && fieldStatement.Name.Equals(name)))
-                            throw new SyntaxException(current.Token.Location.Line,
-                                current.Token.Location.Column,
+                            throw new SyntaxException(current.Span.Location.Line,
+                                current.Span.Location.Column,
                                 $"Field with name {name} already exists!",
                                 string.Format(Strings.Message_SyntaxError_FieldAlreadyExists, name));
 
-                    var statement = new AssignmentStatement(current.Token.Location.Line, current.Token.Location.Column, name, expression);
+                    var statement = new AssignmentStatement(current.Span.Location.Line, current.Span.Location.Column, name, expression);
                     result.Add(statement);
                 }
                 else if (current.Term.Name.Equals(BinAnalyzerGrammar.SHOW_STATEMENT))
@@ -312,12 +312,12 @@ namespace Dev.Editor.BinAnalyzer
                     string alias = current.ChildNodes[1].Token.Text;
 
                     if (result.Any(r => r is BaseFieldStatement fieldStatement && fieldStatement.Name.Equals(alias)))
-                        throw new SyntaxException(current.Token.Location.Line,
-                            current.Token.Location.Column,
+                        throw new SyntaxException(current.Span.Location.Line,
+                            current.Span.Location.Column,
                             $"Field with name {alias} already exists!",
                             string.Format(Strings.Message_SyntaxError_FieldAlreadyExists, alias));
 
-                    var statement = new ShowStatement(current.Token.Location.Line, current.Token.Location.Column, expression, alias);
+                    var statement = new ShowStatement(current.Span.Location.Line, current.Span.Location.Column, expression, alias);
                     result.Add(statement);
                 }
                 else

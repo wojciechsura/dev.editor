@@ -469,4 +469,25 @@
   <data name="Ribbon.Interface.BottomPanel" xml:space="preserve">
     <value>Bottom panel</value>
   </data>
+  <data name="Messages.Severity" xml:space="preserve">
+    <value>Severity</value>
+  </data>
+  <data name="Messages.Message" xml:space="preserve">
+    <value>Message</value>
+  </data>
+  <data name="Messages.File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="Messages.Row" xml:space="preserve">
+    <value>Row</value>
+  </data>
+  <data name="Messages.Column" xml:space="preserve">
+    <value>Column</value>
+  </data>
+  <data name="Messages.Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Message.CannotOpenBinFile" xml:space="preserve">
+    <value>Cannot open binary file. See Messages window for details.</value>
+  </data>
 </root>

@@ -83,6 +83,7 @@
     <Compile Include="Models\Documents\TextDocumentState.cs" />
     <Compile Include="Models\Documents\FoldSectionState.cs" />
     <Compile Include="Models\Highlighting\HighlightingInfo.cs" />
+    <Compile Include="Models\Messages\MessageModel.cs" />
     <Compile Include="Models\UI\BottomPanelVisibilityModel.cs" />
     <Compile Include="Models\UI\SidePanelPlacementModel.cs" />
     <Compile Include="Models\Navigation\BaseNavigationModel.cs" />
@@ -109,12 +110,14 @@
     <Compile Include="Services\StartupInfo\StartupInfoService.cs" />
     <Compile Include="Types\Behavior\CloseBehavior.cs" />
     <Compile Include="Types\Folding\FoldingKind.cs" />
+    <Compile Include="Types\Messages\MessageSeverity.cs" />
     <Compile Include="Types\Search\SearchMode.cs" />
     <Compile Include="Types\Tools\Explorer\FileItemType.cs" />
     <Compile Include="Types\UI\BottomPanelVisibility.cs" />
     <Compile Include="Types\UI\SidePanelPlacement.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\BottomTools\Base\BaseBottomToolViewModel.cs" />
+    <Compile Include="ViewModels\BottomTools\Messages\IMessagesHandler.cs" />
     <Compile Include="ViewModels\BottomTools\Messages\MessagesBottomToolViewModel.cs" />
     <Compile Include="ViewModels\Configuration\BaseConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Configuration\BehaviorConfigurationViewModel.cs" />

@@ -45,6 +45,8 @@ namespace Dev.Editor.BinAnalyzer.Grammar
         public const string STATEMENT = "statement";
         public const string STATEMENTS = "statements";
         public const string STRUCT_DEF = "structDef";
+        public const string ENUM_DEF = "enumDef";
+        public const string ENUM_ITEM_DEF = "enumItemDef";
         public const string DEFINITION = "definition";
         public const string DEFINITIONS = "definitions";
         public const string ANALYZER = "analyzer";
@@ -80,6 +82,8 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             var statements = new NonTerminal(STATEMENTS);
 
             var structDef = new NonTerminal(STRUCT_DEF);
+            var enumDef = new NonTerminal(ENUM_DEF);
+            var enumItemDef = new NonTerminal(ENUM_ITEM_DEF);
             var definition = new NonTerminal(DEFINITION);
             var definitions = new NonTerminal(DEFINITIONS);
 

@@ -469,4 +469,25 @@
   <data name="Ribbon.Interface.BottomPanel" xml:space="preserve">
     <value>Panel dolny</value>
   </data>
+  <data name="Messages.Severity" xml:space="preserve">
+    <value>Ważność</value>
+  </data>
+  <data name="Messages.Message" xml:space="preserve">
+    <value>Wiadomość</value>
+  </data>
+  <data name="Messages.File" xml:space="preserve">
+    <value>Plik</value>
+  </data>
+  <data name="Messages.Row" xml:space="preserve">
+    <value>Wiersz</value>
+  </data>
+  <data name="Messages.Column" xml:space="preserve">
+    <value>Kolumna</value>
+  </data>
+  <data name="Messages.Code" xml:space="preserve">
+    <value>Kod</value>
+  </data>
+  <data name="Message.CannotOpenBinFile" xml:space="preserve">
+    <value>Nie mogę otworzyć pliku binarnego. Szczegóły w oknie wiadomości.</value>
+  </data>
 </root>

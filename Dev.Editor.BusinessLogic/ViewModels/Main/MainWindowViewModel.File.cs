@@ -8,6 +8,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Dev.Editor.BinAnalyzer.Data;
 using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
+using Dev.Editor.BinAnalyzer.Exceptions;
+using Dev.Editor.BusinessLogic.Models.Messages;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -300,25 +302,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void InternalReadBinDocument(BinDocumentViewModel document, string filename, BinDefinition binDefinition)
         {
-            try
+            // Try compile binary definition
+            string defSource = File.ReadAllText($"{pathService.BinDefinitionsPath}\\{binDefinition.Filename.Value}");
+
+            var analyzer = BinAnalyzer.Compiler.Compile(defSource);
+
+            using (var fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
             {
-                // Try compile binary definition
-                string defSource = File.ReadAllText($"{pathService.BinDefinitionsPath}\\{binDefinition.Filename.Value}");
+                var result = analyzer.Analyze(fs);
 
-                var analyzer = BinAnalyzer.Compiler.Compile(defSource);
-
-                using (var fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
-                {
-                    var result = analyzer.Analyze(fs);
-
-                    document.Document = result;
-                    document.Definition = binDefinition;
-                }
-            }
-            catch (Exception e)
-            {
-                // TODO
-                messagingService.ShowError($"#Cannot open binary file, error: {e.Message}");
+                document.Document = result;
+                document.Definition = binDefinition;
             }
         }
 
@@ -347,14 +341,35 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             var dialogResult = dialogService.ShowOpenDialog(Strings.DefaultFilter, string.Format(Strings.OpenBinaryFile_Title, binDefinition.DefinitionName.Value));
             if (dialogResult.Result)
             {
+                messagesBottomToolViewModel.ClearMessages();
+
                 try
                 {
                     LoadBinDocument(dialogResult.FileName, binDefinition);
                 }
+                catch (BaseSourceReferenceException e)
+                {
+                    messagesBottomToolViewModel.AddMessage(new MessageModel(e.LocalizedErrorMessage,
+                        Types.Messages.MessageSeverity.Error,
+                        $"{pathService.BinDefinitionsPath}\\{binDefinition.Filename.Value}",
+                        e.Line,
+                        e.Column));
+
+                    messagingService.ShowError(string.Format(Strings.Message_CannotOpenBinFile));
+
+                    BottomPanelVisibility = Types.UI.BottomPanelVisibility.Visible;
+                    SelectedBottomTool = messagesBottomToolViewModel;
+                }
                 catch (Exception e)
                 {
-                    // TODO (more complicated)
-                    messagingService.ShowError(string.Format(Strings.Message_CannotOpenFile, dialogResult.FileName, e.Message));
+                    messagesBottomToolViewModel.AddMessage(new MessageModel(e.Message,
+                        Types.Messages.MessageSeverity.Critical,
+                        $"{pathService.BinDefinitionsPath}\\{binDefinition.Filename.Value}"));
+
+                    messagingService.ShowError(string.Format(Strings.Message_CannotOpenBinFile));
+
+                    BottomPanelVisibility = Types.UI.BottomPanelVisibility.Visible;
+                    SelectedBottomTool = messagesBottomToolViewModel;
                 }
             }
         }

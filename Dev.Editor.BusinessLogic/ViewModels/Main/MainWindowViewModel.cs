@@ -44,7 +44,7 @@ using Dev.Editor.BusinessLogic.ViewModels.BottomTools.Messages;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
-    public partial class MainWindowViewModel : BaseViewModel, IDocumentHandler, IExplorerHandler, IBinDefinitionsHandler
+    public partial class MainWindowViewModel : BaseViewModel, IDocumentHandler, IExplorerHandler, IBinDefinitionsHandler, IMessagesHandler
     {
         // Private fields -----------------------------------------------------
 
@@ -364,6 +364,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             dialogService.ShowConfigurationDialog();
         }
 
+        private void DoOpenFileAndFocus(string filename, int line, int column)
+        {
+            LoadTextDocument(filename);
+
+            
+            TextDocumentViewModel textDoc = ActiveDocument as TextDocumentViewModel;
+            var offset = textDoc.Document.GetOffset(line + 1, column);
+            textDoc.SetSelection(offset, 0, true);
+
+            textDoc.FocusDocument();
+        }
+
         // IDocumentHandler implementation ------------------------------------
 
         void IDocumentHandler.RequestClose(BaseDocumentViewModel documentViewModel)
@@ -396,6 +408,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         void IBinDefinitionsHandler.RequestOpenBinFile(BinDefinition binDefinition)
         {
             DoOpenBinDocument(binDefinition);
+        }
+
+        // IMessagesHandler implementation ------------------------------------
+
+        void IMessagesHandler.OpenFileAndFocus(string filename)
+        {
+            LoadTextDocument(filename);
         }
 
         // Public methods -----------------------------------------------------
@@ -486,7 +505,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             bottomTools = new List<BaseBottomToolViewModel>();
 
-            messagesBottomToolViewModel = new MessagesBottomToolViewModel();
+            messagesBottomToolViewModel = new MessagesBottomToolViewModel(this);
             bottomTools.Add(messagesBottomToolViewModel);
 
             selectedBottomTool = bottomTools.FirstOrDefault(t => t.Uid.Equals(configurationService.Configuration.UI.BottomPanelActiveTab.Value));

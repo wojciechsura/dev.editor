@@ -13,7 +13,7 @@ using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions;
 using Dev.Editor.BinAnalyzer.Exceptions;
 using Dev.Editor.Resources;
 <#
-    (string type, string name, string readerMethod)[] data = new (string type, string name, string readerMethod)[] 
+    (string type, string name, string readerMethod)[] intTypes = new (string type, string name, string readerMethod)[] 
     {
         ("byte", "Byte", "ReadByte"),
         ("sbyte", "Sbyte", "ReadSByte"),
@@ -23,9 +23,15 @@ using Dev.Editor.Resources;
         ("uint", "Uint", "ReadUInt32"),
         ("long", "Long", "ReadInt64"),
         ("ulong", "Ulong", "ReadUInt64"),
+    };  
+
+    (string type, string name, string readerMethod)[] floatTypes = new (string type, string name, string readerMethod)[] 
+    {        
         ("float", "Float", "ReadSingle"),
         ("double", "Double", "ReadDouble")
     };  
+
+    IEnumerable<(string type, string name, string readerMethod)> data = intTypes.Union(floatTypes);      
 #>
 
 namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
