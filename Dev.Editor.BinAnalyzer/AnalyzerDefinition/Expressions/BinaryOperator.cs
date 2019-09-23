@@ -44,12 +44,30 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions
                         return leftValue / rightValue;
                     case BinaryOperation.Modulo:
                         return leftValue % rightValue;
-                    case BinaryOperation.And:
+                    case BinaryOperation.BitAnd:
                         return leftValue & rightValue;
-                    case BinaryOperation.Or:
+                    case BinaryOperation.BitOr:
                         return leftValue | rightValue;
-                    case BinaryOperation.Xor:
+                    case BinaryOperation.BitXor:
                         return leftValue ^ rightValue;
+                    case BinaryOperation.LessThan:
+                        return leftValue < rightValue;
+                    case BinaryOperation.LessThanOrEqual:
+                        return leftValue <= rightValue;
+                    case BinaryOperation.Equal:
+                        return leftValue == rightValue;
+                    case BinaryOperation.Inequal:
+                        return leftValue != rightValue;
+                    case BinaryOperation.GreaterThanOrEqual:
+                        return leftValue >= rightValue;
+                    case BinaryOperation.GreaterThan:
+                        return leftValue > rightValue;
+                    case BinaryOperation.LogicAnd:
+                        return leftValue && rightValue;
+                    case BinaryOperation.LogicOr:
+                        return leftValue || rightValue;
+                    case BinaryOperation.LogicXor:
+                        return (leftValue && !rightValue) || (!leftValue && rightValue);
                     default:
                         throw new InvalidEnumArgumentException("Unsupported operation!");
                 }

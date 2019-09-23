@@ -32,6 +32,9 @@ namespace Dev.Editor.BinAnalyzer.Grammar
         public const string INT_NUMBER = "intNumber";
         public const string UINT_NUMBER = "uintNumber";
         public const string FLOAT_NUMBER = "floatNumber";
+        public const string BOOL_VALUE = "boolValue";
+        public const string SUM = "sum";
+        public const string COMPARISON = "comparison";
         public const string EXPRESSION = "expression";
         public const string COMPONENT = "component";
         public const string TERM = "term";
@@ -72,8 +75,11 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             var intNumber = new RegexBasedTerminal(INT_NUMBER, "\\-?[0-9]+");
             var uintNumber = new RegexBasedTerminal(UINT_NUMBER, "[0-9]+[uU]");
             var floatNumber = new RegexBasedTerminal(FLOAT_NUMBER, "[0-9]+\\.[0-9]+f?");
+            var boolValue = new NonTerminal(BOOL_VALUE);
 
             var expression = new NonTerminal(EXPRESSION);
+            var comparison = new NonTerminal(COMPARISON);
+            var sum = new NonTerminal(SUM);
             var component = new NonTerminal(COMPONENT);
             var term = new NonTerminal(TERM);
             var bitTerm = new NonTerminal(BIT_TERM);
@@ -104,13 +110,16 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             // Non-terminals
 
             qualifiedIdentifier.Rule = identifier | identifier + "." + qualifiedIdentifier;
+            boolValue.Rule = ToTerm("true") | "false";
 
             // Math expressions
 
-            component.Rule = intNumber | uintNumber | floatNumber | qualifiedIdentifier | ToTerm("(") + expression + ")";
+            component.Rule = intNumber | uintNumber | floatNumber | boolValue | qualifiedIdentifier | ToTerm("(") + expression + ")";
             bitTerm.Rule = component | bitTerm + "|" + component | bitTerm + "&" + component | bitTerm + "^" + component;
             term.Rule = bitTerm | term + "*" + bitTerm | term + "/" + bitTerm | term + "%" + bitTerm;            
-            expression.Rule = term | expression + "+" + term | expression + "-" + term;
+            sum.Rule = term | sum + "+" + term | sum + "-" + term;
+            comparison.Rule = sum | comparison + "<" + sum | comparison + "<=" + sum | comparison + "==" + sum | comparison + "!=" + sum | comparison + ">=" + sum | comparison + ">" + sum;
+            expression.Rule = comparison | expression + "&&" + comparison | expression + "||" + comparison | expression + "^^" + comparison;
 
             // Fields
 

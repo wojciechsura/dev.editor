@@ -13,8 +13,17 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions
         Multiply,
         Divide,
         Modulo,
-        And,
-        Or,
-        Xor
+        BitAnd,
+        BitOr,
+        BitXor,
+        LessThan,
+        LessThanOrEqual,
+        Equal,
+        Inequal,
+        GreaterThanOrEqual,
+        GreaterThan,
+        LogicAnd,
+        LogicOr,
+        LogicXor
     }
 }

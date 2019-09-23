@@ -203,6 +203,11 @@ namespace Dev.Editor.BinAnalyzer
             }
         }
 
+        private static BaseExpressionNode InternalProcessBoolValue(ParseTreeNode parseTreeNode)
+        {
+            return new NumericNode(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, parseTreeNode.ChildNodes[0].Token.Text.Equals("true"));
+        }
+
         private static BaseExpressionNode InternalProcessQualifiedIdentifier(ParseTreeNode parseTreeNode)
         {
             var identifier = new List<string>();
@@ -231,6 +236,8 @@ namespace Dev.Editor.BinAnalyzer
                 return InternalProcessUintNumber(parseTreeNode.ChildNodes[0]);
             if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.FLOAT_NUMBER))
                 return InternalProcessFloatNumber(parseTreeNode.ChildNodes[0]);
+            if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.BOOL_VALUE))
+                return InternalProcessBoolValue(parseTreeNode.ChildNodes[0]);
             if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.QUALIFIED_IDENTIFIER))
                 return InternalProcessQualifiedIdentifier(parseTreeNode.ChildNodes[0]);
 
@@ -249,17 +256,17 @@ namespace Dev.Editor.BinAnalyzer
             if (parseTreeNode.ChildNodes[1].Token.Text.Equals("|"))
                 return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessBitTerm(parseTreeNode.ChildNodes[0]),
                     InternalProcessComponent(parseTreeNode.ChildNodes[2]),
-                    BinaryOperation.Or);
+                    BinaryOperation.BitOr);
 
             if (parseTreeNode.ChildNodes[1].Token.Text.Equals("&"))
                 return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessBitTerm(parseTreeNode.ChildNodes[0]),
                     InternalProcessComponent(parseTreeNode.ChildNodes[2]),
-                    BinaryOperation.And);
+                    BinaryOperation.BitAnd);
 
             if (parseTreeNode.ChildNodes[1].Token.Text.Equals("^"))
                 return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessBitTerm(parseTreeNode.ChildNodes[0]),
                     InternalProcessComponent(parseTreeNode.ChildNodes[2]),
-                    BinaryOperation.Xor);
+                    BinaryOperation.BitXor);
 
             throw new InvalidOperationException("Invalid BitTerm definition!");
         }
@@ -287,20 +294,81 @@ namespace Dev.Editor.BinAnalyzer
             throw new InvalidOperationException("Invalid Term definition!");
         }
 
-        private static BaseExpressionNode InternalProcessExpression(ParseTreeNode parseTreeNode)
+        private static BaseExpressionNode InternalProcessSum(ParseTreeNode parseTreeNode)
         {
             if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.TERM))
                 return InternalProcessTerm(parseTreeNode.ChildNodes[0]);
 
             if (parseTreeNode.ChildNodes[1].Token.Text.Equals("+"))
-                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessExpression(parseTreeNode.ChildNodes[0]),
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessSum(parseTreeNode.ChildNodes[0]),
                     InternalProcessTerm(parseTreeNode.ChildNodes[2]),
                     BinaryOperation.Add);
 
             if (parseTreeNode.ChildNodes[1].Token.Text.Equals("-"))
-                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessExpression(parseTreeNode.ChildNodes[0]),
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessSum(parseTreeNode.ChildNodes[0]),
                     InternalProcessTerm(parseTreeNode.ChildNodes[2]),
                     BinaryOperation.Subtract);
+
+            throw new InvalidOperationException("Invalid Expression definition!");
+        }
+
+        private static BaseExpressionNode InternalProcessComparison(ParseTreeNode parseTreeNode)
+        {
+            if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.SUM))
+                return InternalProcessSum(parseTreeNode.ChildNodes[0]);
+
+            if (parseTreeNode.ChildNodes[1].Token.Text.Equals("<"))
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessComparison(parseTreeNode.ChildNodes[0]),
+                    InternalProcessSum(parseTreeNode.ChildNodes[2]),
+                    BinaryOperation.LessThan);
+
+            if (parseTreeNode.ChildNodes[1].Token.Text.Equals("<="))
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessComparison(parseTreeNode.ChildNodes[0]),
+                    InternalProcessSum(parseTreeNode.ChildNodes[2]),
+                    BinaryOperation.LessThanOrEqual);
+
+            if (parseTreeNode.ChildNodes[1].Token.Text.Equals("=="))
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessComparison(parseTreeNode.ChildNodes[0]),
+                    InternalProcessSum(parseTreeNode.ChildNodes[2]),
+                    BinaryOperation.Equal);
+
+            if (parseTreeNode.ChildNodes[1].Token.Text.Equals("!="))
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessComparison(parseTreeNode.ChildNodes[0]),
+                    InternalProcessSum(parseTreeNode.ChildNodes[2]),
+                    BinaryOperation.Inequal);
+
+            if (parseTreeNode.ChildNodes[1].Token.Text.Equals(">="))
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessComparison(parseTreeNode.ChildNodes[0]),
+                    InternalProcessSum(parseTreeNode.ChildNodes[2]),
+                    BinaryOperation.GreaterThanOrEqual);
+
+            if (parseTreeNode.ChildNodes[1].Token.Text.Equals(">"))
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessComparison(parseTreeNode.ChildNodes[0]),
+                    InternalProcessSum(parseTreeNode.ChildNodes[2]),
+                    BinaryOperation.GreaterThan);
+
+            throw new InvalidOperationException("Invalid Expression definition!");
+        }
+
+        private static BaseExpressionNode InternalProcessExpression(ParseTreeNode parseTreeNode)
+        {
+            if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.COMPARISON))
+                return InternalProcessComparison(parseTreeNode.ChildNodes[0]);
+
+            if (parseTreeNode.ChildNodes[1].Token.Text.Equals("&&"))
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessExpression(parseTreeNode.ChildNodes[0]),
+                    InternalProcessComparison(parseTreeNode.ChildNodes[2]),
+                    BinaryOperation.LogicAnd);
+
+            if (parseTreeNode.ChildNodes[1].Token.Text.Equals("||"))
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessExpression(parseTreeNode.ChildNodes[0]),
+                    InternalProcessComparison(parseTreeNode.ChildNodes[2]),
+                    BinaryOperation.LogicOr);
+
+            if (parseTreeNode.ChildNodes[1].Token.Text.Equals("^^"))
+                return new BinaryOperator(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, InternalProcessExpression(parseTreeNode.ChildNodes[0]),
+                    InternalProcessComparison(parseTreeNode.ChildNodes[2]),
+                    BinaryOperation.LogicXor);
 
             throw new InvalidOperationException("Invalid Expression definition!");
         }

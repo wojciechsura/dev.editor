@@ -1532,6 +1532,8 @@ namespace Dev.Editor.BinAnalyzer.Data
                 return new DoubleData(name, doubleDynamic);
             else  if (d is string str)
                 return new CharArrayData(name, str);
+            else if (d is bool b)
+                return new BoolData(name, b);
             else
 
                 throw new InvalidOperationException("Unsupported type!");
