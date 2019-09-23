@@ -439,6 +439,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Enum item with value {0} already exists!.
+        /// </summary>
+        public static string Message_SyntaxError_EnumItemValueDuplicated {
+            get {
+                return ResourceManager.GetString("Message.SyntaxError.EnumItemValueDuplicated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to process definition!.
         /// </summary>
         public static string Message_SyntaxError_FailedToProcessDefinition {

@@ -499,4 +499,7 @@
   <data name="Message.SyntaxError.InvalidUnsignedEnumItem" xml:space="preserve">
     <value>Typ wyliczeniowy bez znaku powinien zawierać tylko wartości bez znaku (z sufiksem "u")!</value>
   </data>
+  <data name="Message.SyntaxError.EnumItemValueDuplicated" xml:space="preserve">
+    <value>Element typu wyliczeniowego o wartości {0} już istnieje!</value>
+  </data>
 </root>

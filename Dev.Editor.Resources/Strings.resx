@@ -499,4 +499,7 @@
   <data name="Message.SyntaxError.InvalidSignedEnumItem" xml:space="preserve">
     <value>Signed-type enum should contain only signed int values!</value>
   </data>
+  <data name="Message.SyntaxError.EnumItemValueDuplicated" xml:space="preserve">
+    <value>Enum item with value {0} already exists!</value>
+  </data>
 </root>

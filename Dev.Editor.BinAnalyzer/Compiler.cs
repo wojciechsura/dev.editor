@@ -91,6 +91,12 @@ namespace Dev.Editor.BinAnalyzer
                                     string.Format(Strings.Message_SyntaxError_InvalidUnsignedIntegerValue, current.ChildNodes[1].Token.Text));
                             }
 
+                            if (items.Any(ei => ei.Value == value))
+                                throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                                    current.ChildNodes[1].Token.Location.Column,
+                                    "Enum item with this value already exists!",
+                                    string.Format(Strings.Message_SyntaxError_EnumItemValueDuplicated, value));
+
                             var item = new UnsignedEnumItem(itemName, value);
                             items.Add(item);
                         }
@@ -127,6 +133,12 @@ namespace Dev.Editor.BinAnalyzer
                                     "Invalid integer value",
                                     string.Format(Strings.Message_SyntaxError_InvalidIntegerValue, current.ChildNodes[1].Token.Text));
                             }
+
+                            if (items.Any(ei => ei.Value == value))
+                                throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                                    current.ChildNodes[1].Token.Location.Column,
+                                    "Enum item with this value already exists!",
+                                    string.Format(Strings.Message_SyntaxError_EnumItemValueDuplicated, value));
 
                             var item = new SignedEnumItem(itemName, value);
                             items.Add(item);
