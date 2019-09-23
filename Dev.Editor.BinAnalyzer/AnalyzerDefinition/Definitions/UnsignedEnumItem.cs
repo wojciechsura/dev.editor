@@ -6,15 +6,15 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
 {
-    abstract class BaseDefinition
+    class UnsignedEnumItem
     {
-        private readonly string name;
-
-        public BaseDefinition(string name)
+        public UnsignedEnumItem(string name, ulong value)
         {
-            this.name = name;
+            Name = name;
+            Value = value;
         }
 
-        public string Name => name;
+        public string Name { get; }
+        public ulong Value { get; }
     }
 }

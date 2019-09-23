@@ -31,8 +31,10 @@ namespace Dev.Editor.BinAnalyzer
         private static Definitions ProcessDefinitions(ParseTreeNode parseTreeNode)
         {
             var structDefinitions = new List<StructDefinition>();
+            var unsignedEnumDefinitions = new List<UnsignedEnumDefinition>();
+            var signedEnumDefinitions = new List<SignedEnumDefinition>();
 
-            var definitions = new Definitions(structDefinitions);
+            var definitions = new Definitions(structDefinitions, unsignedEnumDefinitions, signedEnumDefinitions);
 
             foreach (var node in parseTreeNode.ChildNodes)
             {
@@ -54,6 +56,86 @@ namespace Dev.Editor.BinAnalyzer
 
                     structDefinitions.Add(structDef);
                 }
+                else if (defNode.Term.Name.Equals(BinAnalyzerGrammar.ENUM_DEF))
+                {
+                    string name = defNode.ChildNodes[0].Token.Text;
+                    string type = defNode.ChildNodes[1].ChildNodes[0].Token.Text;
+
+                    if (new[] { "byte", "ushort", "uint", "ulong" }.Contains(type))
+                    {
+                        // Unsigned enum
+
+                        var items = new List<UnsignedEnumItem>();
+                        for (int i = 0; i < defNode.ChildNodes[2].ChildNodes.Count; i++)
+                        {
+                            var current = defNode.ChildNodes[2].ChildNodes[i];
+
+                            string itemName = current.ChildNodes[0].Token.Text;
+
+                            if (current.ChildNodes[1].Term.Name != BinAnalyzerGrammar.UINT_NUMBER)
+                                throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                                    current.ChildNodes[1].Token.Location.Column,
+                                    "Unsigned enum should contain only unsigned items!",
+                                    Strings.Message_SyntaxError_InvalidUnsignedEnumItem);
+
+                            ulong value;
+                            try
+                            {
+                                value = ulong.Parse(current.ChildNodes[1].Token.Text.Substring(0, current.ChildNodes[1].Token.Text.Length - 1));
+                            }
+                            catch (Exception e)
+                            {
+                                throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                                    current.ChildNodes[1].Token.Location.Column,
+                                    "Invalid unsigned integer value",
+                                    string.Format(Strings.Message_SyntaxError_InvalidUnsignedIntegerValue, current.ChildNodes[1].Token.Text));
+                            }
+
+                            var item = new UnsignedEnumItem(itemName, value);
+                            items.Add(item);
+                        }
+
+                        var def = new UnsignedEnumDefinition(name, type, items);
+                        unsignedEnumDefinitions.Add(def);
+                    }
+                    else if (new[] { "sbyte", "short", "int", "long"}.Contains(type))
+                    {
+                        // Signed enum
+
+                        var items = new List<SignedEnumItem>();
+                        for (int i = 0; i < defNode.ChildNodes[2].ChildNodes.Count; i++)
+                        {
+                            var current = defNode.ChildNodes[2].ChildNodes[i];
+
+                            string itemName = current.ChildNodes[0].Token.Text;
+
+                            if (current.ChildNodes[1].Term.Name != BinAnalyzerGrammar.INT_NUMBER)
+                                throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                                    current.ChildNodes[1].Token.Location.Column,
+                                    "Signed enum should contain only signed items!",
+                                    Strings.Message_SyntaxError_InvalidSignedEnumItem);
+
+                            long value;
+                            try
+                            {
+                                value = long.Parse(current.ChildNodes[1].Token.Text);
+                            }
+                            catch (Exception e)
+                            {
+                                throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                                    current.ChildNodes[1].Token.Location.Column,
+                                    "Invalid integer value",
+                                    string.Format(Strings.Message_SyntaxError_InvalidIntegerValue, current.ChildNodes[1].Token.Text));
+                            }
+
+                            var item = new SignedEnumItem(itemName, value);
+                            items.Add(item);
+                        }
+
+                        var def = new SignedEnumDefinition(name, type, items);
+                        signedEnumDefinitions.Add(def);
+                    }
+                }
                 else
                     throw new InvalidOperationException("Unsupported definition!");
             }
@@ -73,6 +155,22 @@ namespace Dev.Editor.BinAnalyzer
                 throw new SyntaxException(parseTreeNode.Span.Location.Line,
                     parseTreeNode.Span.Location.Column,
                     "Invalid integer value",
+                    string.Format(Strings.Message_SyntaxError_InvalidIntegerValue, parseTreeNode.Token.Text));
+            }
+        }
+
+        private static BaseExpressionNode InternalProcessUintNumber(ParseTreeNode parseTreeNode)
+        {
+            try
+            {
+                var value = ulong.Parse(parseTreeNode.Token.Text.Substring(0, parseTreeNode.Token.Text.Length - 1));
+                return new NumericNode(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, value);
+            }
+            catch
+            {
+                throw new SyntaxException(parseTreeNode.Span.Location.Line,
+                    parseTreeNode.Span.Location.Column,
+                    "Invalid unsigned integer value",
                     string.Format(Strings.Message_SyntaxError_InvalidIntegerValue, parseTreeNode.Token.Text));
             }
         }
@@ -113,11 +211,12 @@ namespace Dev.Editor.BinAnalyzer
             return new QualifiedIdentifierNode(parseTreeNode.Span.Location.Line, parseTreeNode.Span.Location.Column, identifier);
         }
 
-
         private static BaseExpressionNode InternalProcessComponent(ParseTreeNode parseTreeNode)
         {
             if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.INT_NUMBER))
                 return InternalProcessIntNumber(parseTreeNode.ChildNodes[0]);
+            if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.UINT_NUMBER))
+                return InternalProcessUintNumber(parseTreeNode.ChildNodes[0]);
             if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.FLOAT_NUMBER))
                 return InternalProcessFloatNumber(parseTreeNode.ChildNodes[0]);
             if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.QUALIFIED_IDENTIFIER))
@@ -211,7 +310,7 @@ namespace Dev.Editor.BinAnalyzer
 
                 if (current.Term.Name.Equals(BinAnalyzerGrammar.BUILTIN_FIELD))
                 {
-                    string type = current.ChildNodes[0].ChildNodes[0].Token.Text;
+                    string type = current.ChildNodes[0].ChildNodes[0].ChildNodes[0].Token.Text;
                     string name = current.ChildNodes[1].Token.Text;
 
                     if (result.Any(r => r is BaseFieldStatement fieldStatement && fieldStatement.Name.Equals(name)))
@@ -243,15 +342,39 @@ namespace Dev.Editor.BinAnalyzer
                         result.Add(statement);
                         continue;
                     }
-                    else
-                        throw new SyntaxException(current.Span.Location.Line, 
+
+                    // Signed enum?
+
+                    var signedEnumDef = definitions.SignedEnumDefinitions.FirstOrDefault(d => d.Name.Equals(type));
+                    if (signedEnumDef != null)
+                    {
+                        var statement = FieldFactory.FromSignedEnumTypeName(current.Span.Location.Line, 
                             current.Span.Location.Column, 
-                            $"Cannot find type {type} !",
-                            string.Format(Strings.Message_SyntaxError_CannotFindTypeName, type));
+                            name, 
+                            signedEnumDef);
+                        result.Add(statement);
+                        continue;
+                    }
+
+                    var unsignedEnumDef = definitions.UnsignedEnumDefinitions.FirstOrDefault(d => d.Name.Equals(type));
+                    if (unsignedEnumDef != null)
+                    {
+                        var statement = FieldFactory.FromUnsignedEnumTypeName(current.Span.Location.Line,
+                            current.Span.Location.Column,
+                            name,
+                            unsignedEnumDef);
+                        result.Add(statement);
+                        continue;
+                    }
+
+                    throw new SyntaxException(current.Span.Location.Line, 
+                        current.Span.Location.Column, 
+                        $"Cannot find type {type} !",
+                        string.Format(Strings.Message_SyntaxError_CannotFindTypeName, type));
                 }
                 else if (current.Term.Name.Equals(BinAnalyzerGrammar.BUILTIN_ARRAY_FIELD))
                 {
-                    string type = current.ChildNodes[0].ChildNodes[0].Token.Text;
+                    string type = current.ChildNodes[0].ChildNodes[0].ChildNodes[0].Token.Text;
                     Expression count = ProcessExpression(current.ChildNodes[1]);
                     string name = current.ChildNodes[2].Token.Text;
 

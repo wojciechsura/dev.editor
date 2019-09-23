@@ -30,12 +30,16 @@ namespace Dev.Editor.BinAnalyzer.Grammar
         public const string QUALIFIED_IDENTIFIER = "qualifiedIdentifier";
         public const string POSITIVE_INT_NUMBER = "positiveIntNumber";
         public const string INT_NUMBER = "intNumber";
+        public const string UINT_NUMBER = "uintNumber";
         public const string FLOAT_NUMBER = "floatNumber";
         public const string EXPRESSION = "expression";
         public const string COMPONENT = "component";
         public const string TERM = "term";
         public const string BIT_TERM = "bitTerm";
         public const string TYPE = "type";
+        public const string INT_TYPE_NAME = "intTypeName";
+        public const string FLOAT_TYPE_NAME = "floatTypeName";
+        public const string SPECIAL_TYPE_NAME = "specialTypeName";
         public const string BUILTIN_FIELD = "builtinField";
         public const string CUSTOM_FIELD = "customField";
         public const string BUILTIN_ARRAY_FIELD = "builtinArrayField";
@@ -47,6 +51,7 @@ namespace Dev.Editor.BinAnalyzer.Grammar
         public const string STRUCT_DEF = "structDef";
         public const string ENUM_DEF = "enumDef";
         public const string ENUM_ITEM_DEF = "enumItemDef";
+        public const string ENUM_ITEMS_DEF = "enumItemsDef";
         public const string DEFINITION = "definition";
         public const string DEFINITIONS = "definitions";
         public const string ANALYZER = "analyzer";
@@ -58,12 +63,14 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             var oneLineComment = new CommentTerminal(ONE_LINE_COMMENT, "//", "\r", "\n", "\u2085", "\u2028", "\u2029");
             var multipleLineComment = new CommentTerminal(MULTIPLE_LINE_COMMENT, "/*", "*/");
 
-            var intTypeName = ToTerm(TYPE_BYTE) | TYPE_SBYTE | TYPE_SHORT | TYPE_USHORT | TYPE_INT | TYPE_UINT | TYPE_LONG | TYPE_ULONG | TYPE_CHAR | TYPE_SKIP;
-            var floatTypeName = ToTerm(TYPE_FLOAT) | TYPE_DOUBLE;
+            var intTypeName = new NonTerminal(INT_TYPE_NAME);
+            var floatTypeName = new NonTerminal(FLOAT_TYPE_NAME);
+            var specialTypeName = new NonTerminal(SPECIAL_TYPE_NAME);
 
             var identifier = new IdentifierTerminal(IDENTIFIER);
             var qualifiedIdentifier = new NonTerminal(QUALIFIED_IDENTIFIER);            
-            var intNumber = new RegexBasedTerminal(INT_NUMBER, "[0-9]+");
+            var intNumber = new RegexBasedTerminal(INT_NUMBER, "\\-?[0-9]+");
+            var uintNumber = new RegexBasedTerminal(UINT_NUMBER, "[0-9]+[uU]");
             var floatNumber = new RegexBasedTerminal(FLOAT_NUMBER, "[0-9]+\\.[0-9]+f?");
 
             var expression = new NonTerminal(EXPRESSION);
@@ -84,6 +91,7 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             var structDef = new NonTerminal(STRUCT_DEF);
             var enumDef = new NonTerminal(ENUM_DEF);
             var enumItemDef = new NonTerminal(ENUM_ITEM_DEF);
+            var enumItemsDef = new NonTerminal(ENUM_ITEMS_DEF);
             var definition = new NonTerminal(DEFINITION);
             var definitions = new NonTerminal(DEFINITIONS);
 
@@ -99,14 +107,17 @@ namespace Dev.Editor.BinAnalyzer.Grammar
 
             // Math expressions
 
-            component.Rule = intNumber | floatNumber | qualifiedIdentifier | ToTerm("(") + expression + ")";
+            component.Rule = intNumber | uintNumber | floatNumber | qualifiedIdentifier | ToTerm("(") + expression + ")";
             bitTerm.Rule = component | bitTerm + "|" + component | bitTerm + "&" + component | bitTerm + "^" + component;
             term.Rule = bitTerm | term + "*" + bitTerm | term + "/" + bitTerm | term + "%" + bitTerm;            
             expression.Rule = term | expression + "+" + term | expression + "-" + term;
 
             // Fields
 
-            type.Rule = intTypeName | floatTypeName;
+            intTypeName.Rule = ToTerm(TYPE_BYTE) | TYPE_SBYTE | TYPE_SHORT | TYPE_USHORT | TYPE_INT | TYPE_UINT | TYPE_LONG | TYPE_ULONG;
+            floatTypeName.Rule = ToTerm(TYPE_FLOAT) | TYPE_DOUBLE;
+            specialTypeName.Rule = ToTerm(TYPE_CHAR) | TYPE_SKIP;
+            type.Rule = intTypeName | floatTypeName | specialTypeName;
             builtinField.Rule = type + identifier + ToTerm(";");
             customField.Rule = identifier + identifier + ToTerm(";");
             builtinArrayField.Rule = type + ToTerm("[") + expression + "]" + identifier + ";";
@@ -120,12 +131,16 @@ namespace Dev.Editor.BinAnalyzer.Grammar
 
             structDef.Rule = ToTerm("struct") + identifier + "{" + statements + "}" + ";";
 
-            definition.Rule = structDef;
+            enumDef.Rule = ToTerm("enum") + identifier + ":" + intTypeName + "{" + enumItemsDef + "}" + ";";
+            enumItemDef.Rule = identifier + "=" + intNumber | identifier + "=" + uintNumber;
+            enumItemsDef.Rule = MakePlusRule(enumItemsDef, ToTerm(","), enumItemDef);
+
+            definition.Rule = structDef | enumDef;
             MakeStarRule(definitions, definition);
 
             program.Rule = definitions + statements;
 
-            MarkPunctuation(",", ";", "{", "}", "[", "]", "=", "struct", "enum", "let", "show", "as");
+            MarkPunctuation(",", ";", ":", "{", "}", "[", "]", "=", "struct", "enum", "let", "show", "as");
 
             Root = program;
         }

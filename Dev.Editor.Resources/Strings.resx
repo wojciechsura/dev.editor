@@ -490,4 +490,13 @@
   <data name="Message.CannotOpenBinFile" xml:space="preserve">
     <value>Cannot open binary file. See Messages window for details.</value>
   </data>
+  <data name="Message.SyntaxError.InvalidUnsignedIntegerValue" xml:space="preserve">
+    <value>Invalid unsigned integer value: {0}!</value>
+  </data>
+  <data name="Message.SyntaxError.InvalidUnsignedEnumItem" xml:space="preserve">
+    <value>Unsigned-type enum should contain only unsigned int values (with suffix "u")!</value>
+  </data>
+  <data name="Message.SyntaxError.InvalidSignedEnumItem" xml:space="preserve">
+    <value>Signed-type enum should contain only signed int values!</value>
+  </data>
 </root>

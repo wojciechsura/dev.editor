@@ -83,7 +83,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions
                     // Insert to viewmodel to display
 
                     i = 0;
-                    while (i < binDefinitions.Count && binDefinitions[i].Name.CompareTo(binDefinition.DefinitionName) < 0)
+                    while (i < binDefinitions.Count && binDefinitions[i].Name.CompareTo(binDefinition.DefinitionName.Value) < 0)
                         i++;
 
                     var defViewModel = new BinDefinitionViewModel(binDefinition);

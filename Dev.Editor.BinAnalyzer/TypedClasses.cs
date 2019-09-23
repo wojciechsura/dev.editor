@@ -1,46 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.IO;
 using Dev.Editor.BinAnalyzer.Data;
 using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions;
 using Dev.Editor.BinAnalyzer.Exceptions;
 using Dev.Editor.Resources;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions;
+
 
 namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
-    class ByteFieldStatement : BaseFieldStatement
-    {
-        public ByteFieldStatement(int line, int column, string name)
-            : base(line, column, name)
-        {
-            
-        }
-
-        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-        {
-            try
-            {
-                if (reader.BaseStream.Position + sizeof(byte) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
-                byte value = reader.ReadByte();
-
-                var data = new ByteData(name, value);
-                result.Add(data);
-                scope.AddContent(name, data);
-            }
-            catch (BaseLocalizedException e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
-            }
-            catch (Exception e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
-            }
-        }
-    }
-
     class SbyteFieldStatement : BaseFieldStatement
     {
         public SbyteFieldStatement(int line, int column, string name)
@@ -105,38 +76,6 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         }
     }
 
-    class UshortFieldStatement : BaseFieldStatement
-    {
-        public UshortFieldStatement(int line, int column, string name)
-            : base(line, column, name)
-        {
-            
-        }
-
-        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-        {
-            try
-            {
-                if (reader.BaseStream.Position + sizeof(ushort) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
-                ushort value = reader.ReadUInt16();
-
-                var data = new UshortData(name, value);
-                result.Add(data);
-                scope.AddContent(name, data);
-            }
-            catch (BaseLocalizedException e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
-            }
-            catch (Exception e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
-            }
-        }
-    }
-
     class IntFieldStatement : BaseFieldStatement
     {
         public IntFieldStatement(int line, int column, string name)
@@ -169,38 +108,6 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         }
     }
 
-    class UintFieldStatement : BaseFieldStatement
-    {
-        public UintFieldStatement(int line, int column, string name)
-            : base(line, column, name)
-        {
-            
-        }
-
-        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-        {
-            try
-            {
-                if (reader.BaseStream.Position + sizeof(uint) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
-                uint value = reader.ReadUInt32();
-
-                var data = new UintData(name, value);
-                result.Add(data);
-                scope.AddContent(name, data);
-            }
-            catch (BaseLocalizedException e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
-            }
-            catch (Exception e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
-            }
-        }
-    }
-
     class LongFieldStatement : BaseFieldStatement
     {
         public LongFieldStatement(int line, int column, string name)
@@ -219,6 +126,102 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 long value = reader.ReadInt64();
 
                 var data = new LongData(name, value);
+                result.Add(data);
+                scope.AddContent(name, data);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+    class ByteFieldStatement : BaseFieldStatement
+    {
+        public ByteFieldStatement(int line, int column, string name)
+            : base(line, column, name)
+        {
+            
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                if (reader.BaseStream.Position + sizeof(byte) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                byte value = reader.ReadByte();
+
+                var data = new ByteData(name, value);
+                result.Add(data);
+                scope.AddContent(name, data);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+    class UshortFieldStatement : BaseFieldStatement
+    {
+        public UshortFieldStatement(int line, int column, string name)
+            : base(line, column, name)
+        {
+            
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                if (reader.BaseStream.Position + sizeof(ushort) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                ushort value = reader.ReadUInt16();
+
+                var data = new UshortData(name, value);
+                result.Add(data);
+                scope.AddContent(name, data);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+    class UintFieldStatement : BaseFieldStatement
+    {
+        public UintFieldStatement(int line, int column, string name)
+            : base(line, column, name)
+        {
+            
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                if (reader.BaseStream.Position + sizeof(uint) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                uint value = reader.ReadUInt32();
+
+                var data = new UintData(name, value);
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -329,50 +332,6 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         }
     }
 
-    class ByteArrayFieldStatement : BaseFieldStatement
-    {
-        private readonly Expression count;
-
-        public ByteArrayFieldStatement(int line, int column, string name, Expression count)
-            : base(line, column, name)
-        {
-            this.count = count;
-        }
-
-        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-        {
-            try
-            {
-                dynamic countValue = count.Eval(scope);
-                int countInt = (int)countValue;
-                
-                if (reader.BaseStream.Position + sizeof(byte) * countInt >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
-                ByteData[] data = new ByteData[countInt];
-                for (int i = 0; i < countInt; i++)
-                {
-                    byte value = reader.ReadByte();
-                    var element = new ByteData(i.ToString(), value);
-                    data[i] = element;
-                }
-
-                ArrayData<ByteData> item = new ArrayData<ByteData>(name, "Byte", data);
-
-                result.Add(item);
-                scope.AddContent(name, item);
-            }
-            catch (BaseLocalizedException e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
-            }
-            catch (Exception e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
-            }
-        }
-    }
-
     class SbyteArrayFieldStatement : BaseFieldStatement
     {
         private readonly Expression count;
@@ -393,7 +352,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 if (reader.BaseStream.Position + sizeof(sbyte) * countInt >= reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
-                SbyteData[] data = new SbyteData[countInt];
+                var data = new SbyteData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
                     sbyte value = reader.ReadSByte();
@@ -401,7 +360,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                     data[i] = element;
                 }
 
-                ArrayData<SbyteData> item = new ArrayData<SbyteData>(name, "Sbyte", data);
+                var item = new ArrayData<SbyteData>(name, "Sbyte", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -437,7 +396,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 if (reader.BaseStream.Position + sizeof(short) * countInt >= reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
-                ShortData[] data = new ShortData[countInt];
+                var data = new ShortData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
                     short value = reader.ReadInt16();
@@ -445,51 +404,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                     data[i] = element;
                 }
 
-                ArrayData<ShortData> item = new ArrayData<ShortData>(name, "Short", data);
-
-                result.Add(item);
-                scope.AddContent(name, item);
-            }
-            catch (BaseLocalizedException e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
-            }
-            catch (Exception e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
-            }
-        }
-    }
-
-    class UshortArrayFieldStatement : BaseFieldStatement
-    {
-        private readonly Expression count;
-
-        public UshortArrayFieldStatement(int line, int column, string name, Expression count)
-            : base(line, column, name)
-        {
-            this.count = count;
-        }
-
-        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-        {
-            try
-            {
-                dynamic countValue = count.Eval(scope);
-                int countInt = (int)countValue;
-                
-                if (reader.BaseStream.Position + sizeof(ushort) * countInt >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
-                UshortData[] data = new UshortData[countInt];
-                for (int i = 0; i < countInt; i++)
-                {
-                    ushort value = reader.ReadUInt16();
-                    var element = new UshortData(i.ToString(), value);
-                    data[i] = element;
-                }
-
-                ArrayData<UshortData> item = new ArrayData<UshortData>(name, "Ushort", data);
+                var item = new ArrayData<ShortData>(name, "Short", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -525,7 +440,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 if (reader.BaseStream.Position + sizeof(int) * countInt >= reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
-                IntData[] data = new IntData[countInt];
+                var data = new IntData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
                     int value = reader.ReadInt32();
@@ -533,51 +448,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                     data[i] = element;
                 }
 
-                ArrayData<IntData> item = new ArrayData<IntData>(name, "Int", data);
-
-                result.Add(item);
-                scope.AddContent(name, item);
-            }
-            catch (BaseLocalizedException e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
-            }
-            catch (Exception e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
-            }
-        }
-    }
-
-    class UintArrayFieldStatement : BaseFieldStatement
-    {
-        private readonly Expression count;
-
-        public UintArrayFieldStatement(int line, int column, string name, Expression count)
-            : base(line, column, name)
-        {
-            this.count = count;
-        }
-
-        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-        {
-            try
-            {
-                dynamic countValue = count.Eval(scope);
-                int countInt = (int)countValue;
-                
-                if (reader.BaseStream.Position + sizeof(uint) * countInt >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
-                UintData[] data = new UintData[countInt];
-                for (int i = 0; i < countInt; i++)
-                {
-                    uint value = reader.ReadUInt32();
-                    var element = new UintData(i.ToString(), value);
-                    data[i] = element;
-                }
-
-                ArrayData<UintData> item = new ArrayData<UintData>(name, "Uint", data);
+                var item = new ArrayData<IntData>(name, "Int", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -613,7 +484,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 if (reader.BaseStream.Position + sizeof(long) * countInt >= reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
-                LongData[] data = new LongData[countInt];
+                var data = new LongData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
                     long value = reader.ReadInt64();
@@ -621,7 +492,139 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                     data[i] = element;
                 }
 
-                ArrayData<LongData> item = new ArrayData<LongData>(name, "Long", data);
+                var item = new ArrayData<LongData>(name, "Long", data);
+
+                result.Add(item);
+                scope.AddContent(name, item);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+    class ByteArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
+
+        public ByteArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
+        {
+            this.count = count;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                if (reader.BaseStream.Position + sizeof(byte) * countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                var data = new ByteData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    byte value = reader.ReadByte();
+                    var element = new ByteData(i.ToString(), value);
+                    data[i] = element;
+                }
+
+                var item = new ArrayData<ByteData>(name, "Byte", data);
+
+                result.Add(item);
+                scope.AddContent(name, item);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+    class UshortArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
+
+        public UshortArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
+        {
+            this.count = count;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                if (reader.BaseStream.Position + sizeof(ushort) * countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                var data = new UshortData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    ushort value = reader.ReadUInt16();
+                    var element = new UshortData(i.ToString(), value);
+                    data[i] = element;
+                }
+
+                var item = new ArrayData<UshortData>(name, "Ushort", data);
+
+                result.Add(item);
+                scope.AddContent(name, item);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+    class UintArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
+
+        public UintArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
+        {
+            this.count = count;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                if (reader.BaseStream.Position + sizeof(uint) * countInt >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                var data = new UintData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    uint value = reader.ReadUInt32();
+                    var element = new UintData(i.ToString(), value);
+                    data[i] = element;
+                }
+
+                var item = new ArrayData<UintData>(name, "Uint", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -657,7 +660,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 if (reader.BaseStream.Position + sizeof(ulong) * countInt >= reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
-                UlongData[] data = new UlongData[countInt];
+                var data = new UlongData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
                     ulong value = reader.ReadUInt64();
@@ -665,7 +668,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                     data[i] = element;
                 }
 
-                ArrayData<UlongData> item = new ArrayData<UlongData>(name, "Ulong", data);
+                var item = new ArrayData<UlongData>(name, "Ulong", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -701,7 +704,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 if (reader.BaseStream.Position + sizeof(float) * countInt >= reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
-                FloatData[] data = new FloatData[countInt];
+                var data = new FloatData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
                     float value = reader.ReadSingle();
@@ -709,7 +712,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                     data[i] = element;
                 }
 
-                ArrayData<FloatData> item = new ArrayData<FloatData>(name, "Float", data);
+                var item = new ArrayData<FloatData>(name, "Float", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -745,7 +748,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 if (reader.BaseStream.Position + sizeof(double) * countInt >= reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
-                DoubleData[] data = new DoubleData[countInt];
+                var data = new DoubleData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
                     double value = reader.ReadDouble();
@@ -753,7 +756,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                     data[i] = element;
                 }
 
-                ArrayData<DoubleData> item = new ArrayData<DoubleData>(name, "Double", data);
+                var item = new ArrayData<DoubleData>(name, "Double", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -769,26 +772,323 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         }
     }
 
+
+    class SbyteEnumFieldStatement : BaseFieldStatement
+    {
+        private readonly SignedEnumDefinition enumDef;
+
+        public SbyteEnumFieldStatement(int line, int column, string name, SignedEnumDefinition enumDef)
+            : base(line, column, name)
+        {
+            this.enumDef = enumDef;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                if (reader.BaseStream.Position + sizeof(sbyte) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                sbyte value = reader.ReadSByte();
+
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                
+                var data = new SbyteEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                result.Add(data);
+                scope.AddContent(name, data);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+
+    class ShortEnumFieldStatement : BaseFieldStatement
+    {
+        private readonly SignedEnumDefinition enumDef;
+
+        public ShortEnumFieldStatement(int line, int column, string name, SignedEnumDefinition enumDef)
+            : base(line, column, name)
+        {
+            this.enumDef = enumDef;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                if (reader.BaseStream.Position + sizeof(short) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                short value = reader.ReadInt16();
+
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                
+                var data = new ShortEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                result.Add(data);
+                scope.AddContent(name, data);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+
+    class IntEnumFieldStatement : BaseFieldStatement
+    {
+        private readonly SignedEnumDefinition enumDef;
+
+        public IntEnumFieldStatement(int line, int column, string name, SignedEnumDefinition enumDef)
+            : base(line, column, name)
+        {
+            this.enumDef = enumDef;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                if (reader.BaseStream.Position + sizeof(int) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                int value = reader.ReadInt32();
+
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                
+                var data = new IntEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                result.Add(data);
+                scope.AddContent(name, data);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+
+    class LongEnumFieldStatement : BaseFieldStatement
+    {
+        private readonly SignedEnumDefinition enumDef;
+
+        public LongEnumFieldStatement(int line, int column, string name, SignedEnumDefinition enumDef)
+            : base(line, column, name)
+        {
+            this.enumDef = enumDef;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                if (reader.BaseStream.Position + sizeof(long) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                long value = reader.ReadInt64();
+
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                
+                var data = new LongEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                result.Add(data);
+                scope.AddContent(name, data);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+
+    class ByteEnumFieldStatement : BaseFieldStatement
+    {
+        private readonly UnsignedEnumDefinition enumDef;
+
+        public ByteEnumFieldStatement(int line, int column, string name, UnsignedEnumDefinition enumDef)
+            : base(line, column, name)
+        {
+            this.enumDef = enumDef;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                if (reader.BaseStream.Position + sizeof(byte) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                byte value = reader.ReadByte();
+
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                
+                var data = new ByteEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                result.Add(data);
+                scope.AddContent(name, data);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+
+    class UshortEnumFieldStatement : BaseFieldStatement
+    {
+        private readonly UnsignedEnumDefinition enumDef;
+
+        public UshortEnumFieldStatement(int line, int column, string name, UnsignedEnumDefinition enumDef)
+            : base(line, column, name)
+        {
+            this.enumDef = enumDef;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                if (reader.BaseStream.Position + sizeof(ushort) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                ushort value = reader.ReadUInt16();
+
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                
+                var data = new UshortEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                result.Add(data);
+                scope.AddContent(name, data);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+
+    class UintEnumFieldStatement : BaseFieldStatement
+    {
+        private readonly UnsignedEnumDefinition enumDef;
+
+        public UintEnumFieldStatement(int line, int column, string name, UnsignedEnumDefinition enumDef)
+            : base(line, column, name)
+        {
+            this.enumDef = enumDef;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                if (reader.BaseStream.Position + sizeof(uint) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                uint value = reader.ReadUInt32();
+
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                
+                var data = new UintEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                result.Add(data);
+                scope.AddContent(name, data);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+
+    class UlongEnumFieldStatement : BaseFieldStatement
+    {
+        private readonly UnsignedEnumDefinition enumDef;
+
+        public UlongEnumFieldStatement(int line, int column, string name, UnsignedEnumDefinition enumDef)
+            : base(line, column, name)
+        {
+            this.enumDef = enumDef;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                if (reader.BaseStream.Position + sizeof(ulong) >= reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+
+                ulong value = reader.ReadUInt64();
+
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                
+                var data = new UlongEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                result.Add(data);
+                scope.AddContent(name, data);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+
     class FieldFactory
     {
         public static BaseFieldStatement FromTypeName(int line, int column, string typeName, string name)
         {
             switch (typeName)
             {
-                case "byte":
-                    return new ByteFieldStatement(line, column, name);
                 case "sbyte":
                     return new SbyteFieldStatement(line, column, name);
                 case "short":
                     return new ShortFieldStatement(line, column, name);
-                case "ushort":
-                    return new UshortFieldStatement(line, column, name);
                 case "int":
                     return new IntFieldStatement(line, column, name);
-                case "uint":
-                    return new UintFieldStatement(line, column, name);
                 case "long":
                     return new LongFieldStatement(line, column, name);
+                case "byte":
+                    return new ByteFieldStatement(line, column, name);
+                case "ushort":
+                    return new UshortFieldStatement(line, column, name);
+                case "uint":
+                    return new UintFieldStatement(line, column, name);
                 case "ulong":
                     return new UlongFieldStatement(line, column, name);
                 case "float":
@@ -802,6 +1102,40 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                 default:
                     throw new InvalidEnumArgumentException("Unsupported type name!");
             }
+        }        
+
+        public static BaseFieldStatement FromSignedEnumTypeName(int line, int column, string name, SignedEnumDefinition signedEnumDef)
+        {
+            switch (signedEnumDef.Type)
+            {
+                case "sbyte":
+                    return new SbyteEnumFieldStatement(line, column, name, signedEnumDef);
+                case "short":
+                    return new ShortEnumFieldStatement(line, column, name, signedEnumDef);
+                case "int":
+                    return new IntEnumFieldStatement(line, column, name, signedEnumDef);
+                case "long":
+                    return new LongEnumFieldStatement(line, column, name, signedEnumDef);
+                default:
+                    throw new InvalidEnumArgumentException("Unsupported type name!");
+            }
+        }
+
+        public static BaseFieldStatement FromUnsignedEnumTypeName(int line, int column, string name, UnsignedEnumDefinition unsignedEnumDef)
+        {
+            switch (unsignedEnumDef.Type)
+            {
+                case "byte":
+                    return new ByteEnumFieldStatement(line, column, name, unsignedEnumDef);
+                case "ushort":
+                    return new UshortEnumFieldStatement(line, column, name, unsignedEnumDef);
+                case "uint":
+                    return new UintEnumFieldStatement(line, column, name, unsignedEnumDef);
+                case "ulong":
+                    return new UlongEnumFieldStatement(line, column, name, unsignedEnumDef);
+                default:
+                    throw new InvalidEnumArgumentException("Unsupported type name!");
+            }
         }
     }
 
@@ -811,20 +1145,20 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             switch (typeName)
             {
-                case "byte":
-                    return new ByteArrayFieldStatement(line, column, name, count);
                 case "sbyte":
                     return new SbyteArrayFieldStatement(line, column, name, count);
                 case "short":
                     return new ShortArrayFieldStatement(line, column, name, count);
-                case "ushort":
-                    return new UshortArrayFieldStatement(line, column, name, count);
                 case "int":
                     return new IntArrayFieldStatement(line, column, name, count);
-                case "uint":
-                    return new UintArrayFieldStatement(line, column, name, count);
                 case "long":
                     return new LongArrayFieldStatement(line, column, name, count);
+                case "byte":
+                    return new ByteArrayFieldStatement(line, column, name, count);
+                case "ushort":
+                    return new UshortArrayFieldStatement(line, column, name, count);
+                case "uint":
+                    return new UintArrayFieldStatement(line, column, name, count);
                 case "ulong":
                     return new UlongArrayFieldStatement(line, column, name, count);
                 case "float":
@@ -844,22 +1178,6 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
 namespace Dev.Editor.BinAnalyzer.Data
 {
-    public class ByteData : BaseValueData
-    {       
-        private readonly byte value;
-
-        public ByteData(string name, byte value)
-            : base(name, "byte")
-        {
-            this.value = value;
-        }
-
-        public override dynamic GetValue()
-        {
-            return value;
-        }
-    }
-
     public class SbyteData : BaseValueData
     {       
         private readonly sbyte value;
@@ -892,22 +1210,6 @@ namespace Dev.Editor.BinAnalyzer.Data
         }
     }
 
-    public class UshortData : BaseValueData
-    {       
-        private readonly ushort value;
-
-        public UshortData(string name, ushort value)
-            : base(name, "ushort")
-        {
-            this.value = value;
-        }
-
-        public override dynamic GetValue()
-        {
-            return value;
-        }
-    }
-
     public class IntData : BaseValueData
     {       
         private readonly int value;
@@ -924,12 +1226,12 @@ namespace Dev.Editor.BinAnalyzer.Data
         }
     }
 
-    public class UintData : BaseValueData
+    public class LongData : BaseValueData
     {       
-        private readonly uint value;
+        private readonly long value;
 
-        public UintData(string name, uint value)
-            : base(name, "uint")
+        public LongData(string name, long value)
+            : base(name, "long")
         {
             this.value = value;
         }
@@ -940,12 +1242,44 @@ namespace Dev.Editor.BinAnalyzer.Data
         }
     }
 
-    public class LongData : BaseValueData
+    public class ByteData : BaseValueData
     {       
-        private readonly long value;
+        private readonly byte value;
 
-        public LongData(string name, long value)
-            : base(name, "long")
+        public ByteData(string name, byte value)
+            : base(name, "byte")
+        {
+            this.value = value;
+        }
+
+        public override dynamic GetValue()
+        {
+            return value;
+        }
+    }
+
+    public class UshortData : BaseValueData
+    {       
+        private readonly ushort value;
+
+        public UshortData(string name, ushort value)
+            : base(name, "ushort")
+        {
+            this.value = value;
+        }
+
+        public override dynamic GetValue()
+        {
+            return value;
+        }
+    }
+
+    public class UintData : BaseValueData
+    {       
+        private readonly uint value;
+
+        public UintData(string name, uint value)
+            : base(name, "uint")
         {
             this.value = value;
         }
@@ -1005,24 +1339,191 @@ namespace Dev.Editor.BinAnalyzer.Data
     }
 
 
+    public class SbyteEnumData : BaseValueData
+    {
+        private readonly sbyte value;
+        private readonly string enumValue;
+
+        public SbyteEnumData(string name, string enumName, sbyte value, string enumValue)
+            : base(name, $"{enumName} : byte")
+        {
+            this.value = value;
+            this.enumValue = enumValue;
+        }
+
+        public override dynamic GetValue()
+        {
+            return value;
+        }
+
+        public override string Value => enumValue;
+    }
+
+
+    public class ShortEnumData : BaseValueData
+    {
+        private readonly short value;
+        private readonly string enumValue;
+
+        public ShortEnumData(string name, string enumName, short value, string enumValue)
+            : base(name, $"{enumName} : byte")
+        {
+            this.value = value;
+            this.enumValue = enumValue;
+        }
+
+        public override dynamic GetValue()
+        {
+            return value;
+        }
+
+        public override string Value => enumValue;
+    }
+
+
+    public class IntEnumData : BaseValueData
+    {
+        private readonly int value;
+        private readonly string enumValue;
+
+        public IntEnumData(string name, string enumName, int value, string enumValue)
+            : base(name, $"{enumName} : byte")
+        {
+            this.value = value;
+            this.enumValue = enumValue;
+        }
+
+        public override dynamic GetValue()
+        {
+            return value;
+        }
+
+        public override string Value => enumValue;
+    }
+
+
+    public class LongEnumData : BaseValueData
+    {
+        private readonly long value;
+        private readonly string enumValue;
+
+        public LongEnumData(string name, string enumName, long value, string enumValue)
+            : base(name, $"{enumName} : byte")
+        {
+            this.value = value;
+            this.enumValue = enumValue;
+        }
+
+        public override dynamic GetValue()
+        {
+            return value;
+        }
+
+        public override string Value => enumValue;
+    }
+
+
+    public class ByteEnumData : BaseValueData
+    {
+        private readonly byte value;
+        private readonly string enumValue;
+
+        public ByteEnumData(string name, string enumName, byte value, string enumValue)
+            : base(name, $"{enumName} : byte")
+        {
+            this.value = value;
+            this.enumValue = enumValue;
+        }
+
+        public override dynamic GetValue()
+        {
+            return value;
+        }
+
+        public override string Value => enumValue;
+    }
+
+
+    public class UshortEnumData : BaseValueData
+    {
+        private readonly ushort value;
+        private readonly string enumValue;
+
+        public UshortEnumData(string name, string enumName, ushort value, string enumValue)
+            : base(name, $"{enumName} : byte")
+        {
+            this.value = value;
+            this.enumValue = enumValue;
+        }
+
+        public override dynamic GetValue()
+        {
+            return value;
+        }
+
+        public override string Value => enumValue;
+    }
+
+
+    public class UintEnumData : BaseValueData
+    {
+        private readonly uint value;
+        private readonly string enumValue;
+
+        public UintEnumData(string name, string enumName, uint value, string enumValue)
+            : base(name, $"{enumName} : byte")
+        {
+            this.value = value;
+            this.enumValue = enumValue;
+        }
+
+        public override dynamic GetValue()
+        {
+            return value;
+        }
+
+        public override string Value => enumValue;
+    }
+
+
+    public class UlongEnumData : BaseValueData
+    {
+        private readonly ulong value;
+        private readonly string enumValue;
+
+        public UlongEnumData(string name, string enumName, ulong value, string enumValue)
+            : base(name, $"{enumName} : byte")
+        {
+            this.value = value;
+            this.enumValue = enumValue;
+        }
+
+        public override dynamic GetValue()
+        {
+            return value;
+        }
+
+        public override string Value => enumValue;
+    }
+
     public class DataFactory
     {
         public static BaseData DataFromDynamic(string name, dynamic d)
         {
-            if (d is byte byteDynamic)
-                return new ByteData(name, byteDynamic);
-            else if (d is sbyte sbyteDynamic)
+            if (d is sbyte sbyteDynamic)
                 return new SbyteData(name, sbyteDynamic);
             else if (d is short shortDynamic)
                 return new ShortData(name, shortDynamic);
-            else if (d is ushort ushortDynamic)
-                return new UshortData(name, ushortDynamic);
             else if (d is int intDynamic)
                 return new IntData(name, intDynamic);
-            else if (d is uint uintDynamic)
-                return new UintData(name, uintDynamic);
             else if (d is long longDynamic)
                 return new LongData(name, longDynamic);
+            else if (d is byte byteDynamic)
+                return new ByteData(name, byteDynamic);
+            else if (d is ushort ushortDynamic)
+                return new UshortData(name, ushortDynamic);
+            else if (d is uint uintDynamic)
+                return new UintData(name, uintDynamic);
             else if (d is ulong ulongDynamic)
                 return new UlongData(name, ulongDynamic);
             else if (d is float floatDynamic)

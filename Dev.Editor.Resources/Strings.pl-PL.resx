@@ -490,4 +490,13 @@
   <data name="Message.CannotOpenBinFile" xml:space="preserve">
     <value>Nie mogę otworzyć pliku binarnego. Szczegóły w oknie wiadomości.</value>
   </data>
+  <data name="Message.SyntaxError.InvalidUnsignedIntegerValue" xml:space="preserve">
+    <value>Nieprawidłowa liczba całkowita bez znaku: {0}!</value>
+  </data>
+  <data name="Message.SyntaxError.InvalidSignedEnumItem" xml:space="preserve">
+    <value>Typ wyliczeniowy ze znakiem powinien zawierać tylko wartości ze znakiem!</value>
+  </data>
+  <data name="Message.SyntaxError.InvalidUnsignedEnumItem" xml:space="preserve">
+    <value>Typ wyliczeniowy bez znaku powinien zawierać tylko wartości bez znaku (z sufiksem "u")!</value>
+  </data>
 </root>

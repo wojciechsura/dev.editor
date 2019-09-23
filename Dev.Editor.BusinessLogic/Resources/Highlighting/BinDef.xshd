@@ -16,6 +16,7 @@
   <RuleSet ignoreCase="false">
 		<Keywords color="Keywords">
 			<Word>as</Word>
+      <Word>enum</Word>
 			<Word>struct</Word>
 		</Keywords>
     
