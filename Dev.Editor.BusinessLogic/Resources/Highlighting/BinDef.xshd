@@ -18,7 +18,11 @@
 			<Word>as</Word>
       <Word>enum</Word>
 			<Word>struct</Word>
-		</Keywords>
+      <Word>let</Word>
+      <Word>show</Word>
+      <Word>as</Word>
+      <Word>if</Word>
+    </Keywords>
     
 		<Keywords color="BuiltinTypes">
 			<Word>byte</Word>
@@ -35,12 +39,7 @@
 			<Word>ushort</Word>
     </Keywords>
 
-    <Keywords color="Keywords">
-      <Word>let</Word>
-      <Word>show</Word>
-      <Word>as</Word>
-    </Keywords>
-    
+   
 		<Keywords color="Operators">
 			<Word>-</Word>
 			<Word>%</Word>

@@ -502,4 +502,7 @@
   <data name="Message.SyntaxError.EnumItemValueDuplicated" xml:space="preserve">
     <value>Enum item with value {0} already exists!</value>
   </data>
+  <data name="Message.AnalysisError.InvalidIfCondition" xml:space="preserve">
+    <value>Condition in if statement must evaluate to bool value!</value>
+  </data>
 </root>

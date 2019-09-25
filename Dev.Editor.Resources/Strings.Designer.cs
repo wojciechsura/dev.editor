@@ -286,6 +286,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Condition in if statement must evaluate to bool value!.
+        /// </summary>
+        public static string Message_AnalysisError_InvalidIfCondition {
+            get {
+                return ResourceManager.GetString("Message.AnalysisError.InvalidIfCondition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unexpected end of file!.
         /// </summary>
         public static string Message_AnalysisError_UnexpectedEndOfStream {

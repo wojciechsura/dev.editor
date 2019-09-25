@@ -47,6 +47,7 @@ namespace Dev.Editor.BinAnalyzer.Grammar
         public const string CUSTOM_FIELD = "customField";
         public const string BUILTIN_ARRAY_FIELD = "builtinArrayField";
         public const string CUSTOM_ARRAY_FIELD = "customArrayField";
+        public const string IF_STATEMENT = "if";
         public const string ASSIGNMENT = "assignment";
         public const string SHOW_STATEMENT = "showStatement";
         public const string STATEMENT = "statement";
@@ -89,6 +90,7 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             var customField = new NonTerminal(CUSTOM_FIELD);
             var builtinArrayField = new NonTerminal(BUILTIN_ARRAY_FIELD);
             var customArrayField = new NonTerminal(CUSTOM_ARRAY_FIELD);
+            var ifStatement = new NonTerminal(IF_STATEMENT);
             var assignment = new NonTerminal(ASSIGNMENT);
             var showStatement = new NonTerminal(SHOW_STATEMENT);
             var statement = new NonTerminal(STATEMENT);
@@ -131,9 +133,10 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             customField.Rule = identifier + identifier + ToTerm(";");
             builtinArrayField.Rule = type + ToTerm("[") + expression + "]" + identifier + ";";
             customArrayField.Rule = identifier + "[" + expression + "]" + identifier + ";";
+            ifStatement.Rule = ToTerm("if") + "(" + expression + ")" + "{" + statements + "}";
             assignment.Rule = ToTerm("let") + identifier + "=" + expression + ";";
             showStatement.Rule = ToTerm("show") + expression + ToTerm("as") + identifier + ";";
-            statement.Rule = builtinField | customField | builtinArrayField | customArrayField | assignment | showStatement;
+            statement.Rule = builtinField | customField | builtinArrayField | customArrayField | assignment | showStatement | ifStatement;
             MakePlusRule(statements, statement);
 
             // Definitions
@@ -149,7 +152,7 @@ namespace Dev.Editor.BinAnalyzer.Grammar
 
             program.Rule = definitions + statements;
 
-            MarkPunctuation(",", ";", ":", "{", "}", "[", "]", "=", "struct", "enum", "let", "show", "as");
+            MarkPunctuation(",", ";", ":", "{", "}", "[", "]", "(", ")", "=", "struct", "enum", "let", "show", "as", "if");
 
             Root = program;
         }

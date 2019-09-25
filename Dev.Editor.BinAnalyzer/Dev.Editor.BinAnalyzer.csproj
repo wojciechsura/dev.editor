@@ -50,6 +50,7 @@
     <Compile Include="AnalyzerDefinition\Definitions\UnsignedEnumItem.cs" />
     <Compile Include="AnalyzerDefinition\Statements\CharArrayFieldStatement.cs" />
     <Compile Include="AnalyzerDefinition\Statements\CharFieldStatement.cs" />
+    <Compile Include="AnalyzerDefinition\Statements\IfStatement.cs" />
     <Compile Include="Compiler.cs" />
     <Compile Include="Data\BoolData.cs" />
     <Compile Include="Data\CharArrayData.cs" />

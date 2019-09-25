@@ -502,4 +502,7 @@
   <data name="Message.SyntaxError.EnumItemValueDuplicated" xml:space="preserve">
     <value>Element typu wyliczeniowego o wartości {0} już istnieje!</value>
   </data>
+  <data name="Message.AnalysisError.InvalidIfCondition" xml:space="preserve">
+    <value>Wyrażenie warunkowe musi obliczyć się do wartości typu bool!</value>
+  </data>
 </root>

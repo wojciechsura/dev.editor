@@ -240,10 +240,8 @@ namespace Dev.Editor.BinAnalyzer
                 return InternalProcessBoolValue(parseTreeNode.ChildNodes[0]);
             if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.QUALIFIED_IDENTIFIER))
                 return InternalProcessQualifiedIdentifier(parseTreeNode.ChildNodes[0]);
-
-            if (parseTreeNode.ChildNodes[0].Token.Text.Equals("(") &&
-                parseTreeNode.ChildNodes[2].Token.Text.Equals(")"))
-                return InternalProcessExpression(parseTreeNode.ChildNodes[1]);
+            if (parseTreeNode.ChildNodes[0].Term.Name.Equals(BinAnalyzerGrammar.EXPRESSION))
+                return InternalProcessExpression(parseTreeNode.ChildNodes[0]);
 
             throw new InvalidOperationException("Invalid Component definition!");
         }
@@ -521,6 +519,14 @@ namespace Dev.Editor.BinAnalyzer
                             string.Format(Strings.Message_SyntaxError_FieldAlreadyExists, alias));
 
                     var statement = new ShowStatement(current.Span.Location.Line, current.Span.Location.Column, expression, alias);
+                    result.Add(statement);
+                }
+                else if (current.Term.Name.Equals(BinAnalyzerGrammar.IF_STATEMENT))
+                {
+                    Expression expression = ProcessExpression(current.ChildNodes[0]);
+                    var statements = ProcessStatements(current.ChildNodes[1], definitions);
+
+                    var statement = new IfStatement(current.Span.Location.Line, current.Span.Location.Column, expression, statements);
                     result.Add(statement);
                 }
                 else

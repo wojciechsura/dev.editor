@@ -51,6 +51,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Expressions
 
                 var child = structData.Children.FirstOrDefault(x => x.Name.Equals(identifier[i]));
                 data = child ?? throw new EvalException(Line, Column, "Cannot access member!", string.Format(Strings.Message_EvalError_CannotAccessMember, identifier[i - 1], identifier[i]));
+
+                i++;
             }
 
             if (!(data is BaseValueData valueData))
