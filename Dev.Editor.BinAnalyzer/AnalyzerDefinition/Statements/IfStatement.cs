@@ -13,31 +13,42 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
     class IfStatement : BaseStatement
     {
-        private readonly Expression condition;
-        private readonly List<BaseStatement> statements;
+        private List<(Expression condition, List<BaseStatement> statements)> conditions;
+        private List<BaseStatement> elseStatements;
 
-        public IfStatement(int line, int column, Expression condition, List<BaseStatement> statements)
+        public IfStatement(int line, int column, List<(Expression condition, List<BaseStatement> statements)> conditions, List<BaseStatement> elseStatements)
             : base(line, column)
         {
-            this.condition = condition;
-            this.statements = statements;
+            this.conditions = conditions;
+            this.elseStatements = elseStatements;
         }
 
         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
         {
-            dynamic value = condition.Eval(scope);
-
-            if (value is bool boolValue)
+            for (int i = 0; i < conditions.Count; i++)
             {
-                if (boolValue)
+                dynamic value = conditions[i].condition.Eval(scope);
+
+                if (value is bool boolValue)
                 {
-                    for (int i = 0; i < statements.Count; i++)
-                        statements[i].Read(reader, result, scope);
+                    if (boolValue)
+                    {
+                        for (int j = 0; j < conditions[i].statements.Count; j++)
+                            conditions[i].statements[j].Read(reader, result, scope);
+
+                        return;
+                    }
+                }
+                else
+                {
+                    throw new AnalysisException(Line, Column, "If condition does not evaluate to bool!", Strings.Message_AnalysisError_InvalidIfCondition);
                 }
             }
-            else
+
+            if (elseStatements != null)
             {
-                throw new AnalysisException(Line, Column, "If condition does not evaluate to bool!", Strings.Message_AnalysisError_InvalidIfCondition);
+                for (int j = 0; j < elseStatements.Count; j++)
+                    elseStatements[j].Read(reader, result, scope);
             }
         }
     }

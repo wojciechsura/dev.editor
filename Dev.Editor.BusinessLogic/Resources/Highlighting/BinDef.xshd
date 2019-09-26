@@ -22,6 +22,8 @@
       <Word>show</Word>
       <Word>as</Word>
       <Word>if</Word>
+      <Word>elseif</Word>
+      <Word>else</Word>
     </Keywords>
     
 		<Keywords color="BuiltinTypes">

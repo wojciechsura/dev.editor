@@ -523,10 +523,29 @@ namespace Dev.Editor.BinAnalyzer
                 }
                 else if (current.Term.Name.Equals(BinAnalyzerGrammar.IF_STATEMENT))
                 {
-                    Expression expression = ProcessExpression(current.ChildNodes[0]);
-                    var statements = ProcessStatements(current.ChildNodes[1], definitions);
+                    var conditions = new List<(Expression condition, List<BaseStatement> statements)>();
 
-                    var statement = new IfStatement(current.Span.Location.Line, current.Span.Location.Column, expression, statements);
+                    // Regular if condition is required
+                    Expression expression = ProcessExpression(current.ChildNodes[0].ChildNodes[0]);
+                    var statements = ProcessStatements(current.ChildNodes[0].ChildNodes[1], definitions);
+
+                    conditions.Add((expression, statements));
+
+                    for (int j = 0; j < current.ChildNodes[1].ChildNodes.Count; j++)
+                    {
+                        var elseifExpression = ProcessExpression(current.ChildNodes[1].ChildNodes[j].ChildNodes[0]);
+                        var elseifStatements = ProcessStatements(current.ChildNodes[1].ChildNodes[j].ChildNodes[1], definitions);
+
+                        conditions.Add((elseifExpression, elseifStatements));
+                    }
+
+                    List<BaseStatement> elseStatements = null;
+                    if (current.ChildNodes[2].ChildNodes.Count > 0)
+                    {
+                        elseStatements = ProcessStatements(current.ChildNodes[2].ChildNodes[0], definitions);
+                    }
+
+                    var statement = new IfStatement(current.Span.Location.Line, current.Span.Location.Column, conditions, elseStatements);
                     result.Add(statement);
                 }
                 else
