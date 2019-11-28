@@ -1,5 +1,6 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Highlighting;
 using Dev.Editor.BusinessLogic.Types.Folding;
+using Dev.Editor.BusinessLogic.Types.UI;
 using Dev.Editor.Resources;
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
@@ -53,7 +54,8 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
             string resourceName, 
             string iconResourceName, 
             FoldingKind foldingKind,
-            bool hidden = false)
+            bool hidden = false,
+            AdditionalToolset additionalToolset = AdditionalToolset.None)
         {
             ImageSource icon = null;
             if (iconResourceName != null)
@@ -71,7 +73,7 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
                 }
             }
 
-            var info = new HighlightingInfo(name, LoadDefinition(resourceName), icon, foldingKind, hidden);
+            var info = new HighlightingInfo(name, LoadDefinition(resourceName), icon, foldingKind, hidden, additionalToolset);
             allHighlightingInfos.Add(info);
 
             if (extensions != null)
@@ -83,7 +85,7 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
         {
             // Special: empty
 
-            emptyHighlighting = new HighlightingInfo(Strings.SyntaxHighlighting_None, null, null, FoldingKind.None, false);
+            emptyHighlighting = new HighlightingInfo(Strings.SyntaxHighlighting_None, null, null, FoldingKind.None, false, AdditionalToolset.None);
             allHighlightingInfos.Add(emptyHighlighting);
 
             // Register internal highlightings
@@ -192,7 +194,9 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
                 new[] { ".xml", ".xsl", ".xslt", ".xsd", ".manifest", ".config", ".addin", ".xshd", ".wxs", ".wxi", ".wxl", ".proj", ".csproj", ".vbproj", ".ilproj", ".booproj", ".build", ".xfrm", ".targets", ".xaml", ".xpt", ".xft", ".map", ".wsdl", ".disco", ".ps1xml", ".nuspec" },
                 "XML-Mode.xshd",
                 "xml.png",
-                FoldingKind.Xml);
+                FoldingKind.Xml,
+                false,
+                AdditionalToolset.Xml);
 
             RegisterHighlighting("MarkDown",
                 new[] { ".md" },

@@ -117,52 +117,52 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Ribbon.File.New" xml:space="preserve">
+  <data name="Ribbon.Home.File.New" xml:space="preserve">
     <value>Nowy</value>
   </data>
-  <data name="Ribbon.File.Open" xml:space="preserve">
+  <data name="Ribbon.Home.File.Open" xml:space="preserve">
     <value>Otwórz</value>
   </data>
-  <data name="Ribbon.File.Save" xml:space="preserve">
+  <data name="Ribbon.Home.File.Save" xml:space="preserve">
     <value>Zapisz</value>
   </data>
-  <data name="Ribbon.File.SaveAs" xml:space="preserve">
+  <data name="Ribbon.Home.File.SaveAs" xml:space="preserve">
     <value>Zapisz jako</value>
   </data>
-  <data name="Ribbon.Group.Edit" xml:space="preserve">
+  <data name="Ribbon.Home.Group.Edit" xml:space="preserve">
     <value>Edycja</value>
   </data>
-  <data name="Ribbon.Group.File" xml:space="preserve">
+  <data name="Ribbon.Home.Group.File" xml:space="preserve">
     <value>Plik</value>
   </data>
   <data name="Ribbon.Tab.Home" xml:space="preserve">
     <value>Narzędzia główne</value>
   </data>
-  <data name="Ribbon.Edit.Copy" xml:space="preserve">
+  <data name="Ribbon.Home.Edit.Copy" xml:space="preserve">
     <value>Kopiuj</value>
   </data>
-  <data name="Ribbon.Edit.Cut" xml:space="preserve">
+  <data name="Ribbon.Home.Edit.Cut" xml:space="preserve">
     <value>Wytnij</value>
   </data>
-  <data name="Ribbon.Edit.Paste" xml:space="preserve">
+  <data name="Ribbon.Home.Edit.Paste" xml:space="preserve">
     <value>Wklej</value>
   </data>
-  <data name="Ribbon.Edit.Redo" xml:space="preserve">
+  <data name="Ribbon.Home.Edit.Redo" xml:space="preserve">
     <value>Ponów</value>
   </data>
-  <data name="Ribbon.Edit.Undo" xml:space="preserve">
+  <data name="Ribbon.Home.Edit.Undo" xml:space="preserve">
     <value>Cofnij</value>
   </data>
   <data name="BlankDocName" xml:space="preserve">
     <value>Dokument</value>
   </data>
-  <data name="Ribbon.Group.Search" xml:space="preserve">
+  <data name="Ribbon.Home.Group.Search" xml:space="preserve">
     <value>Szukanie</value>
   </data>
-  <data name="Ribbon.Search.Search" xml:space="preserve">
+  <data name="Ribbon.Home.Search.Search" xml:space="preserve">
     <value>Szukaj</value>
   </data>
-  <data name="Ribbon.Search.Replace" xml:space="preserve">
+  <data name="Ribbon.Home.Search.Replace" xml:space="preserve">
     <value>Zamień</value>
   </data>
   <data name="DefaultDialogTitle" xml:space="preserve">
@@ -225,7 +225,7 @@
   <data name="SearchWindow.SearchBackwards" xml:space="preserve">
     <value>Szukaj wstecz</value>
   </data>
-  <data name="Ribbon.Search.FindNext" xml:space="preserve">
+  <data name="Ribbon.Home.Search.FindNext" xml:space="preserve">
     <value>Znajdź następny</value>
   </data>
   <data name="BlankDocumentName" xml:space="preserve">
@@ -261,13 +261,13 @@
   <data name="Ribbon.Tab.View" xml:space="preserve">
     <value>Widok</value>
   </data>
-  <data name="Ribbon.Group.Editor" xml:space="preserve">
+  <data name="Ribbon.View.Group.Editor" xml:space="preserve">
     <value>Edytor</value>
   </data>
-  <data name="Ribbon.Editor.WordWrap" xml:space="preserve">
+  <data name="Ribbon.View.Editor.WordWrap" xml:space="preserve">
     <value>Zawijaj wiersze</value>
   </data>
-  <data name="Ribbon.Editor.ShowLineNumbers" xml:space="preserve">
+  <data name="Ribbon.View.Editor.ShowLineNumbers" xml:space="preserve">
     <value>Numery wierszy</value>
   </data>
   <data name="Message.CannotSaveConfiguration" xml:space="preserve">
@@ -276,7 +276,7 @@
   <data name="Message.CannotRestoreFile" xml:space="preserve">
     <value>Nie mogę odtworzyć pliku {0}. Błąd: {1}</value>
   </data>
-  <data name="Ribbon.View.SyntaxHighlighting" xml:space="preserve">
+  <data name="Ribbon.View.View.SyntaxHighlighting" xml:space="preserve">
     <value>Kolorowanie składni</value>
   </data>
   <data name="SyntaxHighlighting.None" xml:space="preserve">
@@ -285,40 +285,40 @@
   <data name="Ribbon.Tab.Lines" xml:space="preserve">
     <value>Linie</value>
   </data>
-  <data name="Ribbon.Group.Ordering" xml:space="preserve">
+  <data name="Ribbon.Lines.Group.Ordering" xml:space="preserve">
     <value>Kolejność</value>
   </data>
-  <data name="Ribbon.Ordering.SortAscending" xml:space="preserve">
+  <data name="Ribbon.Lines.Ordering.SortAscending" xml:space="preserve">
     <value>Sortuj rosnąco</value>
   </data>
-  <data name="Ribbon.Ordering.SortDescending" xml:space="preserve">
+  <data name="Ribbon.Lines.Ordering.SortDescending" xml:space="preserve">
     <value>Sortuj malejąco</value>
   </data>
-  <data name="Ribbon.Group.Navigation" xml:space="preserve">
+  <data name="Ribbon.Home.Group.Navigation" xml:space="preserve">
     <value>Nawigacja</value>
   </data>
-  <data name="Ribbon.Navigation.Navigate" xml:space="preserve">
+  <data name="Ribbon.Home.Navigation.Navigate" xml:space="preserve">
     <value>Nawigacja</value>
   </data>
   <data name="NavigationPopup.Header" xml:space="preserve">
     <value>Nawigacja</value>
   </data>
-  <data name="Ribbon.Group.Cleanup" xml:space="preserve">
+  <data name="Ribbon.Lines.Group.Cleanup" xml:space="preserve">
     <value>Czyszczenie</value>
   </data>
-  <data name="Ribbon.Cleanup.RemoveEmptyLines" xml:space="preserve">
+  <data name="Ribbon.Lines.Cleanup.RemoveEmptyLines" xml:space="preserve">
     <value>Usuń puste linie</value>
   </data>
-  <data name="Ribbon.Cleanup.RemoveWhitespaceLines" xml:space="preserve">
+  <data name="Ribbon.Lines.Cleanup.RemoveWhitespaceLines" xml:space="preserve">
     <value>Usuń linie z białymi znakami</value>
   </data>
   <data name="Tool.Explorer.Title" xml:space="preserve">
     <value>Pliki</value>
   </data>
-  <data name="Ribbon.File.NewHex" xml:space="preserve">
+  <data name="Ribbon.Home.File.NewHex" xml:space="preserve">
     <value>Nowy hexedytor</value>
   </data>
-  <data name="Ribbon.File.OpenHex" xml:space="preserve">
+  <data name="Ribbon.Home.File.OpenHex" xml:space="preserve">
     <value>Otwórz w hexedytorze</value>
   </data>
   <data name="Configuration.Behavior" xml:space="preserve">
@@ -354,10 +354,10 @@
   <data name="Configuration.Behavior.ClosingBehavior.Standard.Comment" xml:space="preserve">
     <value>Dev.Editor zamknie wszystkie dokumenty podczas kończenia pracy i uruchomi się z nowym, pustym dokumentem</value>
   </data>
-  <data name="Ribbon.View.Interface" xml:space="preserve">
+  <data name="Ribbon.View.Group.Interface" xml:space="preserve">
     <value>Interfejs</value>
   </data>
-  <data name="Ribbon.Interface.SidePanel" xml:space="preserve">
+  <data name="Ribbon.View.Interface.SidePanel" xml:space="preserve">
     <value>Panel boczny</value>
   </data>
   <data name="Ribbon.View.SidePanelPlacement.Hidden" xml:space="preserve">
@@ -394,7 +394,7 @@
   <data name="OpenBinaryFile.Title" xml:space="preserve">
     <value>Otwórz plik binarny {0}</value>
   </data>
-  <data name="Ribbon.File.OpenBin" xml:space="preserve">
+  <data name="Ribbon.Home.File.OpenBin" xml:space="preserve">
     <value>Otwórz plik binarny</value>
   </data>
   <data name="Message.UseSidePanelToOpenBinFile" xml:space="preserve">
@@ -466,7 +466,7 @@
   <data name="Ribbon.View.BottomPanelVisibility.Hidden" xml:space="preserve">
     <value>Ukryj</value>
   </data>
-  <data name="Ribbon.Interface.BottomPanel" xml:space="preserve">
+  <data name="Ribbon.View.Interface.BottomPanel" xml:space="preserve">
     <value>Panel dolny</value>
   </data>
   <data name="Messages.Severity" xml:space="preserve">
@@ -504,5 +504,20 @@
   </data>
   <data name="Message.AnalysisError.InvalidIfCondition" xml:space="preserve">
     <value>Wyrażenie warunkowe musi obliczyć się do wartości typu bool!</value>
+  </data>
+  <data name="Ribbon.ContextGroup.Xml" xml:space="preserve">
+    <value>XML</value>
+  </data>
+  <data name="Ribbon.Tab.XmlTools" xml:space="preserve">
+    <value>Narzędzia XML</value>
+  </data>
+  <data name="Ribbon.XmlTools.Group.Formatting" xml:space="preserve">
+    <value>Formatowanie</value>
+  </data>
+  <data name="Ribbon.XmlTools.Formatting.Format" xml:space="preserve">
+    <value>Formatuj XML</value>
+  </data>
+  <data name="Message.CannotFormatInvalidXml" xml:space="preserve">
+    <value>Nie mogę sformatować - XML jest nieprawidłowy.</value>
   </data>
 </root>

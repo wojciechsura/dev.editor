@@ -98,6 +98,7 @@
     <Compile Include="Controls\HexDocumentView.xaml.cs">
       <DependentUpon>HexDocumentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Converters\AdditionalToolsetToVisibilityConverter.cs" />
     <Compile Include="Converters\DataTypeToImageConverter.cs" />
     <Compile Include="Converters\DoubleToGridLengthConverter.cs" />
     <Compile Include="Converters\EnabledToOpacityConverter.cs" />

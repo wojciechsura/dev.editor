@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.ViewModels.Document;
+﻿using Dev.Editor.BusinessLogic.Models.Highlighting;
+using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.Common.Conditions;
 using System;
 using System.Collections.Generic;
@@ -21,6 +22,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel> selectionAvailableCondition;
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel> regularSelectionAvailableCondition;
         private readonly MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, BaseDocumentViewModel> searchPerformedCondition;
+        private readonly MutableSourcePropertyFuncCondition<MainWindowViewModel, BaseDocumentViewModel, HighlightingInfo> xmlToolsetAvailableCondition;
 
         // Public properties --------------------------------------------------
 
@@ -62,5 +64,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand SortLinesDescendingCommand { get; }
         public ICommand RemoveEmptyLinesCommand { get; }
         public ICommand RemoveWhitespaceLinesCommand { get; }
+
+        // XmlTools
+
+        public ICommand FormatXmlCommand { get; }
     }
 }

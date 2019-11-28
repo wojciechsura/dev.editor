@@ -29,6 +29,7 @@
             <converters:SidePanelToColumnConverter x:Key="SidePanelToColumnConverter" />
             <converters:SidePanelToVisibilityConverter x:Key="SidePanelToVisibilityConverter" />
             <converters:SidePanelToTabPlacement x:Key="SidePanelToTabPlacement" />
+            <converters:AdditionalToolsetToVisibilityConverter x:Key="AdditionalToolsetToVisibilityConverter" />
 
             <wpf:DocumentTemplateSelector x:Key="DocumentTemplateSelector" />
         </ResourceDictionary> 
@@ -61,14 +62,20 @@
         <f:Ribbon Focusable="False" FocusManager.IsFocusScope="True">
             <f:Ribbon.Menu>
                 <f:ApplicationMenu>
-                    <f:MenuItem Header="{x:Static p:Strings.Ribbon_File_New}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/New32.png" Command="{Binding NewTextCommand}" />
-                    <f:MenuItem Header="{x:Static p:Strings.Ribbon_File_Open}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open32.png" Command="{Binding OpenTextCommand}" />
-                    <f:MenuItem Header="{x:Static p:Strings.Ribbon_File_Save}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save32.png" Command="{Binding SaveCommand}" />
+                    <f:MenuItem Header="{x:Static p:Strings.Ribbon_Home_File_New}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/New32.png" Command="{Binding NewTextCommand}" />
+                    <f:MenuItem Header="{x:Static p:Strings.Ribbon_Home_File_Open}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open32.png" Command="{Binding OpenTextCommand}" />
+                    <f:MenuItem Header="{x:Static p:Strings.Ribbon_Home_File_Save}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save32.png" Command="{Binding SaveCommand}" />
                     <Separator />
                     <f:MenuItem Header="{x:Static p:Strings.Configuration}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Settings32.png" Command="{Binding ConfigCommand}" />
                 </f:ApplicationMenu>
             </f:Ribbon.Menu>
 
+            <f:Ribbon.ContextualGroups>
+                <f:RibbonContextualTabGroup x:Name="rctgXml" Header="{x:Static p:Strings.Ribbon_ContextGroup_Xml}" 
+                                            Visibility="{Binding ActiveDocument.Highlighting.AdditionalToolset, Converter={StaticResource AdditionalToolsetToVisibilityConverter}, ConverterParameter={x:Static uit:AdditionalToolset.Xml}}"
+                                            Background="#0000a0"/>
+            </f:Ribbon.ContextualGroups>
+            
             <!-- Home tab -->
 
             <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_Home}"
@@ -76,36 +83,36 @@
 
                 <!-- File -->
 
-                <f:RibbonGroupBox x:Name="grHomeFile" Header="{x:Static p:Strings.Ribbon_Group_File}">
-                    <f:SplitButton Header="{x:Static p:Strings.Ribbon_File_Open}" Command="{Binding OpenTextCommand}" SizeDefinition="Large" 
+                <f:RibbonGroupBox x:Name="grHomeFile" Header="{x:Static p:Strings.Ribbon_Home_Group_File}">
+                    <f:SplitButton Header="{x:Static p:Strings.Ribbon_Home_File_Open}" Command="{Binding OpenTextCommand}" SizeDefinition="Large" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open16.png">
                         <f:MenuItem Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open16.png"
-                                    Header="{x:Static p:Strings.Ribbon_File_OpenHex}"
+                                    Header="{x:Static p:Strings.Ribbon_Home_File_OpenHex}"
                                     Command="{Binding OpenHexCommand}" />
                         <f:MenuItem Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open16.png"
-                                    Header="{x:Static p:Strings.Ribbon_File_OpenBin}"
+                                    Header="{x:Static p:Strings.Ribbon_Home_File_OpenBin}"
                                     Command="{Binding OpenBinCommand}" />
                     </f:SplitButton>
-                    <f:SplitButton Header="{x:Static p:Strings.Ribbon_File_New}" Command="{Binding NewTextCommand}" SizeDefinition="Middle, Small" 
+                    <f:SplitButton Header="{x:Static p:Strings.Ribbon_Home_File_New}" Command="{Binding NewTextCommand}" SizeDefinition="Middle, Small" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/New32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/New16.png">
                         <f:MenuItem Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/New16.png"
-                                    Header="{x:Static p:Strings.Ribbon_File_NewHex}"
+                                    Header="{x:Static p:Strings.Ribbon_Home_File_NewHex}"
                                     Command="{Binding NewHexCommand}" />
                     </f:SplitButton>
-                    <f:Button Header="{x:Static p:Strings.Ribbon_File_Save}" Command="{Binding SaveCommand}" SizeDefinition="Middle, Small"
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Home_File_Save}" Command="{Binding SaveCommand}" SizeDefinition="Middle, Small"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save16.png"/>
-                    <f:Button Header="{x:Static p:Strings.Ribbon_File_SaveAs}" Command="{Binding SaveAsCommand}" SizeDefinition="Middle, Small"
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Home_File_SaveAs}" Command="{Binding SaveAsCommand}" SizeDefinition="Middle, Small"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save16.png"/>
                 </f:RibbonGroupBox>
 
                 <!-- Edit -->
 
-                <f:RibbonGroupBox x:Name="grHomeEdit" Header="{x:Static p:Strings.Ribbon_Group_Edit}">
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Edit_Paste}" Command="{Binding PasteCommand}" SizeDefinition="Large" 
+                <f:RibbonGroupBox x:Name="grHomeEdit" Header="{x:Static p:Strings.Ribbon_Home_Group_Edit}">
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Home_Edit_Paste}" Command="{Binding PasteCommand}" SizeDefinition="Large" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Paste32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Paste16.png"/>
 
@@ -138,16 +145,16 @@
 
                         </f:RibbonToolBar.LayoutDefinitions>
 
-                        <f:Button x:Name="bEditUndo" Header="{x:Static p:Strings.Ribbon_Edit_Undo}" Command="{Binding UndoCommand}" 
+                        <f:Button x:Name="bEditUndo" Header="{x:Static p:Strings.Ribbon_Home_Edit_Undo}" Command="{Binding UndoCommand}" 
                                   LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Undo32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Undo16.png"/>
-                        <f:Button x:Name="bEditRedo" Header="{x:Static p:Strings.Ribbon_Edit_Redo}" Command="{Binding RedoCommand}" 
+                        <f:Button x:Name="bEditRedo" Header="{x:Static p:Strings.Ribbon_Home_Edit_Redo}" Command="{Binding RedoCommand}" 
                                   LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Redo32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Redo16.png"/>
-                        <f:Button x:Name="bEditCopy" Header="{x:Static p:Strings.Ribbon_Edit_Copy}" Command="{Binding CopyCommand}" 
+                        <f:Button x:Name="bEditCopy" Header="{x:Static p:Strings.Ribbon_Home_Edit_Copy}" Command="{Binding CopyCommand}" 
                                   LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Copy32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Copy16.png"/>
-                        <f:Button x:Name="bEditCut" Header="{x:Static p:Strings.Ribbon_Edit_Cut}" Command="{Binding CutCommand}" 
+                        <f:Button x:Name="bEditCut" Header="{x:Static p:Strings.Ribbon_Home_Edit_Cut}" Command="{Binding CutCommand}" 
                                   LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Cut32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Cut16.png"/>
 
@@ -157,22 +164,22 @@
 
                 <!-- Search -->
 
-                <f:RibbonGroupBox x:Name="grSearch" Header="{x:Static p:Strings.Ribbon_Group_Search}">
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Search_Search}" Command="{Binding SearchCommand}" SizeDefinition="Large"
+                <f:RibbonGroupBox x:Name="grSearch" Header="{x:Static p:Strings.Ribbon_Home_Group_Search}">
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Home_Search_Search}" Command="{Binding SearchCommand}" SizeDefinition="Large"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search16.png"/>
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Search_Replace}" Command="{Binding ReplaceCommand}" SizeDefinition="Middle"
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Home_Search_Replace}" Command="{Binding ReplaceCommand}" SizeDefinition="Middle"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace16.png"/>
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Search_FindNext}" Command="{Binding FindNextCommand}" SizeDefinition="Middle"
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Home_Search_FindNext}" Command="{Binding FindNextCommand}" SizeDefinition="Middle"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/FindNext32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/FindNext16.png"/>
                 </f:RibbonGroupBox>
 
                 <!-- Navigation -->
 
-                <f:RibbonGroupBox x:Name="grNavigation" Header="{x:Static p:Strings.Ribbon_Group_Navigation}">
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Navigation_Navigate}" Command="{Binding NavigateCommand}" SizeDefinition="Large" 
+                <f:RibbonGroupBox x:Name="grNavigation" Header="{x:Static p:Strings.Ribbon_Home_Group_Navigation}">
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Home_Navigation_Navigate}" Command="{Binding NavigateCommand}" SizeDefinition="Large" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Navigation32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Navigation16.png" />
 
@@ -186,22 +193,22 @@
 
                 <!-- Editor -->
 
-                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Group_Editor}">
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_Group_Editor}">
 
-                    <f:CheckBox Header="{x:Static p:Strings.Ribbon_Editor_WordWrap}" IsChecked="{Binding WordWrap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    <f:CheckBox Header="{x:Static p:Strings.Ribbon_View_Editor_WordWrap}" IsChecked="{Binding WordWrap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                 IsEnabled="{Binding ActiveDocument, Converter={StaticResource TextDocToBoolConverter}}"/>
-                    <f:CheckBox Header="{x:Static p:Strings.Ribbon_Editor_ShowLineNumbers}" IsChecked="{Binding LineNumbers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                    <f:CheckBox Header="{x:Static p:Strings.Ribbon_View_Editor_ShowLineNumbers}" IsChecked="{Binding LineNumbers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
                                 IsEnabled="{Binding ActiveDocument, Converter={StaticResource TextDocToBoolConverter}}"/>
 
                 </f:RibbonGroupBox>
 
-                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_Interface}">
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_Group_Interface}">
 
-                    <f:ComboBox Header="{x:Static p:Strings.Ribbon_Interface_SidePanel}" ItemsSource="{Binding SidePanelPlacements}" 
+                    <f:ComboBox Header="{x:Static p:Strings.Ribbon_View_Interface_SidePanel}" ItemsSource="{Binding SidePanelPlacements}" 
                                 DisplayMemberPath="Display" SelectedValuePath="Value"
                                 SelectedValue="{Binding SidePanelPlacement}" IsEditable="False" Width="150" />
 
-                    <f:ComboBox Header="{x:Static p:Strings.Ribbon_Interface_BottomPanel}" ItemsSource="{Binding BottomPanelVisibilities}" 
+                    <f:ComboBox Header="{x:Static p:Strings.Ribbon_View_Interface_BottomPanel}" ItemsSource="{Binding BottomPanelVisibilities}" 
                                 DisplayMemberPath="Display" SelectedValuePath="Value"
                                 SelectedValue="{Binding BottomPanelVisibility}" IsEditable="False" Width="150" />
 
@@ -209,7 +216,7 @@
                 
                 <!-- Syntax highlighting -->
 
-                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_SyntaxHighlighting}">
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_View_SyntaxHighlighting}">
 
                     <f:InRibbonGallery ItemsSource="{Binding Highlightings}" 
                                        ItemWidth="80"
@@ -239,14 +246,14 @@
 
                 <!-- Ordering -->
 
-                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Group_Ordering}">
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Lines_Group_Ordering}">
 
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Ordering_SortAscending}" Command="{Binding SortLinesAscendingCommand}"
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Lines_Ordering_SortAscending}" Command="{Binding SortLinesAscendingCommand}"
                               SizeDefinition="Large" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/SortAscending32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/SortAscending16.png"/>
 
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Ordering_SortDescending}" Command="{Binding SortLinesDescendingCommand}" 
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Lines_Ordering_SortDescending}" Command="{Binding SortLinesDescendingCommand}" 
                               SizeDefinition="Large" 
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/SortDescending32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/SortDescending16.png"/>
@@ -255,17 +262,31 @@
 
                 <!-- Cleanup -->
 
-                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Group_Cleanup}">
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Lines_Group_Cleanup}">
 
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Cleanup_RemoveEmptyLines}" Command="{Binding RemoveEmptyLinesCommand}"
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Lines_Cleanup_RemoveEmptyLines}" Command="{Binding RemoveEmptyLinesCommand}"
                               SizeDefinition="Middle" />
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Cleanup_RemoveWhitespaceLines}" Command="{Binding RemoveWhitespaceLinesCommand}"
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Lines_Cleanup_RemoveWhitespaceLines}" Command="{Binding RemoveWhitespaceLinesCommand}"
                               SizeDefinition="Middle" />
 
                 </f:RibbonGroupBox>
 
             </f:RibbonTabItem>
 
+            <!-- XML tools -->
+
+            <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_XmlTools}"
+                             Group="{Binding ElementName=rctgXml}">
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_XmlTools_Group_Formatting}">
+
+                    <f:Button Header="{x:Static p:Strings.Ribbon_XmlTools_Formatting_Format}" Command="{Binding FormatXmlCommand}"
+                              SizeDefinition="Large" />
+
+                </f:RibbonGroupBox>
+                
+            </f:RibbonTabItem>
+            
         </f:Ribbon>
 
         <!-- Tabs -->

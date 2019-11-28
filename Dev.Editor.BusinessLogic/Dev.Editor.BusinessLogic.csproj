@@ -113,6 +113,7 @@
     <Compile Include="Types\Messages\MessageSeverity.cs" />
     <Compile Include="Types\Search\SearchMode.cs" />
     <Compile Include="Types\Tools\Explorer\FileItemType.cs" />
+    <Compile Include="Types\UI\AdditionalToolset.cs" />
     <Compile Include="Types\UI\BottomPanelVisibility.cs" />
     <Compile Include="Types\UI\SidePanelPlacement.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
@@ -140,7 +141,9 @@
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Lines.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Navigation.cs" />
+    <Compile Include="ViewModels\Main\MainWindowViewModel.ProcessingTools.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.View.Editor.cs" />
+    <Compile Include="ViewModels\Main\MainWindowViewModel.XmlTools.cs" />
     <Compile Include="ViewModels\Search\ISearchHost.cs" />
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />

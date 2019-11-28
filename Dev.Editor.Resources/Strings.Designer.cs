@@ -322,6 +322,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot format - XML is invalid..
+        /// </summary>
+        public static string Message_CannotFormatInvalidXml {
+            get {
+                return ResourceManager.GetString("Message.CannotFormatInvalidXml", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot open binary file. See Messages window for details..
         /// </summary>
         public static string Message_CannotOpenBinFile {
@@ -638,281 +647,245 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Remove empty lines.
+        ///   Looks up a localized string similar to XML.
         /// </summary>
-        public static string Ribbon_Cleanup_RemoveEmptyLines {
+        public static string Ribbon_ContextGroup_Xml {
             get {
-                return ResourceManager.GetString("Ribbon.Cleanup.RemoveEmptyLines", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Remove whitespace lines.
-        /// </summary>
-        public static string Ribbon_Cleanup_RemoveWhitespaceLines {
-            get {
-                return ResourceManager.GetString("Ribbon.Cleanup.RemoveWhitespaceLines", resourceCulture);
+                return ResourceManager.GetString("Ribbon.ContextGroup.Xml", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Copy.
         /// </summary>
-        public static string Ribbon_Edit_Copy {
+        public static string Ribbon_Home_Edit_Copy {
             get {
-                return ResourceManager.GetString("Ribbon.Edit.Copy", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Edit.Copy", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Cut.
         /// </summary>
-        public static string Ribbon_Edit_Cut {
+        public static string Ribbon_Home_Edit_Cut {
             get {
-                return ResourceManager.GetString("Ribbon.Edit.Cut", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Edit.Cut", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Paste.
         /// </summary>
-        public static string Ribbon_Edit_Paste {
+        public static string Ribbon_Home_Edit_Paste {
             get {
-                return ResourceManager.GetString("Ribbon.Edit.Paste", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Edit.Paste", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Redo.
         /// </summary>
-        public static string Ribbon_Edit_Redo {
+        public static string Ribbon_Home_Edit_Redo {
             get {
-                return ResourceManager.GetString("Ribbon.Edit.Redo", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Edit.Redo", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Undo.
         /// </summary>
-        public static string Ribbon_Edit_Undo {
+        public static string Ribbon_Home_Edit_Undo {
             get {
-                return ResourceManager.GetString("Ribbon.Edit.Undo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Line numbers.
-        /// </summary>
-        public static string Ribbon_Editor_ShowLineNumbers {
-            get {
-                return ResourceManager.GetString("Ribbon.Editor.ShowLineNumbers", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Word wrap.
-        /// </summary>
-        public static string Ribbon_Editor_WordWrap {
-            get {
-                return ResourceManager.GetString("Ribbon.Editor.WordWrap", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Edit.Undo", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to New.
         /// </summary>
-        public static string Ribbon_File_New {
+        public static string Ribbon_Home_File_New {
             get {
-                return ResourceManager.GetString("Ribbon.File.New", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.File.New", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to New hex editor.
         /// </summary>
-        public static string Ribbon_File_NewHex {
+        public static string Ribbon_Home_File_NewHex {
             get {
-                return ResourceManager.GetString("Ribbon.File.NewHex", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.File.NewHex", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Open.
         /// </summary>
-        public static string Ribbon_File_Open {
+        public static string Ribbon_Home_File_Open {
             get {
-                return ResourceManager.GetString("Ribbon.File.Open", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.File.Open", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Open binary file.
         /// </summary>
-        public static string Ribbon_File_OpenBin {
+        public static string Ribbon_Home_File_OpenBin {
             get {
-                return ResourceManager.GetString("Ribbon.File.OpenBin", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.File.OpenBin", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Open in hex editor.
         /// </summary>
-        public static string Ribbon_File_OpenHex {
+        public static string Ribbon_Home_File_OpenHex {
             get {
-                return ResourceManager.GetString("Ribbon.File.OpenHex", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.File.OpenHex", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
-        public static string Ribbon_File_Save {
+        public static string Ribbon_Home_File_Save {
             get {
-                return ResourceManager.GetString("Ribbon.File.Save", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.File.Save", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Save as.
         /// </summary>
-        public static string Ribbon_File_SaveAs {
+        public static string Ribbon_Home_File_SaveAs {
             get {
-                return ResourceManager.GetString("Ribbon.File.SaveAs", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cleanup.
-        /// </summary>
-        public static string Ribbon_Group_Cleanup {
-            get {
-                return ResourceManager.GetString("Ribbon.Group.Cleanup", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.File.SaveAs", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
-        public static string Ribbon_Group_Edit {
+        public static string Ribbon_Home_Group_Edit {
             get {
-                return ResourceManager.GetString("Ribbon.Group.Edit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Editor.
-        /// </summary>
-        public static string Ribbon_Group_Editor {
-            get {
-                return ResourceManager.GetString("Ribbon.Group.Editor", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Group.Edit", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to File.
         /// </summary>
-        public static string Ribbon_Group_File {
+        public static string Ribbon_Home_Group_File {
             get {
-                return ResourceManager.GetString("Ribbon.Group.File", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Group.File", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Navigation.
         /// </summary>
-        public static string Ribbon_Group_Navigation {
+        public static string Ribbon_Home_Group_Navigation {
             get {
-                return ResourceManager.GetString("Ribbon.Group.Navigation", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ordering.
-        /// </summary>
-        public static string Ribbon_Group_Ordering {
-            get {
-                return ResourceManager.GetString("Ribbon.Group.Ordering", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Group.Navigation", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
-        public static string Ribbon_Group_Search {
+        public static string Ribbon_Home_Group_Search {
             get {
-                return ResourceManager.GetString("Ribbon.Group.Search", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Bottom panel.
-        /// </summary>
-        public static string Ribbon_Interface_BottomPanel {
-            get {
-                return ResourceManager.GetString("Ribbon.Interface.BottomPanel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Side panel.
-        /// </summary>
-        public static string Ribbon_Interface_SidePanel {
-            get {
-                return ResourceManager.GetString("Ribbon.Interface.SidePanel", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Group.Search", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Navigation.
         /// </summary>
-        public static string Ribbon_Navigation_Navigate {
+        public static string Ribbon_Home_Navigation_Navigate {
             get {
-                return ResourceManager.GetString("Ribbon.Navigation.Navigate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sort ascending.
-        /// </summary>
-        public static string Ribbon_Ordering_SortAscending {
-            get {
-                return ResourceManager.GetString("Ribbon.Ordering.SortAscending", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Sort descending.
-        /// </summary>
-        public static string Ribbon_Ordering_SortDescending {
-            get {
-                return ResourceManager.GetString("Ribbon.Ordering.SortDescending", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Navigation.Navigate", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Find next.
         /// </summary>
-        public static string Ribbon_Search_FindNext {
+        public static string Ribbon_Home_Search_FindNext {
             get {
-                return ResourceManager.GetString("Ribbon.Search.FindNext", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Search.FindNext", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Replace.
         /// </summary>
-        public static string Ribbon_Search_Replace {
+        public static string Ribbon_Home_Search_Replace {
             get {
-                return ResourceManager.GetString("Ribbon.Search.Replace", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Search.Replace", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
-        public static string Ribbon_Search_Search {
+        public static string Ribbon_Home_Search_Search {
             get {
-                return ResourceManager.GetString("Ribbon.Search.Search", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Search.Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove empty lines.
+        /// </summary>
+        public static string Ribbon_Lines_Cleanup_RemoveEmptyLines {
+            get {
+                return ResourceManager.GetString("Ribbon.Lines.Cleanup.RemoveEmptyLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove whitespace lines.
+        /// </summary>
+        public static string Ribbon_Lines_Cleanup_RemoveWhitespaceLines {
+            get {
+                return ResourceManager.GetString("Ribbon.Lines.Cleanup.RemoveWhitespaceLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cleanup.
+        /// </summary>
+        public static string Ribbon_Lines_Group_Cleanup {
+            get {
+                return ResourceManager.GetString("Ribbon.Lines.Group.Cleanup", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ordering.
+        /// </summary>
+        public static string Ribbon_Lines_Group_Ordering {
+            get {
+                return ResourceManager.GetString("Ribbon.Lines.Group.Ordering", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort ascending.
+        /// </summary>
+        public static string Ribbon_Lines_Ordering_SortAscending {
+            get {
+                return ResourceManager.GetString("Ribbon.Lines.Ordering.SortAscending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort descending.
+        /// </summary>
+        public static string Ribbon_Lines_Ordering_SortDescending {
+            get {
+                return ResourceManager.GetString("Ribbon.Lines.Ordering.SortDescending", resourceCulture);
             }
         }
         
@@ -944,6 +917,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to XML Tools.
+        /// </summary>
+        public static string Ribbon_Tab_XmlTools {
+            get {
+                return ResourceManager.GetString("Ribbon.Tab.XmlTools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hidden.
         /// </summary>
         public static string Ribbon_View_BottomPanelVisibility_Hidden {
@@ -962,11 +944,56 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Line numbers.
+        /// </summary>
+        public static string Ribbon_View_Editor_ShowLineNumbers {
+            get {
+                return ResourceManager.GetString("Ribbon.View.Editor.ShowLineNumbers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Word wrap.
+        /// </summary>
+        public static string Ribbon_View_Editor_WordWrap {
+            get {
+                return ResourceManager.GetString("Ribbon.View.Editor.WordWrap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Editor.
+        /// </summary>
+        public static string Ribbon_View_Group_Editor {
+            get {
+                return ResourceManager.GetString("Ribbon.View.Group.Editor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Interface.
         /// </summary>
-        public static string Ribbon_View_Interface {
+        public static string Ribbon_View_Group_Interface {
             get {
-                return ResourceManager.GetString("Ribbon.View.Interface", resourceCulture);
+                return ResourceManager.GetString("Ribbon.View.Group.Interface", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Bottom panel.
+        /// </summary>
+        public static string Ribbon_View_Interface_BottomPanel {
+            get {
+                return ResourceManager.GetString("Ribbon.View.Interface.BottomPanel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Side panel.
+        /// </summary>
+        public static string Ribbon_View_Interface_SidePanel {
+            get {
+                return ResourceManager.GetString("Ribbon.View.Interface.SidePanel", resourceCulture);
             }
         }
         
@@ -1000,9 +1027,27 @@ namespace Dev.Editor.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Syntax highlighting.
         /// </summary>
-        public static string Ribbon_View_SyntaxHighlighting {
+        public static string Ribbon_View_View_SyntaxHighlighting {
             get {
-                return ResourceManager.GetString("Ribbon.View.SyntaxHighlighting", resourceCulture);
+                return ResourceManager.GetString("Ribbon.View.View.SyntaxHighlighting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Format XML.
+        /// </summary>
+        public static string Ribbon_XmlTools_Formatting_Format {
+            get {
+                return ResourceManager.GetString("Ribbon.XmlTools.Formatting.Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Formatting.
+        /// </summary>
+        public static string Ribbon_XmlTools_Group_Formatting {
+            get {
+                return ResourceManager.GetString("Ribbon.XmlTools.Group.Formatting", resourceCulture);
             }
         }
         

@@ -484,6 +484,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             selectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.SelectionAvailable, false);
             regularSelectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.RegularSelectionAvailable, false);
             searchPerformedCondition = new MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.LastSearch);
+            xmlToolsetAvailableCondition = new MutableSourcePropertyFuncCondition<MainWindowViewModel, BaseDocumentViewModel, HighlightingInfo>(this, vm => ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Xml, false);
 
             // Initializing tools
 
@@ -517,28 +518,30 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             ConfigCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Configuration, "Settings16.png", obj => DoOpenConfiguration());
 
-            NewTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_New, "New16.png", obj => DoNewTextDocument());
-            NewHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_NewHex, "New16.png", obj => DoNewHexDocument());
-            OpenTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Open, "Open16.png", obj => DoOpenTextDocument());
-            OpenHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_OpenHex, "Open16.png", obj => DoOpenHexDocument());
-            OpenBinCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_OpenBin, "Open16.png", obj => DoOpenBinDocument());
-            SaveCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_Save, "Save16.png", obj => DoSaveDocument(), canSaveCondition);
-            SaveAsCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_File_SaveAs, "Save16.png", obj => DoSaveDocumentAs(), canSaveCondition);
+            NewTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_New, "New16.png", obj => DoNewTextDocument());
+            NewHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_NewHex, "New16.png", obj => DoNewHexDocument());
+            OpenTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_Open, "Open16.png", obj => DoOpenTextDocument());
+            OpenHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_OpenHex, "Open16.png", obj => DoOpenHexDocument());
+            OpenBinCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_OpenBin, "Open16.png", obj => DoOpenBinDocument());
+            SaveCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_Save, "Save16.png", obj => DoSaveDocument(), canSaveCondition);
+            SaveAsCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_SaveAs, "Save16.png", obj => DoSaveDocumentAs(), canSaveCondition);
 
-            UndoCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Undo, "Undo16.png", obj => DoUndo(), canUndoCondition);
-            RedoCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Redo, "Redo16.png", obj => DoRedo(), canRedoCondition);
-            CopyCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Copy, "Copy16.png", obj => DoCopy(), selectionAvailableCondition);
-            CutCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Cut, "Cut16.png", obj => DoCut(), selectionAvailableCondition);
-            PasteCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Edit_Paste, "Paste16.png", obj => DoPaste(), documentExistsCondition);
+            UndoCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Edit_Undo, "Undo16.png", obj => DoUndo(), canUndoCondition);
+            RedoCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Edit_Redo, "Redo16.png", obj => DoRedo(), canRedoCondition);
+            CopyCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Edit_Copy, "Copy16.png", obj => DoCopy(), selectionAvailableCondition);
+            CutCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Edit_Cut, "Cut16.png", obj => DoCut(), selectionAvailableCondition);
+            PasteCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Edit_Paste, "Paste16.png", obj => DoPaste(), documentExistsCondition);
 
-            SearchCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Search_Search, "Search16.png", obj => DoSearch(), documentIsTextCondition);
-            ReplaceCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Search_Replace, "Replace16.png", obj => DoReplace(), documentIsTextCondition);
-            FindNextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Search_FindNext, "FindNext16.png", obj => DoFindNext(), documentIsTextCondition & searchPerformedCondition);
+            SearchCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Search_Search, "Search16.png", obj => DoSearch(), documentIsTextCondition);
+            ReplaceCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Search_Replace, "Replace16.png", obj => DoReplace(), documentIsTextCondition);
+            FindNextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Search_FindNext, "FindNext16.png", obj => DoFindNext(), documentIsTextCondition & searchPerformedCondition);
 
-            SortLinesAscendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Ordering_SortAscending, "SortAscending16.png", obj => DoSortAscending(), documentIsTextCondition);
-            SortLinesDescendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Ordering_SortDescending, "SortDescending16.png", obj => DoSortDescending(), documentIsTextCondition);
-            RemoveEmptyLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Cleanup_RemoveEmptyLines, null, obj => DoRemoveEmptyLines(), documentIsTextCondition);
-            RemoveWhitespaceLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Cleanup_RemoveWhitespaceLines, null, obj => DoRemoveWhitespaceLines(), documentIsTextCondition);
+            SortLinesAscendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Ordering_SortAscending, "SortAscending16.png", obj => DoSortAscending(), documentIsTextCondition);
+            SortLinesDescendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Ordering_SortDescending, "SortDescending16.png", obj => DoSortDescending(), documentIsTextCondition);
+            RemoveEmptyLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveEmptyLines, null, obj => DoRemoveEmptyLines(), documentIsTextCondition);
+            RemoveWhitespaceLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveWhitespaceLines, null, obj => DoRemoveWhitespaceLines(), documentIsTextCondition);
+
+            FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, null, obj => DoFormatXml(), xmlToolsetAvailableCondition);
 
             // Navigation
 
