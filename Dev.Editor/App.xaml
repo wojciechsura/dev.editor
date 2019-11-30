@@ -40,9 +40,46 @@
             
             <Thickness x:Key="DialogWindowPadding" Top="10" Left="10" Right="10" Bottom="10" />
             <Thickness x:Key="DialogItemsVMargin" Bottom="4" />
-    
+            <Thickness x:Key="HalfMargin" Left="2" Right="2" Top="2" Bottom="2" />
+
+            <!-- Colors -->
+
+            <SolidColorBrush x:Key="FormBackgroundBrush" Color="#bbc4c9" />
+            
             <!-- Styles -->
-           
+
+            <Style x:Key="RootDockPanel" TargetType="DockPanel">
+                <Style.Setters>
+                    <Setter Property="Background" Value="{StaticResource FormBackgroundBrush}" />
+                </Style.Setters>
+            </Style>
+
+            <Style x:Key="RootGridSplitter" TargetType="GridSplitter">
+                <Style.Setters>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="GridSplitter">
+                                <Border Background="{StaticResource FormBackgroundBrush}" BorderThickness="0"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
+
+            <Style x:Key="VerticalRootGridSplitter" TargetType="GridSplitter" BasedOn="{StaticResource RootGridSplitter}">
+                <Style.Setters>
+                    <Setter Property="Margin" Value="-2,0,-2,0" />
+                    <Setter Property="Width" Value="4" />
+                </Style.Setters>
+            </Style>
+
+            <Style x:Key="HorizontalRootGridSplitter" TargetType="GridSplitter" BasedOn="{StaticResource RootGridSplitter}">
+                <Style.Setters>
+                    <Setter Property="Margin" Value="0,-2,0,-2" />
+                    <Setter Property="Height" Value="4" />
+                </Style.Setters>
+            </Style>
+
             <Style TargetType="TextBox">
                 <Style.Triggers>
                     <Trigger Property="TextWrapping" Value="NoWrap">
