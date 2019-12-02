@@ -10,6 +10,7 @@
              x:Name="Root"
              DataContextChanged="HandleDataContextChanged">
     <ae:TextEditor x:Name="teEditor"
+                   BorderThickness="0"
                    FontFamily="Consolas"      
                    FontSize="10pt"
                    Loaded="HandleLoaded" 

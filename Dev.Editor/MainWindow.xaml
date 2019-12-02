@@ -308,13 +308,15 @@
                         ItemsSource="{Binding Tools}" SelectedItem="{Binding SelectedTool, Mode=TwoWay}"
                             Margin="{StaticResource HalfMargin}">
                     <TabControl.Resources>
-                        <Style TargetType="TabItem">
+                        <Style TargetType="TabItem" BasedOn="{StaticResource RootTabItem}">
                             <Style.Setters>
                                 <Setter Property="Template">
                                     <Setter.Value>
                                         <ControlTemplate TargetType="TabItem">
-                                            <Border x:Name="TabBorder" BorderBrush="Transparent">
-                                                <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2" />
+                                            <Border x:Name="TabBorder" BorderBrush="Transparent" Background="{TemplateBinding Background}" 
+                                                    TextBlock.Foreground="{TemplateBinding Foreground}">
+                                                <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" 
+                                                                  ContentSource="Header" Margin="6,2" />
                                             </Border>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="TabStripPlacement" Value="Left">
@@ -333,13 +335,6 @@
                                                                 <Thickness Left="0" Top="1" Right="1" Bottom="1" />
                                                             </Setter.Value>
                                                         </Setter>
-                                                    </Trigger.Setters>
-                                                </Trigger>
-
-                                                <Trigger Property="IsSelected" Value="True">
-                                                    <Trigger.Setters>
-                                                        <Setter TargetName="TabBorder" Property="BorderBrush" Value="#c0c0c0" />
-                                                        <Setter TargetName="TabBorder" Property="TextElement.Foreground" Value="#086f9e" />
                                                     </Trigger.Setters>
                                                 </Trigger>
                                             </ControlTemplate.Triggers>
@@ -416,22 +411,15 @@
                                 </Style.Setters>
                             </Style>
 
-                            <Style TargetType="TabItem">
+                            <Style TargetType="TabItem" BasedOn="{StaticResource DocumentTabItem}">
                                 <Style.Setters>
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="TabItem">
-                                                <Border x:Name="TabBorder" BorderThickness="1,1,1,0" BorderBrush="Transparent">
+                                                <Border x:Name="TabBorder" BorderThickness="1,1,1,0" BorderBrush="Transparent"
+                                                        Background="{TemplateBinding Background}" TextBlock.Foreground="{TemplateBinding Foreground}">
                                                     <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2" />
                                                 </Border>
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsSelected" Value="True">
-                                                        <Trigger.Setters>
-                                                            <Setter TargetName="TabBorder" Property="BorderBrush" Value="#c0c0c0" />
-                                                            <Setter TargetName="TabBorder" Property="TextElement.Foreground" Value="#086f9e" />
-                                                        </Trigger.Setters>
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
                                             </ControlTemplate>
                                         </Setter.Value>
                                     </Setter>
@@ -519,22 +507,15 @@
                     Visibility="{Binding BottomPanelVisibility, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static uit:BottomPanelVisibility.Visible}}"
                     TabStripPlacement="Bottom" ItemsSource="{Binding BottomTools}" SelectedItem="{Binding SelectedBottomTool, Mode=TwoWay}">
                 <TabControl.Resources>
-                    <Style TargetType="TabItem">
+                    <Style TargetType="TabItem" BasedOn="{StaticResource RootTabItem}">
                         <Style.Setters>
                             <Setter Property="Template">
                                 <Setter.Value>
                                     <ControlTemplate TargetType="TabItem">
-                                        <Border x:Name="TabBorder" BorderBrush="Transparent" BorderThickness="1,0,1,1">
+                                        <Border x:Name="TabBorder" BorderBrush="Transparent" BorderThickness="1,0,1,1" Background="{TemplateBinding Background}"
+                                                TextBlock.Foreground="{TemplateBinding Foreground}">
                                             <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2" />
                                         </Border>
-                                        <ControlTemplate.Triggers>
-                                            <Trigger Property="IsSelected" Value="True">
-                                                <Trigger.Setters>
-                                                    <Setter TargetName="TabBorder" Property="BorderBrush" Value="#c0c0c0" />
-                                                    <Setter TargetName="TabBorder" Property="TextElement.Foreground" Value="#086f9e" />
-                                                </Trigger.Setters>
-                                            </Trigger>
-                                        </ControlTemplate.Triggers>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>

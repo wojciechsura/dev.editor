@@ -305,5 +305,9 @@
     <Resource Include="Resources\Images\Enum16.png" />
     <Resource Include="Resources\Images\Enum32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Message16.png" />
+    <Resource Include="Resources\Images\Message32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

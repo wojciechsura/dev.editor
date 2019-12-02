@@ -506,7 +506,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             bottomTools = new List<BaseBottomToolViewModel>();
 
-            messagesBottomToolViewModel = new MessagesBottomToolViewModel(this);
+            messagesBottomToolViewModel = new MessagesBottomToolViewModel(this, imageResources);
             bottomTools.Add(messagesBottomToolViewModel);
 
             selectedBottomTool = bottomTools.FirstOrDefault(t => t.Uid.Equals(configurationService.Configuration.UI.BottomPanelActiveTab.Value));

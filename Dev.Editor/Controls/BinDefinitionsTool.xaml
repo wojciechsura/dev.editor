@@ -7,7 +7,8 @@
              xmlns:m="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Main;assembly=Dev.Editor.BusinessLogic"
              mc:Ignorable="d" 
              DataContextChanged="HandleDataContextChanged"
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800"
+             Style="{StaticResource RootTool}">
     <DockPanel>
         <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
             <Button Margin="4" Command="{Binding AddBinaryDefinition}">

@@ -1,4 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Messages;
+using Dev.Editor.BusinessLogic.Services.ImageResources;
 using Dev.Editor.BusinessLogic.ViewModels.BottomTools.Base;
 using Dev.Editor.Resources;
 using System;
@@ -17,13 +18,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.Messages
 
         private readonly ObservableCollection<MessageModel> messages = new ObservableCollection<MessageModel>();
         private readonly IMessagesHandler handler;
+        private readonly IImageResources imageResources;
 
+        private readonly ImageSource icon;
 
         // Public methods -----------------------------------------------------
 
-        public MessagesBottomToolViewModel(IMessagesHandler handler)
+        public MessagesBottomToolViewModel(IMessagesHandler handler, IImageResources imageResources)
         {
             this.handler = handler;
+            this.imageResources = imageResources;
+
+            icon = imageResources.GetIconByName("Message16.png");
         }
 
         public void NotifyMessageChosen(MessageModel model)
@@ -48,7 +54,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.Messages
 
         public override string Title => Strings.BottomTool_Messages_Title;
 
-        public override ImageSource Icon => null;
+        public override ImageSource Icon => icon;
 
         public override string Uid => MessagesUid;
 

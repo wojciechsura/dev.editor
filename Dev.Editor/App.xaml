@@ -44,9 +44,24 @@
 
             <!-- Colors -->
 
-            <SolidColorBrush x:Key="FormBackgroundBrush" Color="#bbc4c9" />
-            
+            <SolidColorBrush x:Key="FormBackgroundBrush" Color="#5c7b9a" />
+            <SolidColorBrush x:Key="ToolBackground" Color="#ccdef0" />
+            <SolidColorBrush x:Key="SelectedTabForegroundBrush" Color="#000000" />
+            <SolidColorBrush x:Key="SelectedTabBackgroundBrush" Color="#ffffff" />
+            <SolidColorBrush x:Key="SelectedDocumentTabForegroundBrush" Color="#000000" />
+            <SolidColorBrush x:Key="SelectedDocumentTabBackgroundBrush" Color="#f5bc83" />
+            <SolidColorBrush x:Key="NormalTabForegroundBrush" Color="#e3ebf2" />
+            <SolidColorBrush x:Key="NormalTabBackgroundBrush" Color="#40668c" />
+            <SolidColorBrush x:Key="HoverTabForegroundBrush" Color="#404040" />
+            <SolidColorBrush x:Key="HoverTabBackgroundBrush" Color="#bad6f1" />
+
             <!-- Styles -->
+
+            <Style x:Key="RootTool" TargetType="UserControl">
+                <Style.Setters>
+                    <Setter Property="Background" Value="{StaticResource ToolBackground}" />
+                </Style.Setters>
+            </Style>
 
             <Style x:Key="RootDockPanel" TargetType="DockPanel">
                 <Style.Setters>
@@ -78,6 +93,44 @@
                     <Setter Property="Margin" Value="0,-2,0,-2" />
                     <Setter Property="Height" Value="4" />
                 </Style.Setters>
+            </Style>
+
+
+            <Style x:Key="BaseRootTabItem" TargetType="TabItem">
+                <Style.Setters>
+                    <Setter Property="Background" Value="{StaticResource NormalTabBackgroundBrush}" />
+                    <Setter Property="Foreground" Value="{StaticResource NormalTabForegroundBrush}" />
+                </Style.Setters>
+                <Style.Triggers>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Trigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource HoverTabBackgroundBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource HoverTabForegroundBrush}" />
+                        </Trigger.Setters>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+            
+            <Style x:Key="RootTabItem" TargetType="TabItem" BasedOn="{StaticResource BaseRootTabItem}">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Trigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource SelectedTabBackgroundBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource SelectedTabForegroundBrush}" />
+                        </Trigger.Setters>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="DocumentTabItem" TargetType="TabItem" BasedOn="{StaticResource BaseRootTabItem}">
+                <Style.Triggers>
+                    <Trigger Property="IsSelected" Value="True">
+                        <Trigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource SelectedDocumentTabBackgroundBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource SelectedDocumentTabForegroundBrush}" />
+                        </Trigger.Setters>
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
             <Style TargetType="TextBox">

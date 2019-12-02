@@ -6,7 +6,8 @@
              xmlns:vme="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;assembly=Dev.Editor.BusinessLogic"
              xmlns:local="clr-namespace:Dev.Editor.Controls"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800" DataContextChanged="HandleDataContextChanged">
+             d:DesignHeight="450" d:DesignWidth="800" DataContextChanged="HandleDataContextChanged"
+             Style="{StaticResource RootTool}">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="{Binding FolderTreeHeight, Mode=TwoWay, Converter={StaticResource DoubleToGridLengthConverter}}" />

@@ -6,7 +6,8 @@
              xmlns:local="clr-namespace:Dev.Editor.Controls"
              xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
              mc:Ignorable="d"             
-             d:DesignHeight="450" d:DesignWidth="800" DataContextChanged="HandleDataContextChanged">
+             d:DesignHeight="450" d:DesignWidth="800" DataContextChanged="HandleDataContextChanged"
+             Style="{StaticResource RootTool}">
     <DataGrid x:Name="dgMessages" ItemsSource="{Binding Messages}" AutoGenerateColumns="False" >
         <DataGrid.Resources>
             <Style TargetType="DataGridRow">
