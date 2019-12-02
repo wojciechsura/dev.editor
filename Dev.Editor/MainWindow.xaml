@@ -302,11 +302,11 @@
                 </Grid.ColumnDefinitions>
 
                 <TabControl x:Name="rightPanel" Grid.Column="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToColumnConverter}}" 
-                        VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinWidth="100"
-                        Visibility="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToVisibilityConverter}}"
-                        TabStripPlacement="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToTabPlacement}}"
-                        ItemsSource="{Binding Tools}" SelectedItem="{Binding SelectedTool, Mode=TwoWay}"
-                            Margin="{StaticResource HalfMargin}">
+                            VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinWidth="100"
+                            Visibility="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToVisibilityConverter}}"
+                            TabStripPlacement="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToTabPlacement}}"
+                            ItemsSource="{Binding Tools}" SelectedItem="{Binding SelectedTool, Mode=TwoWay}"
+                            Margin="{StaticResource HalfMargin}" Padding="0" BorderThickness="0">
                     <TabControl.Resources>
                         <Style TargetType="TabItem" BasedOn="{StaticResource RootTabItem}">
                             <Style.Setters>
@@ -316,7 +316,7 @@
                                             <Border x:Name="TabBorder" BorderBrush="Transparent" Background="{TemplateBinding Background}" 
                                                     TextBlock.Foreground="{TemplateBinding Foreground}">
                                                 <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                                                  ContentSource="Header" Margin="6,2" />
+                                                                  ContentSource="Header" Margin="2,6" />
                                             </Border>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="TabStripPlacement" Value="Left">
@@ -376,7 +376,7 @@
                               Style="{StaticResource VerticalRootGridSplitter}"/>
 
                 <TabControl Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{StaticResource HalfMargin}"
-                        ItemsSource="{Binding Documents}" SelectedItem="{Binding ActiveDocument}"
+                        ItemsSource="{Binding Documents}" SelectedItem="{Binding ActiveDocument}" BorderThickness="0" Padding="0"
                         ContentTemplateSelector="{StaticResource DocumentTemplateSelector}">
                     <TabControl.Resources>
                         <ResourceDictionary>
@@ -440,11 +440,9 @@
                                     <RowDefinition x:Name="RowDefinition1" Height="*"/>
                                 </Grid.RowDefinitions>
 
-                                <Border Grid.Row="1" Grid.Column="0" x:Name="ContentPanel" BorderBrush="#FFD0CEBF" BorderThickness="0,0,1,1" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Contained">
-                                    <Border x:Name="Border" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}">
-                                        <Border Background="{TemplateBinding Background}" x:Name="Border1">
-                                            <ContentPresenter DataContext="{x:Null}" Margin="{TemplateBinding Padding}" x:Name="PART_SelectedContentHost" Content="{TemplateBinding SelectedContent}" ContentTemplate="{TemplateBinding SelectedContentTemplate}" ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" ContentSource="SelectedContent"/>
-                                        </Border>
+                                <Border Grid.Row="1" Grid.Column="0" x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Contained">
+                                    <Border Background="{TemplateBinding Background}" x:Name="Border1">
+                                        <ContentPresenter DataContext="{x:Null}" Margin="{TemplateBinding Padding}" x:Name="PART_SelectedContentHost" Content="{TemplateBinding SelectedContent}" ContentTemplate="{TemplateBinding SelectedContentTemplate}" ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" ContentSource="SelectedContent"/>
                                     </Border>
                                 </Border>
 
@@ -505,7 +503,8 @@
 
             <TabControl x:Name="bottomPanel" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight="100" Margin="{StaticResource HalfMargin}"
                     Visibility="{Binding BottomPanelVisibility, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static uit:BottomPanelVisibility.Visible}}"
-                    TabStripPlacement="Bottom" ItemsSource="{Binding BottomTools}" SelectedItem="{Binding SelectedBottomTool, Mode=TwoWay}">
+                    TabStripPlacement="Bottom" ItemsSource="{Binding BottomTools}" SelectedItem="{Binding SelectedBottomTool, Mode=TwoWay}"
+                        Padding="0" BorderThickness="0">
                 <TabControl.Resources>
                     <Style TargetType="TabItem" BasedOn="{StaticResource RootTabItem}">
                         <Style.Setters>

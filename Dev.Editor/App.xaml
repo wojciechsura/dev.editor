@@ -57,7 +57,7 @@
             <SolidColorBrush x:Key="HoverTabBackgroundBrush" Color="#bad6f1" />
 
             <!-- Styles -->
-           
+
             <Style x:Key="RootTool" TargetType="UserControl">
                 <Style.Setters>
                     <Setter Property="Background" Value="{StaticResource ToolBackground}" />
