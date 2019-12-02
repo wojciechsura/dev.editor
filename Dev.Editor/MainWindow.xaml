@@ -385,7 +385,7 @@
                                     <Setter Property="Template">
                                         <Setter.Value>
                                             <ControlTemplate TargetType="Button">
-                                                <Border x:Name="ContentBorder">
+                                                <Border x:Name="ContentBorder" TextBlock.Foreground="{StaticResource CloseDocumentButtonForegroundBrush}">
                                                     <Grid x:Name="ContentGrid" Margin="2,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center">
                                                         <ContentPresenter />
                                                     </Grid>
@@ -402,7 +402,7 @@
                                                         </Trigger.Setters>
                                                     </Trigger>
                                                     <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="ContentBorder" Property="TextElement.Foreground" Value="#086f9e" />
+                                                        <Setter TargetName="ContentBorder" Property="TextElement.Foreground" Value="{StaticResource HoverCloseDocumentButtonForegroundBrush}" />
                                                     </Trigger>
                                                 </ControlTemplate.Triggers>
                                             </ControlTemplate>
@@ -411,6 +411,37 @@
                                 </Style.Setters>
                             </Style>
 
+                            <Style TargetType="RepeatButton" x:Key="ScrollButtonStyle">
+                                <Style.Setters>
+                                    <Setter Property="Template">
+                                        <Setter.Value>
+                                            <ControlTemplate TargetType="RepeatButton">
+                                                <Border x:Name="ContentBorder" TextBlock.Foreground="{StaticResource TabScrollButtonForegroundBrush}">
+                                                    <Grid x:Name="ContentGrid" Margin="2,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                                        <ContentPresenter />
+                                                    </Grid>
+                                                </Border>
+
+                                                <ControlTemplate.Triggers>
+                                                    <Trigger Property="IsPressed" Value="True">
+                                                        <Trigger.Setters>
+                                                            <Setter TargetName="ContentGrid" Property="Margin">
+                                                                <Setter.Value>
+                                                                    <Thickness Top="3" Left="3" Right="1" Bottom="1" />
+                                                                </Setter.Value>
+                                                            </Setter>
+                                                        </Trigger.Setters>
+                                                    </Trigger>
+                                                    <Trigger Property="IsMouseOver" Value="True">
+                                                        <Setter TargetName="ContentBorder" Property="TextElement.Foreground" Value="{StaticResource TabScrollButtonForegroundBrush}" />
+                                                    </Trigger>
+                                                </ControlTemplate.Triggers>
+                                            </ControlTemplate>
+                                        </Setter.Value>
+                                    </Setter>
+                                </Style.Setters>
+                            </Style>
+                            
                             <Style TargetType="TabItem" BasedOn="{StaticResource DocumentTabItem}">
                                 <Style.Setters>
                                     <Setter Property="Template">
@@ -464,8 +495,10 @@
                                                                 <RowDefinition Height="Auto"/>
                                                             </Grid.RowDefinitions>
                                                             <ScrollContentPresenter Grid.Column="0" Content="{TemplateBinding ScrollViewer.Content}" />
-                                                            <RepeatButton Grid.Column="1" Content="3" FontFamily="Marlett" FontSize="12" Padding="2" Command="ScrollBar.LineLeftCommand" Style="{DynamicResource TabScrollerRepeatButtonStyle}"/>
-                                                            <RepeatButton Grid.Column="2" Content="4" FontFamily="Marlett" FontSize="12" Padding="2" Command="ScrollBar.LineRightCommand" Style="{DynamicResource TabScrollerRepeatButtonStyle}"/>
+                                                            <RepeatButton Grid.Column="1" Content="3" FontFamily="Marlett" FontSize="12" Padding="2" 
+                                                                          Command="ScrollBar.LineLeftCommand" Style="{StaticResource ScrollButtonStyle}"/>
+                                                            <RepeatButton Grid.Column="2" Content="4" FontFamily="Marlett" FontSize="12" Padding="2" Command="ScrollBar.LineRightCommand" 
+                                                                          Style="{StaticResource ScrollButtonStyle}"/>
                                                         </Grid>
                                                     </ControlTemplate>
                                                 </Setter.Value>

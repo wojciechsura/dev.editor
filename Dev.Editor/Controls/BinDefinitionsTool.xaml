@@ -8,8 +8,7 @@
              xmlns:m="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Main;assembly=Dev.Editor.BusinessLogic"
              mc:Ignorable="d" 
              DataContextChanged="HandleDataContextChanged"
-             d:DesignHeight="450" d:DesignWidth="800"
-             Style="{StaticResource RootTool}">
+             d:DesignHeight="450" d:DesignWidth="800">
     <local:ToolContainer Header="{x:Static p:Strings.Tool_BinDefinitions_Title}">
         <DockPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
@@ -30,7 +29,8 @@
                 </Button>
             </StackPanel>
 
-            <ListBox ItemsSource="{Binding BinDefinitions}" SelectedItem="{Binding SelectedBinDefinition, Mode=TwoWay}" MouseDoubleClick="HandleBinDefinitionsDoubleClick">
+            <ListBox ItemsSource="{Binding BinDefinitions}" SelectedItem="{Binding SelectedBinDefinition, Mode=TwoWay}" MouseDoubleClick="HandleBinDefinitionsDoubleClick"
+                     BorderThickness="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type m:BinDefinitionViewModel}">
                         <DockPanel>

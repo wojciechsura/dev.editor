@@ -41,12 +41,12 @@
             
             <Thickness x:Key="DialogWindowPadding" Top="10" Left="10" Right="10" Bottom="10" />
             <Thickness x:Key="DialogItemsVMargin" Bottom="4" />
-            <Thickness x:Key="HalfMargin" Left="2" Right="2" Top="2" Bottom="2" />
+            <Thickness x:Key="HalfMargin" Left="3" Right="3" Top="3" Bottom="3" />
 
             <!-- Colors -->
 
             <SolidColorBrush x:Key="FormBackgroundBrush" Color="#5c7b9a" />
-            <SolidColorBrush x:Key="ToolBackground" Color="#ccdef0" />
+
             <SolidColorBrush x:Key="SelectedTabForegroundBrush" Color="#000000" />
             <SolidColorBrush x:Key="SelectedTabBackgroundBrush" Color="#ffffff" />
             <SolidColorBrush x:Key="SelectedDocumentTabForegroundBrush" Color="#000000" />
@@ -56,13 +56,12 @@
             <SolidColorBrush x:Key="HoverTabForegroundBrush" Color="#404040" />
             <SolidColorBrush x:Key="HoverTabBackgroundBrush" Color="#bad6f1" />
 
-            <!-- Styles -->
+            <SolidColorBrush x:Key="CloseDocumentButtonForegroundBrush" Color="#606060" />
+            <SolidColorBrush x:Key="HoverCloseDocumentButtonForegroundBrush" Color="#000000" />
+            <SolidColorBrush x:Key="TabScrollButtonForegroundBrush" Color="#dae9f8" />
+            <SolidColorBrush x:Key="HoverTabScrollButtonForegroundBrush" Color="#ffffff" />
 
-            <Style x:Key="RootTool" TargetType="UserControl">
-                <Style.Setters>
-                    <Setter Property="Background" Value="{StaticResource ToolBackground}" />
-                </Style.Setters>
-            </Style>
+            <!-- Styles -->
 
             <Style x:Key="RootDockPanel" TargetType="DockPanel">
                 <Style.Setters>
@@ -96,7 +95,30 @@
                 </Style.Setters>
             </Style>
 
+            <Style x:Key="ToolGridSplitter" TargetType="GridSplitter">
+                <Style.Setters>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="GridSplitter">
+                                <Border Background="{StaticResource FormBackgroundBrush}" BorderThickness="0"/>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
 
+            <Style x:Key="VerticalToolGridSplitter" TargetType="GridSplitter" BasedOn="{StaticResource ToolGridSplitter}">
+                <Style.Setters>
+                    <Setter Property="Width" Value="4" />
+                </Style.Setters>
+            </Style>
+
+            <Style x:Key="HorizontalToolGridSplitter" TargetType="GridSplitter" BasedOn="{StaticResource ToolGridSplitter}">
+                <Style.Setters>
+                    <Setter Property="Height" Value="4" />
+                </Style.Setters>
+            </Style>
+            
             <Style x:Key="BaseRootTabItem" TargetType="TabItem">
                 <Style.Setters>
                     <Setter Property="Background" Value="{StaticResource NormalTabBackgroundBrush}" />
