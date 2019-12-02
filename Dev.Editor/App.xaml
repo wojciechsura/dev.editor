@@ -9,6 +9,7 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Generic.xaml" />
+                <ResourceDictionary Source="Controls\ToolContainerStyles.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Document templates -->
@@ -56,7 +57,7 @@
             <SolidColorBrush x:Key="HoverTabBackgroundBrush" Color="#bad6f1" />
 
             <!-- Styles -->
-
+           
             <Style x:Key="RootTool" TargetType="UserControl">
                 <Style.Setters>
                     <Setter Property="Background" Value="{StaticResource ToolBackground}" />

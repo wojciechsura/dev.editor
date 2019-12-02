@@ -1,0 +1,67 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Dev.Editor.Controls">
+
+    <SolidColorBrush x:Key="ToolHeaderForegroundBrush" Color="#e3ebf2" />
+    <SolidColorBrush x:Key="ToolHeaderBackgroundBrush" Color="#40668c" />
+
+    <Style x:Key="ToolWindowHeader" TargetType="Border">
+        <Style.Setters>
+            <Setter Property="Background" Value="{StaticResource ToolHeaderBackgroundBrush}" />
+            <Setter Property="TextBlock.Foreground" Value="{StaticResource ToolHeaderForegroundBrush}" />
+            <Setter Property="TextBlock.FontSize" Value="12" />
+        </Style.Setters>
+    </Style>
+
+    <Style x:Key="ToolWindowHeaderButton" TargetType="Button">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="ContentBorder" TextBlock.Foreground="{StaticResource ToolHeaderForegroundBrush}"
+                                        TextBlock.FontSize="10" Margin="0">
+                            <Grid x:Name="ContentGrid" Margin="2,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                <ContentPresenter />
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Trigger.Setters>
+                                    <Setter TargetName="ContentGrid" Property="Margin">
+                                        <Setter.Value>
+                                            <Thickness Top="3" Left="3" Right="1" Bottom="1" />
+                                        </Setter.Value>
+                                    </Setter>
+                                </Trigger.Setters>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="ContentBorder" Property="TextElement.Foreground" Value="#086f9e" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+
+    <Style TargetType="local:ToolContainer">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="local:ToolContainer">
+                        <DockPanel>
+                            <Border DockPanel.Dock="Top" Style="{StaticResource ToolWindowHeader}">
+                                <DockPanel>
+                                    <Button Command="{TemplateBinding CloseCommand}" Style="{StaticResource ToolWindowHeaderButton}" FontFamily="Marlett" DockPanel.Dock="Right">r</Button>
+                                    <TextBlock Text="{TemplateBinding Header}" VerticalAlignment="Center" Margin="2" />
+                                </DockPanel>
+                            </Border>
+                            <ContentPresenter Content="{TemplateBinding Content}" />
+                        </DockPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+</ResourceDictionary>

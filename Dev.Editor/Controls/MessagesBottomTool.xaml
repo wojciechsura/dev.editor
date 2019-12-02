@@ -8,20 +8,22 @@
              mc:Ignorable="d"             
              d:DesignHeight="450" d:DesignWidth="800" DataContextChanged="HandleDataContextChanged"
              Style="{StaticResource RootTool}">
-    <DataGrid x:Name="dgMessages" ItemsSource="{Binding Messages}" AutoGenerateColumns="False" >
-        <DataGrid.Resources>
-            <Style TargetType="DataGridRow">
-                <EventSetter Event="MouseDoubleClick" Handler="HandleGridRowMouseDoubleClick"/>
-            </Style>
-        </DataGrid.Resources>
+    <local:ToolContainer Header="{x:Static p:Strings.BottomTool_Messages_Title}">
+        <DataGrid x:Name="dgMessages" ItemsSource="{Binding Messages}" AutoGenerateColumns="False" >
+            <DataGrid.Resources>
+                <Style TargetType="DataGridRow">
+                    <EventSetter Event="MouseDoubleClick" Handler="HandleGridRowMouseDoubleClick"/>
+                </Style>
+            </DataGrid.Resources>
 
-        <DataGrid.Columns>
-            <DataGridTextColumn Header="{x:Static p:Strings.Messages_Severity}" Binding="{Binding Severity}" Width="48" IsReadOnly="True"/>
-            <DataGridTextColumn Header="{x:Static p:Strings.Messages_Code}" Binding="{Binding Code}" Width="64"  IsReadOnly="True"/>
-            <DataGridTextColumn Header="{x:Static p:Strings.Messages_Message}" Binding="{Binding Message}" Width="*" IsReadOnly="True"/>
-            <DataGridTextColumn Header="{x:Static p:Strings.Messages_File}" Binding="{Binding Filename}" Width="200" IsReadOnly="True"/>
-            <DataGridTextColumn Header="{x:Static p:Strings.Messages_Row}" Binding="{Binding DisplayRow}" Width="48" IsReadOnly="True"/>
-            <DataGridTextColumn Header="{x:Static p:Strings.Messages_Column}" Binding="{Binding DisplayCol}" Width="48" IsReadOnly="True"/>
-        </DataGrid.Columns>
-    </DataGrid>
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="{x:Static p:Strings.Messages_Severity}" Binding="{Binding Severity}" Width="48" IsReadOnly="True"/>
+                <DataGridTextColumn Header="{x:Static p:Strings.Messages_Code}" Binding="{Binding Code}" Width="64"  IsReadOnly="True"/>
+                <DataGridTextColumn Header="{x:Static p:Strings.Messages_Message}" Binding="{Binding Message}" Width="*" IsReadOnly="True"/>
+                <DataGridTextColumn Header="{x:Static p:Strings.Messages_File}" Binding="{Binding Filename}" Width="200" IsReadOnly="True"/>
+                <DataGridTextColumn Header="{x:Static p:Strings.Messages_Row}" Binding="{Binding DisplayRow}" Width="48" IsReadOnly="True"/>
+                <DataGridTextColumn Header="{x:Static p:Strings.Messages_Column}" Binding="{Binding DisplayCol}" Width="48" IsReadOnly="True"/>
+            </DataGrid.Columns>
+        </DataGrid>
+    </local:ToolContainer>
 </UserControl>

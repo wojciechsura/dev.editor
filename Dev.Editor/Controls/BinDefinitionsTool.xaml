@@ -4,39 +4,42 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dev.Editor.Controls"
+             xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
              xmlns:m="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Main;assembly=Dev.Editor.BusinessLogic"
              mc:Ignorable="d" 
              DataContextChanged="HandleDataContextChanged"
              d:DesignHeight="450" d:DesignWidth="800"
              Style="{StaticResource RootTool}">
-    <DockPanel>
-        <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-            <Button Margin="4" Command="{Binding AddBinaryDefinition}">
-                <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Add16.png" />
-            </Button>
-            <Button Margin="0,4,4,4" Command="{Binding EditBinaryDefinition}">
-                <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Edit16.png" />
-            </Button>
-            <Button Margin="0,4,4,4" Command="{Binding RemoveBinaryDefinition}">
-                <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Delete16.png" />
-            </Button>
-            
-            <Separator Margin="0,4,4,4" />
+    <local:ToolContainer Header="{x:Static p:Strings.Tool_BinDefinitions_Title}">
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <Button Margin="4" Command="{Binding AddBinaryDefinition}">
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Add16.png" />
+                </Button>
+                <Button Margin="0,4,4,4" Command="{Binding EditBinaryDefinition}">
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Edit16.png" />
+                </Button>
+                <Button Margin="0,4,4,4" Command="{Binding RemoveBinaryDefinition}">
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Delete16.png" />
+                </Button>
 
-            <Button Margin="0,4,4,4" Command="{Binding OpenBinaryDefinitionSample}">
-                <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Example16.png" />
-            </Button>
-        </StackPanel>
+                <Separator Margin="0,4,4,4" />
 
-        <ListBox ItemsSource="{Binding BinDefinitions}" SelectedItem="{Binding SelectedBinDefinition, Mode=TwoWay}" MouseDoubleClick="HandleBinDefinitionsDoubleClick">
-            <ListBox.ItemTemplate>
-                <DataTemplate DataType="{x:Type m:BinDefinitionViewModel}">
-                    <DockPanel>
-                        <Image DockPanel.Dock="Left" Width="16" Height="16" Margin="4" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Binary16.png" />
-                        <Label Content="{Binding Name}" />
-                    </DockPanel>
-                </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
-    </DockPanel>
+                <Button Margin="0,4,4,4" Command="{Binding OpenBinaryDefinitionSample}">
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Example16.png" />
+                </Button>
+            </StackPanel>
+
+            <ListBox ItemsSource="{Binding BinDefinitions}" SelectedItem="{Binding SelectedBinDefinition, Mode=TwoWay}" MouseDoubleClick="HandleBinDefinitionsDoubleClick">
+                <ListBox.ItemTemplate>
+                    <DataTemplate DataType="{x:Type m:BinDefinitionViewModel}">
+                        <DockPanel>
+                            <Image DockPanel.Dock="Left" Width="16" Height="16" Margin="4" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Binary16.png" />
+                            <Label Content="{Binding Name}" />
+                        </DockPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DockPanel>
+    </local:ToolContainer>
 </UserControl>
