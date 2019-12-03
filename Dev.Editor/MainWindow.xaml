@@ -377,139 +377,8 @@
 
                 <TabControl Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{StaticResource HalfMargin}"
                         ItemsSource="{Binding Documents}" SelectedItem="{Binding ActiveDocument}" BorderThickness="0" Padding="0"
-                        ContentTemplateSelector="{StaticResource DocumentTemplateSelector}">
-                    <TabControl.Resources>
-                        <ResourceDictionary>
-                            <Style TargetType="Button" x:Key="TabCloseButtonStyle">
-                                <Style.Setters>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="Button">
-                                                <Border x:Name="ContentBorder" TextBlock.Foreground="{StaticResource CloseDocumentButtonForegroundBrush}">
-                                                    <Grid x:Name="ContentGrid" Margin="2,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                        <ContentPresenter />
-                                                    </Grid>
-                                                </Border>
-
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsPressed" Value="True">
-                                                        <Trigger.Setters>
-                                                            <Setter TargetName="ContentGrid" Property="Margin">
-                                                                <Setter.Value>
-                                                                    <Thickness Top="3" Left="3" Right="1" Bottom="1" />
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                        </Trigger.Setters>
-                                                    </Trigger>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="ContentBorder" Property="TextElement.Foreground" Value="{StaticResource HoverCloseDocumentButtonForegroundBrush}" />
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style.Setters>
-                            </Style>
-
-                            <Style TargetType="RepeatButton" x:Key="ScrollButtonStyle">
-                                <Style.Setters>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="RepeatButton">
-                                                <Border x:Name="ContentBorder" TextBlock.Foreground="{StaticResource TabScrollButtonForegroundBrush}">
-                                                    <Grid x:Name="ContentGrid" Margin="2,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                                        <ContentPresenter />
-                                                    </Grid>
-                                                </Border>
-
-                                                <ControlTemplate.Triggers>
-                                                    <Trigger Property="IsPressed" Value="True">
-                                                        <Trigger.Setters>
-                                                            <Setter TargetName="ContentGrid" Property="Margin">
-                                                                <Setter.Value>
-                                                                    <Thickness Top="3" Left="3" Right="1" Bottom="1" />
-                                                                </Setter.Value>
-                                                            </Setter>
-                                                        </Trigger.Setters>
-                                                    </Trigger>
-                                                    <Trigger Property="IsMouseOver" Value="True">
-                                                        <Setter TargetName="ContentBorder" Property="TextElement.Foreground" Value="{StaticResource TabScrollButtonForegroundBrush}" />
-                                                    </Trigger>
-                                                </ControlTemplate.Triggers>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style.Setters>
-                            </Style>
-                            
-                            <Style TargetType="TabItem" BasedOn="{StaticResource DocumentTabItem}">
-                                <Style.Setters>
-                                    <Setter Property="Template">
-                                        <Setter.Value>
-                                            <ControlTemplate TargetType="TabItem">
-                                                <Border x:Name="TabBorder" BorderThickness="1,1,1,0" BorderBrush="Transparent"
-                                                        Background="{TemplateBinding Background}" TextBlock.Foreground="{TemplateBinding Foreground}">
-                                                    <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2" />
-                                                </Border>
-                                            </ControlTemplate>
-                                        </Setter.Value>
-                                    </Setter>
-                                </Style.Setters>
-                            </Style>
-                        </ResourceDictionary>
-                    </TabControl.Resources>
-
-                    <TabControl.Template>
-                        <ControlTemplate TargetType="{x:Type TabControl}">
-                            <Grid x:Name="Grid" KeyboardNavigation.TabNavigation="Local">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition x:Name="ColumnDefinition0"/>
-                                    <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
-                                    <RowDefinition x:Name="RowDefinition1" Height="*"/>
-                                </Grid.RowDefinitions>
-
-                                <Border Grid.Row="1" Grid.Column="0" x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" KeyboardNavigation.TabIndex="2" KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Contained">
-                                    <Border Background="{TemplateBinding Background}" x:Name="Border1">
-                                        <ContentPresenter DataContext="{x:Null}" Margin="{TemplateBinding Padding}" x:Name="PART_SelectedContentHost" Content="{TemplateBinding SelectedContent}" ContentTemplate="{TemplateBinding SelectedContentTemplate}" ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" ContentSource="SelectedContent"/>
-                                    </Border>
-                                </Border>
-
-                                <ScrollViewer x:Name="HeaderPanel" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" 
-                                      VerticalAlignment="Stretch" Margin="0,0,0,0" 
-                                      HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
-                                    <ScrollViewer.Style>
-                                        <Style TargetType="{x:Type ScrollViewer}">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate>
-                                                        <Grid Margin="0,0,0,0" Grid.Row="0" Grid.Column="0" x:Name="HeaderPanel">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="Auto"/>
-                                                                <ColumnDefinition Width="Auto"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="Auto"/>
-                                                            </Grid.RowDefinitions>
-                                                            <ScrollContentPresenter Grid.Column="0" Content="{TemplateBinding ScrollViewer.Content}" />
-                                                            <RepeatButton Grid.Column="1" Content="3" FontFamily="Marlett" FontSize="12" Padding="2" 
-                                                                          Command="ScrollBar.LineLeftCommand" Style="{StaticResource ScrollButtonStyle}"/>
-                                                            <RepeatButton Grid.Column="2" Content="4" FontFamily="Marlett" FontSize="12" Padding="2" Command="ScrollBar.LineRightCommand" 
-                                                                          Style="{StaticResource ScrollButtonStyle}"/>
-                                                        </Grid>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </ScrollViewer.Style>
-                                    <StackPanel IsItemsHost="true" Orientation="Horizontal" Background="{x:Null}" KeyboardNavigation.TabIndex="1" />
-                                </ScrollViewer>
-                            </Grid>
-                        </ControlTemplate>
-                    </TabControl.Template>
+                        ContentTemplateSelector="{StaticResource DocumentTemplateSelector}" Style="{StaticResource RootDocumentTabControl}"
+                            ItemContainerStyle="{StaticResource DocumentTabItem}">
 
                     <TabControl.ItemTemplate>
                         <DataTemplate>
@@ -517,7 +386,7 @@
                                 <Image Width="16" Height="16" Source="{Binding Icon}"/>
                                 <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" MaxWidth="200" Margin="2"/>
                                 <TextBlock Text="•" Margin="2" Visibility="{Binding Changed, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                <Button Content="r" FontFamily="Marlett" FontSize="10" Command="{Binding CloseCommand}" Style="{StaticResource TabCloseButtonStyle}"/>
+                                <Button Content="r" FontFamily="Marlett" FontSize="10" Command="{Binding CloseCommand}" Style="{StaticResource DocumentTabCloseButtonStyle}"/>
                             </StackPanel>
                         </DataTemplate>
                     </TabControl.ItemTemplate>
