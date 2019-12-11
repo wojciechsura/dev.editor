@@ -137,11 +137,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 current = folder;
             }
 
-            SelectedFolder = current;
+            if (SelectedFolder != null)
+                SelectedFolder.IsSelected = false;
+            SelectedFolder = null;
+
+            current.IsSelected = true;
 
             var file = files.FirstOrDefault(f => f.Path.ToLower().Equals(pathFragments.Last().ToLower()));
             if (file != null)
                 SelectedFile = file;
+
+            access.ScrollToSelectedFolder();
+            access.ScrollToSelectedFile();
         }
 
         private void DoSetLocationOfCurrentDocument()

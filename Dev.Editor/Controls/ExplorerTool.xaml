@@ -23,7 +23,7 @@
                     <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
 
-                <TreeView Grid.Row="0" HorizontalAlignment="Stretch" MinHeight="200" ItemsSource="{Binding Folders}" 
+                <TreeView x:Name="tvFolders" Grid.Row="0" HorizontalAlignment="Stretch" MinHeight="200" ItemsSource="{Binding Folders}" 
                       BorderThickness="0">
                     <TreeView.Resources>
                         <Style TargetType="TreeViewItem">
@@ -33,7 +33,6 @@
                             </Style.Setters>
                         </Style>
                     </TreeView.Resources>
-
 
                     <TreeView.ItemTemplate>
                         <HierarchicalDataTemplate DataType="{x:Type vme:FolderItemViewModel}" ItemsSource="{Binding Children}">

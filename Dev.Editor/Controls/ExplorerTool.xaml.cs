@@ -65,5 +65,46 @@ namespace Dev.Editor.Controls
                     listBoxItem.Focus();
             }
         }
+
+        public void ScrollToSelectedFolder()
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, 
+                new Action(() =>
+                {
+                    FolderItemViewModel selected = tvFolders.SelectedItem as FolderItemViewModel;
+                    if (selected == null)
+                        return;
+
+                    // Build hierarchy
+                    List<FolderItemViewModel> hierarchy = new List<FolderItemViewModel>();
+                    var current = selected;
+                    while (current != null)
+                    {
+                        hierarchy.Add(current);
+                        current = current.Parent;
+                    }
+
+                    TreeViewItem item = (TreeViewItem)tvFolders.ItemContainerGenerator.ContainerFromItem(hierarchy.Last());
+                    
+                    if (item == null)
+                        return;
+
+                    for (int i = hierarchy.Count - 2; i >= 0; i--)
+                    {
+                        item = (TreeViewItem)item.ItemContainerGenerator.ContainerFromItem(hierarchy[i]);
+                    }
+                    
+                    item.BringIntoView();
+                }));
+        }
+
+        public void ScrollToSelectedFile()
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
+                new Action(() =>
+                {
+                    lbFiles.ScrollIntoView(lbFiles.SelectedItem);
+                }));
+        }
     }
 }
