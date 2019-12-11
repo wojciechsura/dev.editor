@@ -520,4 +520,13 @@
   <data name="Message.CannotFormatInvalidXml" xml:space="preserve">
     <value>Nie mogę sformatować - XML jest nieprawidłowy.</value>
   </data>
+  <data name="TextEditor.ContextMenu.Copy" xml:space="preserve">
+    <value>Kopiuj</value>
+  </data>
+  <data name="TextEditor.ContextMenu.Cut" xml:space="preserve">
+    <value>Wytnij</value>
+  </data>
+  <data name="TextEditor.ContextMenu.Paste" xml:space="preserve">
+    <value>Wklej</value>
+  </data>
 </root>

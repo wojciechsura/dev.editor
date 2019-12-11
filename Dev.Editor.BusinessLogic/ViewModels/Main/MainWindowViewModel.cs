@@ -384,6 +384,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 RemoveDocument(documentViewModel);
         }
 
+        ICommand IDocumentHandler.CopyCommand => CopyCommand;
+
+        ICommand IDocumentHandler.CutCommand => CutCommand;
+
+        ICommand IDocumentHandler.PasteCommand => PasteCommand;
+
         // IExplorerHandler implementation ------------------------------------
 
         void IExplorerHandler.OpenTextFile(string path)

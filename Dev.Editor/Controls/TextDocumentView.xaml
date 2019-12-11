@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dev.Editor.Controls"
              xmlns:ae="http://icsharpcode.net/sharpdevelop/avalonedit"
+             xmlns:r="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="Root"
@@ -15,6 +16,29 @@
                    FontSize="10pt"
                    Loaded="HandleLoaded" 
                    WordWrap="{Binding ElementName=Root, Path=Handler.WordWrap}"
-                   ShowLineNumbers="{Binding ElementName=Root, Path=Handler.LineNumbers}" />
-    
+                   ShowLineNumbers="{Binding ElementName=Root, Path=Handler.LineNumbers}">
+        <ae:TextEditor.ContextMenu>
+            <ContextMenu>
+                <MenuItem Header="{x:Static r:Strings.TextEditor_ContextMenu_Cut}"
+                          Command="{Binding CutCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Cut16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static r:Strings.TextEditor_ContextMenu_Copy}"
+                          Command="{Binding CopyCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Copy16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+                <MenuItem Header="{x:Static r:Strings.TextEditor_ContextMenu_Paste}"
+                          Command="{Binding PasteCommand}">
+                    <MenuItem.Icon>
+                        <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Paste16.png" />
+                    </MenuItem.Icon>
+                </MenuItem>
+            </ContextMenu>
+        </ae:TextEditor.ContextMenu>
+    </ae:TextEditor>
+
 </UserControl>

@@ -167,5 +167,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             get => editorAccess;
             set => editorAccess = value;
         }
+
+        public ICommand CopyCommand => handler.CopyCommand;
+
+        public ICommand CutCommand => handler.CutCommand;
+
+        public ICommand PasteCommand => handler.PasteCommand;
     }
 }

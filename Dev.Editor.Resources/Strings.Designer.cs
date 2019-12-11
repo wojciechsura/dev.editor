@@ -1250,6 +1250,33 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copy.
+        /// </summary>
+        public static string TextEditor_ContextMenu_Copy {
+            get {
+                return ResourceManager.GetString("TextEditor.ContextMenu.Copy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cut.
+        /// </summary>
+        public static string TextEditor_ContextMenu_Cut {
+            get {
+                return ResourceManager.GetString("TextEditor.ContextMenu.Cut", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paste.
+        /// </summary>
+        public static string TextEditor_ContextMenu_Paste {
+            get {
+                return ResourceManager.GetString("TextEditor.ContextMenu.Paste", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Binary definitions.
         /// </summary>
         public static string Tool_BinDefinitions_Title {

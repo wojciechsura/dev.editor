@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Document
 {
@@ -13,5 +14,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         bool LineNumbers { get; }
 
         void RequestClose(BaseDocumentViewModel documentViewModel);
+
+        ICommand CopyCommand { get; }
+        ICommand CutCommand { get; }
+        ICommand PasteCommand { get; }
     }
 }
