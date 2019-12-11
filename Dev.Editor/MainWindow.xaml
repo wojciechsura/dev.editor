@@ -22,7 +22,8 @@
     xmlns:uit="clr-namespace:Dev.Editor.BusinessLogic.Types.UI;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True"
-    Loaded="HandleLoaded">
+    Loaded="HandleLoaded"
+    Drop="HandleDrop" AllowDrop="True">
 
     <f:RibbonWindow.Resources>
         <ResourceDictionary>

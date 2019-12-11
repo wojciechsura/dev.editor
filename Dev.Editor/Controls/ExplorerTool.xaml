@@ -9,49 +9,57 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" DataContextChanged="HandleDataContextChanged">
     <local:ToolContainer Header="{x:Static p:Strings.Tool_Explorer_Title}">
-        <Grid>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="{Binding FolderTreeHeight, Mode=TwoWay, Converter={StaticResource DoubleToGridLengthConverter}}" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="1*" />
-            </Grid.RowDefinitions>
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <Button Margin="4" Command="{Binding SetLocationOfCurrentDocumentCommand}">
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/FolderOfFile16.png" />
+                </Button>
+            </StackPanel>
 
-            <TreeView Grid.Row="0" HorizontalAlignment="Stretch" MinHeight="200" ItemsSource="{Binding Folders}" 
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="{Binding FolderTreeHeight, Mode=TwoWay, Converter={StaticResource DoubleToGridLengthConverter}}" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+
+                <TreeView Grid.Row="0" HorizontalAlignment="Stretch" MinHeight="200" ItemsSource="{Binding Folders}" 
                       BorderThickness="0">
-                <TreeView.Resources>
-                    <Style TargetType="TreeViewItem">
-                        <Style.Setters>
-                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                        </Style.Setters>
-                    </Style>
-                </TreeView.Resources>
+                    <TreeView.Resources>
+                        <Style TargetType="TreeViewItem">
+                            <Style.Setters>
+                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                            </Style.Setters>
+                        </Style>
+                    </TreeView.Resources>
 
 
-                <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate DataType="{x:Type vme:FolderItemViewModel}" ItemsSource="{Binding Children}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Width="16" Height="16" Source="{Binding Icon}" VerticalAlignment="Center" Margin="1,1,4,1"/>
-                            <TextBlock Text="{Binding Display}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </HierarchicalDataTemplate>
-                </TreeView.ItemTemplate>
-            </TreeView>
+                    <TreeView.ItemTemplate>
+                        <HierarchicalDataTemplate DataType="{x:Type vme:FolderItemViewModel}" ItemsSource="{Binding Children}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="16" Height="16" Source="{Binding Icon}" VerticalAlignment="Center" Margin="1,1,4,1"/>
+                                <TextBlock Text="{Binding Display}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+                    </TreeView.ItemTemplate>
+                </TreeView>
 
-            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="4" 
+                <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="4" 
                           Style="{StaticResource HorizontalToolGridSplitter}"/>
 
-            <ListBox x:Name="lbFiles" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}"                 
+                <ListBox x:Name="lbFiles" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ItemsSource="{Binding Files}" SelectedItem="{Binding SelectedFile}"                 
                  MouseDoubleClick="HandleFileListDoubleClick" KeyDown="HandleFileListKeyDown" BorderThickness="0">
-                <ListBox.ItemTemplate>
-                    <DataTemplate DataType="{x:Type vme:FileItemViewModel}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Width="16" Height="16" Source="{Binding Icon}" VerticalAlignment="Center" Margin="1,1,4,1"/>
-                            <TextBlock Text="{Binding Display}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-            </ListBox>
-        </Grid>
+                    <ListBox.ItemTemplate>
+                        <DataTemplate DataType="{x:Type vme:FileItemViewModel}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Width="16" Height="16" Source="{Binding Icon}" VerticalAlignment="Center" Margin="1,1,4,1"/>
+                                <TextBlock Text="{Binding Display}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+            </Grid>
+        </DockPanel>
     </local:ToolContainer>
 </UserControl>

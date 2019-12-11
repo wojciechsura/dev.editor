@@ -171,6 +171,16 @@ namespace Dev.Editor
             viewModel.NavigationItemChosen();
         }
 
+        private void HandleDrop(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(DataFormats.FileDrop))
+            {
+                string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+                viewModel.NotifyFilesDropped(files);                
+            }
+        }
+
         // IMainWindowAccess implementation -----------------------------------
 
         void IMainWindowAccess.ShowNavigationPopup()
@@ -200,5 +210,6 @@ namespace Dev.Editor
 
             navigationTimer = new Lazy<DispatcherTimer>(() => new DispatcherTimer(TimeSpan.FromMilliseconds(500), DispatcherPriority.Normal, NavigationSearch, this.Dispatcher));
         }
-    }
+
+   }
 }

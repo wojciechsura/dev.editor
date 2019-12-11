@@ -3,6 +3,7 @@ using Dev.Editor.BusinessLogic.Services.FileIcons;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
 using Dev.Editor.BusinessLogic.Types.Tools.Explorer;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.Base;
+using Dev.Editor.Common.Commands;
 using Dev.Editor.Common.Tools;
 using Dev.Editor.Resources;
 using System;
@@ -11,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
@@ -118,9 +120,35 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             configurationService.Configuration.Tools.Explorer.FolderTreeHeight.Value = folderTreeHeight;
         }
 
-        public void NotifyItemSelected(FolderItemViewModel folderItemViewModel)
+        private void SetCurrentPath(string path)
         {
-            SelectedFolder = folderItemViewModel;
+            var pathFragments = path.Split('\\');
+
+            FolderItemViewModel current = null;
+
+            for (int i = 0; i < pathFragments.Length - 1; i++)
+            {
+                var folder = (current?.Children ?? folders).FirstOrDefault(f => f.Path.ToLower().Equals(pathFragments[i].ToLower()));
+
+                if (folder == null)
+                    return;
+
+                folder.IsExpanded = true;
+                current = folder;
+            }
+
+            SelectedFolder = current;
+
+            var file = files.FirstOrDefault(f => f.Path.ToLower().Equals(pathFragments.Last().ToLower()));
+            if (file != null)
+                SelectedFile = file;
+        }
+
+        private void DoSetLocationOfCurrentDocument()
+        {
+            string path = handler.GetCurrentDocumentPath();
+
+            SetCurrentPath(path);
         }
 
         // Public metods ------------------------------------------------------
@@ -141,6 +169,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             InitializeFolders();
 
             folderTreeHeight = configurationService.Configuration.Tools.Explorer.FolderTreeHeight.Value;
+
+            SetLocationOfCurrentDocumentCommand = new AppCommand(obj => DoSetLocationOfCurrentDocument(), handler.CurrentDocumentHasPathCondition);
+        }
+
+        public void NotifyItemSelected(FolderItemViewModel folderItemViewModel)
+        {
+            SelectedFolder = folderItemViewModel;
         }
 
         public ImageSource GetFolderIcon(string name)
@@ -218,5 +253,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         }
 
         public override string Uid => ExplorerUid;
+
+        public ICommand SetLocationOfCurrentDocumentCommand { get; }
     }
 }

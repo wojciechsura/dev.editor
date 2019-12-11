@@ -391,6 +391,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             LoadTextDocument(path);
         }
 
+        string IExplorerHandler.GetCurrentDocumentPath()
+        {
+            return ActiveDocument.FileName;
+        }
+
+        BaseCondition IExplorerHandler.CurrentDocumentHasPathCondition => documentHasPathCondition;
+
         // IBinDefinitionsHandler implementation ------------------------------
 
         void IBinDefinitionsHandler.OpenTextFile(string path)
@@ -485,6 +492,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             regularSelectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.RegularSelectionAvailable, false);
             searchPerformedCondition = new MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.LastSearch);
             xmlToolsetAvailableCondition = new MutableSourcePropertyFuncCondition<MainWindowViewModel, BaseDocumentViewModel, HighlightingInfo>(this, vm => ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Xml, false);
+            documentPathVirtualCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.FilenameVirtual, true);
+            documentHasPathCondition = documentExistsCondition & !documentPathVirtualCondition;
 
             // Initializing tools
 
@@ -634,6 +643,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 if (index < navigationItems.Count - 1)
                     SelectedNavigationItem = navigationItems[index + 1];
                 access.EnsureSelectedNavigationItemVisible();
+            }
+        }
+
+        public void NotifyFilesDropped(string[] files)
+        {
+            foreach (var file in files)
+            {
+                LoadTextDocument(file);
             }
         }
 

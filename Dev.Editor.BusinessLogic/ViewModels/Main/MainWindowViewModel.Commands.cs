@@ -23,6 +23,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel> regularSelectionAvailableCondition;
         private readonly MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, BaseDocumentViewModel> searchPerformedCondition;
         private readonly MutableSourcePropertyFuncCondition<MainWindowViewModel, BaseDocumentViewModel, HighlightingInfo> xmlToolsetAvailableCondition;
+        private readonly MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel> documentPathVirtualCondition;
+        private readonly BaseCondition documentHasPathCondition;
 
         // Public properties --------------------------------------------------
 
