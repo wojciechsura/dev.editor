@@ -7,7 +7,8 @@
         xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
         xmlns:t="clr-namespace:Dev.Editor.BusinessLogic.Types.Search;assembly=Dev.Editor.BusinessLogic"
         mc:Ignorable="d"
-        Title="{x:Static p:Strings.SearchWindow_Title}" SizeToContent="WidthAndHeight" ResizeMode="NoResize" Closing="HandleWindowClosing">
+        Title="{x:Static p:Strings.SearchWindow_Title}" 
+        SizeToContent="WidthAndHeight" ResizeMode="NoResize" Closing="HandleWindowClosing" ShowInTaskbar="False">
     <TabControl x:Name="tcTabs" Margin="{StaticResource DialogWindowPadding}">
         
         <!-- Search -->

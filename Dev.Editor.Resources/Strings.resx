@@ -529,4 +529,7 @@
   <data name="TextEditor.ContextMenu.Paste" xml:space="preserve">
     <value>Paste</value>
   </data>
+  <data name="Message.ReplacedOccurrences" xml:space="preserve">
+    <value>Replaced occurrences: {0}.</value>
+  </data>
 </root>

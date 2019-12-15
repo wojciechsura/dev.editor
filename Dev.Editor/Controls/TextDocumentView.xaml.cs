@@ -291,8 +291,7 @@ namespace Dev.Editor.Controls
 
         public void SetSelection(int selStart, int selLength)
         {
-            teEditor.SelectionStart = selStart;
-            teEditor.SelectionLength = selLength;
+            teEditor.Select(selStart, selLength);
         }
 
         public string GetSelectedText()

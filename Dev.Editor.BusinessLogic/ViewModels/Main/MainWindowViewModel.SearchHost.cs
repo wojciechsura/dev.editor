@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
+using Dev.Editor.Resources;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -58,7 +59,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             if (match.Success && match.Index == 0 && match.Length == input.Length)
             {
                 (int selStart, int selLength) = document.GetSelection();
-                document.Document.Replace(selStart, selLength, replaceModel.Replace);
+
+                if (replaceModel.IsRegexReplace)
+                {
+                    var newReplace = replaceModel.Regex.Replace(match.Value, replaceModel.Replace);
+                    document.Document.Replace(selStart, selLength, newReplace);
+                }
+                else
+                {
+                    document.Document.Replace(selStart, selLength, replaceModel.Replace);
+                }
             }
 
             FindNext(replaceModel);
@@ -70,16 +80,32 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             document.LastSearch = replaceModel;
 
+            int replaceCount = 0;
+
             if (!replaceModel.InSelection)
             {
                 int offset = 0;
-                document.RunAsSingleHistoryEntry(() =>
+                
+                replaceCount = document.RunAsSingleHistoryEntry(() =>
                 {
-                    foreach (Match match in replaceModel.Regex.Matches(document.Document.Text))
+                    MatchCollection matches = replaceModel.Regex.Matches(document.Document.Text);
+
+                    foreach (Match match in matches)
                     {
-                        document.Document.Replace(offset + match.Index, match.Length, replaceModel.Replace);
-                        offset += replaceModel.Replace.Length - match.Length;
+                        if (replaceModel.IsRegexReplace)
+                        {
+                            var newReplace = replaceModel.Regex.Replace(match.Value, replaceModel.Replace);
+                            document.Document.Replace(offset + match.Index, match.Length, newReplace);
+                            offset += newReplace.Length - match.Length;
+                        }
+                        else
+                        {
+                            document.Document.Replace(offset + match.Index, match.Length, replaceModel.Replace);
+                            offset += replaceModel.Replace.Length - match.Length;
+                        }
                     }
+
+                    return matches.Count;
                 });
             }
             else
@@ -89,14 +115,27 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 int offset = 0;
 
-                document.RunAsSingleHistoryEntry(() =>
+                replaceCount = document.RunAsSingleHistoryEntry(() =>
                 {
-                    foreach (Match match in replaceModel.Regex.Matches(selection))
+                    MatchCollection matches = replaceModel.Regex.Matches(selection);                    
+
+                    foreach (Match match in matches)
                     {
                         document.Document.Replace(offset + selStart + match.Index, match.Length, replaceModel.Replace);
                         offset += replaceModel.Replace.Length - match.Length;
                     }
+
+                    return matches.Count;
                 });
+            }
+
+            if (replaceCount > 0)
+            {
+                messagingService.Inform(String.Format(Strings.Message_ReplacedOccurrences, replaceCount));
+            }
+            else
+            {
+                messagingService.Inform(Strings.Message_NoMorePatternsFound);
             }
         }
     }

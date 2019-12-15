@@ -211,5 +211,9 @@ namespace Dev.Editor
             navigationTimer = new Lazy<DispatcherTimer>(() => new DispatcherTimer(TimeSpan.FromMilliseconds(500), DispatcherPriority.Normal, NavigationSearch, this.Dispatcher));
         }
 
-   }
+        private void TabControl_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine($"{e.OriginalSource}");
+        }
+    }
 }

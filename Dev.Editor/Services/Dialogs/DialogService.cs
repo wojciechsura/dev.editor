@@ -42,7 +42,11 @@ namespace Dev.Editor.Services.Dialogs
         public SearchReplaceWindowViewModel RequestSearchReplace(ISearchHost searchHost)
         {
             if (!searchWindows.ContainsKey(searchHost))
-                searchWindows.Add(searchHost, new SearchReplaceWindow(searchHost));
+            {
+                SearchReplaceWindow searchReplaceWindow = new SearchReplaceWindow(searchHost);
+                searchReplaceWindow.Owner = Application.Current.MainWindow;
+                searchWindows.Add(searchHost, searchReplaceWindow);
+            }
 
             return searchWindows[searchHost].ViewModel;
         }

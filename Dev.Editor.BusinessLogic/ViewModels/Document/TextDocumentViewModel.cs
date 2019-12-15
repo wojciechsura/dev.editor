@@ -84,6 +84,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             }
         }
 
+        public T RunAsSingleHistoryEntry<T>(Func<T> func)
+        {
+            T result = default(T);
+
+            try
+            {
+                editorAccess.BeginChange();
+                result = func();
+            }
+            finally
+            {
+                editorAccess.EndChange();
+            }
+
+            return result;
+        }
+
         public void NotifySelectionAvailable(bool selectionAvailable) => SelectionAvailable = selectionAvailable;
 
         public void NotifyRegularSelectionAvailable(bool regularSelectionAvailable) => RegularSelectionAvailable = regularSelectionAvailable;        

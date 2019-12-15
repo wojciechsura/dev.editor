@@ -71,6 +71,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         private string GetReplaceText(string replace)
         {
+            replace = replace ?? String.Empty;
+
             switch (searchMode)
             {
                 case SearchMode.Normal:
@@ -93,7 +95,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 Regex searchRegex = GetSearchRegex(search);
                 string replaceText = GetReplaceText(replace);
 
-                var model = new ReplaceAllModel(searchRegex, replaceText, searchBackwards, replaceAllInSelection);
+                var model = new ReplaceAllModel(searchRegex, replaceText, searchBackwards, searchMode == SearchMode.RegularExpressions, replaceAllInSelection);
                 searchHost.ReplaceAll(model);
             }
             catch
@@ -110,7 +112,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 Regex searchRegex = GetSearchRegex(search);
                 string replaceText = GetReplaceText(replace);
 
-                var model = new ReplaceModel(searchRegex, replaceText, searchBackwards);
+                var model = new ReplaceModel(searchRegex, replaceText, searchBackwards, searchMode == SearchMode.RegularExpressions);
                 searchHost.Replace(model);
             }
             catch
