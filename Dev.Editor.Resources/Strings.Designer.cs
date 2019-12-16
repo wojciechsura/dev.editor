@@ -448,6 +448,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Replaced occurrences: {0}..
+        /// </summary>
+        public static string Message_ReplacedOccurrences {
+            get {
+                return ResourceManager.GetString("Message.ReplacedOccurrences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot find type name {0} !.
         /// </summary>
         public static string Message_SyntaxError_CannotFindTypeName {

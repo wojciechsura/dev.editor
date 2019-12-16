@@ -4,6 +4,7 @@
              xmlns:local="clr-namespace:Dev.Editor"
              xmlns:c="clr-namespace:Dev.Editor.Converters"
              xmlns:controls="clr-namespace:Dev.Editor.Controls"
+             xmlns:wpf="clr-namespace:Dev.Editor.Wpf"
              StartupUri="MainWindow.xaml" ShutdownMode="OnMainWindowClose" Startup="HandleApplicationStartup">
     <Application.Resources>
         <ResourceDictionary>
@@ -125,11 +126,11 @@
                 </Style.Setters>
             </Style>
 
-            <Style x:Key="RootDocumentTabControl" TargetType="TabControl">
+            <Style x:Key="RootDocumentTabControl" TargetType="controls:TabControlExt">
                 <Style.Setters>
                     <Setter Property="Template">
                         <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type TabControl}">
+                            <ControlTemplate TargetType="{x:Type controls:TabControlExt}">
                                 <Grid x:Name="Grid" KeyboardNavigation.TabNavigation="Local">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition x:Name="ColumnDefinition0"/>
@@ -151,8 +152,8 @@
                                     </Border>
 
                                     <ScrollViewer x:Name="HeaderPanel" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" 
-                                      VerticalAlignment="Stretch" Margin="0,0,0,0" 
-                                      HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Disabled">
+                                      VerticalAlignment="Stretch" Margin="0,0,0,0" HorizontalScrollBarVisibility="Hidden" 
+                                                  VerticalScrollBarVisibility="Disabled" wpf:MouseEvents.DirectMouseDoubleClickCommand="{TemplateBinding HeaderDoubleClickCommand}">
                                         <ScrollViewer.Style>
                                             <Style TargetType="{x:Type ScrollViewer}">
                                                 <Setter Property="Template">

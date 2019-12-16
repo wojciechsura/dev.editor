@@ -9,12 +9,14 @@ namespace Dev.Editor.BusinessLogic.Models.Search
 {
     public class ReplaceModel : SearchModel
     {
-        public ReplaceModel(Regex regex, string replace, bool searchBackwards)
+        public ReplaceModel(Regex regex, string replace, bool searchBackwards, bool isRegexReplace)
             : base(regex, searchBackwards)
         {
             Replace = replace;
+            IsRegexReplace = isRegexReplace;
         }
 
-        public string Replace { get; set; }
+        public bool IsRegexReplace { get; }
+        public string Replace { get; }
     }
 }

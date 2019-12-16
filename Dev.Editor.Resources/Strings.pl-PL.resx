@@ -379,7 +379,7 @@
     <value>Nazwa</value>
   </data>
   <data name="NewBinaryDefinitionContents" xml:space="preserve">
-    <value>// To jest definicja pliku binarnego {0} Dev.Editora
+    <value>// To jest definicja pliku binarnego {0} Dev.Editora.
 </value>
   </data>
   <data name="Message.CannotAddBinDefinition" xml:space="preserve">
@@ -528,5 +528,8 @@
   </data>
   <data name="TextEditor.ContextMenu.Paste" xml:space="preserve">
     <value>Wklej</value>
+  </data>
+  <data name="Message.ReplacedOccurrences" xml:space="preserve">
+    <value>Zamieniono wystąpień: {0}.</value>
   </data>
 </root>

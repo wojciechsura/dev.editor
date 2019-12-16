@@ -123,6 +123,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             if (fileDialogResult.Result && InternalSaveTextDocument(document, fileDialogResult.FileName))
             {
                 document.SetFilename(fileDialogResult.FileName, fileIconProvider.GetImageForFile(fileDialogResult.FileName));
+                document.FilenameVirtual = false;
                 return true;
             }
 
@@ -239,6 +240,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             if (fileDialogResult.Result && InternalSaveHexDocument(document, fileDialogResult.FileName))
             {
                 document.SetFilename(fileDialogResult.FileName, fileIconProvider.GetImageForFile(fileDialogResult.FileName));
+                document.FilenameVirtual = false;
                 return true;
             }
 
