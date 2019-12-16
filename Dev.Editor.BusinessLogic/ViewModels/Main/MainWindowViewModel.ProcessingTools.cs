@@ -22,7 +22,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             DocumentLine startLine = document.Document.GetLineByOffset(selStart);
             var startOffset = startLine.Offset;
-            DocumentLine endLine = document.Document.GetLineByOffset(selStart + selLength - 1);
+            DocumentLine endLine = document.Document.GetLineByOffset(Math.Max(0, selStart + selLength - 1));
             var endOffset = endLine.Offset + endLine.Length - 1;
 
             return (startOffset, endOffset);

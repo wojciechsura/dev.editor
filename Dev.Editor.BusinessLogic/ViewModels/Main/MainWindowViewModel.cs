@@ -583,6 +583,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 throw new InvalidOperationException("Invalid close behavior!");
         }
 
+        public void NotifyLoaded()
+        {
+            var uiConfig = configurationService.Configuration.UI;
+
+            if (uiConfig.MainWindowSizeSet.Value)
+                access.SetWindowSize(new System.Windows.Size(uiConfig.MainWindowWidth.Value, 
+                    uiConfig.MainWindowHeight.Value));
+
+            if (uiConfig.MainWindowLocationSet.Value)
+                access.SetWindowLocation(new System.Windows.Point(uiConfig.MainWindowX.Value,
+                    uiConfig.MainWindowY.Value));
+
+            if (uiConfig.MainWindowMaximized.Value)
+                access.SetWindowMaximized(true);
+        }
+
         public bool CanCloseApplication()
         {
             switch (configurationService.Configuration.Behavior.CloseBehavior.Value)
@@ -670,11 +686,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             if (!maximized)
             {
-                configurationService.Configuration.UI.MainWindowWidth.Value = windowSize.Width;
-                configurationService.Configuration.UI.MainWindowHeight.Value = windowSize.Height;
-                configurationService.Configuration.UI.MainWindowX.Value = windowLocation.X;
-                configurationService.Configuration.UI.MainWindowY.Value = windowLocation.Y;
+                Models.Configuration.UI.UIConfig uiConfig = configurationService.Configuration.UI;
+
+                uiConfig.MainWindowWidth.Value = windowSize.Width;
+                uiConfig.MainWindowHeight.Value = windowSize.Height;
+                uiConfig.MainWindowSizeSet.Value = true;
+
+                uiConfig.MainWindowX.Value = windowLocation.X;
+                uiConfig.MainWindowY.Value = windowLocation.Y;
+                uiConfig.MainWindowLocationSet.Value = true;
             }
+
+            configurationService.Save();
         }
 
         // Public properties --------------------------------------------------

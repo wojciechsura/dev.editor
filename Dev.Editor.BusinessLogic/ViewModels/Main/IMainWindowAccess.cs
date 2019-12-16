@@ -17,5 +17,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         bool GetMaximized();
         Size GetWindowSize();
         Point GetWindowLocation();
+        void SetWindowSize(Size size);
+        void SetWindowLocation(Point point);
+        void SetWindowMaximized(bool maximized);
     }
 }

@@ -22,10 +22,13 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.UI
             BottomPanelActiveTab = new ConfigValue<string>("BottomPanelActiveTab", this, ViewModels.BottomTools.Base.BaseBottomToolViewModel.MessagesUid);
 
             MainWindowMaximized = new ConfigValue<bool>("MainWindowMaximized", this, false);
-            MainWindowX = new ConfigValue<double?>("MainWindowX", this, null);
-            MainWindowY = new ConfigValue<double?>("MainWindowY", this, null);
-            MainWindowWidth = new ConfigValue<double?>("MainWindowWidth", this, null);
-            MainWindowHeight = new ConfigValue<double?>("MainWindowHeight", this, null);
+
+            MainWindowLocationSet = new ConfigValue<bool>("MainWindowLocationSet", this, false);
+            MainWindowX = new ConfigValue<double>("MainWindowX", this, 0.0);
+            MainWindowY = new ConfigValue<double>("MainWindowY", this, 0.0);
+            MainWindowSizeSet = new ConfigValue<bool>("MainWindowSizeSet", this, false);
+            MainWindowWidth = new ConfigValue<double>("MainWindowWidth", this, 0.0);
+            MainWindowHeight = new ConfigValue<double>("MainWindowHeight", this, 0.0);
         }
 
         public ConfigValue<SidePanelPlacement> SidePanelPlacement { get; }
@@ -36,9 +39,11 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.UI
         public ConfigValue<string> BottomPanelActiveTab { get; }
 
         public ConfigValue<bool> MainWindowMaximized { get; }
-        public ConfigValue<double?> MainWindowX { get; }
-        public ConfigValue<double?> MainWindowY { get; }
-        public ConfigValue<double?> MainWindowWidth { get; }
-        public ConfigValue<double?> MainWindowHeight { get; }
+        public ConfigValue<bool> MainWindowLocationSet { get; }
+        public ConfigValue<double> MainWindowX { get; }
+        public ConfigValue<double> MainWindowY { get; }
+        public ConfigValue<bool> MainWindowSizeSet { get; }
+        public ConfigValue<double> MainWindowWidth { get; }
+        public ConfigValue<double> MainWindowHeight { get; }
     }
 }

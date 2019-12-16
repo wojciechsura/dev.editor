@@ -276,7 +276,9 @@
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_XmlTools_Group_Formatting}">
 
                     <f:Button Header="{x:Static p:Strings.Ribbon_XmlTools_Formatting_Format}" Command="{Binding FormatXmlCommand}"
-                              SizeDefinition="Large" />
+                              SizeDefinition="Large" 
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/FormatXml32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/FormatXml16.png"/>
 
                 </f:RibbonGroupBox>
 

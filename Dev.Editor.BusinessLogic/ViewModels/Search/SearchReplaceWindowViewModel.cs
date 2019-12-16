@@ -43,6 +43,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 options |= RegexOptions.RightToLeft;
             if (!caseSensitive)
                 options |= RegexOptions.IgnoreCase;
+            options |= RegexOptions.Multiline;
 
             switch (searchMode)
             {

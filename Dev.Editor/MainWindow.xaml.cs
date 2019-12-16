@@ -100,7 +100,7 @@ namespace Dev.Editor
         private void HandleWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             bool canClose = viewModel.CanCloseApplication();
-            
+
             e.Cancel = !canClose;
 
             if (canClose)
@@ -151,6 +151,8 @@ namespace Dev.Editor
             viewModel.PropertyChanged += HandleViewModelPropertyChanged;
             SetupSidePanel();
             SetupBottomPanel();
+
+            viewModel.NotifyLoaded();
         }
 
         private void HandleViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -182,7 +184,7 @@ namespace Dev.Editor
             {
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
-                viewModel.NotifyFilesDropped(files);                
+                viewModel.NotifyFilesDropped(files);
             }
         }
 
@@ -219,6 +221,23 @@ namespace Dev.Editor
             return WindowState == WindowState.Maximized;
         }
 
+        void IMainWindowAccess.SetWindowSize(Size size)
+        {
+            this.Width = size.Width;
+            this.Height = size.Height;
+        }
+
+        void IMainWindowAccess.SetWindowLocation(Point point)
+        {
+            this.Left = point.X;
+            this.Top = point.Y;
+        }
+
+        void IMainWindowAccess.SetWindowMaximized(bool maximized)
+        {
+            this.WindowState = maximized ? WindowState.Maximized : WindowState.Normal;
+        }
+
         // Public methods -----------------------------------------------------
 
         public MainWindow()
@@ -230,4 +249,5 @@ namespace Dev.Editor
 
             navigationTimer = new Lazy<DispatcherTimer>(() => new DispatcherTimer(TimeSpan.FromMilliseconds(500), DispatcherPriority.Normal, NavigationSearch, this.Dispatcher));
         }
+    }
 }

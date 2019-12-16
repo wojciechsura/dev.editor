@@ -323,5 +323,9 @@
     <Resource Include="Resources\Images\FolderOfFile16.png" />
     <Resource Include="Resources\Images\FolderOfFile32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\FormatXml16.png" />
+    <Resource Include="Resources\Images\FormatXml32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
