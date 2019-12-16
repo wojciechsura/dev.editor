@@ -99,7 +99,12 @@ namespace Dev.Editor
 
         private void HandleWindowClosing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            e.Cancel = !viewModel.CanCloseApplication();
+            bool canClose = viewModel.CanCloseApplication();
+            
+            e.Cancel = !canClose;
+
+            if (canClose)
+                viewModel.NotifyClosingWindow();
         }
 
         private void ShowNavigationPopup()
@@ -199,6 +204,21 @@ namespace Dev.Editor
                 lbNavigation.ScrollIntoView(viewModel.SelectedNavigationItem);
         }
 
+        Size IMainWindowAccess.GetWindowSize()
+        {
+            return new Size(this.Width, this.Height);
+        }
+
+        Point IMainWindowAccess.GetWindowLocation()
+        {
+            return new Point(this.Left, this.Top);
+        }
+
+        bool IMainWindowAccess.GetMaximized()
+        {
+            return WindowState == WindowState.Maximized;
+        }
+
         // Public methods -----------------------------------------------------
 
         public MainWindow()
@@ -210,6 +230,5 @@ namespace Dev.Editor
 
             navigationTimer = new Lazy<DispatcherTimer>(() => new DispatcherTimer(TimeSpan.FromMilliseconds(500), DispatcherPriority.Normal, NavigationSearch, this.Dispatcher));
         }
-
    }
 }

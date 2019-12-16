@@ -20,6 +20,12 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.UI
             BottomPanelSize = new ConfigValue<double>("BottomPanelSize", this, 200.0);
             BottomPanelVisibility = new ConfigValue<BottomPanelVisibility>("BottomPanelVisibility", this, Types.UI.BottomPanelVisibility.Hidden);
             BottomPanelActiveTab = new ConfigValue<string>("BottomPanelActiveTab", this, ViewModels.BottomTools.Base.BaseBottomToolViewModel.MessagesUid);
+
+            MainWindowMaximized = new ConfigValue<bool>("MainWindowMaximized", this, false);
+            MainWindowX = new ConfigValue<double?>("MainWindowX", this, null);
+            MainWindowY = new ConfigValue<double?>("MainWindowY", this, null);
+            MainWindowWidth = new ConfigValue<double?>("MainWindowWidth", this, null);
+            MainWindowHeight = new ConfigValue<double?>("MainWindowHeight", this, null);
         }
 
         public ConfigValue<SidePanelPlacement> SidePanelPlacement { get; }
@@ -28,5 +34,11 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.UI
         public ConfigValue<double> BottomPanelSize { get; }
         public ConfigValue<BottomPanelVisibility> BottomPanelVisibility { get; }
         public ConfigValue<string> BottomPanelActiveTab { get; }
+
+        public ConfigValue<bool> MainWindowMaximized { get; }
+        public ConfigValue<double?> MainWindowX { get; }
+        public ConfigValue<double?> MainWindowY { get; }
+        public ConfigValue<double?> MainWindowWidth { get; }
+        public ConfigValue<double?> MainWindowHeight { get; }
     }
 }

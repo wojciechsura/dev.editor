@@ -660,6 +660,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
+        public void NotifyClosingWindow()
+        {
+            var windowSize = access.GetWindowSize();
+            var windowLocation = access.GetWindowLocation();
+
+            var maximized = access.GetMaximized();
+            configurationService.Configuration.UI.MainWindowMaximized.Value = maximized;
+
+            if (!maximized)
+            {
+                configurationService.Configuration.UI.MainWindowWidth.Value = windowSize.Width;
+                configurationService.Configuration.UI.MainWindowHeight.Value = windowSize.Height;
+                configurationService.Configuration.UI.MainWindowX.Value = windowLocation.X;
+                configurationService.Configuration.UI.MainWindowY.Value = windowLocation.Y;
+            }
+        }
+
         // Public properties --------------------------------------------------
 
         public ObservableCollection<BaseDocumentViewModel> Documents => documents;

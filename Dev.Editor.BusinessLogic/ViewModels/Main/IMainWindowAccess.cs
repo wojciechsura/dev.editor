@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -12,5 +13,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         void ShowNavigationPopup();
         void EnsureSelectedNavigationItemVisible();
         void HideNavigationPopup();
+
+        bool GetMaximized();
+        Size GetWindowSize();
+        Point GetWindowLocation();
     }
 }
