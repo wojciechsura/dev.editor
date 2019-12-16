@@ -31,9 +31,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             if (!match.Success)  // start again from beginning or end
             {
                 if (searchModel.SearchBackwards)
+                {
                     match = searchModel.Regex.Match(document.Document.Text, document.Document.Text.Length);
+                }
                 else
+                { 
                     match = searchModel.Regex.Match(document.Document.Text, 0);
+                    }
             }
 
             if (match.Success)
@@ -45,6 +49,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public void FindNext(SearchModel searchModel)
         {
             activeDocument.LastSearch = searchModel;
+            
+            //
+            
             InternalFindNext(searchModel);
         }
 

@@ -457,6 +457,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search reached beginning of the file. Do you want to continue from the end?.
+        /// </summary>
+        public static string Message_SearchReachedBeginning {
+            get {
+                return ResourceManager.GetString("Message.SearchReachedBeginning", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search reached end of the file. Do you want to continue from the beginning?.
+        /// </summary>
+        public static string Message_SearchReachedEnd {
+            get {
+                return ResourceManager.GetString("Message.SearchReachedEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot find type name {0} !.
         /// </summary>
         public static string Message_SyntaxError_CannotFindTypeName {

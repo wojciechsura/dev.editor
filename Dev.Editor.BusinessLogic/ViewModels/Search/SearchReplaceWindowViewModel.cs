@@ -48,7 +48,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             switch (searchMode)
             {
                 case SearchMode.RegularExpressions:
-                    return new Regex(textToFind, options);
+                    {
+                        string pattern = textToFind;
+
+                        // See: https://docs.microsoft.com/en-us/dotnet/standard/base-types/anchors-in-regular-expressions#end-of-string-or-line-
+                        pattern = Regex.Replace(pattern, @"(?<!\\)\$", @"\r?$");
+
+                        return new Regex(pattern, options);
+                    }
                 case SearchMode.Extended:
                     {
                         string pattern = Regex.Escape(textToFind.Unescape());

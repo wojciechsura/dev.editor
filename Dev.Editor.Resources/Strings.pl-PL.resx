@@ -532,4 +532,10 @@
   <data name="Message.ReplacedOccurrences" xml:space="preserve">
     <value>Zamieniono wystąpień: {0}.</value>
   </data>
+  <data name="Message.SearchReachedBeginning" xml:space="preserve">
+    <value>Wyszukiwanie osiągnęło początek pliku. Czy chcesz kontynuować od końca?</value>
+  </data>
+  <data name="Message.SearchReachedEnd" xml:space="preserve">
+    <value>Wyszukiwanie osiągnęło koniec pliku. Czy chcesz kontynuować od początku?</value>
+  </data>
 </root>

@@ -532,4 +532,10 @@
   <data name="Message.ReplacedOccurrences" xml:space="preserve">
     <value>Replaced occurrences: {0}.</value>
   </data>
+  <data name="Message.SearchReachedEnd" xml:space="preserve">
+    <value>Search reached end of the file. Do you want to continue from the beginning?</value>
+  </data>
+  <data name="Message.SearchReachedBeginning" xml:space="preserve">
+    <value>Search reached beginning of the file. Do you want to continue from the end?</value>
+  </data>
 </root>

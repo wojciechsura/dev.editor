@@ -17,5 +17,6 @@ namespace Dev.Editor.BusinessLogic.Models.Search
 
         public Regex Regex { get; }
         public bool SearchBackwards { get; }
+        public bool SearchedFromBoundary { get; set; } = false;
     }
 }
