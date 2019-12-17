@@ -34,6 +34,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         private bool selectionAvailable;
         private bool replaceAllInSelection;
 
+        private readonly Condition searchRegexValidCondition;
+
+        private SearchReplaceModel searchReplaceModel;
+
         // Private methods ----------------------------------------------------
 
         private Regex GetSearchRegex(string textToFind)
@@ -94,17 +98,35 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             }
         }
 
+        private void UpdateModel()
+        {
+            searchReplaceModel = null;
+
+            Regex searchRegex;
+
+            try
+            {
+                searchRegex = GetSearchRegex(search);
+                searchRegexValidCondition.Value = true;
+            }
+            catch
+            {
+                searchRegexValidCondition.Value = false;
+                return;
+            }
+
+            string replaceText = GetReplaceText(replace);
+
+            searchReplaceModel = new SearchReplaceModel(searchRegex, replaceText, searchBackwards, searchMode == SearchMode.RegularExpressions, replaceAllInSelection);
+        }
+
         private void DoClose() => access.Close();
 
         private void DoReplaceAll()
         {
             try
             {
-                Regex searchRegex = GetSearchRegex(search);
-                string replaceText = GetReplaceText(replace);
-
-                var model = new ReplaceAllModel(searchRegex, replaceText, searchBackwards, searchMode == SearchMode.RegularExpressions, replaceAllInSelection);
-                searchHost.ReplaceAll(model);
+                searchHost.ReplaceAll(searchReplaceModel);
             }
             catch
             {
@@ -117,11 +139,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         {
             try
             {
-                Regex searchRegex = GetSearchRegex(search);
-                string replaceText = GetReplaceText(replace);
-
-                var model = new ReplaceModel(searchRegex, replaceText, searchBackwards, searchMode == SearchMode.RegularExpressions);
-                searchHost.Replace(model);
+                searchHost.Replace(searchReplaceModel);
             }
             catch
             {
@@ -134,10 +152,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         {
             try
             {
-                Regex regex = GetSearchRegex(search);
-
-                var model = new SearchModel(regex, searchBackwards);
-                searchHost.FindNext(model);
+                searchHost.FindNext(searchReplaceModel);
             }
             catch
             {
@@ -151,6 +166,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             SelectionAvailable = searchHost.SelectionAvailableCondition.GetValue();
             if (!SelectionAvailable)
                 ReplaceAllInSelection = false;
+        }
+
+        private void HandleSearchReplaceParamsChanged()
+        {
+            UpdateModel();
         }
 
         // Public methods -----------------------------------------------------
@@ -172,9 +192,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             selectionAvailable = searchHost.SelectionAvailableCondition.GetValue();
             searchHost.SelectionAvailableCondition.ValueChanged += HandleSelectionAvailableChanged;
 
-            FindNextCommand = new AppCommand(obj => DoFindNext(), searchHost.CanSearchCondition);
-            ReplaceCommand = new AppCommand(obj => DoReplace(), searchHost.CanSearchCondition);
-            ReplaceAllCommand = new AppCommand(obj => DoReplaceAll(), searchHost.CanSearchCondition);
+            searchRegexValidCondition = new Condition(true);
+
+            FindNextCommand = new AppCommand(obj => DoFindNext(), searchHost.CanSearchCondition & searchRegexValidCondition);
+            ReplaceCommand = new AppCommand(obj => DoReplace(), searchHost.CanSearchCondition & searchRegexValidCondition);
+            ReplaceAllCommand = new AppCommand(obj => DoReplaceAll(), searchHost.CanSearchCondition & searchRegexValidCondition);
             CloseCommand = new AppCommand(obj => DoClose());
         }
 
@@ -197,49 +219,49 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         public string Search
         {
             get => search;
-            set => Set(ref search, () => Search, value);
+            set => Set(ref search, () => Search, value, HandleSearchReplaceParamsChanged);
         }
 
         public string Replace
         {
             get => replace;
-            set => Set(ref replace, () => Replace, value);
+            set => Set(ref replace, () => Replace, value, HandleSearchReplaceParamsChanged);
         }
 
         public bool CaseSensitive
         {
             get => caseSensitive;
-            set => Set(ref caseSensitive, () => CaseSensitive, value);
+            set => Set(ref caseSensitive, () => CaseSensitive, value, HandleSearchReplaceParamsChanged);
         }
 
         public bool WholeWordsOnly
         {
             get => wholeWordsOnly;
-            set => Set(ref wholeWordsOnly, () => WholeWordsOnly, value);
+            set => Set(ref wholeWordsOnly, () => WholeWordsOnly, value, HandleSearchReplaceParamsChanged);
         }
 
         public bool SearchBackwards
         {
             get => searchBackwards;
-            set => Set(ref searchBackwards, () => SearchBackwards, value);
+            set => Set(ref searchBackwards, () => SearchBackwards, value, HandleSearchReplaceParamsChanged);
         }
 
         public bool SelectionAvailable
         {
             get => selectionAvailable;
-            set => Set(ref selectionAvailable, () => SelectionAvailable, value);
+            set => Set(ref selectionAvailable, () => SelectionAvailable, value, HandleSearchReplaceParamsChanged);
         }
 
         public bool ReplaceAllInSelection
         {
             get => replaceAllInSelection;
-            set => Set(ref replaceAllInSelection, () => ReplaceAllInSelection, value);
+            set => Set(ref replaceAllInSelection, () => ReplaceAllInSelection, value, HandleSearchReplaceParamsChanged);
         }
 
         public SearchMode SearchMode
         {
             get => searchMode;
-            set => Set(ref searchMode, () => SearchMode, value);
+            set => Set(ref searchMode, () => SearchMode, value, HandleSearchReplaceParamsChanged);
         }
 
         public ICommand FindNextCommand { get; }

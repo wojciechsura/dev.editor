@@ -34,7 +34,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         protected bool canSave;
         protected bool selectionAvailable;
         protected bool regularSelectionAvailable;
-        protected SearchModel lastSearch;
+        protected SearchReplaceModel lastSearch;
 
         protected ImageSource icon;
 
@@ -129,7 +129,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             set => Set(ref regularSelectionAvailable, () => RegularSelectionAvailable, value);
         }
 
-        public SearchModel LastSearch
+        public SearchReplaceModel LastSearch
         {
             get => lastSearch;
             set => Set(ref lastSearch, () => LastSearch, value);

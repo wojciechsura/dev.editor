@@ -7,16 +7,23 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BusinessLogic.Models.Search
 {
-    public class SearchModel
+    public class SearchReplaceModel 
     {
-        public SearchModel(Regex regex, bool searchBackwards)
+        public SearchReplaceModel(Regex regex, string replace, bool searchBackwards, bool isRegexReplace, bool inSelection)
         {
             Regex = regex;
+            Replace = replace;
             SearchBackwards = searchBackwards;
+            IsRegexReplace = isRegexReplace;
+            InSelection = inSelection;
         }
 
         public Regex Regex { get; }
+        public string Replace { get; }
         public bool SearchBackwards { get; }
+        public bool IsRegexReplace { get; }
+        public bool InSelection { get; }
+
         public bool SearchedFromBoundary { get; set; } = false;
     }
 }

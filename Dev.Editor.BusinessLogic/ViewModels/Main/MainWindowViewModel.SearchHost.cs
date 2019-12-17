@@ -18,7 +18,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         BaseCondition ISearchHost.SelectionAvailableCondition => regularSelectionAvailableCondition;
 
-        private void InternalFindNext(SearchModel searchModel)
+        private void InternalFindNext(SearchReplaceModel searchModel)
         {
             var document = (TextDocumentViewModel)activeDocument;
 
@@ -30,32 +30,46 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             if (!match.Success)  // start again from beginning or end
             {
-                if (searchModel.SearchBackwards)
+                if (!searchModel.SearchedFromBoundary)
                 {
-                    match = searchModel.Regex.Match(document.Document.Text, document.Document.Text.Length);
-                }
-                else
-                { 
-                    match = searchModel.Regex.Match(document.Document.Text, 0);
+                    bool continueFromBoundary;
+
+                    if (searchModel.SearchBackwards)
+                        continueFromBoundary = messagingService.AskYesNo(Strings.Message_SearchReachedBeginning);
+                    else
+                        continueFromBoundary = messagingService.AskYesNo(Strings.Message_SearchReachedEnd);
+
+                    if (continueFromBoundary)
+                    {
+                        searchModel.SearchedFromBoundary = true;
+
+                        if (searchModel.SearchBackwards)
+                        {
+                            match = searchModel.Regex.Match(document.Document.Text, document.Document.Text.Length);
+                        }
+                        else
+                        {
+                            match = searchModel.Regex.Match(document.Document.Text, 0);
+                        }
                     }
+                }
             }
 
             if (match.Success)
                 document.SetSelection(match.Index, match.Length, true);
             else
+            { 
                 messagingService.Inform(Resources.Strings.Message_NoMorePatternsFound);
+            }
         }
 
-        public void FindNext(SearchModel searchModel)
+        public void FindNext(SearchReplaceModel searchModel)
         {
             activeDocument.LastSearch = searchModel;
-            
-            //
-            
             InternalFindNext(searchModel);
         }
 
-        public void Replace(ReplaceModel replaceModel)
+        public void Replace(SearchReplaceModel replaceModel)
         {
             var document = (TextDocumentViewModel)activeDocument;
 
@@ -81,7 +95,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             FindNext(replaceModel);
         }
 
-        public void ReplaceAll(ReplaceAllModel replaceModel)
+        public void ReplaceAll(SearchReplaceModel replaceModel)
         {
             var document = (TextDocumentViewModel)activeDocument;
 

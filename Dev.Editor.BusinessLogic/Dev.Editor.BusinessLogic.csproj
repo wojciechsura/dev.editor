@@ -88,9 +88,7 @@
     <Compile Include="Models\UI\SidePanelPlacementModel.cs" />
     <Compile Include="Models\Navigation\BaseNavigationModel.cs" />
     <Compile Include="Models\Navigation\CommandNavigationModel.cs" />
-    <Compile Include="Models\Search\ReplaceAllModel.cs" />
-    <Compile Include="Models\Search\ReplaceModel.cs" />
-    <Compile Include="Models\Search\SearchModel.cs" />
+    <Compile Include="Models\Search\SearchReplaceModel.cs" />
     <Compile Include="Services\Commands\CommandRepositoryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Commands\ICommandRepositoryService.cs" />
