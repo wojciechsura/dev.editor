@@ -549,25 +549,31 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
     <value>Syntax error in definition: {0}</value>
   </data>
   <data name="Message.AnalysisError.CannotAssign" xml:space="preserve">
-    <value>Cannot perform assignment to {0}, cause: {1}</value>
+    <value>Cannot perform assignment to {0}. Reason:
+{1}</value>
   </data>
   <data name="Message.AnalysisError.UnexpectedEndOfStream" xml:space="preserve">
     <value>Unexpected end of file!</value>
   </data>
   <data name="Message.AnalysisError.FailedToReadField" xml:space="preserve">
-    <value>Failed to read field {0}. Reason: {1}</value>
+    <value>Failed to read field {0}. Reason:
+{1}</value>
   </data>
   <data name="Message.AnalysisError.CannotShow" xml:space="preserve">
-    <value>Cannot add evaluated field {0}. Reason: {1}</value>
+    <value>Cannot add evaluated field {0}. Reason:
+{1}</value>
   </data>
   <data name="Message.AnalysisError.FailedToSkip" xml:space="preserve">
-    <value>Failed to skip bytes. Reason: {0}</value>
+    <value>Failed to skip bytes. Reason:
+{0}</value>
   </data>
   <data name="Message.AnalysisError.FailedToReadStructArray" xml:space="preserve">
-    <value>Failed to read struct array field {0}. Reason: {1}</value>
+    <value>Failed to read struct array field {0}. Reason:
+{1}</value>
   </data>
   <data name="Message.AnalysisError.FailedToReadStruct" xml:space="preserve">
-    <value>Failed to read struct field {0}. Reason: {1}</value>
+    <value>Failed to read struct field {0}. Reason:
+{1}</value>
   </data>
   <data name="Message.EvalError.CannotFindIdentifier" xml:space="preserve">
     <value>Cannot find identifier {0} in current scope.</value>
@@ -576,13 +582,15 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
     <value>Cannot access member {0} of field {1}.</value>
   </data>
   <data name="Message.EvalError.MemberIsNotValue" xml:space="preserve">
-    <value>Identifier {0} doesn't point to value field.</value>
+    <value>Identifier {0} does not point to a value-type field.</value>
   </data>
   <data name="Message.EvalError.FailedToEvalBinaryOperator" xml:space="preserve">
-    <value>Failed to evaluate binary operator. Reason: {0}</value>
+    <value>Failed to evaluate binary operator. Reason:
+{0}</value>
   </data>
   <data name="Message.EvalError.FailedToEvalExpression" xml:space="preserve">
-    <value>Failed to evaluate expression. Reason: {0}</value>
+    <value>Failed to evaluate expression. Reason:
+{0}</value>
   </data>
   <data name="BottomTool.Messages.Title" xml:space="preserve">
     <value>Messages</value>
@@ -667,5 +675,8 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   </data>
   <data name="Message.EvalError.EnumDoesNotContainMember" xml:space="preserve">
     <value>Enum {0} does not contain member {1}.</value>
+  </data>
+  <data name="Message.SyntaxError.IntegerValueOutsideRange" xml:space="preserve">
+    <value>Enum member {0} value ({1}) is outside underlying integer type range ({2})!</value>
   </data>
 </root>

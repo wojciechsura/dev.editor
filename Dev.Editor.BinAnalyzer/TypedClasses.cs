@@ -10,6 +10,282 @@ using Dev.Editor.Resources;
 using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions;
 
 
+namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
+{
+    class SbyteEnumItem : BaseEnumItem 
+	{
+	    public SbyteEnumItem(string name, sbyte value)
+		    : base(name)
+        {
+            Value = value;
+        }
+
+        public sbyte Value { get; }
+	}
+
+    class SbyteEnumDefinition : BaseEnumDefinition
+    {
+        private readonly List<SbyteEnumItem> items;
+
+        public SbyteEnumDefinition(string name, List<SbyteEnumItem> items) 
+            : base(name, "sbyte")
+        {
+            this.items = items;
+        }
+
+		public override BaseData GenerateEnumData(string field, string memberName)
+		{
+			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
+
+			if (member == null)
+				throw new ArgumentException("memberName");
+
+			return new SbyteEnumData(field, Name, member.Value, member.Name);
+		}
+
+        public List<SbyteEnumItem> Items => items;
+    }
+
+    class ShortEnumItem : BaseEnumItem 
+	{
+	    public ShortEnumItem(string name, short value)
+		    : base(name)
+        {
+            Value = value;
+        }
+
+        public short Value { get; }
+	}
+
+    class ShortEnumDefinition : BaseEnumDefinition
+    {
+        private readonly List<ShortEnumItem> items;
+
+        public ShortEnumDefinition(string name, List<ShortEnumItem> items) 
+            : base(name, "short")
+        {
+            this.items = items;
+        }
+
+		public override BaseData GenerateEnumData(string field, string memberName)
+		{
+			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
+
+			if (member == null)
+				throw new ArgumentException("memberName");
+
+			return new ShortEnumData(field, Name, member.Value, member.Name);
+		}
+
+        public List<ShortEnumItem> Items => items;
+    }
+
+    class IntEnumItem : BaseEnumItem 
+	{
+	    public IntEnumItem(string name, int value)
+		    : base(name)
+        {
+            Value = value;
+        }
+
+        public int Value { get; }
+	}
+
+    class IntEnumDefinition : BaseEnumDefinition
+    {
+        private readonly List<IntEnumItem> items;
+
+        public IntEnumDefinition(string name, List<IntEnumItem> items) 
+            : base(name, "int")
+        {
+            this.items = items;
+        }
+
+		public override BaseData GenerateEnumData(string field, string memberName)
+		{
+			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
+
+			if (member == null)
+				throw new ArgumentException("memberName");
+
+			return new IntEnumData(field, Name, member.Value, member.Name);
+		}
+
+        public List<IntEnumItem> Items => items;
+    }
+
+    class LongEnumItem : BaseEnumItem 
+	{
+	    public LongEnumItem(string name, long value)
+		    : base(name)
+        {
+            Value = value;
+        }
+
+        public long Value { get; }
+	}
+
+    class LongEnumDefinition : BaseEnumDefinition
+    {
+        private readonly List<LongEnumItem> items;
+
+        public LongEnumDefinition(string name, List<LongEnumItem> items) 
+            : base(name, "long")
+        {
+            this.items = items;
+        }
+
+		public override BaseData GenerateEnumData(string field, string memberName)
+		{
+			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
+
+			if (member == null)
+				throw new ArgumentException("memberName");
+
+			return new LongEnumData(field, Name, member.Value, member.Name);
+		}
+
+        public List<LongEnumItem> Items => items;
+    }
+
+    class ByteEnumItem : BaseEnumItem 
+	{
+	    public ByteEnumItem(string name, byte value)
+		    : base(name)
+        {
+            Value = value;
+        }
+
+        public byte Value { get; }
+	}
+
+    class ByteEnumDefinition : BaseEnumDefinition
+    {
+        private readonly List<ByteEnumItem> items;
+
+        public ByteEnumDefinition(string name, List<ByteEnumItem> items) 
+            : base(name, "byte")
+        {
+            this.items = items;
+        }
+
+		public override BaseData GenerateEnumData(string field, string memberName)
+		{
+			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
+
+			if (member == null)
+				throw new ArgumentException("memberName");
+
+			return new ByteEnumData(field, Name, member.Value, member.Name);
+		}
+
+        public List<ByteEnumItem> Items => items;
+    }
+
+    class UshortEnumItem : BaseEnumItem 
+	{
+	    public UshortEnumItem(string name, ushort value)
+		    : base(name)
+        {
+            Value = value;
+        }
+
+        public ushort Value { get; }
+	}
+
+    class UshortEnumDefinition : BaseEnumDefinition
+    {
+        private readonly List<UshortEnumItem> items;
+
+        public UshortEnumDefinition(string name, List<UshortEnumItem> items) 
+            : base(name, "ushort")
+        {
+            this.items = items;
+        }
+
+		public override BaseData GenerateEnumData(string field, string memberName)
+		{
+			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
+
+			if (member == null)
+				throw new ArgumentException("memberName");
+
+			return new UshortEnumData(field, Name, member.Value, member.Name);
+		}
+
+        public List<UshortEnumItem> Items => items;
+    }
+
+    class UintEnumItem : BaseEnumItem 
+	{
+	    public UintEnumItem(string name, uint value)
+		    : base(name)
+        {
+            Value = value;
+        }
+
+        public uint Value { get; }
+	}
+
+    class UintEnumDefinition : BaseEnumDefinition
+    {
+        private readonly List<UintEnumItem> items;
+
+        public UintEnumDefinition(string name, List<UintEnumItem> items) 
+            : base(name, "uint")
+        {
+            this.items = items;
+        }
+
+		public override BaseData GenerateEnumData(string field, string memberName)
+		{
+			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
+
+			if (member == null)
+				throw new ArgumentException("memberName");
+
+			return new UintEnumData(field, Name, member.Value, member.Name);
+		}
+
+        public List<UintEnumItem> Items => items;
+    }
+
+    class UlongEnumItem : BaseEnumItem 
+	{
+	    public UlongEnumItem(string name, ulong value)
+		    : base(name)
+        {
+            Value = value;
+        }
+
+        public ulong Value { get; }
+	}
+
+    class UlongEnumDefinition : BaseEnumDefinition
+    {
+        private readonly List<UlongEnumItem> items;
+
+        public UlongEnumDefinition(string name, List<UlongEnumItem> items) 
+            : base(name, "ulong")
+        {
+            this.items = items;
+        }
+
+		public override BaseData GenerateEnumData(string field, string memberName)
+		{
+			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
+
+			if (member == null)
+				throw new ArgumentException("memberName");
+
+			return new UlongEnumData(field, Name, member.Value, member.Name);
+		}
+
+        public List<UlongEnumItem> Items => items;
+    }
+
+}
+
 namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
     class SbyteFieldStatement : BaseFieldStatement
@@ -775,9 +1051,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
     class SbyteEnumFieldStatement : BaseFieldStatement
     {
-        private readonly SignedEnumDefinition enumDef;
+        private readonly SbyteEnumDefinition enumDef;
 
-        public SbyteEnumFieldStatement(int line, int column, string name, SignedEnumDefinition enumDef)
+        public SbyteEnumFieldStatement(int line, int column, string name, SbyteEnumDefinition enumDef)
             : base(line, column, name)
         {
             this.enumDef = enumDef;
@@ -792,7 +1068,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
                 sbyte value = reader.ReadSByte();
 
-                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
                 var data = new SbyteEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
@@ -812,9 +1088,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
     class ShortEnumFieldStatement : BaseFieldStatement
     {
-        private readonly SignedEnumDefinition enumDef;
+        private readonly ShortEnumDefinition enumDef;
 
-        public ShortEnumFieldStatement(int line, int column, string name, SignedEnumDefinition enumDef)
+        public ShortEnumFieldStatement(int line, int column, string name, ShortEnumDefinition enumDef)
             : base(line, column, name)
         {
             this.enumDef = enumDef;
@@ -829,7 +1105,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
                 short value = reader.ReadInt16();
 
-                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
                 var data = new ShortEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
@@ -849,9 +1125,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
     class IntEnumFieldStatement : BaseFieldStatement
     {
-        private readonly SignedEnumDefinition enumDef;
+        private readonly IntEnumDefinition enumDef;
 
-        public IntEnumFieldStatement(int line, int column, string name, SignedEnumDefinition enumDef)
+        public IntEnumFieldStatement(int line, int column, string name, IntEnumDefinition enumDef)
             : base(line, column, name)
         {
             this.enumDef = enumDef;
@@ -866,7 +1142,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
                 int value = reader.ReadInt32();
 
-                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
                 var data = new IntEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
@@ -886,9 +1162,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
     class LongEnumFieldStatement : BaseFieldStatement
     {
-        private readonly SignedEnumDefinition enumDef;
+        private readonly LongEnumDefinition enumDef;
 
-        public LongEnumFieldStatement(int line, int column, string name, SignedEnumDefinition enumDef)
+        public LongEnumFieldStatement(int line, int column, string name, LongEnumDefinition enumDef)
             : base(line, column, name)
         {
             this.enumDef = enumDef;
@@ -903,7 +1179,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
                 long value = reader.ReadInt64();
 
-                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
                 var data = new LongEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
@@ -923,9 +1199,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
     class ByteEnumFieldStatement : BaseFieldStatement
     {
-        private readonly UnsignedEnumDefinition enumDef;
+        private readonly ByteEnumDefinition enumDef;
 
-        public ByteEnumFieldStatement(int line, int column, string name, UnsignedEnumDefinition enumDef)
+        public ByteEnumFieldStatement(int line, int column, string name, ByteEnumDefinition enumDef)
             : base(line, column, name)
         {
             this.enumDef = enumDef;
@@ -940,7 +1216,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
                 byte value = reader.ReadByte();
 
-                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
                 var data = new ByteEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
@@ -960,9 +1236,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
     class UshortEnumFieldStatement : BaseFieldStatement
     {
-        private readonly UnsignedEnumDefinition enumDef;
+        private readonly UshortEnumDefinition enumDef;
 
-        public UshortEnumFieldStatement(int line, int column, string name, UnsignedEnumDefinition enumDef)
+        public UshortEnumFieldStatement(int line, int column, string name, UshortEnumDefinition enumDef)
             : base(line, column, name)
         {
             this.enumDef = enumDef;
@@ -977,7 +1253,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
                 ushort value = reader.ReadUInt16();
 
-                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
                 var data = new UshortEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
@@ -997,9 +1273,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
     class UintEnumFieldStatement : BaseFieldStatement
     {
-        private readonly UnsignedEnumDefinition enumDef;
+        private readonly UintEnumDefinition enumDef;
 
-        public UintEnumFieldStatement(int line, int column, string name, UnsignedEnumDefinition enumDef)
+        public UintEnumFieldStatement(int line, int column, string name, UintEnumDefinition enumDef)
             : base(line, column, name)
         {
             this.enumDef = enumDef;
@@ -1014,7 +1290,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
                 uint value = reader.ReadUInt32();
 
-                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
                 var data = new UintEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
@@ -1034,9 +1310,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
     class UlongEnumFieldStatement : BaseFieldStatement
     {
-        private readonly UnsignedEnumDefinition enumDef;
+        private readonly UlongEnumDefinition enumDef;
 
-        public UlongEnumFieldStatement(int line, int column, string name, UnsignedEnumDefinition enumDef)
+        public UlongEnumFieldStatement(int line, int column, string name, UlongEnumDefinition enumDef)
             : base(line, column, name)
         {
             this.enumDef = enumDef;
@@ -1051,7 +1327,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
                 ulong value = reader.ReadUInt64();
 
-                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
                 var data = new UlongEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
@@ -1104,37 +1380,28 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
             }
         }        
 
-        public static BaseFieldStatement FromSignedEnumTypeName(int line, int column, string name, SignedEnumDefinition signedEnumDef)
+        public static BaseFieldStatement FromEnum(int line, int column, string name, BaseEnumDefinition enumDef)
         {
-            switch (signedEnumDef.Type)
+            switch (enumDef)
             {
-                case "sbyte":
-                    return new SbyteEnumFieldStatement(line, column, name, signedEnumDef);
-                case "short":
-                    return new ShortEnumFieldStatement(line, column, name, signedEnumDef);
-                case "int":
-                    return new IntEnumFieldStatement(line, column, name, signedEnumDef);
-                case "long":
-                    return new LongEnumFieldStatement(line, column, name, signedEnumDef);
+                case SbyteEnumDefinition sbyteEnumDefinition:
+                    return new SbyteEnumFieldStatement(line, column, name, sbyteEnumDefinition);
+                case ShortEnumDefinition shortEnumDefinition:
+                    return new ShortEnumFieldStatement(line, column, name, shortEnumDefinition);
+                case IntEnumDefinition intEnumDefinition:
+                    return new IntEnumFieldStatement(line, column, name, intEnumDefinition);
+                case LongEnumDefinition longEnumDefinition:
+                    return new LongEnumFieldStatement(line, column, name, longEnumDefinition);
+                case ByteEnumDefinition byteEnumDefinition:
+                    return new ByteEnumFieldStatement(line, column, name, byteEnumDefinition);
+                case UshortEnumDefinition ushortEnumDefinition:
+                    return new UshortEnumFieldStatement(line, column, name, ushortEnumDefinition);
+                case UintEnumDefinition uintEnumDefinition:
+                    return new UintEnumFieldStatement(line, column, name, uintEnumDefinition);
+                case UlongEnumDefinition ulongEnumDefinition:
+                    return new UlongEnumFieldStatement(line, column, name, ulongEnumDefinition);
                 default:
-                    throw new InvalidEnumArgumentException("Unsupported type name!");
-            }
-        }
-
-        public static BaseFieldStatement FromUnsignedEnumTypeName(int line, int column, string name, UnsignedEnumDefinition unsignedEnumDef)
-        {
-            switch (unsignedEnumDef.Type)
-            {
-                case "byte":
-                    return new ByteEnumFieldStatement(line, column, name, unsignedEnumDef);
-                case "ushort":
-                    return new UshortEnumFieldStatement(line, column, name, unsignedEnumDef);
-                case "uint":
-                    return new UintEnumFieldStatement(line, column, name, unsignedEnumDef);
-                case "ulong":
-                    return new UlongEnumFieldStatement(line, column, name, unsignedEnumDef);
-                default:
-                    throw new InvalidEnumArgumentException("Unsupported type name!");
+                    throw new InvalidEnumArgumentException("Unsupported enum type!");
             }
         }
     }

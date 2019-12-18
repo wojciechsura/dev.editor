@@ -1,0 +1,176 @@
+﻿<#@ template debug="false" hostspecific="false" language="C#" #>
+<#@ assembly name="System.Core" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ output extension=".cs" #>
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
+using System.IO;
+using Dev.Editor.BinAnalyzer.Exceptions;
+using Dev.Editor.Resources;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions;
+using Dev.Editor.BinAnalyzer.Grammar;
+using Irony.Parsing;
+
+<#
+    (string type, string name, string readerMethod)[] intTypes = new (string type, string name, string readerMethod)[] 
+    {
+        ("sbyte", "Sbyte", "ReadSByte"),
+        ("short", "Short", "ReadInt16"),
+        ("int", "Int", "ReadInt32"),
+        ("long", "Long", "ReadInt64"),
+    };  
+
+    (string type, string name, string readerMethod)[] uintTypes = new (string type, string name, string readerMethod)[] 
+    {
+        ("byte", "Byte", "ReadByte"),
+        ("ushort", "Ushort", "ReadUInt16"),
+        ("uint", "Uint", "ReadUInt32"),
+        ("ulong", "Ulong", "ReadUInt64"),
+    };  
+
+    IEnumerable<(string type, string name, string readerMethod)> intData = intTypes.Union(uintTypes);
+#>
+
+namespace Dev.Editor.BinAnalyzer
+{
+    public static partial class Compiler
+	{
+
+	    private static BaseEnumDefinition BuildEnumDefinition(ParseTreeNode defNode)
+		{
+		    string name = defNode.ChildNodes[0].Token.Text;
+            string type = defNode.ChildNodes[1].ChildNodes[0].Token.Text;
+
+			switch (type)
+			{
+<#
+    foreach (var item in intData)
+	{
+#>
+                case "<#=item.type#>":
+		            return Build<#=item.name#>EnumDefinition(name, defNode);
+<#
+	}
+#>
+                default:
+				    throw new InvalidOperationException("Unsupported underlying enum type!");
+			}
+		}		
+
+<#
+    foreach (var item in uintTypes)
+	{
+#>
+        private static BaseEnumDefinition Build<#=item.name#>EnumDefinition(string name, ParseTreeNode defNode)
+        {
+            var items = new List<<#=item.name#>EnumItem>();
+            for (int i = 0; i < defNode.ChildNodes[2].ChildNodes.Count; i++)
+            {
+                var current = defNode.ChildNodes[2].ChildNodes[i];
+
+                string itemName = current.ChildNodes[0].Token.Text;
+
+                if (current.ChildNodes[1].Term.Name != BinAnalyzerGrammar.UINT_NUMBER)
+                    throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                        current.ChildNodes[1].Token.Location.Column,
+                        "Unsigned enum should contain only unsigned items!",
+                        Strings.Message_SyntaxError_InvalidUnsignedEnumItem);
+
+                <#=item.type#> value;
+                try
+                {
+                    value = <#=item.type#>.Parse(current.ChildNodes[1].Token.Text.Substring(0, current.ChildNodes[1].Token.Text.Length - 1));
+                }
+				catch (OverflowException)
+				{
+					throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                        current.ChildNodes[1].Token.Location.Column,
+                        "Unsigned value outside enum type range!",
+                        string.Format(Strings.Message_SyntaxError_IntegerValueOutsideRange, itemName, current.ChildNodes[1].Token.Text, "<#=item.type#>"));
+				}
+                catch (Exception)
+                {
+                    throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                        current.ChildNodes[1].Token.Location.Column,
+                        "Invalid unsigned integer value",
+                        string.Format(Strings.Message_SyntaxError_InvalidUnsignedIntegerValue, current.ChildNodes[1].Token.Text));
+                }
+
+                if (items.Any(ei => ei.Value == value))
+                    throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                        current.ChildNodes[1].Token.Location.Column,
+                        "Enum item with this value already exists!",
+                        string.Format(Strings.Message_SyntaxError_EnumItemValueDuplicated, value));
+
+                var item = new <#=item.name#>EnumItem(itemName, value);
+                items.Add(item);
+            }
+
+            return new <#=item.name#>EnumDefinition(name, items);			
+        }
+
+<#
+    }
+#>
+
+<#
+    foreach (var item in intTypes)
+	{
+#>
+        private static BaseEnumDefinition Build<#=item.name#>EnumDefinition(string name, ParseTreeNode defNode)
+        {
+            var items = new List<<#=item.name#>EnumItem>();
+            for (int i = 0; i < defNode.ChildNodes[2].ChildNodes.Count; i++)
+            {
+                var current = defNode.ChildNodes[2].ChildNodes[i];
+
+                string itemName = current.ChildNodes[0].Token.Text;
+
+                if (current.ChildNodes[1].Term.Name != BinAnalyzerGrammar.INT_NUMBER)
+                    throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                        current.ChildNodes[1].Token.Location.Column,
+                        "Unsigned enum should contain only signed items!",
+                        Strings.Message_SyntaxError_InvalidUnsignedEnumItem);
+
+                <#=item.type#> value;
+                try
+                {
+                    value = <#=item.type#>.Parse(current.ChildNodes[1].Token.Text);
+                }
+				catch (OverflowException)
+				{
+					throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                        current.ChildNodes[1].Token.Location.Column,
+                        "Unsigned value outside enum type range!",
+                        string.Format(Strings.Message_SyntaxError_IntegerValueOutsideRange, itemName, current.ChildNodes[1].Token.Text, "<#=item.type#>"));
+				}
+                catch (Exception)
+                {
+                    throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                        current.ChildNodes[1].Token.Location.Column,
+                        "Invalid unsigned integer value",
+                        string.Format(Strings.Message_SyntaxError_InvalidIntegerValue, current.ChildNodes[1].Token.Text));
+                }
+
+                if (items.Any(ei => ei.Value == value))
+                    throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
+                        current.ChildNodes[1].Token.Location.Column,
+                        "Enum item with this value already exists!",
+                        string.Format(Strings.Message_SyntaxError_EnumItemValueDuplicated, value));
+
+                var item = new <#=item.name#>EnumItem(itemName, value);
+                items.Add(item);
+            }
+
+            return new <#=item.name#>EnumDefinition(name, items);			
+        }
+
+<#
+    }
+#>
+    }
+}

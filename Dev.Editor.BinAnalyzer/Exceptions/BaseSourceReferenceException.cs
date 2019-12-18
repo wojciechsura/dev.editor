@@ -17,5 +17,7 @@ namespace Dev.Editor.BinAnalyzer.Exceptions
 
         public int Line { get; }
         public int Column { get; }
+
+        public override string LocalizedErrorMessage => $"({Line + 1},{Column + 1}): {base.LocalizedErrorMessage}";
     }
 }

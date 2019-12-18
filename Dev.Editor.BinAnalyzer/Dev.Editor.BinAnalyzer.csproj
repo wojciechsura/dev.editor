@@ -44,14 +44,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnalyzerDefinition\Definitions\SignedEnumDefinition.cs" />
-    <Compile Include="AnalyzerDefinition\Definitions\SignedEnumItem.cs" />
-    <Compile Include="AnalyzerDefinition\Definitions\UnsignedEnumDefinition.cs" />
-    <Compile Include="AnalyzerDefinition\Definitions\UnsignedEnumItem.cs" />
+    <Compile Include="AnalyzerDefinition\Definitions\BaseEnumDefinition.cs" />
+    <Compile Include="AnalyzerDefinition\Definitions\BaseEnumItem.cs" />
     <Compile Include="AnalyzerDefinition\Show\ExpressionShowValue.cs" />
     <Compile Include="AnalyzerDefinition\Show\BaseShowValue.cs" />
-    <Compile Include="AnalyzerDefinition\Show\SignedEnumShowValue.cs" />
-    <Compile Include="AnalyzerDefinition\Show\UnsignedEnumShowValue.cs" />
+    <Compile Include="AnalyzerDefinition\Show\EnumShowValue.cs" />
     <Compile Include="AnalyzerDefinition\Statements\CharArrayFieldStatement.cs" />
     <Compile Include="AnalyzerDefinition\Statements\CharFieldStatement.cs" />
     <Compile Include="AnalyzerDefinition\Statements\IfStatement.cs" />
@@ -95,6 +92,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>TypedClasses.tt</DependentUpon>
     </Compile>
+    <Compile Include="TypedCompiler.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TypedCompiler.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -109,6 +111,10 @@
     <Content Include="TypedClasses.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>TypedClasses.cs</LastGenOutput>
+    </Content>
+    <Content Include="TypedCompiler.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TypedCompiler.cs</LastGenOutput>
     </Content>
   </ItemGroup>
   <ItemGroup>

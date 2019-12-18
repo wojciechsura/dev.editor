@@ -9,22 +9,17 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
     class Definitions
     {
         private readonly List<StructDefinition> structDefinitions;
-        private readonly List<UnsignedEnumDefinition> unsignedEnumDefinitions;
-        private readonly List<SignedEnumDefinition> signedEnumDefinitions;
+        private readonly List<BaseEnumDefinition> enumDefinitions;
         
         public Definitions(List<StructDefinition> structDefinitions, 
-            List<UnsignedEnumDefinition> unsignedEnumDefinitions, 
-            List<SignedEnumDefinition> signedEnumDefinitions)
+            List<BaseEnumDefinition> enumDefinitions)
         {
             this.structDefinitions = structDefinitions;
-            this.unsignedEnumDefinitions = unsignedEnumDefinitions;
-            this.signedEnumDefinitions = signedEnumDefinitions;
+            this.enumDefinitions = enumDefinitions;
         }
 
         public IReadOnlyList<StructDefinition> StructDefinitions => structDefinitions;
 
-        internal IReadOnlyList<UnsignedEnumDefinition> UnsignedEnumDefinitions => unsignedEnumDefinitions;
-
-        internal IReadOnlyList<SignedEnumDefinition> SignedEnumDefinitions => signedEnumDefinitions;
+        internal IReadOnlyList<BaseEnumDefinition> EnumDefinitions => enumDefinitions;
     }
 }

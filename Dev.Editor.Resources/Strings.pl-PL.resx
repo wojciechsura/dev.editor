@@ -549,25 +549,31 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
     <value>Błąd składniowy w definicji: {0}</value>
   </data>
   <data name="Message.AnalysisError.CannotAssign" xml:space="preserve">
-    <value>Nie można wykonać przypisania do {0}, powód: {1}</value>
+    <value>Nie można wykonać przypisania do {0}. Powód:
+{1}</value>
   </data>
   <data name="Message.AnalysisError.UnexpectedEndOfStream" xml:space="preserve">
     <value>Niespodziewany koniec pliku!</value>
   </data>
   <data name="Message.AnalysisError.FailedToReadField" xml:space="preserve">
-    <value>Nie udało się wczytać pola {0}. Powód: {1}</value>
+    <value>Nie udało się wczytać pola {0}. Powód:
+{1}</value>
   </data>
   <data name="Message.AnalysisError.CannotShow" xml:space="preserve">
-    <value>Nie można dodać obliczonego pola {0}. Powód: {1}</value>
+    <value>Nie można dodać obliczonego pola {0}. Powód:
+{1}</value>
   </data>
   <data name="Message.AnalysisError.FailedToSkip" xml:space="preserve">
-    <value>Nie udało się pominąć bajtów. Powód: {0}</value>
+    <value>Nie udało się pominąć bajtów. Powód:
+{0}</value>
   </data>
   <data name="Message.AnalysisError.FailedToReadStructArray" xml:space="preserve">
-    <value>Nie udało się wczytać pola tablicy struktur {0}. Powód: {1}</value>
+    <value>Nie udało się wczytać pola tablicy struktur {0}. Powód:
+{1}</value>
   </data>
   <data name="Message.AnalysisError.FailedToReadStruct" xml:space="preserve">
-    <value>Nie udało się wczytać pola struktury {0}. Powód: {1}</value>
+    <value>Nie udało się wczytać pola struktury {0}. Powód:
+{1}</value>
   </data>
   <data name="Message.EvalError.CannotFindIdentifier" xml:space="preserve">
     <value>Nie mogę znaleźć identyfikatora {0} w bieżącym zakresie.</value>
@@ -579,10 +585,12 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
     <value>Identyfikator {0} nie wskazuje na pole typu wartościowego.</value>
   </data>
   <data name="Message.EvalError.FailedToEvalBinaryOperator" xml:space="preserve">
-    <value>Nie udało się obliczyć binarnego operatora. Powód: {0}</value>
+    <value>Nie udało się obliczyć binarnego operatora. Powód:
+{0}</value>
   </data>
   <data name="Message.EvalError.FailedToEvalExpression" xml:space="preserve">
-    <value>Nie udało się obliczyć wyrażenia. Powód: {0}</value>
+    <value>Nie udało się obliczyć wyrażenia. Powód:
+{0}</value>
   </data>
   <data name="BottomTool.Messages.Title" xml:space="preserve">
     <value>Komunikaty</value>
@@ -667,5 +675,8 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   </data>
   <data name="Message.EvalError.EnumDoesNotContainMember" xml:space="preserve">
     <value>Typ wyliczeniowy {0} nie zawiera składowej {1}.</value>
+  </data>
+  <data name="Message.SyntaxError.IntegerValueOutsideRange" xml:space="preserve">
+    <value>Składowa typu wyliczeniowego {0} ma wartość ({1}) spoza zakresu typu liczbowego {2}!</value>
   </data>
 </root>

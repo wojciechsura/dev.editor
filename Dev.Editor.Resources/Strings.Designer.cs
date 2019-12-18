@@ -253,7 +253,8 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot perform assignment to {0}, cause: {1}.
+        ///   Looks up a localized string similar to Cannot perform assignment to {0}. Reason:
+        ///{1}.
         /// </summary>
         public static string Message_AnalysisError_CannotAssign {
             get {
@@ -262,7 +263,8 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Cannot add evaluated field {0}. Reason: {1}.
+        ///   Looks up a localized string similar to Cannot add evaluated field {0}. Reason:
+        ///{1}.
         /// </summary>
         public static string Message_AnalysisError_CannotShow {
             get {
@@ -271,7 +273,8 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to read field {0}. Reason: {1}.
+        ///   Looks up a localized string similar to Failed to read field {0}. Reason:
+        ///{1}.
         /// </summary>
         public static string Message_AnalysisError_FailedToReadField {
             get {
@@ -280,7 +283,8 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to read struct field {0}. Reason: {1}.
+        ///   Looks up a localized string similar to Failed to read struct field {0}. Reason:
+        ///{1}.
         /// </summary>
         public static string Message_AnalysisError_FailedToReadStruct {
             get {
@@ -289,7 +293,8 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to read struct array field {0}. Reason: {1}.
+        ///   Looks up a localized string similar to Failed to read struct array field {0}. Reason:
+        ///{1}.
         /// </summary>
         public static string Message_AnalysisError_FailedToReadStructArray {
             get {
@@ -298,7 +303,8 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to skip bytes. Reason: {0}.
+        ///   Looks up a localized string similar to Failed to skip bytes. Reason:
+        ///{0}.
         /// </summary>
         public static string Message_AnalysisError_FailedToSkip {
             get {
@@ -424,7 +430,8 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to evaluate binary operator. Reason: {0}.
+        ///   Looks up a localized string similar to Failed to evaluate binary operator. Reason:
+        ///{0}.
         /// </summary>
         public static string Message_EvalError_FailedToEvalBinaryOperator {
             get {
@@ -433,7 +440,8 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed to evaluate expression. Reason: {0}.
+        ///   Looks up a localized string similar to Failed to evaluate expression. Reason:
+        ///{0}.
         /// </summary>
         public static string Message_EvalError_FailedToEvalExpression {
             get {
@@ -442,7 +450,7 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Identifier {0} doesn&apos;t point to value field..
+        ///   Looks up a localized string similar to Identifier {0} does not point to a value-type field..
         /// </summary>
         public static string Message_EvalError_MemberIsNotValue {
             get {
@@ -537,6 +545,15 @@ namespace Dev.Editor.Resources {
         public static string Message_SyntaxError_FieldAlreadyExists {
             get {
                 return ResourceManager.GetString("Message.SyntaxError.FieldAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enum member {0} value ({1}) is outside underlying integer type range ({2})!.
+        /// </summary>
+        public static string Message_SyntaxError_IntegerValueOutsideRange {
+            get {
+                return ResourceManager.GetString("Message.SyntaxError.IntegerValueOutsideRange", resourceCulture);
             }
         }
         

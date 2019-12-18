@@ -43,6 +43,51 @@ using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions;
     IEnumerable<(string type, string name, string readerMethod)> data = intTypes.Union(uintTypes).Union(floatTypes);      
 #>
 
+namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
+{
+<#
+    foreach (var item in intData)
+	{
+#>
+    class <#=item.name#>EnumItem : BaseEnumItem 
+	{
+	    public <#=item.name#>EnumItem(string name, <#=item.type#> value)
+		    : base(name)
+        {
+            Value = value;
+        }
+
+        public <#=item.type#> Value { get; }
+	}
+
+    class <#=item.name#>EnumDefinition : BaseEnumDefinition
+    {
+        private readonly List<<#=item.name#>EnumItem> items;
+
+        public <#=item.name#>EnumDefinition(string name, List<<#=item.name#>EnumItem> items) 
+            : base(name, "<#=item.type#>")
+        {
+            this.items = items;
+        }
+
+		public override BaseData GenerateEnumData(string field, string memberName)
+		{
+			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
+
+			if (member == null)
+				throw new ArgumentException("memberName");
+
+			return new <#=item.name#>EnumData(field, Name, member.Value, member.Name);
+		}
+
+        public List<<#=item.name#>EnumItem> Items => items;
+    }
+
+<#
+    }
+#>
+}
+
 namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
 <#    
@@ -134,15 +179,15 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 <#
     }
 
-    foreach (var item in intTypes)
+    foreach (var item in intData)
     {
 #>
 
     class <#=item.name#>EnumFieldStatement : BaseFieldStatement
     {
-        private readonly SignedEnumDefinition enumDef;
+        private readonly <#=item.name#>EnumDefinition enumDef;
 
-        public <#=item.name#>EnumFieldStatement(int line, int column, string name, SignedEnumDefinition enumDef)
+        public <#=item.name#>EnumFieldStatement(int line, int column, string name, <#=item.name#>EnumDefinition enumDef)
             : base(line, column, name)
         {
             this.enumDef = enumDef;
@@ -157,50 +202,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
                 <#=item.type#> value = reader.<#=item.readerMethod#>();
 
-                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
-                
-                var data = new <#=item.name#>EnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
-                result.Add(data);
-                scope.AddContent(name, data);
-            }
-            catch (BaseLocalizedException e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
-            }
-            catch (Exception e)
-            {
-                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
-            }
-        }
-    }
-
-<#
-    }
-
-    foreach (var item in uintTypes)
-    {
-#>
-
-    class <#=item.name#>EnumFieldStatement : BaseFieldStatement
-    {
-        private readonly UnsignedEnumDefinition enumDef;
-
-        public <#=item.name#>EnumFieldStatement(int line, int column, string name, UnsignedEnumDefinition enumDef)
-            : base(line, column, name)
-        {
-            this.enumDef = enumDef;
-        }
-
-        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
-        {
-            try
-            {
-                if (reader.BaseStream.Position + sizeof(<#=item.type#>) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
-                <#=item.type#> value = reader.<#=item.readerMethod#>();
-
-                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value.Equals(value));
+                var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
                 var data = new <#=item.name#>EnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
@@ -245,39 +247,21 @@ foreach (var item in data)
             }
         }        
 
-        public static BaseFieldStatement FromSignedEnumTypeName(int line, int column, string name, SignedEnumDefinition signedEnumDef)
+        public static BaseFieldStatement FromEnum(int line, int column, string name, BaseEnumDefinition enumDef)
         {
-            switch (signedEnumDef.Type)
+            switch (enumDef)
             {
 <#
-foreach (var item in intTypes)
+foreach (var item in intData)
 {
 #>
-                case "<#=item.type#>":
-                    return new <#=item.name#>EnumFieldStatement(line, column, name, signedEnumDef);
+                case <#=item.name#>EnumDefinition <#=item.type#>EnumDefinition:
+                    return new <#=item.name#>EnumFieldStatement(line, column, name, <#=item.type#>EnumDefinition);
 <#
 }
 #>
                 default:
-                    throw new InvalidEnumArgumentException("Unsupported type name!");
-            }
-        }
-
-        public static BaseFieldStatement FromUnsignedEnumTypeName(int line, int column, string name, UnsignedEnumDefinition unsignedEnumDef)
-        {
-            switch (unsignedEnumDef.Type)
-            {
-<#
-foreach (var item in uintTypes)
-{
-#>
-                case "<#=item.type#>":
-                    return new <#=item.name#>EnumFieldStatement(line, column, name, unsignedEnumDef);
-<#
-}
-#>
-                default:
-                    throw new InvalidEnumArgumentException("Unsupported type name!");
+                    throw new InvalidEnumArgumentException("Unsupported enum type!");
             }
         }
     }

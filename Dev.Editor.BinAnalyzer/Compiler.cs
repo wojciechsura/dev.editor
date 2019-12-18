@@ -16,7 +16,7 @@ using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Show;
 
 namespace Dev.Editor.BinAnalyzer
 {
-    public static class Compiler
+    public static partial class Compiler
     {
         private static ParseTree BuildParseTree(string source)
         {
@@ -32,10 +32,9 @@ namespace Dev.Editor.BinAnalyzer
         private static Definitions ProcessDefinitions(ParseTreeNode parseTreeNode)
         {
             var structDefinitions = new List<StructDefinition>();
-            var unsignedEnumDefinitions = new List<UnsignedEnumDefinition>();
-            var signedEnumDefinitions = new List<SignedEnumDefinition>();
+            var enumDefinitions = new List<BaseEnumDefinition>();
 
-            var definitions = new Definitions(structDefinitions, unsignedEnumDefinitions, signedEnumDefinitions);
+            var definitions = new Definitions(structDefinitions, enumDefinitions);
 
             foreach (var node in parseTreeNode.ChildNodes)
             {
@@ -59,95 +58,8 @@ namespace Dev.Editor.BinAnalyzer
                 }
                 else if (defNode.Term.Name.Equals(BinAnalyzerGrammar.ENUM_DEF))
                 {
-                    string name = defNode.ChildNodes[0].Token.Text;
-                    string type = defNode.ChildNodes[1].ChildNodes[0].Token.Text;
-
-                    if (new[] { "byte", "ushort", "uint", "ulong" }.Contains(type))
-                    {
-                        // Unsigned enum
-
-                        var items = new List<UnsignedEnumItem>();
-                        for (int i = 0; i < defNode.ChildNodes[2].ChildNodes.Count; i++)
-                        {
-                            var current = defNode.ChildNodes[2].ChildNodes[i];
-
-                            string itemName = current.ChildNodes[0].Token.Text;
-
-                            if (current.ChildNodes[1].Term.Name != BinAnalyzerGrammar.UINT_NUMBER)
-                                throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
-                                    current.ChildNodes[1].Token.Location.Column,
-                                    "Unsigned enum should contain only unsigned items!",
-                                    Strings.Message_SyntaxError_InvalidUnsignedEnumItem);
-
-                            ulong value;
-                            try
-                            {
-                                value = ulong.Parse(current.ChildNodes[1].Token.Text.Substring(0, current.ChildNodes[1].Token.Text.Length - 1));
-                            }
-                            catch (Exception e)
-                            {
-                                throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
-                                    current.ChildNodes[1].Token.Location.Column,
-                                    "Invalid unsigned integer value",
-                                    string.Format(Strings.Message_SyntaxError_InvalidUnsignedIntegerValue, current.ChildNodes[1].Token.Text));
-                            }
-
-                            if (items.Any(ei => ei.Value == value))
-                                throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
-                                    current.ChildNodes[1].Token.Location.Column,
-                                    "Enum item with this value already exists!",
-                                    string.Format(Strings.Message_SyntaxError_EnumItemValueDuplicated, value));
-
-                            var item = new UnsignedEnumItem(itemName, value);
-                            items.Add(item);
-                        }
-
-                        var def = new UnsignedEnumDefinition(name, type, items);
-                        unsignedEnumDefinitions.Add(def);
-                    }
-                    else if (new[] { "sbyte", "short", "int", "long"}.Contains(type))
-                    {
-                        // Signed enum
-
-                        var items = new List<SignedEnumItem>();
-                        for (int i = 0; i < defNode.ChildNodes[2].ChildNodes.Count; i++)
-                        {
-                            var current = defNode.ChildNodes[2].ChildNodes[i];
-
-                            string itemName = current.ChildNodes[0].Token.Text;
-
-                            if (current.ChildNodes[1].Term.Name != BinAnalyzerGrammar.INT_NUMBER)
-                                throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
-                                    current.ChildNodes[1].Token.Location.Column,
-                                    "Signed enum should contain only signed items!",
-                                    Strings.Message_SyntaxError_InvalidSignedEnumItem);
-
-                            long value;
-                            try
-                            {
-                                value = long.Parse(current.ChildNodes[1].Token.Text);
-                            }
-                            catch (Exception e)
-                            {
-                                throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
-                                    current.ChildNodes[1].Token.Location.Column,
-                                    "Invalid integer value",
-                                    string.Format(Strings.Message_SyntaxError_InvalidIntegerValue, current.ChildNodes[1].Token.Text));
-                            }
-
-                            if (items.Any(ei => ei.Value == value))
-                                throw new SyntaxException(current.ChildNodes[1].Token.Location.Line,
-                                    current.ChildNodes[1].Token.Location.Column,
-                                    "Enum item with this value already exists!",
-                                    string.Format(Strings.Message_SyntaxError_EnumItemValueDuplicated, value));
-
-                            var item = new SignedEnumItem(itemName, value);
-                            items.Add(item);
-                        }
-
-                        var def = new SignedEnumDefinition(name, type, items);
-                        signedEnumDefinitions.Add(def);
-                    }
+                    var definition = BuildEnumDefinition(defNode);
+                    enumDefinitions.Add(definition);
                 }
                 else
                     throw new InvalidOperationException("Unsupported definition!");
@@ -375,7 +287,7 @@ namespace Dev.Editor.BinAnalyzer
         private static Expression ProcessExpression(ParseTreeNode parseTreeNode)
         {
             return new Expression(parseTreeNode.Span.Location.Line, 
-                parseTreeNode.Span.Location.Position, 
+                parseTreeNode.Span.Location.Column, 
                 InternalProcessExpression(parseTreeNode));
         }
 
@@ -422,26 +334,15 @@ namespace Dev.Editor.BinAnalyzer
                         continue;
                     }
 
-                    // Signed enum?
+                    // Enum?
 
-                    var signedEnumDef = definitions.SignedEnumDefinitions.FirstOrDefault(d => d.Name.Equals(type));
-                    if (signedEnumDef != null)
+                    var enumDef = definitions.EnumDefinitions.FirstOrDefault(d => d.Name.Equals(type));
+                    if (enumDef != null)
                     {
-                        var statement = FieldFactory.FromSignedEnumTypeName(current.Span.Location.Line, 
+                        var statement = FieldFactory.FromEnum(current.Span.Location.Line, 
                             current.Span.Location.Column, 
                             name, 
-                            signedEnumDef);
-                        result.Add(statement);
-                        continue;
-                    }
-
-                    var unsignedEnumDef = definitions.UnsignedEnumDefinitions.FirstOrDefault(d => d.Name.Equals(type));
-                    if (unsignedEnumDef != null)
-                    {
-                        var statement = FieldFactory.FromUnsignedEnumTypeName(current.Span.Location.Line,
-                            current.Span.Location.Column,
-                            name,
-                            unsignedEnumDef);
+                            enumDef);
                         result.Add(statement);
                         continue;
                     }
@@ -532,28 +433,19 @@ namespace Dev.Editor.BinAnalyzer
                         var enumName = showValue.ChildNodes[0].Token.Text;
                         var enumMember = showValue.ChildNodes[1].Token.Text;
 
-                        var signedEnumDef = definitions.SignedEnumDefinitions.FirstOrDefault(d => d.Name.Equals(enumName));
-                        if (signedEnumDef != null)
+                        var enumDef = definitions.EnumDefinitions.FirstOrDefault(d => d.Name.Equals(enumName));
+                        if (enumDef != null)
                         {
-                            var signedEnumShowValue = new SignedEnumShowValue(signedEnumDef, enumMember);
-                            statement = new ShowStatement(current.Span.Location.Line, current.Span.Location.Column, signedEnumShowValue, alias);
-                        }
+                            var enumShowValue = new EnumShowValue(enumDef, enumMember);
+                            statement = new ShowStatement(current.Span.Location.Line, current.Span.Location.Column, enumShowValue, alias);
+                        }                        
                         else
                         {
-                            var unsignedEnumDef = definitions.UnsignedEnumDefinitions.FirstOrDefault(d => d.Name.Equals(enumName));
-                            if (unsignedEnumDef != null)
-                            {
-                                var unsignedEnumShowValue = new UnsignedEnumShowValue(unsignedEnumDef, enumMember);
-                                statement = new ShowStatement(current.Span.Location.Line, current.Span.Location.Column, unsignedEnumShowValue, alias);                                
-                            }
-                            else
-                            {
-                                throw new SyntaxException(current.Span.Location.Line,
-                                    current.Span.Location.Column,
-                                    $"Cannot find type {enumName} !",
-                                    string.Format(Strings.Message_SyntaxError_CannotFindTypeName, enumName));
-                            }
-                        }
+                            throw new SyntaxException(current.Span.Location.Line,
+                                current.Span.Location.Column,
+                                $"Cannot find type {enumName} !",
+                                string.Format(Strings.Message_SyntaxError_CannotFindTypeName, enumName));
+                        }                        
                     }
                     else
                     {

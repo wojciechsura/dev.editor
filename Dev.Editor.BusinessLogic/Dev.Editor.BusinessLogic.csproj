@@ -134,7 +134,6 @@
     <Compile Include="ViewModels\Document\ITextEditorAccess.cs" />
     <Compile Include="ViewModels\Main\BinDefinitionViewModel.cs" />
     <Compile Include="ViewModels\Main\IMainWindowAccess.cs" />
-    <Compile Include="ViewModels\Main\MainWindowViewModel.BinaryAnalyzers.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Commands.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Lines.cs" />

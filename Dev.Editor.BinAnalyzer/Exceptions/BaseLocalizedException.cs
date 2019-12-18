@@ -14,6 +14,6 @@ namespace Dev.Editor.BinAnalyzer.Exceptions
             LocalizedErrorMessage = localizedErrorMessage;
         }
 
-        public string LocalizedErrorMessage { get; }
+        public virtual string LocalizedErrorMessage { get; }
     }
 }
