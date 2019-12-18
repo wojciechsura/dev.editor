@@ -61,7 +61,28 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to TODO: BinDefinitionSample.
+        ///   Looks up a localized string similar to // The following example binary definition processes a bitmap file (.BMP)
+        ///// and provides information decoded from the bitmap header.
+        ///
+        ///struct BmpHeader 
+        ///{
+        ///    char[2] descriptor;
+        ///    int bmpSizeInBytes;
+        ///    short reserved1;
+        ///    short reserved2;
+        ///    int dataOffset;
+        ///};
+        ///
+        ///enum DibHeaderType : byte 
+        ///{
+        /// BITMAPCOREHEADER = 1u,
+        /// OS21XBITMAPHEADER = 2u,
+        /// OS22XBITMAPHEADER_V1 = 3u,
+        /// OS22XBITMAPHEADER_V2 = 4u,
+        /// BITMAPINFOHEADER = 5u,
+        /// BITMAPV2INFOHEADER = 6u,
+        /// BITMAPV3INFOHEADER = 7u,
+        /// BITMAPV4HEA [rest of string was truncated]&quot;;.
         /// </summary>
         public static string BinDefinitionSample {
             get {
@@ -390,6 +411,15 @@ namespace Dev.Editor.Resources {
         public static string Message_EvalError_CannotFindIdentifier {
             get {
                 return ResourceManager.GetString("Message.EvalError.CannotFindIdentifier", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enum {0} does not contain member {1}..
+        /// </summary>
+        public static string Message_EvalError_EnumDoesNotContainMember {
+            get {
+                return ResourceManager.GetString("Message.EvalError.EnumDoesNotContainMember", resourceCulture);
             }
         }
         

@@ -12,6 +12,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dev.Editor.Resources;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Show;
 
 namespace Dev.Editor.BinAnalyzer
 {
@@ -218,8 +219,8 @@ namespace Dev.Editor.BinAnalyzer
             {
                 identifier.Add(current.ChildNodes[0].Token.Text);
 
-                if (current.ChildNodes.Count == 3 && current.ChildNodes[2].Term.Name.Equals(BinAnalyzerGrammar.QUALIFIED_IDENTIFIER))
-                    current = current.ChildNodes[2];
+                if (current.ChildNodes.Count == 2 && current.ChildNodes[1].Term.Name.Equals(BinAnalyzerGrammar.QUALIFIED_IDENTIFIER))
+                    current = current.ChildNodes[1];
                 else
                     current = null;
             }
@@ -509,16 +510,56 @@ namespace Dev.Editor.BinAnalyzer
                 }
                 else if (current.Term.Name.Equals(BinAnalyzerGrammar.SHOW_STATEMENT))
                 {
-                    Expression expression = ProcessExpression(current.ChildNodes[0]);
                     string alias = current.ChildNodes[1].Token.Text;
-
                     if (result.Any(r => r is BaseFieldStatement fieldStatement && fieldStatement.Name.Equals(alias)))
                         throw new SyntaxException(current.Span.Location.Line,
                             current.Span.Location.Column,
                             $"Field with name {alias} already exists!",
                             string.Format(Strings.Message_SyntaxError_FieldAlreadyExists, alias));
 
-                    var statement = new ShowStatement(current.Span.Location.Line, current.Span.Location.Column, expression, alias);
+                    var showValue = current.ChildNodes[0].ChildNodes[0];
+
+                    BaseStatement statement;
+
+                    if (showValue.Term.Name == BinAnalyzerGrammar.EXPRESSION)
+                    {
+                        Expression expression = ProcessExpression(showValue);
+                        var expressionShowValue = new ExpressionShowValue(current.Span.Location.Line, current.Span.Location.Column, expression);
+                        statement = new ShowStatement(current.Span.Location.Line, current.Span.Location.Column, expressionShowValue, alias);
+                    }
+                    else if (showValue.Term.Name == BinAnalyzerGrammar.ENUM_CONST)
+                    {
+                        var enumName = showValue.ChildNodes[0].Token.Text;
+                        var enumMember = showValue.ChildNodes[1].Token.Text;
+
+                        var signedEnumDef = definitions.SignedEnumDefinitions.FirstOrDefault(d => d.Name.Equals(enumName));
+                        if (signedEnumDef != null)
+                        {
+                            var signedEnumShowValue = new SignedEnumShowValue(signedEnumDef, enumMember);
+                            statement = new ShowStatement(current.Span.Location.Line, current.Span.Location.Column, signedEnumShowValue, alias);
+                        }
+                        else
+                        {
+                            var unsignedEnumDef = definitions.UnsignedEnumDefinitions.FirstOrDefault(d => d.Name.Equals(enumName));
+                            if (unsignedEnumDef != null)
+                            {
+                                var unsignedEnumShowValue = new UnsignedEnumShowValue(unsignedEnumDef, enumMember);
+                                statement = new ShowStatement(current.Span.Location.Line, current.Span.Location.Column, unsignedEnumShowValue, alias);                                
+                            }
+                            else
+                            {
+                                throw new SyntaxException(current.Span.Location.Line,
+                                    current.Span.Location.Column,
+                                    $"Cannot find type {enumName} !",
+                                    string.Format(Strings.Message_SyntaxError_CannotFindTypeName, enumName));
+                            }
+                        }
+                    }
+                    else
+                    {
+                        throw new InvalidOperationException("Unsupported show statement syntax!");
+                    }
+                    
                     result.Add(statement);
                 }
                 else if (current.Term.Name.Equals(BinAnalyzerGrammar.IF_STATEMENT))

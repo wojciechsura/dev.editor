@@ -21,5 +21,7 @@ namespace Dev.Editor.BinAnalyzer.Data
         public abstract IList<BaseData> Children { get; }
 
         public abstract DataType DataType { get; }
+
+        public bool IsExpanded { get; set; } = false;
     }    
 }

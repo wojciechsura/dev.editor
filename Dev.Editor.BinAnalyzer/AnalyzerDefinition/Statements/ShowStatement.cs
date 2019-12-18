@@ -8,21 +8,20 @@ using System.Text;
 using System.Threading.Tasks;
 using Dev.Editor.BinAnalyzer.Exceptions;
 using Dev.Editor.Resources;
+using Dev.Editor.BinAnalyzer.AnalyzerDefinition.Show;
 
 namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 {
     class ShowStatement : BaseStatement
     {
-        private readonly Expression expression;
+        private readonly BaseShowValue showValue;
         private readonly string alias;
 
         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
         {
             try
             {
-                dynamic value = expression.Eval(scope);
-                var data = DataFactory.DataFromDynamic(alias, value);
-
+                var data = showValue.Eval(alias, scope); 
                 result.Add(data);
             }
             catch (BaseLocalizedException e)
@@ -35,14 +34,14 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
             }
         }
 
-        public ShowStatement(int line, int column, Expression expression, string alias)
+        public ShowStatement(int line, int column, BaseShowValue showValue, string alias)
             : base(line, column)
         {
-            this.expression = expression;
+            this.showValue = showValue;
             this.alias = alias;
         }
 
-        public Expression Expression => expression;
+        public BaseShowValue ShowValue => showValue;
         public string Alias => alias;        
     }
 }

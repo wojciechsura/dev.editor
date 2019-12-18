@@ -48,6 +48,10 @@
     <Compile Include="AnalyzerDefinition\Definitions\SignedEnumItem.cs" />
     <Compile Include="AnalyzerDefinition\Definitions\UnsignedEnumDefinition.cs" />
     <Compile Include="AnalyzerDefinition\Definitions\UnsignedEnumItem.cs" />
+    <Compile Include="AnalyzerDefinition\Show\ExpressionShowValue.cs" />
+    <Compile Include="AnalyzerDefinition\Show\BaseShowValue.cs" />
+    <Compile Include="AnalyzerDefinition\Show\SignedEnumShowValue.cs" />
+    <Compile Include="AnalyzerDefinition\Show\UnsignedEnumShowValue.cs" />
     <Compile Include="AnalyzerDefinition\Statements\CharArrayFieldStatement.cs" />
     <Compile Include="AnalyzerDefinition\Statements\CharFieldStatement.cs" />
     <Compile Include="AnalyzerDefinition\Statements\IfStatement.cs" />

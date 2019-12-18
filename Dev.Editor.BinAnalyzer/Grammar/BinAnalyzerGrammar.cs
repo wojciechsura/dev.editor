@@ -53,6 +53,8 @@ namespace Dev.Editor.BinAnalyzer.Grammar
         public const string ELSEIF_CONDITIONS = "elseIfConditions";
         public const string ELSE_CONDITION = "elseCondition";
         public const string ASSIGNMENT = "assignment";
+        public const string ENUM_CONST = "enumConst";
+        public const string SHOW_VALUE = "showValue";
         public const string SHOW_STATEMENT = "showStatement";
         public const string STATEMENT = "statement";
         public const string STATEMENTS = "statements";
@@ -95,6 +97,8 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             var builtinArrayField = new NonTerminal(BUILTIN_ARRAY_FIELD);
             var customArrayField = new NonTerminal(CUSTOM_ARRAY_FIELD);
             var assignment = new NonTerminal(ASSIGNMENT);
+            var enumConst = new NonTerminal(ENUM_CONST);
+            var showValue = new NonTerminal(SHOW_VALUE);
             var showStatement = new NonTerminal(SHOW_STATEMENT);
             var ifStatement = new NonTerminal(IF_STATEMENT);
             var ifCondition = new NonTerminal(IF_CONDITION);
@@ -141,15 +145,20 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             customField.Rule = identifier + identifier + ToTerm(";");
             builtinArrayField.Rule = type + ToTerm("[") + expression + "]" + identifier + ";";
             customArrayField.Rule = identifier + "[" + expression + "]" + identifier + ";";
+            
+            // Statements
+            
             ifStatement.Rule = ifCondition + elseifConditions + elseCondition;
             ifCondition.Rule = ToTerm("if") + "(" + expression + ")" + "{" + statements + "}";
             elseifCondition.Rule = ToTerm("elseif") + "(" + expression + ")" + "{" + statements + "}";
             MakeStarRule(elseifConditions, elseifCondition);
             elseCondition.Rule = ToTerm("else") + "{" + statements + "}" | Empty;
             assignment.Rule = ToTerm("let") + identifier + "=" + expression + ";";
-            showStatement.Rule = ToTerm("show") + expression + ToTerm("as") + identifier + ";";
+            enumConst.Rule = ToTerm("enum") + identifier + "." + identifier;
+            showValue.Rule = expression | enumConst;
+            showStatement.Rule = ToTerm("show") + showValue + ToTerm("as") + identifier + ";";
             statement.Rule = builtinField | customField | builtinArrayField | customArrayField | assignment | showStatement | ifStatement;
-            MakePlusRule(statements, statement);
+            MakeStarRule(statements, statement);
 
             // Definitions
 
@@ -164,7 +173,7 @@ namespace Dev.Editor.BinAnalyzer.Grammar
 
             program.Rule = definitions + statements;
 
-            MarkPunctuation(",", ";", ":", "{", "}", "[", "]", "(", ")", "=", "struct", "enum", "let", "show", "as", "if", "elseif", "else");
+            MarkPunctuation(",", ";", ":", "{", "}", "[", "]", "(", ")", "=", ".", "struct", "enum", "let", "show", "as", "if", "elseif", "else");
 
             Root = program;
         }

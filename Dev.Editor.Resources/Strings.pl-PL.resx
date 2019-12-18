@@ -389,7 +389,134 @@
     <value>Czy jesteś pewien, że chcesz usunąć definicję binarną {0}?</value>
   </data>
   <data name="BinDefinitionSample" xml:space="preserve">
-    <value>TODO: BinDefinitionSample</value>
+    <value>// Poniższa, przykładowa definicja binarna przetwarza plik bitmapy (.BMP)
+// i dostarcza informacje zdekodowane z jej nagłówka.
+
+struct BmpHeader 
+{
+    char[2] descriptor;
+    int bmpSizeInBytes;
+    short reserved1;
+    short reserved2;
+    int dataOffset;
+};
+
+enum DibHeaderType : byte 
+{
+ BITMAPCOREHEADER = 1u,
+ OS21XBITMAPHEADER = 2u,
+ OS22XBITMAPHEADER_V1 = 3u,
+ OS22XBITMAPHEADER_V2 = 4u,
+ BITMAPINFOHEADER = 5u,
+ BITMAPV2INFOHEADER = 6u,
+ BITMAPV3INFOHEADER = 7u,
+ BITMAPV4HEADER = 8u,
+ BITMAPV5HEADER = 9u
+};
+
+enum BitmapCompressionMethod : int
+{
+ BI_RGB = 0,
+ BI_RLE8 = 1,
+ BI_RLE4 = 2,
+ BI_BITFIELDS = 3,
+ BI_JPEG = 4,
+ BI_PNG = 5,
+ BI_ALPHABITFIELDS = 6,
+ BI_CMYK = 11,
+ BI_CMYKRLE8 = 12,
+ BI_CMYKRLE4 = 13
+};
+
+enum HalftoningAlgorithm : short
+{
+ None = 0,
+ ErrorDiffusion = 1,
+ PANDA = 2,
+ SuperCircle = 3
+};
+
+struct DibHeader
+{
+ int headerSize;
+ 
+ if (headerSize == 12)
+ {
+  show enum DibHeaderType.BITMAPCOREHEADER as headerType;
+  ushort bitmapWidth;
+  ushort bitmapHeight;
+  short colorPlaneCount;
+  short bitsPerPixel;
+ }
+ elseif (headerSize == 64)
+ {
+  show enum DibHeaderType.OS22XBITMAPHEADER_V1 as headerType;
+  int bitmapWidth;
+  int bitmapHeight;
+  short colorPlaneCount;
+  short bitsPerPixel;
+  BitmapCompressionMethod compressionMethod;
+  int imageSize;
+  int horizontalResolution;
+  int verticalResolution;
+  int colorsInPallette;
+  int importantColorCount;
+  
+  short resolutionUnit;
+  short padding;
+  short fillDirection;
+  HalftoningAlgorithm halftoningAlgorithm;
+  int halftoningParameter1;
+  int halftoningParameter2;
+  int colorEncoding;
+  int appDefinedIdentifier;  
+ }
+ elseif (headerSize == 16)
+ {
+  show enum DibHeaderType.OS22XBITMAPHEADER_V2 as headerType;
+  int bitmapWidth;
+  int bitmapHeight;
+  short colorPlaneCount;
+  short bitsPerPixel;
+  BitmapCompressionMethod compressionMethod;
+ }
+ elseif (headerSize == 40)
+ {
+  show enum DibHeaderType.BITMAPINFOHEADER as headerType;
+  int bitmapWidth;
+  int bitmapHeight;
+  short colorPlaneCount;
+  short bitsPerPixel;
+  BitmapCompressionMethod compressionMethod;
+  int imageSize;
+  int horizontalResolution;
+  int verticalResolution;
+  int colorsInPallette;
+  int importantColorCount;
+  
+ }
+ elseif (headerSize == 52)
+ {
+     show enum DibHeaderType.BITMAPV2INFOHEADER as headerType;     
+ }
+ elseif (headerSize == 56)
+ {
+     show enum DibHeaderType.BITMAPV3INFOHEADER as headerType; 
+ }
+ elseif (headerSize == 108)
+ { 
+  show enum DibHeaderType.BITMAPV4HEADER as headerType;
+ }
+ elseif (headerSize == 124)
+ {
+     show enum DibHeaderType.BITMAPV5HEADER as headerType;
+ }
+};
+
+BmpHeader bmpHeader;
+DibHeader dibHeader;
+
+show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) / 8 as bitmapByteSize; </value>
   </data>
   <data name="OpenBinaryFile.Title" xml:space="preserve">
     <value>Otwórz plik binarny {0}</value>
@@ -537,5 +664,8 @@
   </data>
   <data name="Message.SearchReachedEnd" xml:space="preserve">
     <value>Wyszukiwanie osiągnęło koniec pliku. Czy chcesz kontynuować od początku?</value>
+  </data>
+  <data name="Message.EvalError.EnumDoesNotContainMember" xml:space="preserve">
+    <value>Typ wyliczeniowy {0} nie zawiera składowej {1}.</value>
   </data>
 </root>
