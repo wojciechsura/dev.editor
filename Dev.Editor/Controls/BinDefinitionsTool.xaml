@@ -12,19 +12,19 @@
     <local:ToolContainer Header="{x:Static p:Strings.Tool_BinDefinitions_Title}">
         <DockPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                <Button Margin="4" Command="{Binding AddBinaryDefinition}">
+                <Button Command="{Binding AddBinaryDefinition}" Style="{StaticResource FirstToolButton}">
                     <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Add16.png" />
                 </Button>
-                <Button Margin="0,4,4,4" Command="{Binding EditBinaryDefinition}">
+                <Button Command="{Binding EditBinaryDefinition}" Style="{StaticResource ToolButton}">
                     <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Edit16.png" />
                 </Button>
-                <Button Margin="0,4,4,4" Command="{Binding RemoveBinaryDefinition}">
+                <Button Command="{Binding RemoveBinaryDefinition}" Style="{StaticResource ToolButton}">
                     <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Delete16.png" />
                 </Button>
 
-                <Separator Margin="0,4,4,4" />
+                <Separator Style="{StaticResource ToolSeparator}" />
 
-                <Button Margin="0,4,4,4" Command="{Binding OpenBinaryDefinitionSample}">
+                <Button Command="{Binding OpenBinaryDefinitionSample}" Style="{StaticResource ToolButton}">
                     <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Example16.png" />
                 </Button>
             </StackPanel>

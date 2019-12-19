@@ -11,7 +11,7 @@
     <local:ToolContainer Header="{x:Static p:Strings.Tool_Explorer_Title}">
         <DockPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                <Button Margin="4" Command="{Binding SetLocationOfCurrentDocumentCommand}">
+                <Button Margin="4" Command="{Binding SetLocationOfCurrentDocumentCommand}" Style="{StaticResource ToolButton}">
                     <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/FolderOfFile16.png" />
                 </Button>
             </StackPanel>
