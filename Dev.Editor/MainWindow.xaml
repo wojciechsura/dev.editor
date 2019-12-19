@@ -268,6 +268,22 @@
 
             </f:RibbonTabItem>
 
+            <!-- Text tab -->
+
+            <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_Text}">
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Text_Case}">
+
+                    <f:Button SizeDefinition="Middle" Header="Lowercase" Command="{Binding LowercaseCommand}"/>
+                    <f:Button SizeDefinition="Middle" Header="Uppercase" Command="{Binding UppercaseCommand}"/>
+                    <f:Button SizeDefinition="Middle" Header="Naming" Command="{Binding NamingCaseCommand}"/>
+                    <f:Button SizeDefinition="Middle" Header="Sentence" Command="{Binding SentenceCaseCommand}"/>
+                    <f:Button SizeDefinition="Middle" Header="Invert" Command="{Binding InvertCaseCommand}"/>
+
+                </f:RibbonGroupBox>
+                
+            </f:RibbonTabItem>
+            
             <!-- XML tools -->
 
             <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_XmlTools}"

@@ -679,4 +679,25 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Message.SyntaxError.IntegerValueOutsideRange" xml:space="preserve">
     <value>Składowa typu wyliczeniowego {0} ma wartość ({1}) spoza zakresu typu liczbowego {2}!</value>
   </data>
+  <data name="Ribbon.Tab.Text" xml:space="preserve">
+    <value>Tekst</value>
+  </data>
+  <data name="Ribbon.Text.Case" xml:space="preserve">
+    <value>Wielkość liter</value>
+  </data>
+  <data name="Ribbon.Text.Case.Lowercase" xml:space="preserve">
+    <value>Małe litery</value>
+  </data>
+  <data name="Ribbon.Text.Case.Uppercase" xml:space="preserve">
+    <value>Wielkie litery</value>
+  </data>
+  <data name="Ribbon.Text.Case.Naming" xml:space="preserve">
+    <value>Jak w nazwach</value>
+  </data>
+  <data name="Ribbon.Text.Case.Sentence" xml:space="preserve">
+    <value>Jak w zdaniu</value>
+  </data>
+  <data name="Ribbon.Text.Case.Invert" xml:space="preserve">
+    <value>Odwróć</value>
+  </data>
 </root>

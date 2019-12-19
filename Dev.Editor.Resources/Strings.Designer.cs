@@ -982,6 +982,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Text.
+        /// </summary>
+        public static string Ribbon_Tab_Text {
+            get {
+                return ResourceManager.GetString("Ribbon.Tab.Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View.
         /// </summary>
         public static string Ribbon_Tab_View {
@@ -996,6 +1005,60 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Tab_XmlTools {
             get {
                 return ResourceManager.GetString("Ribbon.Tab.XmlTools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Letter case.
+        /// </summary>
+        public static string Ribbon_Text_Case {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Case", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invert case.
+        /// </summary>
+        public static string Ribbon_Text_Case_Invert {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Case.Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lowercase.
+        /// </summary>
+        public static string Ribbon_Text_Case_Lowercase {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Case.Lowercase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to As in names.
+        /// </summary>
+        public static string Ribbon_Text_Case_Naming {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Case.Naming", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to As in sentence.
+        /// </summary>
+        public static string Ribbon_Text_Case_Sentence {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Case.Sentence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uppercase.
+        /// </summary>
+        public static string Ribbon_Text_Case_Uppercase {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Case.Uppercase", resourceCulture);
             }
         }
         

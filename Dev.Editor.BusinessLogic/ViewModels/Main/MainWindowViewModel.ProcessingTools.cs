@@ -46,5 +46,30 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 });
             }
         }
+
+        private void TransformText(Func<string, (bool, string)> func)
+        {
+            var document = (TextDocumentViewModel)activeDocument;
+
+            (int selStart, int selLength) = document.GetSelection();
+
+            if (selLength == 0)
+            {
+                selStart = 0;
+                selLength = document.Document.TextLength;
+            }
+
+            var textToTransform = document.Document.GetText(selStart, selLength);
+
+            (bool result, string resultText) = func(textToTransform);
+
+            if (result)
+            {
+                document.RunAsSingleHistoryEntry(() =>
+                {
+                    document.Document.Replace(selStart, selLength, resultText);
+                });
+            }
+        }
     }
 }

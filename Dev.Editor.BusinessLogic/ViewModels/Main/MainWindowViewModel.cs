@@ -556,6 +556,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             RemoveEmptyLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveEmptyLines, null, obj => DoRemoveEmptyLines(), documentIsTextCondition);
             RemoveWhitespaceLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveWhitespaceLines, null, obj => DoRemoveWhitespaceLines(), documentIsTextCondition);
 
+            LowercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Case_Lowercase, null, obj => DoLowercase(), documentIsTextCondition);
+            UppercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Case_Lowercase, null, obj => DoUppercase(), documentIsTextCondition);
+            NamingCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Case_Lowercase, null, obj => DoNamingCase(), documentIsTextCondition);
+            SentenceCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Case_Lowercase, null, obj => DoSentenceCase(), documentIsTextCondition);
+            InvertCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Case_Lowercase, null, obj => DoInvertCase(), documentIsTextCondition);
+
+
             FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, null, obj => DoFormatXml(), xmlToolsetAvailableCondition);
 
             // Navigation

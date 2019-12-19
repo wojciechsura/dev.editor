@@ -67,6 +67,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand RemoveEmptyLinesCommand { get; }
         public ICommand RemoveWhitespaceLinesCommand { get; }
 
+        // Text
+
+        public ICommand LowercaseCommand { get; }
+        public ICommand UppercaseCommand { get; }
+        public ICommand NamingCaseCommand { get; }
+        public ICommand SentenceCaseCommand { get; }
+        public ICommand InvertCaseCommand { get; }
+
         // XmlTools
 
         public ICommand FormatXmlCommand { get; }

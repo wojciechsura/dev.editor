@@ -679,4 +679,25 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Message.SyntaxError.IntegerValueOutsideRange" xml:space="preserve">
     <value>Enum member {0} value ({1}) is outside underlying integer type range ({2})!</value>
   </data>
+  <data name="Ribbon.Tab.Text" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="Ribbon.Text.Case" xml:space="preserve">
+    <value>Letter case</value>
+  </data>
+  <data name="Ribbon.Text.Case.Lowercase" xml:space="preserve">
+    <value>Lowercase</value>
+  </data>
+  <data name="Ribbon.Text.Case.Uppercase" xml:space="preserve">
+    <value>Uppercase</value>
+  </data>
+  <data name="Ribbon.Text.Case.Naming" xml:space="preserve">
+    <value>As in names</value>
+  </data>
+  <data name="Ribbon.Text.Case.Sentence" xml:space="preserve">
+    <value>As in sentence</value>
+  </data>
+  <data name="Ribbon.Text.Case.Invert" xml:space="preserve">
+    <value>Invert case</value>
+  </data>
 </root>

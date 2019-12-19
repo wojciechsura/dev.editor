@@ -139,6 +139,7 @@
     <Compile Include="ViewModels\Main\MainWindowViewModel.Lines.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Navigation.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.ProcessingTools.cs" />
+    <Compile Include="ViewModels\Main\MainWindowViewModel.Text.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.View.Editor.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.XmlTools.cs" />
     <Compile Include="ViewModels\Search\ISearchHost.cs" />
