@@ -23,5 +23,7 @@ namespace Dev.Editor.BinAnalyzer.Data
         public abstract DataType DataType { get; }
 
         public bool IsExpanded { get; set; } = false;
+
+        public bool IsSelected { get; set; } = false;
     }    
 }

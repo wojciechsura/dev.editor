@@ -8,5 +8,13 @@ namespace Dev.Editor.BusinessLogic.Models.Documents
 {
     public class BinDocumentState
     {
+        public BinDocumentState(double verticalOffset, double horizontalOffset)
+        {
+            VerticalOffset = verticalOffset;
+            HorizontalOffset = horizontalOffset;
+        }
+
+        public double VerticalOffset { get; }
+        public double HorizontalOffset { get; }
     }
 }

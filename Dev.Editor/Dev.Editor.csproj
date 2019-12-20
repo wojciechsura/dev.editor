@@ -103,6 +103,7 @@
       <DependentUpon>HexDocumentView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Controls\ToolContainer.cs" />
+    <Compile Include="Controls\TreeViewEx.cs" />
     <Compile Include="Converters\AdditionalToolsetToVisibilityConverter.cs" />
     <Compile Include="Converters\DataTypeToImageConverter.cs" />
     <Compile Include="Converters\DoubleToGridLengthConverter.cs" />

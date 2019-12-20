@@ -15,6 +15,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Dev.Editor.Controls
 {
@@ -28,13 +29,21 @@ namespace Dev.Editor.Controls
 
         private BinDocumentState BuildCurrentState()
         {
-            // TODO
-            return new BinDocumentState();
+            return new BinDocumentState(tveItems.VerticalScrollOffset, tveItems.HorizontalScrollOffset);
         }
 
         private void RestoreCurrentState(BinDocumentState state)
         {
-            // TODO
+            // Allowing bindings to run, so that treeview becomes
+            // populated with contents
+            if (state != null)
+            {
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    tveItems.VerticalScrollOffset = state.VerticalOffset;
+                    tveItems.HorizontalScrollOffset = state.HorizontalOffset;
+                }), DispatcherPriority.ContextIdle);
+            }
         }
 
         private void InitializeViewModel(BinDocumentViewModel newViewModel)
