@@ -1,9 +1,9 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                    xmlns:local="clr-namespace:Dev.Editor.Controls"
-                    xmlns:c="clr-namespace:Dev.Editor.Controls">
-   
-    <Style x:Key="BinDocumentTreeviewStyle" TargetType="{x:Type c:TreeViewEx}">
+                    xmlns:c="clr-namespace:Dev.Editor.Controls"
+                    xmlns:local="clr-namespace:Dev.Editor.Controls">
+
+    <Style x:Key="{x:Type c:TreeViewEx}" TargetType="{x:Type c:TreeViewEx}">
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="1"/>

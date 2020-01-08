@@ -274,11 +274,11 @@
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Text_Case}">
 
-                    <f:Button SizeDefinition="Middle" Header="Lowercase" Command="{Binding LowercaseCommand}"/>
-                    <f:Button SizeDefinition="Middle" Header="Uppercase" Command="{Binding UppercaseCommand}"/>
-                    <f:Button SizeDefinition="Middle" Header="Naming" Command="{Binding NamingCaseCommand}"/>
-                    <f:Button SizeDefinition="Middle" Header="Sentence" Command="{Binding SentenceCaseCommand}"/>
-                    <f:Button SizeDefinition="Middle" Header="Invert" Command="{Binding InvertCaseCommand}"/>
+                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Case_Lowercase}" Command="{Binding LowercaseCommand}"/>
+                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Case_Uppercase}" Command="{Binding UppercaseCommand}"/>
+                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Case_Naming}" Command="{Binding NamingCaseCommand}"/>
+                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Case_Sentence}" Command="{Binding SentenceCaseCommand}"/>
+                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Case_Invert}" Command="{Binding InvertCaseCommand}"/>
 
                 </f:RibbonGroupBox>
                 
@@ -323,9 +323,9 @@
                 <TabControl x:Name="rightPanel" Grid.Column="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToColumnConverter}}" 
                             VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinWidth="100"
                             Visibility="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToVisibilityConverter}}"
-                            TabStripPlacement="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToTabPlacement}}"
-                            ItemsSource="{Binding Tools}" SelectedItem="{Binding SelectedTool, Mode=TwoWay}"
+                            TabStripPlacement="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToTabPlacement}}"                                    
                             Margin="{StaticResource HalfMargin}" Padding="0" BorderThickness="0">
+                    
                     <TabControl.Resources>
                         <Style TargetType="TabItem" BasedOn="{StaticResource RootTabItem}">
                             <Style.Setters>
@@ -334,8 +334,17 @@
                                         <ControlTemplate TargetType="TabItem">
                                             <Border x:Name="TabBorder" BorderBrush="Transparent" Background="{TemplateBinding Background}" 
                                                     TextBlock.Foreground="{TemplateBinding Foreground}">
-                                                <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" 
-                                                                  ContentSource="Header" Margin="2,6" />
+                                                <StackPanel Orientation="Vertical" Margin="2,6">
+
+                                                    <Image Width="16" Height="16" Source="{Binding Icon}" Margin="2" />
+
+                                                    <TextBlock Text="{Binding Title}" Margin="2">
+                                                        <TextBlock.LayoutTransform>
+                                                            <RotateTransform Angle="90" />
+                                                        </TextBlock.LayoutTransform>
+                                                    </TextBlock>
+
+                                                </StackPanel>
                                             </Border>
                                             <ControlTemplate.Triggers>
                                                 <Trigger Property="TabStripPlacement" Value="Left">
@@ -372,22 +381,16 @@
                         </DataTemplate>
                     </TabControl.Resources>
 
-                    <TabControl.ItemTemplate>
-                        <DataTemplate DataType="{x:Type vmtb:BaseToolViewModel}">
-                            <StackPanel Orientation="Vertical">
+                    <TabItem DataContext="{Binding ExplorerToolViewModel}">
 
-                                <Image Width="16" Height="16" Source="{Binding Icon}" Margin="2" />
+                        
+                        <controls:ExplorerTool />
+                    </TabItem>
 
-                                <TextBlock Text="{Binding Title}" Margin="2">
-                                    <TextBlock.LayoutTransform>
-                                        <RotateTransform Angle="90" />
-                                    </TextBlock.LayoutTransform>
-                                </TextBlock>
-
-                            </StackPanel>
-
-                        </DataTemplate>
-                    </TabControl.ItemTemplate>
+                    <TabItem DataContext="{Binding BinDefinitionsToolViewModel}">
+                        <controls:BinDefinitionsTool />
+                    </TabItem>
+                   
                 </TabControl>
 
                 <GridSplitter x:Name="leftPanelSplitter" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" 
@@ -424,7 +427,7 @@
 
             <TabControl x:Name="bottomPanel" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight="100" Margin="{StaticResource HalfMargin}"
                     Visibility="{Binding BottomPanelVisibility, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static uit:BottomPanelVisibility.Visible}}"
-                    TabStripPlacement="Bottom" ItemsSource="{Binding BottomTools}" SelectedItem="{Binding SelectedBottomTool, Mode=TwoWay}"
+                    TabStripPlacement="Bottom"
                         Padding="0" BorderThickness="0">
                 <TabControl.Resources>
                     <Style TargetType="TabItem" BasedOn="{StaticResource RootTabItem}">
@@ -434,27 +437,21 @@
                                     <ControlTemplate TargetType="TabItem">
                                         <Border x:Name="TabBorder" BorderBrush="Transparent" BorderThickness="1,0,1,1" Background="{TemplateBinding Background}"
                                                 TextBlock.Foreground="{TemplateBinding Foreground}">
-                                            <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2" />
+                                            <StackPanel Orientation="Horizontal" Margin="6,2">
+                                                <Image Width="16" Height="16" Source="{Binding Icon}" Margin="2" />
+                                                <TextBlock Text="{Binding Title}" Margin="2" />
+                                            </StackPanel>
                                         </Border>
                                     </ControlTemplate>
                                 </Setter.Value>
                             </Setter>
                         </Style.Setters>
                     </Style>
-
-                    <DataTemplate DataType="{x:Type vmm:MessagesBottomToolViewModel}">
-                        <controls:MessagesBottomTool />
-                    </DataTemplate>
                 </TabControl.Resources>
 
-                <TabControl.ItemTemplate>
-                    <DataTemplate DataType="{x:Type vmbtb:BaseBottomToolViewModel}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Width="16" Height="16" Source="{Binding Icon}" Margin="2" />
-                            <TextBlock Text="{Binding Title}" Margin="2" />
-                        </StackPanel>
-                    </DataTemplate>
-                </TabControl.ItemTemplate>
+                <TabItem DataContext="{Binding MessagesBottomToolViewModel}">
+                    <controls:MessagesBottomTool />
+                </TabItem>
             </TabControl>
 
             <Popup x:Name="pNavigation" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0" StaysOpen="False"

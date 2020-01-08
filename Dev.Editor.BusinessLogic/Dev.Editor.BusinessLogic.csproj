@@ -116,6 +116,7 @@
     <Compile Include="Types\UI\SidePanelPlacement.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\BottomTools\Base\BaseBottomToolViewModel.cs" />
+    <Compile Include="ViewModels\BottomTools\Base\IBottomToolHandler.cs" />
     <Compile Include="ViewModels\BottomTools\Messages\IMessagesHandler.cs" />
     <Compile Include="ViewModels\BottomTools\Messages\MessagesBottomToolViewModel.cs" />
     <Compile Include="ViewModels\Configuration\BaseConfigurationViewModel.cs" />
@@ -146,6 +147,7 @@
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />
     <Compile Include="ViewModels\Tools\Base\BaseToolViewModel.cs" />
+    <Compile Include="ViewModels\Tools\Base\IToolHandler.cs" />
     <Compile Include="ViewModels\Tools\BinDefinitions\BinDefinitionsToolViewModel.cs" />
     <Compile Include="ViewModels\Tools\BinDefinitions\IBinDefinitionsHandler.cs" />
     <Compile Include="ViewModels\Tools\BinDefinitions\IBinDefinitionsToolAccess.cs" />

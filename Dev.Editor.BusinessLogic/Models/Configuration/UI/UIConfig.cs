@@ -16,10 +16,8 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.UI
         {
             SidePanelPlacement = new ConfigValue<SidePanelPlacement>("SidePanelPlacement", this, Types.UI.SidePanelPlacement.Right);
             SidePanelSize = new ConfigValue<double>("SidePanelSize", this, 200.0);
-            SidePanelActiveTab = new ConfigValue<string>("SidePanelActiveTab", this, ViewModels.Tools.Base.BaseToolViewModel.ExplorerUid);
             BottomPanelSize = new ConfigValue<double>("BottomPanelSize", this, 200.0);
             BottomPanelVisibility = new ConfigValue<BottomPanelVisibility>("BottomPanelVisibility", this, Types.UI.BottomPanelVisibility.Hidden);
-            BottomPanelActiveTab = new ConfigValue<string>("BottomPanelActiveTab", this, ViewModels.BottomTools.Base.BaseBottomToolViewModel.MessagesUid);
 
             MainWindowMaximized = new ConfigValue<bool>("MainWindowMaximized", this, false);
 

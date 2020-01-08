@@ -22,7 +22,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         private readonly IFileIconProvider fileIconProvider;
         private readonly IImageResources imageResources;
         private readonly IConfigurationService configurationService;
-        private readonly IExplorerHandler handler;
+        private readonly IExplorerHandler explorerHandler;
 
         private readonly ImageSource icon;
         private IExplorerToolAccess access;
@@ -153,7 +153,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 
         private void DoSetLocationOfCurrentDocument()
         {
-            string path = handler.GetCurrentDocumentPath();
+            string path = explorerHandler.GetCurrentDocumentPath();
 
             SetCurrentPath(path);
         }
@@ -164,11 +164,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             IImageResources imageResources, 
             IConfigurationService configurationService,
             IExplorerHandler handler)
+            : base(handler)
         {
             this.fileIconProvider = fileIconProvider;
             this.imageResources = imageResources;
             this.configurationService = configurationService;
-            this.handler = handler;
+            this.explorerHandler = handler;
             this.icon = imageResources.GetIconByName("Explorer16.png");
 
             folders = new ObservableCollection<FolderItemViewModel>();
@@ -198,7 +199,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 {
                     case FileItemType.File:
                         {
-                            handler.OpenTextFile(selectedFile.GetFullPath());
+                            explorerHandler.OpenTextFile(selectedFile.GetFullPath());
                             break;
                         }
                     case FileItemType.Folder:

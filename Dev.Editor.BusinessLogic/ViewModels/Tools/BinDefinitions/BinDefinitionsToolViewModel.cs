@@ -25,7 +25,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions
 {
     public class BinDefinitionsToolViewModel : BaseToolViewModel
     {
-        private readonly IBinDefinitionsHandler handler;
+        private readonly IBinDefinitionsHandler binDefinitionHandler;
 
         // Private fields -----------------------------------------------------
 
@@ -95,7 +95,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions
 
                     // Open definitionFile
 
-                    handler.OpenTextFile(fullFilename);
+                    binDefinitionHandler.OpenTextFile(fullFilename);
                 }
                 catch (Exception e)
                 {
@@ -119,12 +119,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions
 
         public void DoEditBinaryDefinition()
         {
-            handler.OpenTextFile($"{pathService.BinDefinitionsPath}\\{selectedBinDefinition.BinDefinition.Filename.Value}");
+            binDefinitionHandler.OpenTextFile($"{pathService.BinDefinitionsPath}\\{selectedBinDefinition.BinDefinition.Filename.Value}");
         }
 
         public void DoBinaryDefinitionSample()
         {
-            handler.NewTextDocument(Strings.BinDefinitionSample);
+            binDefinitionHandler.NewTextDocument(Strings.BinDefinitionSample);
         }
 
         // Public methods -----------------------------------------------------
@@ -135,8 +135,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions
             IDialogService dialogService,
             IMessagingService messagingService,
             IPathService pathService)
+            : base(handler)
         {
-            this.handler = handler;
+            this.binDefinitionHandler = handler;
             this.imageResources = imageResources;
             this.configurationService = configurationService;
             this.dialogService = dialogService;
@@ -169,7 +170,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions
         {
             if (selectedBinDefinition != null)
             {
-                handler.RequestOpenBinFile(selectedBinDefinition.BinDefinition);
+                binDefinitionHandler.RequestOpenBinFile(selectedBinDefinition.BinDefinition);
             }
         }
 

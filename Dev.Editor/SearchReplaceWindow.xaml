@@ -6,14 +6,15 @@
         xmlns:local="clr-namespace:Dev.Editor"
         xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
         xmlns:t="clr-namespace:Dev.Editor.BusinessLogic.Types.Search;assembly=Dev.Editor.BusinessLogic"
+        xmlns:wpf="clr-namespace:Dev.Editor.Wpf"
         mc:Ignorable="d"
         Title="{x:Static p:Strings.SearchWindow_Title}" 
         SizeToContent="WidthAndHeight" ResizeMode="NoResize" Closing="HandleWindowClosing" ShowInTaskbar="False">
     <TabControl x:Name="tcTabs" Margin="{StaticResource DialogWindowPadding}">
         
         <!-- Search -->
-        
-        <TabItem x:Name="tSearch" Header="{x:Static p:Strings.SearchWindow_SearchTab}" >
+
+        <TabItem x:Name="tSearch" Header="{x:Static p:Strings.SearchWindow_SearchTab}" wpf:AccessKeyScopeControl.IsAccessKeyScope="True">
             <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchTab}" Padding="4">
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical">
@@ -52,14 +53,16 @@
                         </GroupBox>
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Margin="10,0,0,0">
-                        <Button Content="{x:Static p:Strings.SearchWindow_FindNext}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindNextCommand}" />
-                        <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" />
+                        <Button Content="{x:Static p:Strings.SearchWindow_FindNext}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindNextCommand}" 
+                                IsDefault="True"/>
+                        <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" 
+                                IsCancel="True"/>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>
         </TabItem>
 
-        <TabItem x:Name="tReplace" Header="{x:Static p:Strings.SearchWindow_ReplaceTab}">
+        <TabItem x:Name="tReplace" Header="{x:Static p:Strings.SearchWindow_ReplaceTab}" wpf:AccessKeyScopeControl.IsAccessKeyScope="True">
             <GroupBox Header="{x:Static p:Strings.SearchWindow_ReplaceTab}" Padding="4">
                 <StackPanel Orientation="Horizontal">
                     <StackPanel Orientation="Vertical">
@@ -104,14 +107,16 @@
                         </GroupBox>
                     </StackPanel>
                     <StackPanel Orientation="Vertical" Margin="10,0,0,0">
-                        <Button Content="{x:Static p:Strings.SearchWindow_FindNext}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindNextCommand}" />
+                        <Button Content="{x:Static p:Strings.SearchWindow_FindNext}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindNextCommand}" 
+                                IsDefault="True"/>
                         <Button Content="{x:Static p:Strings.SearchWindow_Replace}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding ReplaceCommand}"/>
                         <Separator Margin="{StaticResource DialogItemsVMargin}" />
                         <Button Content="{x:Static p:Strings.SearchWindow_ReplaceAll}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding ReplaceAllCommand}"/>
                         <CheckBox Content="{x:Static p:Strings.SearchWindow_InSelection}" Margin="{StaticResource DialogItemsVMargin}" 
                                     IsEnabled="{Binding SelectionAvailable}" IsChecked="{Binding ReplaceAllInSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                         <Separator Margin="{StaticResource DialogItemsVMargin}" />
-                        <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}"></Button>
+                        <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" 
+                                IsCancel="true"/>
                     </StackPanel>
                 </StackPanel>
             </GroupBox>

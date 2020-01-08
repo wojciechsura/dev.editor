@@ -284,7 +284,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 SidePanelPlacement = Types.UI.SidePanelPlacement.Right;
             }
 
-            SelectedTool = binDefinitionsToolViewModel;
+            #warning TODO!
+            // SelectedTool = binDefinitionsToolViewModel;
 
             messagingService.Inform(Strings.Message_UseSidePanelToOpenBinFile);
         }
@@ -360,7 +361,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     messagingService.ShowError(string.Format(Strings.Message_CannotOpenBinFile));
 
                     BottomPanelVisibility = Types.UI.BottomPanelVisibility.Visible;
-                    SelectedBottomTool = messagesBottomToolViewModel;
+
+                    #warning TODO!
+                    // SelectedBottomTool = messagesBottomToolViewModel;
                 }
                 catch (Exception e)
                 {
@@ -371,7 +374,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     messagingService.ShowError(string.Format(Strings.Message_CannotOpenBinFile));
 
                     BottomPanelVisibility = Types.UI.BottomPanelVisibility.Visible;
-                    SelectedBottomTool = messagesBottomToolViewModel;
+                    
+                    #warning TODO!
+                    // SelectedBottomTool = messagesBottomToolViewModel;
                 }
             }
         }

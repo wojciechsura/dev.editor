@@ -8,7 +8,7 @@
              xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" DataContextChanged="HandleDataContextChanged">
-    <local:ToolContainer Header="{x:Static p:Strings.Tool_Explorer_Title}">
+    <local:ToolContainer Header="{x:Static p:Strings.Tool_Explorer_Title}" CloseCommand="{Binding CloseToolsCommand}">
         <DockPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                 <Button Margin="4" Command="{Binding SetLocationOfCurrentDocumentCommand}" Style="{StaticResource ToolButton}">

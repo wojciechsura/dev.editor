@@ -17,7 +17,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.Messages
         // Private methods ----------------------------------------------------
 
         private readonly ObservableCollection<MessageModel> messages = new ObservableCollection<MessageModel>();
-        private readonly IMessagesHandler handler;
+        private readonly IMessagesHandler messageHandler;
         private readonly IImageResources imageResources;
 
         private readonly ImageSource icon;
@@ -25,8 +25,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.Messages
         // Public methods -----------------------------------------------------
 
         public MessagesBottomToolViewModel(IMessagesHandler handler, IImageResources imageResources)
+            : base(handler)
         {
-            this.handler = handler;
+            this.messageHandler = handler;
             this.imageResources = imageResources;
 
             icon = imageResources.GetIconByName("Message16.png");
@@ -36,7 +37,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.Messages
         {
             if (model.Filename != null)
             {
-                handler.OpenFileAndFocus(model.Path);
+                messageHandler.OpenFileAndFocus(model.Path);
             }
         }
 

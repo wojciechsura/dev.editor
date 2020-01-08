@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              DataContextChanged="HandleDataContextChanged"
              d:DesignHeight="450" d:DesignWidth="800">
-    <local:ToolContainer Header="{x:Static p:Strings.Tool_BinDefinitions_Title}">
+    <local:ToolContainer Header="{x:Static p:Strings.Tool_BinDefinitions_Title}" CloseCommand="{Binding CloseToolsCommand}">
         <DockPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                 <Button Command="{Binding AddBinaryDefinition}" Style="{StaticResource FirstToolButton}">

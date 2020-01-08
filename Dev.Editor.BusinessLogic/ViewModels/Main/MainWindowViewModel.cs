@@ -81,14 +81,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // Tools
 
-        private readonly List<BaseToolViewModel> tools;
         private readonly ExplorerToolViewModel explorerToolViewModel;
         private readonly BinDefinitionsToolViewModel binDefinitionsToolViewModel;
-        private BaseToolViewModel selectedTool;
 
-        private readonly List<BaseBottomToolViewModel> bottomTools;
         private readonly MessagesBottomToolViewModel messagesBottomToolViewModel;
-        private BaseBottomToolViewModel selectedBottomTool;
 
         // Private methods ----------------------------------------------------
 
@@ -116,16 +112,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private void HandleBottomPanelVisibilityChanged()
         {
             configurationService.Configuration.UI.BottomPanelVisibility.Value = bottomPanelVisibility;
-        }
-
-        private void HandleSelcetedToolChanged()
-        {
-            configurationService.Configuration.UI.SidePanelActiveTab.Value = selectedTool.Uid;
-        }
-
-        private void HandleSelectedBottomToolChanged()
-        {
-            configurationService.Configuration.UI.BottomPanelActiveTab.Value = selectedBottomTool.Uid;
         }
 
         private void RemoveDocument(BaseDocumentViewModel document)
@@ -390,6 +376,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         ICommand IDocumentHandler.PasteCommand => PasteCommand;
 
+        // IToolHandler implementation ----------------------------------------
+
+        void IToolHandler.CloseTools()
+        {
+            SidePanelPlacement = SidePanelPlacement.Hidden;
+        }
+
         // IExplorerHandler implementation ------------------------------------
 
         void IExplorerHandler.OpenTextFile(string path)
@@ -421,6 +414,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         void IBinDefinitionsHandler.RequestOpenBinFile(BinDefinition binDefinition)
         {
             DoOpenBinDocument(binDefinition);
+        }
+
+        // IBottomToolsHandler implementation ---------------------------------
+
+        void IBottomToolHandler.CloseBottomTools()
+        {
+            BottomPanelVisibility = BottomPanelVisibility.Hidden;
         }
 
         // IMessagesHandler implementation ------------------------------------
@@ -503,28 +503,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             // Initializing tools
 
-            tools = new List<BaseToolViewModel>();
-
             explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources, configurationService, this);
-            tools.Add(explorerToolViewModel);
             binDefinitionsToolViewModel = new BinDefinitionsToolViewModel(this,
                 imageResources, 
                 configurationService,
                 dialogService,
                 messagingService,
                 pathService);
-            tools.Add(binDefinitionsToolViewModel);
-
-            selectedTool = tools.FirstOrDefault(t => t.Uid.Equals(configurationService.Configuration.UI.SidePanelActiveTab.Value));
 
             // Initializeing bottom tools
 
-            bottomTools = new List<BaseBottomToolViewModel>();
-
             messagesBottomToolViewModel = new MessagesBottomToolViewModel(this, imageResources);
-            bottomTools.Add(messagesBottomToolViewModel);
-
-            selectedBottomTool = bottomTools.FirstOrDefault(t => t.Uid.Equals(configurationService.Configuration.UI.BottomPanelActiveTab.Value));
 
             // Initializing commands
 
@@ -761,20 +750,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             set => Set(ref bottomPanelSize, () => BottomPanelSize, value, HandleBottomPanelSizeChanged);            
         }
 
-        public IEnumerable<BaseToolViewModel> Tools => tools;
+        public ExplorerToolViewModel ExplorerToolViewModel => explorerToolViewModel;
 
-        public BaseToolViewModel SelectedTool
-        {
-            get => selectedTool;
-            set => Set(ref selectedTool, () => SelectedTool, value, HandleSelcetedToolChanged);
-        }
+        public BinDefinitionsToolViewModel BinDefinitionsToolViewModel => binDefinitionsToolViewModel;
 
-        public IEnumerable<BaseBottomToolViewModel> BottomTools => bottomTools;
-
-        public BaseBottomToolViewModel SelectedBottomTool
-        {
-            get => selectedBottomTool;
-            set => Set(ref selectedBottomTool, () => SelectedBottomTool, value, HandleSelectedBottomToolChanged);
-        }
+        public MessagesBottomToolViewModel MessagesBottomToolViewModel => messagesBottomToolViewModel;
     }
 }

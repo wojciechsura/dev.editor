@@ -121,6 +121,7 @@
     </Compile>
     <Compile Include="Services\Dialogs\DialogService.cs" />
     <Compile Include="Services\ImageResources\ImageResources.cs" />
+    <Compile Include="Wpf\AccessKeyScopeControl.cs" />
     <Compile Include="Wpf\DocumentTemplateSelector.cs" />
     <Compile Include="Wpf\MouseEvents.cs" />
     <Page Include="BinDefinitionDialog.xaml">
@@ -139,7 +140,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\BinDocumentViewStyles.xaml">
+    <Page Include="Controls\DefaultControlTemplates.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

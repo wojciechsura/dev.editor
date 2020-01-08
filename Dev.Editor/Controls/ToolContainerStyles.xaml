@@ -54,7 +54,8 @@
                         <DockPanel Background="{StaticResource ToolBackgroundBrush}">
                             <Border DockPanel.Dock="Top" Style="{StaticResource ToolWindowHeader}">
                                 <DockPanel>
-                                    <Button Command="{TemplateBinding CloseCommand}" Style="{StaticResource ToolWindowHeaderButton}" FontFamily="Marlett" DockPanel.Dock="Right">r</Button>
+                                    <Button Command="{TemplateBinding CloseCommand}" Style="{StaticResource ToolWindowHeaderButton}" FontFamily="Marlett" DockPanel.Dock="Right"
+                                            Margin="1,1,4,1">r</Button>
                                     <TextBlock Text="{TemplateBinding Header}" VerticalAlignment="Center" Margin="4" />
                                 </DockPanel>
                             </Border>

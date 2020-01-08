@@ -11,6 +11,7 @@
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Generic.xaml" />
                 <ResourceDictionary Source="Controls\ToolContainerStyles.xaml" />
+                <ResourceDictionary Source="Controls\DefaultControlTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
 
             <!-- Document templates -->
@@ -73,6 +74,12 @@
 
             <!-- Styles -->
 
+            <Style TargetType="Button">
+                <Style.Setters>
+                    <Setter Property="Height" Value="23" />
+                </Style.Setters>
+            </Style>
+            
             <Style TargetType="Button" x:Key="DocumentTabCloseButtonStyle">
                 <Style.Setters>
                     <Setter Property="Template">
