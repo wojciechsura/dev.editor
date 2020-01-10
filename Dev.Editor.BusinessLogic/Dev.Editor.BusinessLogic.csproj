@@ -211,6 +211,7 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Highlighting\BinDef.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\INI.xshd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Highlighting\cpp.png" />
@@ -327,6 +328,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\FileTypeIcons\Folder_Bin_16x.png" />
     <EmbeddedResource Include="Resources\FileTypeIcons\Folder_Obj_16x.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Highlighting\ini.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -60,7 +60,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                     System.IO.Directory.EnumerateDirectories(selectedFolder.GetFullPath())
                         .Select(x => System.IO.Path.GetFileName(x))
                         .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
-                        .Select(x => new FileItemViewModel(selectedFolder, x, $"[ {x} ]", fileIconProvider.GetImageForFolder(x), FileItemType.Folder))
+                        .Select(x => new FileItemViewModel(selectedFolder, x, $"[{x}]", fileIconProvider.GetImageForFolder(x), FileItemType.Folder))
                         .ForEach(x => files.Add(x));
 
                     System.IO.Directory.EnumerateFiles(selectedFolder.GetFullPath())

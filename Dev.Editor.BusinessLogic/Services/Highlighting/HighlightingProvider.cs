@@ -148,6 +148,12 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
                 "cpp.png",
                 FoldingKind.Braces);
 
+            RegisterHighlighting("Ini",
+                new[] { ".ini" },
+                "INI.xshd",
+                "ini.png",
+                FoldingKind.None);
+
             RegisterHighlighting("Java",
                 new[] { ".java" },
                 "Java.xshd",
