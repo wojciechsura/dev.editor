@@ -29,11 +29,20 @@ namespace Dev.Editor
         {
             e.Cancel = true;
             Hide();
+
+            // This window's focus and owner window's focus are independent
+            // However, user expects, that focusing this window focuses
+            // the application, so we have to ensure, that main window gains
+            // focus at this point.
+            if (Owner != null)
+            {
+                Owner.Focus();
+            }
         }
 
         void ISearchReplaceWindowAccess.Close()
         {
-            Hide();
+            Close();
         }
 
         public SearchReplaceWindow(ISearchHost searchHost)
