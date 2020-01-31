@@ -65,6 +65,7 @@ namespace Dev.Editor
                 new Action(delegate()
                 {
                     FocusManager.SetFocusedElement(this, tbReplaceSearch);
+                    tbReplaceSearch.SelectAll();
                     tbReplaceSearch.Focus();
                 }));
             
@@ -78,6 +79,7 @@ namespace Dev.Editor
                 new Action(delegate ()
                 {
                     FocusManager.SetFocusedElement(this, tbSearchSearch);
+                    tbSearchSearch.SelectAll();
                     tbSearchSearch.Focus();
                 }));
         }

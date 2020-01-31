@@ -72,6 +72,11 @@
     <Compile Include="Models\Configuration\Internal\BaseStoredFile.cs" />
     <Compile Include="Models\Configuration\Internal\StoredFiles.cs" />
     <Compile Include="Models\Configuration\Internal\TextStoredFile.cs" />
+    <Compile Include="Models\Configuration\Search\ReplaceText.cs" />
+    <Compile Include="Models\Configuration\Search\ReplaceTexts.cs" />
+    <Compile Include="Models\Configuration\Search\SearchConfig.cs" />
+    <Compile Include="Models\Configuration\Search\SearchText.cs" />
+    <Compile Include="Models\Configuration\Search\SearchTexts.cs" />
     <Compile Include="Models\Configuration\Tools\Explorer\ExplorerConfig.cs" />
     <Compile Include="Models\Configuration\Tools\ToolsConfig.cs" />
     <Compile Include="Models\Configuration\UI\UIConfig.cs" />
