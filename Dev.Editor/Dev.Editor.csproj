@@ -89,6 +89,7 @@
     <Compile Include="Controls\BinDocumentView.xaml.cs">
       <DependentUpon>BinDocumentView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Controls\ComboBoxEx.cs" />
     <Compile Include="Controls\MessagesBottomTool.xaml.cs">
       <DependentUpon>MessagesBottomTool.xaml</DependentUpon>
     </Compile>

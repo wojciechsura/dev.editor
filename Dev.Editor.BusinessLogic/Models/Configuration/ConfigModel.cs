@@ -2,6 +2,7 @@
 using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
 using Dev.Editor.BusinessLogic.Models.Configuration.Editor;
 using Dev.Editor.BusinessLogic.Models.Configuration.Internal;
+using Dev.Editor.BusinessLogic.Models.Configuration.Search;
 using Dev.Editor.BusinessLogic.Models.Configuration.Tools;
 using Dev.Editor.BusinessLogic.Models.Configuration.UI;
 using Dev.Editor.Configuration;
@@ -25,6 +26,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration
             UI = new UIConfig(this);
             Tools = new ToolsConfig(this);
             BinDefinitions = new BinDefinitionsConfig(this);
+            SearchConfig = new SearchConfig(this);
         }
 
         public EditorConfig Editor { get; }
@@ -33,5 +35,6 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration
         public UIConfig UI { get; }
         public ToolsConfig Tools { get; }
         public BinDefinitionsConfig BinDefinitions { get; }
+        public SearchConfig SearchConfig { get; }
     }
 }

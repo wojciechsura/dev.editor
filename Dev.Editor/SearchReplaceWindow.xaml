@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:Dev.Editor"
         xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
         xmlns:t="clr-namespace:Dev.Editor.BusinessLogic.Types.Search;assembly=Dev.Editor.BusinessLogic"
+        xmlns:c="clr-namespace:Dev.Editor.Controls"
         xmlns:wpf="clr-namespace:Dev.Editor.Wpf"
         mc:Ignorable="d"
         Title="{x:Static p:Strings.SearchWindow_Title}" 
@@ -28,7 +29,8 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_SearchedText}"/>
-                            <TextBox x:Name="tbSearchSearch" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <c:ComboBoxEx x:Name="cbSearchSearch" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                      ItemsSource="{Binding LastSearches}" IsEditable="True"/>
                         </Grid>
                         
                         <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchOptions}" Padding="4">
@@ -77,12 +79,12 @@
                             </Grid.ColumnDefinitions>
 
                             <Label Margin="{StaticResource DialogItemsVMargin}" Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_SearchedText}"/>
-                            <TextBox x:Name="tbReplaceSearch" Margin="{StaticResource DialogItemsVMargin}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
-                                        Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <c:ComboBoxEx x:Name="cbReplaceSearch" Margin="{StaticResource DialogItemsVMargin}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
+                                        Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding LastSearches}" IsEditable="True"/>
 
                             <Label Grid.Row="1" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_ReplaceWith}" />
-                            <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" 
-                                        Text="{Binding Replace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                            <c:ComboBoxEx Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" 
+                                        Text="{Binding Replace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding LastReplaces}" IsEditable="True" />
                         </Grid>
 
                         <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchOptions}" Padding="4">

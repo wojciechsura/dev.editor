@@ -73,10 +73,10 @@
     <Compile Include="Models\Configuration\Internal\StoredFiles.cs" />
     <Compile Include="Models\Configuration\Internal\TextStoredFile.cs" />
     <Compile Include="Models\Configuration\Search\ReplaceText.cs" />
-    <Compile Include="Models\Configuration\Search\ReplaceTexts.cs" />
+    <Compile Include="Models\Configuration\Search\LastReplaceTexts.cs" />
     <Compile Include="Models\Configuration\Search\SearchConfig.cs" />
     <Compile Include="Models\Configuration\Search\SearchText.cs" />
-    <Compile Include="Models\Configuration\Search\SearchTexts.cs" />
+    <Compile Include="Models\Configuration\Search\LastSearchTexts.cs" />
     <Compile Include="Models\Configuration\Tools\Explorer\ExplorerConfig.cs" />
     <Compile Include="Models\Configuration\Tools\ToolsConfig.cs" />
     <Compile Include="Models\Configuration\UI\UIConfig.cs" />
@@ -87,6 +87,8 @@
     <Compile Include="Models\Documents\HexDocumentState.cs" />
     <Compile Include="Models\Documents\TextDocumentState.cs" />
     <Compile Include="Models\Documents\FoldSectionState.cs" />
+    <Compile Include="Models\Events\ApplicationShutdownEvent.cs" />
+    <Compile Include="Models\Events\BaseEvent.cs" />
     <Compile Include="Models\Highlighting\HighlightingInfo.cs" />
     <Compile Include="Models\Messages\MessageModel.cs" />
     <Compile Include="Models\UI\BottomPanelVisibilityModel.cs" />
@@ -100,6 +102,9 @@
     <Compile Include="Services\Configuration\ConfigurationService.cs" />
     <Compile Include="Services\Configuration\IConfigurationService.cs" />
     <Compile Include="Services\Dialogs\IDialogService.cs" />
+    <Compile Include="Services\EventBus\EventBus.cs" />
+    <Compile Include="Services\EventBus\IEventBus.cs" />
+    <Compile Include="Services\EventBus\IEventListener.cs" />
     <Compile Include="Services\FileIcons\FileIconProvider.cs" />
     <Compile Include="Services\FileIcons\IFileIconProvider.cs" />
     <Compile Include="Services\Highlighting\HighlightingProvider.cs" />

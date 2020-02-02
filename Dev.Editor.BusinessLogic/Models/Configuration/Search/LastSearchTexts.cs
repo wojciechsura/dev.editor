@@ -7,15 +7,16 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BusinessLogic.Models.Configuration.Search
 {
-    public class ReplaceTexts : BaseTypedItemCollection<ReplaceText>
+    public class LastSearchTexts : BaseTypedItemCollection<SearchText>
     {
-        public const string NAME = "ReplaceTexts";
+        public const string NAME = "LastSearchTexts";
 
-        public ReplaceTexts(BaseItemContainer parent) : base(NAME, parent)
+        public LastSearchTexts(BaseItemContainer parent) 
+            : base(NAME, parent)
         {
             ChildInfos = new List<BaseChildInfo>
             {
-                new ChildInfo<ReplaceText>(ReplaceText.NAME, () => new ReplaceText())
+                new ChildInfo<SearchText>(SearchText.NAME, () => new SearchText())
             };
         }
 

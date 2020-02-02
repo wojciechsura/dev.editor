@@ -1,4 +1,8 @@
-﻿using Dev.Editor.BusinessLogic.Models.Search;
+﻿using Dev.Editor.BusinessLogic.Models.Configuration.Search;
+using Dev.Editor.BusinessLogic.Models.Events;
+using Dev.Editor.BusinessLogic.Models.Search;
+using Dev.Editor.BusinessLogic.Services.Config;
+using Dev.Editor.BusinessLogic.Services.EventBus;
 using Dev.Editor.BusinessLogic.Services.Messaging;
 using Dev.Editor.BusinessLogic.Types.Search;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
@@ -8,6 +12,7 @@ using Dev.Editor.Common.Tools;
 using Dev.Editor.Resources;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -16,13 +21,18 @@ using System.Windows.Input;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Search
 {
-    public class SearchReplaceWindowViewModel : BaseViewModel
+    public class SearchReplaceWindowViewModel : BaseViewModel, IEventListener<ApplicationShutdownEvent>
     {
+        private const string EolFixString = "\r?";
+        private const int LastSearchCount = 10;
+
         // Private fields -----------------------------------------------------
 
         private readonly ISearchHost searchHost;
         private readonly ISearchReplaceWindowAccess access;
         private readonly IMessagingService messagingService;
+        private readonly IConfigurationService configurationService;
+        private readonly IEventBus eventBus;
 
         private string search;
         private string replace;
@@ -37,8 +47,76 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         private readonly Condition searchRegexValidCondition;
 
         private SearchReplaceModel searchReplaceModel;
+        private bool modelUpdatedSinceLastSearch = true;
 
         // Private methods ----------------------------------------------------
+
+        /// <summary>
+        /// Replaces $ signs in the pattern with \r?$
+        /// Takes into account, that $ signs in the pattern
+        /// may be escaped. Handles properly situations, that
+        /// might effect in false positives (such as "\$" in "\\$").
+        /// </summary>
+        /// <param name="pattern"></param>
+        /// <returns></returns>
+        private string FixDotNetEoLRegex(string pattern)
+        {
+            int startIndex = 0;
+
+            while (startIndex < pattern.Length)
+            {
+                var res = pattern.IndexOf('$', startIndex);
+                if (res == -1)
+                {
+                    // No more $'s
+                    break;
+                }
+
+                // Check escaping
+                int backslashCount = 0;
+                for (int i = res - 1; i >= 0; i--)
+                {
+                    if (pattern[i] == '\\')
+                        backslashCount++;
+                    else
+                        break;
+                }
+
+                if (backslashCount % 2 == 1)
+                {
+                    // Odd count of backslashes - $ is escaped
+                    startIndex = res + 1;
+                    continue;
+                }
+
+                // Add \r? before the $ sign
+                pattern.Insert(res, EolFixString);
+                res += EolFixString.Length;
+
+                startIndex = res + 1;
+            }
+
+            return pattern;
+        }
+
+        private void StoreLastString(string str, ObservableCollection<string> list)
+        {
+            var index = LastSearches.IndexOf(str);
+            if (index > 0)
+                list.Move(index, 0);
+            else
+            {
+                list.Insert(0, str);
+                while (list.Count > LastSearchCount)
+                    list.RemoveAt(LastSearches.Count - 1);
+            }
+        }
+
+        private void StoreLastSearchReplace()
+        {
+            StoreLastString(Search, LastSearches);
+            StoreLastString(Replace, LastReplaces);
+        }
 
         private Regex GetSearchRegex(string textToFind)
         {
@@ -56,7 +134,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                         string pattern = textToFind;
 
                         // See: https://docs.microsoft.com/en-us/dotnet/standard/base-types/anchors-in-regular-expressions#end-of-string-or-line-
-                        pattern = Regex.Replace(pattern, @"(?<!\\)\$", @"\r?$");
+                        pattern = FixDotNetEoLRegex(pattern);                        
 
                         return new Regex(pattern, options);
                     }
@@ -118,6 +196,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             string replaceText = GetReplaceText(replace);
 
             searchReplaceModel = new SearchReplaceModel(searchRegex, replaceText, searchBackwards, searchMode == SearchMode.RegularExpressions, replaceAllInSelection);
+            modelUpdatedSinceLastSearch = true;
         }
 
         private void DoClose() => access.Close();
@@ -152,6 +231,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         {
             try
             {
+                if (modelUpdatedSinceLastSearch)
+                {
+                    StoreLastSearchReplace();
+                }
+
+                modelUpdatedSinceLastSearch = false;
                 searchHost.FindNext(searchReplaceModel);
             }
             catch
@@ -173,21 +258,62 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             UpdateModel();
         }
 
+        // IEventListener<ApplicationShutdownEvent> implementation ------------
+
+        void IEventListener<ApplicationShutdownEvent>.Receive(ApplicationShutdownEvent @event)
+        {
+            // Store last search/replaces
+
+            configurationService.Configuration.SearchConfig.LastSearchTexts.Clear();
+            LastSearches.ForEach(ls =>
+            {
+                var searchText = new SearchText();
+                searchText.Text.Value = ls;
+                configurationService.Configuration.SearchConfig.LastSearchTexts.Add(searchText);
+            });
+
+            configurationService.Configuration.SearchConfig.LastReplaceTexts.Clear();
+            LastReplaces.ForEach(lr =>
+            {
+                var replaceText = new ReplaceText();
+                replaceText.Text.Value = lr;
+                configurationService.Configuration.SearchConfig.LastReplaceTexts.Add(replaceText);
+            });
+        }
+
         // Public methods -----------------------------------------------------
 
         public SearchReplaceWindowViewModel(ISearchHost searchHost, 
             ISearchReplaceWindowAccess access, 
-            IMessagingService messagingService)
+            IMessagingService messagingService,
+            IConfigurationService configurationService,
+            IEventBus eventBus)
         {
             this.searchHost = searchHost;
             this.access = access;
             this.messagingService = messagingService;
+            this.configurationService = configurationService;
+            this.eventBus = eventBus;
 
-            search = null;
-            replace = null;
+            eventBus.Register((IEventListener<ApplicationShutdownEvent>)this);
+
             caseSensitive = false;
             wholeWordsOnly = false;
             searchMode = SearchMode.Normal;
+
+            LastSearches = new ObservableCollection<string>();
+            configurationService.Configuration.SearchConfig.LastSearchTexts.ForEach(st => LastSearches.Add(st.Text.Value));
+            if (LastSearches.Any())
+                search = LastSearches.First();
+            else
+                search = null;
+
+            LastReplaces = new ObservableCollection<string>();
+            configurationService.Configuration.SearchConfig.LastSearchTexts.ForEach(rt => LastReplaces.Add(rt.Text.Value));
+            if (LastReplaces.Any())
+                replace = LastReplaces.First();
+            else
+                replace = null;
 
             selectionAvailable = searchHost.SelectionAvailableCondition.GetValue();
             searchHost.SelectionAvailableCondition.ValueChanged += HandleSelectionAvailableChanged;
@@ -222,11 +348,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             set => Set(ref search, () => Search, value, HandleSearchReplaceParamsChanged);
         }
 
+        public ObservableCollection<string> LastSearches { get; }
+
         public string Replace
         {
             get => replace;
             set => Set(ref replace, () => Replace, value, HandleSearchReplaceParamsChanged);
         }
+
+        public ObservableCollection<string> LastReplaces { get; }
 
         public bool CaseSensitive
         {

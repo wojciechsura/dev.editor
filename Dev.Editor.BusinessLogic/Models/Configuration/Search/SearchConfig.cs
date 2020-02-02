@@ -14,11 +14,11 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Search
         public SearchConfig(BaseItemContainer parent) 
             : base(NAME, parent)
         {
-            SearchTexts = new SearchTexts(this);
-            ReplaceTexts = new ReplaceTexts(this);
+            LastSearchTexts = new LastSearchTexts(this);
+            LastReplaceTexts = new LastReplaceTexts(this);
         }
 
-        public SearchTexts SearchTexts { get; }
-        public ReplaceTexts ReplaceTexts { get; }
+        public LastSearchTexts LastSearchTexts { get; }
+        public LastReplaceTexts LastReplaceTexts { get; }
     }
 }

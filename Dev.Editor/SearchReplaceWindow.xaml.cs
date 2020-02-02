@@ -64,9 +64,9 @@ namespace Dev.Editor
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
                 new Action(delegate()
                 {
-                    FocusManager.SetFocusedElement(this, tbReplaceSearch);
-                    tbReplaceSearch.SelectAll();
-                    tbReplaceSearch.Focus();
+                    FocusManager.SetFocusedElement(this, cbReplaceSearch);
+                    cbReplaceSearch.SelectAll();
+                    cbReplaceSearch.Focus();
                 }));
             
         }
@@ -78,9 +78,9 @@ namespace Dev.Editor
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
                 new Action(delegate ()
                 {
-                    FocusManager.SetFocusedElement(this, tbSearchSearch);
-                    tbSearchSearch.SelectAll();
-                    tbSearchSearch.Focus();
+                    FocusManager.SetFocusedElement(this, cbSearchSearch);
+                    cbSearchSearch.SelectAll();
+                    cbSearchSearch.Focus();
                 }));
         }
 

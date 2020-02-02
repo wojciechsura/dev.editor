@@ -41,6 +41,8 @@ using System.Windows.Data;
 using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
 using Dev.Editor.BusinessLogic.ViewModels.BottomTools.Base;
 using Dev.Editor.BusinessLogic.ViewModels.BottomTools.Messages;
+using Dev.Editor.BusinessLogic.Services.EventBus;
+using Dev.Editor.BusinessLogic.Models.Events;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -58,6 +60,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly ICommandRepositoryService commandRepositoryService;
         private readonly IImageResources imageResources;
         private readonly IFileIconProvider fileIconProvider;
+        private readonly IEventBus eventBus;
 
         private readonly ObservableCollection<BaseDocumentViewModel> documents;
         private BaseDocumentViewModel activeDocument;
@@ -441,7 +444,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             IHighlightingProvider highlightingProvider,
             ICommandRepositoryService commandRepositoryService,
             IImageResources imageResources,
-            IFileIconProvider fileIconProvider)
+            IFileIconProvider fileIconProvider,
+            IEventBus eventBus)
         {
             this.access = access;
             this.dialogService = dialogService;
@@ -453,6 +457,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             this.commandRepositoryService = commandRepositoryService;
             this.imageResources = imageResources;
             this.fileIconProvider = fileIconProvider;
+            this.eventBus = eventBus;
 
             wordWrap = configurationService.Configuration.Editor.WordWrap.Value;
             lineNumbers = configurationService.Configuration.Editor.LineNumbers.Value;
@@ -692,6 +697,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 uiConfig.MainWindowY.Value = windowLocation.Y;
                 uiConfig.MainWindowLocationSet.Value = true;
             }
+
+            // Allow all other interested parties to write configuration
+            eventBus.Send(new ApplicationShutdownEvent());
 
             configurationService.Save();
         }
