@@ -28,28 +28,72 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         // Private fields -----------------------------------------------------
 
-        private readonly ISearchHost searchHost;
         private readonly ISearchReplaceWindowAccess access;
-        private readonly IMessagingService messagingService;
         private readonly IConfigurationService configurationService;
         private readonly IEventBus eventBus;
-
-        private string search;
-        private string replace;
-        private bool caseSensitive;
-        private bool wholeWordsOnly;
-        private bool searchBackwards;
-        private SearchMode searchMode;
-
-        private bool selectionAvailable;
-        private bool replaceAllInSelection;
-
+        private readonly IMessagingService messagingService;
+        private readonly ISearchHost searchHost;
         private readonly Condition searchRegexValidCondition;
 
-        private SearchReplaceModel searchReplaceModel;
+        private bool caseSensitive;
         private bool modelUpdatedSinceLastSearch = true;
+        private string replace;
+        private bool replaceAllInSelection;
+        private string search;
+        private bool searchBackwards;
+        private SearchMode searchMode;
+        private SearchReplaceModel searchReplaceModel;
+        private bool selectionAvailable;
+        private bool wholeWordsOnly;
 
         // Private methods ----------------------------------------------------
+
+        private void DoClose() => access.Close();
+
+        private void DoFindNext()
+        {
+            try
+            {
+                if (modelUpdatedSinceLastSearch)
+                {
+                    StoreLastSearchReplace();
+                }
+
+                modelUpdatedSinceLastSearch = false;
+                searchHost.FindNext(searchReplaceModel);
+            }
+            catch
+            {
+                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
+                return;
+            }
+        }
+
+        private void DoReplace()
+        {
+            try
+            {
+                searchHost.Replace(searchReplaceModel);
+            }
+            catch
+            {
+                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
+                return;
+            }
+        }
+
+        private void DoReplaceAll()
+        {
+            try
+            {
+                searchHost.ReplaceAll(searchReplaceModel);
+            }
+            catch
+            {
+                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
+                return;
+            }
+        }
 
         /// <summary>
         /// Replaces $ signs in the pattern with \r?$
@@ -99,23 +143,21 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             return pattern;
         }
 
-        private void StoreLastString(string str, ObservableCollection<string> list)
+        private string GetReplaceText(string replace)
         {
-            var index = LastSearches.IndexOf(str);
-            if (index > 0)
-                list.Move(index, 0);
-            else
-            {
-                list.Insert(0, str);
-                while (list.Count > LastSearchCount)
-                    list.RemoveAt(LastSearches.Count - 1);
-            }
-        }
+            replace = replace ?? String.Empty;
 
-        private void StoreLastSearchReplace()
-        {
-            StoreLastString(Search, LastSearches);
-            StoreLastString(Replace, LastReplaces);
+            switch (searchMode)
+            {
+                case SearchMode.Normal:
+                    return replace;
+                case SearchMode.Extended:
+                    return replace.Unescape();
+                case SearchMode.RegularExpressions:
+                    return replace;
+                default:
+                    throw new InvalidOperationException("Unsupported search mode!");
+            }
         }
 
         private Regex GetSearchRegex(string textToFind)
@@ -134,7 +176,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                         string pattern = textToFind;
 
                         // See: https://docs.microsoft.com/en-us/dotnet/standard/base-types/anchors-in-regular-expressions#end-of-string-or-line-
-                        pattern = FixDotNetEoLRegex(pattern);                        
+                        pattern = FixDotNetEoLRegex(pattern);
 
                         return new Regex(pattern, options);
                     }
@@ -159,23 +201,36 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             }
         }
 
-        private string GetReplaceText(string replace)
+        private void HandleSearchReplaceParamsChanged()
         {
-            replace = replace ?? String.Empty;
-
-            switch (searchMode)
-            {
-                case SearchMode.Normal:
-                    return replace;
-                case SearchMode.Extended:
-                    return replace.Unescape();
-                case SearchMode.RegularExpressions:
-                    return replace;
-                default:
-                    throw new InvalidOperationException("Unsupported search mode!");
-            }
+            UpdateModel();
         }
 
+        private void HandleSelectionAvailableChanged(object sender, ValueChangedEventArgs e)
+        {
+            SelectionAvailable = searchHost.SelectionAvailableCondition.GetValue();
+            if (!SelectionAvailable)
+                ReplaceAllInSelection = false;
+        }
+
+        private void StoreLastSearchReplace()
+        {
+            StoreLastString(Search, LastSearches);
+            StoreLastString(Replace, LastReplaces);
+        }
+
+        private void StoreLastString(string str, ObservableCollection<string> list)
+        {
+            var index = list.IndexOf(str);
+            if (index > 0)
+                list.Move(index, 0);
+            else
+            {
+                list.Insert(0, str);
+                while (list.Count > LastSearchCount)
+                    list.RemoveAt(list.Count - 1);
+            }
+        }
         private void UpdateModel()
         {
             searchReplaceModel = null;
@@ -198,93 +253,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             searchReplaceModel = new SearchReplaceModel(searchRegex, replaceText, searchBackwards, searchMode == SearchMode.RegularExpressions, replaceAllInSelection);
             modelUpdatedSinceLastSearch = true;
         }
-
-        private void DoClose() => access.Close();
-
-        private void DoReplaceAll()
-        {
-            try
-            {
-                searchHost.ReplaceAll(searchReplaceModel);
-            }
-            catch
-            {
-                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
-                return;
-            }
-        }
-
-        private void DoReplace()
-        {
-            try
-            {
-                searchHost.Replace(searchReplaceModel);
-            }
-            catch
-            {
-                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
-                return;
-            }
-        }
-
-        private void DoFindNext()
-        {
-            try
-            {
-                if (modelUpdatedSinceLastSearch)
-                {
-                    StoreLastSearchReplace();
-                }
-
-                modelUpdatedSinceLastSearch = false;
-                searchHost.FindNext(searchReplaceModel);
-            }
-            catch
-            {
-                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
-                return;
-            }
-        }
-
-        private void HandleSelectionAvailableChanged(object sender, ValueChangedEventArgs e)
-        {
-            SelectionAvailable = searchHost.SelectionAvailableCondition.GetValue();
-            if (!SelectionAvailable)
-                ReplaceAllInSelection = false;
-        }
-
-        private void HandleSearchReplaceParamsChanged()
-        {
-            UpdateModel();
-        }
-
         // IEventListener<ApplicationShutdownEvent> implementation ------------
 
-        void IEventListener<ApplicationShutdownEvent>.Receive(ApplicationShutdownEvent @event)
-        {
-            // Store last search/replaces
-
-            configurationService.Configuration.SearchConfig.LastSearchTexts.Clear();
-            LastSearches.ForEach(ls =>
-            {
-                var searchText = new SearchText();
-                searchText.Text.Value = ls;
-                configurationService.Configuration.SearchConfig.LastSearchTexts.Add(searchText);
-            });
-
-            configurationService.Configuration.SearchConfig.LastReplaceTexts.Clear();
-            LastReplaces.ForEach(lr =>
-            {
-                var replaceText = new ReplaceText();
-                replaceText.Text.Value = lr;
-                configurationService.Configuration.SearchConfig.LastReplaceTexts.Add(replaceText);
-            });
-        }
-
-        // Public methods -----------------------------------------------------
-
-        public SearchReplaceWindowViewModel(ISearchHost searchHost, 
-            ISearchReplaceWindowAccess access, 
+        public SearchReplaceWindowViewModel(ISearchHost searchHost,
+            ISearchReplaceWindowAccess access,
             IMessagingService messagingService,
             IConfigurationService configurationService,
             IEventBus eventBus)
@@ -326,12 +298,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             CloseCommand = new AppCommand(obj => DoClose());
         }
 
-        public void ShowSearch()
-        {
-            access.ChooseSearchTab();
-            access.ShowAndFocus();
-        }
-
         public void ShowReplace()
         {
             replaceAllInSelection = searchHost.SelectionAvailableCondition.GetValue();
@@ -340,13 +306,46 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             access.ShowAndFocus();
         }
 
+        // Public methods -----------------------------------------------------
+        public void ShowSearch()
+        {
+            access.ChooseSearchTab();
+            access.ShowAndFocus();
+        }
+
+        void IEventListener<ApplicationShutdownEvent>.Receive(ApplicationShutdownEvent @event)
+        {
+            // Store last search/replaces
+
+            configurationService.Configuration.SearchConfig.LastSearchTexts.Clear();
+            LastSearches.ForEach(ls =>
+            {
+                var searchText = new SearchText();
+                searchText.Text.Value = ls;
+                configurationService.Configuration.SearchConfig.LastSearchTexts.Add(searchText);
+            });
+
+            configurationService.Configuration.SearchConfig.LastReplaceTexts.Clear();
+            LastReplaces.ForEach(lr =>
+            {
+                var replaceText = new ReplaceText();
+                replaceText.Text.Value = lr;
+                configurationService.Configuration.SearchConfig.LastReplaceTexts.Add(replaceText);
+            });
+        }
         // Public properties --------------------------------------------------
 
-        public string Search
+        public bool CaseSensitive
         {
-            get => search;
-            set => Set(ref search, () => Search, value, HandleSearchReplaceParamsChanged);
+            get => caseSensitive;
+            set => Set(ref caseSensitive, () => CaseSensitive, value, HandleSearchReplaceParamsChanged);
         }
+
+        public ICommand CloseCommand { get; }
+
+        public ICommand FindNextCommand { get; }
+
+        public ObservableCollection<string> LastReplaces { get; }
 
         public ObservableCollection<string> LastSearches { get; }
 
@@ -356,36 +355,25 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             set => Set(ref replace, () => Replace, value, HandleSearchReplaceParamsChanged);
         }
 
-        public ObservableCollection<string> LastReplaces { get; }
-
-        public bool CaseSensitive
-        {
-            get => caseSensitive;
-            set => Set(ref caseSensitive, () => CaseSensitive, value, HandleSearchReplaceParamsChanged);
-        }
-
-        public bool WholeWordsOnly
-        {
-            get => wholeWordsOnly;
-            set => Set(ref wholeWordsOnly, () => WholeWordsOnly, value, HandleSearchReplaceParamsChanged);
-        }
-
-        public bool SearchBackwards
-        {
-            get => searchBackwards;
-            set => Set(ref searchBackwards, () => SearchBackwards, value, HandleSearchReplaceParamsChanged);
-        }
-
-        public bool SelectionAvailable
-        {
-            get => selectionAvailable;
-            set => Set(ref selectionAvailable, () => SelectionAvailable, value, HandleSearchReplaceParamsChanged);
-        }
+        public ICommand ReplaceAllCommand { get; }
 
         public bool ReplaceAllInSelection
         {
             get => replaceAllInSelection;
             set => Set(ref replaceAllInSelection, () => ReplaceAllInSelection, value, HandleSearchReplaceParamsChanged);
+        }
+
+        public ICommand ReplaceCommand { get; }
+
+        public string Search
+        {
+            get => search;
+            set => Set(ref search, () => Search, value, HandleSearchReplaceParamsChanged);
+        }
+        public bool SearchBackwards
+        {
+            get => searchBackwards;
+            set => Set(ref searchBackwards, () => SearchBackwards, value, HandleSearchReplaceParamsChanged);
         }
 
         public SearchMode SearchMode
@@ -394,9 +382,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             set => Set(ref searchMode, () => SearchMode, value, HandleSearchReplaceParamsChanged);
         }
 
-        public ICommand FindNextCommand { get; }
-        public ICommand ReplaceCommand { get; }
-        public ICommand ReplaceAllCommand { get; }
-        public ICommand CloseCommand { get; }
+        public bool SelectionAvailable
+        {
+            get => selectionAvailable;
+            set => Set(ref selectionAvailable, () => SelectionAvailable, value, HandleSearchReplaceParamsChanged);
+        }
+
+        public bool WholeWordsOnly
+        {
+            get => wholeWordsOnly;
+            set => Set(ref wholeWordsOnly, () => WholeWordsOnly, value, HandleSearchReplaceParamsChanged);
+        }
     }
 }
