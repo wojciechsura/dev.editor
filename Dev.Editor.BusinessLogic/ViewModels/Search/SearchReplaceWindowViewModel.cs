@@ -222,8 +222,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         private void StoreLastString(string str, ObservableCollection<string> list)
         {
             var index = list.IndexOf(str);
-            if (index > 0)
-                list.Move(index, 0);
+            if (index >= 0)
+            {
+                if (index > 0)
+                    list.Move(index, 0);
+            }                
             else
             {
                 list.Insert(0, str);
@@ -296,6 +299,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             ReplaceCommand = new AppCommand(obj => DoReplace(), searchHost.CanSearchCondition & searchRegexValidCondition);
             ReplaceAllCommand = new AppCommand(obj => DoReplaceAll(), searchHost.CanSearchCondition & searchRegexValidCondition);
             CloseCommand = new AppCommand(obj => DoClose());
+
+            UpdateModel();
         }
 
         public void ShowReplace()
