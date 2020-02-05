@@ -699,7 +699,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
 
             // Allow all other interested parties to write configuration
-            eventBus.Send(new ApplicationShutdownEvent());
+            eventBus.Send(this, new ApplicationShutdownEvent());
 
             configurationService.Save();
         }

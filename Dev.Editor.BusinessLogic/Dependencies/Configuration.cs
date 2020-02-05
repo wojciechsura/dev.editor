@@ -6,6 +6,7 @@ using Dev.Editor.BusinessLogic.Services.FileIcons;
 using Dev.Editor.BusinessLogic.Services.Highlighting;
 using Dev.Editor.BusinessLogic.Services.Messaging;
 using Dev.Editor.BusinessLogic.Services.Paths;
+using Dev.Editor.BusinessLogic.Services.SearchEncoder;
 using Dev.Editor.BusinessLogic.Services.StartupInfo;
 using System;
 using System.Collections.Generic;
@@ -35,6 +36,7 @@ namespace Dev.Editor.BusinessLogic.Dependencies
             container.RegisterType<ICommandRepositoryService, CommandRepositoryService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IFileIconProvider, FileIconProvider>(new ContainerControlledLifetimeManager());
             container.RegisterType<IEventBus, EventBus>(new ContainerControlledLifetimeManager());
+            container.RegisterType<ISearchEncoderService, SearchEncoderService>(new ContainerControlledLifetimeManager());
         }
     }
 }

@@ -9,35 +9,46 @@ namespace Dev.Editor.BusinessLogic.Services.EventBus
 {
     class EventBus : IEventBus
     {
-        private Dictionary<Type, object> listeners;
-
-        public EventBus()
+        private class ListenerInfo<T>
+            where T : BaseEvent
         {
-            listeners = new Dictionary<Type, object>();
+            public ListenerInfo(IEventListener<T> listener, bool notifySelf)
+            {
+                Listener = listener;
+                NotifySelf = notifySelf;
+            }
+
+            public IEventListener<T> Listener { get; }
+            public bool NotifySelf { get; }
         }
 
-        public void Register<T>(IEventListener<T> listener) where T : BaseEvent
+        private readonly Dictionary<Type, object> listeners = new Dictionary<Type, object>();
+
+        public void Register<T>(IEventListener<T> listener, bool notifySelf = false) where T : BaseEvent
         {
             if (listener == null)
                 throw new ArgumentNullException(nameof(listener));
 
             Type t = typeof(T);
 
-            List<IEventListener<T>> eventListeners;
+            List<ListenerInfo<T>> eventListeners;
             if (!listeners.ContainsKey(t))
             {
-                eventListeners = new List<IEventListener<T>>();
+                eventListeners = new List<ListenerInfo<T>>();
                 listeners[t] = eventListeners;
             }
             else
             {
-                eventListeners = listeners[t] as List<IEventListener<T>>;
+                eventListeners = listeners[t] as List<ListenerInfo<T>>;
                 if (eventListeners == null)
                     throw new InvalidOperationException("Invalid list type in dictionary!");
             }
 
-            if (!eventListeners.Contains(listener))
-                eventListeners.Add(listener);
+            if (!eventListeners.Any(li => li.Listener == listener))
+            {
+                var listenerInfo = new ListenerInfo<T>(listener, notifySelf);
+                eventListeners.Add(listenerInfo);
+            }
         }
 
         public void Unregister<T>(IEventListener<T> listener) where T : BaseEvent
@@ -50,21 +61,30 @@ namespace Dev.Editor.BusinessLogic.Services.EventBus
             if (!listeners.ContainsKey(t))
                 return;
 
-            List<IEventListener<T>> eventListeners = listeners[t] as List<IEventListener<T>>;
-            eventListeners.Remove(listener);
+            List<ListenerInfo<T>> eventListeners = listeners[t] as List<ListenerInfo<T>>;
+            
+            var info = eventListeners.FirstOrDefault(el => el.Listener == listener);
+            if (info != null)
+                eventListeners.Remove(info);
 
             if (eventListeners.Count == 0)
                 listeners.Remove(t);
         }
 
-        public void Send<T>(T @event) where T : BaseEvent
+        public void Send<T>(object sender, T @event) where T : BaseEvent
         {
             Type t = typeof(T);
             if (listeners.ContainsKey(t))
             {
-                List<IEventListener<T>> eventListeners = listeners[t] as List<IEventListener<T>>;
-                foreach (var listener in eventListeners)
-                    listener.Receive(@event);
+                List<ListenerInfo<T>> eventListeners = listeners[t] as List<ListenerInfo<T>>;
+                
+                foreach (var info in eventListeners)
+                {
+                    if (!info.NotifySelf && info.Listener == sender)
+                        continue;
+
+                    info.Listener.Receive(@event);
+                }                    
             }
         }
     }

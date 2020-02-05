@@ -91,6 +91,7 @@
     <Compile Include="Models\Events\BaseEvent.cs" />
     <Compile Include="Models\Highlighting\HighlightingInfo.cs" />
     <Compile Include="Models\Messages\MessageModel.cs" />
+    <Compile Include="Models\Search\SearchReplaceDescription.cs" />
     <Compile Include="Models\UI\BottomPanelVisibilityModel.cs" />
     <Compile Include="Models\UI\SidePanelPlacementModel.cs" />
     <Compile Include="Models\Navigation\BaseNavigationModel.cs" />
@@ -114,12 +115,16 @@
     <Compile Include="Services\Messaging\MessagingService.cs" />
     <Compile Include="Services\Paths\IPathService.cs" />
     <Compile Include="Services\Paths\PathService.cs" />
+    <Compile Include="Services\SearchEncoder\InvalidSearchExpressionException.cs" />
+    <Compile Include="Services\SearchEncoder\ISearchEncoderService.cs" />
+    <Compile Include="Services\SearchEncoder\SearchEncoderService.cs" />
     <Compile Include="Services\StartupInfo\IStartupInfoService.cs" />
     <Compile Include="Services\StartupInfo\StartupInfoService.cs" />
     <Compile Include="Types\Behavior\CloseBehavior.cs" />
     <Compile Include="Types\Folding\FoldingKind.cs" />
     <Compile Include="Types\Messages\MessageSeverity.cs" />
     <Compile Include="Types\Search\SearchMode.cs" />
+    <Compile Include="Types\Search\SearchReplaceOperation.cs" />
     <Compile Include="Types\Tools\Explorer\FileItemType.cs" />
     <Compile Include="Types\UI\AdditionalToolset.cs" />
     <Compile Include="Types\UI\BottomPanelVisibility.cs" />
