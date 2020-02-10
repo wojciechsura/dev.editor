@@ -112,6 +112,7 @@
     <Compile Include="Converters\EnumToVisibilityConverter.cs" />
     <Compile Include="Converters\NullToBoolConverter.cs" />
     <Compile Include="Converters\RadioToEnumConverter.cs" />
+    <Compile Include="Converters\SearchOperationToIndexConverter.cs" />
     <Compile Include="Converters\SidePanelToColumnConverter.cs" />
     <Compile Include="Converters\SidePanelToTabPlacement.cs" />
     <Compile Include="Converters\SidePanelToVisibilityConverter.cs" />

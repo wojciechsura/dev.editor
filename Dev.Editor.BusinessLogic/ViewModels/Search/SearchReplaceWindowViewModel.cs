@@ -47,7 +47,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         private SearchReplaceModel searchReplaceModel;
         private bool selectionAvailable;
         private bool wholeWordsOnly;
-        private int selectedMode;
+        private SearchReplaceOperation currentOperation;
 
         // Private methods ----------------------------------------------------
 
@@ -134,23 +134,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         private SearchReplaceDescription BuildSearchDescription()
         {
-            SearchReplaceOperation operation;
-            switch (SelectedMode)
-            {
-                case 0:
-                    operation = SearchReplaceOperation.Search;
-                    break;
-                case 1:
-                    operation = SearchReplaceOperation.Replace;
-                    break;
-                default:
-                    throw new InvalidOperationException("Unsupported search operation!");
-            }
-
             return new SearchReplaceDescription(
                 Search,
                 Replace,
-                operation,
+                currentOperation,
                 SearchMode,
                 CaseSensitive,
                 ReplaceAllInSelection,
@@ -252,13 +239,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         {
             replaceAllInSelection = searchHost.SelectionAvailableCondition.GetValue();
 
-            access.ChooseReplaceTab();
+            CurrentOperation = SearchReplaceOperation.Replace;
+            
+            access.FocusReplace();
             access.ShowAndFocus();
         }
 
         public void ShowSearch()
         {
-            access.ChooseSearchTab();
+            CurrentOperation = SearchReplaceOperation.Search;
+            
+            access.FocusSearch();
             access.ShowAndFocus();
         }
 
@@ -299,6 +290,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             get => search;
             set => Set(ref search, () => Search, value, HandleSearchReplaceParamsChanged);
         }
+        
         public bool SearchBackwards
         {
             get => searchBackwards;
@@ -323,10 +315,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             set => Set(ref wholeWordsOnly, () => WholeWordsOnly, value, HandleSearchReplaceParamsChanged);
         }
 
-        public int SelectedMode
+        public SearchReplaceOperation CurrentOperation
         {
-            get => selectedMode;
-            set => Set(ref selectedMode, () => SelectedMode, value);
+            get => currentOperation;
+            set => Set(ref currentOperation, () => CurrentOperation, value);
         }
     }
 }

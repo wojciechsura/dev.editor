@@ -57,10 +57,8 @@ namespace Dev.Editor
 
         public SearchReplaceWindowViewModel ViewModel => viewModel;
 
-        public void ChooseReplaceTab()
+        public void FocusReplace()
         {
-            tcTabs.SelectedItem = tReplace;
-
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
                 new Action(delegate()
                 {
@@ -71,10 +69,8 @@ namespace Dev.Editor
             
         }
 
-        public void ChooseSearchTab()
+        public void FocusSearch()
         {
-            tcTabs.SelectedItem = tSearch;
-
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
                 new Action(delegate ()
                 {

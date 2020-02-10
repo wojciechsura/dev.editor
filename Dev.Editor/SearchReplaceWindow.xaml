@@ -8,10 +8,15 @@
         xmlns:t="clr-namespace:Dev.Editor.BusinessLogic.Types.Search;assembly=Dev.Editor.BusinessLogic"
         xmlns:c="clr-namespace:Dev.Editor.Controls"
         xmlns:wpf="clr-namespace:Dev.Editor.Wpf"
+        xmlns:converters="clr-namespace:Dev.Editor.Converters"
         mc:Ignorable="d"
         Title="{x:Static p:Strings.SearchWindow_Title}" 
-        SizeToContent="WidthAndHeight" ResizeMode="NoResize" Closing="HandleWindowClosing" ShowInTaskbar="False">
-    <TabControl x:Name="tcTabs" Margin="{StaticResource DialogWindowPadding}" SelectedIndex="{Binding SelectedMode, Mode=TwoWay}">
+        SizeToContent="WidthAndHeight" ResizeMode="NoResize" Closing="HandleWindowClosing" ShowInTaskbar="False"
+        WindowStartupLocation="CenterOwner">
+    <Window.Resources>
+        <converters:SearchOperationToIndexConverter x:Key="SearchOperationToIndexConverter" />
+    </Window.Resources>
+    <TabControl x:Name="tcTabs" Margin="{StaticResource DialogWindowPadding}" SelectedIndex="{Binding CurrentOperation, Mode=TwoWay, Converter={StaticResource SearchOperationToIndexConverter}}">
         
         <!-- Search -->
 

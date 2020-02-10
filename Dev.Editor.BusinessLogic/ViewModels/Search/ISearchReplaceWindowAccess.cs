@@ -9,8 +9,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
     public interface ISearchReplaceWindowAccess
     {
         void ShowAndFocus();
-        void ChooseSearchTab();
-        void ChooseReplaceTab();
+        void FocusSearch();
+        void FocusReplace();
         void Close();
     }
 }
