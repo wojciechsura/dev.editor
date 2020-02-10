@@ -48,21 +48,27 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         private bool selectionAvailable;
         private bool wholeWordsOnly;
         private SearchReplaceOperation currentOperation;
+        private bool showReplaceSummary;
 
         // Private methods ----------------------------------------------------
 
         private void DoClose() => access.Close();
 
+        private void StoreLastSearchReplaceIfNeeded()
+        {
+            if (modelUpdatedSinceLastSearch)
+            {
+                StoreLastSearchReplace();
+            }
+
+            modelUpdatedSinceLastSearch = false;
+        }
+
         private void DoFindNext()
         {
             try
             {
-                if (modelUpdatedSinceLastSearch)
-                {
-                    StoreLastSearchReplace();
-                }
-
-                modelUpdatedSinceLastSearch = false;
+                StoreLastSearchReplaceIfNeeded();
                 searchHost.FindNext(searchReplaceModel);
             }
             catch
@@ -76,6 +82,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         {
             try
             {
+                StoreLastSearchReplaceIfNeeded();
                 searchHost.Replace(searchReplaceModel);
             }
             catch
@@ -89,6 +96,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         {
             try
             {
+                StoreLastSearchReplaceIfNeeded();
                 searchHost.ReplaceAll(searchReplaceModel);
             }
             catch
@@ -142,7 +150,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 CaseSensitive,
                 ReplaceAllInSelection,
                 SearchBackwards,
-                WholeWordsOnly);
+                WholeWordsOnly,
+                ShowReplaceSummary);
         }
 
         private void UpdateModel()
@@ -313,6 +322,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         {
             get => wholeWordsOnly;
             set => Set(ref wholeWordsOnly, () => WholeWordsOnly, value, HandleSearchReplaceParamsChanged);
+        }
+
+        public bool ShowReplaceSummary
+        {
+            get => showReplaceSummary;
+            set => Set(ref showReplaceSummary, () => ShowReplaceSummary, value);
         }
 
         public SearchReplaceOperation CurrentOperation

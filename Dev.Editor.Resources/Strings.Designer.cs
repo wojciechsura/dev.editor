@@ -1270,6 +1270,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Replace options.
+        /// </summary>
+        public static string SearchWindow_ReplaceOptions {
+            get {
+                return ResourceManager.GetString("SearchWindow.ReplaceOptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Replace.
         /// </summary>
         public static string SearchWindow_ReplaceTab {
@@ -1365,6 +1374,15 @@ namespace Dev.Editor.Resources {
         public static string SearchWindow_SearchTab {
             get {
                 return ResourceManager.GetString("SearchWindow.SearchTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show summary.
+        /// </summary>
+        public static string SearchWindow_ShowSummary {
+            get {
+                return ResourceManager.GetString("SearchWindow.ShowSummary", resourceCulture);
             }
         }
         

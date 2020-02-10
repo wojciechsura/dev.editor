@@ -92,16 +92,35 @@
                                         Text="{Binding Replace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding LastReplaces}" IsEditable="True" />
                         </Grid>
 
-                        <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchOptions}" Padding="4">
-                            <StackPanel Orientation="Vertical">
-                                <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_CaseSensitive}" 
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*" />
+                                <ColumnDefinition Width="1*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <GroupBox Grid.Column="0" Grid.Row="0" Header="{x:Static p:Strings.SearchWindow_SearchOptions}" Padding="4">
+                                <StackPanel Orientation="Vertical">
+                                    <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_CaseSensitive}" 
                                             IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_OnlyFullWords}" 
+                                    <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_OnlyFullWords}" 
                                             IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                <CheckBox Content="{x:Static p:Strings.SearchWindow_SearchBackwards}" 
+                                    <CheckBox Content="{x:Static p:Strings.SearchWindow_SearchBackwards}" 
                                             IsChecked="{Binding SearchBackwards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                            </StackPanel>
-                        </GroupBox>
+                                </StackPanel>
+                            </GroupBox>
+
+                            <GroupBox Grid.Column="1" Grid.Row="0" Header="{x:Static p:Strings.SearchWindow_ReplaceOptions}" Padding="4">
+                                <StackPanel Orientation="Vertical">
+                                    <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_ShowSummary}"
+                                              IsChecked="{Binding ShowReplaceSummary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                </StackPanel>
+                            </GroupBox>
+                            
+                        </Grid>
+                        
                         <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchMode}" Padding="4">
                             <StackPanel Orientation="Vertical">
                                 <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeNormal}" 

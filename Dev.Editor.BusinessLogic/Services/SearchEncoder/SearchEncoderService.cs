@@ -147,7 +147,8 @@ namespace Dev.Editor.BusinessLogic.Services.SearchEncoder
                 replaceText,
                 description.IsSearchBackwards,
                 description.SearchMode == SearchMode.RegularExpressions,
-                description.IsReplaceAllInSelection);            
+                description.IsReplaceAllInSelection,
+                description.ShowReplaceSummary);            
         }
     }
 }

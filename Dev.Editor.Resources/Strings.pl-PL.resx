@@ -700,4 +700,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Text.Case.Invert" xml:space="preserve">
     <value>Odwróć</value>
   </data>
+  <data name="SearchWindow.ReplaceOptions" xml:space="preserve">
+    <value>Opcje zamiany</value>
+  </data>
+  <data name="SearchWindow.ShowSummary" xml:space="preserve">
+    <value>Pokaż podsumowanie</value>
+  </data>
 </root>

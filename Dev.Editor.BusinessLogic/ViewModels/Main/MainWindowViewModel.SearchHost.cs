@@ -152,7 +152,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             if (replaceCount > 0)
             {
-                messagingService.Inform(String.Format(Strings.Message_ReplacedOccurrences, replaceCount));
+                if (replaceModel.ShowReplaceSummary)
+                    messagingService.Inform(String.Format(Strings.Message_ReplacedOccurrences, replaceCount));
             }
             else
             {

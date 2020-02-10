@@ -9,13 +9,14 @@ namespace Dev.Editor.BusinessLogic.Models.Search
 {
     public class SearchReplaceModel 
     {
-        public SearchReplaceModel(Regex regex, string replace, bool searchBackwards, bool isRegexReplace, bool inSelection)
+        public SearchReplaceModel(Regex regex, string replace, bool searchBackwards, bool isRegexReplace, bool inSelection, bool showReplaceSummary)
         {
             Regex = regex;
             Replace = replace;
             SearchBackwards = searchBackwards;
             IsRegexReplace = isRegexReplace;
             InSelection = inSelection;
+            ShowReplaceSummary = showReplaceSummary;
         }
 
         public Regex Regex { get; }
@@ -23,6 +24,7 @@ namespace Dev.Editor.BusinessLogic.Models.Search
         public bool SearchBackwards { get; }
         public bool IsRegexReplace { get; }
         public bool InSelection { get; }
+        public bool ShowReplaceSummary { get; }
 
         public bool SearchedFromBoundary { get; set; } = false;
     }
