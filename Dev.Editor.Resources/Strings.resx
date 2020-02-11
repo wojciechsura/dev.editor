@@ -375,7 +375,7 @@
   <data name="Dialog.BinDefinition.Title" xml:space="preserve">
     <value>Binary definition</value>
   </data>
-  <data name="Dialog.BinDefinition.Name" xml:space="preserve">
+  <data name="Dialog.Name.Name" xml:space="preserve">
     <value>Name</value>
   </data>
   <data name="NewBinaryDefinitionContents" xml:space="preserve">
@@ -705,5 +705,14 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   </data>
   <data name="SearchWindow.ShowSummary" xml:space="preserve">
     <value>Show summary</value>
+  </data>
+  <data name="NameDialog.Title" xml:space="preserve">
+    <value>Enter name</value>
+  </data>
+  <data name="NameDialog.GroupBoxHeader" xml:space="preserve">
+    <value>Enter name</value>
+  </data>
+  <data name="NameDialog.Label" xml:space="preserve">
+    <value>Name</value>
   </data>
 </root>

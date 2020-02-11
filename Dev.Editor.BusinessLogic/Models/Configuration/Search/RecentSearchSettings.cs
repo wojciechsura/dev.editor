@@ -5,7 +5,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Search
 {
     public class RecentSearchSettings : ConfigItem
     {
-        private const string NAME = "RecentSearchSettings";
+        public const string NAME = "RecentSearchSettings";
 
         public RecentSearchSettings(BaseItemContainer parent)
             : base(NAME, parent)

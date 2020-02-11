@@ -78,10 +78,13 @@
     <Compile Include="Models\Configuration\Search\SearchConfig.cs" />
     <Compile Include="Models\Configuration\Search\SearchText.cs" />
     <Compile Include="Models\Configuration\Search\LastSearchTexts.cs" />
+    <Compile Include="Models\Configuration\Search\StoredSearchReplace.cs" />
+    <Compile Include="Models\Configuration\Search\StoredSearchReplaces.cs" />
     <Compile Include="Models\Configuration\Tools\Explorer\ExplorerConfig.cs" />
     <Compile Include="Models\Configuration\Tools\ToolsConfig.cs" />
     <Compile Include="Models\Configuration\UI\UIConfig.cs" />
-    <Compile Include="Models\Dialogs\BinDefinitionDialogResult.cs" />
+    <Compile Include="Models\Dialogs\NameDialogModel.cs" />
+    <Compile Include="Models\Dialogs\NameDialogResult.cs" />
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
     <Compile Include="Models\Dialogs\SaveDialogResult.cs" />
     <Compile Include="Models\Documents\BinDocumentState.cs" />
@@ -139,8 +142,8 @@
     <Compile Include="ViewModels\Configuration\BehaviorConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Configuration\ConfigurationWindowViewModel.cs" />
     <Compile Include="ViewModels\Configuration\IConfigurationWindowAccess.cs" />
-    <Compile Include="ViewModels\Dialogs\BinDefinitionDialogViewModel.cs" />
-    <Compile Include="ViewModels\Dialogs\IBinDefinitionDialogAccess.cs" />
+    <Compile Include="ViewModels\Dialogs\NameDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\INameDialogAccess.cs" />
     <Compile Include="ViewModels\Document\BaseDocumentViewModel.cs" />
     <Compile Include="ViewModels\Document\BinDocumentViewModel.cs" />
     <Compile Include="ViewModels\Document\IBinEditorAccess.cs" />
@@ -162,6 +165,7 @@
     <Compile Include="ViewModels\Search\ISearchHost.cs" />
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />
+    <Compile Include="ViewModels\Search\StoredSearchViewModel.cs" />
     <Compile Include="ViewModels\Tools\Base\BaseToolViewModel.cs" />
     <Compile Include="ViewModels\Tools\Base\IToolHandler.cs" />
     <Compile Include="ViewModels\Tools\BinDefinitions\BinDefinitionsToolViewModel.cs" />

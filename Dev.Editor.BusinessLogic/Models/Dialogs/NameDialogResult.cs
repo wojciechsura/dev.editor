@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BusinessLogic.Models.Dialogs
 {
-    public class BinDefinitionDialogResult
+    public class NameDialogResult
     {
-        public BinDefinitionDialogResult(string name)
+        public NameDialogResult(string name)
         {
             Name = name;
         }

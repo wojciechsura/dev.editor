@@ -235,20 +235,20 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name.
-        /// </summary>
-        public static string Dialog_BinDefinition_Name {
-            get {
-                return ResourceManager.GetString("Dialog.BinDefinition.Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Binary definition.
         /// </summary>
         public static string Dialog_BinDefinition_Title {
             get {
                 return ResourceManager.GetString("Dialog.BinDefinition.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Dialog_Name_Name {
+            get {
+                return ResourceManager.GetString("Dialog.Name.Name", resourceCulture);
             }
         }
         
@@ -680,6 +680,33 @@ namespace Dev.Editor.Resources {
         public static string Messages_Severity {
             get {
                 return ResourceManager.GetString("Messages.Severity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter name.
+        /// </summary>
+        public static string NameDialog_GroupBoxHeader {
+            get {
+                return ResourceManager.GetString("NameDialog.GroupBoxHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string NameDialog_Label {
+            get {
+                return ResourceManager.GetString("NameDialog.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enter name.
+        /// </summary>
+        public static string NameDialog_Title {
+            get {
+                return ResourceManager.GetString("NameDialog.Title", resourceCulture);
             }
         }
         

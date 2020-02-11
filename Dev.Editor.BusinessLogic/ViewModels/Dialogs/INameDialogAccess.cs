@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
 {
-    public interface IBinDefinitionDialogAccess
+    public interface INameDialogAccess
     {
-        void CloseDialog(BinDefinitionDialogResult model, bool result);
+        void CloseDialog(NameDialogResult model, bool result);
     }
 }

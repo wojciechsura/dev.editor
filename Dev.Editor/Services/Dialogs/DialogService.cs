@@ -79,18 +79,9 @@ namespace Dev.Editor.Services.Dialogs
             configurationWindow.ShowDialog();
         }
 
-        public (bool, BinDefinitionDialogResult) ShowBinDefinitionDialog()
+        public (bool, NameDialogResult) ShowBinDefinitionDialog(NameDialogModel model)
         {
-            var dialog = new BinDefinitionDialog();
-            if (dialog.ShowDialog() == true)
-                return (true, dialog.Result);
-            else
-                return (false, null);
-        }
-
-        public (bool, BinDefinitionDialogResult) ShowBinDefinitionDialog(BinDefinition model)
-        {
-            var dialog = new BinDefinitionDialog(model);
+            var dialog = new NameDialog(model);
             if (dialog.ShowDialog() == true)
                 return (true, dialog.Result);
             else

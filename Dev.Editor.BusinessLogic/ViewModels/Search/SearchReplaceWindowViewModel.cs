@@ -37,6 +37,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         private readonly Condition searchExpressionValidCondition;
 
+        private readonly ObservableCollection<StoredSearchViewModel> storedSearches = new ObservableCollection<StoredSearchViewModel>();
+        private StoredSearchViewModel selectedStoredSearch;
+
         private bool caseSensitive;
         private bool modelUpdatedSinceLastSearch = true;
         private string replace;
@@ -49,8 +52,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         private bool wholeWordsOnly;
         private SearchReplaceOperation currentOperation;
         private bool showReplaceSummary;
+        private bool storedSearchPanelVisible;
 
         // Private methods ----------------------------------------------------
+
+        private void BuildStoredSearches(IConfigurationService configurationService)
+        {
+            storedSearches.Clear();
+            configurationService.Configuration.SearchConfig.StoredSearchReplaces
+                .Select(sr => new StoredSearchViewModel(sr))
+                .OrderBy(sr => sr.SearchName)
+                .ToList()
+                .ForEach(srvm => storedSearches.Add(srvm));
+        }
 
         private void DoClose() => access.Close();
 
@@ -233,6 +247,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             showReplaceSummary = recentSearchSettings.ShowReplaceSummary.Value;
             wholeWordsOnly = recentSearchSettings.WholeWordsOnly.Value;
 
+            storedSearchPanelVisible = false;
+            BuildStoredSearches(configurationService);
+
             LastSearches = new ObservableCollection<string>();
             configurationService.Configuration.SearchConfig.LastSearchTexts.ForEach(st => LastSearches.Add(st.Text.Value));
             if (LastSearches.Any())
@@ -350,6 +367,20 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         {
             get => currentOperation;
             set => Set(ref currentOperation, () => CurrentOperation, value);
+        }
+
+        public bool StoredSearchPanelVisible 
+        {
+            get => storedSearchPanelVisible;
+            set => Set(ref storedSearchPanelVisible, () => StoredSearchPanelVisible, value);
+        }
+
+        public ObservableCollection<StoredSearchViewModel> StoredSearches => storedSearches;
+
+        public StoredSearchViewModel SelectedStoredSearch
+        {
+            get => selectedStoredSearch;
+            set => Set(ref selectedStoredSearch, () => SelectedStoredSearch, value);
         }
     }
 }

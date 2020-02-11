@@ -22,39 +22,29 @@ namespace Dev.Editor
     /// <summary>
     /// Interaction logic for BinDefinitionDialog.xaml
     /// </summary>
-    public partial class BinDefinitionDialog : Window, IBinDefinitionDialogAccess
+    public partial class NameDialog : Window, INameDialogAccess
     {
-        private BinDefinitionDialogViewModel viewModel;
-
-        public BinDefinitionDialog()
+        private NameDialogViewModel viewModel;
+        
+        public NameDialog(NameDialogModel model)
         {
             InitializeComponent();
 
-            viewModel = Dependencies.Container.Instance.Resolve<BinDefinitionDialogViewModel>(
-                new ParameterOverride("access", this),
-                new ParameterOverride("model", null));
-            DataContext = viewModel;
-        }
-
-        public BinDefinitionDialog(BinDefinition model)
-        {
-            InitializeComponent();
-
-            viewModel = Dependencies.Container.Instance.Resolve<BinDefinitionDialogViewModel>(
+            viewModel = Dependencies.Container.Instance.Resolve<NameDialogViewModel>(
                 new ParameterOverride("access", this),
                 new ParameterOverride("model", model));
             DataContext = viewModel;
         }
 
-        public void CloseDialog(BinDefinitionDialogResult model, bool result)
+        public void CloseDialog(NameDialogResult model, bool result)
         {
             DialogResult = result;
             Result = model;
             Close();
         }
 
-        public BinDefinitionDialogViewModel ViewModel => viewModel;
+        public NameDialogViewModel ViewModel => viewModel;
 
-        public BinDefinitionDialogResult Result { get; private set; }
+        public NameDialogResult Result { get; private set; }
     }
 }

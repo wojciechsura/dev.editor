@@ -12,10 +12,10 @@ using System.Windows.Input;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
 {
-    public class BinDefinitionDialogViewModel : BaseViewModel
+    public class NameDialogViewModel : BaseViewModel
     {
         private string name;
-        private IBinDefinitionDialogAccess access;
+        private INameDialogAccess access;
 
         private Condition NameNotEmptyCondition;
 
@@ -39,17 +39,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
 
         private void DoOk()
         {
-            access.CloseDialog(new BinDefinitionDialogResult(name), true);
+            access.CloseDialog(new NameDialogResult(name), true);
         }
 
-        public BinDefinitionDialogViewModel(IBinDefinitionDialogAccess access, BinDefinition model = null)
+        public NameDialogViewModel(INameDialogAccess access, NameDialogModel model)
         {
+            if (model == null)
+                throw new ArgumentNullException(nameof(model));
+
             this.access = access;
 
-            if (model != null)
-            {
-                Name = model.DefinitionName.Value;
-            }
+            Name = model.CurrentName;
+            WindowTitle = model.WindowTitle;
+            GroupboxTitle = model.GroupboxTitle;
 
             InitializeCommands();
         }
@@ -65,5 +67,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
                 Set(ref name, () => Name, value, HandleNameChanged);
             }
         }
+
+        public string WindowTitle { get; }
+        public string GroupboxTitle { get; }
     }
 }

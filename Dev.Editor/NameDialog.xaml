@@ -1,4 +1,4 @@
-﻿<Window x:Class="Dev.Editor.BinDefinitionDialog"
+﻿<Window x:Class="Dev.Editor.NameDialog"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -6,16 +6,23 @@
         xmlns:local="clr-namespace:Dev.Editor"
         xmlns:res="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
         mc:Ignorable="d"
-        Title="BinDefinitionDialog" SizeToContent="WidthAndHeight">
+        Title="{Binding WindowTitle}" SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <DockPanel>
         <Grid DockPanel.Dock="Bottom">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-                <Button Margin="6" Width="150" Height="24" Command="{Binding OkCommand}" Content="{x:Static res:Strings.Ok}" />
-                <Button Margin="6" Width="150" Height="24" Command="{Binding CancelCommand}" Content="{x:Static res:Strings.Cancel}" IsCancel="True" />
+                <Button Style="{StaticResource DialogButton}" Command="{Binding OkCommand}" Content="{x:Static res:Strings.Ok}" />
+                <Button Style="{StaticResource DialogButton}" Command="{Binding CancelCommand}" Content="{x:Static res:Strings.Cancel}" IsCancel="True" />
             </StackPanel>
         </Grid>
 
-        <GroupBox Header="{x:Static res:Strings.Dialog_BinDefinition_Title}" Margin="4" Padding="4">
+        <GroupBox Header="{Binding GroupboxTitle}" Margin="4" Padding="4">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="100" />
@@ -25,7 +32,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Content="{x:Static res:Strings.Dialog_BinDefinition_Name}" Margin="4" />
+                <Label Grid.Row="0" Grid.Column="0" Content="{x:Static res:Strings.Dialog_Name_Name}" Margin="4" />
                 <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="4" />
             </Grid>
         </GroupBox>
