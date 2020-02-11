@@ -15,6 +15,6 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
         void ShowConfigurationDialog();
 
         SearchReplaceWindowViewModel RequestSearchReplace(ISearchHost searchHost);
-        (bool, NameDialogResult) ShowBinDefinitionDialog(NameDialogModel model);
+        (bool, NameDialogResult) ShowChooseNameDialog(NameDialogModel model);
     }
 }

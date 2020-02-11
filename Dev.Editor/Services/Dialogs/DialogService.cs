@@ -79,7 +79,7 @@ namespace Dev.Editor.Services.Dialogs
             configurationWindow.ShowDialog();
         }
 
-        public (bool, NameDialogResult) ShowBinDefinitionDialog(NameDialogModel model)
+        public (bool, NameDialogResult) ShowChooseNameDialog(NameDialogModel model)
         {
             var dialog = new NameDialog(model);
             if (dialog.ShowDialog() == true)

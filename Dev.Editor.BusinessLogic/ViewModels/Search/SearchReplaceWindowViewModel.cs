@@ -76,7 +76,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         private void DoSaveSearch()
         {
             var model = new NameDialogModel("", Strings.Dialog_StoredSearch_Title, Strings.Dialog_StoredSearch_Title);
-            (bool result, NameDialogResult data) = dialogService.ShowBinDefinitionDialog(model);
+            (bool result, NameDialogResult data) = dialogService.ShowChooseNameDialog(model);
             if (result)
             {
                 var newEntry = new StoredSearchReplace();

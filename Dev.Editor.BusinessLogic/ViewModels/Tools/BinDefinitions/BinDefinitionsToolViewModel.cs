@@ -53,7 +53,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions
         {
             var model = new NameDialogModel("", Strings.Dialog_BinDefinition_Title, Strings.Dialog_BinDefinition_Title);
 
-            (bool result, NameDialogResult data) = dialogService.ShowBinDefinitionDialog(model);
+            (bool result, NameDialogResult data) = dialogService.ShowChooseNameDialog(model);
             if (result)
             {
                 BinDefinition binDefinition;
