@@ -16,9 +16,12 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Search
         {
             LastSearchTexts = new LastSearchTexts(this);
             LastReplaceTexts = new LastReplaceTexts(this);
+            RecentSearchSettings = new RecentSearchSettings(this);
         }
 
         public LastSearchTexts LastSearchTexts { get; }
         public LastReplaceTexts LastReplaceTexts { get; }
+
+        public RecentSearchSettings RecentSearchSettings { get; }
     }
 }

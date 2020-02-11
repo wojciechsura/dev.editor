@@ -72,6 +72,7 @@
     <Compile Include="Models\Configuration\Internal\BaseStoredFile.cs" />
     <Compile Include="Models\Configuration\Internal\StoredFiles.cs" />
     <Compile Include="Models\Configuration\Internal\TextStoredFile.cs" />
+    <Compile Include="Models\Configuration\Search\RecentSearchSettings.cs" />
     <Compile Include="Models\Configuration\Search\ReplaceText.cs" />
     <Compile Include="Models\Configuration\Search\LastReplaceTexts.cs" />
     <Compile Include="Models\Configuration\Search\SearchConfig.cs" />

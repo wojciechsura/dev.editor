@@ -193,6 +193,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 replaceText.Text.Value = lr;
                 configurationService.Configuration.SearchConfig.LastReplaceTexts.Add(replaceText);
             });
+
+            // Store recent search settings
+
+            var recentSearchSettings = configurationService.Configuration.SearchConfig.RecentSearchSettings;
+
+            recentSearchSettings.CaseSensitive.Value = caseSensitive;
+            recentSearchSettings.ReplaceAllInSelection.Value = replaceAllInSelection;
+            recentSearchSettings.SearchBackwards.Value = searchBackwards;
+            recentSearchSettings.SearchMode.Value = searchMode;
+            recentSearchSettings.ShowReplaceSummary.Value = showReplaceSummary;
+            recentSearchSettings.WholeWordsOnly.Value = wholeWordsOnly;
         }
 
         // Public methods -----------------------------------------------------
@@ -213,9 +224,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
             eventBus.Register((IEventListener<ApplicationShutdownEvent>)this);
 
-            caseSensitive = false;
-            wholeWordsOnly = false;
-            searchMode = SearchMode.Normal;
+            var recentSearchSettings = configurationService.Configuration.SearchConfig.RecentSearchSettings;
+
+            caseSensitive = recentSearchSettings.CaseSensitive.Value;
+            replaceAllInSelection = recentSearchSettings.ReplaceAllInSelection.Value;
+            searchBackwards = recentSearchSettings.SearchBackwards.Value;
+            searchMode = recentSearchSettings.SearchMode.Value;
+            showReplaceSummary = recentSearchSettings.ShowReplaceSummary.Value;
+            wholeWordsOnly = recentSearchSettings.WholeWordsOnly.Value;
 
             LastSearches = new ObservableCollection<string>();
             configurationService.Configuration.SearchConfig.LastSearchTexts.ForEach(st => LastSearches.Add(st.Text.Value));
