@@ -715,4 +715,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="NameDialog.Label" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="Dialog.StoredSearch.Title" xml:space="preserve">
+    <value>Stored search</value>
+  </data>
+  <data name="Message.StoredSearchDeleteConfirmation" xml:space="preserve">
+    <value>Are you sure you want to delete stored search "{0}"?</value>
+  </data>
 </root>

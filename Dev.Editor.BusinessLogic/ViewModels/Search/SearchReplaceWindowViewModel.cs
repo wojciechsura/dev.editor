@@ -1,7 +1,9 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Configuration.Search;
+using Dev.Editor.BusinessLogic.Models.Dialogs;
 using Dev.Editor.BusinessLogic.Models.Events;
 using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.Services.Config;
+using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.Services.EventBus;
 using Dev.Editor.BusinessLogic.Services.Messaging;
 using Dev.Editor.BusinessLogic.Services.SearchEncoder;
@@ -22,7 +24,7 @@ using System.Windows.Input;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Search
 {
-    public class SearchReplaceWindowViewModel : BaseViewModel, IEventListener<ApplicationShutdownEvent>
+    public class SearchReplaceWindowViewModel : BaseViewModel, IEventListener<ApplicationShutdownEvent>, IEventListener<StoredSearchesChangedEvent>
     {
         private const int LastSearchCount = 10;
 
@@ -32,10 +34,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         private readonly IConfigurationService configurationService;
         private readonly IEventBus eventBus;
         private readonly IMessagingService messagingService;
+
         private readonly ISearchHost searchHost;
         private readonly ISearchEncoderService searchEncoderService;
+        private readonly IDialogService dialogService;
 
         private readonly Condition searchExpressionValidCondition;
+        private readonly Condition storedSearchSelectedCondition;
 
         private readonly ObservableCollection<StoredSearchViewModel> storedSearches = new ObservableCollection<StoredSearchViewModel>();
         private StoredSearchViewModel selectedStoredSearch;
@@ -56,7 +61,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         // Private methods ----------------------------------------------------
 
-        private void BuildStoredSearches(IConfigurationService configurationService)
+        private void BuildStoredSearches()
         {
             storedSearches.Clear();
             configurationService.Configuration.SearchConfig.StoredSearchReplaces
@@ -67,6 +72,61 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         }
 
         private void DoClose() => access.Close();
+
+        private void DoSaveSearch()
+        {
+            var model = new NameDialogModel("", Strings.Dialog_StoredSearch_Title, Strings.Dialog_StoredSearch_Title);
+            (bool result, NameDialogResult data) = dialogService.ShowBinDefinitionDialog(model);
+            if (result)
+            {
+                var newEntry = new StoredSearchReplace();
+                newEntry.IsCaseSensitive.Value = CaseSensitive;
+                newEntry.IsReplaceAllInSelection.Value = ReplaceAllInSelection;
+                newEntry.IsSearchBackwards.Value = SearchBackwards;
+                newEntry.IsWholeWordsOnly.Value = WholeWordsOnly;
+                newEntry.Operation.Value = CurrentOperation;
+                newEntry.Replace.Value = Replace;
+                newEntry.Search.Value = Search;
+                newEntry.SearchMode.Value = SearchMode;
+                newEntry.SearchName.Value = data.Name;
+                newEntry.ShowReplaceSummary.Value = ShowReplaceSummary;
+
+                configurationService.Configuration.SearchConfig.StoredSearchReplaces.Add(newEntry);
+                configurationService.Save();
+
+                // Insert new viewmodel to avoid reloading whole list
+
+                var viewmodel = new StoredSearchViewModel(newEntry);
+                int i = 0;
+                while (i < storedSearches.Count && String.Compare(storedSearches[i].SearchName, viewmodel.SearchName) < 0)
+                    i++;
+                storedSearches.Insert(i, viewmodel);
+
+                // Notify interested parties about change
+
+                eventBus.Send(this, new StoredSearchesChangedEvent());
+            }
+        }
+
+        private void DoDeleteSearch()
+        {
+            if (messagingService.AskYesNo(String.Format(Strings.Message_StoredSearchDeleteConfirmation, SelectedStoredSearch.SearchName)) == true)
+            {
+                // Delete stored search
+
+                configurationService.Configuration.SearchConfig.StoredSearchReplaces.Remove(SelectedStoredSearch.StoredSearch);
+                configurationService.Save();
+
+                // Remove viewmodel to avoid reloading whole list
+
+                storedSearches.Remove(SelectedStoredSearch);
+                SelectedStoredSearch = null;
+
+                // Notify interested parties about change
+
+                eventBus.Send(this, new StoredSearchesChangedEvent());
+            }
+        }
 
         private void StoreLastSearchReplaceIfNeeded()
         {
@@ -123,6 +183,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         private void HandleSearchReplaceParamsChanged()
         {
             UpdateModel();
+        }
+
+        private void HandleSelectedStoredSearchChanged()
+        {
+            storedSearchSelectedCondition.Value = SelectedStoredSearch != null;
         }
 
         private void HandleSelectionAvailableChanged(object sender, ValueChangedEventArgs e)
@@ -220,6 +285,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             recentSearchSettings.WholeWordsOnly.Value = wholeWordsOnly;
         }
 
+        // IEventListener<StoredSearchesChangedEvent> implementation ----------
+
+        void IEventListener<StoredSearchesChangedEvent>.Receive(StoredSearchesChangedEvent @event)
+        {
+            BuildStoredSearches();
+        }
+
         // Public methods -----------------------------------------------------
 
         public SearchReplaceWindowViewModel(ISearchHost searchHost,
@@ -227,7 +299,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             IMessagingService messagingService,
             IConfigurationService configurationService,
             IEventBus eventBus,
-            ISearchEncoderService searchEncoderService)
+            ISearchEncoderService searchEncoderService,
+            IDialogService dialogService)
         {
             this.searchHost = searchHost;
             this.access = access;
@@ -235,8 +308,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             this.configurationService = configurationService;
             this.eventBus = eventBus;
             this.searchEncoderService = searchEncoderService;
+            this.dialogService = dialogService;
 
             eventBus.Register((IEventListener<ApplicationShutdownEvent>)this);
+            eventBus.Register((IEventListener<StoredSearchesChangedEvent>)this);
 
             var recentSearchSettings = configurationService.Configuration.SearchConfig.RecentSearchSettings;
 
@@ -248,7 +323,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             wholeWordsOnly = recentSearchSettings.WholeWordsOnly.Value;
 
             storedSearchPanelVisible = false;
-            BuildStoredSearches(configurationService);
+            BuildStoredSearches();
 
             LastSearches = new ObservableCollection<string>();
             configurationService.Configuration.SearchConfig.LastSearchTexts.ForEach(st => LastSearches.Add(st.Text.Value));
@@ -265,6 +340,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 replace = null;
 
             searchExpressionValidCondition = new Condition(false);
+            storedSearchSelectedCondition = new Condition(SelectedStoredSearch != null);
 
             selectionAvailable = searchHost.SelectionAvailableCondition.GetValue();
             searchHost.SelectionAvailableCondition.ValueChanged += HandleSelectionAvailableChanged;
@@ -273,6 +349,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             ReplaceCommand = new AppCommand(obj => DoReplace(), searchHost.CanSearchCondition & searchExpressionValidCondition);
             ReplaceAllCommand = new AppCommand(obj => DoReplaceAll(), searchHost.CanSearchCondition & searchExpressionValidCondition);
             CloseCommand = new AppCommand(obj => DoClose());
+            SaveSearchCommand = new AppCommand(obj => DoSaveSearch());
+            DeleteSearchCommand = new AppCommand(obj => DoDeleteSearch(), storedSearchSelectedCondition);
 
             UpdateModel();
         }
@@ -293,6 +371,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             
             access.FocusSearch();
             access.ShowAndFocus();
+        }
+
+        public void StoredSearchSelected()
+        {
+            if (SelectedStoredSearch != null)
+            {
+                CaseSensitive = SelectedStoredSearch.StoredSearch.IsCaseSensitive.Value;
+                ReplaceAllInSelection = SelectedStoredSearch.StoredSearch.IsReplaceAllInSelection.Value;
+                SearchBackwards = SelectedStoredSearch.StoredSearch.IsSearchBackwards.Value;
+                WholeWordsOnly = SelectedStoredSearch.StoredSearch.IsWholeWordsOnly.Value;
+                CurrentOperation = SelectedStoredSearch.StoredSearch.Operation.Value;
+                Replace = SelectedStoredSearch.StoredSearch.Replace.Value;
+                Search = SelectedStoredSearch.StoredSearch.Search.Value;
+                SearchMode = SelectedStoredSearch.StoredSearch.SearchMode.Value;
+                ShowReplaceSummary = SelectedStoredSearch.StoredSearch.ShowReplaceSummary.Value;
+            }
         }
 
         // Public properties --------------------------------------------------
@@ -326,6 +420,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         }
 
         public ICommand ReplaceCommand { get; }
+
+        public ICommand SaveSearchCommand { get; }
+
+        public ICommand DeleteSearchCommand { get; }
 
         public string Search
         {
@@ -380,7 +478,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         public StoredSearchViewModel SelectedStoredSearch
         {
             get => selectedStoredSearch;
-            set => Set(ref selectedStoredSearch, () => SelectedStoredSearch, value);
-        }
+            set => Set(ref selectedStoredSearch, () => SelectedStoredSearch, value, HandleSelectedStoredSearchChanged);
+        }        
     }
 }

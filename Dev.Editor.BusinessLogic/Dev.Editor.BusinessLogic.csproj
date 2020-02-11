@@ -93,6 +93,7 @@
     <Compile Include="Models\Documents\FoldSectionState.cs" />
     <Compile Include="Models\Events\ApplicationShutdownEvent.cs" />
     <Compile Include="Models\Events\BaseEvent.cs" />
+    <Compile Include="Models\Events\StoredSearchesChangedEvent.cs" />
     <Compile Include="Models\Highlighting\HighlightingInfo.cs" />
     <Compile Include="Models\Messages\MessageModel.cs" />
     <Compile Include="Models\Search\SearchReplaceDescription.cs" />

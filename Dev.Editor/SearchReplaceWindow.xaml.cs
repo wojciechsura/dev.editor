@@ -40,6 +40,12 @@ namespace Dev.Editor
             }
         }
 
+        private void HandleStoredSearchesDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            viewModel.StoredSearchSelected();
+        }
+
+
         void ISearchReplaceWindowAccess.Close()
         {
             Close();

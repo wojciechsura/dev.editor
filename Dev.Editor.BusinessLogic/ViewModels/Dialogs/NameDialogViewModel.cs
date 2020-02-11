@@ -49,11 +49,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
 
             this.access = access;
 
+            InitializeCommands();
+
             Name = model.CurrentName;
             WindowTitle = model.WindowTitle;
             GroupboxTitle = model.GroupboxTitle;
-
-            InitializeCommands();
         }
 
         public ICommand OkCommand { get; private set; }

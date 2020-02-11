@@ -11,14 +11,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 {
     public class StoredSearchViewModel
     {
-        private StoredSearchReplace storedSearch;
-
         public StoredSearchViewModel(StoredSearchReplace storedSearch)
         {
-            this.storedSearch = storedSearch;
+            this.StoredSearch = storedSearch;
         }
 
-        public string SearchName => storedSearch.SearchName.Value;
-        public SearchReplaceOperation Operation => storedSearch.Operation.Value;
+        public string SearchName => StoredSearch.SearchName.Value;
+        public SearchReplaceOperation Operation => StoredSearch.Operation.Value;
+
+        public StoredSearchReplace StoredSearch { get; }
     }
 }

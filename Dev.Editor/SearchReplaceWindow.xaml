@@ -172,7 +172,17 @@
         </TabControl>
 
         <DockPanel Width="250" Visibility="{Binding StoredSearchPanelVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <ListBox ItemsSource="{Binding StoredSearches}" SelectedItem="{Binding SelectedStoredSearch, Mode=TwoWay}">
+
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <Button Command="{Binding SaveSearchCommand}" Style="{StaticResource FirstToolButton}">
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Add16.png" />
+                </Button>
+                <Button Command="{Binding DeleteSearchCommand}" Style="{StaticResource ToolButton}">
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Delete16.png" />
+                </Button>
+            </StackPanel>
+
+            <ListBox ItemsSource="{Binding StoredSearches}" SelectedItem="{Binding SelectedStoredSearch, Mode=TwoWay}" MouseDoubleClick="HandleStoredSearchesDoubleClick">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type vm:StoredSearchViewModel}">
                         <DockPanel>

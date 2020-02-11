@@ -253,6 +253,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Stored search.
+        /// </summary>
+        public static string Dialog_StoredSearch_Title {
+            get {
+                return ResourceManager.GetString("Dialog.StoredSearch.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot perform assignment to {0}. Reason:
         ///{1}.
         /// </summary>
@@ -509,6 +518,15 @@ namespace Dev.Editor.Resources {
         public static string Message_SearchReachedEnd {
             get {
                 return ResourceManager.GetString("Message.SearchReachedEnd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to delete stored search &quot;{0}&quot;?.
+        /// </summary>
+        public static string Message_StoredSearchDeleteConfirmation {
+            get {
+                return ResourceManager.GetString("Message.StoredSearchDeleteConfirmation", resourceCulture);
             }
         }
         
