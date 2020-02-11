@@ -8,6 +8,38 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
     public partial class MainWindowViewModel
     {
+        private void DoBase64Encode()
+        {
+            TransformText(text =>
+            {
+                if (string.IsNullOrEmpty(text))
+                    return (false, null);
+
+                var bytes = System.Text.Encoding.UTF8.GetBytes(text);
+                return (true, System.Convert.ToBase64String(bytes));
+            });
+        }
+
+        private void DoBase64Decode()
+        {
+            TransformText(text =>
+            {
+                if (string.IsNullOrEmpty(text))
+                    return (false, null);
+
+                try
+                {
+                    var bytes = System.Convert.FromBase64String(text);
+                    return (true, System.Text.Encoding.UTF8.GetString(bytes));
+                }
+                catch
+                {
+                    messagingService.Warn(Resources.Strings.Message_InvalidBase64String);
+                    return (false, null);
+                }
+            });
+        }
+
         private void DoInvertCase()
         {
             TransformText(text =>

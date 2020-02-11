@@ -477,6 +477,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid Base64 string!.
+        /// </summary>
+        public static string Message_InvalidBase64String {
+            get {
+                return ResourceManager.GetString("Message.InvalidBase64String", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid search pattern!.
         /// </summary>
         public static string Message_InvalidSearchPattern {
@@ -1104,6 +1113,33 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Text_Case_Uppercase {
             get {
                 return ResourceManager.GetString("Ribbon.Text.Case.Uppercase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Convert.
+        /// </summary>
+        public static string Ribbon_Text_Convert {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Convert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Base64 Decode.
+        /// </summary>
+        public static string Ribbon_Text_Convert_FromBase64 {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Convert.FromBase64", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Base64 Encode.
+        /// </summary>
+        public static string Ribbon_Text_Convert_ToBase64 {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Convert.ToBase64", resourceCulture);
             }
         }
         

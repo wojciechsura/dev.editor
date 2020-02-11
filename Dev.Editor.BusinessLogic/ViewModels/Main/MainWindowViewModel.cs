@@ -556,6 +556,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             SentenceCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Case_Lowercase, null, obj => DoSentenceCase(), documentIsTextCondition);
             InvertCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Case_Lowercase, null, obj => DoInvertCase(), documentIsTextCondition);
 
+            Base64EncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_ToBase64, null, obj => DoBase64Encode(), documentIsTextCondition);
+            Base64DecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_FromBase64, null, obj => DoBase64Decode(), documentIsTextCondition);
 
             FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, null, obj => DoFormatXml(), xmlToolsetAvailableCondition);
 

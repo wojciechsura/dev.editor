@@ -721,4 +721,16 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Message.StoredSearchDeleteConfirmation" xml:space="preserve">
     <value>Czy na pewno usunąć zapisane wyszukiwanie "{0}"?</value>
   </data>
+  <data name="Ribbon.Text.Convert" xml:space="preserve">
+    <value>Konwertuj</value>
+  </data>
+  <data name="Ribbon.Text.Convert.FromBase64" xml:space="preserve">
+    <value>Dekoduj Base64</value>
+  </data>
+  <data name="Ribbon.Text.Convert.ToBase64" xml:space="preserve">
+    <value>Zakoduj Base64</value>
+  </data>
+  <data name="Message.InvalidBase64String" xml:space="preserve">
+    <value>Nieprawidłowy ciąg Base64!</value>
+  </data>
 </root>

@@ -75,6 +75,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand SentenceCaseCommand { get; }
         public ICommand InvertCaseCommand { get; }
 
+        public ICommand Base64EncodeCommand { get; }
+        public ICommand Base64DecodeCommand { get; }
+
         // XmlTools
 
         public ICommand FormatXmlCommand { get; }

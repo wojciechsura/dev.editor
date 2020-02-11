@@ -281,6 +281,13 @@
                     <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Case_Invert}" Command="{Binding InvertCaseCommand}"/>
 
                 </f:RibbonGroupBox>
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Text_Convert}">
+
+                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Convert_ToBase64}" Command="{Binding Base64EncodeCommand}" />
+                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Convert_FromBase64}" Command="{Binding Base64DecodeCommand}" />
+
+                </f:RibbonGroupBox>
                 
             </f:RibbonTabItem>
             
