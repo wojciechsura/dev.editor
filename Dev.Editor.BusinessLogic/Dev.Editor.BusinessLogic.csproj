@@ -163,6 +163,7 @@
     <Compile Include="ViewModels\Main\MainWindowViewModel.Text.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.View.Editor.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.XmlTools.cs" />
+    <Compile Include="ViewModels\Main\StoredSearchReplaceViewModel.cs" />
     <Compile Include="ViewModels\Search\ISearchHost.cs" />
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />

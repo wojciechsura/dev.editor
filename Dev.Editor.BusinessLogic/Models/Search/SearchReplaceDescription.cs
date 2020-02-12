@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.Types.Search;
+﻿using Dev.Editor.BusinessLogic.Models.Configuration.Search;
+using Dev.Editor.BusinessLogic.Types.Search;
 using System;
 using System.Collections.Generic;
 using System.Linq;

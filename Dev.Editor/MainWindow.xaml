@@ -6,19 +6,15 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
-    xmlns:ad="http://schemas.xceed.com/wpf/xaml/avalondock"    
     xmlns:local="clr-namespace:Dev.Editor"
     xmlns:controls="clr-namespace:Dev.Editor.Controls"
     xmlns:converters="clr-namespace:Dev.Editor.Converters"
     xmlns:vmd="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
     xmlns:nav="clr-namespace:Dev.Editor.BusinessLogic.Models.Navigation;assembly=Dev.Editor.BusinessLogic"
     xmlns:wpf="clr-namespace:Dev.Editor.Wpf"
-    xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
-    xmlns:vmtb="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.Base;assembly=Dev.Editor.BusinessLogic"
-    xmlns:vmbtb="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.BottomTools.Base;assembly=Dev.Editor.BusinessLogic"
+    xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Main;assembly=Dev.Editor.BusinessLogic"
     xmlns:vme="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;assembly=Dev.Editor.BusinessLogic"
     xmlns:vmb="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions;assembly=Dev.Editor.BusinessLogic"
-    xmlns:vmm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.BottomTools.Messages;assembly=Dev.Editor.BusinessLogic"
     xmlns:uit="clr-namespace:Dev.Editor.BusinessLogic.Types.UI;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True"
@@ -31,6 +27,7 @@
             <converters:SidePanelToVisibilityConverter x:Key="SidePanelToVisibilityConverter" />
             <converters:SidePanelToTabPlacement x:Key="SidePanelToTabPlacement" />
             <converters:AdditionalToolsetToVisibilityConverter x:Key="AdditionalToolsetToVisibilityConverter" />
+            <converters:SearchReplaceOperationToImageConverter x:Key="SearchReplaceOperationToImageConverter" />
 
             <wpf:DocumentTemplateSelector x:Key="DocumentTemplateSelector" />
         </ResourceDictionary>
@@ -160,12 +157,22 @@
                 <!-- Search -->
 
                 <f:RibbonGroupBox x:Name="grSearch" Header="{x:Static p:Strings.Ribbon_Home_Group_Search}">
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Home_Search_Search}" Command="{Binding SearchCommand}" SizeDefinition="Large"
+                    <f:RibbonGroupBox.Resources>
+                        <DataTemplate x:Key="SearchItemTemplate" DataType="{x:Type vm:StoredSearchReplaceViewModel}">
+                            <f:MenuItem Header="{Binding SearchName}" Icon="{Binding Operation, Converter={StaticResource SearchReplaceOperationToImageConverter}}" 
+                                                Command="{Binding RunStoredSearchCommand}" CommandParameter="{Binding StoredSearchReplace}"/>
+                        </DataTemplate>
+                    </f:RibbonGroupBox.Resources>
+                    <f:SplitButton Header="{x:Static p:Strings.Ribbon_Home_Search_Search}" Command="{Binding SearchCommand}" SizeDefinition="Large"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search32.png"
-                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search16.png"/>
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Home_Search_Replace}" Command="{Binding ReplaceCommand}" SizeDefinition="Middle"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search16.png">
+                        <ItemsControl ItemsSource="{Binding StoredSearches}" ItemTemplate="{StaticResource SearchItemTemplate}" />
+                    </f:SplitButton>
+                    <f:SplitButton Header="{x:Static p:Strings.Ribbon_Home_Search_Replace}" Command="{Binding ReplaceCommand}" SizeDefinition="Middle"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace32.png"
-                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace16.png"/>
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace16.png">
+                        <ItemsControl ItemsSource="{Binding StoredReplaces}" ItemTemplate="{StaticResource SearchItemTemplate}" />
+                    </f:SplitButton>
                     <f:Button Header="{x:Static p:Strings.Ribbon_Home_Search_FindNext}" Command="{Binding FindNextCommand}" SizeDefinition="Middle"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/FindNext32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/FindNext16.png"/>

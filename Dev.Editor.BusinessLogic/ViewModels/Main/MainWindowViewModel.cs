@@ -43,10 +43,14 @@ using Dev.Editor.BusinessLogic.ViewModels.BottomTools.Base;
 using Dev.Editor.BusinessLogic.ViewModels.BottomTools.Messages;
 using Dev.Editor.BusinessLogic.Services.EventBus;
 using Dev.Editor.BusinessLogic.Models.Events;
+using Dev.Editor.BusinessLogic.Models.Configuration.Search;
+using Dev.Editor.BusinessLogic.Models.Search;
+using Dev.Editor.BusinessLogic.Services.SearchEncoder;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
-    public partial class MainWindowViewModel : BaseViewModel, IDocumentHandler, IExplorerHandler, IBinDefinitionsHandler, IMessagesHandler
+    public partial class MainWindowViewModel : BaseViewModel, IDocumentHandler, 
+        IExplorerHandler, IBinDefinitionsHandler, IMessagesHandler, IEventListener<StoredSearchesChangedEvent>
     {
         // Private fields -----------------------------------------------------
 
@@ -61,9 +65,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly IImageResources imageResources;
         private readonly IFileIconProvider fileIconProvider;
         private readonly IEventBus eventBus;
+        private readonly ISearchEncoderService searchEncoder;
 
         private readonly ObservableCollection<BaseDocumentViewModel> documents;
         private BaseDocumentViewModel activeDocument;
+
+        private readonly ObservableCollection<StoredSearchReplaceViewModel> storedSearches;
+        private readonly ObservableCollection<StoredSearchReplaceViewModel> storedReplaces;
 
         private readonly List<HighlightingInfo> highlightings;
 
@@ -365,6 +373,25 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             textDoc.FocusDocument();
         }
 
+        private void BuildStoredSearchReplaceViewModels()
+        {
+            storedSearches.Clear();
+            configurationService.Configuration.SearchConfig.StoredSearchReplaces
+                .Where(sr => sr.Operation.Value == Types.Search.SearchReplaceOperation.Search)
+                .OrderBy(sr => sr.SearchName.Value)
+                .Select(sr => new StoredSearchReplaceViewModel(sr, RunStoredSearchCommand))
+                .ToList()
+                .ForEach(srvm => storedSearches.Add(srvm));
+
+            storedReplaces.Clear();
+            configurationService.Configuration.SearchConfig.StoredSearchReplaces
+                .Where(sr => sr.Operation.Value == Types.Search.SearchReplaceOperation.Replace)
+                .OrderBy(sr => sr.SearchName.Value)
+                .Select(sr => new StoredSearchReplaceViewModel(sr, RunStoredSearchCommand))
+                .ToList()
+                .ForEach(srvm => storedReplaces.Add(srvm));
+        }
+
         // IDocumentHandler implementation ------------------------------------
 
         void IDocumentHandler.RequestClose(BaseDocumentViewModel documentViewModel)
@@ -433,6 +460,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             LoadTextDocument(filename);
         }
 
+        // IEventListener<StoredSearchesChangedEvent> implementation ----------
+
+        void IEventListener<StoredSearchesChangedEvent>.Receive(StoredSearchesChangedEvent @event)
+        {
+            BuildStoredSearchReplaceViewModels();
+        }
+
         // Public methods -----------------------------------------------------
 
         public MainWindowViewModel(IMainWindowAccess access, 
@@ -445,6 +479,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             ICommandRepositoryService commandRepositoryService,
             IImageResources imageResources,
             IFileIconProvider fileIconProvider,
+            ISearchEncoderService searchEncoder,
             IEventBus eventBus)
         {
             this.access = access;
@@ -457,6 +492,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             this.commandRepositoryService = commandRepositoryService;
             this.imageResources = imageResources;
             this.fileIconProvider = fileIconProvider;
+            this.searchEncoder = searchEncoder;
             this.eventBus = eventBus;
 
             wordWrap = configurationService.Configuration.Editor.WordWrap.Value;
@@ -526,6 +562,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             NavigateCommand = new AppCommand(obj => DoNavigate());
 
             ConfigCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Configuration, "Settings16.png", obj => DoOpenConfiguration());
+            RunStoredSearchCommand = new AppCommand(obj => DoRunStoredSearch(obj as StoredSearchReplace), documentIsTextCondition);
 
             NewTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_New, "New16.png", obj => DoNewTextDocument());
             NewHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_NewHex, "New16.png", obj => DoNewHexDocument());
@@ -561,6 +598,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, null, obj => DoFormatXml(), xmlToolsetAvailableCondition);
 
+            // Initializing stored search/replaces
+
+            storedSearches = new ObservableCollection<StoredSearchReplaceViewModel>();
+            storedReplaces = new ObservableCollection<StoredSearchReplaceViewModel>();
+            BuildStoredSearchReplaceViewModels();
+
             // Navigation
 
             navigationText = String.Empty;
@@ -584,6 +627,33 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
             else
                 throw new InvalidOperationException("Invalid close behavior!");
+        }
+
+        private void DoRunStoredSearch(StoredSearchReplace storedSearchReplace)
+        {
+            var desc = new SearchReplaceDescription(storedSearchReplace.Search.Value,
+                storedSearchReplace.Replace.Value,
+                storedSearchReplace.Operation.Value,
+                storedSearchReplace.SearchMode.Value,
+                storedSearchReplace.IsCaseSensitive.Value,
+                (selectionAvailableCondition.GetValue() && regularSelectionAvailableCondition.GetValue()),
+                storedSearchReplace.IsSearchBackwards.Value,
+                storedSearchReplace.IsWholeWordsOnly.Value,
+                storedSearchReplace.ShowReplaceSummary.Value);
+
+            var searchModel = searchEncoder.SearchDescriptionToModel(desc);
+
+            switch (storedSearchReplace.Operation.Value)
+            {
+                case Types.Search.SearchReplaceOperation.Search:
+                    FindNext(searchModel);
+                    break;
+                case Types.Search.SearchReplaceOperation.Replace:
+                    ReplaceAll(searchModel);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("Unsupported search/replace operation!");
+            }
         }
 
         public void NotifyLoaded()
@@ -765,5 +835,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public BinDefinitionsToolViewModel BinDefinitionsToolViewModel => binDefinitionsToolViewModel;
 
         public MessagesBottomToolViewModel MessagesBottomToolViewModel => messagesBottomToolViewModel;
+
+        public ObservableCollection<StoredSearchReplaceViewModel> StoredSearches => storedSearches;
+
+        public ObservableCollection<StoredSearchReplaceViewModel> StoredReplaces => storedReplaces;
     }
 }
