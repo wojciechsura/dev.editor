@@ -1,4 +1,6 @@
-﻿using Dev.Editor.BusinessLogic.Services.Config;
+﻿using Dev.Editor.BusinessLogic.Models.Events;
+using Dev.Editor.BusinessLogic.Services.Config;
+using Dev.Editor.BusinessLogic.Services.EventBus;
 using Dev.Editor.BusinessLogic.Services.FileIcons;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
 using Dev.Editor.BusinessLogic.Types.Tools.Explorer;
@@ -17,34 +19,41 @@ using System.Windows.Media;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 {
-    public class ExplorerToolViewModel : BaseToolViewModel, IFileItemHandler
+    public class ExplorerToolViewModel : BaseToolViewModel, IFileItemHandler, IEventListener<ApplicationActivatedEvent>
     {
-        private readonly IFileIconProvider fileIconProvider;
-        private readonly IImageResources imageResources;
         private readonly IConfigurationService configurationService;
+        private readonly IEventBus eventBus;
         private readonly IExplorerHandler explorerHandler;
-
-        private readonly ImageSource icon;
-        private IExplorerToolAccess access;
-
-        private readonly ObservableCollection<FolderItemViewModel> folders;
-        private FolderItemViewModel selectedFolder;
+        private readonly IFileIconProvider fileIconProvider;
         private readonly ObservableCollection<FileItemViewModel> files;
-        private FileItemViewModel selectedFile;
-
+        private readonly ObservableCollection<FolderItemViewModel> folders;
+        private readonly ImageSource icon;
+        private readonly IImageResources imageResources;
+        private IExplorerToolAccess access;
         private double folderTreeHeight;
+        private FileItemViewModel selectedFile;
+        private FolderItemViewModel selectedFolder;
 
-        private void InitializeFolders()
+        // Private methods ----------------------------------------------------
+
+        private void DoSetLocationOfCurrentDocument()
         {
-            folders.Clear();
-            System.IO.Directory.GetLogicalDrives()
-                .Select(x => $"{x[0]}:")
-                .OrderBy(x => x.ToLower())
-                .Select(x => new FolderItemViewModel(null, x, x, fileIconProvider.GetImageForFolder(x), this))
-                .ForEach(x => folders.Add(x));            
+            string path = explorerHandler.GetCurrentDocumentPath();
+
+            SetCurrentPath(path);
+        }
+
+        private void HandleFolderTreeHeightChanged()
+        {
+            configurationService.Configuration.Tools.Explorer.FolderTreeHeight.Value = folderTreeHeight;
         }
 
         private void HandleSelectedFolderChanged()
+        {
+            UpdateFolderContents();
+        }
+
+        private void UpdateFolderContents()
         {
             files.Clear();
 
@@ -78,23 +87,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             SelectedFile = files.FirstOrDefault();
         }
 
-        private void OpenSubfolder(string name)
+        private void InitializeFolders()
         {
-            if (selectedFolder != null)
-            {
-                selectedFolder.IsExpanded = true;
-
-                var subfolder = selectedFolder.Children
-                    .FirstOrDefault(x => x.Path.Equals(name, StringComparison.OrdinalIgnoreCase));
-
-                if (subfolder != null)
-                {
-                    subfolder.IsSelected = true;
-                }
-
-                SelectedFile = files.FirstOrDefault();
-                access.FixListboxFocus();
-            }
+            folders.Clear();
+            System.IO.Directory.GetLogicalDrives()
+                .Select(x => $"{x[0]}:")
+                .OrderBy(x => x.ToLower())
+                .Select(x => new FolderItemViewModel(null, x, x, fileIconProvider.GetImageForFolder(x), this))
+                .ForEach(x => folders.Add(x));            
         }
 
         private void OpenParentFolder()
@@ -115,9 +115,49 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             }
         }
 
-        private void HandleFolderTreeHeightChanged()
+        private void OpenSubfolder(string name)
         {
-            configurationService.Configuration.Tools.Explorer.FolderTreeHeight.Value = folderTreeHeight;
+            if (selectedFolder != null)
+            {
+                selectedFolder.IsExpanded = true;
+
+                var subfolder = selectedFolder.Children
+                    .FirstOrDefault(x => x.Path.Equals(name, StringComparison.OrdinalIgnoreCase));
+
+                if (subfolder != null)
+                {
+                    subfolder.IsSelected = true;
+                }
+
+                SelectedFile = files.FirstOrDefault();
+                access.FixListboxFocus();
+            }
+        }
+
+        private void RefreshDrives()
+        {
+            var drives = System.IO.Directory.GetLogicalDrives()
+                            .Select(x => $"{x[0]}:")
+                            .OrderBy(x => x.ToLower())
+                            .Select(x => new FolderItemViewModel(null, x, x, fileIconProvider.GetImageForFolder(x), this))
+                            .ToList();
+
+            FolderListHelper.UpdateFolderList(folders, drives);
+        }
+
+        private void RefreshFolders()
+        {
+            // Updating drives
+            RefreshDrives();
+
+            // Refresh opened folders
+            foreach (var folder in folders)
+            {
+                folder.RefreshRecursive();
+            }
+
+            // Refresh current folder contents
+            UpdateFolderContents();
         }
 
         private void SetCurrentPath(string path)
@@ -151,25 +191,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             access.ScrollToSelectedFile();
         }
 
-        private void DoSetLocationOfCurrentDocument()
-        {
-            string path = explorerHandler.GetCurrentDocumentPath();
-
-            SetCurrentPath(path);
-        }
-
         // Public metods ------------------------------------------------------
 
         public ExplorerToolViewModel(IFileIconProvider fileIconProvider, 
             IImageResources imageResources, 
             IConfigurationService configurationService,
-            IExplorerHandler handler)
+            IExplorerHandler handler,
+            IEventBus eventBus)
             : base(handler)
         {
             this.fileIconProvider = fileIconProvider;
             this.imageResources = imageResources;
             this.configurationService = configurationService;
             this.explorerHandler = handler;
+            this.eventBus = eventBus;
+
+            eventBus.Register((IEventListener<ApplicationActivatedEvent>)this);
+
             this.icon = imageResources.GetIconByName("Explorer16.png");
 
             folders = new ObservableCollection<FolderItemViewModel>();
@@ -179,16 +217,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             folderTreeHeight = configurationService.Configuration.Tools.Explorer.FolderTreeHeight.Value;
 
             SetLocationOfCurrentDocumentCommand = new AppCommand(obj => DoSetLocationOfCurrentDocument(), handler.CurrentDocumentHasPathCondition);
-        }
-
-        public void NotifyItemSelected(FolderItemViewModel folderItemViewModel)
-        {
-            SelectedFolder = folderItemViewModel;
-        }
-
-        public ImageSource GetFolderIcon(string name)
-        {
-            return fileIconProvider.GetImageForFolder(name);
         }
 
         public void FileItemChosen()
@@ -216,31 +244,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             }
         }
 
-        public override string Title => Strings.Tool_Explorer_Title;
-
-        public override ImageSource Icon => icon;
-
-        public ObservableCollection<FolderItemViewModel> Folders => folders;
-
-        public FolderItemViewModel SelectedFolder
+        public ImageSource GetFolderIcon(string name)
         {
-            get => selectedFolder;
-            set
-            {
-                Set(ref selectedFolder, () => SelectedFolder, value, HandleSelectedFolderChanged);
-            }
+            return fileIconProvider.GetImageForFolder(name);
         }
 
-        public ObservableCollection<FileItemViewModel> Files => files;
-
-        public FileItemViewModel SelectedFile
+        public void NotifyItemSelected(FolderItemViewModel folderItemViewModel)
         {
-            get => selectedFile;
-            set
-            {
-                Set(ref selectedFile, () => SelectedFile, value);
-            }
+            SelectedFolder = folderItemViewModel;
         }
+
+        void IEventListener<ApplicationActivatedEvent>.Receive(ApplicationActivatedEvent @event)
+        {
+            RefreshFolders();
+        }
+
+        // Public properties --------------------------------------------------
 
         public IExplorerToolAccess Access
         {
@@ -251,6 +270,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             }
         }
 
+        public ObservableCollection<FileItemViewModel> Files => files;
+
+        public ObservableCollection<FolderItemViewModel> Folders => folders;
+
         public double FolderTreeHeight
         {
             get => folderTreeHeight;
@@ -260,8 +283,30 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             }
         }
 
-        public override string Uid => ExplorerUid;
+        public override ImageSource Icon => icon;
+
+        public FileItemViewModel SelectedFile
+        {
+            get => selectedFile;
+            set
+            {
+                Set(ref selectedFile, () => SelectedFile, value);
+            }
+        }
+
+        public FolderItemViewModel SelectedFolder
+        {
+            get => selectedFolder;
+            set
+            {
+                Set(ref selectedFolder, () => SelectedFolder, value, HandleSelectedFolderChanged);
+            }
+        }
 
         public ICommand SetLocationOfCurrentDocumentCommand { get; }
+
+        public override string Title => Strings.Tool_Explorer_Title;
+
+        public override string Uid => ExplorerUid;
     }
 }

@@ -544,7 +544,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             // Initializing tools
 
-            explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources, configurationService, this);
+            explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources, configurationService, this, eventBus);
             binDefinitionsToolViewModel = new BinDefinitionsToolViewModel(this,
                 imageResources, 
                 configurationService,

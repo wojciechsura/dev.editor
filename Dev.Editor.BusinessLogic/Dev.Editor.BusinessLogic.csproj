@@ -91,6 +91,7 @@
     <Compile Include="Models\Documents\HexDocumentState.cs" />
     <Compile Include="Models\Documents\TextDocumentState.cs" />
     <Compile Include="Models\Documents\FoldSectionState.cs" />
+    <Compile Include="Models\Events\ApplicationActivatedEvent.cs" />
     <Compile Include="Models\Events\ApplicationShutdownEvent.cs" />
     <Compile Include="Models\Events\BaseEvent.cs" />
     <Compile Include="Models\Events\StoredSearchesChangedEvent.cs" />
@@ -176,6 +177,7 @@
     <Compile Include="ViewModels\Tools\Explorer\FileItemViewModel.cs" />
     <Compile Include="ViewModels\Tools\Explorer\FolderItemViewModel.cs" />
     <Compile Include="ViewModels\Tools\Explorer\ExplorerToolViewModel.cs" />
+    <Compile Include="ViewModels\Tools\Explorer\FolderListHelper.cs" />
     <Compile Include="ViewModels\Tools\Explorer\IExplorerHandler.cs" />
     <Compile Include="ViewModels\Tools\Explorer\IExplorerToolAccess.cs" />
     <Compile Include="ViewModels\Tools\Explorer\IFileItemHandler.cs" />

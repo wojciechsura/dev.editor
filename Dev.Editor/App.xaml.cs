@@ -1,4 +1,6 @@
-﻿using Dev.Editor.BusinessLogic.Services.StartupInfo;
+﻿using Dev.Editor.BusinessLogic.Models.Events;
+using Dev.Editor.BusinessLogic.Services.EventBus;
+using Dev.Editor.BusinessLogic.Services.StartupInfo;
 using Dev.Editor.Dependencies;
 using System;
 using System.Collections.Generic;
@@ -16,9 +18,20 @@ namespace Dev.Editor
     /// </summary>
     public partial class App : Application
     {
+        private readonly IEventBus eventBus;
+
         public App()
         {
-            Configuration.Configure(Container.Instance);            
+            Configuration.Configure(Container.Instance);
+
+            eventBus = Dependencies.Container.Instance.Resolve<IEventBus>();
+
+            Activated += HandleAppActivated;
+        }
+
+        private void HandleAppActivated(object sender, EventArgs e)
+        {
+            eventBus.Send(this, new ApplicationActivatedEvent());
         }
 
         private void HandleApplicationStartup(object sender, StartupEventArgs e)

@@ -1,6 +1,7 @@
 ﻿using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.Common.Tools;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Media;
@@ -11,18 +12,29 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
     {
         // Private fields -----------------------------------------------------
 
-        private readonly FolderItemViewModel parent;
-        private readonly string display;
-        private readonly string path;
-        private readonly ImageSource icon;
-        private readonly IFileItemHandler handler;
         private readonly ObservableCollection<FolderItemViewModel> children;
-
-        private bool isInitialized;
+        private readonly string display;
+        private readonly IFileItemHandler handler;
+        private readonly ImageSource icon;
+        private readonly FolderItemViewModel parent;
+        private readonly string path;
         private bool isExpanded;
+        private bool isInitialized;
         private bool isSelected;
 
         // Private methods ----------------------------------------------------
+
+        private List<FolderItemViewModel> GetSubFolders()
+        {
+            string currentPath = GetFullPath();
+
+            var contents = System.IO.Directory.EnumerateDirectories(currentPath)
+                .Select(x => System.IO.Path.GetFileName(x))
+                .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
+                .Select(x => new FolderItemViewModel(this, x, x, handler.GetFolderIcon(x), handler))
+                .ToList();
+            return contents;
+        }
 
         private void HandleIsExpandedChanged()
         {
@@ -37,7 +49,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             if (isSelected)
                 handler.NotifyItemSelected(this);
         }
-
 
         // Public methods -----------------------------------------------------
 
@@ -78,12 +89,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 try
                 {
                     // Load folders
-                    string currentPath = GetFullPath();
-                    System.IO.Directory.EnumerateDirectories(currentPath)
-                        .Select(x => System.IO.Path.GetFileName(x))
-                        .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
-                        .Select(x => new FolderItemViewModel(this, x, x, handler.GetFolderIcon(x), handler))
-                        .ForEach(item => children.Add(item));
+                    List<FolderItemViewModel> subFolders = GetSubFolders();
+
+                    subFolders.ForEach(item => children.Add(item));
                 }
                 catch (Exception)
                 {
@@ -94,9 +102,31 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             }
         }
 
+        public void RefreshRecursive()
+        {
+            // Refresh only opened folders
+            if (!isInitialized)
+                return;
+
+            try
+            {
+                var updated = GetSubFolders();
+
+                FolderListHelper.UpdateFolderList(children, updated);
+
+                foreach (var child in children)
+                    if (child.IsInitialized)
+                        child.RefreshRecursive();
+            }
+            catch
+            {
+                // Ignore - don't load items if not possible
+            }
+        }
+
         // Public properties --------------------------------------------------
 
-        public string Path => path;
+        public ObservableCollection<FolderItemViewModel> Children => children;
 
         public string Display => display;
 
@@ -111,6 +141,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             }
         }
 
+        public bool IsInitialized => isInitialized;
+
         public bool IsSelected
         {
             get => isSelected;
@@ -122,6 +154,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 
         public FolderItemViewModel Parent => parent;
 
-        public ObservableCollection<FolderItemViewModel> Children => children;
+        public string Path => path;
     }
 }
