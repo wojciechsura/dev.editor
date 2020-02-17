@@ -22,6 +22,9 @@ https://findicons.com/pack/2477/vista_stock_icons
 * Visual Studio icons from Jordan Lowe's Studio Icons extension for VS Code (MIT)
 https://marketplace.visualstudio.com/items?itemName=jtlowe.vscode-icon-theme
 
+* Nuvola icons by David Vignoni (LGPL)
+https://www.iconfinder.com/iconsets/nuvola2
+
 Libraries
 
 * AvalonEdit (MIT)

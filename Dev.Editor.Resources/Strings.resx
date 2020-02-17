@@ -682,22 +682,22 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Tab.Text" xml:space="preserve">
     <value>Text</value>
   </data>
-  <data name="Ribbon.Text.Case" xml:space="preserve">
+  <data name="Ribbon.Text.Convert.Case" xml:space="preserve">
     <value>Letter case</value>
   </data>
-  <data name="Ribbon.Text.Case.Lowercase" xml:space="preserve">
+  <data name="Ribbon.Text.Convert.Case.Lowercase" xml:space="preserve">
     <value>Lowercase</value>
   </data>
-  <data name="Ribbon.Text.Case.Uppercase" xml:space="preserve">
+  <data name="Ribbon.Text.Convert.Case.Uppercase" xml:space="preserve">
     <value>Uppercase</value>
   </data>
-  <data name="Ribbon.Text.Case.Naming" xml:space="preserve">
+  <data name="Ribbon.Text.Convert.Case.Naming" xml:space="preserve">
     <value>As in names</value>
   </data>
-  <data name="Ribbon.Text.Case.Sentence" xml:space="preserve">
+  <data name="Ribbon.Text.Convert.Case.Sentence" xml:space="preserve">
     <value>As in sentence</value>
   </data>
-  <data name="Ribbon.Text.Case.Invert" xml:space="preserve">
+  <data name="Ribbon.Text.Convert.Case.Invert" xml:space="preserve">
     <value>Invert case</value>
   </data>
   <data name="SearchWindow.ReplaceOptions" xml:space="preserve">
@@ -722,15 +722,18 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
     <value>Are you sure you want to delete stored search "{0}"?</value>
   </data>
   <data name="Ribbon.Text.Convert" xml:space="preserve">
-    <value>Convert</value>
+    <value>Convertion</value>
   </data>
-  <data name="Ribbon.Text.Convert.ToBase64" xml:space="preserve">
+  <data name="Ribbon.Text.Convert.Base64.ToBase64" xml:space="preserve">
     <value>Base64 Encode</value>
   </data>
-  <data name="Ribbon.Text.Convert.FromBase64" xml:space="preserve">
+  <data name="Ribbon.Text.Convert.Base64.FromBase64" xml:space="preserve">
     <value>Base64 Decode</value>
   </data>
   <data name="Message.InvalidBase64String" xml:space="preserve">
     <value>Invalid Base64 string!</value>
+  </data>
+  <data name="Ribbon.Text.Convert.Base64" xml:space="preserve">
+    <value>Base64</value>
   </data>
 </root>

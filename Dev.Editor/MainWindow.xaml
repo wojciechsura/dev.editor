@@ -279,20 +279,22 @@
 
             <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_Text}">
 
-                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Text_Case}">
-
-                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Case_Lowercase}" Command="{Binding LowercaseCommand}"/>
-                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Case_Uppercase}" Command="{Binding UppercaseCommand}"/>
-                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Case_Naming}" Command="{Binding NamingCaseCommand}"/>
-                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Case_Sentence}" Command="{Binding SentenceCaseCommand}"/>
-                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Case_Invert}" Command="{Binding InvertCaseCommand}"/>
-
-                </f:RibbonGroupBox>
-
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Text_Convert}">
 
-                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Convert_ToBase64}" Command="{Binding Base64EncodeCommand}" />
-                    <f:Button SizeDefinition="Middle" Header="{x:Static p:Strings.Ribbon_Text_Convert_FromBase64}" Command="{Binding Base64DecodeCommand}" />
+                    <f:DropDownButton SizeDefinition="Large" Header="{x:Static p:Strings.Ribbon_Text_Convert_Case}" 
+                                      LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Case32.png"
+                                      Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Case16.png">
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Case_Lowercase}" Command="{Binding LowercaseCommand}"/>
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Case_Uppercase}" Command="{Binding UppercaseCommand}"/>
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Case_Naming}" Command="{Binding NamingCaseCommand}"/>
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Case_Sentence}" Command="{Binding SentenceCaseCommand}"/>
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Case_Invert}" Command="{Binding InvertCaseCommand}"/>
+                    </f:DropDownButton>
+
+                    <f:DropDownButton Size="Large" Header="{x:Static p:Strings.Ribbon_Text_Convert_Base64}">
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Base64_ToBase64}" Command="{Binding Base64EncodeCommand}" />
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Base64_FromBase64}" Command="{Binding Base64DecodeCommand}" />
+                    </f:DropDownButton>
 
                 </f:RibbonGroupBox>
                 
