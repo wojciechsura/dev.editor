@@ -276,6 +276,8 @@ namespace Dev.Editor.Controls
         public TextDocumentView()
         {
             InitializeComponent();
+
+            teEditor.Options.AllowScrollBelowDocument = true;
         }
 
         public void Copy() => teEditor.Copy();
