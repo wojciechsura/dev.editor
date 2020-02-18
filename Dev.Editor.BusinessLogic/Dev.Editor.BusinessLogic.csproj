@@ -121,6 +121,7 @@
     <Compile Include="Services\Messaging\MessagingService.cs" />
     <Compile Include="Services\Paths\IPathService.cs" />
     <Compile Include="Services\Paths\PathService.cs" />
+    <Compile Include="Services\Platform\IPlatformService.cs" />
     <Compile Include="Services\SearchEncoder\InvalidSearchExpressionException.cs" />
     <Compile Include="Services\SearchEncoder\ISearchEncoderService.cs" />
     <Compile Include="Services\SearchEncoder\SearchEncoderService.cs" />

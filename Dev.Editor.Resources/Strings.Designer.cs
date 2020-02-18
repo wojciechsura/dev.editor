@@ -1531,6 +1531,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show in Windows Explorer.
+        /// </summary>
+        public static string Tool_Explorer_Files_ShowInExplorer {
+            get {
+                return ResourceManager.GetString("Tool.Explorer.Files.ShowInExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open in Windows Explorer.
+        /// </summary>
+        public static string Tool_Explorer_Folders_OpenInExplorer {
+            get {
+                return ResourceManager.GetString("Tool.Explorer.Folders.OpenInExplorer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Files.
         /// </summary>
         public static string Tool_Explorer_Title {

@@ -3,9 +3,11 @@ using Dev.Editor.BusinessLogic.Services.Config;
 using Dev.Editor.BusinessLogic.Services.EventBus;
 using Dev.Editor.BusinessLogic.Services.FileIcons;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
+using Dev.Editor.BusinessLogic.Services.Platform;
 using Dev.Editor.BusinessLogic.Types.Tools.Explorer;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.Base;
 using Dev.Editor.Common.Commands;
+using Dev.Editor.Common.Conditions;
 using Dev.Editor.Common.Tools;
 using Dev.Editor.Resources;
 using System;
@@ -21,6 +23,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 {
     public class ExplorerToolViewModel : BaseToolViewModel, IFileItemHandler, IEventListener<ApplicationActivatedEvent>
     {
+        // Private fields -----------------------------------------------------
+
         private readonly IConfigurationService configurationService;
         private readonly IEventBus eventBus;
         private readonly IExplorerHandler explorerHandler;
@@ -29,12 +33,28 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         private readonly ObservableCollection<FolderItemViewModel> folders;
         private readonly ImageSource icon;
         private readonly IImageResources imageResources;
+        private readonly IPlatformService platformService;
+
         private IExplorerToolAccess access;
+        private Condition fileSelectedCondition;
+        private Condition folderSelectedCondition;
         private double folderTreeHeight;
         private FileItemViewModel selectedFile;
         private FolderItemViewModel selectedFolder;
 
         // Private methods ----------------------------------------------------
+
+        private void DoOpenFolderInExplorer()
+        {
+            var path = selectedFolder.GetFullPath();
+            platformService.ShowInExplorer(path);
+        }
+
+        private void DoSelectFileInExplorer()
+        {
+            var path = selectedFile.GetFullPath();
+            platformService.SelectInExplorer(path);
+        }
 
         private void DoSetLocationOfCurrentDocument()
         {
@@ -48,43 +68,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             configurationService.Configuration.Tools.Explorer.FolderTreeHeight.Value = folderTreeHeight;
         }
 
-        private void HandleSelectedFolderChanged()
+        private void HandleSelectedFileChanged()
         {
-            UpdateFolderContents();
+            fileSelectedCondition.Value = selectedFile != null;
         }
 
-        private void UpdateFolderContents()
+        private void HandleSelectedFolderChanged()
         {
-            files.Clear();
-
-            try
-            {
-                if (selectedFolder != null)
-                {
-                    if (selectedFolder.Parent != null)
-                    {
-                        files.Add(new FileItemViewModel(selectedFolder, "..", "..", imageResources.GetIconByName("Up16.png"), FileItemType.ParentFolder));
-                    }
-
-                    System.IO.Directory.EnumerateDirectories(selectedFolder.GetFullPath())
-                        .Select(x => System.IO.Path.GetFileName(x))
-                        .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
-                        .Select(x => new FileItemViewModel(selectedFolder, x, $"[{x}]", fileIconProvider.GetImageForFolder(x), FileItemType.Folder))
-                        .ForEach(x => files.Add(x));
-
-                    System.IO.Directory.EnumerateFiles(selectedFolder.GetFullPath())
-                        .Select(x => System.IO.Path.GetFileName(x))
-                        .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
-                        .Select(x => new FileItemViewModel(selectedFolder, x, x, fileIconProvider.GetImageForFile(x), FileItemType.File))
-                        .ForEach(x => files.Add(x));
-                }
-            }
-            catch (Exception)
-            {
-                // Don't display files from this folder if it is not possible
-            }
-
-            SelectedFile = files.FirstOrDefault();
+            folderSelectedCondition.Value = selectedFolder != null;
+            UpdateFolderContents();
         }
 
         private void InitializeFolders()
@@ -94,7 +86,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 .Select(x => $"{x[0]}:")
                 .OrderBy(x => x.ToLower())
                 .Select(x => new FolderItemViewModel(null, x, x, fileIconProvider.GetImageForFolder(x), this))
-                .ForEach(x => folders.Add(x));            
+                .ForEach(x => folders.Add(x));
         }
 
         private void OpenParentFolder()
@@ -191,13 +183,47 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             access.ScrollToSelectedFile();
         }
 
+        private void UpdateFolderContents()
+        {
+            files.Clear();
+
+            try
+            {
+                if (selectedFolder != null)
+                {
+                    if (selectedFolder.Parent != null)
+                    {
+                        files.Add(new FileItemViewModel(selectedFolder, "..", "..", imageResources.GetIconByName("Up16.png"), FileItemType.ParentFolder));
+                    }
+
+                    System.IO.Directory.EnumerateDirectories(selectedFolder.GetFullPath())
+                        .Select(x => System.IO.Path.GetFileName(x))
+                        .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
+                        .Select(x => new FileItemViewModel(selectedFolder, x, $"[{x}]", fileIconProvider.GetImageForFolder(x), FileItemType.Folder))
+                        .ForEach(x => files.Add(x));
+
+                    System.IO.Directory.EnumerateFiles(selectedFolder.GetFullPath())
+                        .Select(x => System.IO.Path.GetFileName(x))
+                        .OrderBy(x => x, StringComparer.OrdinalIgnoreCase)
+                        .Select(x => new FileItemViewModel(selectedFolder, x, x, fileIconProvider.GetImageForFile(x), FileItemType.File))
+                        .ForEach(x => files.Add(x));
+                }
+            }
+            catch (Exception)
+            {
+                // Don't display files from this folder if it is not possible
+            }
+
+            SelectedFile = files.FirstOrDefault();
+        }
         // Public metods ------------------------------------------------------
 
         public ExplorerToolViewModel(IFileIconProvider fileIconProvider, 
             IImageResources imageResources, 
             IConfigurationService configurationService,
             IExplorerHandler handler,
-            IEventBus eventBus)
+            IEventBus eventBus,
+            IPlatformService platformService)
             : base(handler)
         {
             this.fileIconProvider = fileIconProvider;
@@ -205,6 +231,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             this.configurationService = configurationService;
             this.explorerHandler = handler;
             this.eventBus = eventBus;
+            this.platformService = platformService;
 
             eventBus.Register((IEventListener<ApplicationActivatedEvent>)this);
 
@@ -216,7 +243,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 
             folderTreeHeight = configurationService.Configuration.Tools.Explorer.FolderTreeHeight.Value;
 
+            folderSelectedCondition = new Condition(selectedFolder != null);
+            fileSelectedCondition = new Condition(selectedFile != null);
+
             SetLocationOfCurrentDocumentCommand = new AppCommand(obj => DoSetLocationOfCurrentDocument(), handler.CurrentDocumentHasPathCondition);
+            OpenFolderInExplorerCommand = new AppCommand(obj => DoOpenFolderInExplorer(), folderSelectedCondition);
+            SelectFileInExplorerCommand = new AppCommand(obj => DoSelectFileInExplorer(), fileSelectedCondition);
         }
 
         public void FileItemChosen()
@@ -285,15 +317,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 
         public override ImageSource Icon => icon;
 
+        public ICommand OpenFolderInExplorerCommand { get; }
+
         public FileItemViewModel SelectedFile
         {
             get => selectedFile;
             set
             {
-                Set(ref selectedFile, () => SelectedFile, value);
+                Set(ref selectedFile, () => SelectedFile, value, HandleSelectedFileChanged);
             }
         }
-
+        
         public FolderItemViewModel SelectedFolder
         {
             get => selectedFolder;
@@ -302,6 +336,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
                 Set(ref selectedFolder, () => SelectedFolder, value, HandleSelectedFolderChanged);
             }
         }
+
+        public ICommand SelectFileInExplorerCommand { get; }
 
         public ICommand SetLocationOfCurrentDocumentCommand { get; }
 

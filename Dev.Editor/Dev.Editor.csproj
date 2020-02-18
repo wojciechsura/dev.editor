@@ -124,6 +124,7 @@
     </Compile>
     <Compile Include="Services\Dialogs\DialogService.cs" />
     <Compile Include="Services\ImageResources\ImageResources.cs" />
+    <Compile Include="Services\Platform\PlatformService.cs" />
     <Compile Include="Wpf\AccessKeyScopeControl.cs" />
     <Compile Include="Wpf\DocumentTemplateSelector.cs" />
     <Compile Include="Wpf\MouseEvents.cs" />

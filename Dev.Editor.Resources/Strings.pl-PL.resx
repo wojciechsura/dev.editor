@@ -736,4 +736,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Text.Convert.Base64" xml:space="preserve">
     <value>Base64</value>
   </data>
+  <data name="Tool.Explorer.Folders.OpenInExplorer" xml:space="preserve">
+    <value>Otwórz w Eksploratorze Windows</value>
+  </data>
+  <data name="Tool.Explorer.Files.ShowInExplorer" xml:space="preserve">
+    <value>Pokaż w Eksploratorze Windows</value>
+  </data>
 </root>

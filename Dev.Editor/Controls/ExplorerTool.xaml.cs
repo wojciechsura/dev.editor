@@ -25,10 +25,15 @@ namespace Dev.Editor.Controls
     {
         private ExplorerToolViewModel viewModel;
 
-        public ExplorerTool()
+        private void HandleDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
-            InitializeComponent();
-            viewModel = null;
+            if (viewModel != null)
+                viewModel.Access = null;
+
+            viewModel = e.NewValue as ExplorerToolViewModel;
+
+            if (viewModel != null)
+                viewModel.Access = this;
         }
 
         private void HandleFileListDoubleClick(object sender, MouseButtonEventArgs e)
@@ -42,15 +47,69 @@ namespace Dev.Editor.Controls
                 viewModel.FileItemChosen();
         }
 
-        private void HandleDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        private void OnPreviewMouseRightButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (viewModel != null)
-                viewModel.Access = null;
+        }
 
-            viewModel = e.NewValue as ExplorerToolViewModel;
+        static TreeViewItem VisualUpwardSearch(DependencyObject source)
+        {
+            while (source != null && !(source is TreeViewItem))
+                source = VisualTreeHelper.GetParent(source);
 
-            if (viewModel != null)
-                viewModel.Access = this;
+            return source as TreeViewItem;
+        }
+
+        private void HandleFolderListPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == MouseButton.Right)
+            {
+                TreeViewItem treeViewItem = VisualUpwardSearch(e.OriginalSource as DependencyObject);
+
+                if (treeViewItem != null)
+                {
+                    treeViewItem.IsSelected = true;
+                }
+                else
+                {
+                    FolderItemViewModel selected = tvFolders.SelectedItem as FolderItemViewModel;
+                    var item = TreeViewItemFromItem(selected);
+                    if (item != null)
+                        item.IsSelected = false;
+                }
+            }
+        }
+
+        private TreeViewItem TreeViewItemFromItem(FolderItemViewModel selected)
+        {
+            if (selected == null)
+                return null;
+
+            // Build hierarchy
+            List<FolderItemViewModel> hierarchy = new List<FolderItemViewModel>();
+            var current = selected;
+            while (current != null)
+            {
+                hierarchy.Add(current);
+                current = current.Parent;
+            }
+
+            TreeViewItem item = (TreeViewItem)tvFolders.ItemContainerGenerator.ContainerFromItem(hierarchy.Last());
+
+            if (item == null)
+                return null;
+
+            for (int i = hierarchy.Count - 2; i >= 0; i--)
+            {
+                item = (TreeViewItem)item.ItemContainerGenerator.ContainerFromItem(hierarchy[i]);
+            }
+
+            return item;
+        }
+
+        public ExplorerTool()
+        {
+            InitializeComponent();
+            viewModel = null;
         }
 
         public void FixListboxFocus()
@@ -66,38 +125,6 @@ namespace Dev.Editor.Controls
             }
         }
 
-        public void ScrollToSelectedFolder()
-        {
-            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, 
-                new Action(() =>
-                {
-                    FolderItemViewModel selected = tvFolders.SelectedItem as FolderItemViewModel;
-                    if (selected == null)
-                        return;
-
-                    // Build hierarchy
-                    List<FolderItemViewModel> hierarchy = new List<FolderItemViewModel>();
-                    var current = selected;
-                    while (current != null)
-                    {
-                        hierarchy.Add(current);
-                        current = current.Parent;
-                    }
-
-                    TreeViewItem item = (TreeViewItem)tvFolders.ItemContainerGenerator.ContainerFromItem(hierarchy.Last());
-                    
-                    if (item == null)
-                        return;
-
-                    for (int i = hierarchy.Count - 2; i >= 0; i--)
-                    {
-                        item = (TreeViewItem)item.ItemContainerGenerator.ContainerFromItem(hierarchy[i]);
-                    }
-                    
-                    item.BringIntoView();
-                }));
-        }
-
         public void ScrollToSelectedFile()
         {
             Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
@@ -106,5 +133,17 @@ namespace Dev.Editor.Controls
                     lbFiles.ScrollIntoView(lbFiles.SelectedItem);
                 }));
         }
+
+        public void ScrollToSelectedFolder()
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle, 
+                new Action(() =>
+                {
+                    FolderItemViewModel selected = tvFolders.SelectedItem as FolderItemViewModel;
+                    var item = TreeViewItemFromItem(selected);
+                    item?.BringIntoView();
+                }));
+        }
     }
 }
+    

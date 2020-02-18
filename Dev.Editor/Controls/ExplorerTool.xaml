@@ -24,7 +24,7 @@
                 </Grid.RowDefinitions>
 
                 <TreeView x:Name="tvFolders" Grid.Row="0" HorizontalAlignment="Stretch" MinHeight="200" ItemsSource="{Binding Folders}" 
-                      BorderThickness="0">
+                      BorderThickness="0" PreviewMouseDown="HandleFolderListPreviewMouseDown">
                     <TreeView.Resources>
                         <Style TargetType="TreeViewItem">
                             <Style.Setters>
@@ -42,6 +42,12 @@
                             </StackPanel>
                         </HierarchicalDataTemplate>
                     </TreeView.ItemTemplate>
+
+                    <TreeView.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{x:Static p:Strings.Tool_Explorer_Folders_OpenInExplorer}" Command="{Binding OpenFolderInExplorerCommand}" />
+                        </ContextMenu>
+                    </TreeView.ContextMenu>
                 </TreeView>
 
                 <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Height="4" 
@@ -57,6 +63,11 @@
                             </StackPanel>
                         </DataTemplate>
                     </ListBox.ItemTemplate>
+                    <ListBox.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="{x:Static p:Strings.Tool_Explorer_Files_ShowInExplorer}" Command="{Binding SelectFileInExplorerCommand}" />
+                        </ContextMenu>
+                    </ListBox.ContextMenu>
                 </ListBox>
             </Grid>
         </DockPanel>

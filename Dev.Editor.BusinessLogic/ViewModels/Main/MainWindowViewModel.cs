@@ -46,6 +46,7 @@ using Dev.Editor.BusinessLogic.Models.Events;
 using Dev.Editor.BusinessLogic.Models.Configuration.Search;
 using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.Services.SearchEncoder;
+using Dev.Editor.BusinessLogic.Services.Platform;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -66,6 +67,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly IFileIconProvider fileIconProvider;
         private readonly IEventBus eventBus;
         private readonly ISearchEncoderService searchEncoder;
+        private readonly IPlatformService platformService;
 
         private readonly ObservableCollection<BaseDocumentViewModel> documents;
         private BaseDocumentViewModel activeDocument;
@@ -480,7 +482,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             IImageResources imageResources,
             IFileIconProvider fileIconProvider,
             ISearchEncoderService searchEncoder,
-            IEventBus eventBus)
+            IEventBus eventBus,
+            IPlatformService platformService)
         {
             this.access = access;
             this.dialogService = dialogService;
@@ -544,7 +547,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             // Initializing tools
 
-            explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources, configurationService, this, eventBus);
+            explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources, configurationService, this, eventBus, platformService);
             binDefinitionsToolViewModel = new BinDefinitionsToolViewModel(this,
                 imageResources, 
                 configurationService,
