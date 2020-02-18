@@ -5,7 +5,8 @@
              xmlns:c="clr-namespace:Dev.Editor.Converters"
              xmlns:controls="clr-namespace:Dev.Editor.Controls"
              xmlns:wpf="clr-namespace:Dev.Editor.Wpf"
-             StartupUri="MainWindow.xaml" ShutdownMode="OnMainWindowClose" Startup="HandleApplicationStartup">
+             StartupUri="MainWindow.xaml" ShutdownMode="OnMainWindowClose" Startup="HandleApplicationStartup"
+             Activated="HandleAppActivated">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>

@@ -47,6 +47,9 @@
     <Reference Include="Fluent, Version=6.1.0.326, Culture=neutral, processorArchitecture=MSIL">
       <HintPath>..\packages\Fluent.Ribbon.6.1.0.326\lib\net462\Fluent.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
@@ -77,6 +80,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Models\ArgumentInfo.cs" />
     <Compile Include="NameDialog.xaml.cs">
       <DependentUpon>NameDialog.xaml</DependentUpon>
     </Compile>
@@ -125,6 +129,8 @@
     <Compile Include="Services\Dialogs\DialogService.cs" />
     <Compile Include="Services\ImageResources\ImageResources.cs" />
     <Compile Include="Services\Platform\PlatformService.cs" />
+    <Compile Include="Services\SingleInstance\SingleInstanceService.cs" />
+    <Compile Include="Services\WinAPI\WinAPIService.cs" />
     <Compile Include="Wpf\AccessKeyScopeControl.cs" />
     <Compile Include="Wpf\DocumentTemplateSelector.cs" />
     <Compile Include="Wpf\MouseEvents.cs" />
@@ -349,5 +355,6 @@
     <Resource Include="Resources\Images\Case16.png" />
     <Resource Include="Resources\Images\Case32.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

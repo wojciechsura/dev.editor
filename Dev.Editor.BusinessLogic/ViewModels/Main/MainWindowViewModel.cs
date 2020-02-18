@@ -297,14 +297,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
-        private bool OpenParameters()
+        private bool DoOpenParameters(IEnumerable<string> args)
         {
             bool anyDocumentLoaded = false;
 
-            for (int i = 0; i < startupInfoService.Parameters.Length; i++)
+            foreach (var param in args)
             {
-                string param = startupInfoService.Parameters[i];
-
                 if (File.Exists(param))
                 {
                     try
@@ -320,6 +318,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
 
             return anyDocumentLoaded;
+        }
+
+        private bool OpenParameters()
+        {
+            return DoOpenParameters(startupInfoService.Parameters);
         }
 
         private bool CanCloseDocument(BaseDocumentViewModel document)
@@ -777,6 +780,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             eventBus.Send(this, new ApplicationShutdownEvent());
 
             configurationService.Save();
+        }
+
+        public void NotifyArgsReceived(List<string> args)
+        {
+            access.BringToFront();
+            DoOpenParameters(args);
         }
 
         // Public properties --------------------------------------------------

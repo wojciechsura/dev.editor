@@ -20,5 +20,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         void SetWindowSize(Size size);
         void SetWindowLocation(Point point);
         void SetWindowMaximized(bool maximized);
+        void BringToFront();
     }
 }

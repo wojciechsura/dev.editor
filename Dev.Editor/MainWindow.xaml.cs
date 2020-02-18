@@ -3,10 +3,16 @@ using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.BusinessLogic.ViewModels.Main;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
 using Dev.Editor.Converters;
+using Dev.Editor.Models;
+using Dev.Editor.Services;
+using Dev.Editor.Services.SingleInstance;
+using Dev.Editor.Services.WinAPI;
 using Fluent;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,6 +21,7 @@ using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
+using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
@@ -31,6 +38,11 @@ namespace Dev.Editor
     public partial class MainWindow : RibbonWindow, IMainWindowAccess
     {
         // Private fields -----------------------------------------------------
+
+        private readonly WinAPIService winAPIService;
+        private readonly SingleInstanceService singleInstanceService;
+
+        private WindowInteropHelper interopHelper;
 
         private MainWindowViewModel viewModel;
 
@@ -148,11 +160,32 @@ namespace Dev.Editor
 
         private void HandleLoaded(object sender, RoutedEventArgs e)
         {
+            interopHelper = new WindowInteropHelper(this);
+            singleInstanceService.StoreMainWindowHandle(interopHelper.Handle);
+            HwndSource.FromHwnd(interopHelper.Handle).AddHook(HandleWindowMessage);
+
             viewModel.PropertyChanged += HandleViewModelPropertyChanged;
             SetupSidePanel();
             SetupBottomPanel();
 
             viewModel.NotifyLoaded();
+        }
+
+        private IntPtr HandleWindowMessage(IntPtr hwnd, int msg, IntPtr wParam, IntPtr lParam, ref bool handled)
+        {
+            if (msg == WinAPIService.WM_COPYDATA)
+            {
+                (bool result, string data) = winAPIService.ProcessCopyData(lParam);
+                if (result)
+                {
+                    var args = JsonConvert.DeserializeObject<ArgumentInfo>(data);
+                    viewModel.NotifyArgsReceived(args.Args);
+                }
+
+                handled = true;
+            }
+
+            return IntPtr.Zero;
         }
 
         private void HandleViewModelPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
@@ -238,11 +271,19 @@ namespace Dev.Editor
             this.WindowState = maximized ? WindowState.Maximized : WindowState.Normal;
         }
 
+        void IMainWindowAccess.BringToFront()
+        {
+            this.Activate();
+        }
+
         // Public methods -----------------------------------------------------
 
         public MainWindow()
         {
             InitializeComponent();
+
+            winAPIService = Dependencies.Container.Instance.Resolve<WinAPIService>();
+            singleInstanceService = Dependencies.Container.Instance.Resolve<SingleInstanceService>();
 
             viewModel = Dependencies.Container.Instance.Resolve<MainWindowViewModel>(new ParameterOverride("access", this));
             DataContext = viewModel;
