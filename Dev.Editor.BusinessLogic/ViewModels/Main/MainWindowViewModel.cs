@@ -788,6 +788,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             DoOpenParameters(args);
         }
 
+        public void ReorderDocument(BaseDocumentViewModel fromDoc, BaseDocumentViewModel toDoc)
+        {
+            if (fromDoc == toDoc)
+                return;
+
+            int fromIndex = documents.IndexOf(fromDoc);
+            int toIndex = documents.IndexOf(toDoc);
+
+            documents.Move(fromIndex, toIndex);
+        }
+
         // Public properties --------------------------------------------------
 
         public ObservableCollection<BaseDocumentViewModel> Documents => documents;

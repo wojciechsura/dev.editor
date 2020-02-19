@@ -37,6 +37,18 @@ namespace Dev.Editor
     /// </summary>
     public partial class MainWindow : RibbonWindow, IMainWindowAccess
     {
+        // Private classes ----------------------------------------------------
+
+        private class DragData
+        {
+            public DragData(BaseDocumentViewModel documentViewModel)
+            {
+                DocumentViewModel = documentViewModel;
+            }
+
+            public BaseDocumentViewModel DocumentViewModel { get; }
+        }
+
         // Private fields -----------------------------------------------------
 
         private readonly WinAPIService winAPIService;
@@ -218,6 +230,29 @@ namespace Dev.Editor
                 string[] files = (string[])e.Data.GetData(DataFormats.FileDrop);
 
                 viewModel.NotifyFilesDropped(files);
+            }
+        }
+
+        private void DocumentTabItemPreviewMouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.LeftButton == MouseButtonState.Pressed && !(e.OriginalSource is System.Windows.Controls.Button))
+            {
+                var stackPanel = (StackPanel)sender;
+
+                var data = stackPanel.DataContext as BaseDocumentViewModel;
+                DragDrop.DoDragDrop(sender as DependencyObject, new DragData(data), DragDropEffects.Move);
+            }
+        }
+
+        private void DocumentTabItemDrop(object sender, DragEventArgs e)
+        {
+            var stackPanel = (StackPanel)sender;
+
+            var dragData = (DragData)e.Data.GetData(typeof(DragData));
+            if (dragData != null)
+            {
+                var data = stackPanel.DataContext;
+                viewModel.ReorderDocument(dragData.DocumentViewModel, data as BaseDocumentViewModel);
             }
         }
 

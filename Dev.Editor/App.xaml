@@ -143,68 +143,6 @@
                 </Style.Setters>
             </Style>
 
-            <Style x:Key="RootDocumentTabControl" TargetType="controls:TabControlExt">
-                <Style.Setters>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type controls:TabControlExt}">
-                                <Grid x:Name="Grid" KeyboardNavigation.TabNavigation="Local">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition x:Name="ColumnDefinition0"/>
-                                        <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
-                                        <RowDefinition x:Name="RowDefinition1" Height="*"/>
-                                    </Grid.RowDefinitions>
-
-                                    <Border Grid.Row="1" Grid.Column="0" x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" 
-                                            BorderThickness="{TemplateBinding BorderThickness}" KeyboardNavigation.TabIndex="2" 
-                                            KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Contained">
-                                        <Border Background="{TemplateBinding Background}" x:Name="Border1">
-                                            <ContentPresenter DataContext="{x:Null}" Margin="{TemplateBinding Padding}" x:Name="PART_SelectedContentHost" 
-                                                              Content="{TemplateBinding SelectedContent}" ContentTemplate="{TemplateBinding SelectedContentTemplate}" 
-                                                              ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" ContentSource="SelectedContent"/>
-                                        </Border>
-                                    </Border>
-
-                                    <ScrollViewer x:Name="HeaderPanel" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" 
-                                      VerticalAlignment="Stretch" Margin="0,0,0,0" HorizontalScrollBarVisibility="Hidden" 
-                                                  VerticalScrollBarVisibility="Disabled" wpf:MouseEvents.DirectMouseDoubleClickCommand="{TemplateBinding HeaderDoubleClickCommand}">
-                                        <ScrollViewer.Style>
-                                            <Style TargetType="{x:Type ScrollViewer}">
-                                                <Setter Property="Template">
-                                                    <Setter.Value>
-                                                        <ControlTemplate>
-                                                            <Grid Margin="0,0,0,0" Grid.Row="0" Grid.Column="0" x:Name="HeaderPanel">
-                                                                <Grid.ColumnDefinitions>
-                                                                    <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="Auto"/>
-                                                                    <ColumnDefinition Width="Auto"/>
-                                                                </Grid.ColumnDefinitions>
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition Height="Auto"/>
-                                                                </Grid.RowDefinitions>
-                                                                <ScrollContentPresenter Grid.Column="0" Content="{TemplateBinding ScrollViewer.Content}" />
-                                                                <RepeatButton Grid.Column="1" Content="3" FontFamily="Marlett" FontSize="12" Padding="2" 
-                                                                          Command="ScrollBar.LineLeftCommand" Style="{StaticResource DocumentTabScrollButtonStyle}"/>
-                                                                <RepeatButton Grid.Column="2" Content="4" FontFamily="Marlett" FontSize="12" Padding="2" Command="ScrollBar.LineRightCommand" 
-                                                                          Style="{StaticResource DocumentTabScrollButtonStyle}"/>
-                                                            </Grid>
-                                                        </ControlTemplate>
-                                                    </Setter.Value>
-                                                </Setter>
-                                            </Style>
-                                        </ScrollViewer.Style>
-                                        <StackPanel IsItemsHost="true" Orientation="Horizontal" Background="{x:Null}" KeyboardNavigation.TabIndex="1" />
-                                    </ScrollViewer>
-                                </Grid>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style.Setters>
-            </Style>
-
             <Style x:Key="RootDockPanel" TargetType="DockPanel">
                 <Style.Setters>
                     <Setter Property="Background" Value="{StaticResource FormBackgroundBrush}" />
