@@ -199,6 +199,69 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to System.
+        /// </summary>
+        public static string Configuration_System {
+            get {
+                return ResourceManager.GetString("Configuration.System", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Disable integration.
+        /// </summary>
+        public static string Configuration_System_Integration_Disable {
+            get {
+                return ResourceManager.GetString("Configuration.System.Integration.Disable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Integration is disabled.
+        /// </summary>
+        public static string Configuration_System_Integration_Disabled {
+            get {
+                return ResourceManager.GetString("Configuration.System.Integration.Disabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Enable integration.
+        /// </summary>
+        public static string Configuration_System_Integration_Enable {
+            get {
+                return ResourceManager.GetString("Configuration.System.Integration.Enable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Integration is enabled.
+        /// </summary>
+        public static string Configuration_System_Integration_Enabled {
+            get {
+                return ResourceManager.GetString("Configuration.System.Integration.Enabled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to System context menu integration.
+        /// </summary>
+        public static string Configuration_System_IntegrationHeader {
+            get {
+                return ResourceManager.GetString("Configuration.System.IntegrationHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Integration state.
+        /// </summary>
+        public static string Configuration_System_IntegrationState {
+            get {
+                return ResourceManager.GetString("Configuration.System.IntegrationState", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration.
         /// </summary>
         public static string Configuration_Title {
@@ -1491,6 +1554,15 @@ namespace Dev.Editor.Resources {
         public static string SyntaxHighlighting_None {
             get {
                 return ResourceManager.GetString("SyntaxHighlighting.None", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Edit in Dev.Editor.
+        /// </summary>
+        public static string SystemIntegration_OpenInDevEditor {
+            get {
+                return ResourceManager.GetString("SystemIntegration.OpenInDevEditor", resourceCulture);
             }
         }
         

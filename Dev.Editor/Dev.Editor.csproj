@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Icon.ico</ApplicationIcon>
+    <ApplicationIcon>Dev.Editor.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationManifest>app.manifest</ApplicationManifest>
@@ -80,6 +80,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Converters\BoolToIntegrationStateConverter.cs" />
     <Compile Include="Models\ArgumentInfo.cs" />
     <Compile Include="NameDialog.xaml.cs">
       <DependentUpon>NameDialog.xaml</DependentUpon>
@@ -129,6 +130,7 @@
     <Compile Include="Services\Dialogs\DialogService.cs" />
     <Compile Include="Services\ImageResources\ImageResources.cs" />
     <Compile Include="Services\Platform\PlatformService.cs" />
+    <Compile Include="Services\Registry\RegistryService.cs" />
     <Compile Include="Services\SingleInstance\SingleInstanceService.cs" />
     <Compile Include="Services\WinAPI\WinAPIService.cs" />
     <Compile Include="Wpf\AccessKeyScopeControl.cs" />
@@ -341,7 +343,7 @@
     <Resource Include="Resources\Images\Message32.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icon.ico" />
+    <Resource Include="Dev.Editor.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Resources\Images\FolderOfFile16.png" />

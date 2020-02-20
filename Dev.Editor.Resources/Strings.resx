@@ -742,4 +742,28 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Tool.Explorer.Files.ShowInExplorer" xml:space="preserve">
     <value>Show in Windows Explorer</value>
   </data>
+  <data name="SystemIntegration.OpenInDevEditor" xml:space="preserve">
+    <value>Edit in Dev.Editor</value>
+  </data>
+  <data name="Configuration.System" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="Configuration.System.IntegrationHeader" xml:space="preserve">
+    <value>System context menu integration</value>
+  </data>
+  <data name="Configuration.System.IntegrationState" xml:space="preserve">
+    <value>Integration state</value>
+  </data>
+  <data name="Configuration.System.Integration.Enabled" xml:space="preserve">
+    <value>Integration is enabled</value>
+  </data>
+  <data name="Configuration.System.Integration.Disabled" xml:space="preserve">
+    <value>Integration is disabled</value>
+  </data>
+  <data name="Configuration.System.Integration.Enable" xml:space="preserve">
+    <value>Enable integration</value>
+  </data>
+  <data name="Configuration.System.Integration.Disable" xml:space="preserve">
+    <value>Disable integration</value>
+  </data>
 </root>

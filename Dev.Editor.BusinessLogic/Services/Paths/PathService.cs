@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using System.Reflection;
 
 namespace Dev.Editor.BusinessLogic.Services.Paths
 {
@@ -20,6 +21,7 @@ namespace Dev.Editor.BusinessLogic.Services.Paths
         private string configPath;
         private string storedFilesPath;
         private string binDefinitionsPath;
+        private string appExecutablePath;
 
         public PathService()
         {
@@ -33,6 +35,9 @@ namespace Dev.Editor.BusinessLogic.Services.Paths
             Directory.CreateDirectory(binDefinitionsPath);
 
             configPath = Path.Combine(appDataPath, CONFIG_FILENAME);
+
+            var executingAssembly = Assembly.GetEntryAssembly();
+            appExecutablePath = new Uri(executingAssembly.CodeBase).LocalPath;
         }
 
         public string ConfigPath => configPath;
@@ -40,5 +45,7 @@ namespace Dev.Editor.BusinessLogic.Services.Paths
         public string StoredFilesPath => storedFilesPath;
 
         public string BinDefinitionsPath => binDefinitionsPath;
+
+        public string AppExecutablePath => appExecutablePath;
     }
 }

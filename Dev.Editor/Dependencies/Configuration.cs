@@ -1,9 +1,11 @@
 ﻿using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
 using Dev.Editor.BusinessLogic.Services.Platform;
+using Dev.Editor.BusinessLogic.Services.Registry;
 using Dev.Editor.Services.Dialogs;
 using Dev.Editor.Services.ImageResources;
 using Dev.Editor.Services.Platform;
+using Dev.Editor.Services.Registry;
 using Dev.Editor.Services.SingleInstance;
 using Dev.Editor.Services.WinAPI;
 using System;
@@ -30,6 +32,7 @@ namespace Dev.Editor.Dependencies
             container.RegisterType<IPlatformService, PlatformService>(new ContainerControlledLifetimeManager());
             container.RegisterType<SingleInstanceService>(new ContainerControlledLifetimeManager());
             container.RegisterType<WinAPIService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IRegistryService, RegistryService>(new ContainerControlledLifetimeManager());
 
             Dev.Editor.BusinessLogic.Dependencies.Configuration.Configure(container);
 

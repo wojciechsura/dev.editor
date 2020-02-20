@@ -7,10 +7,13 @@
         xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Configuration;assembly=Dev.Editor.BusinessLogic"
         xmlns:b="clr-namespace:Dev.Editor.BusinessLogic.Types.Behavior;assembly=Dev.Editor.BusinessLogic"
         xmlns:res="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
+        xmlns:converters="clr-namespace:Dev.Editor.Converters"
         mc:Ignorable="d"
         Title="{x:Static res:Strings.Configuration_Title}" Height="450" Width="800">
     <Window.Resources>
         <ResourceDictionary>
+            <converters:BoolToIntegrationStateConverter x:Key="BoolToIntegrationStateConverter" />
+
             <Style TargetType="TextBlock" x:Key="Header">
                 <Style.Setters>
                     <Setter Property="FontWeight" Value="Bold" />
@@ -73,6 +76,22 @@
                                     <RadioButton IsChecked="{Binding CloseBehavior, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static b:CloseBehavior.Fluent}}" Content="{x:Static res:Strings.Configuration_Behavior_ClosingBehavior_Fluent}" />
                                     <TextBlock Margin="20,8,0,8" TextWrapping="Wrap" Text="{x:Static res:Strings.Configuration_Behavior_ClosingBehavior_Fluent_Comment}">
                                     </TextBlock>
+                                </StackPanel>
+                            </DockPanel>
+                        </StackPanel>
+                    </DataTemplate>
+
+                    <DataTemplate DataType="{x:Type vm:SystemConfigurationViewModel}">
+                        <StackPanel Orientation="Vertical" Style="{StaticResource ConfigurationPage}">
+                            <TextBlock Margin="3" Style="{StaticResource Header}" Text="{x:Static res:Strings.Configuration_System_IntegrationHeader}" />
+                            <DockPanel Style="{StaticResource ItemBlock}">
+                                <TextBlock DockPanel.Dock="Left" Style="{StaticResource ItemDesc}" Text="{x:Static res:Strings.Configuration_System_IntegrationState}" />
+                                <StackPanel Orientation="Vertical">
+                                    <TextBlock Text="{Binding SystemIntegrationState, Converter={StaticResource BoolToIntegrationStateConverter}}" />
+                                    <StackPanel Orientation="Horizontal">
+                                        <Button Margin="0,3,3,3" Content="{x:Static res:Strings.Configuration_System_Integration_Enable}" Command="{Binding EnableIntegrationCommand}" />
+                                        <Button Margin="3,3,3,3" Content="{x:Static res:Strings.Configuration_System_Integration_Disable}" Command="{Binding DisableIntegrationCommand}" />
+                                    </StackPanel>
                                 </StackPanel>
                             </DockPanel>
                         </StackPanel>

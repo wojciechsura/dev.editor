@@ -1,6 +1,8 @@
 ﻿using Dev.Editor.BusinessLogic.Services.Config;
 using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.Services.Messaging;
+using Dev.Editor.BusinessLogic.Services.Paths;
+using Dev.Editor.BusinessLogic.Services.Registry;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.Common.Commands;
 using System;
@@ -17,6 +19,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Configuration
         // Private fields -----------------------------------------------------
 
         private readonly IConfigurationService configurationService;
+        private readonly IRegistryService registryService;
+        private readonly IPathService pathService;
         private readonly IMessagingService messagingService;
 
         private readonly IConfigurationWindowAccess access;
@@ -55,15 +59,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Configuration
 
         // Public methods -----------------------------------------------------
 
-        public ConfigurationWindowViewModel(IConfigurationService configurationService, IMessagingService messagingService, IConfigurationWindowAccess access)
+        public ConfigurationWindowViewModel(IConfigurationService configurationService, IMessagingService messagingService, IRegistryService registryService, IPathService pathService, IConfigurationWindowAccess access)
         {
             this.configurationService = configurationService;
             this.messagingService = messagingService;
+            this.registryService = registryService;
+            this.pathService = pathService;
             this.access = access;
 
             pages = new List<BaseConfigurationViewModel>
             {
-                new BehaviorConfigurationViewModel(configurationService)
+                new BehaviorConfigurationViewModel(configurationService),
+                new SystemConfigurationViewModel(registryService, pathService)
             };
             activePage = pages.First();
 

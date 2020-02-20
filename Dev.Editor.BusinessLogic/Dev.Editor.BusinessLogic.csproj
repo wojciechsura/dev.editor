@@ -122,6 +122,7 @@
     <Compile Include="Services\Paths\IPathService.cs" />
     <Compile Include="Services\Paths\PathService.cs" />
     <Compile Include="Services\Platform\IPlatformService.cs" />
+    <Compile Include="Services\Registry\IRegistryService.cs" />
     <Compile Include="Services\SearchEncoder\InvalidSearchExpressionException.cs" />
     <Compile Include="Services\SearchEncoder\ISearchEncoderService.cs" />
     <Compile Include="Services\SearchEncoder\SearchEncoderService.cs" />
@@ -145,6 +146,7 @@
     <Compile Include="ViewModels\Configuration\BehaviorConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Configuration\ConfigurationWindowViewModel.cs" />
     <Compile Include="ViewModels\Configuration\IConfigurationWindowAccess.cs" />
+    <Compile Include="ViewModels\Configuration\SystemConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\NameDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\INameDialogAccess.cs" />
     <Compile Include="ViewModels\Document\BaseDocumentViewModel.cs" />

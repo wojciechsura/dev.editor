@@ -6,6 +6,7 @@ using Dev.Editor.BusinessLogic.Services.FileIcons;
 using Dev.Editor.BusinessLogic.Services.Highlighting;
 using Dev.Editor.BusinessLogic.Services.Messaging;
 using Dev.Editor.BusinessLogic.Services.Paths;
+using Dev.Editor.BusinessLogic.Services.Registry;
 using Dev.Editor.BusinessLogic.Services.SearchEncoder;
 using Dev.Editor.BusinessLogic.Services.StartupInfo;
 using System;

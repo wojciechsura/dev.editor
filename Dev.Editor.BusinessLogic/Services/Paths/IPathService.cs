@@ -11,5 +11,6 @@ namespace Dev.Editor.BusinessLogic.Services.Paths
         string ConfigPath { get; }
         string StoredFilesPath { get; }
         string BinDefinitionsPath { get; }
+        string AppExecutablePath { get; }
     }
 }

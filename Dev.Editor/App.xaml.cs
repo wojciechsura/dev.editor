@@ -48,8 +48,8 @@ namespace Dev.Editor
                 {
                     Args = e.Args.ToList()
                 };
-                var serializedArgs = JsonConvert.SerializeObject(argInfo);
 
+                var serializedArgs = JsonConvert.SerializeObject(argInfo);
                 var mainInstanceWindowHandle = singleInstanceService.ReadMainwWindowHandle();
 
                 winAPIService.SendCopyData(mainInstanceWindowHandle, serializedArgs);
