@@ -27,6 +27,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 
         private readonly IConfigurationService configurationService;
         private readonly IEventBus eventBus;
+
         private readonly IExplorerHandler explorerHandler;
         private readonly IFileIconProvider fileIconProvider;
         private readonly ObservableCollection<FileItemViewModel> files;
@@ -60,7 +61,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         {
             string path = explorerHandler.GetCurrentDocumentPath();
 
-            SetCurrentPath(path);
+            ShowCurrentPath(path);
         }
 
         private void HandleFolderTreeHeightChanged()
@@ -76,6 +77,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         private void HandleSelectedFolderChanged()
         {
             folderSelectedCondition.Value = selectedFolder != null;
+            configurationService.Configuration.Tools.Explorer.LastFolder.Value = selectedFolder?.GetFullPath();
+
             UpdateFolderContents();
         }
 
@@ -179,6 +182,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             if (file != null)
                 SelectedFile = file;
 
+        }
+
+        private void ShowCurrentPath(string path)
+        {
+            SetCurrentPath(path);
+
             access.ScrollToSelectedFolder();
             access.ScrollToSelectedFile();
         }
@@ -249,6 +258,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             SetLocationOfCurrentDocumentCommand = new AppCommand(obj => DoSetLocationOfCurrentDocument(), handler.CurrentDocumentHasPathCondition);
             OpenFolderInExplorerCommand = new AppCommand(obj => DoOpenFolderInExplorer(), folderSelectedCondition);
             SelectFileInExplorerCommand = new AppCommand(obj => DoSelectFileInExplorer(), fileSelectedCondition);
+
+            if (configurationService.Configuration.Tools.Explorer.LastFolder.Value != null)
+            {
+                SetCurrentPath(configurationService.Configuration.Tools.Explorer.LastFolder.Value);
+            }
         }
 
         public void FileItemChosen()
@@ -289,6 +303,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         void IEventListener<ApplicationActivatedEvent>.Receive(ApplicationActivatedEvent @event)
         {
             RefreshFolders();
+        }
+
+        public void NotifyWindowLoaded()
+        {
+            // When view is attached and ready, scroll to the selected file and folder.
+
+            access.ScrollToSelectedFolder();
+            access.ScrollToSelectedFile();
         }
 
         // Public properties --------------------------------------------------

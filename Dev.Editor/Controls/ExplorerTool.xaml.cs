@@ -33,7 +33,10 @@ namespace Dev.Editor.Controls
             viewModel = e.NewValue as ExplorerToolViewModel;
 
             if (viewModel != null)
+            {
                 viewModel.Access = this;
+                viewModel.NotifyWindowLoaded();
+            }
         }
 
         private void HandleFileListDoubleClick(object sender, MouseButtonEventArgs e)

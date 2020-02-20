@@ -476,11 +476,12 @@
 
                     <controls:TabControlExt.ItemTemplate>
                         <DataTemplate>
-                            <StackPanel Orientation="Horizontal" PreviewMouseMove="DocumentTabItemPreviewMouseMove" Drop="DocumentTabItemDrop">
+                            <StackPanel x:Name="spDocTabItemRoot" Orientation="Horizontal" PreviewMouseMove="DocumentTabItemPreviewMouseMove" Drop="DocumentTabItemDrop">
                                 <Image Width="16" Height="16" Source="{Binding Icon}"/>
                                 <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" MaxWidth="200" Margin="2"/>
                                 <TextBlock Text="•" Margin="2" Visibility="{Binding Changed, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                <Button Content="r" FontFamily="Marlett" FontSize="10" Command="{Binding CloseCommand}" Style="{StaticResource DocumentTabCloseButtonStyle}"/>
+                                <Button Content="r" FontFamily="Marlett" FontSize="10" Command="{Binding CloseCommand}" Style="{StaticResource DocumentTabCloseButtonStyle}" 
+                                        Foreground="{Binding ElementName=spDocTabItemRoot, Path=(TextBlock.Foreground)}"/>
                             </StackPanel>
                         </DataTemplate>
                     </controls:TabControlExt.ItemTemplate>
