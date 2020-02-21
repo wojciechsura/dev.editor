@@ -71,6 +71,8 @@
             <SolidColorBrush x:Key="ToolButtonDownBorderBrush" Color="#89b3dc" />
             <SolidColorBrush x:Key="ToolButtonDownBackgroundBrush" Color="#ebf2fa" />
 
+            <SolidColorBrush x:Key="DocumentCloseButtonHoverForegroundBrush" Color="#3A9EFF" />
+
             <!-- Styles -->
 
             <Style TargetType="Button">
@@ -85,16 +87,15 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="Button">
                                 <Border x:Name="ContentBorder" TextBlock.Foreground="{TemplateBinding Foreground}">
-                                    <Border x:Name="ContentGrid" Margin="1" Padding="2" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                            BorderThickness="0" BorderBrush="{TemplateBinding Foreground}">
+                                    <Grid x:Name="ContentGrid" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <ContentPresenter/>
-                                    </Border>
+                                    </Grid>
                                 </Border>
 
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsPressed" Value="True">
                                         <Trigger.Setters>
-                                            <Setter TargetName="ContentGrid" Property="Padding">
+                                            <Setter TargetName="ContentGrid" Property="Margin">
                                                 <Setter.Value>
                                                     <Thickness Top="3" Left="3" Right="1" Bottom="1" />
                                                 </Setter.Value>
@@ -102,8 +103,7 @@
                                         </Trigger.Setters>
                                     </Trigger>
                                     <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="ContentGrid" Property="Margin" Value="0" />
-                                        <Setter TargetName="ContentGrid" Property="BorderThickness" Value="1"/>
+                                        <Setter TargetName="ContentBorder" Property="TextBlock.Foreground" Value="{StaticResource DocumentCloseButtonHoverForegroundBrush}"/>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

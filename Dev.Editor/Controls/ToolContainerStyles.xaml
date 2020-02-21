@@ -5,6 +5,7 @@
     <SolidColorBrush x:Key="ToolHeaderForegroundBrush" Color="#e3ebf2" />
     <SolidColorBrush x:Key="ToolHeaderBackgroundBrush" Color="#40668c" />
     <SolidColorBrush x:Key="ToolBackgroundBrush" Color="#ccdef0" />
+    <SolidColorBrush x:Key="ToolCloseMouseHoverForegroundBrush" Color="#3A9EFF" />
 
     <Style x:Key="ToolWindowHeader" TargetType="Border">
         <Style.Setters>
@@ -37,7 +38,7 @@
                                 </Trigger.Setters>
                             </Trigger>
                             <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="ContentBorder" Property="TextElement.Foreground" Value="#086f9e" />
+                                <Setter TargetName="ContentBorder" Property="TextElement.Foreground" Value="{StaticResource ToolCloseMouseHoverForegroundBrush}" />
                             </Trigger>
                         </ControlTemplate.Triggers>
                     </ControlTemplate>
