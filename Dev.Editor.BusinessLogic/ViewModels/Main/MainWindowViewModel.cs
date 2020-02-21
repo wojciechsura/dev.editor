@@ -609,7 +609,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             foreach (var highlighting in highlightings)
             {
                 commandRepositoryService.RegisterCommand(String.Format(Resources.Strings.Command_SetHighlighting, highlighting.Name),
-                    null,
+                    "Highlighting16.png",
                     obj => DoSetHighlighting(highlighting),
                     documentIsTextCondition);
             }

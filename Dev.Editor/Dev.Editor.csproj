@@ -357,6 +357,9 @@
     <Resource Include="Resources\Images\Case16.png" />
     <Resource Include="Resources\Images\Case32.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\Highlighting16.png" />
+    <Resource Include="Resources\Images\Highlighting32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
