@@ -314,6 +314,12 @@
 
                 </f:RibbonGroupBox>
 
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_XmlTools_Group_Transform}">
+
+                    <f:Button Header="{x:Static p:Strings.Ribbon_XmlTools_Transform_XSLT}" Command="{Binding TransformXsltCommand}"
+                              SizeDefinition="Large" />
+                </f:RibbonGroupBox>
+                
             </f:RibbonTabItem>
 
         </f:Ribbon>

@@ -766,4 +766,16 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Configuration.System.Integration.Disable" xml:space="preserve">
     <value>Disable integration</value>
   </data>
+  <data name="Filter.Xslt" xml:space="preserve">
+    <value>XSLT sheets (*.xsl)|*.xsl</value>
+  </data>
+  <data name="Message.CannotTransformXslt" xml:space="preserve">
+    <value>Cannot transform XML file with XSLT. See Messages window for details.</value>
+  </data>
+  <data name="Ribbon.XmlTools.Group.Transform" xml:space="preserve">
+    <value>Transform</value>
+  </data>
+  <data name="Ribbon.XmlTools.Transform.XSLT" xml:space="preserve">
+    <value>XSLT transform</value>
+  </data>
 </root>

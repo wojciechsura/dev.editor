@@ -325,6 +325,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to XSLT sheets (*.xsl)|*.xsl.
+        /// </summary>
+        public static string Filter_Xslt {
+            get {
+                return ResourceManager.GetString("Filter.Xslt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot perform assignment to {0}. Reason:
         ///{1}.
         /// </summary>
@@ -471,6 +480,15 @@ namespace Dev.Editor.Resources {
         public static string Message_CannotSaveFile {
             get {
                 return ResourceManager.GetString("Message.CannotSaveFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cannot transform XML file with XSLT. See Messages window for details..
+        /// </summary>
+        public static string Message_CannotTransformXslt {
+            get {
+                return ResourceManager.GetString("Message.CannotTransformXslt", resourceCulture);
             }
         }
         
@@ -1338,6 +1356,24 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_XmlTools_Group_Formatting {
             get {
                 return ResourceManager.GetString("Ribbon.XmlTools.Group.Formatting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transform.
+        /// </summary>
+        public static string Ribbon_XmlTools_Group_Transform {
+            get {
+                return ResourceManager.GetString("Ribbon.XmlTools.Group.Transform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XSLT transform.
+        /// </summary>
+        public static string Ribbon_XmlTools_Transform_XSLT {
+            get {
+                return ResourceManager.GetString("Ribbon.XmlTools.Transform.XSLT", resourceCulture);
             }
         }
         

@@ -83,5 +83,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         // XmlTools
 
         public ICommand FormatXmlCommand { get; }
+        public ICommand TransformXsltCommand { get; }
     }
 }

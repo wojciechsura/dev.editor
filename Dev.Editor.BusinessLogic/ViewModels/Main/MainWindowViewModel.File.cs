@@ -130,7 +130,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return false;
         }
 
-        private void DoNewTextDocument()
+        private void DoNewTextDocument(string initialText = null)
         {
             InternalAddTextDocument(newDocument =>
             {
@@ -141,6 +141,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 string newFilename = GenerateBlankFileName(i);
                 newDocument.SetFilename(newFilename, fileIconProvider.GetImageForFile(newFilename));
                 newDocument.Highlighting = highlightingProvider.EmptyHighlighting;
+
+                if (initialText != null)
+                    newDocument.Document.Text = initialText;
             });            
         }
 

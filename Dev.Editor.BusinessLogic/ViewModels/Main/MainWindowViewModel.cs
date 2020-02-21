@@ -602,7 +602,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             Base64EncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_ToBase64, null, obj => DoBase64Encode(), documentIsTextCondition);
             Base64DecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_FromBase64, null, obj => DoBase64Decode(), documentIsTextCondition);
 
-            FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, null, obj => DoFormatXml(), xmlToolsetAvailableCondition);
+            FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, "FormatXml16.png", obj => DoFormatXml(), xmlToolsetAvailableCondition);
+            TransformXsltCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Transform_XSLT, null, obj => DoTransformXslt(), xmlToolsetAvailableCondition);
 
             // Initializing stored search/replaces
 
