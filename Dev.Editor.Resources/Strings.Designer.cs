@@ -127,6 +127,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Syntax highlighting {0}.
+        /// </summary>
+        public static string Command_SetHighlighting {
+            get {
+                return ResourceManager.GetString("Command.SetHighlighting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration.
         /// </summary>
         public static string Configuration {

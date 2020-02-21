@@ -778,4 +778,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.XmlTools.Transform.XSLT" xml:space="preserve">
     <value>XSLT transform</value>
   </data>
+  <data name="Command.SetHighlighting" xml:space="preserve">
+    <value>Syntax highlighting {0}</value>
+  </data>
 </root>

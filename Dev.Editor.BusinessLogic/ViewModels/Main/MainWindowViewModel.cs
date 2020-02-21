@@ -605,6 +605,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, "FormatXml16.png", obj => DoFormatXml(), xmlToolsetAvailableCondition);
             TransformXsltCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Transform_XSLT, null, obj => DoTransformXslt(), xmlToolsetAvailableCondition);
 
+            // Registering commands for syntax highlightings
+            foreach (var highlighting in highlightings)
+            {
+                commandRepositoryService.RegisterCommand(String.Format(Resources.Strings.Command_SetHighlighting, highlighting.Name),
+                    null,
+                    obj => DoSetHighlighting(highlighting),
+                    documentIsTextCondition);
+            }
+
             // Initializing stored search/replaces
 
             storedSearches = new ObservableCollection<StoredSearchReplaceViewModel>();
@@ -634,6 +643,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
             else
                 throw new InvalidOperationException("Invalid close behavior!");
+        }
+
+        private void DoSetHighlighting(HighlightingInfo highlighting)
+        {
+            ActiveDocument.Highlighting = highlighting;
         }
 
         private void DoRunStoredSearch(StoredSearchReplace storedSearchReplace)
