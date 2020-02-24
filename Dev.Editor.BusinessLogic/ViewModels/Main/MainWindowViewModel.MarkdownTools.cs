@@ -45,5 +45,54 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             InsertAtLineStart("###### ");
         }
 
+        private void DoInsertMarkdownHorizontalRuleCommand()
+        {
+            InsertAtLineStart("---\r\n");
+        }
+
+        private void DoInsertMarkdownPictureCommand()
+        {
+            SurroundSelection("![", "](http://example.com/image.png)");
+        }
+
+        private void DoInsertMarkdownLinkCommand()
+        {
+            SurroundSelection("[", "](http://example.com)");
+        }
+
+        private void DoInsertMarkdownStrongCommand()
+        {
+            SurroundSelection("**", "**");
+        }
+
+        private void DoInsertMarkdownEmphasisCommand()
+        {
+            SurroundSelection("*", "*");
+        }
+
+        private void DoInsertMarkdownInlineCodeCommand()
+        {
+            SurroundSelection("`", "`");
+        }
+
+        private void DoInsertMarkdownUnorderedListCommand()
+        {
+            InsertAtLineStart("* ");
+        }
+
+        private void DoInsertMarkdownOrderedListCommand()
+        {
+            InsertAtLineStart("1. ");
+        }
+
+        private void DoInsertMarkdownBlockquoteCommand()
+        {
+            PrependLines(">");
+        }
+
+        private void DoInsertMarkdownBlockCodeCommand()
+        {
+            PrependLines("    ");
+        }
     }
 }

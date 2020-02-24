@@ -623,6 +623,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             InsertMarkdownHeader5Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H5, "H516.png", obj => DoInsertMarkdownHeader5(), markdownToolsetAvailableCondition);
             InsertMarkdownHeader6Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H6, "H616.png", obj => DoInsertMarkdownHeader6(), markdownToolsetAvailableCondition);
 
+            InsertMarkdownBlockCodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Blocks_Code, null, obj => DoInsertMarkdownBlockCodeCommand(), markdownToolsetAvailableCondition);
+            InsertMarkdownBlockquoteCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Blocks_Blockquote, null, obj => DoInsertMarkdownBlockquoteCommand(), markdownToolsetAvailableCondition);
+            InsertMarkdownOrderedListCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Blocks_OrderedList, null, obj => DoInsertMarkdownOrderedListCommand(), markdownToolsetAvailableCondition);
+            InsertMarkdownUnorderedListCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Blocks_UnorderedList, null, obj => DoInsertMarkdownUnorderedListCommand(), markdownToolsetAvailableCondition);
+            InsertMarkdownInlineCodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Inline_Code, null, obj => DoInsertMarkdownInlineCodeCommand(), markdownToolsetAvailableCondition);
+            InsertMarkdownEmphasisCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Inline_Emphasis, null, obj => DoInsertMarkdownEmphasisCommand(), markdownToolsetAvailableCondition);
+            InsertMarkdownStrongCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Inline_Strong, null, obj => DoInsertMarkdownStrongCommand(), markdownToolsetAvailableCondition);
+            InsertMarkdownLinkCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Insert_Link, null, obj => DoInsertMarkdownLinkCommand(), markdownToolsetAvailableCondition);
+            InsertMarkdownPictureCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Insert_Picture, null, obj => DoInsertMarkdownPictureCommand(), markdownToolsetAvailableCondition);
+            InsertMarkdownHorizontalRuleCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Insert_Hr, null, obj => DoInsertMarkdownHorizontalRuleCommand(), markdownToolsetAvailableCondition);
+
             commandRepositoryService.RegisterCommand(Resources.Strings.Command_ToggleWordWrap, "WordWrap16.png", obj => DoToggleWordWrap());
             commandRepositoryService.RegisterCommand(Resources.Strings.Command_ToggleLineNumbers, "LineNumbers16.png", obj => DoToggleLineNumbers());
 
@@ -666,7 +677,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             else
                 throw new InvalidOperationException("Invalid close behavior!");
         }
-
         private void DoSetHighlighting(HighlightingInfo highlighting)
         {
             ActiveDocument.Highlighting = highlighting;

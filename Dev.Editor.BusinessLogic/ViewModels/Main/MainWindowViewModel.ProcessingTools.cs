@@ -87,7 +87,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             else
             {
                 document.Document.Insert(selStart, $"{before}{after}");
-                document.SetSelection(selStart + before.Length, 0);
             }
         }
 
@@ -100,8 +99,27 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             var line = document.Document.GetLineByOffset(selStart);
 
             document.Document.Insert(line.Offset, text);
+        }
 
-            document.SetSelection(selStart + text.Length, selLength);
+        private void PrependLines(string text)
+        {
+            var document = (TextDocumentViewModel)activeDocument;
+
+            (int selStart, int selLength) = document.GetSelection();
+
+            var startLine = document.Document.GetLineByOffset(selStart);
+            var endLine = document.Document.GetLineByOffset(selStart + selLength);
+
+            var line = endLine;
+            do
+            {               
+                document.Document.Insert(line.Offset, text);
+
+                line = line.PreviousLine;
+            }
+            while (line != startLine);
+
+            document.Document.Insert(startLine.Offset, text);
         }
     }
 }

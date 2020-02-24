@@ -1135,6 +1135,51 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Blocks.
+        /// </summary>
+        public static string Ribbon_Markdown_Blocks {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Blocks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blockquote.
+        /// </summary>
+        public static string Ribbon_Markdown_Blocks_Blockquote {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Blocks.Blockquote", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Code.
+        /// </summary>
+        public static string Ribbon_Markdown_Blocks_Code {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Blocks.Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ordered list.
+        /// </summary>
+        public static string Ribbon_Markdown_Blocks_OrderedList {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Blocks.OrderedList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unordered list.
+        /// </summary>
+        public static string Ribbon_Markdown_Blocks_UnorderedList {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Blocks.UnorderedList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Headers.
         /// </summary>
         public static string Ribbon_Markdown_Headers {
@@ -1194,6 +1239,78 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Markdown_Headers_H6 {
             get {
                 return ResourceManager.GetString("Ribbon.Markdown.Headers.H6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inline.
+        /// </summary>
+        public static string Ribbon_Markdown_Inline {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Inline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Code.
+        /// </summary>
+        public static string Ribbon_Markdown_Inline_Code {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Inline.Code", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Emphasis.
+        /// </summary>
+        public static string Ribbon_Markdown_Inline_Emphasis {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Inline.Emphasis", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Strong.
+        /// </summary>
+        public static string Ribbon_Markdown_Inline_Strong {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Inline.Strong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Insert.
+        /// </summary>
+        public static string Ribbon_Markdown_Insert {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Insert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Horizontal rule.
+        /// </summary>
+        public static string Ribbon_Markdown_Insert_Hr {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Insert.Hr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Link.
+        /// </summary>
+        public static string Ribbon_Markdown_Insert_Link {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Insert.Link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Picture.
+        /// </summary>
+        public static string Ribbon_Markdown_Insert_Picture {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Insert.Picture", resourceCulture);
             }
         }
         

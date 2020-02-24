@@ -362,5 +362,8 @@
   <ItemGroup>
     <Compile Include="ViewModels\Main\MainWindowViewModel.MarkdownTools.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Highlighting\MarkDown.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

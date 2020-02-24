@@ -207,7 +207,7 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
             RegisterHighlighting("MarkDown",
                 new[] { ".md" },
                 "MarkDown.xshd",
-                null,
+                "MarkDown.png",
                 FoldingKind.None,
                 false,
                 AdditionalToolset.Markdown);

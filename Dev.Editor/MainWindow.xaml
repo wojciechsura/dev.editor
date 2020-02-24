@@ -373,6 +373,68 @@
                     </f:RibbonToolBar>
                    
                 </f:RibbonGroupBox>
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Markdown_Blocks}">
+
+                    <f:Button SizeDefinition="Large" Header="{x:Static p:Strings.Ribbon_Markdown_Blocks_Code}" Command="{Binding InsertMarkdownBlockCodeCommand}" />
+
+                    <f:RibbonToolBar>
+
+                        <f:RibbonToolBar.LayoutDefinitions>
+                            <f:RibbonToolBarLayoutDefinition Size="Large">
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bMarkdownBlockquote" Size="Middle" />
+                                </f:RibbonToolBarRow>
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bMarkdownOrderedList" Size="Middle" />
+                                </f:RibbonToolBarRow>
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bMarkdownUnorderedList" Size="Middle" />
+                                </f:RibbonToolBarRow>
+                            </f:RibbonToolBarLayoutDefinition>
+                        </f:RibbonToolBar.LayoutDefinitions>
+
+                        <f:Button x:Name="bMarkdownBlockquote" Header="{x:Static p:Strings.Ribbon_Markdown_Blocks_Blockquote}" Command="{Binding InsertMarkdownBlockquoteCommand}" />
+                        <f:Button x:Name="bMarkdownOrderedList" Header="{x:Static p:Strings.Ribbon_Markdown_Blocks_OrderedList}" Command="{Binding InsertMarkdownOrderedListCommand}" />
+                        <f:Button x:Name="bMarkdownUnorderedList" Header="{x:Static p:Strings.Ribbon_Markdown_Blocks_UnorderedList}" Command="{Binding InsertMarkdownUnorderedListCommand}" />
+
+                    </f:RibbonToolBar>
+
+                </f:RibbonGroupBox>
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Markdown_Inline}">
+
+                    <f:RibbonToolBar>
+                    
+                        <f:RibbonToolBar.LayoutDefinitions>
+                            <f:RibbonToolBarLayoutDefinition Size="Large">
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bMarkdownCode" Size="Middle" />
+                                </f:RibbonToolBarRow>
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bMarkdownEmphasis" Size="Middle" />
+                                </f:RibbonToolBarRow>
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bMarkdownStrong" Size="Middle" />
+                                </f:RibbonToolBarRow>
+                            </f:RibbonToolBarLayoutDefinition>
+                        </f:RibbonToolBar.LayoutDefinitions>
+
+                        <f:Button x:Name="bMarkdownCode" Header="{x:Static p:Strings.Ribbon_Markdown_Inline_Code}" Command="{Binding InsertMarkdownInlineCodeCommand}" />
+                        <f:Button x:Name="bMarkdownEmphasis" Header="{x:Static p:Strings.Ribbon_Markdown_Inline_Emphasis}" Command="{Binding InsertMarkdownEmphasisCommand}" />
+                        <f:Button x:Name="bMarkdownStrong" Header="{x:Static p:Strings.Ribbon_Markdown_Inline_Strong}" Command="{Binding InsertMarkdownStrongCommand}" />
+
+                    </f:RibbonToolBar>
+
+                </f:RibbonGroupBox>
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Markdown_Insert}">
+
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Markdown_Insert_Link}" Command="{Binding InsertMarkdownLinkCommand}" />
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Markdown_Insert_Picture}" Command="{Binding InsertMarkdownPictureCommand}" />
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Markdown_Insert_Hr}" Command="{Binding InsertMarkdownHorizontalRuleCommand}" />
+                    
+                </f:RibbonGroupBox>
                 
             </f:RibbonTabItem>
             

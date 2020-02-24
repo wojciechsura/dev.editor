@@ -94,5 +94,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand InsertMarkdownHeader4Command { get; }
         public ICommand InsertMarkdownHeader5Command { get; }
         public ICommand InsertMarkdownHeader6Command { get; }
+
+        public ICommand InsertMarkdownBlockCodeCommand { get; }
+        public ICommand InsertMarkdownBlockquoteCommand { get; }
+        public ICommand InsertMarkdownOrderedListCommand { get; }
+        public ICommand InsertMarkdownUnorderedListCommand { get; }
+        public ICommand InsertMarkdownInlineCodeCommand { get; }
+        public ICommand InsertMarkdownEmphasisCommand { get; }
+        public ICommand InsertMarkdownStrongCommand { get; }
+        public ICommand InsertMarkdownLinkCommand { get; }
+        public ICommand InsertMarkdownPictureCommand { get; }
+        public ICommand InsertMarkdownHorizontalRuleCommand { get; }
     }   
 }

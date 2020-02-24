@@ -814,4 +814,43 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Command.ToggleLineNumbers" xml:space="preserve">
     <value>Toggle line numbers</value>
   </data>
+  <data name="Ribbon.Markdown.Blocks" xml:space="preserve">
+    <value>Blocks</value>
+  </data>
+  <data name="Ribbon.Markdown.Blocks.Blockquote" xml:space="preserve">
+    <value>Blockquote</value>
+  </data>
+  <data name="Ribbon.Markdown.Blocks.Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Ribbon.Markdown.Inline.Code" xml:space="preserve">
+    <value>Code</value>
+  </data>
+  <data name="Ribbon.Markdown.Inline" xml:space="preserve">
+    <value>Inline</value>
+  </data>
+  <data name="Ribbon.Markdown.Inline.Emphasis" xml:space="preserve">
+    <value>Emphasis</value>
+  </data>
+  <data name="Ribbon.Markdown.Inline.Strong" xml:space="preserve">
+    <value>Strong</value>
+  </data>
+  <data name="Ribbon.Markdown.Blocks.UnorderedList" xml:space="preserve">
+    <value>Unordered list</value>
+  </data>
+  <data name="Ribbon.Markdown.Blocks.OrderedList" xml:space="preserve">
+    <value>Ordered list</value>
+  </data>
+  <data name="Ribbon.Markdown.Insert" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="Ribbon.Markdown.Insert.Hr" xml:space="preserve">
+    <value>Horizontal rule</value>
+  </data>
+  <data name="Ribbon.Markdown.Insert.Link" xml:space="preserve">
+    <value>Link</value>
+  </data>
+  <data name="Ribbon.Markdown.Insert.Picture" xml:space="preserve">
+    <value>Picture</value>
+  </data>
 </root>
