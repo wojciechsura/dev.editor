@@ -376,7 +376,9 @@
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Markdown_Blocks}">
 
-                    <f:Button SizeDefinition="Large" Header="{x:Static p:Strings.Ribbon_Markdown_Blocks_Code}" Command="{Binding InsertMarkdownBlockCodeCommand}" />
+                    <f:Button SizeDefinition="Large" Header="{x:Static p:Strings.Ribbon_Markdown_Blocks_Code}" Command="{Binding InsertMarkdownBlockCodeCommand}" 
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Source32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Source16.png"/>
 
                     <f:RibbonToolBar>
 
@@ -394,9 +396,15 @@
                             </f:RibbonToolBarLayoutDefinition>
                         </f:RibbonToolBar.LayoutDefinitions>
 
-                        <f:Button x:Name="bMarkdownBlockquote" Header="{x:Static p:Strings.Ribbon_Markdown_Blocks_Blockquote}" Command="{Binding InsertMarkdownBlockquoteCommand}" />
-                        <f:Button x:Name="bMarkdownOrderedList" Header="{x:Static p:Strings.Ribbon_Markdown_Blocks_OrderedList}" Command="{Binding InsertMarkdownOrderedListCommand}" />
-                        <f:Button x:Name="bMarkdownUnorderedList" Header="{x:Static p:Strings.Ribbon_Markdown_Blocks_UnorderedList}" Command="{Binding InsertMarkdownUnorderedListCommand}" />
+                        <f:Button x:Name="bMarkdownBlockquote" Header="{x:Static p:Strings.Ribbon_Markdown_Blocks_Blockquote}" Command="{Binding InsertMarkdownBlockquoteCommand}" 
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Quote32.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Quote16.png"/>
+                        <f:Button x:Name="bMarkdownOrderedList" Header="{x:Static p:Strings.Ribbon_Markdown_Blocks_OrderedList}" Command="{Binding InsertMarkdownOrderedListCommand}" 
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/OrderedList32.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/OrderedList16.png"/>
+                        <f:Button x:Name="bMarkdownUnorderedList" Header="{x:Static p:Strings.Ribbon_Markdown_Blocks_UnorderedList}" Command="{Binding InsertMarkdownUnorderedListCommand}" 
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/UnorderedList32.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/UnorderedList16.png"/>
 
                     </f:RibbonToolBar>
 
@@ -420,9 +428,15 @@
                             </f:RibbonToolBarLayoutDefinition>
                         </f:RibbonToolBar.LayoutDefinitions>
 
-                        <f:Button x:Name="bMarkdownCode" Header="{x:Static p:Strings.Ribbon_Markdown_Inline_Code}" Command="{Binding InsertMarkdownInlineCodeCommand}" />
-                        <f:Button x:Name="bMarkdownEmphasis" Header="{x:Static p:Strings.Ribbon_Markdown_Inline_Emphasis}" Command="{Binding InsertMarkdownEmphasisCommand}" />
-                        <f:Button x:Name="bMarkdownStrong" Header="{x:Static p:Strings.Ribbon_Markdown_Inline_Strong}" Command="{Binding InsertMarkdownStrongCommand}" />
+                        <f:Button x:Name="bMarkdownCode" Header="{x:Static p:Strings.Ribbon_Markdown_Inline_Code}" Command="{Binding InsertMarkdownInlineCodeCommand}" 
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Source32.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Source16.png"/>
+                        <f:Button x:Name="bMarkdownEmphasis" Header="{x:Static p:Strings.Ribbon_Markdown_Inline_Emphasis}" Command="{Binding InsertMarkdownEmphasisCommand}" 
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Italic32.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Italic16.png"/>
+                        <f:Button x:Name="bMarkdownStrong" Header="{x:Static p:Strings.Ribbon_Markdown_Inline_Strong}" Command="{Binding InsertMarkdownStrongCommand}" 
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Bold32.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Bold16.png"/>
 
                     </f:RibbonToolBar>
 
@@ -430,10 +444,16 @@
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Markdown_Insert}">
 
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Markdown_Insert_Link}" Command="{Binding InsertMarkdownLinkCommand}" />
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Markdown_Insert_Picture}" Command="{Binding InsertMarkdownPictureCommand}" />
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Markdown_Insert_Hr}" Command="{Binding InsertMarkdownHorizontalRuleCommand}" />
-                    
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Markdown_Insert_Link}" Command="{Binding InsertMarkdownLinkCommand}" 
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Link32.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Link16.png"/>
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Markdown_Insert_Picture}" Command="{Binding InsertMarkdownPictureCommand}" 
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Image32.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Image16.png"/>
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Markdown_Insert_Hr}" Command="{Binding InsertMarkdownHorizontalRuleCommand}" 
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/HorizontalRule32.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/HorizontalRule16.png"/>
+
                 </f:RibbonGroupBox>
                 
             </f:RibbonTabItem>

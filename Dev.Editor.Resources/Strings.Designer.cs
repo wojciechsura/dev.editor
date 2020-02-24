@@ -1153,7 +1153,7 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Code.
+        ///   Looks up a localized string similar to Source code.
         /// </summary>
         public static string Ribbon_Markdown_Blocks_Code {
             get {
@@ -1252,7 +1252,7 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Code.
+        ///   Looks up a localized string similar to Source code.
         /// </summary>
         public static string Ribbon_Markdown_Inline_Code {
             get {

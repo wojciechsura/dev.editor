@@ -25,6 +25,11 @@ https://marketplace.visualstudio.com/items?itemName=jtlowe.vscode-icon-theme
 * Nuvola icons by David Vignoni (LGPL)
 https://www.iconfinder.com/iconsets/nuvola2
 
+* Picol Vector icons by PICOL (CC BY-SA 3.0)
+https://www.iconfinder.com/iconsets/picol-vector
+
+
+
 Libraries
 
 * AvalonEdit (MIT)

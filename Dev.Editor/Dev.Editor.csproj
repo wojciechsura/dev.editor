@@ -383,5 +383,25 @@
     <Resource Include="Resources\Images\WordWrap16.png" />
     <Resource Include="Resources\Images\WordWrap32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Bold16.png" />
+    <Resource Include="Resources\Images\Bold32.png" />
+    <Resource Include="Resources\Images\HorizontalRule16.png" />
+    <Resource Include="Resources\Images\HorizontalRule32.png" />
+    <Resource Include="Resources\Images\Image16.png" />
+    <Resource Include="Resources\Images\Image32.png" />
+    <Resource Include="Resources\Images\Italic16.png" />
+    <Resource Include="Resources\Images\Italic32.png" />
+    <Resource Include="Resources\Images\Link16.png" />
+    <Resource Include="Resources\Images\Link32.png" />
+    <Resource Include="Resources\Images\OrderedList16.png" />
+    <Resource Include="Resources\Images\OrderedList32.png" />
+    <Resource Include="Resources\Images\Quote16.png" />
+    <Resource Include="Resources\Images\Quote32.png" />
+    <Resource Include="Resources\Images\Source16.png" />
+    <Resource Include="Resources\Images\Source32.png" />
+    <Resource Include="Resources\Images\UnorderedList16.png" />
+    <Resource Include="Resources\Images\UnorderedList32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

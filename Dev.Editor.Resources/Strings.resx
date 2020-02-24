@@ -821,10 +821,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
     <value>Blockquote</value>
   </data>
   <data name="Ribbon.Markdown.Blocks.Code" xml:space="preserve">
-    <value>Code</value>
+    <value>Source code</value>
   </data>
   <data name="Ribbon.Markdown.Inline.Code" xml:space="preserve">
-    <value>Code</value>
+    <value>Source code</value>
   </data>
   <data name="Ribbon.Markdown.Inline" xml:space="preserve">
     <value>Inline</value>
