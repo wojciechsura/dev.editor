@@ -18,13 +18,9 @@
   <!-- Rules -->
   
 	<RuleSet ignoreCase="true">
-    <!-- Catching escaped emphasize boundaries -->
+    <!-- Catching escaped characters -->
     <Rule>
-      \\\*
-    </Rule>
-
-    <Rule>
-      \\_
+      \\[\\`\*_\{\}\[\]\(\)\#\+\-\.\!]
     </Rule>
 
     <Rule color="Heading">
