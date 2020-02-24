@@ -375,5 +375,13 @@
     <Resource Include="Resources\Images\H616.png" />
     <Resource Include="Resources\Images\H632.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\LineNumbers16.png" />
+    <Resource Include="Resources\Images\LineNumbers32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\WordWrap16.png" />
+    <Resource Include="Resources\Images\WordWrap32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

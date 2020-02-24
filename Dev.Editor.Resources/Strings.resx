@@ -808,4 +808,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Markdown.Headers.H6" xml:space="preserve">
     <value>Header 6</value>
   </data>
+  <data name="Command.ToggleWordWrap" xml:space="preserve">
+    <value>Toggle word wrap</value>
+  </data>
+  <data name="Command.ToggleLineNumbers" xml:space="preserve">
+    <value>Toggle line numbers</value>
+  </data>
 </root>

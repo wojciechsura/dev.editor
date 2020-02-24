@@ -397,6 +397,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 .ForEach(srvm => storedReplaces.Add(srvm));
         }
 
+        private void DoToggleLineNumbers()
+        {
+            LineNumbers = !LineNumbers;
+        }
+
+        private void DoToggleWordWrap()
+        {
+            WordWrap = !WordWrap;
+        }
+
         // IDocumentHandler implementation ------------------------------------
 
         void IDocumentHandler.RequestClose(BaseDocumentViewModel documentViewModel)
@@ -606,12 +616,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, "FormatXml16.png", obj => DoFormatXml(), xmlToolsetAvailableCondition);
             TransformXsltCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Transform_XSLT, null, obj => DoTransformXslt(), xmlToolsetAvailableCondition);
 
-            InsertMarkdownHeader1Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H1, null, obj => DoInsertMarkdownHeader1(), markdownToolsetAvailableCondition);
-            InsertMarkdownHeader2Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H2, null, obj => DoInsertMarkdownHeader2(), markdownToolsetAvailableCondition);
-            InsertMarkdownHeader3Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H3, null, obj => DoInsertMarkdownHeader3(), markdownToolsetAvailableCondition);
-            InsertMarkdownHeader4Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H4, null, obj => DoInsertMarkdownHeader4(), markdownToolsetAvailableCondition);
-            InsertMarkdownHeader5Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H5, null, obj => DoInsertMarkdownHeader5(), markdownToolsetAvailableCondition);
-            InsertMarkdownHeader6Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H6, null, obj => DoInsertMarkdownHeader6(), markdownToolsetAvailableCondition);
+            InsertMarkdownHeader1Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H1, "H116.png", obj => DoInsertMarkdownHeader1(), markdownToolsetAvailableCondition);
+            InsertMarkdownHeader2Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H2, "H216.png", obj => DoInsertMarkdownHeader2(), markdownToolsetAvailableCondition);
+            InsertMarkdownHeader3Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H3, "H316.png", obj => DoInsertMarkdownHeader3(), markdownToolsetAvailableCondition);
+            InsertMarkdownHeader4Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H4, "H416.png", obj => DoInsertMarkdownHeader4(), markdownToolsetAvailableCondition);
+            InsertMarkdownHeader5Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H5, "H516.png", obj => DoInsertMarkdownHeader5(), markdownToolsetAvailableCondition);
+            InsertMarkdownHeader6Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H6, "H616.png", obj => DoInsertMarkdownHeader6(), markdownToolsetAvailableCondition);
+
+            commandRepositoryService.RegisterCommand(Resources.Strings.Command_ToggleWordWrap, "WordWrap16.png", obj => DoToggleWordWrap());
+            commandRepositoryService.RegisterCommand(Resources.Strings.Command_ToggleLineNumbers, "LineNumbers16.png", obj => DoToggleLineNumbers());
+
 
             // Registering commands for syntax highlightings
             foreach (var highlighting in highlightings)

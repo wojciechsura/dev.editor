@@ -136,6 +136,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Toggle line numbers.
+        /// </summary>
+        public static string Command_ToggleLineNumbers {
+            get {
+                return ResourceManager.GetString("Command.ToggleLineNumbers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Toggle word wrap.
+        /// </summary>
+        public static string Command_ToggleWordWrap {
+            get {
+                return ResourceManager.GetString("Command.ToggleWordWrap", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Configuration.
         /// </summary>
         public static string Configuration {
