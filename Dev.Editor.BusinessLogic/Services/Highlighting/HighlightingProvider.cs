@@ -208,7 +208,9 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
                 new[] { ".md" },
                 "MarkDown.xshd",
                 null,
-                FoldingKind.None);
+                FoldingKind.None,
+                false,
+                AdditionalToolset.Markdown);
 
             // Sort highlightings
             allHighlightingInfos.Sort((i1, i2) => i1.Name.CompareTo(i2.Name));

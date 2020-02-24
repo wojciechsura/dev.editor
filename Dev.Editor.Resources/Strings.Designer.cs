@@ -865,6 +865,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Markdown.
+        /// </summary>
+        public static string Ribbon_ContentGroup_Markdown {
+            get {
+                return ResourceManager.GetString("Ribbon.ContentGroup.Markdown", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to XML.
         /// </summary>
         public static string Ribbon_ContextGroup_Xml {
@@ -1108,6 +1117,69 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Headers.
+        /// </summary>
+        public static string Ribbon_Markdown_Headers {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Headers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Header 1.
+        /// </summary>
+        public static string Ribbon_Markdown_Headers_H1 {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Headers.H1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Header 2.
+        /// </summary>
+        public static string Ribbon_Markdown_Headers_H2 {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Headers.H2", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Header 3.
+        /// </summary>
+        public static string Ribbon_Markdown_Headers_H3 {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Headers.H3", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Header 4.
+        /// </summary>
+        public static string Ribbon_Markdown_Headers_H4 {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Headers.H4", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Header 5.
+        /// </summary>
+        public static string Ribbon_Markdown_Headers_H5 {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Headers.H5", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Header 6.
+        /// </summary>
+        public static string Ribbon_Markdown_Headers_H6 {
+            get {
+                return ResourceManager.GetString("Ribbon.Markdown.Headers.H6", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Ribbon_Tab_Home {
@@ -1122,6 +1194,15 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Tab_Lines {
             get {
                 return ResourceManager.GetString("Ribbon.Tab.Lines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Markdown tools.
+        /// </summary>
+        public static string Ribbon_Tab_MarkdownTools {
+            get {
+                return ResourceManager.GetString("Ribbon.Tab.MarkdownTools", resourceCulture);
             }
         }
         

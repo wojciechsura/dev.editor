@@ -9,6 +9,7 @@ namespace Dev.Editor.BusinessLogic.Types.UI
     public enum AdditionalToolset
     {
         None,
-        Xml
+        Xml,
+        Markdown
     }
 }

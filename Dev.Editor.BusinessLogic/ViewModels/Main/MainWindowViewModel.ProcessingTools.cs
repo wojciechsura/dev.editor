@@ -71,5 +71,37 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 });
             }
         }
+
+        private void SurroundSelection(string before, string after)
+        {
+            var document = (TextDocumentViewModel)activeDocument;
+
+            (int selStart, int selLength) = document.GetSelection();
+
+            if (selLength > 0)
+            {
+                var text = document.Document.GetText(selStart, selLength);
+                document.Document.Replace(selStart, selLength, $"{before}{text}{after}");
+                document.SetSelection(selStart + before.Length, selLength);
+            }
+            else
+            {
+                document.Document.Insert(selStart, $"{before}{after}");
+                document.SetSelection(selStart + before.Length, 0);
+            }
+        }
+
+        private void InsertAtLineStart(string text)
+        {
+            var document = (TextDocumentViewModel)activeDocument;
+
+            (int selStart, int selLength) = document.GetSelection();
+
+            var line = document.Document.GetLineByOffset(selStart);
+
+            document.Document.Insert(line.Offset, text);
+
+            document.SetSelection(selStart + text.Length, selLength);
+        }
     }
 }

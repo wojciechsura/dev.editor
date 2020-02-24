@@ -65,7 +65,10 @@
             <f:Ribbon.ContextualGroups>
                 <f:RibbonContextualTabGroup x:Name="rctgXml" Header="{x:Static p:Strings.Ribbon_ContextGroup_Xml}" 
                                             Visibility="{Binding ActiveDocument.Highlighting.AdditionalToolset, Converter={StaticResource AdditionalToolsetToVisibilityConverter}, ConverterParameter={x:Static uit:AdditionalToolset.Xml}}"
-                                            Background="#0000a0"/>
+                                            Background="#0000a0" />
+                <f:RibbonContextualTabGroup x:Name="rctgMarkdown" Header="{x:Static p:Strings.Ribbon_ContentGroup_Markdown}"
+                                            Visibility="{Binding ActiveDocument.Highlighting.AdditionalToolset, Converter={StaticResource AdditionalToolsetToVisibilityConverter}, ConverterParameter={x:Static uit:AdditionalToolset.Markdown}}"
+                                            Background="#00a000" />
             </f:Ribbon.ContextualGroups>
 
             <!-- Home tab -->
@@ -322,6 +325,57 @@
                 
             </f:RibbonTabItem>
 
+            <!-- Markdown tools -->
+
+            <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_MarkdownTools}"
+                             Group="{Binding ElementName=rctgMarkdown}">
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Markdown_Headers}">
+                                       
+                    <f:Button SizeDefinition="Large" Header="{x:Static p:Strings.Ribbon_Markdown_Headers_H1}" Command="{Binding InsertMarkdownHeader1Command}"
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/H132.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/H116.png"/>
+                    <f:Button SizeDefinition="Large" Header="{x:Static p:Strings.Ribbon_Markdown_Headers_H2}" Command="{Binding InsertMarkdownHeader2Command}" 
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/H232.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/H216.png"/>
+
+                    <f:RibbonToolBar>
+                        <f:RibbonToolBar.LayoutDefinitions>
+
+                            <f:RibbonToolBarLayoutDefinition Size="Large">
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bMarkdownH3" Size="Middle" />
+                                    <f:RibbonToolBarControlDefinition Target="bMarkdownH4" Size="Middle" />
+                                </f:RibbonToolBarRow>
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bMarkdownH5" Size="Middle" />
+                                    <f:RibbonToolBarControlDefinition Target="bMarkdownH6" Size="Middle" />
+                                </f:RibbonToolBarRow>
+                            </f:RibbonToolBarLayoutDefinition>
+                        </f:RibbonToolBar.LayoutDefinitions>
+
+                        <f:Button x:Name="bMarkdownH3" SizeDefinition="Medium" Header="{x:Static p:Strings.Ribbon_Markdown_Headers_H3}" Command="{Binding InsertMarkdownHeader3Command}" 
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/H332.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/H316.png"/>
+
+                        <f:Button x:Name="bMarkdownH4" SizeDefinition="Medium" Header="{x:Static p:Strings.Ribbon_Markdown_Headers_H4}" Command="{Binding InsertMarkdownHeader4Command}" 
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/H432.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/H416.png"/>
+
+                        <f:Button x:Name="bMarkdownH5" SizeDefinition="Medium" Header="{x:Static p:Strings.Ribbon_Markdown_Headers_H5}" Command="{Binding InsertMarkdownHeader5Command}" 
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/H532.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/H516.png"/>
+
+                        <f:Button x:Name="bMarkdownH6" SizeDefinition="Medium" Header="{x:Static p:Strings.Ribbon_Markdown_Headers_H6}" Command="{Binding InsertMarkdownHeader6Command}" 
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/H632.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/H616.png"/>
+
+                    </f:RibbonToolBar>
+                   
+                </f:RibbonGroupBox>
+                
+            </f:RibbonTabItem>
+            
         </f:Ribbon>
 
         <Grid Margin="{StaticResource HalfMargin}">

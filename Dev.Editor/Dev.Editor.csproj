@@ -361,5 +361,19 @@
     <Resource Include="Resources\Images\Highlighting16.png" />
     <Resource Include="Resources\Images\Highlighting32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\H116.png" />
+    <Resource Include="Resources\Images\H132.png" />
+    <Resource Include="Resources\Images\H216.png" />
+    <Resource Include="Resources\Images\H232.png" />
+    <Resource Include="Resources\Images\H316.png" />
+    <Resource Include="Resources\Images\H332.png" />
+    <Resource Include="Resources\Images\H416.png" />
+    <Resource Include="Resources\Images\H432.png" />
+    <Resource Include="Resources\Images\H516.png" />
+    <Resource Include="Resources\Images\H532.png" />
+    <Resource Include="Resources\Images\H616.png" />
+    <Resource Include="Resources\Images\H632.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

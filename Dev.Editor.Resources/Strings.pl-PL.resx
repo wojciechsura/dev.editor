@@ -781,4 +781,31 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Command.SetHighlighting" xml:space="preserve">
     <value>Kolorowanie składni {0}</value>
   </data>
+  <data name="Ribbon.ContentGroup.Markdown" xml:space="preserve">
+    <value>Markdown</value>
+  </data>
+  <data name="Ribbon.Markdown.Headers.H1" xml:space="preserve">
+    <value>Header 1</value>
+  </data>
+  <data name="Ribbon.Markdown.Headers" xml:space="preserve">
+    <value>Nagłówki</value>
+  </data>
+  <data name="Ribbon.Tab.MarkdownTools" xml:space="preserve">
+    <value>Narzędzia Markdown</value>
+  </data>
+  <data name="Ribbon.Markdown.Headers.H2" xml:space="preserve">
+    <value>Header 2</value>
+  </data>
+  <data name="Ribbon.Markdown.Headers.H3" xml:space="preserve">
+    <value>Header 3</value>
+  </data>
+  <data name="Ribbon.Markdown.Headers.H4" xml:space="preserve">
+    <value>Header 4</value>
+  </data>
+  <data name="Ribbon.Markdown.Headers.H5" xml:space="preserve">
+    <value>Header 5</value>
+  </data>
+  <data name="Ribbon.Markdown.Headers.H6" xml:space="preserve">
+    <value>Header 6</value>
+  </data>
 </root>
