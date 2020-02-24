@@ -117,9 +117,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 line = line.PreviousLine;
             }
-            while (line != startLine);
+            while (line != startLine && line != null);
 
-            document.Document.Insert(startLine.Offset, text);
+            if (line == startLine)
+                document.Document.Insert(startLine.Offset, text);
         }
     }
 }
