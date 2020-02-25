@@ -233,6 +233,11 @@ namespace Dev.Editor
             }
         }
 
+        private void HandleWindowActivated(object sender, EventArgs e)
+        {
+            viewModel.NotifyActivated();
+        }
+
         private void DocumentTabItemPreviewMouseMove(object sender, MouseEventArgs e)
         {
             if (e.LeftButton == MouseButtonState.Pressed && !(e.OriginalSource is System.Windows.Controls.Button))
@@ -324,6 +329,6 @@ namespace Dev.Editor
             DataContext = viewModel;
 
             navigationTimer = new Lazy<DispatcherTimer>(() => new DispatcherTimer(TimeSpan.FromMilliseconds(500), DispatcherPriority.Normal, NavigationSearch, this.Dispatcher));
-        }
+        }        
     }
 }

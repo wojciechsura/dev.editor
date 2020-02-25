@@ -13,6 +13,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
         private readonly ConfigValue<bool> isDirty;
         private readonly ConfigValue<bool> flienameIsVirtual;
         private readonly ConfigValue<string> storedFilename;
+        private readonly ConfigValue<long> lastModifiedDate;
 
         public BaseStoredFile(string name)             
             : base(name)
@@ -21,6 +22,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
             isDirty = new ConfigValue<bool>("IsDirty", this);
             flienameIsVirtual = new ConfigValue<bool>("FilenameIsVirtual", this);
             storedFilename = new ConfigValue<string>("StoredFilename", this);
+            lastModifiedDate = new ConfigValue<long>("LastModifiedDate", this);
         }
 
         public ConfigValue<string> Filename => filename;
@@ -30,5 +32,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
         public ConfigValue<bool> FilenameIsVirtual => flienameIsVirtual;
 
         public ConfigValue<string> StoredFilename => storedFilename;
+
+        public ConfigValue<long> LastModifiedDate => lastModifiedDate;
     }
 }

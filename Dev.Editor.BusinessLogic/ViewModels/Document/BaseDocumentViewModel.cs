@@ -29,6 +29,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         protected bool changed;
         protected string filename;
         protected bool filenameVirtual;
+        protected DateTime lastModificationDate;
         protected bool canUndo;
         protected bool canRedo;
         protected bool canSave;
@@ -97,6 +98,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         {
             get => filenameVirtual;
             set => Set(ref filenameVirtual, () => FilenameVirtual, value);
+        }
+
+        public DateTime LastModificationDate
+        {
+            get => lastModificationDate;
+            set => Set(ref lastModificationDate, () => LastModificationDate, value);
         }
 
         public bool CanUndo

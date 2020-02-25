@@ -853,4 +853,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Markdown.Insert.Picture" xml:space="preserve">
     <value>Picture</value>
   </data>
+  <data name="Message.DocumentDeleted" xml:space="preserve">
+    <value>File {0} was deleted. Do you want to keep it in the editor?</value>
+  </data>
+  <data name="Message.DocumentModifiedOutsideEditor" xml:space="preserve">
+    <value>File {0} was modified outside the editor. Do you want to reload it?</value>
+  </data>
 </root>

@@ -520,6 +520,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File {0} was deleted. Do you want to keep it in the editor?.
+        /// </summary>
+        public static string Message_DocumentDeleted {
+            get {
+                return ResourceManager.GetString("Message.DocumentDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to File {0} was modified outside the editor. Do you want to reload it?.
+        /// </summary>
+        public static string Message_DocumentModifiedOutsideEditor {
+            get {
+                return ResourceManager.GetString("Message.DocumentModifiedOutsideEditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot access member {0} of field {1}..
         /// </summary>
         public static string Message_EvalError_CannotAccessMember {

@@ -22,32 +22,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return $"{Strings.BlankDocumentName}{i}.txt";
         }
 
-        private bool CheckIsAlreadyOpened(string filename)
+        private BaseDocumentViewModel FindDocument(string filename)
         {
-            foreach (var document in documents)
-            {
-                if (string.Equals(document.FileName.ToLower(), filename.ToLower()))
-                {
-                    ActiveDocument = document;
-                    return true;
-                }
-            }
-
-            return false;
+            return documents.FirstOrDefault(d => string.Equals(d.FileName.ToLower(), filename.ToLower()));
         }
 
         // *** Text document ***
-
-        private void InternalAddTextDocument(Action<TextDocumentViewModel> initAction)
-        {
-            var document = new TextDocumentViewModel(this);
-
-            initAction(document);
-
-            documents.Add(document);
-
-            ActiveDocument = document;
-        }
 
         private void InternalWriteTextDocument(TextDocumentViewModel document, string filename)
         {
@@ -78,6 +58,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 InternalWriteTextDocument(document, filename);
 
                 document.Document.UndoStack.MarkAsOriginalFile();
+
+                var modificationDate = System.IO.File.GetLastWriteTimeUtc(document.FileName);
+                document.LastModificationDate = modificationDate;
+
                 return true;
             }
             catch (Exception e)
@@ -96,17 +80,28 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             document.Document.UndoStack.MarkAsOriginalFile();
             document.FilenameVirtual = false;
             document.Highlighting = highlightingProvider.GetDefinitionByExtension(Path.GetExtension(filename));
+
+            var modificationDate = System.IO.File.GetLastWriteTimeUtc(document.FileName);
+            document.LastModificationDate = modificationDate;
+
         }
 
-        private void LoadTextDocument(string filename)
+        private void LoadTextDocument(string filename, int? index = null)
         {
-            if (CheckIsAlreadyOpened(filename))
-                return;
-
-            InternalAddTextDocument(document =>
+            var document = FindDocument(filename);
+                
+            if (document == null)
             {
-                InternalLoadTextDocument(document, filename);
-            });
+                var textDocument = new TextDocumentViewModel(this);
+                
+                InternalLoadTextDocument(textDocument, filename);
+
+                documents.Insert(index ?? documents.Count, textDocument);
+
+                document = textDocument;
+            }
+
+            ActiveDocument = document;
         }
 
 		private bool SaveTextDocument(TextDocumentViewModel document)
@@ -130,21 +125,24 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return false;
         }
 
-        private void DoNewTextDocument(string initialText = null)
+        private void DoNewTextDocument(string initialText = null, int? index = null)
         {
-            InternalAddTextDocument(newDocument =>
-            {
-                int i = 1;
-                while (documents.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
-                    i++;
+            var newDocument = new TextDocumentViewModel(this);
+            
+            int i = 1;
+            while (documents.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
+                i++;
 
-                string newFilename = GenerateBlankFileName(i);
-                newDocument.SetFilename(newFilename, fileIconProvider.GetImageForFile(newFilename));
-                newDocument.Highlighting = highlightingProvider.EmptyHighlighting;
+            string newFilename = GenerateBlankFileName(i);
+            newDocument.SetFilename(newFilename, fileIconProvider.GetImageForFile(newFilename));
+            newDocument.Highlighting = highlightingProvider.EmptyHighlighting;
 
-                if (initialText != null)
-                    newDocument.Document.Text = initialText;
-            });            
+            if (initialText != null)
+                newDocument.Document.Text = initialText;
+
+            documents.Insert(index ?? documents.Count, newDocument);
+
+            ActiveDocument = newDocument;
         }
 
         private void DoOpenTextDocument()
@@ -164,17 +162,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         }
        
         // *** Hex document ***
-
-        private void InternalAddHexDocument(Action<HexDocumentViewModel> initAction)
-        {
-            var document = new HexDocumentViewModel(this);
-
-            initAction(document);
-
-            documents.Add(document);
-
-            ActiveDocument = document;
-        }
 
         private void InternalWriteHexDocument(HexDocumentViewModel document, string filename)
         {
@@ -199,6 +186,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 InternalWriteHexDocument(document, filename);
 
                 document.Changed = false;
+
+                var modificationDate = System.IO.File.GetLastWriteTimeUtc(document.FileName);
+                document.LastModificationDate = modificationDate;
+
                 return true;
             }
             catch (Exception e)
@@ -216,17 +207,27 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             document.Document.ClearUndoHistory();
             document.Changed = false;
             document.FilenameVirtual = false;
+
+            var modificationDate = System.IO.File.GetLastWriteTimeUtc(document.FileName);
+            document.LastModificationDate = modificationDate;
         }
 
-        private void LoadHexDocument(string filename)
+        private void LoadHexDocument(string filename, int? index = null)
         {
-            if (CheckIsAlreadyOpened(filename))
-                return;
+            var document = FindDocument(filename);
 
-            InternalAddHexDocument(document =>
+            if (document == null)
             {
-                InternalLoadHexDocument(document, filename);
-            });
+                var hexDocument = new HexDocumentViewModel(this);
+
+                InternalLoadHexDocument(hexDocument, filename);
+
+                documents.Insert(index ?? documents.Count, hexDocument);
+
+                document = hexDocument;
+            }
+
+            ActiveDocument = document;            
         }
 
         private bool SaveHexDocument(HexDocumentViewModel document)
@@ -250,17 +251,20 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return false;
         }
 
-        private void DoNewHexDocument()
+        private void DoNewHexDocument(int? index = null)
         {
-            InternalAddHexDocument(newDocument =>
-            {
-                int i = 1;
-                while (documents.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
-                    i++;
+            var newDocument = new HexDocumentViewModel(this);
 
-                string newFilename = GenerateBlankFileName(i);
-                newDocument.SetFilename(newFilename, fileIconProvider.GetImageForFile(newFilename));
-            });
+            int i = 1;
+            while (documents.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
+                i++;
+
+            string newFilename = GenerateBlankFileName(i);
+            newDocument.SetFilename(newFilename, fileIconProvider.GetImageForFile(newFilename));
+
+            documents.Insert(index ?? documents.Count, newDocument);
+
+            ActiveDocument = newDocument;
         }
 
         private void DoOpenHexDocument()
@@ -295,17 +299,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // *** Binary Document ***
 
-        private void InternalAddBinDocument(Action<BinDocumentViewModel> initAction)
-        {
-            var document = new BinDocumentViewModel(this);
-
-            initAction(document);
-
-            documents.Add(document);
-
-            ActiveDocument = document;
-        }
-
         private void InternalReadBinDocument(BinDocumentViewModel document, string filename, BinDefinition binDefinition)
         {
             // Try compile binary definition
@@ -329,17 +322,27 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             document.SetFilename(filename, fileIconProvider.GetImageForFile(filename));
             document.Changed = false;
             document.FilenameVirtual = false;
+
+            var modificationDate = System.IO.File.GetLastWriteTimeUtc(document.FileName);
+            document.LastModificationDate = modificationDate;
         }
 
-        private void LoadBinDocument(string filename, BinDefinition binDefinition)
+        private void LoadBinDocument(string filename, BinDefinition binDefinition, int? index = null)
         {
-            if (CheckIsAlreadyOpened(filename))
-                return;
-
-            InternalAddBinDocument(document =>
+            var document = FindDocument(filename);
+                
+            if (document == null)
             {
-                InternalLoadBinDocument(document, filename, binDefinition);
-            });
+                var binDocument = new BinDocumentViewModel(this);
+
+                InternalLoadBinDocument(binDocument, filename, binDefinition);
+
+                documents.Insert(index ?? documents.Count, binDocument);
+
+                document = binDocument;
+            }
+
+            ActiveDocument = document;
         }
 
         private void DoOpenBinDocument(BinDefinition binDefinition)
@@ -428,6 +431,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     default:
                         throw new InvalidOperationException("Unsupported document type!");
                 }
+
             }
         }
 
@@ -436,16 +440,31 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             switch (activeDocument)
             {
                 case TextDocumentViewModel textDocument:
-                    SaveTextDocumentAs(textDocument);
-                    break;
+                    {
+                        if (!SaveTextDocumentAs(textDocument))
+                            return;
+
+                        break;
+                    }
                 case HexDocumentViewModel hexDocument:
-                    SaveHexDocumentAs(hexDocument);
-                    break;
+                    {
+                        if (!SaveHexDocumentAs(hexDocument))
+                            return;
+
+                        break;
+                    }
                 case BinDocumentViewModel binDocument:
-                    throw new InvalidOperationException("Bin document doesn't support saving!");
+                    {
+                        throw new InvalidOperationException("Bin document doesn't support saving!");
+                    }
                 default:
-                    throw new InvalidOperationException("Unsupported document type!");
-            }            
+                    {
+                        throw new InvalidOperationException("Unsupported document type!");
+                    }
+            }
+
+            var modificationDate = System.IO.File.GetLastWriteTimeUtc(activeDocument.FileName);
+            activeDocument.LastModificationDate = modificationDate;
         }
 
         private bool SaveDocument(BaseDocumentViewModel document)
@@ -473,6 +492,37 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     return SaveHexDocumentAs(hexDocument);
                 case BinDocumentViewModel binDocument:
                     throw new InvalidOperationException("Bin document doesn't support saving!");
+                default:
+                    throw new InvalidOperationException("Unsupported document type!");
+            }
+        }        
+
+        private void ReplaceReloadDocument(BaseDocumentViewModel document)
+        {
+            int index = documents.IndexOf(document);
+            
+            if (index < 0)
+                throw new ArgumentException("Invalid document!");
+
+            RemoveDocument(document);
+
+            switch (document)
+            {
+                case TextDocumentViewModel textDocumentViewModel:
+                    {
+                        LoadTextDocument(textDocumentViewModel.FileName, index);
+                        break;
+                    }
+                case HexDocumentViewModel hexDocumentViewModel:
+                    {
+                        LoadHexDocument(hexDocumentViewModel.FileName, index);
+                        break;
+                    }
+                case BinDocumentViewModel binDocumentViewModel:
+                    {
+                        LoadBinDocument(binDocumentViewModel.FileName, binDocumentViewModel.Definition, index);
+                        break;
+                    }
                 default:
                     throw new InvalidOperationException("Unsupported document type!");
             }

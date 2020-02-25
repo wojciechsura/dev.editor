@@ -175,6 +175,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                             storedFile.IsDirty.Value = textDocument.Changed;
                             storedFile.StoredFilename.Value = storedFilename;
                             storedFile.HighlightingName.Value = textDocument.Highlighting?.Name;
+                            storedFile.LastModifiedDate.Value = textDocument.LastModificationDate.Ticks;
 
                             configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                             break;
@@ -186,6 +187,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                             storedFile.FilenameIsVirtual.Value = hexDocument.FilenameVirtual;
                             storedFile.IsDirty.Value = hexDocument.Changed;
                             storedFile.StoredFilename.Value = storedFilename;
+                            storedFile.LastModifiedDate.Value = hexDocument.LastModificationDate.Ticks;
 
                             configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                             break;
@@ -198,6 +200,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                             storedFile.IsDirty.Value = binDocument.Changed;
                             storedFile.StoredFilename.Value = document.FileName;
                             storedFile.DefinitionUid.Value = binDocument.Definition.Uid.Value;
+                            storedFile.LastModifiedDate.Value = binDocument.LastModificationDate.Ticks;
 
                             configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                             break;
@@ -222,23 +225,25 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                         {
                             try
                             {
-                                InternalAddTextDocument(document =>
+                                var document = new TextDocumentViewModel(this);
+                                
+                                InternalReadTextDocument(document, textStoredFile.StoredFilename.Value);
+
+                                document.SetFilename(textStoredFile.Filename.Value, fileIconProvider.GetImageForFile(textStoredFile.Filename.Value));
+                                document.FilenameVirtual = textStoredFile.FilenameIsVirtual.Value;
+                                document.LastModificationDate = new DateTime(textStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
+
+                                if (!textStoredFile.IsDirty.Value)
                                 {
-                                    InternalReadTextDocument(document, textStoredFile.StoredFilename.Value);
+                                    document.Document.UndoStack.MarkAsOriginalFile();
+                                }
+                                else
+                                {
+                                    document.Document.UndoStack.DiscardOriginalFileMarker();
+                                }
+                                document.Highlighting = highlightingProvider.GetDefinitionByName(textStoredFile.HighlightingName.Value);
 
-                                    document.SetFilename(textStoredFile.Filename.Value, fileIconProvider.GetImageForFile(textStoredFile.Filename.Value));
-                                    document.FilenameVirtual = textStoredFile.FilenameIsVirtual.Value;
-
-                                    if (!textStoredFile.IsDirty.Value)
-                                    {
-                                        document.Document.UndoStack.MarkAsOriginalFile();
-                                    }
-                                    else
-                                    {
-                                        document.Document.UndoStack.DiscardOriginalFileMarker();
-                                    }
-                                    document.Highlighting = highlightingProvider.GetDefinitionByName(textStoredFile.HighlightingName.Value);
-                                });
+                                documents.Add(document);
                             }
                             catch (Exception e)
                             {
@@ -251,14 +256,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                         {
                             try
                             {
-                                InternalAddHexDocument(document =>
-                                {
-                                    InternalReadHexDocument(document, hexStoredFile.StoredFilename.Value);
+                                var document = new HexDocumentViewModel(this);
 
-                                    document.SetFilename(hexStoredFile.Filename.Value, fileIconProvider.GetImageForFile(hexStoredFile.Filename.Value));
-                                    document.FilenameVirtual = hexStoredFile.FilenameIsVirtual.Value;
-                                    document.Changed = hexStoredFile.IsDirty.Value;
-                                });
+                                InternalReadHexDocument(document, hexStoredFile.StoredFilename.Value);
+
+                                document.SetFilename(hexStoredFile.Filename.Value, fileIconProvider.GetImageForFile(hexStoredFile.Filename.Value));
+                                document.FilenameVirtual = hexStoredFile.FilenameIsVirtual.Value;
+                                document.Changed = hexStoredFile.IsDirty.Value;
+                                document.LastModificationDate = new DateTime(hexStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
+
+                                documents.Add(document);
                             }
                             catch (Exception e)
                             {
@@ -275,14 +282,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 if (def == null)
                                     continue;
 
-                                InternalAddBinDocument(document =>
-                                {
-                                    InternalReadBinDocument(document, binStoredFile.StoredFilename.Value, def);
+                                var document = new BinDocumentViewModel(this);
 
-                                    document.SetFilename(binStoredFile.Filename.Value, fileIconProvider.GetImageForFile(binStoredFile.Filename.Value));
-                                    document.FilenameVirtual = binStoredFile.FilenameIsVirtual.Value;
-                                    document.Changed = binStoredFile.IsDirty.Value;
-                                });
+                                InternalReadBinDocument(document, binStoredFile.StoredFilename.Value, def);
+
+                                document.SetFilename(binStoredFile.Filename.Value, fileIconProvider.GetImageForFile(binStoredFile.Filename.Value));
+                                document.FilenameVirtual = binStoredFile.FilenameIsVirtual.Value;
+                                document.Changed = binStoredFile.IsDirty.Value;
+                                document.LastModificationDate = new DateTime(binStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
+
+                                documents.Add(document);
                             }
                             catch (Exception e)
                             {
@@ -407,6 +416,38 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             WordWrap = !WordWrap;
         }
 
+        private void DoSetHighlighting(HighlightingInfo highlighting)
+        {
+            ActiveDocument.Highlighting = highlighting;
+        }
+
+        private void DoRunStoredSearch(StoredSearchReplace storedSearchReplace)
+        {
+            var desc = new SearchReplaceDescription(storedSearchReplace.Search.Value,
+                storedSearchReplace.Replace.Value,
+                storedSearchReplace.Operation.Value,
+                storedSearchReplace.SearchMode.Value,
+                storedSearchReplace.IsCaseSensitive.Value,
+                (selectionAvailableCondition.GetValue() && regularSelectionAvailableCondition.GetValue()),
+                storedSearchReplace.IsSearchBackwards.Value,
+                storedSearchReplace.IsWholeWordsOnly.Value,
+                storedSearchReplace.ShowReplaceSummary.Value);
+
+            var searchModel = searchEncoder.SearchDescriptionToModel(desc);
+
+            switch (storedSearchReplace.Operation.Value)
+            {
+                case Types.Search.SearchReplaceOperation.Search:
+                    FindNext(searchModel);
+                    break;
+                case Types.Search.SearchReplaceOperation.Replace:
+                    ReplaceAll(searchModel);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("Unsupported search/replace operation!");
+            }
+        }
+        
         // IDocumentHandler implementation ------------------------------------
 
         void IDocumentHandler.RequestClose(BaseDocumentViewModel documentViewModel)
@@ -676,36 +717,85 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
             else
                 throw new InvalidOperationException("Invalid close behavior!");
+
+            if (documents.Count > 0)
+                ActiveDocument = documents.First();
         }
-        private void DoSetHighlighting(HighlightingInfo highlighting)
+
+        public void NotifyActivated()
         {
-            ActiveDocument.Highlighting = highlighting;
+            VerifyRemovedAndModifiedDocuments();
         }
 
-        private void DoRunStoredSearch(StoredSearchReplace storedSearchReplace)
+        private void VerifyRemovedAndModifiedDocuments()
         {
-            var desc = new SearchReplaceDescription(storedSearchReplace.Search.Value,
-                storedSearchReplace.Replace.Value,
-                storedSearchReplace.Operation.Value,
-                storedSearchReplace.SearchMode.Value,
-                storedSearchReplace.IsCaseSensitive.Value,
-                (selectionAvailableCondition.GetValue() && regularSelectionAvailableCondition.GetValue()),
-                storedSearchReplace.IsSearchBackwards.Value,
-                storedSearchReplace.IsWholeWordsOnly.Value,
-                storedSearchReplace.ShowReplaceSummary.Value);
+            // Check documents
+            int i = 0;
 
-            var searchModel = searchEncoder.SearchDescriptionToModel(desc);
-
-            switch (storedSearchReplace.Operation.Value)
+            while (i < documents.Count)
             {
-                case Types.Search.SearchReplaceOperation.Search:
-                    FindNext(searchModel);
-                    break;
-                case Types.Search.SearchReplaceOperation.Replace:
-                    ReplaceAll(searchModel);
-                    break;
-                default:
-                    throw new InvalidEnumArgumentException("Unsupported search/replace operation!");
+                var document = documents[i];
+
+                if (document.FilenameVirtual)
+                {
+                    i++;
+                    continue;
+                }
+
+                // Checking if file still exists
+
+                if (!File.Exists(document.FileName))
+                {
+                    ActiveDocument = document;
+
+                    if (messagingService.AskYesNo(String.Format(Strings.Message_DocumentDeleted, document.FileName)) == false)
+                    {
+                        // Remove document
+                        RemoveDocument(document);
+                        continue;
+                    }
+                    else
+                    {
+                        string newFilename = System.IO.Path.GetFileName(document.FileName);
+
+                        document.SetFilename(newFilename, fileIconProvider.GetImageForFile(newFilename));
+                        document.FilenameVirtual = true;
+                    }
+                }
+                else
+                {
+                    try
+                    {
+                        var fileModificationDate = System.IO.File.GetLastWriteTimeUtc(document.FileName);
+
+                        if (document.LastModificationDate < fileModificationDate)
+                        {
+                            ActiveDocument = document;
+
+                            if (messagingService.AskYesNo(String.Format(Strings.Message_DocumentModifiedOutsideEditor, document.FileName)) == true)
+                            {
+                                int documentIndex = i;
+
+                                ReplaceReloadDocument(document);
+                            }
+                            else
+                            {
+                                // Set this date as new reference point. User will no
+                                // longer be notified about this change, but will be
+                                // notified about any next change.
+
+                                document.LastModificationDate = fileModificationDate;
+                            }
+                        }
+                    }
+                    catch
+                    {
+                        // This is just for user's convenience.
+                        // Cannot get the date? Just ignore this document.                        
+                    }
+
+                    i++;
+                }
             }
         }
 
