@@ -10,35 +10,76 @@
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="Root"
              DataContextChanged="HandleDataContextChanged">
-    <ae:TextEditor x:Name="teEditor"
-                   BorderThickness="0"
-                   FontFamily="Consolas"      
-                   FontSize="10pt"
-                   Loaded="HandleLoaded" 
-                   WordWrap="{Binding ElementName=Root, Path=Handler.WordWrap}"
-                   ShowLineNumbers="{Binding ElementName=Root, Path=Handler.LineNumbers}">
-        <ae:TextEditor.ContextMenu>
-            <ContextMenu>
-                <MenuItem Header="{x:Static r:Strings.TextEditor_ContextMenu_Cut}"
+    <UserControl.Resources>
+        <ContextMenu x:Key="EditorContextMenu">
+            <MenuItem Header="{x:Static r:Strings.TextEditor_ContextMenu_Cut}"
                           Command="{Binding CutCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Cut16.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{x:Static r:Strings.TextEditor_ContextMenu_Copy}"
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Cut16.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{x:Static r:Strings.TextEditor_ContextMenu_Copy}"
                           Command="{Binding CopyCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Copy16.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
-                <MenuItem Header="{x:Static r:Strings.TextEditor_ContextMenu_Paste}"
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Copy16.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+            <MenuItem Header="{x:Static r:Strings.TextEditor_ContextMenu_Paste}"
                           Command="{Binding PasteCommand}">
-                    <MenuItem.Icon>
-                        <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Paste16.png" />
-                    </MenuItem.Icon>
-                </MenuItem>
-            </ContextMenu>
-        </ae:TextEditor.ContextMenu>
-    </ae:TextEditor>
+                <MenuItem.Icon>
+                    <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Paste16.png" />
+                </MenuItem.Icon>
+            </MenuItem>
+        </ContextMenu>
+    </UserControl.Resources>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1*" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition x:Name="rdBottomEditor" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
+        <ae:TextEditor x:Name="teEditor"
+                       Grid.Row="0"
+                       Grid.Column="0"
+                       VerticalAlignment="Stretch"
+                       HorizontalAlignment="Stretch"
+                       BorderThickness="0"
+                       FontFamily="Consolas"      
+                       FontSize="10pt"
+                       Loaded="HandleLoaded" 
+                       WordWrap="{Binding ElementName=Root, Path=Handler.WordWrap}"
+                       ShowLineNumbers="{Binding ElementName=Root, Path=Handler.LineNumbers}"
+                       ContextMenu="{StaticResource EditorContextMenu}"
+                       GotFocus="HandleEditorGotFocus" />
+
+        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+                          Style="{StaticResource HorizontalRootGridSplitter}"
+                      Visibility="{Binding Editor2Visible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+
+        <ae:TextEditor x:Name="teEditor2"
+                       Grid.Row="2"
+                       Grid.Column="0"
+                       VerticalAlignment="Stretch"
+                       HorizontalAlignment="Stretch"
+                       BorderThickness="0"
+                       FontFamily="Consolas"      
+                       FontSize="10pt"
+                       Loaded="HandleLoaded" 
+                       WordWrap="{Binding ElementName=Root, Path=Handler.WordWrap}"
+                       ShowLineNumbers="{Binding ElementName=Root, Path=Handler.LineNumbers}"
+                       ContextMenu="{StaticResource EditorContextMenu}"
+                       GotFocus="HandleEditorGotFocus2"
+                       Visibility="{Binding Editor2Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+        <Grid Grid.Row="3">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <ToggleButton Grid.Column="1" Content="Split" IsChecked="{Binding Editor2Visible}" />
+        </Grid>
+    </Grid>
 </UserControl>

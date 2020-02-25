@@ -1,6 +1,8 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Documents;
 using Dev.Editor.BusinessLogic.Types.Folding;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
+using Dev.Editor.Converters;
+using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Dev.Editor.Folding.Strategies;
 using ICSharpCode.AvalonEdit.Document;
 using ICSharpCode.AvalonEdit.Folding;
@@ -54,25 +56,55 @@ namespace Dev.Editor.Controls
 
         private TextDocumentViewModel viewModel;
         private FoldingManager foldingManager;
+        private FoldingManager foldingManager2;
         private BaseFoldingStrategy foldingStrategy;
         private IDocumentHandler handler;
 
         private DispatcherTimer foldingTimer;
+        private DispatcherTimer foldingTimer2;
+
+        private TextEditor currentEditor;
 
         // Private methods ----------------------------------------------------
 
-        private void UpdateSelectionInfo()
+        private TextEditor GetActiveEditor()
         {
-            viewModel.NotifySelectionAvailable(teEditor.SelectionLength > 0);
-            viewModel.NotifyRegularSelectionAvailable(teEditor.SelectionLength > 0 && teEditor.TextArea.Selection.Segments.Count() == 1);
+            return currentEditor;
+        }
+
+        private void SetActiveEditor(TextEditor editor)
+        {
+            currentEditor = editor;
+
+            UpdateSelectionInfo(currentEditor);
+        }
+
+        private void RunOnAllEditors(Action<TextEditor> action)
+        {
+            action(teEditor);
+            action(teEditor2);
+        }
+
+        private void UpdateSelectionInfo(TextEditor editor)
+        {
+            viewModel.NotifySelectionAvailable(editor.SelectionLength > 0);
+            viewModel.NotifyRegularSelectionAvailable(editor.SelectionLength > 0 && editor.TextArea.Selection.Segments.Count() == 1);
         }
 
         private void HandleViewModelPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(viewModel.Highlighting))
             {
-                teEditor.SyntaxHighlighting = viewModel.Highlighting.Definition;
+                RunOnAllEditors(editor =>
+                {
+                    editor.SyntaxHighlighting = viewModel.Highlighting.Definition;                    
+                });
+                
                 SetupFolding();
+            }
+            else if (e.PropertyName == nameof(viewModel.Editor2Visible))
+            {
+                SetupEditor2Panel();
             }
         }
 
@@ -80,6 +112,12 @@ namespace Dev.Editor.Controls
         {
             foldingTimer?.Stop();
             foldingTimer?.Start();
+        }
+
+        private void HandleTextChanged2(object sender, EventArgs e)
+        {
+            foldingTimer2?.Stop();
+            foldingTimer2?.Start();
         }
 
         private void UpdateFolding(object sender, EventArgs e)
@@ -90,8 +128,28 @@ namespace Dev.Editor.Controls
             foldingTimer.Stop();
         }
 
+        private void UpdateFolding2(object sender, EventArgs e)
+        {
+            if (foldingManager2 != null && foldingStrategy != null)
+                foldingStrategy.UpdateFoldings(foldingManager2, viewModel.Document);
+
+            foldingTimer2.Stop();
+        }
+
         private void SetupFolding()
         {
+            if (foldingTimer != null)
+            {
+                foldingTimer.Stop();
+                foldingTimer = null;
+            }
+
+            if (foldingTimer2 != null)
+            {
+                foldingTimer2.Stop();
+                foldingTimer2 = null;
+            }
+
             // Choose folding strategy
             switch (viewModel.Highlighting?.FoldingKind)
             {
@@ -119,11 +177,15 @@ namespace Dev.Editor.Controls
                 // Install folding manager with chosen strategy
 
                 if (foldingManager == null)
+                {
                     foldingManager = FoldingManager.Install(teEditor.TextArea);
+                    foldingManager2 = FoldingManager.Install(teEditor2.TextArea);
+                }
 
                 foldingStrategy.UpdateFoldings(foldingManager, viewModel.Document);
 
                 foldingTimer = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Background, UpdateFolding, this.Dispatcher);
+                foldingTimer2 = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Background, UpdateFolding2, this.Dispatcher);
             }
             else
             {
@@ -133,6 +195,12 @@ namespace Dev.Editor.Controls
                 {
                     FoldingManager.Uninstall(foldingManager);
                     foldingManager = null;
+                }
+
+                if (foldingManager2 != null)
+                {
+                    FoldingManager.Uninstall(foldingManager2);
+                    foldingManager2 = null;
                 }
             }
         }
@@ -145,53 +213,74 @@ namespace Dev.Editor.Controls
                 FoldingManager.Uninstall(foldingManager);
                 foldingManager = null;
             }
+
+            if (foldingManager2 != null)
+            {
+                FoldingManager.Uninstall(foldingManager2);
+                foldingManager2 = null;
+            }
         }
 
-        private void HandleSelectionChanged(object sender, EventArgs e) => UpdateSelectionInfo();
+        private void HandleSelectionChanged(object sender, EventArgs e) => UpdateSelectionInfo(teEditor);
+
+        private void HandleSelectionChanged2(object sender, EventArgs e) => UpdateSelectionInfo(teEditor2);
 
         private TextDocumentState BuildCurrentState()
         {
-            List<FoldSectionState> foldSections = null;
+            TextEditorState GenerateEditorState(TextEditor editor, FoldingManager manager)
+            {
+                List<FoldSectionState> foldSections = null;
+                if (manager != null)
+                    foldSections = manager.AllFoldings
+                        .Select(f => new FoldSectionState(f))
+                        .ToList();
 
-            if (foldingManager != null)
-                foldSections = foldingManager.AllFoldings
-                    .Select(f => new FoldSectionState(f))
-                    .ToList();
+                var editorState = new TextEditorState(editor.CaretOffset,
+                    editor.SelectionStart,
+                    editor.SelectionLength,
+                    editor.HorizontalOffset,
+                    editor.VerticalOffset,
+                    foldSections);
 
-            var state = new TextDocumentState(teEditor.CaretOffset,
-                teEditor.SelectionStart,
-                teEditor.SelectionLength,
-                teEditor.HorizontalOffset,
-                teEditor.VerticalOffset,
-                foldSections);
+                return editorState;
+            }
 
-            return state;
+            var state = GenerateEditorState(teEditor, foldingManager);
+            var state2 = GenerateEditorState(teEditor2, foldingManager2);
+
+            return new TextDocumentState(state, state2);
         }
 
         private void RestoreCurrentState(TextDocumentState state)
         {
-            if (state != null)
+            void RestoreEditorState(TextEditor editor, FoldingManager manager, TextEditorState editorState)
             {
                 // Restoring editor state
 
-                teEditor.CaretOffset = state.CaretOffset;
-                teEditor.SelectionStart = state.SelectionStart;
-                teEditor.SelectionLength = state.SelectionLength;
-                teEditor.ScrollToVerticalOffset(state.VerticalOffset);
-                teEditor.ScrollToHorizontalOffset(state.HorizontalOffset);
+                editor.CaretOffset = editorState.CaretOffset;
+                editor.SelectionStart = editorState.SelectionStart;
+                editor.SelectionLength = editorState.SelectionLength;
+                editor.ScrollToVerticalOffset(editorState.VerticalOffset);
+                editor.ScrollToHorizontalOffset(editorState.HorizontalOffset);
 
                 // Restoring foldings
 
-                if (state.FoldSections != null && foldingManager != null)
+                if (editorState.FoldSections != null && foldingManager != null)
                 {
-                    foldingManager.AllFoldings
-                        .Join(state.FoldSections, 
-                            fs => new FoldingIndex(fs), 
-                            fss => new FoldingIndex(fss), 
+                    manager.AllFoldings
+                        .Join(editorState.FoldSections,
+                            fs => new FoldingIndex(fs),
+                            fss => new FoldingIndex(fss),
                             (fs, fss) => new Tuple<FoldingSection, FoldSectionState>(fs, fss))
                         .ToList()
                         .ForEach(t => t.Item1.IsFolded = t.Item2.IsFolded);
                 }
+            }
+
+            if (state != null)
+            {
+                RestoreEditorState(teEditor, foldingManager, state.EditorState);
+                RestoreEditorState(teEditor2, foldingManager2, state.EditorState2);                
             }
         }
 
@@ -199,8 +288,11 @@ namespace Dev.Editor.Controls
         {
             Handler = newViewModel.Handler;
 
-            teEditor.Document = newViewModel.Document;
-            teEditor.SyntaxHighlighting = newViewModel.Highlighting.Definition;
+            RunOnAllEditors(editor =>
+            {
+                editor.Document = newViewModel.Document;
+                editor.SyntaxHighlighting = newViewModel.Highlighting.Definition;
+            });
 
             newViewModel.EditorAccess = this;
             newViewModel.PropertyChanged += HandleViewModelPropertyChanged;
@@ -208,20 +300,24 @@ namespace Dev.Editor.Controls
             // Setting folding strategy
             SetupFolding();
             teEditor.TextChanged += HandleTextChanged;
+            teEditor2.TextChanged += HandleTextChanged2;
 
             // Restoring state from the viewmodel
             var state = newViewModel.LoadState();
             RestoreCurrentState(state);
 
             // Hooking text editor
+            currentEditor = teEditor;
             teEditor.TextArea.SelectionChanged += HandleSelectionChanged;
-            UpdateSelectionInfo();
+            teEditor2.TextArea.SelectionChanged += HandleSelectionChanged2;
+            UpdateSelectionInfo(teEditor);
         }
 
         private void DeinitializeViewModel(TextDocumentViewModel viewModel)
         {
             // Unhooking editor
             teEditor.TextArea.SelectionChanged -= HandleSelectionChanged;
+            teEditor2.TextArea.SelectionChanged -= HandleSelectionChanged2;
 
             // Storing current state in the viewmodel
             TextDocumentState state = BuildCurrentState();
@@ -230,12 +326,16 @@ namespace Dev.Editor.Controls
             // Clearing folding
             ClearFolding();
             teEditor.TextChanged -= HandleTextChanged;
+            teEditor2.TextChanged -= HandleTextChanged2;
 
             viewModel.PropertyChanged -= HandleViewModelPropertyChanged;
             viewModel.EditorAccess = null;
 
-            teEditor.SyntaxHighlighting = null;
-            teEditor.Document = null;
+            RunOnAllEditors(editor =>
+            {
+                editor.SyntaxHighlighting = null;
+                editor.Document = null;
+            });
 
             Handler = null;
         }
@@ -262,6 +362,39 @@ namespace Dev.Editor.Controls
                 viewModel = e.NewValue as TextDocumentViewModel;
                 InitializeViewModel(viewModel);
             }
+
+            SetupEditor2Panel();
+        }
+
+        private void HandleEditorGotFocus(object sender, RoutedEventArgs e)
+        {
+            SetActiveEditor(teEditor);
+        }
+
+        private void HandleEditorGotFocus2(object sender, RoutedEventArgs e)
+        {
+            SetActiveEditor(teEditor2);
+        }
+
+        private void SetupEditor2Panel()
+        {
+            if (viewModel != null && viewModel.Editor2Visible)
+            {
+                BindingOperations.SetBinding(rdBottomEditor, RowDefinition.HeightProperty, new Binding
+                {
+                    Path = new PropertyPath(nameof(TextDocumentViewModel.Editor2Height)),
+                    Mode = BindingMode.TwoWay,
+                    Converter = new DoubleToGridLengthConverter()
+                });
+
+                rdBottomEditor.MinHeight = 150.0;
+            }
+            else
+            {
+                rdBottomEditor.MinHeight = 0.0;
+                BindingOperations.ClearBinding(rdBottomEditor, RowDefinition.HeightProperty);
+                rdBottomEditor.Height = new GridLength(0.0, GridUnitType.Auto);
+            }
         }
 
         // Protected methods --------------------------------------------------
@@ -277,48 +410,61 @@ namespace Dev.Editor.Controls
         {
             InitializeComponent();
 
-            teEditor.Options.AllowScrollBelowDocument = true;
+            RunOnAllEditors(editor =>
+            {
+                editor.Options.AllowScrollBelowDocument = true;
+            });
         }
 
-        public void Copy() => teEditor.Copy();
+        public void Copy() => GetActiveEditor().Copy();
 
-        public void Cut() => teEditor.Cut();
+        public void Cut() => GetActiveEditor().Cut();
 
-        public void Paste() => teEditor.Paste();
+        public void Paste() => GetActiveEditor().Paste();
 
         public (int selStart, int selLength) GetSelection()
         {
-            return (teEditor.SelectionStart, teEditor.SelectionLength);
+            var editor = GetActiveEditor();
+            return (editor.SelectionStart, editor.SelectionLength);
         }
 
         public void SetSelection(int selStart, int selLength)
         {
-            teEditor.Select(selStart, selLength);
+            var editor = GetActiveEditor();
+            editor.Select(selStart, selLength);
         }
 
         public string GetSelectedText()
         {
-            return teEditor.SelectedText;
+            var editor = GetActiveEditor();
+            return editor.SelectedText;
         }
 
-        public void BeginChange()
+        public void RunAsSingleHistoryOperation(Action action)
         {
-            teEditor.BeginChange();
-        }
+            var editor = GetActiveEditor();
 
-        public void EndChange()
-        {
-            teEditor.EndChange();
+            try
+            {
+                editor.BeginChange();
+                action();
+            }
+            finally
+            {
+                editor.EndChange();
+            }
         }
 
         public void ScrollTo(int line, int column)
         {
-            teEditor.ScrollTo(line, column);
+            var editor = GetActiveEditor();
+            editor.ScrollTo(line, column);
         }
 
         public void FocusDocument()
         {
-            teEditor.Focus();
+            var editor = GetActiveEditor();
+            editor.Focus();
         }
 
         // Public properties --------------------------------------------------

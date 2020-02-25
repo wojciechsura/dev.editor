@@ -8,31 +8,13 @@ namespace Dev.Editor.BusinessLogic.Models.Documents
 {
     public class TextDocumentState
     {
-        public TextDocumentState(int caretOffset, 
-            int selectionStart, 
-            int selectionLength, 
-            double horizontalOffset, 
-            double verticalOffset,
-            List<FoldSectionState> foldSections)
+        public TextDocumentState(TextEditorState editorState, TextEditorState editorState2)
         {
-            CaretOffset = caretOffset;
-            SelectionStart = selectionStart;
-            SelectionLength = selectionLength;
-            HorizontalOffset = horizontalOffset;
-            VerticalOffset = verticalOffset;
-            FoldSections = foldSections;
+            EditorState = editorState;
+            EditorState2 = editorState2;
         }
 
-        public int CaretOffset { get; }
-
-        public int SelectionStart { get; }
-
-        public int SelectionLength { get; }
-
-        public double HorizontalOffset { get; }
-
-        public double VerticalOffset { get; }
-
-        public List<FoldSectionState> FoldSections { get; }
+        public TextEditorState EditorState { get; }
+        public TextEditorState EditorState2 { get; }
     }
 }

@@ -90,6 +90,7 @@
     <Compile Include="Models\Documents\BinDocumentState.cs" />
     <Compile Include="Models\Documents\HexDocumentState.cs" />
     <Compile Include="Models\Documents\TextDocumentState.cs" />
+    <Compile Include="Models\Documents\TextEditorState.cs" />
     <Compile Include="Models\Documents\FoldSectionState.cs" />
     <Compile Include="Models\Events\ApplicationActivatedEvent.cs" />
     <Compile Include="Models\Events\ApplicationShutdownEvent.cs" />

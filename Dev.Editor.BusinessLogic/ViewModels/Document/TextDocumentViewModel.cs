@@ -29,8 +29,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private ITextEditorAccess editorAccess;
         private HighlightingInfo highlighting;
 
+        private double editor2Height;
+        private bool editor2Visible;
+
         // Private methods ----------------------------------------------------
-        
+
         private void HandleUndoStackPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(document.UndoStack.CanUndo))
@@ -69,34 +72,21 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             filenameVirtual = true;
 
             lastSearch = null;
+
+            editor2Height = 100.0;
+            editor2Visible = false;
         }
 
         public void RunAsSingleHistoryEntry(Action action)
         {
-            try
-            {
-                editorAccess.BeginChange();
-                action();
-            }
-            finally
-            {
-                editorAccess.EndChange();
-            }
+            editorAccess.RunAsSingleHistoryOperation(action);            
         }
 
         public T RunAsSingleHistoryEntry<T>(Func<T> func)
         {
             T result = default(T);
 
-            try
-            {
-                editorAccess.BeginChange();
-                result = func();
-            }
-            finally
-            {
-                editorAccess.EndChange();
-            }
+            editorAccess.RunAsSingleHistoryOperation(() => result = func());
 
             return result;
         }
@@ -190,5 +180,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         public ICommand CutCommand => handler.CutCommand;
 
         public ICommand PasteCommand => handler.PasteCommand;
+
+        public double Editor2Height
+        {
+            get => editor2Height;
+            set => Set(ref editor2Height, () => Editor2Height, value);
+        }
+
+        public bool Editor2Visible
+        {
+            get => editor2Visible;
+            set => Set(ref editor2Visible, () => Editor2Visible, value);
+        }
     }
 }
