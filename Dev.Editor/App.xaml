@@ -175,6 +175,13 @@
                 </Style.Setters>
             </Style>
 
+            <Style x:Key="EditorSplitter" TargetType="GridSplitter" BasedOn="{StaticResource RootGridSplitter}">
+                <Style.Setters>
+                    <Setter Property="Height" Value="4" />
+                </Style.Setters>
+            </Style>
+
+
             <Style x:Key="ToolGridSplitter" TargetType="GridSplitter">
                 <Style.Setters>
                     <Setter Property="Template">

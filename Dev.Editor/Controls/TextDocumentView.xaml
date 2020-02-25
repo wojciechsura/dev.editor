@@ -34,7 +34,7 @@
     </UserControl.Resources>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
+            <RowDefinition Height="1*" MinHeight="50"/>
             <RowDefinition Height="Auto" />
             <RowDefinition x:Name="rdBottomEditor" />
             <RowDefinition Height="Auto" />
@@ -55,7 +55,7 @@
                        GotFocus="HandleEditorGotFocus" />
 
         <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
-                          Style="{StaticResource HorizontalRootGridSplitter}"
+                      Style="{StaticResource EditorSplitter}"
                       Visibility="{Binding Editor2Visible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
 
         <ae:TextEditor x:Name="teEditor2"
