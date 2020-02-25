@@ -31,6 +31,19 @@
                 </MenuItem.Icon>
             </MenuItem>
         </ContextMenu>
+
+        <Style x:Key="EditorSplitter" TargetType="GridSplitter">
+            <Style.Setters>
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="GridSplitter">
+                            <Border Background="{StaticResource FormBackgroundBrush}" BorderThickness="0"/>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Height" Value="4" />
+            </Style.Setters>
+        </Style>
     </UserControl.Resources>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
@@ -73,13 +86,13 @@
                        GotFocus="HandleEditorGotFocus2"
                        Visibility="{Binding Editor2Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-        <Grid Grid.Row="3">
+        <Grid Grid.Row="3" Style="{StaticResource DocumentFooter}">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <ToggleButton Grid.Column="1" Content="Split" IsChecked="{Binding Editor2Visible}" />
+            <ToggleButton Style="{StaticResource DocumentFooterToggleButton}" Grid.Column="1" Content="{x:Static r:Strings.TextEditor_Footer_Split}" IsChecked="{Binding Editor2Visible}" />
         </Grid>
     </Grid>
 </UserControl>
