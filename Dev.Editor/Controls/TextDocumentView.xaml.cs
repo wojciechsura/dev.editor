@@ -384,10 +384,10 @@ namespace Dev.Editor.Controls
                 {
                     Path = new PropertyPath(nameof(TextDocumentViewModel.Editor2Height)),
                     Mode = BindingMode.TwoWay,
-                    Converter = new DoubleToGridLengthConverter()
+                    Converter = new DoubleToStarGridLengthConverter()
                 });
 
-                rdBottomEditor.MinHeight = 150.0;
+                rdBottomEditor.MinHeight = 50.0;
             }
             else
             {

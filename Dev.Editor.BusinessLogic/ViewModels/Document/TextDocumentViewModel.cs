@@ -73,7 +73,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
             lastSearch = null;
 
-            editor2Height = 100.0;
+            editor2Height = 1.0;
             editor2Visible = false;
         }
 

@@ -70,7 +70,7 @@ namespace Dev.Editor
                 {
                     Path = new PropertyPath(nameof(MainWindowViewModel.SidePanelSize)),
                     Mode = BindingMode.TwoWay,
-                    Converter = new DoubleToGridLengthConverter()
+                    Converter = new DoubleToPixelGridLengthConverter()
                 });
 
                 leftPanelColumn.MinWidth = 150.0;
@@ -88,7 +88,7 @@ namespace Dev.Editor
                 {
                     Path = new PropertyPath(nameof(MainWindowViewModel.SidePanelSize)),
                     Mode = BindingMode.TwoWay,
-                    Converter = new DoubleToGridLengthConverter()
+                    Converter = new DoubleToPixelGridLengthConverter()
                 });
                 rightPanelColumn.MinWidth = 150.0;
             }
@@ -108,7 +108,7 @@ namespace Dev.Editor
                 {
                     Path = new PropertyPath(nameof(MainWindowViewModel.BottomPanelSize)),
                     Mode = BindingMode.TwoWay,
-                    Converter = new DoubleToGridLengthConverter()
+                    Converter = new DoubleToPixelGridLengthConverter()
                 });
 
                 bottomPanelRow.MinHeight = 150.0;

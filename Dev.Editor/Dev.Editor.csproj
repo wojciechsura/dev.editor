@@ -81,6 +81,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToIntegrationStateConverter.cs" />
+    <Compile Include="Converters\DoubleToStarGridLengthConverter.cs" />
     <Compile Include="Models\ArgumentInfo.cs" />
     <Compile Include="NameDialog.xaml.cs">
       <DependentUpon>NameDialog.xaml</DependentUpon>
@@ -112,7 +113,7 @@
     <Compile Include="Controls\TreeViewEx.cs" />
     <Compile Include="Converters\AdditionalToolsetToVisibilityConverter.cs" />
     <Compile Include="Converters\DataTypeToImageConverter.cs" />
-    <Compile Include="Converters\DoubleToGridLengthConverter.cs" />
+    <Compile Include="Converters\DoubleToPixelGridLengthConverter.cs" />
     <Compile Include="Converters\EnabledToOpacityConverter.cs" />
     <Compile Include="Converters\EnumToVisibilityConverter.cs" />
     <Compile Include="Converters\NullToBoolConverter.cs" />

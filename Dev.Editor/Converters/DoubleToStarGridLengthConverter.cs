@@ -9,13 +9,13 @@ using System.Windows.Data;
 
 namespace Dev.Editor.Converters
 {
-    public class DoubleToGridLengthConverter : IValueConverter
+    public class DoubleToStarGridLengthConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is double dValue)
             {
-                return new GridLength(dValue);
+                return new GridLength(dValue, GridUnitType.Star);
             }
             else
                 return Binding.DoNothing;
@@ -25,7 +25,7 @@ namespace Dev.Editor.Converters
         {
             if (value is GridLength gridLength)
             {
-                if (gridLength.IsAbsolute)
+                if (gridLength.IsStar)
                     return gridLength.Value;
                 else
                     return Binding.DoNothing;

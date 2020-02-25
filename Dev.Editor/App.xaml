@@ -36,7 +36,7 @@
             <c:RadioToEnumConverter x:Key="RadioToEnumConverter" />
             <c:EnabledToOpacityConverter x:Key="EnabledToOpactityConverter" />
             <c:EnumToVisibilityConverter x:Key="EnumToVisibilityConverter" />
-            <c:DoubleToGridLengthConverter x:Key="DoubleToGridLengthConverter" />
+            <c:DoubleToPixelGridLengthConverter x:Key="DoubleToGridLengthConverter" />
             <c:TextDocToBoolConverter x:Key="TextDocToBoolConverter" />
             <c:DataTypeToImageConverter x:Key="DataTypeToImageConverter" />
 
