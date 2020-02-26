@@ -47,9 +47,9 @@
     </UserControl.Resources>
     <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*" x:Name="rdTopEditor" MinHeight="50"/>
+            <RowDefinition Height="1*" x:Name="rdTopEditor"/>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" x:Name="rdBottomEditor" MinHeight="50"/>
+            <RowDefinition Height="Auto" x:Name="rdBottomEditor"/>
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
