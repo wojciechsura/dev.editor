@@ -10,6 +10,7 @@ using System.Windows.Media;
 using Dev.Editor.BusinessLogic.Models.Documents;
 using Dev.Editor.BusinessLogic.Models.Highlighting;
 using Dev.Editor.BusinessLogic.Models.Search;
+using Dev.Editor.BusinessLogic.Types.Document.Text;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.Common.Commands;
 using Dev.Editor.Common.Conditions;
@@ -29,8 +30,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private ITextEditorAccess editorAccess;
         private HighlightingInfo highlighting;
 
+        private double editor1Height;
         private double editor2Height;
         private bool editor2Visible;
+        private ActiveEditor activeEditor;
 
         // Private methods ----------------------------------------------------
 
@@ -73,8 +76,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
             lastSearch = null;
 
+            editor1Height = 1.0;
             editor2Height = 1.0;
             editor2Visible = false;
+            activeEditor = ActiveEditor.Primary;
         }
 
         public void RunAsSingleHistoryEntry(Action action)
@@ -181,6 +186,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         public ICommand PasteCommand => handler.PasteCommand;
 
+
+        public double Editor1Height
+        {
+            get => editor1Height;
+            set => Set(ref editor1Height, () => Editor1Height, value);
+        }
+
         public double Editor2Height
         {
             get => editor2Height;
@@ -191,6 +203,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         {
             get => editor2Visible;
             set => Set(ref editor2Visible, () => Editor2Visible, value);
+        }
+
+        public ActiveEditor ActiveEditor
+        {
+            get => activeEditor;
+            set => Set(ref activeEditor, () => ActiveEditor, value);
         }
     }
 }
