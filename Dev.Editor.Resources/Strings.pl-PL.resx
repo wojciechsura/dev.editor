@@ -859,4 +859,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Message.DocumentModifiedOutsideEditor" xml:space="preserve">
     <value>Plik {0} został zmodyfikowany poza edytorem. Czy chcesz wczytać go ponownie?</value>
   </data>
+  <data name="TextEditor.Footer.Split" xml:space="preserve">
+    <value>PODZIEL</value>
+  </data>
 </root>

@@ -14,20 +14,6 @@
                 <ResourceDictionary Source="Controls\ToolContainerStyles.xaml" />
                 <ResourceDictionary Source="Controls\DefaultControlTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
-            <!-- Document templates -->
-
-            <DataTemplate x:Key="TextDocumentTemplate" >
-                <controls:TextDocumentView />    
-            </DataTemplate>
-
-            <DataTemplate x:Key="HexDocumentTemplate">
-                <controls:HexDocumentView />
-            </DataTemplate>
-
-            <DataTemplate x:Key="BinDocumentTemplate">
-                <controls:BinDocumentView />
-            </DataTemplate>
             
             <!-- Converters -->
             
@@ -70,6 +56,7 @@
             <SolidColorBrush x:Key="ToolButtonHoverBackgroundBrush" Color="#d9e7f4" />
             <SolidColorBrush x:Key="ToolButtonDownBorderBrush" Color="#89b3dc" />
             <SolidColorBrush x:Key="ToolButtonDownBackgroundBrush" Color="#ebf2fa" />
+            <SolidColorBrush x:Key="ToolButtonCheckedBrush" Color="#DCB789" />
 
             <SolidColorBrush x:Key="DocumentCloseButtonHoverForegroundBrush" Color="#3A9EFF" />
 
@@ -81,107 +68,6 @@
                 </Style.Setters>
             </Style>
             
-            <Style TargetType="Button" x:Key="DocumentTabCloseButtonStyle">
-                <Style.Setters>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="Button">
-                                <Border x:Name="ContentBorder" TextBlock.Foreground="{TemplateBinding Foreground}">
-                                    <Grid x:Name="ContentGrid" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <ContentPresenter/>
-                                    </Grid>
-                                </Border>
-
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsPressed" Value="True">
-                                        <Trigger.Setters>
-                                            <Setter TargetName="ContentGrid" Property="Margin">
-                                                <Setter.Value>
-                                                    <Thickness Top="3" Left="3" Right="1" Bottom="1" />
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger.Setters>
-                                    </Trigger>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="ContentBorder" Property="TextBlock.Foreground" Value="{StaticResource DocumentCloseButtonHoverForegroundBrush}"/>
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style.Setters>
-            </Style>
-
-            <Style TargetType="RepeatButton" x:Key="DocumentTabScrollButtonStyle">
-                <Style.Setters>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="RepeatButton">
-                                <Border x:Name="ContentBorder" TextBlock.Foreground="{StaticResource TabScrollButtonForegroundBrush}">
-                                    <Grid x:Name="ContentGrid" Margin="2,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <ContentPresenter />
-                                    </Grid>
-                                </Border>
-
-                                <ControlTemplate.Triggers>
-                                    <Trigger Property="IsPressed" Value="True">
-                                        <Trigger.Setters>
-                                            <Setter TargetName="ContentGrid" Property="Margin">
-                                                <Setter.Value>
-                                                    <Thickness Top="3" Left="3" Right="1" Bottom="1" />
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Trigger.Setters>
-                                    </Trigger>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter TargetName="ContentBorder" Property="TextElement.Foreground" Value="{StaticResource TabScrollButtonForegroundBrush}" />
-                                    </Trigger>
-                                </ControlTemplate.Triggers>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style.Setters>
-            </Style>
-
-            <Style x:Key="RootDockPanel" TargetType="DockPanel">
-                <Style.Setters>
-                    <Setter Property="Background" Value="{StaticResource FormBackgroundBrush}" />
-                </Style.Setters>
-            </Style>
-
-            <Style x:Key="RootGridSplitter" TargetType="GridSplitter">
-                <Style.Setters>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="GridSplitter">
-                                <Border Background="{StaticResource FormBackgroundBrush}" BorderThickness="0"/>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style.Setters>
-            </Style>
-
-            <Style x:Key="VerticalRootGridSplitter" TargetType="GridSplitter" BasedOn="{StaticResource RootGridSplitter}">
-                <Style.Setters>
-                    <Setter Property="Margin" Value="-2,0,-2,0" />
-                    <Setter Property="Width" Value="4" />
-                </Style.Setters>
-            </Style>
-
-            <Style x:Key="HorizontalRootGridSplitter" TargetType="GridSplitter" BasedOn="{StaticResource RootGridSplitter}">
-                <Style.Setters>
-                    <Setter Property="Margin" Value="0,-2,0,-2" />
-                    <Setter Property="Height" Value="4" />
-                </Style.Setters>
-            </Style>
-
-            <Style x:Key="EditorSplitter" TargetType="GridSplitter" BasedOn="{StaticResource RootGridSplitter}">
-                <Style.Setters>
-                    <Setter Property="Height" Value="4" />
-                </Style.Setters>
-            </Style>
-
-
             <Style x:Key="ToolGridSplitter" TargetType="GridSplitter">
                 <Style.Setters>
                     <Setter Property="Template">
@@ -206,55 +92,6 @@
                 </Style.Setters>
             </Style>
             
-            <Style x:Key="BaseRootTabItem" TargetType="TabItem">
-                <Style.Setters>
-                    <Setter Property="Background" Value="{StaticResource NormalTabBackgroundBrush}" />
-                    <Setter Property="TextBlock.Foreground" Value="{StaticResource NormalTabForegroundBrush}" />
-                </Style.Setters>
-                <Style.Triggers>
-                    <Trigger Property="IsMouseOver" Value="True">
-                        <Trigger.Setters>
-                            <Setter Property="Background" Value="{StaticResource HoverTabBackgroundBrush}" />
-                            <Setter Property="TextBlock.Foreground" Value="{StaticResource HoverTabForegroundBrush}" />
-                        </Trigger.Setters>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-            
-            <Style x:Key="RootTabItem" TargetType="TabItem" BasedOn="{StaticResource BaseRootTabItem}">
-                <Style.Triggers>
-                    <Trigger Property="IsSelected" Value="True">
-                        <Trigger.Setters>
-                            <Setter Property="Background" Value="{StaticResource SelectedTabBackgroundBrush}" />
-                            <Setter Property="TextBlock.Foreground" Value="{StaticResource SelectedTabForegroundBrush}" />
-                        </Trigger.Setters>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-
-            <Style x:Key="DocumentTabItem" TargetType="TabItem" BasedOn="{StaticResource BaseRootTabItem}">
-                <Style.Setters>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="TabItem">
-                                <Border x:Name="TabBorder" BorderThickness="1,1,1,0" BorderBrush="Transparent"
-                                                        Background="{TemplateBinding Background}" TextBlock.Foreground="{TemplateBinding Foreground}">
-                                    <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2" />
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style.Setters>
-                <Style.Triggers>
-                    <Trigger Property="IsSelected" Value="True">
-                        <Trigger.Setters>
-                            <Setter Property="Background" Value="{StaticResource SelectedDocumentTabBackgroundBrush}" />
-                            <Setter Property="Foreground" Value="{StaticResource SelectedDocumentTabForegroundBrush}" />
-                        </Trigger.Setters>
-                    </Trigger>
-                </Style.Triggers>
-            </Style>
-
             <Style TargetType="TextBox">
                 <Style.Triggers>
                     <Trigger Property="TextWrapping" Value="NoWrap">
@@ -318,6 +155,52 @@
                         </ControlTemplate>
                     </Setter.Value>
                 </Setter>
+            </Style>
+
+            <Style x:Key="DocumentFooter" TargetType="Grid">
+                <Style.Setters>
+                    <Setter Property="Background" Value="{StaticResource ToolBackgroundBrush}" />
+                </Style.Setters>
+            </Style>
+
+            <Style x:Key="DocumentFooterToggleButton" TargetType="ToggleButton">
+                <Style.Setters>
+                    <Setter Property="TextBlock.FontSize" Value="9" />
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ToggleButton">
+                                <Border x:Name="bMain" BorderThickness="0" BorderBrush="Transparent" Margin="2" Background="Transparent">
+                                    <ContentPresenter Content="{TemplateBinding Content}" Margin="1"/>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Trigger.Setters>
+                                            <Setter TargetName="bMain" Property="BorderThickness" Value="1" />
+                                            <Setter TargetName="bMain" Property="Margin" Value="1" />
+                                            <Setter TargetName="bMain" Property="BorderBrush" Value="{StaticResource ToolButtonHoverBorderBrush}" />
+                                            <Setter TargetName="bMain" Property="Background" Value="{StaticResource ToolButtonHoverBackgroundBrush}" />
+                                        </Trigger.Setters> 
+                                    </Trigger>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Trigger.Setters>
+                                            <Setter TargetName="bMain" Property="BorderThickness" Value="1" />
+                                            <Setter TargetName="bMain" Property="Margin" Value="1" />
+                                            <Setter TargetName="bMain" Property="BorderBrush" Value="{StaticResource ToolButtonDownBorderBrush}" />
+                                            <Setter TargetName="bMain" Property="Background" Value="{StaticResource ToolButtonDownBackgroundBrush}" />
+                                        </Trigger.Setters>
+                                    </Trigger>
+                                    <Trigger Property="IsChecked" Value="True">
+                                        <Trigger.Setters>
+                                            <Setter TargetName="bMain" Property="BorderThickness" Value="1" />
+                                            <Setter TargetName="bMain" Property="Margin" Value="1" />
+                                            <Setter TargetName="bMain" Property="BorderBrush" Value="{StaticResource ToolButtonCheckedBrush}" />
+                                        </Trigger.Setters>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
             </Style>
             
         </ResourceDictionary>
