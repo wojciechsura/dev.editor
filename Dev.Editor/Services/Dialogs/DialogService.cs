@@ -17,9 +17,8 @@ namespace Dev.Editor.Services.Dialogs
     {
         private readonly Dictionary<ISearchHost, SearchReplaceWindow> searchWindows = new Dictionary<ISearchHost, SearchReplaceWindow>();
 
-        public OpenDialogResult ShowOpenDialog(string filter = null, string title = null, string filename = null)
+        private void SetupFileDialog(FileDialog dialog, string filter, string title, string filename, string path)
         {
-            OpenFileDialog dialog = new OpenFileDialog();
             if (filename != null)
                 dialog.FileName = filename;
 
@@ -32,6 +31,15 @@ namespace Dev.Editor.Services.Dialogs
                 dialog.Title = title;
             else
                 dialog.Title = Strings.DefaultDialogTitle;
+
+            if (path != null)
+                dialog.InitialDirectory = path;
+        }
+
+        public OpenDialogResult ShowOpenDialog(string filter = null, string title = null, string filename = null, string path = null)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            SetupFileDialog(dialog, filter, title, filename, path);
 
             if (dialog.ShowDialog() == true)
                 return new OpenDialogResult(true, dialog.FileName);
@@ -51,21 +59,10 @@ namespace Dev.Editor.Services.Dialogs
             return searchWindows[searchHost].ViewModel;
         }
 
-        public SaveDialogResult ShowSaveDialog(string filter = null, string title = null, string filename = null)
+        public SaveDialogResult ShowSaveDialog(string filter = null, string title = null, string filename = null, string path = null)
         {
             SaveFileDialog dialog = new SaveFileDialog();
-            if (filename != null)
-                dialog.FileName = filename;
-
-            if (filter != null)
-                dialog.Filter = filter;
-            else
-                dialog.Filter = Strings.DefaultFilter;
-
-            if (title != null)
-                dialog.Title = title;
-            else
-                dialog.Title = Strings.DefaultDialogTitle;
+            SetupFileDialog(dialog, filter, title, filename, path);           
 
             if (dialog.ShowDialog() == true)
                 return new SaveDialogResult(true, dialog.FileName);
