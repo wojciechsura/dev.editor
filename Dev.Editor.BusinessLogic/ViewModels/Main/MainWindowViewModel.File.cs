@@ -27,6 +27,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return documents.FirstOrDefault(d => string.Equals(d.FileName.ToLower(), filename.ToLower()));
         }
 
+        private string GetSuggestedFilename(BaseDocumentViewModel document)
+        {
+            string suggestedFilename = null;
+
+            if (document.FilenameVirtual)
+            {
+                if (explorerToolViewModel.SelectedFolder != null)
+                    suggestedFilename = System.IO.Path.Combine(explorerToolViewModel.SelectedFolder.GetFullPath(), document.FileName);
+            }
+            else
+            {
+                suggestedFilename = document.FileName;
+            }
+
+            return suggestedFilename;
+        }
+
         // *** Text document ***
 
         private void InternalWriteTextDocument(TextDocumentViewModel document, string filename)
@@ -114,7 +131,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
 		private bool SaveTextDocumentAs(TextDocumentViewModel document)
         {
-            var fileDialogResult = dialogService.ShowSaveDialog();
+            string suggestedFilename = GetSuggestedFilename(document);
+
+            var fileDialogResult = dialogService.ShowSaveDialog(null, null, suggestedFilename);
             if (fileDialogResult.Result && InternalSaveTextDocument(document, fileDialogResult.FileName))
             {
                 document.SetFilename(fileDialogResult.FileName, fileIconProvider.GetImageForFile(fileDialogResult.FileName));
@@ -240,7 +259,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private bool SaveHexDocumentAs(HexDocumentViewModel document)
         {
-            var fileDialogResult = dialogService.ShowSaveDialog();
+            var suggestedFilename = GetSuggestedFilename(document);
+
+            var fileDialogResult = dialogService.ShowSaveDialog(null, null, suggestedFilename);
+
             if (fileDialogResult.Result && InternalSaveHexDocument(document, fileDialogResult.FileName))
             {
                 document.SetFilename(fileDialogResult.FileName, fileIconProvider.GetImageForFile(fileDialogResult.FileName));
@@ -347,7 +369,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoOpenBinDocument(BinDefinition binDefinition)
         {
-            var dialogResult = dialogService.ShowOpenDialog(Strings.DefaultFilter, string.Format(Strings.OpenBinaryFile_Title, binDefinition.DefinitionName.Value));
+            var dialogResult = dialogService.ShowOpenDialog(Strings.DefaultFilter, 
+                string.Format(Strings.OpenBinaryFile_Title, binDefinition.DefinitionName.Value));
             if (dialogResult.Result)
             {
                 messagesBottomToolViewModel.ClearMessages();
@@ -462,6 +485,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                         throw new InvalidOperationException("Unsupported document type!");
                     }
             }
+
+            // File might have been saved in location chosen in explorer tool
+            explorerToolViewModel.Refresh();
 
             var modificationDate = System.IO.File.GetLastWriteTimeUtc(activeDocument.FileName);
             activeDocument.LastModificationDate = modificationDate;

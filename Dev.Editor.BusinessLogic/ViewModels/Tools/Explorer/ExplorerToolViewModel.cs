@@ -225,6 +225,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 
             SelectedFile = files.FirstOrDefault();
         }
+
         // Public metods ------------------------------------------------------
 
         public ExplorerToolViewModel(IFileIconProvider fileIconProvider, 
@@ -311,6 +312,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 
             access.ScrollToSelectedFolder();
             access.ScrollToSelectedFile();
+        }
+
+        public void Refresh()
+        {
+            RefreshFolders();
         }
 
         // Public properties --------------------------------------------------
