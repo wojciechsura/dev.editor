@@ -27,21 +27,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return documents.FirstOrDefault(d => string.Equals(d.FileName.ToLower(), filename.ToLower()));
         }
 
-        private string GetSuggestedFilename(BaseDocumentViewModel document)
+        private (string filename, string path) GetSuggestedFilenamePath(BaseDocumentViewModel document)
         {
-            string suggestedFilename = null;
+            string filename = document.FileName;
+            string path = null;
 
             if (document.FilenameVirtual)
             {
                 if (explorerToolViewModel.SelectedFolder != null)
-                    suggestedFilename = System.IO.Path.Combine(explorerToolViewModel.SelectedFolder.GetFullPath(), document.FileName);
+                    path = explorerToolViewModel.SelectedFolder.GetFullPath();
             }
             else
             {
-                suggestedFilename = document.FileName;
+                path = System.IO.Path.GetDirectoryName(document.FileName);
             }
 
-            return suggestedFilename;
+            return (filename, path);
         }
 
         // *** Text document ***
@@ -131,9 +132,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
 		private bool SaveTextDocumentAs(TextDocumentViewModel document)
         {
-            string suggestedFilename = GetSuggestedFilename(document);
+            (string filename, string path) = GetSuggestedFilenamePath(document);
 
-            var fileDialogResult = dialogService.ShowSaveDialog(null, null, suggestedFilename);
+            var fileDialogResult = dialogService.ShowSaveDialog(null, null, filename, path);
             if (fileDialogResult.Result && InternalSaveTextDocument(document, fileDialogResult.FileName))
             {
                 document.SetFilename(fileDialogResult.FileName, fileIconProvider.GetImageForFile(fileDialogResult.FileName));
@@ -259,9 +260,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private bool SaveHexDocumentAs(HexDocumentViewModel document)
         {
-            var suggestedFilename = GetSuggestedFilename(document);
+            (string filename, string path) = GetSuggestedFilenamePath(document);
 
-            var fileDialogResult = dialogService.ShowSaveDialog(null, null, suggestedFilename);
+            var fileDialogResult = dialogService.ShowSaveDialog(null, null, filename, path);
 
             if (fileDialogResult.Result && InternalSaveHexDocument(document, fileDialogResult.FileName))
             {
