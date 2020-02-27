@@ -77,12 +77,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoInsertMarkdownUnorderedListCommand()
         {
-            InsertAtLineStart("* ");
+            PrependLines("* ");
         }
 
         private void DoInsertMarkdownOrderedListCommand()
         {
-            InsertAtLineStart("1. ");
+            PrependLines("1. ");
         }
 
         private void DoInsertMarkdownBlockquoteCommand()
