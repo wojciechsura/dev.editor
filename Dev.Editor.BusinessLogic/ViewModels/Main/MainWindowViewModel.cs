@@ -646,10 +646,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             RemoveWhitespaceLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveWhitespaceLines, null, obj => DoRemoveWhitespaceLines(), documentIsTextCondition);
 
             LowercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Lowercase, null, obj => DoLowercase(), documentIsTextCondition);
-            UppercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Lowercase, null, obj => DoUppercase(), documentIsTextCondition);
-            NamingCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Lowercase, null, obj => DoNamingCase(), documentIsTextCondition);
-            SentenceCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Lowercase, null, obj => DoSentenceCase(), documentIsTextCondition);
-            InvertCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Lowercase, null, obj => DoInvertCase(), documentIsTextCondition);
+            UppercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Uppercase, null, obj => DoUppercase(), documentIsTextCondition);
+            NamingCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Naming, null, obj => DoNamingCase(), documentIsTextCondition);
+            SentenceCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Sentence, null, obj => DoSentenceCase(), documentIsTextCondition);
+            InvertCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Invert, null, obj => DoInvertCase(), documentIsTextCondition);
 
             Base64EncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_ToBase64, null, obj => DoBase64Encode(), documentIsTextCondition);
             Base64DecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_FromBase64, null, obj => DoBase64Decode(), documentIsTextCondition);
