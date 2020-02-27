@@ -313,6 +313,11 @@ namespace Dev.Editor
 
         void IMainWindowAccess.BringToFront()
         {
+            // Restore if needed
+            if (this.WindowState == WindowState.Minimized)
+                this.WindowState = WindowState.Normal;
+
+            // Focus
             this.Activate();
         }
 

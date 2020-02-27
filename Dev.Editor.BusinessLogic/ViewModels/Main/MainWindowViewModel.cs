@@ -316,7 +316,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 {
                     try
                     {
-                        LoadTextDocument(param);
+                        LoadTextDocument(param);                        
                         anyDocumentLoaded = true;
                     }
                     catch (Exception e)

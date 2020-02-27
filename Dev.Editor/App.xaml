@@ -169,30 +169,24 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="ToggleButton">
-                                <Border x:Name="bMain" BorderThickness="0" BorderBrush="Transparent" Margin="2" Background="Transparent">
+                                <Border x:Name="bMain" BorderThickness="1" BorderBrush="Transparent" Margin="1" Background="Transparent">
                                     <ContentPresenter Content="{TemplateBinding Content}" Margin="1"/>
                                 </Border>
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsMouseOver" Value="True">
                                         <Trigger.Setters>
-                                            <Setter TargetName="bMain" Property="BorderThickness" Value="1" />
-                                            <Setter TargetName="bMain" Property="Margin" Value="1" />
                                             <Setter TargetName="bMain" Property="BorderBrush" Value="{StaticResource ToolButtonHoverBorderBrush}" />
                                             <Setter TargetName="bMain" Property="Background" Value="{StaticResource ToolButtonHoverBackgroundBrush}" />
                                         </Trigger.Setters> 
                                     </Trigger>
                                     <Trigger Property="IsPressed" Value="True">
                                         <Trigger.Setters>
-                                            <Setter TargetName="bMain" Property="BorderThickness" Value="1" />
-                                            <Setter TargetName="bMain" Property="Margin" Value="1" />
                                             <Setter TargetName="bMain" Property="BorderBrush" Value="{StaticResource ToolButtonDownBorderBrush}" />
                                             <Setter TargetName="bMain" Property="Background" Value="{StaticResource ToolButtonDownBackgroundBrush}" />
                                         </Trigger.Setters>
                                     </Trigger>
                                     <Trigger Property="IsChecked" Value="True">
                                         <Trigger.Setters>
-                                            <Setter TargetName="bMain" Property="BorderThickness" Value="1" />
-                                            <Setter TargetName="bMain" Property="Margin" Value="1" />
                                             <Setter TargetName="bMain" Property="BorderBrush" Value="{StaticResource ToolButtonCheckedBrush}" />
                                         </Trigger.Setters>
                                     </Trigger>
