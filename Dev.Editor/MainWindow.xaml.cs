@@ -220,9 +220,9 @@ namespace Dev.Editor
             }
             else if (e.PropertyName == nameof(MainWindowViewModel.ActiveDocumentTab))
             {
-                if (viewModel.ActiveDocumentTab == DocumentTabKind.Primary && tceSecondary.IsFocused)
+                if (viewModel.ActiveDocumentTab == DocumentTabKind.Primary && !tcePrimary.IsFocused)
                     tcePrimary.Focus();
-                else if (viewModel.ActiveDocumentTab == DocumentTabKind.Secondary && tcePrimary.IsFocused)
+                else if (viewModel.ActiveDocumentTab == DocumentTabKind.Secondary && !tceSecondary.IsFocused)
                     tceSecondary.Focus();
             }
         }
@@ -384,6 +384,8 @@ namespace Dev.Editor
 
         // Public methods -----------------------------------------------------
 
+        // private DispatcherTimer tmp;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -395,6 +397,10 @@ namespace Dev.Editor
             DataContext = viewModel;
 
             navigationTimer = new Lazy<DispatcherTimer>(() => new DispatcherTimer(TimeSpan.FromMilliseconds(500), DispatcherPriority.Normal, NavigationSearch, this.Dispatcher));
+
+            // tmp = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, new EventHandler((s, a) => {
+            //     System.Diagnostics.Debug.WriteLine($"Focused element: {FocusManager.GetFocusedElement(this)}");
+            // }), Dispatcher);
         }
     }
 }

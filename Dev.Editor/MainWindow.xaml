@@ -221,7 +221,7 @@
 
                                     <ScrollViewer x:Name="HeaderPanel" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" 
                                               VerticalAlignment="Stretch" Margin="0,0,0,0" HorizontalScrollBarVisibility="Hidden" 
-                                                          VerticalScrollBarVisibility="Disabled" Drop="TabHeaderDrop"
+                                                          VerticalScrollBarVisibility="Disabled" Drop="TabHeaderDrop" Focusable="False"
                                                   wpf:MouseEvents.DirectMouseDoubleClickCommand="{TemplateBinding HeaderDoubleClickCommand}"
                                                   wpf:ParentData.ParentItemsSource="{TemplateBinding ItemsSource}">
 

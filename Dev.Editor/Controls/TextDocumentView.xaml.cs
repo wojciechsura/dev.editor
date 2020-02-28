@@ -462,12 +462,6 @@ namespace Dev.Editor.Controls
             Handler = null;
         }
 
-        private void HandleLoaded(object sender, RoutedEventArgs e)
-        {
-            Dispatcher.CurrentDispatcher.BeginInvoke(new Action(() => teEditor.Focus()), 
-                DispatcherPriority.Normal);            
-        }
-
         private void HandleDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (e.NewValue != null && !(e.NewValue is TextDocumentViewModel))

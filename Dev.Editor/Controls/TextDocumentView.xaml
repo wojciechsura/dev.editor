@@ -61,7 +61,7 @@
                        BorderThickness="0"
                        FontFamily="Consolas"      
                        FontSize="10pt"
-                       Loaded="HandleLoaded" 
+                       TabIndex="0"             
                        WordWrap="{Binding ElementName=Root, Path=Handler.WordWrap}"
                        ShowLineNumbers="{Binding ElementName=Root, Path=Handler.LineNumbers}"
                        ContextMenu="{StaticResource EditorContextMenu}"
@@ -69,7 +69,8 @@
 
         <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                       Style="{StaticResource EditorSplitter}"
-                      Visibility="{Binding Editor2Visible, Converter={StaticResource BooleanToVisibilityConverter}}"/>
+                      Visibility="{Binding Editor2Visible, Converter={StaticResource BooleanToVisibilityConverter}}"
+                      IsTabStop="False" Focusable="False"/>
 
         <ae:TextEditor x:Name="teEditor2"
                        Grid.Row="2"
@@ -79,7 +80,7 @@
                        BorderThickness="0"
                        FontFamily="Consolas"      
                        FontSize="10pt"
-                       Loaded="HandleLoaded" 
+                       TabIndex="1"
                        WordWrap="{Binding ElementName=Root, Path=Handler.WordWrap}"
                        ShowLineNumbers="{Binding ElementName=Root, Path=Handler.LineNumbers}"
                        ContextMenu="{StaticResource EditorContextMenu}"
