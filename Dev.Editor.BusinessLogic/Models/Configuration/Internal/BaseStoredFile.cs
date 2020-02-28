@@ -14,6 +14,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
         private readonly ConfigValue<bool> flienameIsVirtual;
         private readonly ConfigValue<string> storedFilename;
         private readonly ConfigValue<long> lastModifiedDate;
+        private readonly ConfigValue<Types.Main.DocumentTabKind> documentTabKind;
 
         public BaseStoredFile(string name)             
             : base(name)
@@ -23,6 +24,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
             flienameIsVirtual = new ConfigValue<bool>("FilenameIsVirtual", this);
             storedFilename = new ConfigValue<string>("StoredFilename", this);
             lastModifiedDate = new ConfigValue<long>("LastModifiedDate", this);
+            documentTabKind = new ConfigValue<Types.Main.DocumentTabKind>("DocumentTabKind", this, Types.Main.DocumentTabKind.Primary);
         }
 
         public ConfigValue<string> Filename => filename;
@@ -34,5 +36,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
         public ConfigValue<string> StoredFilename => storedFilename;
 
         public ConfigValue<long> LastModifiedDate => lastModifiedDate;
+
+        public ConfigValue<Types.Main.DocumentTabKind> DocumentTabKind => documentTabKind;
     }
 }

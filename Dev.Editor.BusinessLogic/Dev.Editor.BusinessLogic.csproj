@@ -132,6 +132,7 @@
     <Compile Include="Types\Behavior\CloseBehavior.cs" />
     <Compile Include="Types\Document\Text\ActiveEditor.cs" />
     <Compile Include="Types\Folding\FoldingKind.cs" />
+    <Compile Include="Types\Main\DocumentTabKind.cs" />
     <Compile Include="Types\Messages\MessageSeverity.cs" />
     <Compile Include="Types\Search\SearchMode.cs" />
     <Compile Include="Types\Search\SearchReplaceOperation.cs" />

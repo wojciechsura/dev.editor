@@ -16,6 +16,7 @@
     xmlns:vme="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;assembly=Dev.Editor.BusinessLogic"
     xmlns:vmb="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions;assembly=Dev.Editor.BusinessLogic"
     xmlns:uit="clr-namespace:Dev.Editor.BusinessLogic.Types.UI;assembly=Dev.Editor.BusinessLogic"
+    xmlns:mt="clr-namespace:Dev.Editor.BusinessLogic.Types.Main;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True"
     Loaded="HandleLoaded" Activated="HandleWindowActivated"
@@ -180,7 +181,95 @@
                             <Setter Property="Foreground" Value="{StaticResource SelectedDocumentTabForegroundBrush}" />
                         </Trigger.Setters>
                     </Trigger>
+                    <MultiDataTrigger>
+                        <MultiDataTrigger.Conditions>
+                            <Condition Binding="{Binding IsSelected, RelativeSource={RelativeSource Mode=Self}}" Value="True" />
+                            <Condition Binding="{Binding IsActiveDocumentTab, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type controls:TabControlExt}}}" Value="False" />
+                        </MultiDataTrigger.Conditions>
+                        <MultiDataTrigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource SelectedInactiveDocumentTabBackgroundBrush}" />
+                            <Setter Property="Foreground" Value="{StaticResource SelectedInactiveDocumentTabForegroundBrush}" />
+                        </MultiDataTrigger.Setters>
+                    </MultiDataTrigger>
                 </Style.Triggers>
+            </Style>
+
+            <Style x:Key="DocumentTabControlStyle" TargetType="controls:TabControlExt">
+                <Style.Setters>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="{x:Type controls:TabControlExt}">
+                                <Grid x:Name="Grid" KeyboardNavigation.TabNavigation="Local">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition x:Name="ColumnDefinition0"/>
+                                        <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
+                                        <RowDefinition x:Name="RowDefinition1" Height="*"/>
+                                    </Grid.RowDefinitions>
+
+                                    <Border Grid.Row="1" Grid.Column="0" x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" 
+                                                    BorderThickness="{TemplateBinding BorderThickness}" KeyboardNavigation.TabIndex="2" 
+                                                    KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Contained">
+                                        <Border Background="{TemplateBinding Background}" x:Name="Border1">
+                                            <ContentPresenter DataContext="{x:Null}" Margin="{TemplateBinding Padding}" x:Name="PART_SelectedContentHost" 
+                                                                      Content="{TemplateBinding SelectedContent}" ContentTemplate="{TemplateBinding SelectedContentTemplate}" 
+                                                                      ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" ContentSource="SelectedContent"/>
+                                        </Border>
+                                    </Border>
+
+                                    <ScrollViewer x:Name="HeaderPanel" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" 
+                                              VerticalAlignment="Stretch" Margin="0,0,0,0" HorizontalScrollBarVisibility="Hidden" 
+                                                          VerticalScrollBarVisibility="Disabled" Drop="TabHeaderDrop"
+                                                  wpf:MouseEvents.DirectMouseDoubleClickCommand="{TemplateBinding HeaderDoubleClickCommand}"
+                                                  wpf:ParentData.ParentItemsSource="{TemplateBinding ItemsSource}">
+
+                                        <ScrollViewer.Style>
+                                            <Style TargetType="{x:Type ScrollViewer}">
+                                                <Setter Property="Template">
+                                                    <Setter.Value>
+                                                        <ControlTemplate>
+                                                            <Grid Margin="0,0,0,0" Grid.Row="0" Grid.Column="0" x:Name="HeaderPanel">
+                                                                <Grid.ColumnDefinitions>
+                                                                    <ColumnDefinition Width="*"/>
+                                                                    <ColumnDefinition Width="Auto"/>
+                                                                    <ColumnDefinition Width="Auto"/>
+                                                                </Grid.ColumnDefinitions>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                </Grid.RowDefinitions>
+                                                                <ScrollContentPresenter Grid.Column="0" Content="{TemplateBinding ScrollViewer.Content}" />
+                                                                <RepeatButton Grid.Column="1" Content="3" FontFamily="Marlett" FontSize="12" Padding="2" 
+                                                                                  Command="ScrollBar.LineLeftCommand" Style="{StaticResource DocumentTabScrollButtonStyle}"/>
+                                                                <RepeatButton Grid.Column="2" Content="4" FontFamily="Marlett" FontSize="12" Padding="2" Command="ScrollBar.LineRightCommand" 
+                                                                                  Style="{StaticResource DocumentTabScrollButtonStyle}"/>
+                                                            </Grid>
+                                                        </ControlTemplate>
+                                                    </Setter.Value>
+                                                </Setter>
+                                            </Style>
+                                        </ScrollViewer.Style>
+                                        <StackPanel IsItemsHost="true" Orientation="Horizontal" Background="{x:Null}" KeyboardNavigation.TabIndex="1" />
+                                    </ScrollViewer>
+                                </Grid>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter Property="ItemTemplate">
+                        <Setter.Value>
+                            <DataTemplate>
+                                <StackPanel x:Name="spDocTabItemRoot" Orientation="Horizontal" PreviewMouseMove="DocumentTabItemPreviewMouseMove" Drop="DocumentTabItemDrop">
+                                    <Image Width="16" Height="16" Source="{Binding Icon}"/>
+                                    <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" MaxWidth="200" Margin="2"/>
+                                    <TextBlock Text="•" Margin="2" Visibility="{Binding Changed, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                    <Button Content="r" FontFamily="Marlett" FontSize="10" Command="{Binding CloseCommand}" Style="{StaticResource DocumentTabCloseButtonStyle}" 
+                                            Foreground="{Binding ElementName=spDocTabItemRoot, Path=(TextBlock.Foreground)}"/>
+                                </StackPanel>
+                            </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
             </Style>
 
             <!-- Converters -->          
@@ -215,6 +304,8 @@
 
     <DockPanel Style="{StaticResource RootDockPanel}">
 
+        <!-- Ribbon -->
+        
         <f:Ribbon DockPanel.Dock="Top" Focusable="False" FocusManager.IsFocusScope="True">
             <f:Ribbon.Menu>
                 <f:ApplicationMenu>
@@ -371,7 +462,8 @@
 
                 </f:RibbonGroupBox>
 
-                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_Group_Interface}">
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_Group_Interface}" HorizontalContentAlignment="Left"
+                                  Grid.IsSharedSizeScope="True">
 
                     <f:ComboBox Header="{x:Static p:Strings.Ribbon_View_Interface_SidePanel}" ItemsSource="{Binding SidePanelPlacements}" 
                                 DisplayMemberPath="Display" SelectedValuePath="Value"
@@ -380,6 +472,9 @@
                     <f:ComboBox Header="{x:Static p:Strings.Ribbon_View_Interface_BottomPanel}" ItemsSource="{Binding BottomPanelVisibilities}" 
                                 DisplayMemberPath="Display" SelectedValuePath="Value"
                                 SelectedValue="{Binding BottomPanelVisibility}" IsEditable="False" Width="150" />
+
+                    <f:CheckBox Header="{x:Static p:Strings.Ribbon_View_Interface_ShowSecondaryDocumentTab}"
+                                IsChecked="{Binding ShowSecondaryDocumentTab, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 </f:RibbonGroupBox>
 
@@ -624,6 +719,8 @@
             
         </f:Ribbon>
 
+        <!-- Window content -->
+        
         <Grid Margin="{StaticResource HalfMargin}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -631,8 +728,8 @@
                 <RowDefinition x:Name="bottomPanelRow" />
             </Grid.RowDefinitions>
 
-            <!-- Tabs -->
-
+            <!-- Main content -->
+            
             <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="leftPanelColumn" />
@@ -642,6 +739,8 @@
                     <ColumnDefinition x:Name="rightPanelColumn" />
                 </Grid.ColumnDefinitions>
 
+                <!-- Side panel -->
+                
                 <TabControl x:Name="rightPanel" Grid.Column="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToColumnConverter}}" 
                             VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinWidth="100"
                             Visibility="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToVisibilityConverter}}"
@@ -719,79 +818,41 @@
                               Visibility="{Binding SidePanelPlacement, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static uit:SidePanelPlacement.Left}}"
                               Style="{StaticResource VerticalRootGridSplitter}"/>
 
-                <controls:TabControlExt Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{StaticResource HalfMargin}"
-                        ItemsSource="{Binding Documents}" SelectedItem="{Binding ActiveDocument}" BorderThickness="0" Padding="0"
-                        ContentTemplateSelector="{StaticResource DocumentTemplateSelector}"
-                        ItemContainerStyle="{StaticResource DocumentTabItem}" HeaderDoubleClickCommand="{Binding NewTextCommand}">
+                <!-- Documents -->
+                
+                <Grid Grid.Column="2">
+                    
+                    <!-- Primary document tab -->                    
+                    
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" x:Name="cdPrimary" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" x:Name="cdSecondary" />
+                    </Grid.ColumnDefinitions>
 
-                    <controls:TabControlExt.Template>
-                        <ControlTemplate TargetType="{x:Type controls:TabControlExt}">
-                            <Grid x:Name="Grid" KeyboardNavigation.TabNavigation="Local">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition x:Name="ColumnDefinition0"/>
-                                    <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
-                                </Grid.ColumnDefinitions>
-                                <Grid.RowDefinitions>
-                                    <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
-                                    <RowDefinition x:Name="RowDefinition1" Height="*"/>
-                                </Grid.RowDefinitions>
+                    <controls:TabControlExt Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{StaticResource HalfMargin}"
+                                            ItemsSource="{Binding PrimaryDocuments}" SelectedItem="{Binding SelectedPrimaryDocument}" 
+                                            BorderThickness="0" Padding="0" ContentTemplateSelector="{StaticResource DocumentTemplateSelector}"
+                                            ItemContainerStyle="{StaticResource DocumentTabItem}" HeaderDoubleClickCommand="{Binding NewPrimaryTextCommand}"
+                                            GotFocus="PrimaryDocumentTabGotFocus" Style="{StaticResource DocumentTabControlStyle}" 
+                                            IsActiveDocumentTab="{Binding ActiveDocumentTab, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static mt:DocumentTabKind.Primary}}" />
 
-                                <Border Grid.Row="1" Grid.Column="0" x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" 
-                                                BorderThickness="{TemplateBinding BorderThickness}" KeyboardNavigation.TabIndex="2" 
-                                                KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Contained">
-                                    <Border Background="{TemplateBinding Background}" x:Name="Border1">
-                                        <ContentPresenter DataContext="{x:Null}" Margin="{TemplateBinding Padding}" x:Name="PART_SelectedContentHost" 
-                                                                  Content="{TemplateBinding SelectedContent}" ContentTemplate="{TemplateBinding SelectedContentTemplate}" 
-                                                                  ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" ContentSource="SelectedContent"/>
-                                    </Border>
-                                </Border>
+                    <!-- Document tab splitter -->
+                    
+                    <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"
+                                  Visibility="{Binding ShowSecondaryDocumentTab, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                  Style="{StaticResource VerticalRootGridSplitter}" />
 
-                                <ScrollViewer x:Name="HeaderPanel" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" 
-                                          VerticalAlignment="Stretch" Margin="0,0,0,0" HorizontalScrollBarVisibility="Hidden" 
-                                                      VerticalScrollBarVisibility="Disabled" wpf:MouseEvents.DirectMouseDoubleClickCommand="{TemplateBinding HeaderDoubleClickCommand}">
-                                    <ScrollViewer.Style>
-                                        <Style TargetType="{x:Type ScrollViewer}">
-                                            <Setter Property="Template">
-                                                <Setter.Value>
-                                                    <ControlTemplate>
-                                                        <Grid Margin="0,0,0,0" Grid.Row="0" Grid.Column="0" x:Name="HeaderPanel">
-                                                            <Grid.ColumnDefinitions>
-                                                                <ColumnDefinition Width="*"/>
-                                                                <ColumnDefinition Width="Auto"/>
-                                                                <ColumnDefinition Width="Auto"/>
-                                                            </Grid.ColumnDefinitions>
-                                                            <Grid.RowDefinitions>
-                                                                <RowDefinition Height="Auto"/>
-                                                            </Grid.RowDefinitions>
-                                                            <ScrollContentPresenter Grid.Column="0" Content="{TemplateBinding ScrollViewer.Content}" />
-                                                            <RepeatButton Grid.Column="1" Content="3" FontFamily="Marlett" FontSize="12" Padding="2" 
-                                                                              Command="ScrollBar.LineLeftCommand" Style="{StaticResource DocumentTabScrollButtonStyle}"/>
-                                                            <RepeatButton Grid.Column="2" Content="4" FontFamily="Marlett" FontSize="12" Padding="2" Command="ScrollBar.LineRightCommand" 
-                                                                              Style="{StaticResource DocumentTabScrollButtonStyle}"/>
-                                                        </Grid>
-                                                    </ControlTemplate>
-                                                </Setter.Value>
-                                            </Setter>
-                                        </Style>
-                                    </ScrollViewer.Style>
-                                    <StackPanel IsItemsHost="true" Orientation="Horizontal" Background="{x:Null}" KeyboardNavigation.TabIndex="1" />
-                                </ScrollViewer>
-                            </Grid>
-                        </ControlTemplate>
-                    </controls:TabControlExt.Template>
+                    <!-- Secondary document tab -->
 
-                    <controls:TabControlExt.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel x:Name="spDocTabItemRoot" Orientation="Horizontal" PreviewMouseMove="DocumentTabItemPreviewMouseMove" Drop="DocumentTabItemDrop">
-                                <Image Width="16" Height="16" Source="{Binding Icon}"/>
-                                <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" MaxWidth="200" Margin="2"/>
-                                <TextBlock Text="•" Margin="2" Visibility="{Binding Changed, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                <Button Content="r" FontFamily="Marlett" FontSize="10" Command="{Binding CloseCommand}" Style="{StaticResource DocumentTabCloseButtonStyle}" 
-                                        Foreground="{Binding ElementName=spDocTabItemRoot, Path=(TextBlock.Foreground)}"/>
-                            </StackPanel>
-                        </DataTemplate>
-                    </controls:TabControlExt.ItemTemplate>
-                </controls:TabControlExt>
+                    <controls:TabControlExt Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{StaticResource HalfMargin}"
+                                            ItemsSource="{Binding SecondaryDocuments}" SelectedItem="{Binding SelectedSecondaryDocument}" 
+                                            BorderThickness="0" Padding="0" ContentTemplateSelector="{StaticResource DocumentTemplateSelector}"
+                                            ItemContainerStyle="{StaticResource DocumentTabItem}" HeaderDoubleClickCommand="{Binding NewSecondaryTextCommand}"                                            
+                                            GotFocus="SecondaryDocumentTabGotFocus" Style="{StaticResource DocumentTabControlStyle}" 
+                                            IsActiveDocumentTab="{Binding ActiveDocumentTab, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static mt:DocumentTabKind.Secondary}}"
+                                            Visibility="{Binding ShowSecondaryDocumentTab, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                </Grid>
 
                 <GridSplitter x:Name="rightPanelSplitter" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Center"
                               Visibility="{Binding SidePanelPlacement, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static uit:SidePanelPlacement.Right}}"

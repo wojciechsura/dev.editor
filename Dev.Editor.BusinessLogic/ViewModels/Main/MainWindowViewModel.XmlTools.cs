@@ -79,7 +79,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     string transformed = textReader.ReadToEnd();
 
                     // Create new document
-                    DoNewTextDocument(transformed);
+                    DoNewTextDocument(CurrentDocuments, transformed);
                 }
                 catch (XsltException e)
                 {

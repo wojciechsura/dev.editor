@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.Types.UI;
+﻿using Dev.Editor.BusinessLogic.Types.Main;
+using Dev.Editor.BusinessLogic.Types.UI;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.BusinessLogic.ViewModels.Main;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
@@ -7,10 +8,12 @@ using Dev.Editor.Models;
 using Dev.Editor.Services;
 using Dev.Editor.Services.SingleInstance;
 using Dev.Editor.Services.WinAPI;
+using Dev.Editor.Wpf;
 using Fluent;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -179,6 +182,7 @@ namespace Dev.Editor
             viewModel.PropertyChanged += HandleViewModelPropertyChanged;
             SetupSidePanel();
             SetupBottomPanel();
+            SetupSecondaryDocumentTabArea();
 
             viewModel.NotifyLoaded();
         }
@@ -210,6 +214,10 @@ namespace Dev.Editor
             {
                 SetupBottomPanel();
             }
+            else if (e.PropertyName == nameof(MainWindowViewModel.ShowSecondaryDocumentTab))
+            {
+                SetupSecondaryDocumentTabArea();
+            }
         }
 
         private void NavigationSearch(object sender, EventArgs e)
@@ -239,7 +247,7 @@ namespace Dev.Editor
         }
 
         private void DocumentTabItemPreviewMouseMove(object sender, MouseEventArgs e)
-        {
+        {            
             if (e.LeftButton == MouseButtonState.Pressed && !(e.OriginalSource is System.Windows.Controls.Button))
             {
                 var stackPanel = (StackPanel)sender;
@@ -258,6 +266,52 @@ namespace Dev.Editor
             {
                 var data = stackPanel.DataContext;
                 viewModel.ReorderDocument(dragData.DocumentViewModel, data as BaseDocumentViewModel);
+            }
+        }
+
+        private void TabHeaderDrop(object sender, DragEventArgs e)
+        {
+            // Handle only direct drops
+            if (e.OriginalSource == sender)
+            {
+                var dragData = (DragData)e.Data.GetData(typeof(DragData));
+                if (dragData != null)
+                {
+                    var scrollViewer = (ScrollViewer)sender;
+                    var itemsSource = (ObservableCollection<BaseDocumentViewModel>)(scrollViewer.GetValue(ParentData.ParentItemsSourceProperty));
+
+                    viewModel.MoveDocumentTo(dragData.DocumentViewModel, itemsSource);
+                }
+            }
+        }
+
+        private void PrimaryDocumentTabGotFocus(object sender, RoutedEventArgs e)
+        {
+            if (viewModel.ActiveDocumentTab != DocumentTabKind.Primary)
+                viewModel.ActiveDocumentTab = DocumentTabKind.Primary;
+        }
+
+        private void SecondaryDocumentTabGotFocus(object sender, RoutedEventArgs e)
+        {
+            if (viewModel.ActiveDocumentTab != DocumentTabKind.Secondary)
+                viewModel.ActiveDocumentTab = DocumentTabKind.Secondary;
+        }
+
+        private void SetupSecondaryDocumentTabArea()
+        {
+            if (viewModel.ShowSecondaryDocumentTab)
+            {
+                cdPrimary.MinWidth = 50;
+                cdSecondary.MinWidth = 50;
+                cdPrimary.Width = new GridLength(1, GridUnitType.Star);
+                cdSecondary.Width = new GridLength(1, GridUnitType.Star);
+            }
+            else
+            {
+                cdPrimary.MinWidth = 0;
+                cdSecondary.MinWidth = 0;
+                cdPrimary.Width = new GridLength(1, GridUnitType.Star);
+                cdSecondary.Width = new GridLength(0, GridUnitType.Auto);
             }
         }
 
@@ -334,6 +388,6 @@ namespace Dev.Editor
             DataContext = viewModel;
 
             navigationTimer = new Lazy<DispatcherTimer>(() => new DispatcherTimer(TimeSpan.FromMilliseconds(500), DispatcherPriority.Normal, NavigationSearch, this.Dispatcher));
-        }        
+        }
     }
 }

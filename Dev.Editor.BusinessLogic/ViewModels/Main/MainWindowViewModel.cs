@@ -47,10 +47,11 @@ using Dev.Editor.BusinessLogic.Models.Configuration.Search;
 using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.Services.SearchEncoder;
 using Dev.Editor.BusinessLogic.Services.Platform;
+using Dev.Editor.BusinessLogic.Types.Main;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
-    public partial class MainWindowViewModel : BaseViewModel, IDocumentHandler, 
+    public partial class MainWindowViewModel : BaseViewModel, IDocumentHandler,
         IExplorerHandler, IBinDefinitionsHandler, IMessagesHandler, IEventListener<StoredSearchesChangedEvent>
     {
         // Private fields -----------------------------------------------------
@@ -69,8 +70,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly ISearchEncoderService searchEncoder;
         private readonly IPlatformService platformService;
 
-        private readonly ObservableCollection<BaseDocumentViewModel> documents;
         private BaseDocumentViewModel activeDocument;
+
+        private bool showSecondaryDocumentTab;
+        private readonly ObservableCollection<BaseDocumentViewModel> primaryDocuments;
+        private readonly ObservableCollection<BaseDocumentViewModel> secondaryDocuments;
+        private BaseDocumentViewModel selectedPrimaryDocument;
+        private BaseDocumentViewModel selectedSecondaryDocument;
+        private DocumentTabKind activeDocumentTab;
 
         private readonly ObservableCollection<StoredSearchReplaceViewModel> storedSearches;
         private readonly ObservableCollection<StoredSearchReplaceViewModel> storedReplaces;
@@ -101,10 +108,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // Private methods ----------------------------------------------------
 
+        private void UpdateActiveDocument()
+        {
+            ActiveDocument = activeDocumentTab == DocumentTabKind.Primary ? selectedPrimaryDocument : selectedSecondaryDocument;
+        }
+
         private void HandleActiveDocumentChanged()
         {
-            documentExistsCondition.Value = activeDocument != null;
-            documentIsTextCondition.Value = activeDocument is TextDocumentViewModel;
+            documentExistsCondition.Value = ActiveDocument != null;
+            documentIsTextCondition.Value = ActiveDocument is TextDocumentViewModel;
         }
 
         private void HandleSidePanelSizeChanged()
@@ -127,7 +139,52 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             configurationService.Configuration.UI.BottomPanelVisibility.Value = bottomPanelVisibility;
         }
 
+        private void HandleActiveDocumentTabChanged()
+        {
+            UpdateActiveDocument();
+        }
+
+        private void HandleSelectedPrimaryDocumentChanged()
+        {
+            if (ActiveDocumentTab == DocumentTabKind.Primary)
+            {
+                ActiveDocument = selectedPrimaryDocument;
+            }
+        }
+
+        private void HandleSelectedSecondaryDocumentChanged()
+        {
+            if (ActiveDocumentTab == DocumentTabKind.Secondary)
+            {
+                ActiveDocument = selectedSecondaryDocument;
+            }
+        }
+
+        private void HandleShowSecondaryDocumentTabChanged()
+        {
+            if (!showSecondaryDocumentTab)
+            {
+                // Moving documents back to main tab
+                while (secondaryDocuments.Count > 0)
+                {
+                    var doc = secondaryDocuments[secondaryDocuments.Count - 1];
+                    secondaryDocuments.RemoveAt(secondaryDocuments.Count - 1);
+                    primaryDocuments.Add(doc);
+                }
+            }
+        }
+
         private void RemoveDocument(BaseDocumentViewModel document)
+        {
+            if (primaryDocuments.Contains(document))
+                RemoveDocument(primaryDocuments, document);
+            else if (secondaryDocuments.Contains(document))
+                RemoveDocument(secondaryDocuments, document);
+            else
+                throw new ArgumentException(nameof(document));                
+        }
+
+        private void RemoveDocument(IList<BaseDocumentViewModel> documents, BaseDocumentViewModel document)
         {
             int index = documents.IndexOf(document);
 
@@ -144,73 +201,106 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
+        private void SetActiveDocument(BaseDocumentViewModel value)
+        {
+            if (primaryDocuments.Contains(value))
+            {
+                // Activate primary document tab
+                ActiveDocumentTab = DocumentTabKind.Primary;
+                SelectedPrimaryDocument = value;
+            }
+            else if (secondaryDocuments.Contains(value))
+            {
+                ActiveDocumentTab = DocumentTabKind.Secondary;
+                SelectedSecondaryDocument = value;
+            }
+            else
+                throw new ArgumentException(nameof(value));
+
+            activeDocument = value;
+
+            HandleActiveDocumentChanged();
+            OnPropertyChanged(() => ActiveDocument);
+        }
+
         private bool StoreFiles()
         {
-            configurationService.Configuration.Internal.StoredFiles.Clear();
-            var storedFilesPath = pathService.StoredFilesPath;
+            int storedFileIndex = 0;
 
-            for (int i = 0; i < documents.Count; i++)
+            bool StoreDocuments(IList<BaseDocumentViewModel> documents, DocumentTabKind documentTabKind)
             {
-                var document = documents[i];
-                var storedFilename = Path.Combine(storedFilesPath, $"{i}.txt");
+                var storedFilesPath = pathService.StoredFilesPath;
 
-                try
+                for (int i = 0; i < documents.Count; i++)
                 {
-                    if (document.CanSave)
-                        InternalWriteDocument(document, storedFilename);
+                    var document = documents[i];
+                    var storedFilename = Path.Combine(storedFilesPath, $"{storedFileIndex++}.txt");
+
+                    try
+                    {
+                        if (document.CanSave)
+                            InternalWriteDocument(document, storedFilename);
+                    }
+                    catch (Exception e)
+                    {
+                        messagingService.ShowError(String.Format(Resources.Strings.Message_CannotSaveFile, e.Message));
+                        return false;
+                    }
+
+                    switch (document)
+                    {
+                        case TextDocumentViewModel textDocument:
+                            {
+                                var storedFile = new TextStoredFile();
+                                storedFile.Filename.Value = textDocument.FileName;
+                                storedFile.FilenameIsVirtual.Value = textDocument.FilenameVirtual;
+                                storedFile.IsDirty.Value = textDocument.Changed;
+                                storedFile.StoredFilename.Value = storedFilename;
+                                storedFile.HighlightingName.Value = textDocument.Highlighting?.Name;
+                                storedFile.LastModifiedDate.Value = textDocument.LastModificationDate.Ticks;
+                                storedFile.DocumentTabKind.Value = documentTabKind;
+
+                                configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
+                                break;
+                            }
+                        case HexDocumentViewModel hexDocument:
+                            {
+                                var storedFile = new HexStoredFile();
+                                storedFile.Filename.Value = hexDocument.FileName;
+                                storedFile.FilenameIsVirtual.Value = hexDocument.FilenameVirtual;
+                                storedFile.IsDirty.Value = hexDocument.Changed;
+                                storedFile.StoredFilename.Value = storedFilename;
+                                storedFile.LastModifiedDate.Value = hexDocument.LastModificationDate.Ticks;
+                                storedFile.DocumentTabKind.Value = documentTabKind;
+
+                                configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
+                                break;
+                            }
+                        case BinDocumentViewModel binDocument:
+                            {
+                                var storedFile = new BinStoredFile();
+                                storedFile.Filename.Value = binDocument.FileName;
+                                storedFile.FilenameIsVirtual.Value = binDocument.FilenameVirtual;
+                                storedFile.IsDirty.Value = binDocument.Changed;
+                                storedFile.StoredFilename.Value = document.FileName;
+                                storedFile.DefinitionUid.Value = binDocument.Definition.Uid.Value;
+                                storedFile.LastModifiedDate.Value = binDocument.LastModificationDate.Ticks;
+                                storedFile.DocumentTabKind.Value = documentTabKind;
+
+                                configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
+                                break;
+                            }
+                        default:
+                            throw new InvalidOperationException("Unsupported document type!");
+                    }
                 }
-                catch (Exception e)
-                {
-                    messagingService.ShowError(String.Format(Resources.Strings.Message_CannotSaveFile, e.Message));
-                    return false;
-                }
 
-                switch (document)
-                {
-                    case TextDocumentViewModel textDocument:
-                        {
-                            var storedFile = new TextStoredFile();
-                            storedFile.Filename.Value = textDocument.FileName;
-                            storedFile.FilenameIsVirtual.Value = textDocument.FilenameVirtual;
-                            storedFile.IsDirty.Value = textDocument.Changed;
-                            storedFile.StoredFilename.Value = storedFilename;
-                            storedFile.HighlightingName.Value = textDocument.Highlighting?.Name;
-                            storedFile.LastModifiedDate.Value = textDocument.LastModificationDate.Ticks;
-
-                            configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
-                            break;
-                        }
-                    case HexDocumentViewModel hexDocument:
-                        {
-                            var storedFile = new HexStoredFile();
-                            storedFile.Filename.Value = hexDocument.FileName;
-                            storedFile.FilenameIsVirtual.Value = hexDocument.FilenameVirtual;
-                            storedFile.IsDirty.Value = hexDocument.Changed;
-                            storedFile.StoredFilename.Value = storedFilename;
-                            storedFile.LastModifiedDate.Value = hexDocument.LastModificationDate.Ticks;
-
-                            configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
-                            break;
-                        }
-                    case BinDocumentViewModel binDocument:
-                        {
-                            var storedFile = new BinStoredFile();
-                            storedFile.Filename.Value = binDocument.FileName;
-                            storedFile.FilenameIsVirtual.Value = binDocument.FilenameVirtual;
-                            storedFile.IsDirty.Value = binDocument.Changed;
-                            storedFile.StoredFilename.Value = document.FileName;
-                            storedFile.DefinitionUid.Value = binDocument.Definition.Uid.Value;
-                            storedFile.LastModifiedDate.Value = binDocument.LastModificationDate.Ticks;
-
-                            configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
-                            break;
-                        }
-                    default:
-                        throw new InvalidOperationException("Unsupported document type!");
-                }
+                return true;
             }
 
-            return true;
+            configurationService.Configuration.Internal.StoredFiles.Clear();
+
+            return StoreDocuments(primaryDocuments, DocumentTabKind.Primary) && StoreDocuments(secondaryDocuments, DocumentTabKind.Secondary);
         }
 
         private void RestoreFiles()
@@ -219,31 +309,33 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             {
                 var file = configurationService.Configuration.Internal.StoredFiles[i];
 
+                BaseDocumentViewModel document = null;
+
                 switch (file)
                 {
                     case TextStoredFile textStoredFile:
                         {
                             try
                             {
-                                var document = new TextDocumentViewModel(this);
-                                
-                                InternalReadTextDocument(document, textStoredFile.StoredFilename.Value);
+                                var textDocument = new TextDocumentViewModel(this);
 
-                                document.SetFilename(textStoredFile.Filename.Value, fileIconProvider.GetImageForFile(textStoredFile.Filename.Value));
-                                document.FilenameVirtual = textStoredFile.FilenameIsVirtual.Value;
-                                document.LastModificationDate = new DateTime(textStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
+                                InternalReadTextDocument(textDocument, textStoredFile.StoredFilename.Value);
+
+                                textDocument.SetFilename(textStoredFile.Filename.Value, fileIconProvider.GetImageForFile(textStoredFile.Filename.Value));
+                                textDocument.FilenameVirtual = textStoredFile.FilenameIsVirtual.Value;
+                                textDocument.LastModificationDate = new DateTime(textStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
 
                                 if (!textStoredFile.IsDirty.Value)
                                 {
-                                    document.Document.UndoStack.MarkAsOriginalFile();
+                                    textDocument.Document.UndoStack.MarkAsOriginalFile();
                                 }
                                 else
                                 {
-                                    document.Document.UndoStack.DiscardOriginalFileMarker();
+                                    textDocument.Document.UndoStack.DiscardOriginalFileMarker();
                                 }
-                                document.Highlighting = highlightingProvider.GetDefinitionByName(textStoredFile.HighlightingName.Value);
+                                textDocument.Highlighting = highlightingProvider.GetDefinitionByName(textStoredFile.HighlightingName.Value);
 
-                                documents.Add(document);
+                                document = textDocument;
                             }
                             catch (Exception e)
                             {
@@ -256,19 +348,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                         {
                             try
                             {
-                                var document = new HexDocumentViewModel(this);
+                                var hexDocument = new HexDocumentViewModel(this);
 
-                                InternalReadHexDocument(document, hexStoredFile.StoredFilename.Value);
+                                InternalReadHexDocument((HexDocumentViewModel)hexDocument, hexStoredFile.StoredFilename.Value);
 
-                                document.SetFilename(hexStoredFile.Filename.Value, fileIconProvider.GetImageForFile(hexStoredFile.Filename.Value));
-                                document.FilenameVirtual = hexStoredFile.FilenameIsVirtual.Value;
-                                document.Changed = hexStoredFile.IsDirty.Value;
-                                document.LastModificationDate = new DateTime(hexStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
+                                hexDocument.SetFilename(hexStoredFile.Filename.Value, fileIconProvider.GetImageForFile(hexStoredFile.Filename.Value));
+                                hexDocument.FilenameVirtual = hexStoredFile.FilenameIsVirtual.Value;
+                                hexDocument.Changed = hexStoredFile.IsDirty.Value;
+                                hexDocument.LastModificationDate = new DateTime(hexStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
 
-                                documents.Add(document);
+                                document = hexDocument;
                             }
                             catch (Exception e)
-                            {
+                            {                                
                                 messagingService.ShowError(string.Format(Resources.Strings.Message_CannotRestoreFile, hexStoredFile.Filename, e.Message));
                             }
 
@@ -282,16 +374,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 if (def == null)
                                     continue;
 
-                                var document = new BinDocumentViewModel(this);
+                                var binDocument = new BinDocumentViewModel(this);
 
-                                InternalReadBinDocument(document, binStoredFile.StoredFilename.Value, def);
+                                InternalReadBinDocument((BinDocumentViewModel)binDocument, binStoredFile.StoredFilename.Value, def);
 
-                                document.SetFilename(binStoredFile.Filename.Value, fileIconProvider.GetImageForFile(binStoredFile.Filename.Value));
-                                document.FilenameVirtual = binStoredFile.FilenameIsVirtual.Value;
-                                document.Changed = binStoredFile.IsDirty.Value;
-                                document.LastModificationDate = new DateTime(binStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
+                                binDocument.SetFilename(binStoredFile.Filename.Value, fileIconProvider.GetImageForFile(binStoredFile.Filename.Value));
+                                binDocument.FilenameVirtual = binStoredFile.FilenameIsVirtual.Value;
+                                binDocument.Changed = binStoredFile.IsDirty.Value;
+                                binDocument.LastModificationDate = new DateTime(binStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
 
-                                documents.Add(document);
+                                document = binDocument;
                             }
                             catch (Exception e)
                             {
@@ -302,6 +394,20 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                         }
                     default:
                         throw new InvalidOperationException("Unsupported document type!");
+                }
+
+                if (document != null)
+                {
+                    switch (file.DocumentTabKind.Value)
+                    {
+                        case DocumentTabKind.Secondary:
+                            secondaryDocuments.Add(document);
+                            break;
+                        case DocumentTabKind.Primary:
+                        default:
+                            primaryDocuments.Add(document);
+                            break;
+                    }
                 }
             }
         }
@@ -316,7 +422,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 {
                     try
                     {
-                        LoadTextDocument(param);                        
+                        LoadTextDocument(CurrentDocuments, param);
                         anyDocumentLoaded = true;
                     }
                     catch (Exception e)
@@ -377,9 +483,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoOpenFileAndFocus(string filename, int line, int column)
         {
-            LoadTextDocument(filename);
+            LoadTextDocument(CurrentDocuments, filename);
 
-            
+
             TextDocumentViewModel textDoc = ActiveDocument as TextDocumentViewModel;
             var offset = textDoc.Document.GetOffset(line + 1, column);
             textDoc.SetSelection(offset, 0, true);
@@ -418,7 +524,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoSetHighlighting(HighlightingInfo highlighting)
         {
-            ActiveDocument.Highlighting = highlighting;
+            activeDocument.Highlighting = highlighting;
         }
 
         private void DoRunStoredSearch(StoredSearchReplace storedSearchReplace)
@@ -447,7 +553,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     throw new InvalidEnumArgumentException("Unsupported search/replace operation!");
             }
         }
-        
+
+        // Private properties -------------------------------------------------
+
+        private IEnumerable<BaseDocumentViewModel> AllDocuments => primaryDocuments.Union(secondaryDocuments);
+
+        private IList<BaseDocumentViewModel> CurrentDocuments => activeDocumentTab == DocumentTabKind.Primary ? primaryDocuments : secondaryDocuments;
+
         // IDocumentHandler implementation ------------------------------------
 
         void IDocumentHandler.RequestClose(BaseDocumentViewModel documentViewModel)
@@ -473,12 +585,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         void IExplorerHandler.OpenTextFile(string path)
         {
-            LoadTextDocument(path);
+            LoadTextDocument(CurrentDocuments, path);
         }
 
         string IExplorerHandler.GetCurrentDocumentPath()
         {
-            return ActiveDocument.FileName;
+            return activeDocument.FileName;
         }
 
         BaseCondition IExplorerHandler.CurrentDocumentHasPathCondition => documentHasPathCondition;
@@ -487,19 +599,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         void IBinDefinitionsHandler.OpenTextFile(string path)
         {
-            LoadTextDocument(path);
+            LoadTextDocument(CurrentDocuments, path);
         }
 
         void IBinDefinitionsHandler.NewTextDocument(string text)
         {
-            DoNewTextDocument();
+            DoNewTextDocument(CurrentDocuments);
 
-            (ActiveDocument as TextDocumentViewModel).Document.Insert(0, text);
+            (activeDocument as TextDocumentViewModel).Document.Insert(0, text);
         }
 
         void IBinDefinitionsHandler.RequestOpenBinFile(BinDefinition binDefinition)
         {
-            DoOpenBinDocument(binDefinition);
+            DoOpenBinDocument(CurrentDocuments, binDefinition);
         }
 
         // IBottomToolsHandler implementation ---------------------------------
@@ -513,7 +625,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         void IMessagesHandler.OpenFileAndFocus(string filename)
         {
-            LoadTextDocument(filename);
+            LoadTextDocument(CurrentDocuments, filename);
         }
 
         // IEventListener<StoredSearchesChangedEvent> implementation ----------
@@ -525,8 +637,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // Public methods -----------------------------------------------------
 
-        public MainWindowViewModel(IMainWindowAccess access, 
-            IDialogService dialogService, 
+        public MainWindowViewModel(IMainWindowAccess access,
+            IDialogService dialogService,
             IMessagingService messagingService,
             IConfigurationService configurationService,
             IPathService pathService,
@@ -580,15 +692,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             bottomPanelSize = configurationService.Configuration.UI.BottomPanelSize.Value;
 
-            documents = new ObservableCollection<BaseDocumentViewModel>();
+            primaryDocuments = new ObservableCollection<BaseDocumentViewModel>();
+            secondaryDocuments = new ObservableCollection<BaseDocumentViewModel>();
+            activeDocumentTab = DocumentTabKind.Primary;
 
             highlightings = new List<HighlightingInfo>(highlightingProvider.HighlightingDefinitions);
             highlightings.Sort((h1, h2) => h1.Name.CompareTo(h2.Name));
 
             // Initializing conditions
 
-            documentExistsCondition = new Condition(activeDocument != null);
-            documentIsTextCondition = new Condition(activeDocument is TextDocumentViewModel);
+            documentExistsCondition = new Condition(ActiveDocument != null);
+            documentIsTextCondition = new Condition(ActiveDocument is TextDocumentViewModel);
             canUndoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanUndo, false);
             canRedoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanRedo, false);
             canSaveCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanSave, false);
@@ -604,7 +718,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources, configurationService, this, eventBus, platformService);
             binDefinitionsToolViewModel = new BinDefinitionsToolViewModel(this,
-                imageResources, 
+                imageResources,
                 configurationService,
                 dialogService,
                 messagingService,
@@ -616,16 +730,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             // Initializing commands
 
-            // This command should not be registered in command repository service
+            // Some commands should not be registered in command repository service
             NavigateCommand = new AppCommand(obj => DoNavigate());
+            NewPrimaryTextCommand = new AppCommand(obj => DoNewPrimaryText());
+            NewSecondaryTextCommand = new AppCommand(obj => DoNewSecondaryText());
 
             ConfigCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Configuration, "Settings16.png", obj => DoOpenConfiguration());
             RunStoredSearchCommand = new AppCommand(obj => DoRunStoredSearch(obj as StoredSearchReplace), documentIsTextCondition);
 
-            NewTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_New, "New16.png", obj => DoNewTextDocument());
-            NewHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_NewHex, "New16.png", obj => DoNewHexDocument());
-            OpenTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_Open, "Open16.png", obj => DoOpenTextDocument());
-            OpenHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_OpenHex, "Open16.png", obj => DoOpenHexDocument());
+            NewTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_New, "New16.png", obj => DoNewTextDocument(CurrentDocuments));
+            NewHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_NewHex, "New16.png", obj => DoNewHexDocument(CurrentDocuments));
+            OpenTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_Open, "Open16.png", obj => DoOpenTextDocument(CurrentDocuments));
+            OpenHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_OpenHex, "Open16.png", obj => DoOpenHexDocument(CurrentDocuments));
             OpenBinCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_OpenBin, "Open16.png", obj => DoOpenBinDocument());
             SaveCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_Save, "Save16.png", obj => DoSaveDocument(), canSaveCondition);
             SaveAsCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_SaveAs, "Save16.png", obj => DoSaveDocumentAs(), canSaveCondition);
@@ -678,7 +794,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             commandRepositoryService.RegisterCommand(Resources.Strings.Command_ToggleWordWrap, "WordWrap16.png", obj => DoToggleWordWrap());
             commandRepositoryService.RegisterCommand(Resources.Strings.Command_ToggleLineNumbers, "LineNumbers16.png", obj => DoToggleLineNumbers());
 
-
             // Registering commands for syntax highlightings
             foreach (var highlighting in highlightings)
             {
@@ -707,19 +822,35 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 OpenParameters();
 
-                if (documents.Count == 0)
-                    DoNewTextDocument();
+                if (primaryDocuments.Count == 0)
+                    DoNewTextDocument(CurrentDocuments);
             }
             else if (configurationService.Configuration.Behavior.CloseBehavior.Value == CloseBehavior.Standard)
             {
                 if (!OpenParameters())
-                    DoNewTextDocument();
+                    DoNewTextDocument(CurrentDocuments);
             }
             else
                 throw new InvalidOperationException("Invalid close behavior!");
 
-            if (documents.Count > 0)
-                ActiveDocument = documents.First();
+            showSecondaryDocumentTab = secondaryDocuments.Count > 0;
+
+            if (primaryDocuments.Count > 0)
+                SelectedPrimaryDocument = primaryDocuments.First();
+            if (secondaryDocuments.Count > 0)
+                SelectedSecondaryDocument = secondaryDocuments.First();
+
+            UpdateActiveDocument();
+        }
+
+        private void DoNewSecondaryText()
+        {
+            DoNewTextDocument(secondaryDocuments);
+        }
+
+        private void DoNewPrimaryText()
+        {
+            DoNewTextDocument(primaryDocuments);
         }
 
         public void NotifyActivated()
@@ -729,74 +860,80 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void VerifyRemovedAndModifiedDocuments()
         {
-            // Check documents
-            int i = 0;
-
-            while (i < documents.Count)
+            void InternalVerifyRemovedAndModifiedDocuments(IList<BaseDocumentViewModel> documents)
             {
-                var document = documents[i];
+                // Check documents
+                int i = 0;
 
-                if (document.FilenameVirtual)
+                while (i < documents.Count)
                 {
-                    i++;
-                    continue;
-                }
+                    var document = documents[i];
 
-                // Checking if file still exists
-
-                if (!File.Exists(document.FileName))
-                {
-                    ActiveDocument = document;
-
-                    if (messagingService.AskYesNo(String.Format(Strings.Message_DocumentDeleted, document.FileName)) == false)
+                    if (document.FilenameVirtual)
                     {
-                        // Remove document
-                        RemoveDocument(document);
+                        i++;
                         continue;
+                    }
+
+                    // Checking if file still exists
+
+                    if (!File.Exists(document.FileName))
+                    {
+                        ActiveDocument = document;
+
+                        if (messagingService.AskYesNo(String.Format(Strings.Message_DocumentDeleted, document.FileName)) == false)
+                        {
+                            // Remove document
+                            RemoveDocument(document);
+                            continue;
+                        }
+                        else
+                        {
+                            string newFilename = System.IO.Path.GetFileName(document.FileName);
+
+                            document.SetFilename(newFilename, fileIconProvider.GetImageForFile(newFilename));
+                            document.FilenameVirtual = true;
+                        }
                     }
                     else
                     {
-                        string newFilename = System.IO.Path.GetFileName(document.FileName);
-
-                        document.SetFilename(newFilename, fileIconProvider.GetImageForFile(newFilename));
-                        document.FilenameVirtual = true;
-                    }
-                }
-                else
-                {
-                    try
-                    {
-                        var fileModificationDate = System.IO.File.GetLastWriteTimeUtc(document.FileName);
-
-                        if (document.LastModificationDate < fileModificationDate)
+                        try
                         {
-                            ActiveDocument = document;
+                            var fileModificationDate = System.IO.File.GetLastWriteTimeUtc(document.FileName);
 
-                            if (messagingService.AskYesNo(String.Format(Strings.Message_DocumentModifiedOutsideEditor, document.FileName)) == true)
+                            if (document.LastModificationDate < fileModificationDate)
                             {
-                                int documentIndex = i;
+                                ActiveDocument = document;
 
-                                ReplaceReloadDocument(document);
-                            }
-                            else
-                            {
-                                // Set this date as new reference point. User will no
-                                // longer be notified about this change, but will be
-                                // notified about any next change.
+                                if (messagingService.AskYesNo(String.Format(Strings.Message_DocumentModifiedOutsideEditor, document.FileName)) == true)
+                                {
+                                    int documentIndex = i;
 
-                                document.LastModificationDate = fileModificationDate;
+                                    ReplaceReloadDocument(documents, document);
+                                }
+                                else
+                                {
+                                    // Set this date as new reference point. User will no
+                                    // longer be notified about this change, but will be
+                                    // notified about any next change.
+
+                                    document.LastModificationDate = fileModificationDate;
+                                }
                             }
                         }
-                    }
-                    catch
-                    {
-                        // This is just for user's convenience.
-                        // Cannot get the date? Just ignore this document.                        
-                    }
+                        catch
+                        {
+                            // This is just for user's convenience.
+                            // Cannot get the date? Just ignore this document.                        
+                        }
 
-                    i++;
+                        i++;
+                    }
                 }
             }
+
+            InternalVerifyRemovedAndModifiedDocuments(primaryDocuments);
+            InternalVerifyRemovedAndModifiedDocuments(secondaryDocuments);
         }
 
         public void NotifyLoaded()
@@ -804,7 +941,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             var uiConfig = configurationService.Configuration.UI;
 
             if (uiConfig.MainWindowSizeSet.Value)
-                access.SetWindowSize(new System.Windows.Size(uiConfig.MainWindowWidth.Value, 
+                access.SetWindowSize(new System.Windows.Size(uiConfig.MainWindowWidth.Value,
                     uiConfig.MainWindowHeight.Value));
 
             if (uiConfig.MainWindowLocationSet.Value)
@@ -817,22 +954,30 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public bool CanCloseApplication()
         {
+            bool CloseDocuments(IList<BaseDocumentViewModel> documents)
+            {
+                while (documents.Count > 0)
+                {
+                    ActiveDocument = documents[0];
+                    if (CanCloseDocument(documents[0]))
+                    {
+                        RemoveDocument(documents[0]);
+                    }
+                    else
+                    {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+
             switch (configurationService.Configuration.Behavior.CloseBehavior.Value)
             {
                 case CloseBehavior.Standard:
                     {
-                        while (documents.Count > 0)
-                        {
-                            ActiveDocument = documents[0];
-                            if (CanCloseDocument(documents[0]))
-                            {
-                                RemoveDocument(documents[0]);
-                            }
-                            else
-                            {
-                                return false;
-                            }
-                        }
+                        if (!(CloseDocuments(primaryDocuments) && CloseDocuments(secondaryDocuments)))
+                            return false;
 
                         break;
                     }
@@ -859,7 +1004,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public void FocusActiveDocument()
         {
-            activeDocument?.FocusDocument();
+            ActiveDocument?.FocusDocument();
         }
 
         public void SelectPreviousNavigationItem()
@@ -888,7 +1033,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         {
             foreach (var file in files)
             {
-                LoadTextDocument(file);
+                LoadTextDocument(CurrentDocuments, file);
             }
         }
 
@@ -927,23 +1072,94 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public void ReorderDocument(BaseDocumentViewModel fromDoc, BaseDocumentViewModel toDoc)
         {
+            void MoveInside(ObservableCollection<BaseDocumentViewModel> documents, BaseDocumentViewModel fromDocument, BaseDocumentViewModel toDocument)
+            {
+                var fromIndex = documents.IndexOf(fromDocument);
+                var toIndex = documents.IndexOf(toDocument);
+
+                documents.Move(fromIndex, toIndex);
+            }
+
+            void MoveFromTo(ObservableCollection<BaseDocumentViewModel> fromDocuments, BaseDocumentViewModel fromDocument,
+                ObservableCollection<BaseDocumentViewModel> toDocuments, BaseDocumentViewModel toDocument)
+            {
+                int fromIndex = fromDocuments.IndexOf(fromDocument);
+                int toIndex = toDocuments.IndexOf(toDocument);
+
+                var doc = fromDocuments[fromIndex];
+                fromDocuments.RemoveAt(fromIndex);
+                toDocuments.Insert(toIndex, doc);
+            }
+
             if (fromDoc == toDoc)
                 return;
 
-            int fromIndex = documents.IndexOf(fromDoc);
-            int toIndex = documents.IndexOf(toDoc);
+            if (primaryDocuments.Contains(fromDoc))
+            {
+                int fromIndex = primaryDocuments.IndexOf(fromDoc);
 
-            documents.Move(fromIndex, toIndex);
+                if (primaryDocuments.Contains(toDoc))
+                {
+                    MoveInside(primaryDocuments, fromDoc, toDoc);
+                }
+                else if (secondaryDocuments.Contains(toDoc))
+                {
+                    MoveFromTo(primaryDocuments, fromDoc, secondaryDocuments, toDoc);
+                }
+                else
+                    throw new InvalidOperationException("Target document does not exist in internal collections!");
+            }
+            else if (secondaryDocuments.Contains(fromDoc))
+            {
+                int fromIndex = secondaryDocuments.IndexOf(fromDoc);
+
+                if (primaryDocuments.Contains(toDoc))
+                {
+                    MoveFromTo(secondaryDocuments, fromDoc, primaryDocuments, toDoc);
+                }
+                else if (secondaryDocuments.Contains(toDoc))
+                {
+                    MoveInside(secondaryDocuments, fromDoc, toDoc);
+                }
+                else
+                    throw new InvalidOperationException("Target document does not exist in internal collections!");
+            }
+            else
+                throw new InvalidOperationException("Target document does not exist in internal collections!");
+        }
+
+        public void MoveDocumentTo(BaseDocumentViewModel documentViewModel, ObservableCollection<BaseDocumentViewModel> destinationDocuments)
+        {
+            ObservableCollection<BaseDocumentViewModel> sourceDocuments = null;
+
+            if (destinationDocuments != primaryDocuments && destinationDocuments != secondaryDocuments)
+                throw new ArgumentException(nameof(destinationDocuments));
+
+            if (primaryDocuments.Contains(documentViewModel))
+                sourceDocuments = primaryDocuments;
+            else if (secondaryDocuments.Contains(documentViewModel))
+                sourceDocuments = secondaryDocuments;
+            else
+                throw new ArgumentException(nameof(documentViewModel));
+
+            // The only case when nothing needs to be done
+            if (sourceDocuments == destinationDocuments && sourceDocuments.IndexOf(documentViewModel) == sourceDocuments.Count - 1)
+                return;
+
+            sourceDocuments.Remove(documentViewModel);
+            destinationDocuments.Add(documentViewModel);
         }
 
         // Public properties --------------------------------------------------
 
-        public ObservableCollection<BaseDocumentViewModel> Documents => documents;
+        public ObservableCollection<BaseDocumentViewModel> PrimaryDocuments => primaryDocuments;
+
+        public ObservableCollection<BaseDocumentViewModel> SecondaryDocuments => secondaryDocuments;
 
         public BaseDocumentViewModel ActiveDocument
         {
             get => activeDocument;
-            set => Set(ref activeDocument, () => ActiveDocument, value, HandleActiveDocumentChanged);
+            set => SetActiveDocument(value);
         }
 
         public IReadOnlyList<HighlightingInfo> Highlightings => highlightings;
@@ -973,7 +1189,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public double SidePanelSize
         {
             get => sidePanelSize;
-            set => Set(ref sidePanelSize, () => SidePanelSize, value, HandleSidePanelSizeChanged);            
+            set => Set(ref sidePanelSize, () => SidePanelSize, value, HandleSidePanelSizeChanged);
         }
 
         public BottomPanelVisibility BottomPanelVisibility
@@ -987,7 +1203,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public double BottomPanelSize
         {
             get => bottomPanelSize;
-            set => Set(ref bottomPanelSize, () => BottomPanelSize, value, HandleBottomPanelSizeChanged);            
+            set => Set(ref bottomPanelSize, () => BottomPanelSize, value, HandleBottomPanelSizeChanged);
         }
 
         public ExplorerToolViewModel ExplorerToolViewModel => explorerToolViewModel;
@@ -999,5 +1215,29 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ObservableCollection<StoredSearchReplaceViewModel> StoredSearches => storedSearches;
 
         public ObservableCollection<StoredSearchReplaceViewModel> StoredReplaces => storedReplaces;
+
+        public DocumentTabKind ActiveDocumentTab
+        {
+            get => activeDocumentTab;
+            set => Set(ref activeDocumentTab, () => ActiveDocumentTab, value, HandleActiveDocumentTabChanged);
+        }
+
+        public BaseDocumentViewModel SelectedPrimaryDocument
+        {
+            get => selectedPrimaryDocument;
+            set => Set(ref selectedPrimaryDocument, () => SelectedPrimaryDocument, value, HandleSelectedPrimaryDocumentChanged);
+        }
+
+        public BaseDocumentViewModel SelectedSecondaryDocument
+        {
+            get => selectedSecondaryDocument;
+            set => Set(ref selectedSecondaryDocument, () => SelectedSecondaryDocument, value, HandleSelectedSecondaryDocumentChanged);
+        }
+
+        public bool ShowSecondaryDocumentTab
+        {
+            get => showSecondaryDocumentTab;
+            set => Set(ref showSecondaryDocumentTab, () => ShowSecondaryDocumentTab, value, HandleShowSecondaryDocumentTabChanged);
+        }
     }
 }

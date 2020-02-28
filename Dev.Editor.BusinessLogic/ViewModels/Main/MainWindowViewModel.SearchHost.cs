@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.Resources;
+using System.Collections.ObjectModel;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {

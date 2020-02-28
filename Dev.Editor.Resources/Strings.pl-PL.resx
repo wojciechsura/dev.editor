@@ -862,4 +862,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="TextEditor.Footer.Split" xml:space="preserve">
     <value>PODZIEL</value>
   </data>
+  <data name="Ribbon.View.Interface.ShowSecondaryDocumentTab" xml:space="preserve">
+    <value>Drugi widok</value>
+  </data>
 </root>

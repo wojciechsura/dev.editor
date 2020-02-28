@@ -23,5 +23,19 @@ namespace Dev.Editor.Controls
             DependencyProperty.Register("HeaderDoubleClickCommand", typeof(ICommand), typeof(TabControlExt), new PropertyMetadata(null));
 
         #endregion
+
+        #region IsActiveDocumentTab
+
+        public bool IsActiveDocumentTab
+        {
+            get { return (bool)GetValue(IsActiveDocumentTabProperty); }
+            set { SetValue(IsActiveDocumentTabProperty, value); }
+        }
+
+        // Using a DependencyProperty as the backing store for IsActiveDocumentTab.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty IsActiveDocumentTabProperty =
+            DependencyProperty.Register("IsActiveDocumentTab", typeof(bool), typeof(TabControlExt), new PropertyMetadata(false));
+
+        #endregion
     }
 }

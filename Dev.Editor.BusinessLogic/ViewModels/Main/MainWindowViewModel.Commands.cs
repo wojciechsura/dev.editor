@@ -35,6 +35,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public ICommand RunStoredSearchCommand { get; }
 
+        public ICommand NewPrimaryTextCommand { get; }
+
+        public ICommand NewSecondaryTextCommand { get; }
+
         // File
 
         public ICommand NewTextCommand { get; }

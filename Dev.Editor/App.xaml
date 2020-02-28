@@ -25,6 +25,7 @@
             <c:DoubleToPixelGridLengthConverter x:Key="DoubleToGridLengthConverter" />
             <c:TextDocToBoolConverter x:Key="TextDocToBoolConverter" />
             <c:DataTypeToImageConverter x:Key="DataTypeToImageConverter" />
+            <c:EqualsParameterToBoolConverter x:Key="EqualsParameterToBoolConverter" />
 
             <!-- Layout -->
             
@@ -40,6 +41,8 @@
             <SolidColorBrush x:Key="SelectedTabBackgroundBrush" Color="#ffffff" />
             <SolidColorBrush x:Key="SelectedDocumentTabForegroundBrush" Color="#000000" />
             <SolidColorBrush x:Key="SelectedDocumentTabBackgroundBrush" Color="#f5bc83" />
+            <SolidColorBrush x:Key="SelectedInactiveDocumentTabForegroundBrush" Color="#000000" />
+            <SolidColorBrush x:Key="SelectedInactiveDocumentTabBackgroundBrush" Color="#bad6f1" />
             <SolidColorBrush x:Key="NormalTabForegroundBrush" Color="#e3ebf2" />
             <SolidColorBrush x:Key="NormalTabBackgroundBrush" Color="#40668c" />
             <SolidColorBrush x:Key="HoverTabForegroundBrush" Color="#404040" />

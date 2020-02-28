@@ -82,6 +82,7 @@
     </ApplicationDefinition>
     <Compile Include="Converters\BoolToIntegrationStateConverter.cs" />
     <Compile Include="Converters\DoubleToStarGridLengthConverter.cs" />
+    <Compile Include="Converters\EqualsParameterToBoolConverter.cs" />
     <Compile Include="Models\ArgumentInfo.cs" />
     <Compile Include="NameDialog.xaml.cs">
       <DependentUpon>NameDialog.xaml</DependentUpon>
@@ -137,6 +138,7 @@
     <Compile Include="Wpf\AccessKeyScopeControl.cs" />
     <Compile Include="Wpf\DocumentTemplateSelector.cs" />
     <Compile Include="Wpf\MouseEvents.cs" />
+    <Compile Include="Wpf\ParentData.cs" />
     <Page Include="NameDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
