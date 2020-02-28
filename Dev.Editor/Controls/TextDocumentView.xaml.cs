@@ -55,17 +55,21 @@ namespace Dev.Editor.Controls
         // Private fields -----------------------------------------------------
 
         private TextDocumentViewModel viewModel;
-        private FoldingManager foldingManager;
-        private FoldingManager foldingManager2;
-        private BaseFoldingStrategy foldingStrategy;
-        private IDocumentHandler handler;
 
         private DispatcherTimer foldingTimer;
+        private FoldingManager foldingManager;
+
         private DispatcherTimer foldingTimer2;
+        private FoldingManager foldingManager2;
+
+        private BaseFoldingStrategy foldingStrategy;
+        private IDocumentHandler handler;
 
         private TextEditor currentEditor;
 
         // Private methods ----------------------------------------------------
+
+        // TODO Limit extent of duplicated code in * and *2 methods
 
         private TextEditor GetActiveEditor()
         {
@@ -264,12 +268,6 @@ namespace Dev.Editor.Controls
             {
                 // Uninstall folding manager
 
-                if (foldingManager != null)
-                {
-                    FoldingManager.Uninstall(foldingManager);
-                    foldingManager = null;
-                }
-
                 if (foldingManager2 != null)
                 {
                     FoldingManager.Uninstall(foldingManager2);
@@ -281,6 +279,7 @@ namespace Dev.Editor.Controls
         private void ClearFolding()
         {
             foldingStrategy = null;
+
             if (foldingManager != null)
             {
                 FoldingManager.Uninstall(foldingManager);
