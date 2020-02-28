@@ -171,6 +171,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     secondaryDocuments.RemoveAt(secondaryDocuments.Count - 1);
                     primaryDocuments.Add(doc);
                 }
+
+                ActiveDocument = SelectedPrimaryDocument;
             }
         }
 
