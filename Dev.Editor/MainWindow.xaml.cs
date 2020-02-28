@@ -218,6 +218,13 @@ namespace Dev.Editor
             {
                 SetupSecondaryDocumentTabArea();
             }
+            else if (e.PropertyName == nameof(MainWindowViewModel.ActiveDocumentTab))
+            {
+                if (viewModel.ActiveDocumentTab == DocumentTabKind.Primary && tceSecondary.IsFocused)
+                    tcePrimary.Focus();
+                else if (viewModel.ActiveDocumentTab == DocumentTabKind.Secondary && tcePrimary.IsFocused)
+                    tceSecondary.Focus();
+            }
         }
 
         private void NavigationSearch(object sender, EventArgs e)

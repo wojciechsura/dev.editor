@@ -177,45 +177,65 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private void RemoveDocument(BaseDocumentViewModel document)
         {
             if (primaryDocuments.Contains(document))
-                RemoveDocument(primaryDocuments, document);
+                RemovePrimaryDocument(document);
             else if (secondaryDocuments.Contains(document))
-                RemoveDocument(secondaryDocuments, document);
+                RemoveSecondaryDocument(document);
             else
                 throw new ArgumentException(nameof(document));                
         }
 
-        private void RemoveDocument(IList<BaseDocumentViewModel> documents, BaseDocumentViewModel document)
+        private void RemovePrimaryDocument(BaseDocumentViewModel document)
         {
-            int index = documents.IndexOf(document);
+            int index = primaryDocuments.IndexOf(document);
 
-            documents.Remove(document);
-            if (ActiveDocument == document)
+            primaryDocuments.Remove(document);
+            if (SelectedPrimaryDocument == document)
             {
-                if (index >= documents.Count)
-                    index = documents.Count - 1;
+                if (index >= primaryDocuments.Count)
+                    index = primaryDocuments.Count - 1;
 
-                if (index > 0 && index < documents.Count)
-                    ActiveDocument = documents[index];
+                if (index > 0 && index < primaryDocuments.Count)
+                    SelectedPrimaryDocument = primaryDocuments[index];
                 else
-                    ActiveDocument = null;
+                    SelectedPrimaryDocument = null;
+            }
+        }
+
+        private void RemoveSecondaryDocument(BaseDocumentViewModel document)
+        {
+            int index = secondaryDocuments.IndexOf(document);
+
+            secondaryDocuments.Remove(document);
+            if (SelectedSecondaryDocument == document)
+            {
+                if (index >= secondaryDocuments.Count)
+                    index = secondaryDocuments.Count - 1;
+
+                if (index > 0 && index < secondaryDocuments.Count)
+                    SelectedSecondaryDocument = secondaryDocuments[index];
+                else
+                    SelectedSecondaryDocument = null;
             }
         }
 
         private void SetActiveDocument(BaseDocumentViewModel value)
         {
-            if (primaryDocuments.Contains(value))
+            if (value != null)
             {
-                // Activate primary document tab
-                ActiveDocumentTab = DocumentTabKind.Primary;
-                SelectedPrimaryDocument = value;
+                if (primaryDocuments.Contains(value))
+                {
+                    // Activate primary document tab
+                    ActiveDocumentTab = DocumentTabKind.Primary;
+                    SelectedPrimaryDocument = value;
+                }
+                else if (secondaryDocuments.Contains(value))
+                {
+                    ActiveDocumentTab = DocumentTabKind.Secondary;
+                    SelectedSecondaryDocument = value;
+                }
+                else
+                    throw new ArgumentException(nameof(value));
             }
-            else if (secondaryDocuments.Contains(value))
-            {
-                ActiveDocumentTab = DocumentTabKind.Secondary;
-                SelectedSecondaryDocument = value;
-            }
-            else
-                throw new ArgumentException(nameof(value));
 
             activeDocument = value;
 
@@ -1126,6 +1146,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
             else
                 throw new InvalidOperationException("Target document does not exist in internal collections!");
+
+            ActiveDocument = fromDoc;
         }
 
         public void MoveDocumentTo(BaseDocumentViewModel documentViewModel, ObservableCollection<BaseDocumentViewModel> destinationDocuments)
@@ -1148,6 +1170,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             sourceDocuments.Remove(documentViewModel);
             destinationDocuments.Add(documentViewModel);
+
+            ActiveDocument = documentViewModel;
         }
 
         // Public properties --------------------------------------------------

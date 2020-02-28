@@ -830,7 +830,8 @@
                         <ColumnDefinition Width="Auto" x:Name="cdSecondary" />
                     </Grid.ColumnDefinitions>
 
-                    <controls:TabControlExt Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{StaticResource HalfMargin}"
+                    <controls:TabControlExt x:Name="tcePrimary"
+                                            Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{StaticResource HalfMargin}"
                                             ItemsSource="{Binding PrimaryDocuments}" SelectedItem="{Binding SelectedPrimaryDocument}" 
                                             BorderThickness="0" Padding="0" ContentTemplateSelector="{StaticResource DocumentTemplateSelector}"
                                             ItemContainerStyle="{StaticResource DocumentTabItem}" HeaderDoubleClickCommand="{Binding NewPrimaryTextCommand}"
@@ -845,7 +846,8 @@
 
                     <!-- Secondary document tab -->
 
-                    <controls:TabControlExt Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{StaticResource HalfMargin}"
+                    <controls:TabControlExt x:Name="tceSecondary"
+                                            Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{StaticResource HalfMargin}"
                                             ItemsSource="{Binding SecondaryDocuments}" SelectedItem="{Binding SelectedSecondaryDocument}" 
                                             BorderThickness="0" Padding="0" ContentTemplateSelector="{StaticResource DocumentTemplateSelector}"
                                             ItemContainerStyle="{StaticResource DocumentTabItem}" HeaderDoubleClickCommand="{Binding NewSecondaryTextCommand}"                                            
