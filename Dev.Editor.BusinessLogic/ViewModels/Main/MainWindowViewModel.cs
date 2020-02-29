@@ -1195,6 +1195,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public ObservableCollection<BaseDocumentViewModel> SecondaryDocuments => secondaryDocuments;
 
+        // TODO wrap ActiveDocument, SelectedDocuments and ActiveDocumentTab into common object with proper change handlers
         public BaseDocumentViewModel ActiveDocument
         {
             get => activeDocument;
