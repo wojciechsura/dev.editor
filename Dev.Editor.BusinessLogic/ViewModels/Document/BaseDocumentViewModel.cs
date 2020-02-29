@@ -15,11 +15,20 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 {
     public abstract class BaseDocumentViewModel : BaseViewModel
     {
+        // Private fields -----------------------------------------------------
+
+        private bool isActive;
+
         // Private methods ----------------------------------------------------
 
         private void DoClose()
         {
             handler.RequestClose(this);
+        }
+
+        private void HandleIsActiveChanged()
+        {
+            handler.ChildActivated(this);
         }
 
         // Protected fields ---------------------------------------------------
@@ -143,5 +152,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         }
 
         public abstract HighlightingInfo Highlighting { get; set; }
+        
+        public bool IsActive 
+        {
+            get => isActive; 
+            set => Set(ref isActive, () => IsActive, value, HandleIsActiveChanged);
+        }
     }
 }

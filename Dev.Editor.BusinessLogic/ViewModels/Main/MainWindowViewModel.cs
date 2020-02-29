@@ -222,24 +222,31 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void SetActiveDocument(BaseDocumentViewModel value)
         {
-            if (value != null)
+            if (activeDocument != null)
             {
-                if (primaryDocuments.Contains(value))
-                {
-                    // Activate primary document tab
-                    ActiveDocumentTab = DocumentTabKind.Primary;
-                    SelectedPrimaryDocument = value;
-                }
-                else if (secondaryDocuments.Contains(value))
-                {
-                    ActiveDocumentTab = DocumentTabKind.Secondary;
-                    SelectedSecondaryDocument = value;
-                }
-                else
-                    throw new ArgumentException(nameof(value));
+                activeDocument.IsActive = false;
             }
 
             activeDocument = value;
+
+            if (activeDocument != null)
+            {
+                if (primaryDocuments.Contains(activeDocument))
+                {
+                    // Activate primary document tab
+                    SelectedPrimaryDocument = activeDocument;
+                    ActiveDocumentTab = DocumentTabKind.Primary;
+                }
+                else if (secondaryDocuments.Contains(activeDocument))
+                {
+                    SelectedSecondaryDocument = activeDocument;
+                    ActiveDocumentTab = DocumentTabKind.Secondary;
+                }
+                else
+                    throw new ArgumentException(nameof(value));
+
+                activeDocument.IsActive = true;
+            }
 
             HandleActiveDocumentChanged();
             OnPropertyChanged(() => ActiveDocument);
@@ -588,6 +595,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         {
             if (CanCloseDocument(documentViewModel))
                 RemoveDocument(documentViewModel);
+        }
+
+        void IDocumentHandler.ChildActivated(BaseDocumentViewModel documentViewModel)
+        {
+            if (activeDocument != documentViewModel)
+                SetActiveDocument(activeDocument);
         }
 
         ICommand IDocumentHandler.CopyCommand => CopyCommand;

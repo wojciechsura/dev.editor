@@ -20,7 +20,7 @@
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True"
     Loaded="HandleLoaded" Activated="HandleWindowActivated"
-    Drop="HandleDrop" AllowDrop="True">
+    Drop="HandleDrop" AllowDrop="True" FocusManager.FocusedElement="{Binding ElementName=tcePrimary}">
 
     <f:RibbonWindow.Resources>
         <ResourceDictionary>

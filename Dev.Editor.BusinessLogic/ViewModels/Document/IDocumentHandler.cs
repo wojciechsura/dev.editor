@@ -18,5 +18,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         ICommand CopyCommand { get; }
         ICommand CutCommand { get; }
         ICommand PasteCommand { get; }
+
+        void ChildActivated(BaseDocumentViewModel baseDocumentViewModel);
     }
 }

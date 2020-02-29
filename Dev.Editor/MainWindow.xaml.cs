@@ -399,7 +399,8 @@ namespace Dev.Editor
             navigationTimer = new Lazy<DispatcherTimer>(() => new DispatcherTimer(TimeSpan.FromMilliseconds(500), DispatcherPriority.Normal, NavigationSearch, this.Dispatcher));
 
             // tmp = new DispatcherTimer(TimeSpan.FromSeconds(1), DispatcherPriority.Normal, new EventHandler((s, a) => {
-            //     System.Diagnostics.Debug.WriteLine($"Focused element: {FocusManager.GetFocusedElement(this)}");
+            //     var focusedElement = FocusManager.GetFocusedElement(this);
+            //     System.Diagnostics.Debug.WriteLine($"Focused element: {(focusedElement == null ? "null" : focusedElement.ToString())}");
             // }), Dispatcher);
         }
     }
