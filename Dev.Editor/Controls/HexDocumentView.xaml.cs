@@ -120,6 +120,14 @@ namespace Dev.Editor.Controls
             {
                 viewModel = e.NewValue as HexDocumentViewModel;
                 InitializeViewModel(viewModel);
+
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    // Focus fix, see TextDocumentView
+
+                    if (viewModel.IsActive)
+                        editor.Focus();
+                }), DispatcherPriority.Normal);
             }
         }
 

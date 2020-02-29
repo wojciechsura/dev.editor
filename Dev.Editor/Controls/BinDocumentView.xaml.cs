@@ -87,6 +87,14 @@ namespace Dev.Editor.Controls
             {
                 viewModel = e.NewValue as BinDocumentViewModel;
                 InitializeViewModel(viewModel);
+
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    // Focus fix, see TextDocumentView
+
+                    if (viewModel.IsActive)
+                        tveItems.Focus();
+                }));
             }
         }
 
