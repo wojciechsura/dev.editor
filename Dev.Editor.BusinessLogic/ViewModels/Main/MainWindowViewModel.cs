@@ -48,6 +48,7 @@ using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.Services.SearchEncoder;
 using Dev.Editor.BusinessLogic.Services.Platform;
 using Dev.Editor.BusinessLogic.Types.Main;
+using Dev.Editor.BusinessLogic.ViewModels.Main.Documents;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -70,14 +71,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly ISearchEncoderService searchEncoder;
         private readonly IPlatformService platformService;
 
-        private BaseDocumentViewModel activeDocument;
-
-        private bool showSecondaryDocumentTab;
-        private readonly ObservableCollection<BaseDocumentViewModel> primaryDocuments;
-        private readonly ObservableCollection<BaseDocumentViewModel> secondaryDocuments;
-        private BaseDocumentViewModel selectedPrimaryDocument;
-        private BaseDocumentViewModel selectedSecondaryDocument;
-        private DocumentTabKind activeDocumentTab;
+        private readonly DocumentsManager documentsManager;
 
         private readonly ObservableCollection<StoredSearchReplaceViewModel> storedSearches;
         private readonly ObservableCollection<StoredSearchReplaceViewModel> storedReplaces;
