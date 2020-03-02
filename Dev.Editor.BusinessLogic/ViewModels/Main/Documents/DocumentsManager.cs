@@ -31,12 +31,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
 
             selectedPrimaryDocument = value;
             OnPropertyChanged(nameof(SelectedPrimaryDocument));
-            
-            if (activeDocumentTab == DocumentTabKind.Primary)
-            {
-                activeDocument = selectedPrimaryDocument;
-                OnPropertyChanged(nameof(ActiveDocument));
-            }
+
+            UpdateActiveDocumentToSelected();
         }
 
         private void SetSelectedSecondaryDocument(BaseDocumentViewModel value)
@@ -48,10 +44,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
             OnPropertyChanged(nameof(SelectedSecondaryDocument));
 
             if (activeDocumentTab == DocumentTabKind.Secondary)
-            {
-                activeDocument = selectedSecondaryDocument;
-                OnPropertyChanged(nameof(ActiveDocument));
-            }
+                DoSetActiveDocument(selectedSecondaryDocument);
         }
 
         private void SetActiveDocument(BaseDocumentViewModel value)
@@ -75,8 +68,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
                     OnPropertyChanged(nameof(SelectedPrimaryDocument));
                 }
 
-                activeDocument = value;
-                OnPropertyChanged(nameof(ActiveDocument));
+                DoSetActiveDocument(value);
             }
             else if (secondaryDocuments.Contains(value))
             {
@@ -92,11 +84,26 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
                     OnPropertyChanged(nameof(SelectedSecondaryDocument));
                 }
 
-                activeDocument = value;
-                OnPropertyChanged(nameof(ActiveDocument));
+                DoSetActiveDocument(value);
             }
             else
                 throw new ArgumentException("Document not found!", nameof(value));
+        }
+
+        private void DoSetActiveDocument(BaseDocumentViewModel value)
+        {
+            if (activeDocument == value)
+                return;
+
+            if (activeDocument != null)
+                activeDocument.IsActive = false;
+
+            activeDocument = value;
+
+            if (activeDocument != null)
+                activeDocument.IsActive = true;
+
+            OnPropertyChanged(nameof(ActiveDocument));
         }
 
         private void SetActiveDocumentTab(DocumentTabKind value)
@@ -107,22 +114,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
             activeDocumentTab = value;
             OnPropertyChanged(nameof(ActiveDocumentTab));
 
-            switch (activeDocumentTab)
-            {
-                case DocumentTabKind.Primary:
-                    {
-                        activeDocument = selectedPrimaryDocument;
-                        break;
-                    }
-                case DocumentTabKind.Secondary:
-                    {
-                        activeDocument = selectedSecondaryDocument;
-                        break;
-                    }
-                default:
-                    throw new InvalidEnumArgumentException("Unsupported active document tab!");
-            }
-            OnPropertyChanged(nameof(ActiveDocument));
+            UpdateActiveDocumentToSelected();
         }
 
         private void SetShowSecondaryDocumentsTab(bool value)
@@ -140,11 +132,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
                     primaryDocuments.Add(doc);
                 }
 
-                if (activeDocument != selectedPrimaryDocument)
-                {
-                    activeDocument = selectedPrimaryDocument;
-                    OnPropertyChanged(nameof(ActiveDocument));
-                }
+                DoSetActiveDocument(selectedPrimaryDocument);
             }
         }
 
@@ -168,11 +156,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
 
                 OnPropertyChanged(selectedPropertyName);
 
-                if (activeDocumentTab == collection.DocumentTabKind && activeDocument != selectedCollectionItem)
-                {
-                    activeDocument = selectedCollectionItem;
-                    OnPropertyChanged(nameof(ActiveDocument));
-                }
+                UpdateActiveDocumentToSelected();
             }
         }
 
@@ -201,15 +185,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
                 selectedCollectionItem = document;
                 OnPropertyChanged(selectedPropertyName);
 
-                if (activeDocumentTab == collection.DocumentTabKind)
-                {
-                    if (activeDocument != selectedCollectionItem)
-                    {
-                        activeDocument = selectedCollectionItem;
-                        OnPropertyChanged(nameof(ActiveDocument));
-                    }
-                }
+                UpdateActiveDocumentToSelected();
             }
+        }
+
+        private void UpdateActiveDocumentToSelected()
+        {
+            if (activeDocumentTab == DocumentTabKind.Primary)
+            {
+                DoSetActiveDocument(selectedPrimaryDocument);
+            }
+            else if (activeDocumentTab == DocumentTabKind.Secondary)
+            {
+                DoSetActiveDocument(selectedSecondaryDocument);
+            }
+            else
+                throw new InvalidOperationException("Unsupported active document tab!");
         }
 
         // Protected methods --------------------------------------------------
@@ -281,8 +272,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
 
                     if (!showSecondaryDocumentTab)
                     {
-                        showSecondaryDocumentTab = true;
-                        OnPropertyChanged(nameof(showSecondaryDocumentTab));
+                        SetShowSecondaryDocumentsTab(true);
                     }
                     break;
                 default:
