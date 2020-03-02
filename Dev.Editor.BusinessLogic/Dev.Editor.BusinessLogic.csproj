@@ -163,7 +163,7 @@
     <Compile Include="ViewModels\Main\BinDefinitionViewModel.cs" />
     <Compile Include="ViewModels\Main\Documents\DocumentsManager.cs" />
     <Compile Include="Types\Main\IReadOnlyObservableCollection.cs" />
-    <Compile Include="Types\Main\ObservableCollectionEx.cs" />
+    <Compile Include="Types\Main\TabDocumentCollection.cs" />
     <Compile Include="ViewModels\Main\IMainWindowAccess.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Commands.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />

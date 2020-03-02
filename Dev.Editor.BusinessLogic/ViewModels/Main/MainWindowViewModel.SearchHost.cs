@@ -21,7 +21,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void InternalFindNext(SearchReplaceModel searchModel)
         {
-            var document = (TextDocumentViewModel)activeDocument;
+            var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
             (int selStart, int selLength) = document.GetSelection();
 
@@ -66,13 +66,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public void FindNext(SearchReplaceModel searchModel)
         {
-            activeDocument.LastSearch = searchModel;
+            documentsManager.ActiveDocument.LastSearch = searchModel;
             InternalFindNext(searchModel);
         }
 
         public void Replace(SearchReplaceModel replaceModel)
         {
-            var document = (TextDocumentViewModel)activeDocument;
+            var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
             string input = document.GetSelectedText();
 
@@ -98,7 +98,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public void ReplaceAll(SearchReplaceModel replaceModel)
         {
-            var document = (TextDocumentViewModel)activeDocument;
+            var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
             document.LastSearch = replaceModel;
 

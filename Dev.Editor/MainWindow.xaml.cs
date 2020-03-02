@@ -2,6 +2,7 @@
 using Dev.Editor.BusinessLogic.Types.UI;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.BusinessLogic.ViewModels.Main;
+using Dev.Editor.BusinessLogic.ViewModels.Main.Documents;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
 using Dev.Editor.Converters;
 using Dev.Editor.Models;
@@ -214,15 +215,19 @@ namespace Dev.Editor
             {
                 SetupBottomPanel();
             }
-            else if (e.PropertyName == nameof(MainWindowViewModel.ShowSecondaryDocumentTab))
+        }
+
+        private void HandleDocumentsManagerPropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
+        {
+            if (e.PropertyName == nameof(DocumentsManager.ShowSecondaryDocumentTab))
             {
                 SetupSecondaryDocumentTabArea();
             }
-            else if (e.PropertyName == nameof(MainWindowViewModel.ActiveDocumentTab))
+            else if (e.PropertyName == nameof(DocumentsManager.ActiveDocumentTab))
             {
-                if (viewModel.ActiveDocumentTab == DocumentTabKind.Primary && !tcePrimary.IsFocused)
+                if (viewModel.Documents.ActiveDocumentTab == DocumentTabKind.Primary && !tcePrimary.IsFocused)
                     tcePrimary.Focus();
-                else if (viewModel.ActiveDocumentTab == DocumentTabKind.Secondary && !tceSecondary.IsFocused)
+                else if (viewModel.Documents.ActiveDocumentTab == DocumentTabKind.Secondary && !tceSecondary.IsFocused)
                     tceSecondary.Focus();
             }
         }
@@ -285,7 +290,7 @@ namespace Dev.Editor
                 if (dragData != null)
                 {
                     var scrollViewer = (ScrollViewer)sender;
-                    var itemsSource = (ObservableCollection<BaseDocumentViewModel>)(scrollViewer.GetValue(ParentData.ParentItemsSourceProperty));
+                    var itemsSource = (ITabDocumentCollection<BaseDocumentViewModel>)scrollViewer.GetValue(ParentData.ParentItemsSourceProperty);
 
                     viewModel.MoveDocumentTo(dragData.DocumentViewModel, itemsSource);
                 }
@@ -294,19 +299,19 @@ namespace Dev.Editor
 
         private void PrimaryDocumentTabGotFocus(object sender, RoutedEventArgs e)
         {
-            if (viewModel.ActiveDocumentTab != DocumentTabKind.Primary)
-                viewModel.ActiveDocumentTab = DocumentTabKind.Primary;
+            if (viewModel.Documents.ActiveDocumentTab != DocumentTabKind.Primary)
+                viewModel.Documents.ActiveDocumentTab = DocumentTabKind.Primary;
         }
 
         private void SecondaryDocumentTabGotFocus(object sender, RoutedEventArgs e)
         {
-            if (viewModel.ActiveDocumentTab != DocumentTabKind.Secondary)
-                viewModel.ActiveDocumentTab = DocumentTabKind.Secondary;
+            if (viewModel.Documents.ActiveDocumentTab != DocumentTabKind.Secondary)
+                viewModel.Documents.ActiveDocumentTab = DocumentTabKind.Secondary;
         }
 
         private void SetupSecondaryDocumentTabArea()
         {
-            if (viewModel.ShowSecondaryDocumentTab)
+            if (viewModel.Documents.ShowSecondaryDocumentTab)
             {
                 cdPrimary.MinWidth = 50;
                 cdSecondary.MinWidth = 50;

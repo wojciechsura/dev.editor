@@ -8,8 +8,10 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BusinessLogic.Types.Main
 {
-    public interface IReadOnlyObservableCollection<T> : IReadOnlyCollection<T>, INotifyCollectionChanged
+    public interface ITabDocumentCollection<T> : IReadOnlyList<T>, INotifyCollectionChanged
     {
-        
+        int IndexOf(T item);
+
+        DocumentTabKind DocumentTabKind { get; }
     }
 }

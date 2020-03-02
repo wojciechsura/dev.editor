@@ -10,6 +10,7 @@ using Dev.Editor.BinAnalyzer.Data;
 using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
 using Dev.Editor.BinAnalyzer.Exceptions;
 using Dev.Editor.BusinessLogic.Models.Messages;
+using Dev.Editor.BusinessLogic.Types.Main;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -24,7 +25,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private BaseDocumentViewModel FindDocument(string filename)
         {
-            return AllDocuments.FirstOrDefault(d => string.Equals(d.FileName.ToLower(), filename.ToLower()));
+            return documentsManager.AllDocuments.FirstOrDefault(d => string.Equals(d.FileName.ToLower(), filename.ToLower()));
         }
 
         private (string filename, string path) GetSuggestedFilenamePath(BaseDocumentViewModel document)
@@ -104,7 +105,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         }
 
-        private void LoadTextDocument(IList<BaseDocumentViewModel> documents, string filename, int? index = null)
+        private void LoadTextDocument(DocumentTabKind documentTabKind, string filename, int? index = null)
         {
             var document = FindDocument(filename);
                 
@@ -114,12 +115,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 
                 InternalLoadTextDocument(textDocument, filename);
 
-                documents.Insert(index ?? documents.Count, textDocument);
+                if (index == null)
+                    documentsManager.AddDocument(textDocument, documentTabKind);
+                else
+                    documentsManager.InsertDocument(index.Value, textDocument, documentTabKind);
 
                 document = textDocument;
             }
 
-            ActiveDocument = document;
+            documentsManager.ActiveDocument = document;
         }
 
 		private bool SaveTextDocument(TextDocumentViewModel document)
@@ -145,12 +149,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return false;
         }
 
-        private void DoNewTextDocument(IList<BaseDocumentViewModel> documents, string initialText = null, int? index = null)
+        private void DoNewTextDocument(DocumentTabKind documentTabKind, string initialText = null, int? index = null)
         {
             var newDocument = new TextDocumentViewModel(this);
             
             int i = 1;
-            while (AllDocuments.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
+            while (documentsManager.AllDocuments.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
                 i++;
 
             string newFilename = GenerateBlankFileName(i);
@@ -160,12 +164,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             if (initialText != null)
                 newDocument.Document.Text = initialText;
 
-            documents.Insert(index ?? documents.Count, newDocument);
+            if (index == null)
+                documentsManager.AddDocument(newDocument, documentTabKind);
+            else
+                documentsManager.InsertDocument(index.Value, newDocument, documentTabKind);
 
-            ActiveDocument = newDocument;
+            documentsManager.ActiveDocument = newDocument;
         }
 
-        private void DoOpenTextDocument(IList<BaseDocumentViewModel> documents)
+        private void DoOpenTextDocument(DocumentTabKind documents)
         {
             var dialogResult = dialogService.ShowOpenDialog();
             if (dialogResult.Result)
@@ -232,7 +239,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             document.LastModificationDate = modificationDate;
         }
 
-        private void LoadHexDocument(IList<BaseDocumentViewModel> documents, string filename, int? index = null)
+        private void LoadHexDocument(DocumentTabKind documentTabKind, string filename, int? index = null)
         {
             var document = FindDocument(filename);
 
@@ -242,12 +249,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 InternalLoadHexDocument(hexDocument, filename);
 
-                documents.Insert(index ?? documents.Count, hexDocument);
-
+                if (index != null)
+                    documentsManager.AddDocument(hexDocument, documentTabKind);
+                else
+                    documentsManager.InsertDocument(index.Value, hexDocument, documentTabKind);
+                
                 document = hexDocument;
             }
 
-            ActiveDocument = document;            
+            documentsManager.ActiveDocument = document;            
         }
 
         private bool SaveHexDocument(HexDocumentViewModel document)
@@ -274,23 +284,26 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             return false;
         }
 
-        private void DoNewHexDocument(IList<BaseDocumentViewModel> documents, int? index = null)
+        private void DoNewHexDocument(DocumentTabKind documentTabKind, int? index = null)
         {
             var newDocument = new HexDocumentViewModel(this);
 
             int i = 1;
-            while (AllDocuments.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
+            while (documentsManager.AllDocuments.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
                 i++;
 
             string newFilename = GenerateBlankFileName(i);
             newDocument.SetFilename(newFilename, fileIconProvider.GetImageForFile(newFilename));
 
-            documents.Insert(index ?? documents.Count, newDocument);
+            if (index == null)
+                documentsManager.AddDocument(newDocument, documentTabKind);
+            else
+                documentsManager.InsertDocument(index.Value, newDocument, documentTabKind);
 
-            ActiveDocument = newDocument;
+            documentsManager.ActiveDocument = newDocument;
         }
 
-        private void DoOpenHexDocument(IList<BaseDocumentViewModel> documents)
+        private void DoOpenHexDocument(DocumentTabKind documents)
         {
             var dialogResult = dialogService.ShowOpenDialog();
             if (dialogResult.Result)
@@ -350,7 +363,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             document.LastModificationDate = modificationDate;
         }
 
-        private void LoadBinDocument(IList<BaseDocumentViewModel> documents, string filename, BinDefinition binDefinition, int? index = null)
+        private void LoadBinDocument(DocumentTabKind documentTabKind, string filename, BinDefinition binDefinition, int? index = null)
         {
             var document = FindDocument(filename);
                 
@@ -360,15 +373,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 InternalLoadBinDocument(binDocument, filename, binDefinition);
 
-                documents.Insert(index ?? documents.Count, binDocument);
+                if (index == null)
+                    documentsManager.AddDocument(binDocument, documentTabKind);
+                else
+                    documentsManager.InsertDocument(index.Value, binDocument, documentTabKind);
 
                 document = binDocument;
             }
 
-            ActiveDocument = document;
+            documentsManager.ActiveDocument = document;
         }
 
-        private void DoOpenBinDocument(IList<BaseDocumentViewModel> documents, BinDefinition binDefinition)
+        private void DoOpenBinDocument(DocumentTabKind documents, BinDefinition binDefinition)
         {
             var dialogResult = dialogService.ShowOpenDialog(Strings.DefaultFilter, 
                 string.Format(Strings.OpenBinaryFile_Title, binDefinition.DefinitionName.Value));
@@ -436,13 +452,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoSaveDocument()
         {
-            if (activeDocument.FilenameVirtual)
+            if (documentsManager.ActiveDocument.FilenameVirtual)
             {
                 DoSaveDocumentAs();
             }
             else
             {
-                switch (activeDocument)
+                switch (documentsManager.ActiveDocument)
                 {
                     case TextDocumentViewModel textDocument:
                         SaveTextDocument(textDocument);
@@ -461,7 +477,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoSaveDocumentAs()
         {
-            switch (activeDocument)
+            switch (documentsManager.ActiveDocument)
             {
                 case TextDocumentViewModel textDocument:
                     {
@@ -490,8 +506,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             // File might have been saved in location chosen in explorer tool
             explorerToolViewModel.Refresh();
 
-            var modificationDate = System.IO.File.GetLastWriteTimeUtc(activeDocument.FileName);
-            activeDocument.LastModificationDate = modificationDate;
+            var modificationDate = System.IO.File.GetLastWriteTimeUtc(documentsManager.ActiveDocument.FileName);
+            documentsManager.ActiveDocument.LastModificationDate = modificationDate;
         }
 
         private bool SaveDocument(BaseDocumentViewModel document)
@@ -524,30 +540,30 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }        
 
-        private void ReplaceReloadDocument(IList<BaseDocumentViewModel> documents, BaseDocumentViewModel document)
+        private void ReplaceReloadDocument(DocumentTabKind documentTabKind, BaseDocumentViewModel document)
         {
-            int index = documents.IndexOf(document);
+            int index = documentsManager[documentTabKind].IndexOf(document);
             
             if (index < 0)
                 throw new ArgumentException("Invalid document!");
 
-            RemoveDocument(document);
+            documentsManager.RemoveDocument(documentTabKind, document);
 
             switch (document)
             {
                 case TextDocumentViewModel textDocumentViewModel:
                     {
-                        LoadTextDocument(documents, textDocumentViewModel.FileName, index);
+                        LoadTextDocument(documentTabKind, textDocumentViewModel.FileName, index);
                         break;
                     }
                 case HexDocumentViewModel hexDocumentViewModel:
                     {
-                        LoadHexDocument(documents, hexDocumentViewModel.FileName, index);
+                        LoadHexDocument(documentTabKind, hexDocumentViewModel.FileName, index);
                         break;
                     }
                 case BinDocumentViewModel binDocumentViewModel:
                     {
-                        LoadBinDocument(documents, binDocumentViewModel.FileName, binDocumentViewModel.Definition, index);
+                        LoadBinDocument(documentTabKind, binDocumentViewModel.FileName, binDocumentViewModel.Definition, index);
                         break;
                     }
                 default:

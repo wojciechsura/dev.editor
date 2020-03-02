@@ -30,7 +30,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void TransformLines(Func<string, (bool, string)> func)
         {
-            var document = (TextDocumentViewModel)activeDocument;
+            var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
             (int startOffset, int endOffset) = ExpandSelectionToFullLines(document);
 
@@ -49,7 +49,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void TransformText(Func<string, (bool, string)> func)
         {
-            var document = (TextDocumentViewModel)activeDocument;
+            var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
             (int selStart, int selLength) = document.GetSelection();
 
@@ -74,7 +74,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void SurroundSelection(string before, string after)
         {
-            var document = (TextDocumentViewModel)activeDocument;
+            var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
             (int selStart, int selLength) = document.GetSelection();
 
@@ -92,7 +92,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void InsertAtLineStart(string text)
         {
-            var document = (TextDocumentViewModel)activeDocument;
+            var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
             (int selStart, int selLength) = document.GetSelection();
 
@@ -103,7 +103,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void PrependLines(string text)
         {
-            var document = (TextDocumentViewModel)activeDocument;
+            var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
             (int selStart, int selLength) = document.GetSelection();
 

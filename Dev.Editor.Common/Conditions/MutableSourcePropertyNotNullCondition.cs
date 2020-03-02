@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.Common.Conditions
 {
-    public class MutableSourcePropertyNotNullWatchCondition<TSourceProvider, TSource> : BaseCondition
+    public class MutableSourcePropertyNotNullCondition<TSourceProvider, TSource> : BaseCondition
         where TSource : class, INotifyPropertyChanged
         where TSourceProvider : class, INotifyPropertyChanged
     {
@@ -78,7 +78,7 @@ namespace Dev.Editor.Common.Conditions
                 OnValueChanged(GetValue());
         }
 
-        public MutableSourcePropertyNotNullWatchCondition(TSourceProvider sourceProvider,
+        public MutableSourcePropertyNotNullCondition(TSourceProvider sourceProvider,
             Expression<Func<TSourceProvider, TSource>> getSourceExpression,
             Expression<Func<TSource, object>> getValueExpression)
         {

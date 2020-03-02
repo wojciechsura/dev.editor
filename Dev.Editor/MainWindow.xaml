@@ -319,10 +319,10 @@
 
             <f:Ribbon.ContextualGroups>
                 <f:RibbonContextualTabGroup x:Name="rctgXml" Header="{x:Static p:Strings.Ribbon_ContextGroup_Xml}" 
-                                            Visibility="{Binding ActiveDocument.Highlighting.AdditionalToolset, Converter={StaticResource AdditionalToolsetToVisibilityConverter}, ConverterParameter={x:Static uit:AdditionalToolset.Xml}}"
+                                            Visibility="{Binding Documents.ActiveDocument.Highlighting.AdditionalToolset, Converter={StaticResource AdditionalToolsetToVisibilityConverter}, ConverterParameter={x:Static uit:AdditionalToolset.Xml}}"
                                             Background="#0000a0" />
                 <f:RibbonContextualTabGroup x:Name="rctgMarkdown" Header="{x:Static p:Strings.Ribbon_ContentGroup_Markdown}"
-                                            Visibility="{Binding ActiveDocument.Highlighting.AdditionalToolset, Converter={StaticResource AdditionalToolsetToVisibilityConverter}, ConverterParameter={x:Static uit:AdditionalToolset.Markdown}}"
+                                            Visibility="{Binding Documents.ActiveDocument.Highlighting.AdditionalToolset, Converter={StaticResource AdditionalToolsetToVisibilityConverter}, ConverterParameter={x:Static uit:AdditionalToolset.Markdown}}"
                                             Background="#00a000" />
             </f:Ribbon.ContextualGroups>
 
@@ -456,9 +456,9 @@
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_Group_Editor}">
 
                     <f:CheckBox Header="{x:Static p:Strings.Ribbon_View_Editor_WordWrap}" IsChecked="{Binding WordWrap, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                IsEnabled="{Binding ActiveDocument, Converter={StaticResource TextDocToBoolConverter}}"/>
+                                IsEnabled="{Binding Documents.ActiveDocument, Converter={StaticResource TextDocToBoolConverter}}"/>
                     <f:CheckBox Header="{x:Static p:Strings.Ribbon_View_Editor_ShowLineNumbers}" IsChecked="{Binding LineNumbers, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                IsEnabled="{Binding ActiveDocument, Converter={StaticResource TextDocToBoolConverter}}"/>
+                                IsEnabled="{Binding Documents.ActiveDocument, Converter={StaticResource TextDocToBoolConverter}}"/>
 
                 </f:RibbonGroupBox>
 
@@ -487,8 +487,8 @@
                                        ItemHeight="58"
                                        MinItemsInRow="6" 
                                        MaxItemsInRow="8" 
-                                       SelectedItem="{Binding ActiveDocument.Highlighting}"
-                                       IsEnabled="{Binding ActiveDocument, Converter={StaticResource TextDocToBoolConverter}}"
+                                       SelectedItem="{Binding Documents.ActiveDocument.Highlighting}"
+                                       IsEnabled="{Binding Documents.ActiveDocument, Converter={StaticResource TextDocToBoolConverter}}"
                                        GroupBy="Initial">
                         <f:InRibbonGallery.ItemTemplate>
                             <DataTemplate>
@@ -832,28 +832,28 @@
 
                     <controls:TabControlExt x:Name="tcePrimary"
                                             Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{StaticResource HalfMargin}"
-                                            ItemsSource="{Binding PrimaryDocuments}" SelectedItem="{Binding SelectedPrimaryDocument}" 
+                                            ItemsSource="{Binding Documents.PrimaryDocuments}" SelectedItem="{Binding Documents.SelectedPrimaryDocument}" 
                                             BorderThickness="0" Padding="0" ContentTemplateSelector="{StaticResource DocumentTemplateSelector}"
                                             ItemContainerStyle="{StaticResource DocumentTabItem}" HeaderDoubleClickCommand="{Binding NewPrimaryTextCommand}"
                                             GotFocus="PrimaryDocumentTabGotFocus" Style="{StaticResource DocumentTabControlStyle}" 
-                                            IsActiveDocumentTab="{Binding ActiveDocumentTab, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static mt:DocumentTabKind.Primary}}" />
+                                            IsActiveDocumentTab="{Binding Documents.ActiveDocumentTab, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static mt:DocumentTabKind.Primary}}" />
 
                     <!-- Document tab splitter -->
                     
                     <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"
-                                  Visibility="{Binding ShowSecondaryDocumentTab, Converter={StaticResource BooleanToVisibilityConverter}}"
+                                  Visibility="{Binding Documents.ShowSecondaryDocumentTab, Converter={StaticResource BooleanToVisibilityConverter}}"
                                   Style="{StaticResource VerticalRootGridSplitter}" />
 
                     <!-- Secondary document tab -->
 
                     <controls:TabControlExt x:Name="tceSecondary"
                                             Grid.Column="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{StaticResource HalfMargin}"
-                                            ItemsSource="{Binding SecondaryDocuments}" SelectedItem="{Binding SelectedSecondaryDocument}" 
+                                            ItemsSource="{Binding Documents.SecondaryDocuments}" SelectedItem="{Binding Documents.SelectedSecondaryDocument}" 
                                             BorderThickness="0" Padding="0" ContentTemplateSelector="{StaticResource DocumentTemplateSelector}"
                                             ItemContainerStyle="{StaticResource DocumentTabItem}" HeaderDoubleClickCommand="{Binding NewSecondaryTextCommand}"                                            
                                             GotFocus="SecondaryDocumentTabGotFocus" Style="{StaticResource DocumentTabControlStyle}" 
-                                            IsActiveDocumentTab="{Binding ActiveDocumentTab, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static mt:DocumentTabKind.Secondary}}"
-                                            Visibility="{Binding ShowSecondaryDocumentTab, Converter={StaticResource BooleanToVisibilityConverter}}" />
+                                            IsActiveDocumentTab="{Binding Documents.ActiveDocumentTab, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static mt:DocumentTabKind.Secondary}}"
+                                            Visibility="{Binding Documents.ShowSecondaryDocumentTab, Converter={StaticResource BooleanToVisibilityConverter}}" />
                 </Grid>
 
                 <GridSplitter x:Name="rightPanelSplitter" Grid.Column="3" VerticalAlignment="Stretch" HorizontalAlignment="Center"

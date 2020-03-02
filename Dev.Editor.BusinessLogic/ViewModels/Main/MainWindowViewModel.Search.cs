@@ -27,7 +27,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoFindNext()
         {
-            InternalFindNext(activeDocument.LastSearch);
+            InternalFindNext(documentsManager.ActiveDocument.LastSearch);
         }
     }
 }

@@ -12,27 +12,27 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoPaste()
         {
-            activeDocument.Paste();
+            documentsManager.ActiveDocument.Paste();
         }
 
         private void DoCut()
         {
-            activeDocument.Cut();
+            documentsManager.ActiveDocument.Cut();
         }
 
         private void DoCopy()
         {
-            activeDocument.Copy();
+            documentsManager.ActiveDocument.Copy();
         }
 
         private void DoRedo()
         {
-            activeDocument.Redo();
+            documentsManager.ActiveDocument.Redo();
         }
 
         private void DoUndo()
         {
-            activeDocument.Undo();
+            documentsManager.ActiveDocument.Undo();
         }
     }
 }

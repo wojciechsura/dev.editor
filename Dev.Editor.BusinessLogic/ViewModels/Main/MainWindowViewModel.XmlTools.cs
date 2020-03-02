@@ -55,7 +55,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             if (result.Result)
             {
-                var document = (TextDocumentViewModel)activeDocument;
+                var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
                 var text = document.Document.GetText(0, document.Document.TextLength);
 
                 try
@@ -79,7 +79,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     string transformed = textReader.ReadToEnd();
 
                     // Create new document
-                    DoNewTextDocument(CurrentDocuments, transformed);
+                    DoNewTextDocument(documentsManager.ActiveDocumentTab, transformed);
                 }
                 catch (XsltException e)
                 {

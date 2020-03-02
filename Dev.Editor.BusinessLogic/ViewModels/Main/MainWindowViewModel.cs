@@ -102,17 +102,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // Private methods ----------------------------------------------------
 
-        private void UpdateActiveDocument()
-        {
-            ActiveDocument = activeDocumentTab == DocumentTabKind.Primary ? selectedPrimaryDocument : selectedSecondaryDocument;
-        }
-
-        private void HandleActiveDocumentChanged()
-        {
-            documentExistsCondition.Value = ActiveDocument != null;
-            documentIsTextCondition.Value = ActiveDocument is TextDocumentViewModel;
-        }
-
         private void HandleSidePanelSizeChanged()
         {
             configurationService.Configuration.UI.SidePanelSize.Value = sidePanelSize;
@@ -133,124 +122,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             configurationService.Configuration.UI.BottomPanelVisibility.Value = bottomPanelVisibility;
         }
 
-        private void HandleActiveDocumentTabChanged()
-        {
-            UpdateActiveDocument();
-        }
-
-        private void HandleSelectedPrimaryDocumentChanged()
-        {
-            if (ActiveDocumentTab == DocumentTabKind.Primary)
-            {
-                ActiveDocument = selectedPrimaryDocument;
-            }
-        }
-
-        private void HandleSelectedSecondaryDocumentChanged()
-        {
-            if (ActiveDocumentTab == DocumentTabKind.Secondary)
-            {
-                ActiveDocument = selectedSecondaryDocument;
-            }
-        }
-
-        private void HandleShowSecondaryDocumentTabChanged()
-        {
-            if (!showSecondaryDocumentTab)
-            {
-                // Moving documents back to main tab
-                while (secondaryDocuments.Count > 0)
-                {
-                    var doc = secondaryDocuments[secondaryDocuments.Count - 1];
-                    secondaryDocuments.RemoveAt(secondaryDocuments.Count - 1);
-                    primaryDocuments.Add(doc);
-                }
-
-                ActiveDocument = SelectedPrimaryDocument;
-            }
-        }
-
-        private void RemoveDocument(BaseDocumentViewModel document)
-        {
-            if (primaryDocuments.Contains(document))
-                RemovePrimaryDocument(document);
-            else if (secondaryDocuments.Contains(document))
-                RemoveSecondaryDocument(document);
-            else
-                throw new ArgumentException(nameof(document));                
-        }
-
-        private void RemovePrimaryDocument(BaseDocumentViewModel document)
-        {
-            int index = primaryDocuments.IndexOf(document);
-
-            primaryDocuments.Remove(document);
-            if (SelectedPrimaryDocument == document)
-            {
-                if (index >= primaryDocuments.Count)
-                    index = primaryDocuments.Count - 1;
-
-                if (index > 0 && index < primaryDocuments.Count)
-                    SelectedPrimaryDocument = primaryDocuments[index];
-                else
-                    SelectedPrimaryDocument = null;
-            }
-        }
-
-        private void RemoveSecondaryDocument(BaseDocumentViewModel document)
-        {
-            int index = secondaryDocuments.IndexOf(document);
-
-            secondaryDocuments.Remove(document);
-            if (SelectedSecondaryDocument == document)
-            {
-                if (index >= secondaryDocuments.Count)
-                    index = secondaryDocuments.Count - 1;
-
-                if (index > 0 && index < secondaryDocuments.Count)
-                    SelectedSecondaryDocument = secondaryDocuments[index];
-                else
-                    SelectedSecondaryDocument = null;
-            }
-        }
-
-        private void SetActiveDocument(BaseDocumentViewModel value)
-        {
-            if (activeDocument != null)
-            {
-                activeDocument.IsActive = false;
-            }
-
-            activeDocument = value;
-
-            if (activeDocument != null)
-            {
-                if (primaryDocuments.Contains(activeDocument))
-                {
-                    // Activate primary document tab
-                    SelectedPrimaryDocument = activeDocument;
-                    ActiveDocumentTab = DocumentTabKind.Primary;
-                }
-                else if (secondaryDocuments.Contains(activeDocument))
-                {
-                    SelectedSecondaryDocument = activeDocument;
-                    ActiveDocumentTab = DocumentTabKind.Secondary;
-                }
-                else
-                    throw new ArgumentException(nameof(value));
-
-                activeDocument.IsActive = true;
-            }
-
-            HandleActiveDocumentChanged();
-            OnPropertyChanged(() => ActiveDocument);
-        }
-
         private bool StoreFiles()
         {
             int storedFileIndex = 0;
 
-            bool StoreDocuments(IList<BaseDocumentViewModel> documents, DocumentTabKind documentTabKind)
+            bool StoreDocuments(ITabDocumentCollection<BaseDocumentViewModel> documents)
             {
                 var storedFilesPath = pathService.StoredFilesPath;
 
@@ -281,7 +157,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 storedFile.StoredFilename.Value = storedFilename;
                                 storedFile.HighlightingName.Value = textDocument.Highlighting?.Name;
                                 storedFile.LastModifiedDate.Value = textDocument.LastModificationDate.Ticks;
-                                storedFile.DocumentTabKind.Value = documentTabKind;
+                                storedFile.DocumentTabKind.Value = documents.DocumentTabKind;
 
                                 configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                                 break;
@@ -294,7 +170,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 storedFile.IsDirty.Value = hexDocument.Changed;
                                 storedFile.StoredFilename.Value = storedFilename;
                                 storedFile.LastModifiedDate.Value = hexDocument.LastModificationDate.Ticks;
-                                storedFile.DocumentTabKind.Value = documentTabKind;
+                                storedFile.DocumentTabKind.Value = documents.DocumentTabKind;
 
                                 configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                                 break;
@@ -308,7 +184,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 storedFile.StoredFilename.Value = document.FileName;
                                 storedFile.DefinitionUid.Value = binDocument.Definition.Uid.Value;
                                 storedFile.LastModifiedDate.Value = binDocument.LastModificationDate.Ticks;
-                                storedFile.DocumentTabKind.Value = documentTabKind;
+                                storedFile.DocumentTabKind.Value = documents.DocumentTabKind;
 
                                 configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                                 break;
@@ -323,7 +199,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             configurationService.Configuration.Internal.StoredFiles.Clear();
 
-            return StoreDocuments(primaryDocuments, DocumentTabKind.Primary) && StoreDocuments(secondaryDocuments, DocumentTabKind.Secondary);
+            return StoreDocuments(documentsManager.PrimaryDocuments) && 
+                StoreDocuments(documentsManager.SecondaryDocuments);
         }
 
         private void RestoreFiles()
@@ -420,18 +297,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 }
 
                 if (document != null)
-                {
-                    switch (file.DocumentTabKind.Value)
-                    {
-                        case DocumentTabKind.Secondary:
-                            secondaryDocuments.Add(document);
-                            break;
-                        case DocumentTabKind.Primary:
-                        default:
-                            primaryDocuments.Add(document);
-                            break;
-                    }
-                }
+                    documentsManager.AddDocument(document, file.DocumentTabKind.Value);
             }
         }
 
@@ -445,7 +311,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 {
                     try
                     {
-                        LoadTextDocument(CurrentDocuments, param);
+                        LoadTextDocument(documentsManager.ActiveDocumentTab, param);
                         anyDocumentLoaded = true;
                     }
                     catch (Exception e)
@@ -506,10 +372,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoOpenFileAndFocus(string filename, int line, int column)
         {
-            LoadTextDocument(CurrentDocuments, filename);
+            LoadTextDocument(documentsManager.ActiveDocumentTab, filename);
 
-
-            TextDocumentViewModel textDoc = ActiveDocument as TextDocumentViewModel;
+            TextDocumentViewModel textDoc = documentsManager.ActiveDocument as TextDocumentViewModel;
             var offset = textDoc.Document.GetOffset(line + 1, column);
             textDoc.SetSelection(offset, 0, true);
 
@@ -547,7 +412,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoSetHighlighting(HighlightingInfo highlighting)
         {
-            activeDocument.Highlighting = highlighting;
+            documentsManager.ActiveDocument.Highlighting = highlighting;
         }
 
         private void DoRunStoredSearch(StoredSearchReplace storedSearchReplace)
@@ -577,24 +442,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
-        // Private properties -------------------------------------------------
-
-        private IEnumerable<BaseDocumentViewModel> AllDocuments => primaryDocuments.Union(secondaryDocuments);
-
-        private IList<BaseDocumentViewModel> CurrentDocuments => activeDocumentTab == DocumentTabKind.Primary ? primaryDocuments : secondaryDocuments;
-
         // IDocumentHandler implementation ------------------------------------
 
-        void IDocumentHandler.RequestClose(BaseDocumentViewModel documentViewModel)
+        void IDocumentHandler.RequestClose(BaseDocumentViewModel document)
         {
-            if (CanCloseDocument(documentViewModel))
-                RemoveDocument(documentViewModel);
+            if (CanCloseDocument(document))
+                documentsManager.RemoveDocument(document);
         }
 
-        void IDocumentHandler.ChildActivated(BaseDocumentViewModel documentViewModel)
+        void IDocumentHandler.ChildActivated(BaseDocumentViewModel document)
         {
-            if (activeDocument != documentViewModel)
-                SetActiveDocument(activeDocument);
+            documentsManager.ActiveDocument = document;
         }
 
         ICommand IDocumentHandler.CopyCommand => CopyCommand;
@@ -614,12 +472,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         void IExplorerHandler.OpenTextFile(string path)
         {
-            LoadTextDocument(CurrentDocuments, path);
+            LoadTextDocument(documentsManager.ActiveDocumentTab, path);
         }
 
         string IExplorerHandler.GetCurrentDocumentPath()
         {
-            return activeDocument.FileName;
+            return documentsManager.ActiveDocument.FileName;
         }
 
         BaseCondition IExplorerHandler.CurrentDocumentHasPathCondition => documentHasPathCondition;
@@ -628,19 +486,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         void IBinDefinitionsHandler.OpenTextFile(string path)
         {
-            LoadTextDocument(CurrentDocuments, path);
+            LoadTextDocument(documentsManager.ActiveDocumentTab, path);
         }
 
         void IBinDefinitionsHandler.NewTextDocument(string text)
         {
-            DoNewTextDocument(CurrentDocuments);
-
-            (activeDocument as TextDocumentViewModel).Document.Insert(0, text);
+            DoNewTextDocument(documentsManager.ActiveDocumentTab, text);
         }
 
         void IBinDefinitionsHandler.RequestOpenBinFile(BinDefinition binDefinition)
         {
-            DoOpenBinDocument(CurrentDocuments, binDefinition);
+            DoOpenBinDocument(documentsManager.ActiveDocumentTab, binDefinition);
         }
 
         // IBottomToolsHandler implementation ---------------------------------
@@ -654,7 +510,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         void IMessagesHandler.OpenFileAndFocus(string filename)
         {
-            LoadTextDocument(CurrentDocuments, filename);
+            LoadTextDocument(documentsManager.ActiveDocumentTab, filename);
         }
 
         // IEventListener<StoredSearchesChangedEvent> implementation ----------
@@ -693,6 +549,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             this.searchEncoder = searchEncoder;
             this.eventBus = eventBus;
 
+            documentsManager = new DocumentsManager();
+
             wordWrap = configurationService.Configuration.Editor.WordWrap.Value;
             lineNumbers = configurationService.Configuration.Editor.LineNumbers.Value;
 
@@ -721,31 +579,32 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             bottomPanelSize = configurationService.Configuration.UI.BottomPanelSize.Value;
 
-            primaryDocuments = new ObservableCollection<BaseDocumentViewModel>();
-            secondaryDocuments = new ObservableCollection<BaseDocumentViewModel>();
-            activeDocumentTab = DocumentTabKind.Primary;
-
             highlightings = new List<HighlightingInfo>(highlightingProvider.HighlightingDefinitions);
             highlightings.Sort((h1, h2) => h1.Name.CompareTo(h2.Name));
 
             // Initializing conditions
 
-            documentExistsCondition = new Condition(ActiveDocument != null);
-            documentIsTextCondition = new Condition(ActiveDocument is TextDocumentViewModel);
-            canUndoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanUndo, false);
-            canRedoCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanRedo, false);
-            canSaveCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.CanSave, false);
-            selectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.SelectionAvailable, false);
-            regularSelectionAvailableCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.RegularSelectionAvailable, false);
-            searchPerformedCondition = new MutableSourcePropertyNotNullWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => ActiveDocument, doc => doc.LastSearch);
-            xmlToolsetAvailableCondition = new MutableSourcePropertyFuncCondition<MainWindowViewModel, BaseDocumentViewModel, HighlightingInfo>(this, vm => ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Xml, false);
-            markdownToolsetAvailableCondition = new MutableSourcePropertyFuncCondition<MainWindowViewModel, BaseDocumentViewModel, HighlightingInfo>(this, vm => ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Markdown, false);
-            documentPathVirtualCondition = new MutableSourcePropertyWatchCondition<MainWindowViewModel, BaseDocumentViewModel>(this, vm => vm.ActiveDocument, doc => doc.FilenameVirtual, true);
+            documentExistsCondition = new MutablePropertyNotNullCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument);
+            documentIsTextCondition = new MutablePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, ad => ad is TextDocumentViewModel);
+            canUndoCondition =                   new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanUndo, false);
+            canRedoCondition =                   new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanRedo, false);
+            canSaveCondition =                   new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanSave, false);
+            selectionAvailableCondition =        new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.SelectionAvailable, false);
+            regularSelectionAvailableCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.RegularSelectionAvailable, false);
+            searchPerformedCondition =           new MutableSourcePropertyNotNullCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.LastSearch);
+            xmlToolsetAvailableCondition =       new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Xml, false);
+            markdownToolsetAvailableCondition =  new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Markdown, false);
+            documentPathVirtualCondition =       new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.FilenameVirtual, true);
             documentHasPathCondition = documentExistsCondition & !documentPathVirtualCondition;
 
             // Initializing tools
 
-            explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, imageResources, configurationService, this, eventBus, platformService);
+            explorerToolViewModel = new ExplorerToolViewModel(fileIconProvider, 
+                imageResources, 
+                configurationService, 
+                this, 
+                eventBus, 
+                platformService);
             binDefinitionsToolViewModel = new BinDefinitionsToolViewModel(this,
                 imageResources,
                 configurationService,
@@ -767,10 +626,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             ConfigCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Configuration, "Settings16.png", obj => DoOpenConfiguration());
             RunStoredSearchCommand = new AppCommand(obj => DoRunStoredSearch(obj as StoredSearchReplace), documentIsTextCondition);
 
-            NewTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_New, "New16.png", obj => DoNewTextDocument(CurrentDocuments));
-            NewHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_NewHex, "New16.png", obj => DoNewHexDocument(CurrentDocuments));
-            OpenTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_Open, "Open16.png", obj => DoOpenTextDocument(CurrentDocuments));
-            OpenHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_OpenHex, "Open16.png", obj => DoOpenHexDocument(CurrentDocuments));
+            NewTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_New, "New16.png", obj => DoNewTextDocument(documentsManager.ActiveDocumentTab));
+            NewHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_NewHex, "New16.png", obj => DoNewHexDocument(documentsManager.ActiveDocumentTab));
+            OpenTextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_Open, "Open16.png", obj => DoOpenTextDocument(documentsManager.ActiveDocumentTab));
+            OpenHexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_OpenHex, "Open16.png", obj => DoOpenHexDocument(documentsManager.ActiveDocumentTab));
             OpenBinCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_OpenBin, "Open16.png", obj => DoOpenBinDocument());
             SaveCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_Save, "Save16.png", obj => DoSaveDocument(), canSaveCondition);
             SaveAsCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_SaveAs, "Save16.png", obj => DoSaveDocumentAs(), canSaveCondition);
@@ -851,35 +710,26 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 OpenParameters();
 
-                if (primaryDocuments.Count == 0)
-                    DoNewTextDocument(CurrentDocuments);
+                if (documentsManager.PrimaryDocuments.Count == 0)
+                    DoNewTextDocument(DocumentTabKind.Primary);
             }
             else if (configurationService.Configuration.Behavior.CloseBehavior.Value == CloseBehavior.Standard)
             {
                 if (!OpenParameters())
-                    DoNewTextDocument(CurrentDocuments);
+                    DoNewTextDocument(DocumentTabKind.Primary);
             }
             else
                 throw new InvalidOperationException("Invalid close behavior!");
-
-            showSecondaryDocumentTab = secondaryDocuments.Count > 0;
-
-            if (primaryDocuments.Count > 0)
-                SelectedPrimaryDocument = primaryDocuments.First();
-            if (secondaryDocuments.Count > 0)
-                SelectedSecondaryDocument = secondaryDocuments.First();
-
-            UpdateActiveDocument();
-        }
-
-        private void DoNewSecondaryText()
-        {
-            DoNewTextDocument(secondaryDocuments);
         }
 
         private void DoNewPrimaryText()
         {
-            DoNewTextDocument(primaryDocuments);
+            DoNewTextDocument(DocumentTabKind.Primary);
+        }
+
+        private void DoNewSecondaryText()
+        {
+            DoNewTextDocument(DocumentTabKind.Secondary);
         }
 
         public void NotifyActivated()
@@ -889,7 +739,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void VerifyRemovedAndModifiedDocuments()
         {
-            void InternalVerifyRemovedAndModifiedDocuments(IList<BaseDocumentViewModel> documents)
+            void InternalVerifyRemovedAndModifiedDocuments(ITabDocumentCollection<BaseDocumentViewModel> documents)
             {
                 // Check documents
                 int i = 0;
@@ -908,12 +758,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                     if (!File.Exists(document.FileName))
                     {
-                        ActiveDocument = document;
+                        documentsManager.ActiveDocument = document;
 
                         if (messagingService.AskYesNo(String.Format(Strings.Message_DocumentDeleted, document.FileName)) == false)
                         {
                             // Remove document
-                            RemoveDocument(document);
+                            documentsManager.RemoveDocument(document);
                             continue;
                         }
                         else
@@ -932,13 +782,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                             if (document.LastModificationDate < fileModificationDate)
                             {
-                                ActiveDocument = document;
+                                documentsManager.ActiveDocument = document;
 
                                 if (messagingService.AskYesNo(String.Format(Strings.Message_DocumentModifiedOutsideEditor, document.FileName)) == true)
                                 {
                                     int documentIndex = i;
 
-                                    ReplaceReloadDocument(documents, document);
+                                    ReplaceReloadDocument(documents.DocumentTabKind, document);
                                 }
                                 else
                                 {
@@ -961,8 +811,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 }
             }
 
-            InternalVerifyRemovedAndModifiedDocuments(primaryDocuments);
-            InternalVerifyRemovedAndModifiedDocuments(secondaryDocuments);
+            InternalVerifyRemovedAndModifiedDocuments(documentsManager.PrimaryDocuments);
+            InternalVerifyRemovedAndModifiedDocuments(documentsManager.SecondaryDocuments);
         }
 
         public void NotifyLoaded()
@@ -983,14 +833,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public bool CanCloseApplication()
         {
-            bool CloseDocuments(IList<BaseDocumentViewModel> documents)
+            bool CloseDocuments(ITabDocumentCollection<BaseDocumentViewModel> documents)
             {
                 while (documents.Count > 0)
                 {
-                    ActiveDocument = documents[0];
+                    documentsManager.ActiveDocument = documents[0];
                     if (CanCloseDocument(documents[0]))
                     {
-                        RemoveDocument(documents[0]);
+                        documentsManager.RemoveDocument(documents[0]);
                     }
                     else
                     {
@@ -1005,7 +855,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             {
                 case CloseBehavior.Standard:
                     {
-                        if (!(CloseDocuments(primaryDocuments) && CloseDocuments(secondaryDocuments)))
+                        if (!(CloseDocuments(documentsManager.PrimaryDocuments) && 
+                            CloseDocuments(documentsManager.SecondaryDocuments)))
                             return false;
 
                         break;
@@ -1029,11 +880,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
 
             return true;
-        }
-
-        public void FocusActiveDocument()
-        {
-            ActiveDocument?.FocusDocument();
         }
 
         public void SelectPreviousNavigationItem()
@@ -1062,7 +908,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         {
             foreach (var file in files)
             {
-                LoadTextDocument(CurrentDocuments, file);
+                LoadTextDocument(documentsManager.ActiveDocumentTab, file);
             }
         }
 
@@ -1101,100 +947,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public void ReorderDocument(BaseDocumentViewModel fromDoc, BaseDocumentViewModel toDoc)
         {
-            void MoveInside(ObservableCollection<BaseDocumentViewModel> documents, BaseDocumentViewModel fromDocument, BaseDocumentViewModel toDocument)
-            {
-                var fromIndex = documents.IndexOf(fromDocument);
-                var toIndex = documents.IndexOf(toDocument);
-
-                documents.Move(fromIndex, toIndex);
-            }
-
-            void MoveFromTo(ObservableCollection<BaseDocumentViewModel> fromDocuments, BaseDocumentViewModel fromDocument,
-                ObservableCollection<BaseDocumentViewModel> toDocuments, BaseDocumentViewModel toDocument)
-            {
-                int fromIndex = fromDocuments.IndexOf(fromDocument);
-                int toIndex = toDocuments.IndexOf(toDocument);
-
-                var doc = fromDocuments[fromIndex];
-                fromDocuments.RemoveAt(fromIndex);
-                toDocuments.Insert(toIndex, doc);
-            }
-
-            if (fromDoc == toDoc)
-                return;
-
-            if (primaryDocuments.Contains(fromDoc))
-            {
-                int fromIndex = primaryDocuments.IndexOf(fromDoc);
-
-                if (primaryDocuments.Contains(toDoc))
-                {
-                    MoveInside(primaryDocuments, fromDoc, toDoc);
-                }
-                else if (secondaryDocuments.Contains(toDoc))
-                {
-                    MoveFromTo(primaryDocuments, fromDoc, secondaryDocuments, toDoc);
-                }
-                else
-                    throw new InvalidOperationException("Target document does not exist in internal collections!");
-            }
-            else if (secondaryDocuments.Contains(fromDoc))
-            {
-                int fromIndex = secondaryDocuments.IndexOf(fromDoc);
-
-                if (primaryDocuments.Contains(toDoc))
-                {
-                    MoveFromTo(secondaryDocuments, fromDoc, primaryDocuments, toDoc);
-                }
-                else if (secondaryDocuments.Contains(toDoc))
-                {
-                    MoveInside(secondaryDocuments, fromDoc, toDoc);
-                }
-                else
-                    throw new InvalidOperationException("Target document does not exist in internal collections!");
-            }
-            else
-                throw new InvalidOperationException("Target document does not exist in internal collections!");
-
-            ActiveDocument = fromDoc;
+            documentsManager.ReorderDocument(fromDoc, toDoc);
         }
 
-        public void MoveDocumentTo(BaseDocumentViewModel documentViewModel, ObservableCollection<BaseDocumentViewModel> destinationDocuments)
+        public void MoveDocumentTo(BaseDocumentViewModel documentViewModel, ITabDocumentCollection<BaseDocumentViewModel> destinationDocuments)
         {
-            ObservableCollection<BaseDocumentViewModel> sourceDocuments = null;
-
-            if (destinationDocuments != primaryDocuments && destinationDocuments != secondaryDocuments)
-                throw new ArgumentException(nameof(destinationDocuments));
-
-            if (primaryDocuments.Contains(documentViewModel))
-                sourceDocuments = primaryDocuments;
-            else if (secondaryDocuments.Contains(documentViewModel))
-                sourceDocuments = secondaryDocuments;
-            else
-                throw new ArgumentException(nameof(documentViewModel));
-
-            // The only case when nothing needs to be done
-            if (sourceDocuments == destinationDocuments && sourceDocuments.IndexOf(documentViewModel) == sourceDocuments.Count - 1)
-                return;
-
-            sourceDocuments.Remove(documentViewModel);
-            destinationDocuments.Add(documentViewModel);
-
-            ActiveDocument = documentViewModel;
+            documentsManager.MoveDocumentTo(documentViewModel, destinationDocuments.DocumentTabKind);
         }
 
         // Public properties --------------------------------------------------
-
-        public ObservableCollection<BaseDocumentViewModel> PrimaryDocuments => primaryDocuments;
-
-        public ObservableCollection<BaseDocumentViewModel> SecondaryDocuments => secondaryDocuments;
-
-        // TODO wrap ActiveDocument, SelectedDocuments and ActiveDocumentTab into common object with proper change handlers
-        public BaseDocumentViewModel ActiveDocument
-        {
-            get => activeDocument;
-            set => SetActiveDocument(value);
-        }
 
         public IReadOnlyList<HighlightingInfo> Highlightings => highlightings;
 
@@ -1250,28 +1011,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public ObservableCollection<StoredSearchReplaceViewModel> StoredReplaces => storedReplaces;
 
-        public DocumentTabKind ActiveDocumentTab
-        {
-            get => activeDocumentTab;
-            set => Set(ref activeDocumentTab, () => ActiveDocumentTab, value, HandleActiveDocumentTabChanged);
-        }
-
-        public BaseDocumentViewModel SelectedPrimaryDocument
-        {
-            get => selectedPrimaryDocument;
-            set => Set(ref selectedPrimaryDocument, () => SelectedPrimaryDocument, value, HandleSelectedPrimaryDocumentChanged);
-        }
-
-        public BaseDocumentViewModel SelectedSecondaryDocument
-        {
-            get => selectedSecondaryDocument;
-            set => Set(ref selectedSecondaryDocument, () => SelectedSecondaryDocument, value, HandleSelectedSecondaryDocumentChanged);
-        }
-
-        public bool ShowSecondaryDocumentTab
-        {
-            get => showSecondaryDocumentTab;
-            set => Set(ref showSecondaryDocumentTab, () => ShowSecondaryDocumentTab, value, HandleShowSecondaryDocumentTabChanged);
-        }
+        public DocumentsManager Documents => documentsManager;
     }
 }
