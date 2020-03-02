@@ -406,5 +406,9 @@
     <Resource Include="Resources\Images\UnorderedList16.png" />
     <Resource Include="Resources\Images\UnorderedList32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\DeleteLine16.png" />
+    <Resource Include="Resources\Images\DeleteLine32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

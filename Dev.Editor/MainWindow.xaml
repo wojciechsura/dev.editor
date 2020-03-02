@@ -528,10 +528,12 @@
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Lines_Group_Cleanup}">
 
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Lines_Cleanup_RemoveEmptyLines}" Command="{Binding RemoveEmptyLinesCommand}"
-                              SizeDefinition="Middle" />
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Lines_Cleanup_RemoveWhitespaceLines}" Command="{Binding RemoveWhitespaceLinesCommand}"
-                              SizeDefinition="Middle" />
+                    <f:SplitButton Header="{x:Static p:Strings.Ribbon_Lines_Cleanup_RemoveEmptyLines}" Command="{Binding RemoveEmptyLinesCommand}"
+                                   LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/DeleteLine32.png"
+                                   Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/DeleteLine16.png"     
+                                   SizeDefinition="Large">
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Lines_Cleanup_RemoveWhitespaceLines}" Command="{Binding RemoveWhitespaceLinesCommand}" />
+                    </f:SplitButton>
 
                 </f:RibbonGroupBox>
 

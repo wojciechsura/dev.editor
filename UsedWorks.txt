@@ -28,7 +28,8 @@ https://www.iconfinder.com/iconsets/nuvola2
 * Picol Vector icons by PICOL (CC BY-SA 3.0)
 https://www.iconfinder.com/iconsets/picol-vector
 
-
+* Text icons by Benjamin Stawarz
+https://www.iconfinder.com/iconsets/text-icons-1
 
 Libraries
 
