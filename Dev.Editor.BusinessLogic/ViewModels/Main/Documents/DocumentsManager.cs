@@ -200,6 +200,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
             {
                 selectedCollectionItem = document;
                 OnPropertyChanged(selectedPropertyName);
+
+                if (activeDocumentTab == collection.DocumentTabKind)
+                {
+                    if (activeDocument != selectedCollectionItem)
+                    {
+                        activeDocument = selectedCollectionItem;
+                        OnPropertyChanged(nameof(ActiveDocument));
+                    }
+                }
             }
         }
 
@@ -372,10 +381,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
             switch (targetDocumentTabKind)
             {
                 case DocumentTabKind.Primary:
-                    destinationDocuments = secondaryDocuments;
+                    destinationDocuments = primaryDocuments;
                     break;
                 case DocumentTabKind.Secondary:
-                    destinationDocuments = primaryDocuments;
+                    destinationDocuments = secondaryDocuments;
                     break;
                 default:
                     throw new InvalidEnumArgumentException("Unsupported document tab kind!");

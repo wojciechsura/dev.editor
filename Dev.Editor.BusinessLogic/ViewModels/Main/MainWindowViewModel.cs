@@ -586,15 +586,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             documentExistsCondition = new MutablePropertyNotNullCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument);
             documentIsTextCondition = new MutablePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, ad => ad is TextDocumentViewModel);
-            canUndoCondition =                   new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanUndo, false);
-            canRedoCondition =                   new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanRedo, false);
-            canSaveCondition =                   new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanSave, false);
-            selectionAvailableCondition =        new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.SelectionAvailable, false);
+            canUndoCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanUndo, false);
+            canRedoCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanRedo, false);
+            canSaveCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanSave, false);
+            selectionAvailableCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.SelectionAvailable, false);
             regularSelectionAvailableCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.RegularSelectionAvailable, false);
-            searchPerformedCondition =           new MutableSourcePropertyNotNullCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.LastSearch);
-            xmlToolsetAvailableCondition =       new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Xml, false);
-            markdownToolsetAvailableCondition =  new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Markdown, false);
-            documentPathVirtualCondition =       new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.FilenameVirtual, true);
+            searchPerformedCondition = new MutableSourcePropertyNotNullCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.LastSearch);
+            xmlToolsetAvailableCondition = new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Xml, false);
+            markdownToolsetAvailableCondition = new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Markdown, false);
+            documentPathVirtualCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.FilenameVirtual, true);
             documentHasPathCondition = documentExistsCondition & !documentPathVirtualCondition;
 
             // Initializing tools

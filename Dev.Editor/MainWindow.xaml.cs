@@ -181,6 +181,7 @@ namespace Dev.Editor
             HwndSource.FromHwnd(interopHelper.Handle).AddHook(HandleWindowMessage);
 
             viewModel.PropertyChanged += HandleViewModelPropertyChanged;
+            viewModel.Documents.PropertyChanged += HandleDocumentsManagerPropertyChanged;
             SetupSidePanel();
             SetupBottomPanel();
             SetupSecondaryDocumentTabArea();

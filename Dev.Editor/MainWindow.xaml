@@ -474,7 +474,7 @@
                                 SelectedValue="{Binding BottomPanelVisibility}" IsEditable="False" Width="150" />
 
                     <f:CheckBox Header="{x:Static p:Strings.Ribbon_View_Interface_ShowSecondaryDocumentTab}"
-                                IsChecked="{Binding ShowSecondaryDocumentTab, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                IsChecked="{Binding Documents.ShowSecondaryDocumentTab, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
 
                 </f:RibbonGroupBox>
 

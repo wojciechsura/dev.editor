@@ -13,7 +13,6 @@ namespace Dev.Editor.Common.Conditions
             where TSource : class, INotifyPropertyChanged
     {
         private TSource source;
-        private readonly string sourcePropertyName;
         private readonly Func<TSource, TProperty> getValueFunc;
         private readonly string valuePropertyName;
         private readonly Func<TProperty, bool> evalValueFunc;
@@ -59,6 +58,7 @@ namespace Dev.Editor.Common.Conditions
 
             if (newValue != value)
             {
+                value = newValue;
                 OnValueChanged(newValue);
             }
         }
@@ -76,7 +76,7 @@ namespace Dev.Editor.Common.Conditions
 
             this.evalValueFunc = evalValueFunc ?? throw new ArgumentNullException(nameof(evalValueFunc));
 
-            Update();
+            value = evalValueFunc(getValueFunc(source));
         }
 
         public override bool GetValue() => value;
