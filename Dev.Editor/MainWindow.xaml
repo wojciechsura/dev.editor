@@ -9,7 +9,6 @@
     xmlns:local="clr-namespace:Dev.Editor"
     xmlns:controls="clr-namespace:Dev.Editor.Controls"
     xmlns:converters="clr-namespace:Dev.Editor.Converters"
-    xmlns:vmd="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
     xmlns:nav="clr-namespace:Dev.Editor.BusinessLogic.Models.Navigation;assembly=Dev.Editor.BusinessLogic"
     xmlns:wpf="clr-namespace:Dev.Editor.Wpf"
     xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Main;assembly=Dev.Editor.BusinessLogic"
@@ -18,47 +17,36 @@
     xmlns:uit="clr-namespace:Dev.Editor.BusinessLogic.Types.UI;assembly=Dev.Editor.BusinessLogic"
     xmlns:mt="clr-namespace:Dev.Editor.BusinessLogic.Types.Main;assembly=Dev.Editor.BusinessLogic"
     xmlns:dt="clr-namespace:Dev.Editor.BusinessLogic.Types.Document;assembly=Dev.Editor.BusinessLogic"
-    xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
     mc:Ignorable="d"
-    Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True"
-    Loaded="HandleLoaded" Activated="HandleWindowActivated"
-    Drop="HandleDrop" AllowDrop="True" FocusManager.FocusedElement="{Binding ElementName=tcePrimary}">
+    Title="Dev.Editor" Height="450" Width="800" UseLayoutRounding="True"
+    Closing="HandleWindowClosing" Loaded="HandleLoaded" Activated="HandleWindowActivated"
+    Drop="HandleDrop" AllowDrop="True"
+    FocusManager.FocusedElement="{Binding ElementName=tcePrimary}">
 
+    <!-- Resources -->
+    
     <f:RibbonWindow.Resources>
         <ResourceDictionary>
             
-            <!-- Document templates -->
-            
-            <DataTemplate x:Key="TextDocumentTemplate" >
-                <controls:TextDocumentView />
-            </DataTemplate>
-
-            <DataTemplate x:Key="HexDocumentTemplate">
-                <controls:HexDocumentView />
-            </DataTemplate>
-
-            <DataTemplate x:Key="BinDocumentTemplate">
-                <controls:BinDocumentView />
-            </DataTemplate>
-
             <!-- Styles -->
 
             <Style TargetType="ButtonBase" x:Key="DocumentTabButtonStyle">
                 <Style.Setters>
                     <Setter Property="TextBlock.Foreground" Value="{Binding Path=(TextBlock.Foreground), RelativeSource={RelativeSource AncestorType=StackPanel}}" />
+                    <Setter Property="Background" Value="Transparent" />
+                    <Setter Property="Margin" Value="0" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="ButtonBase">
-                                <Border x:Name="ContentBorder" TextBlock.Foreground="{TemplateBinding Foreground}">
-                                    <Grid x:Name="ContentGrid" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <ContentPresenter/>
-                                    </Grid>
+                                <Border x:Name="ContentBorder" TextBlock.Foreground="{TemplateBinding Foreground}"
+                                        Background="{TemplateBinding Background}">
+                                    <ContentPresenter x:Name="cpContent" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                                 </Border>
 
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsPressed" Value="True">
                                         <Trigger.Setters>
-                                            <Setter TargetName="ContentGrid" Property="Margin">
+                                            <Setter TargetName="cpContent" Property="Margin">
                                                 <Setter.Value>
                                                     <Thickness Top="3" Left="3" Right="1" Bottom="1" />
                                                 </Setter.Value>
@@ -79,19 +67,19 @@
 
             <Style TargetType="RepeatButton" x:Key="DocumentTabScrollButtonStyle">
                 <Style.Setters>
+                    <Setter Property="Background" Value="Transparent" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="RepeatButton">
-                                <Border x:Name="ContentBorder" TextBlock.Foreground="{StaticResource TabScrollButtonForegroundBrush}">
-                                    <Grid x:Name="ContentGrid" Margin="2,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center">
-                                        <ContentPresenter />
-                                    </Grid>
+                                <Border x:Name="ContentBorder" TextBlock.Foreground="{StaticResource TabScrollButtonForegroundBrush}"
+                                        Background="{TemplateBinding Background}">
+                                    <ContentPresenter x:Name="cpContent" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center" />
                                 </Border>
 
                                 <ControlTemplate.Triggers>
                                     <Trigger Property="IsPressed" Value="True">
                                         <Trigger.Setters>
-                                            <Setter TargetName="ContentGrid" Property="Margin">
+                                            <Setter TargetName="cpContent" Property="Margin">
                                                 <Setter.Value>
                                                     <Thickness Top="3" Left="3" Right="1" Bottom="1" />
                                                 </Setter.Value>
@@ -165,12 +153,12 @@
                 <Style.Setters>
                     <Setter Property="Background" Value="{StaticResource NormalTabBackgroundBrush}" />
                     <Setter Property="TextBlock.Foreground" Value="{StaticResource NormalTabForegroundBrush}" />
-                    <Setter Property="controls:DocumentTabHeader.Pinned" Value="{Binding IsPinned, diag:PresentationTraceSources.TraceLevel=High}" />
+                    <Setter Property="controls:DocumentTabHeader.Pinned" Value="{Binding IsPinned}" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="TabItem">
-                                <Border x:Name="TabBorder" BorderThickness="1,1,1,0" BorderBrush="Transparent"
-                                        Background="{TemplateBinding Background}" TextBlock.Foreground="{TemplateBinding Foreground}">
+                                <Border x:Name="TabBorder" BorderThickness="0" Background="{TemplateBinding Background}" 
+                                        TextBlock.Foreground="{TemplateBinding Foreground}">
                                     <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2" />
 
                                     <Border.ContextMenu>
@@ -250,56 +238,53 @@
                             <ControlTemplate TargetType="{x:Type controls:TabControlExt}">
                                 <Grid x:Name="Grid" KeyboardNavigation.TabNavigation="Local">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition x:Name="ColumnDefinition0"/>
-                                        <ColumnDefinition x:Name="ColumnDefinition1" Width="0"/>
+                                        <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition x:Name="RowDefinition0" Height="Auto"/>
-                                        <RowDefinition x:Name="RowDefinition1" Height="*"/>
+                                        <RowDefinition Height="Auto"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
 
                                     <Border Grid.Row="1" Grid.Column="0" x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" 
-                                                    BorderThickness="{TemplateBinding BorderThickness}" KeyboardNavigation.TabIndex="2" 
-                                                    KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Contained">
-                                        <Border Background="{TemplateBinding Background}" x:Name="Border1">
-                                            <ContentPresenter DataContext="{x:Null}" Margin="{TemplateBinding Padding}" x:Name="PART_SelectedContentHost" 
-                                                                      Content="{TemplateBinding SelectedContent}" ContentTemplate="{TemplateBinding SelectedContentTemplate}" 
-                                                                      ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" ContentSource="SelectedContent"/>
-                                        </Border>
+                                            BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                        <ContentPresenter Margin="{TemplateBinding Padding}" x:Name="PART_SelectedContentHost" 
+                                                          Content="{TemplateBinding SelectedContent}" ContentTemplate="{TemplateBinding SelectedContentTemplate}" 
+                                                          ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" ContentSource="SelectedContent"/>
                                     </Border>
 
                                     <ScrollViewer x:Name="HeaderPanel" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" 
-                                              VerticalAlignment="Stretch" Margin="0,0,0,0" HorizontalScrollBarVisibility="Hidden" 
-                                                          VerticalScrollBarVisibility="Disabled" Drop="TabHeaderDrop" Focusable="False"
+                                                  VerticalAlignment="Stretch" Margin="0" HorizontalScrollBarVisibility="Hidden" 
+                                                  VerticalScrollBarVisibility="Disabled" Focusable="False"
                                                   wpf:MouseEvents.DirectMouseDoubleClickCommand="{TemplateBinding HeaderDoubleClickCommand}"
-                                                  wpf:ParentData.ParentItemsSource="{TemplateBinding ItemsSource}">
-
+                                                  wpf:ParentData.ParentItemsSource="{TemplateBinding ItemsSource}"
+                                                  Drop="TabHeaderDrop">
                                         <ScrollViewer.Style>
                                             <Style TargetType="{x:Type ScrollViewer}">
                                                 <Setter Property="Template">
                                                     <Setter.Value>
                                                         <ControlTemplate>
-                                                            <Grid Margin="0,0,0,0" Grid.Row="0" Grid.Column="0" x:Name="HeaderPanel">
+                                                            <Grid Margin="0" x:Name="HeaderPanel">
                                                                 <Grid.ColumnDefinitions>
                                                                     <ColumnDefinition Width="*"/>
-                                                                    <ColumnDefinition Width="Auto"/>
                                                                     <ColumnDefinition Width="Auto"/>
                                                                 </Grid.ColumnDefinitions>
                                                                 <Grid.RowDefinitions>
                                                                     <RowDefinition Height="Auto"/>
                                                                 </Grid.RowDefinitions>
                                                                 <ScrollContentPresenter Grid.Column="0" Content="{TemplateBinding ScrollViewer.Content}" />
-                                                                <RepeatButton Grid.Column="1" Content="3" FontFamily="Marlett" FontSize="12" Padding="2" 
-                                                                                  Command="ScrollBar.LineLeftCommand" Style="{StaticResource DocumentTabScrollButtonStyle}"/>
-                                                                <RepeatButton Grid.Column="2" Content="4" FontFamily="Marlett" FontSize="12" Padding="2" Command="ScrollBar.LineRightCommand" 
-                                                                                  Style="{StaticResource DocumentTabScrollButtonStyle}"/>
+                                                                <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Bottom">
+                                                                    <RepeatButton Content="3" FontFamily="Marlett" FontSize="12" Padding="2" MinHeight="24"
+                                                                                      Command="ScrollBar.LineLeftCommand" Style="{StaticResource DocumentTabScrollButtonStyle}"/>
+                                                                    <RepeatButton Content="4" FontFamily="Marlett" FontSize="12" Padding="2" MinHeight="24"
+                                                                                  Command="ScrollBar.LineRightCommand" Style="{StaticResource DocumentTabScrollButtonStyle}"/>
+                                                                </StackPanel>
                                                             </Grid>
                                                         </ControlTemplate>
                                                     </Setter.Value>
                                                 </Setter>
                                             </Style>
                                         </ScrollViewer.Style>
-                                        <controls:DocumentTabHeader IsItemsHost="True" Background="{x:Null}" KeyboardNavigation.TabIndex="1" />
+                                        <controls:DocumentTabHeader IsItemsHost="True" Background="{x:Null}" />
                                     </ScrollViewer>
                                 </Grid>
                             </ControlTemplate>
@@ -315,7 +300,8 @@
                                     <Image Width="16" Height="16" Source="{Binding Icon}"/>
                                     <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" MaxWidth="200" Margin="2"/>
                                     <TextBlock Text="•" Margin="2" Visibility="{Binding Changed, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                    <ToggleButton Width="16" Height="16" FontSize="10" Style="{StaticResource DocumentTabButtonStyle}" IsChecked="{Binding IsPinned, Mode=TwoWay}">
+                                    <ToggleButton Width="16" Height="16" FontSize="10" Style="{StaticResource DocumentTabButtonStyle}" IsChecked="{Binding IsPinned, Mode=TwoWay}"
+                                                  VerticalAlignment="Center">
                                         <Grid>
                                             <!-- Pin on icon -->
                                             <Path Width="8" Height="8" Fill="{Binding Path=(TextBlock.Foreground), RelativeSource={RelativeSource AncestorType={x:Type ToggleButton}}}"
@@ -334,15 +320,61 @@
                                             </Path>
                                         </Grid>
                                     </ToggleButton>
-                                    <Button Width="16" Height="16" Command="{Binding CloseCommand}" Style="{StaticResource DocumentTabButtonStyle}">
+                                    <Button Width="16" Height="16" Command="{Binding CloseCommand}" Style="{StaticResource DocumentTabButtonStyle}"
+                                            VerticalAlignment="Center">
                                         <Path Fill="{Binding Path=(TextBlock.Foreground), RelativeSource={RelativeSource AncestorType={x:Type Button}}}">
                                             <Path.Data>
-                                                <PathGeometry Figures="M 0 1 L 3 4 L 0 7 L 2 7 L 4 5 L 6 7 L 8 7 L 5 4 L 8 1 L 6 1 L 4 3 L 2 1 Z" />
+                                                <PathGeometry Figures="M 0 1 L 4 5 L 0 9 L 2 9 L 5 6 L 8 9 L 10 9 L 6 5 L 10 1 L 8 1 L 5 4 L 2 1 Z" />
                                             </Path.Data>
                                         </Path>
                                     </Button>
                                 </StackPanel>
                             </DataTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
+
+            <Style x:Key="SidePanelTabItem" TargetType="TabItem" BasedOn="{StaticResource RootTabItem}">
+                <Style.Setters>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="TabItem">
+                                <Border x:Name="TabBorder" BorderBrush="Transparent" Background="{TemplateBinding Background}" 
+                                                    TextBlock.Foreground="{TemplateBinding Foreground}">
+                                    <StackPanel Orientation="Vertical" Margin="2,6">
+
+                                        <Image Width="16" Height="16" Source="{Binding Icon}" Margin="2" />
+
+                                        <TextBlock Text="{Binding Title}" Margin="2">
+                                            <TextBlock.LayoutTransform>
+                                                <RotateTransform Angle="90" />
+                                            </TextBlock.LayoutTransform>
+                                        </TextBlock>
+
+                                    </StackPanel>
+                                </Border>
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="TabStripPlacement" Value="Left">
+                                        <Trigger.Setters>
+                                            <Setter TargetName="TabBorder" Property="BorderThickness">
+                                                <Setter.Value>
+                                                    <Thickness Left="1" Top="1" Right="0" Bottom="1" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger.Setters>
+                                    </Trigger>
+                                    <Trigger Property="TabStripPlacement" Value="Right">
+                                        <Trigger.Setters>
+                                            <Setter TargetName="TabBorder" Property="BorderThickness">
+                                                <Setter.Value>
+                                                    <Thickness Left="0" Top="1" Right="1" Bottom="1" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger.Setters>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
                         </Setter.Value>
                     </Setter>
                 </Style.Setters>
@@ -378,6 +410,8 @@
         <KeyBinding Key="P" Modifiers="Ctrl" Command="{Binding NavigateCommand}" />
     </f:RibbonWindow.InputBindings>
 
+    <!-- Main content -->
+    
     <DockPanel Style="{StaticResource RootDockPanel}">
 
         <!-- Ribbon -->
@@ -393,6 +427,8 @@
                 </f:ApplicationMenu>
             </f:Ribbon.Menu>
 
+            <!-- Contextual group definitions -->
+            
             <f:Ribbon.ContextualGroups>
                 <f:RibbonContextualTabGroup x:Name="rctgXml" Header="{x:Static p:Strings.Ribbon_ContextGroup_Xml}" 
                                             Visibility="{Binding Documents.ActiveDocument.Highlighting.AdditionalToolset, Converter={StaticResource AdditionalToolsetToVisibilityConverter}, ConverterParameter={x:Static uit:AdditionalToolset.Xml}}"
@@ -640,7 +676,7 @@
                 
             </f:RibbonTabItem>
             
-            <!-- XML tools -->
+            <!-- XML tools tab -->
 
             <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_XmlTools}"
                              Group="{Binding ElementName=rctgXml}">
@@ -662,7 +698,7 @@
                 
             </f:RibbonTabItem>
 
-            <!-- Markdown tools -->
+            <!-- Markdown tools tab -->
 
             <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_MarkdownTools}"
                              Group="{Binding ElementName=rctgMarkdown}">
@@ -823,66 +859,10 @@
                             VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinWidth="100"
                             Visibility="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToVisibilityConverter}}"
                             TabStripPlacement="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToTabPlacement}}"                                    
-                            Margin="{StaticResource HalfMargin}" Padding="0" BorderThickness="0">
-                    
-                    <TabControl.Resources>
-                        <Style TargetType="TabItem" BasedOn="{StaticResource RootTabItem}">
-                            <Style.Setters>
-                                <Setter Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate TargetType="TabItem">
-                                            <Border x:Name="TabBorder" BorderBrush="Transparent" Background="{TemplateBinding Background}" 
-                                                    TextBlock.Foreground="{TemplateBinding Foreground}">
-                                                <StackPanel Orientation="Vertical" Margin="2,6">
-
-                                                    <Image Width="16" Height="16" Source="{Binding Icon}" Margin="2" />
-
-                                                    <TextBlock Text="{Binding Title}" Margin="2">
-                                                        <TextBlock.LayoutTransform>
-                                                            <RotateTransform Angle="90" />
-                                                        </TextBlock.LayoutTransform>
-                                                    </TextBlock>
-
-                                                </StackPanel>
-                                            </Border>
-                                            <ControlTemplate.Triggers>
-                                                <Trigger Property="TabStripPlacement" Value="Left">
-                                                    <Trigger.Setters>
-                                                        <Setter TargetName="TabBorder" Property="BorderThickness">
-                                                            <Setter.Value>
-                                                                <Thickness Left="1" Top="1" Right="0" Bottom="1" />
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </Trigger.Setters>
-                                                </Trigger>
-                                                <Trigger Property="TabStripPlacement" Value="Right">
-                                                    <Trigger.Setters>
-                                                        <Setter TargetName="TabBorder" Property="BorderThickness">
-                                                            <Setter.Value>
-                                                                <Thickness Left="0" Top="1" Right="1" Bottom="1" />
-                                                            </Setter.Value>
-                                                        </Setter>
-                                                    </Trigger.Setters>
-                                                </Trigger>
-                                            </ControlTemplate.Triggers>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style.Setters>
-                        </Style>
-
-                        <DataTemplate DataType="{x:Type vme:ExplorerToolViewModel}">
-                            <controls:ExplorerTool />
-                        </DataTemplate>
-
-                        <DataTemplate DataType="{x:Type vmb:BinDefinitionsToolViewModel}">
-                            <controls:BinDefinitionsTool />
-                        </DataTemplate>
-                    </TabControl.Resources>
+                            Margin="{StaticResource HalfMargin}" Padding="0" BorderThickness="0"
+                            ItemContainerStyle="{StaticResource SidePanelTabItem}">
 
                     <TabItem DataContext="{Binding ExplorerToolViewModel}">
-
-                        
                         <controls:ExplorerTool />
                     </TabItem>
 
@@ -896,17 +876,17 @@
                               Visibility="{Binding SidePanelPlacement, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static uit:SidePanelPlacement.Left}}"
                               Style="{StaticResource VerticalRootGridSplitter}"/>
 
-                <!-- Documents -->
+                <!-- Document area -->
                 
                 <Grid Grid.Column="2">
-                    
-                    <!-- Primary document tab -->                    
-                    
+                                        
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" x:Name="cdPrimary" />
                         <ColumnDefinition Width="Auto" />
                         <ColumnDefinition Width="Auto" x:Name="cdSecondary" />
                     </Grid.ColumnDefinitions>
+
+                    <!-- Primary document tab -->
 
                     <controls:TabControlExt x:Name="tcePrimary"
                                             Grid.Column="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="{StaticResource HalfMargin}"
