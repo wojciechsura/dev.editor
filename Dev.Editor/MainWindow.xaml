@@ -42,11 +42,11 @@
 
             <!-- Styles -->
 
-            <Style TargetType="Button" x:Key="DocumentTabCloseButtonStyle">
+            <Style TargetType="ButtonBase" x:Key="DocumentTabButtonStyle">
                 <Style.Setters>
                     <Setter Property="Template">
                         <Setter.Value>
-                            <ControlTemplate TargetType="Button">
+                            <ControlTemplate TargetType="ButtonBase">
                                 <Border x:Name="ContentBorder" TextBlock.Foreground="{TemplateBinding Foreground}">
                                     <Grid x:Name="ContentGrid" Margin="2" HorizontalAlignment="Center" VerticalAlignment="Center">
                                         <ContentPresenter/>
@@ -165,7 +165,8 @@
                         <Setter.Value>
                             <ControlTemplate TargetType="TabItem">
                                 <Border x:Name="TabBorder" BorderThickness="1,1,1,0" BorderBrush="Transparent"
-                                                        Background="{TemplateBinding Background}" TextBlock.Foreground="{TemplateBinding Foreground}">
+                                        Background="{TemplateBinding Background}" TextBlock.Foreground="{TemplateBinding Foreground}"
+                                        controls:DocumentTabHeaderStackPanel.IsPinned="{Binding IsPinned, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
                                     <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2" />
 
                                     <Border.ContextMenu>
@@ -291,7 +292,7 @@
                                                 </Setter>
                                             </Style>
                                         </ScrollViewer.Style>
-                                        <StackPanel IsItemsHost="true" Orientation="Horizontal" Background="{x:Null}" KeyboardNavigation.TabIndex="1" />
+                                        <controls:DocumentTabHeaderStackPanel IsItemsHost="True" Background="{x:Null}" KeyboardNavigation.TabIndex="1" />
                                     </ScrollViewer>
                                 </Grid>
                             </ControlTemplate>
@@ -304,7 +305,8 @@
                                     <Image Width="16" Height="16" Source="{Binding Icon}"/>
                                     <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" MaxWidth="200" Margin="2"/>
                                     <TextBlock Text="•" Margin="2" Visibility="{Binding Changed, Converter={StaticResource BooleanToVisibilityConverter}}" />
-                                    <Button Content="r" FontFamily="Marlett" FontSize="10" Command="{Binding CloseCommand}" Style="{StaticResource DocumentTabCloseButtonStyle}" 
+                                    <ToggleButton Content="s" FontFamily="Marlett" FontSize="10" Style="{StaticResource DocumentTabButtonStyle}" IsChecked="{Binding IsPinned, Mode=TwoWay}" />
+                                    <Button Content="r" FontFamily="Marlett" FontSize="10" Command="{Binding CloseCommand}" Style="{StaticResource DocumentTabButtonStyle}" 
                                             Foreground="{Binding ElementName=spDocTabItemRoot, Path=(TextBlock.Foreground)}"/>
                                 </StackPanel>
                             </DataTemplate>

@@ -20,6 +20,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         private bool isActive;
         private TabColor tabColor;
+        private bool isPinned;
 
         // Private methods ----------------------------------------------------
 
@@ -57,6 +58,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             this.handler = handler;
             this.isActive = false;
             this.tabColor = TabColor.Default;
+            this.isPinned = false;
 
             SetTabColorCommand = new AppCommand(obj => DoSetTabColor((TabColor)obj));
             CloseCommand = new AppCommand(obj => DoClose());
@@ -173,6 +175,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         {
             get => tabColor;
             set => Set(ref tabColor, () => TabColor, value);
+        }
+
+        public bool IsPinned
+        {
+            get => isPinned;
+            set => Set(ref isPinned, () => IsPinned, value);
         }
 
         public ICommand SetTabColorCommand { get; }
