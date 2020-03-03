@@ -18,6 +18,7 @@
     xmlns:uit="clr-namespace:Dev.Editor.BusinessLogic.Types.UI;assembly=Dev.Editor.BusinessLogic"
     xmlns:mt="clr-namespace:Dev.Editor.BusinessLogic.Types.Main;assembly=Dev.Editor.BusinessLogic"
     xmlns:dt="clr-namespace:Dev.Editor.BusinessLogic.Types.Document;assembly=Dev.Editor.BusinessLogic"
+    xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True"
     Loaded="HandleLoaded" Activated="HandleWindowActivated"
@@ -161,12 +162,12 @@
                 <Style.Setters>
                     <Setter Property="Background" Value="{StaticResource NormalTabBackgroundBrush}" />
                     <Setter Property="TextBlock.Foreground" Value="{StaticResource NormalTabForegroundBrush}" />
+                    <Setter Property="controls:DocumentTabHeaderStackPanel.Pinned" Value="{Binding IsPinned, diag:PresentationTraceSources.TraceLevel=High}" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="TabItem">
                                 <Border x:Name="TabBorder" BorderThickness="1,1,1,0" BorderBrush="Transparent"
-                                        Background="{TemplateBinding Background}" TextBlock.Foreground="{TemplateBinding Foreground}"
-                                        controls:DocumentTabHeaderStackPanel.IsPinned="{Binding IsPinned, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}">
+                                        Background="{TemplateBinding Background}" TextBlock.Foreground="{TemplateBinding Foreground}">
                                     <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2" />
 
                                     <Border.ContextMenu>

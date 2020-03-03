@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace Dev.Editor.Controls
 {
@@ -33,9 +34,7 @@ namespace Dev.Editor.Controls
                 if (measureChildren)
                     InternalChildren[i].Measure(new Size(double.PositiveInfinity, double.PositiveInfinity));
 
-                var desiredSize = InternalChildren[i].DesiredSize;
-                bool isPinned = (bool)GetIsPinned(InternalChildren[i]);
-                bool isPinned2 = ((InternalChildren[i] as FrameworkElement)?.DataContext as BaseDocumentViewModel)?.IsPinned ?? false;
+                bool isPinned = (bool)InternalChildren[i].GetValue(PinnedProperty);
 
                 if (isPinned)
                 {
@@ -93,27 +92,29 @@ namespace Dev.Editor.Controls
             return finalSize;
         }
 
-        #region IsPinned attached property
+        #region Pinned attached property
 
-        public static bool GetIsPinned(DependencyObject obj)
+        public static bool GetPinned(DependencyObject obj)
         {
-            return (bool)obj.GetValue(IsPinnedProperty);
+            return (bool)obj.GetValue(PinnedProperty);
         }
 
-        public static void SetIsPinned(DependencyObject obj, bool value)
+        public static void SetPinned(DependencyObject obj, bool value)
         {
-            obj.SetValue(IsPinnedProperty, value);
+            obj.SetValue(PinnedProperty, value);
         }
 
-        // Using a DependencyProperty as the backing store for IsPinned.  This enables animation, styling, binding, etc...
-        public static readonly DependencyProperty IsPinnedProperty =
-            DependencyProperty.RegisterAttached("IsPinned", 
-                typeof(bool), 
-                typeof(DocumentTabHeaderStackPanel), 
-                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsMeasure
-                    | FrameworkPropertyMetadataOptions.AffectsArrange));
+        // Using a DependencyProperty as the backing store for Pinned.  This enables animation, styling, binding, etc...
+        public static readonly DependencyProperty PinnedProperty =
+            DependencyProperty.RegisterAttached("Pinned", typeof(bool), typeof(DocumentTabHeaderStackPanel), new PropertyMetadata(false, HandlePinnedChanged));
+
+        private static void HandlePinnedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            var documentTabHeader = VisualTreeHelper.GetParent(d) as DocumentTabHeaderStackPanel;
+            if (documentTabHeader != null)
+                documentTabHeader.InvalidateMeasure();
+        }
 
         #endregion
-
     }
 }
