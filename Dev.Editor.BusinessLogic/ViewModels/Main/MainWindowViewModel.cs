@@ -146,6 +146,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                         return false;
                     }
 
+                    // TODO remove duplicated code
                     switch (document)
                     {
                         case TextDocumentViewModel textDocument:
@@ -159,6 +160,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 storedFile.LastModifiedDate.Value = textDocument.LastModificationDate.Ticks;
                                 storedFile.DocumentTabKind.Value = documents.DocumentTabKind;
                                 storedFile.TabColor.Value = textDocument.TabColor;
+                                storedFile.IsPinned.Value = textDocument.IsPinned;
 
                                 configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                                 break;
@@ -173,6 +175,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 storedFile.LastModifiedDate.Value = hexDocument.LastModificationDate.Ticks;
                                 storedFile.DocumentTabKind.Value = documents.DocumentTabKind;
                                 storedFile.TabColor.Value = hexDocument.TabColor;
+                                storedFile.IsPinned.Value = hexDocument.IsPinned;
 
                                 configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                                 break;
@@ -188,6 +191,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 storedFile.LastModifiedDate.Value = binDocument.LastModificationDate.Ticks;
                                 storedFile.DocumentTabKind.Value = documents.DocumentTabKind;
                                 storedFile.TabColor.Value = binDocument.TabColor;
+                                storedFile.IsPinned.Value = binDocument.IsPinned;
 
                                 configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                                 break;
@@ -214,6 +218,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 BaseDocumentViewModel document = null;
 
+                // TODO remove duplicated code
                 switch (file)
                 {
                     case TextStoredFile textStoredFile:
@@ -226,8 +231,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                                 textDocument.SetFilename(textStoredFile.Filename.Value, fileIconProvider.GetImageForFile(textStoredFile.Filename.Value));
                                 textDocument.FilenameVirtual = textStoredFile.FilenameIsVirtual.Value;
+                                textDocument.Changed = textStoredFile.IsDirty.Value;
                                 textDocument.LastModificationDate = new DateTime(textStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
                                 textDocument.TabColor = textStoredFile.TabColor.Value;
+                                textDocument.IsPinned = textStoredFile.IsPinned.Value;
 
                                 if (!textStoredFile.IsDirty.Value)
                                 {
@@ -261,6 +268,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 hexDocument.Changed = hexStoredFile.IsDirty.Value;
                                 hexDocument.LastModificationDate = new DateTime(hexStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
                                 hexDocument.TabColor = hexStoredFile.TabColor.Value;
+                                hexDocument.IsPinned = hexStoredFile.IsPinned.Value;
+
 
                                 document = hexDocument;
                             }
@@ -288,6 +297,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 binDocument.Changed = binStoredFile.IsDirty.Value;
                                 binDocument.LastModificationDate = new DateTime(binStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
                                 binDocument.TabColor = binStoredFile.TabColor.Value;
+                                binDocument.IsPinned = binStoredFile.IsPinned.Value;
+
 
                                 document = binDocument;
                             }

@@ -16,6 +16,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
         private readonly ConfigValue<long> lastModifiedDate;
         private readonly ConfigValue<Types.Main.DocumentTabKind> documentTabKind;
         private readonly ConfigValue<Types.Document.TabColor> tabColor;
+        private readonly ConfigValue<bool> isPinned;
 
         public BaseStoredFile(string name)             
             : base(name)
@@ -27,6 +28,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
             lastModifiedDate = new ConfigValue<long>("LastModifiedDate", this);
             documentTabKind = new ConfigValue<Types.Main.DocumentTabKind>("DocumentTabKind", this, Types.Main.DocumentTabKind.Primary);
             tabColor = new ConfigValue<Types.Document.TabColor>("TabColor", this, Types.Document.TabColor.Default);
+            isPinned = new ConfigValue<bool>("IsPinned", this, false);
         }
 
         public ConfigValue<string> Filename => filename;
@@ -42,5 +44,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Internal
         public ConfigValue<Types.Main.DocumentTabKind> DocumentTabKind => documentTabKind;
 
         public ConfigValue<Types.Document.TabColor> TabColor => tabColor;
+
+        public ConfigValue<bool> IsPinned => isPinned;
     }
 }
