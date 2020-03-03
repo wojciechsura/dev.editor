@@ -1,5 +1,6 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Highlighting;
 using Dev.Editor.BusinessLogic.Models.Search;
+using Dev.Editor.BusinessLogic.Types.Document;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.Common.Commands;
 using System;
@@ -18,6 +19,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         // Private fields -----------------------------------------------------
 
         private bool isActive;
+        private TabColor tabColor;
 
         // Private methods ----------------------------------------------------
 
@@ -53,8 +55,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         public BaseDocumentViewModel(IDocumentHandler handler)
         {
             this.handler = handler;
+            this.isActive = false;
+            this.tabColor = TabColor.Default;
 
+            SetTabColorCommand = new AppCommand(obj => DoSetTabColor((TabColor)obj));
             CloseCommand = new AppCommand(obj => DoClose());
+        }
+
+        private void DoSetTabColor(TabColor color)
+        {
+            TabColor = color;
         }
 
         public virtual void SetFilename(string filename, ImageSource icon)
@@ -158,5 +168,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             get => isActive; 
             set => Set(ref isActive, () => IsActive, value, HandleIsActiveChanged);
         }
+
+        public TabColor TabColor
+        {
+            get => tabColor;
+            set => Set(ref tabColor, () => TabColor, value);
+        }
+
+        public ICommand SetTabColorCommand { get; }
     }
 }

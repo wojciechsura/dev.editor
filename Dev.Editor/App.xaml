@@ -47,6 +47,10 @@
             <SolidColorBrush x:Key="NormalTabBackgroundBrush" Color="#40668c" />
             <SolidColorBrush x:Key="HoverTabForegroundBrush" Color="#404040" />
             <SolidColorBrush x:Key="HoverTabBackgroundBrush" Color="#bad6f1" />
+            <SolidColorBrush x:Key="RedTabBackgroundBrush" Color="#8C4043" />
+            <SolidColorBrush x:Key="YellowTabBackgroundBrush" Color="#8A8C40" />
+            <SolidColorBrush x:Key="GreenTabBackgroundBrush" Color="#52C55A" />
+            <SolidColorBrush x:Key="BlueTabBackgroundBrush" Color="#40B5BA" />
 
             <SolidColorBrush x:Key="TabScrollButtonForegroundBrush" Color="#dae9f8" />
             <SolidColorBrush x:Key="HoverTabScrollButtonForegroundBrush" Color="#ffffff" />

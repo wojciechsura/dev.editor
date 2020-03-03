@@ -158,6 +158,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 storedFile.HighlightingName.Value = textDocument.Highlighting?.Name;
                                 storedFile.LastModifiedDate.Value = textDocument.LastModificationDate.Ticks;
                                 storedFile.DocumentTabKind.Value = documents.DocumentTabKind;
+                                storedFile.TabColor.Value = textDocument.TabColor;
 
                                 configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                                 break;
@@ -171,6 +172,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 storedFile.StoredFilename.Value = storedFilename;
                                 storedFile.LastModifiedDate.Value = hexDocument.LastModificationDate.Ticks;
                                 storedFile.DocumentTabKind.Value = documents.DocumentTabKind;
+                                storedFile.TabColor.Value = hexDocument.TabColor;
 
                                 configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                                 break;
@@ -185,6 +187,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 storedFile.DefinitionUid.Value = binDocument.Definition.Uid.Value;
                                 storedFile.LastModifiedDate.Value = binDocument.LastModificationDate.Ticks;
                                 storedFile.DocumentTabKind.Value = documents.DocumentTabKind;
+                                storedFile.TabColor.Value = binDocument.TabColor;
 
                                 configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                                 break;
@@ -224,6 +227,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 textDocument.SetFilename(textStoredFile.Filename.Value, fileIconProvider.GetImageForFile(textStoredFile.Filename.Value));
                                 textDocument.FilenameVirtual = textStoredFile.FilenameIsVirtual.Value;
                                 textDocument.LastModificationDate = new DateTime(textStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
+                                textDocument.TabColor = textStoredFile.TabColor.Value;
 
                                 if (!textStoredFile.IsDirty.Value)
                                 {
@@ -256,6 +260,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 hexDocument.FilenameVirtual = hexStoredFile.FilenameIsVirtual.Value;
                                 hexDocument.Changed = hexStoredFile.IsDirty.Value;
                                 hexDocument.LastModificationDate = new DateTime(hexStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
+                                hexDocument.TabColor = hexStoredFile.TabColor.Value;
 
                                 document = hexDocument;
                             }
@@ -282,6 +287,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 binDocument.FilenameVirtual = binStoredFile.FilenameIsVirtual.Value;
                                 binDocument.Changed = binStoredFile.IsDirty.Value;
                                 binDocument.LastModificationDate = new DateTime(binStoredFile.LastModifiedDate.Value, DateTimeKind.Utc);
+                                binDocument.TabColor = binStoredFile.TabColor.Value;
 
                                 document = binDocument;
                             }

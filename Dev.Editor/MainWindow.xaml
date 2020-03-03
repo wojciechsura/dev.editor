@@ -17,6 +17,7 @@
     xmlns:vmb="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions;assembly=Dev.Editor.BusinessLogic"
     xmlns:uit="clr-namespace:Dev.Editor.BusinessLogic.Types.UI;assembly=Dev.Editor.BusinessLogic"
     xmlns:mt="clr-namespace:Dev.Editor.BusinessLogic.Types.Main;assembly=Dev.Editor.BusinessLogic"
+    xmlns:dt="clr-namespace:Dev.Editor.BusinessLogic.Types.Document;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" Closing="HandleWindowClosing"  UseLayoutRounding="True"
     Loaded="HandleLoaded" Activated="HandleWindowActivated"
@@ -135,7 +136,7 @@
                 </Style.Setters>
             </Style>
 
-            <Style x:Key="BaseRootTabItem" TargetType="TabItem">
+            <Style x:Key="RootTabItem" TargetType="TabItem">
                 <Style.Setters>
                     <Setter Property="Background" Value="{StaticResource NormalTabBackgroundBrush}" />
                     <Setter Property="TextBlock.Foreground" Value="{StaticResource NormalTabForegroundBrush}" />
@@ -147,11 +148,6 @@
                             <Setter Property="TextBlock.Foreground" Value="{StaticResource HoverTabForegroundBrush}" />
                         </Trigger.Setters>
                     </Trigger>
-                </Style.Triggers>
-            </Style>
-
-            <Style x:Key="RootTabItem" TargetType="TabItem" BasedOn="{StaticResource BaseRootTabItem}">
-                <Style.Triggers>
                     <Trigger Property="IsSelected" Value="True">
                         <Trigger.Setters>
                             <Setter Property="Background" Value="{StaticResource SelectedTabBackgroundBrush}" />
@@ -161,20 +157,65 @@
                 </Style.Triggers>
             </Style>
 
-            <Style x:Key="DocumentTabItem" TargetType="TabItem" BasedOn="{StaticResource BaseRootTabItem}">
+            <Style x:Key="DocumentTabItem" TargetType="TabItem">
                 <Style.Setters>
+                    <Setter Property="Background" Value="{StaticResource NormalTabBackgroundBrush}" />
+                    <Setter Property="TextBlock.Foreground" Value="{StaticResource NormalTabForegroundBrush}" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="TabItem">
                                 <Border x:Name="TabBorder" BorderThickness="1,1,1,0" BorderBrush="Transparent"
                                                         Background="{TemplateBinding Background}" TextBlock.Foreground="{TemplateBinding Foreground}">
                                     <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2" />
+
+                                    <Border.ContextMenu>
+                                        <ContextMenu>
+                                            <MenuItem Header="Tab color">
+                                                <MenuItem Header="Default" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Default}"
+                                                          IsChecked="{Binding TabColor, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static dt:TabColor.Default}, Mode=OneWay}" />
+                                                <MenuItem Header="Red" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Red}"
+                                                          IsChecked="{Binding TabColor, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static dt:TabColor.Red}, Mode=OneWay}"/>
+                                                <MenuItem Header="Yellow" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Yellow}"
+                                                          IsChecked="{Binding TabColor, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static dt:TabColor.Yellow}, Mode=OneWay}"/>
+                                                    <MenuItem Header="Green" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Green}"
+                                                              IsChecked="{Binding TabColor, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static dt:TabColor.Green}, Mode=OneWay}"/>
+                                                <MenuItem Header="Blue" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Blue}"
+                                                          IsChecked="{Binding TabColor, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static dt:TabColor.Blue}, Mode=OneWay}"/>
+                                            </MenuItem>
+                                        </ContextMenu>
+                                    </Border.ContextMenu>
                                 </Border>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
                 </Style.Setters>
                 <Style.Triggers>
+                    <DataTrigger Binding="{Binding TabColor}" Value="{x:Static dt:TabColor.Red}">
+                        <DataTrigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource RedTabBackgroundBrush}" />
+                        </DataTrigger.Setters>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TabColor}" Value="{x:Static dt:TabColor.Yellow}">
+                        <DataTrigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource YellowTabBackgroundBrush}" />
+                        </DataTrigger.Setters>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TabColor}" Value="{x:Static dt:TabColor.Green}">
+                        <DataTrigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource GreenTabBackgroundBrush}" />
+                        </DataTrigger.Setters>
+                    </DataTrigger>
+                    <DataTrigger Binding="{Binding TabColor}" Value="{x:Static dt:TabColor.Blue}">
+                        <DataTrigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource BlueTabBackgroundBrush}" />
+                        </DataTrigger.Setters>
+                    </DataTrigger>
+                    <Trigger Property="IsMouseOver" Value="True">
+                        <Trigger.Setters>
+                            <Setter Property="Background" Value="{StaticResource HoverTabBackgroundBrush}" />
+                            <Setter Property="TextBlock.Foreground" Value="{StaticResource HoverTabForegroundBrush}" />
+                        </Trigger.Setters>
+                    </Trigger>
                     <Trigger Property="IsSelected" Value="True">
                         <Trigger.Setters>
                             <Setter Property="Background" Value="{StaticResource SelectedDocumentTabBackgroundBrush}" />
