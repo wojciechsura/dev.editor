@@ -18,6 +18,7 @@
             <!-- Converters -->
             
             <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+            <c:InverseBooleanToVisibilityConverter x:Key="InverseBooleanToVisibilityConverter" />
             <c:NullToBoolConverter x:Key="NullToBoolConverter" />
             <c:RadioToEnumConverter x:Key="RadioToEnumConverter" />
             <c:EnabledToOpacityConverter x:Key="EnabledToOpactityConverter" />
@@ -65,7 +66,7 @@
             <SolidColorBrush x:Key="ToolButtonDownBackgroundBrush" Color="#ebf2fa" />
             <SolidColorBrush x:Key="ToolButtonCheckedBrush" Color="#DCB789" />
 
-            <SolidColorBrush x:Key="DocumentCloseButtonHoverForegroundBrush" Color="#3A9EFF" />
+            <SolidColorBrush x:Key="DocumentButtonHoverForegroundBrush" Color="#3A9EFF" />
 
             <!-- Styles -->
 

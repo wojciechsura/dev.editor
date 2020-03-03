@@ -261,7 +261,7 @@ namespace Dev.Editor
 
         private void DocumentTabItemPreviewMouseMove(object sender, MouseEventArgs e)
         {            
-            if (e.LeftButton == MouseButtonState.Pressed && !(e.OriginalSource is System.Windows.Controls.Primitives.ButtonBase))
+            if (e.LeftButton == MouseButtonState.Pressed && !(e.OriginalSource is System.Windows.Controls.Button) && !(e.OriginalSource is System.Windows.Controls.Primitives.ToggleButton))
             {
                 var stackPanel = (StackPanel)sender;
 

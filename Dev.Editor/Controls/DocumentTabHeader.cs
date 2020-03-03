@@ -10,7 +10,7 @@ using System.Windows.Media;
 
 namespace Dev.Editor.Controls
 {
-    public class DocumentTabHeaderStackPanel : Panel
+    public class DocumentTabHeader : Panel
     {
         private class ChildSizeInfos
         {
@@ -106,11 +106,11 @@ namespace Dev.Editor.Controls
 
         // Using a DependencyProperty as the backing store for Pinned.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty PinnedProperty =
-            DependencyProperty.RegisterAttached("Pinned", typeof(bool), typeof(DocumentTabHeaderStackPanel), new PropertyMetadata(false, HandlePinnedChanged));
+            DependencyProperty.RegisterAttached("Pinned", typeof(bool), typeof(DocumentTabHeader), new PropertyMetadata(false, HandlePinnedChanged));
 
         private static void HandlePinnedChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
-            var documentTabHeader = VisualTreeHelper.GetParent(d) as DocumentTabHeaderStackPanel;
+            var documentTabHeader = VisualTreeHelper.GetParent(d) as DocumentTabHeader;
             if (documentTabHeader != null)
                 documentTabHeader.InvalidateMeasure();
         }

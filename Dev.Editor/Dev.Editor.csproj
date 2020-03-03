@@ -80,7 +80,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Controls\DocumentTabHeaderStackPanel.cs" />
+    <Compile Include="Controls\DocumentTabHeader.cs" />
     <Compile Include="Converters\BoolToIntegrationStateConverter.cs" />
     <Compile Include="Converters\DoubleToStarGridLengthConverter.cs" />
     <Compile Include="Converters\EqualsParameterToBoolConverter.cs" />
@@ -138,6 +138,7 @@
     <Compile Include="Services\WinAPI\WinAPIService.cs" />
     <Compile Include="Wpf\AccessKeyScopeControl.cs" />
     <Compile Include="Wpf\DocumentTemplateSelector.cs" />
+    <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Wpf\MouseEvents.cs" />
     <Compile Include="Wpf\ParentData.cs" />
     <Page Include="NameDialog.xaml">
