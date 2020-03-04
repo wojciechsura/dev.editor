@@ -161,5 +161,29 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 messagingService.Inform(Strings.Message_NoMorePatternsFound);
             }
         }
+
+        public void CountOccurrences(SearchReplaceModel searchModel)
+        {
+            var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
+
+            (int selStart, int selLength) = document.GetSelection();
+
+            string textToSearch;
+            if (searchModel.InSelection && selLength > 0)
+            {
+                textToSearch = document.GetSelectedText();
+            }
+            else
+            {
+                textToSearch = document.Document.Text;
+            }
+
+            var matches = searchModel.Regex.Matches(textToSearch, 0);
+
+            if (matches.Count == 0)
+                messagingService.Inform(Resources.Strings.Message_NoMorePatternsFound);
+            else
+                messagingService.Inform(String.Format(Resources.Strings.Message_FoundOccurrences, matches.Count));
+        }
     }
 }

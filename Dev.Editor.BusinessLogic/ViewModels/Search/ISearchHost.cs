@@ -13,6 +13,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         void ReplaceAll(SearchReplaceModel replaceModel);
         void Replace(SearchReplaceModel replaceModel);
         void FindNext(SearchReplaceModel searchModel);
+        void CountOccurrences(SearchReplaceModel searchModel);
 
         BaseCondition CanSearchCondition { get; }
         BaseCondition SelectionAvailableCondition { get; }

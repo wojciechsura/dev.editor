@@ -895,4 +895,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="DocumentHeader.ContextMenu.CloseAllButPinned" xml:space="preserve">
     <value>Close all but pinned</value>
   </data>
+  <data name="Message.FoundOccurrences" xml:space="preserve">
+    <value>Found occurrences: {0}.</value>
+  </data>
+  <data name="SearchWindow.CountOccurrences" xml:space="preserve">
+    <value>Count occurrences</value>
+  </data>
 </root>

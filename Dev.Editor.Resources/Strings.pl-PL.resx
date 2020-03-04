@@ -895,4 +895,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="DocumentHeader.ContextMenu.TabColor.Yellow" xml:space="preserve">
     <value>Żółty</value>
   </data>
+  <data name="Message.FoundOccurrences" xml:space="preserve">
+    <value>Znaleziono wystąpień: {0}.</value>
+  </data>
+  <data name="SearchWindow.CountOccurrences" xml:space="preserve">
+    <value>Policz wystąpienia</value>
+  </data>
 </root>

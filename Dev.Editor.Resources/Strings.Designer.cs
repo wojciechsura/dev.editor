@@ -693,6 +693,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Found occurrences: {0}..
+        /// </summary>
+        public static string Message_FoundOccurrences {
+            get {
+                return ResourceManager.GetString("Message.FoundOccurrences", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid Base64 string!.
         /// </summary>
         public static string Message_InvalidBase64String {
@@ -1752,6 +1761,15 @@ namespace Dev.Editor.Resources {
         public static string SearchWindow_Close {
             get {
                 return ResourceManager.GetString("SearchWindow.Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Count occurrences.
+        /// </summary>
+        public static string SearchWindow_CountOccurrences {
+            get {
+                return ResourceManager.GetString("SearchWindow.CountOccurrences", resourceCulture);
             }
         }
         

@@ -73,6 +73,7 @@
                             <StackPanel Orientation="Vertical" Margin="10,0,0,0">
                                 <Button Content="{x:Static p:Strings.SearchWindow_FindNext}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindNextCommand}" 
                                 IsDefault="True"/>
+                                <Button Content="{x:Static p:Strings.SearchWindow_CountOccurrences}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding CountOccurrencesCommand}" />
                                 <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" 
                                 IsCancel="True"/>
                             </StackPanel>

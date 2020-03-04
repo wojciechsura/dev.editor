@@ -152,6 +152,20 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             }
         }
 
+        private void DoCountOccurrences()
+        {
+            try
+            {
+                StoreLastSearchReplaceIfNeeded();
+                searchHost.CountOccurrences(searchReplaceModel);
+            }
+            catch
+            {
+                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
+                return;
+            }
+        }
+
         private void DoReplace()
         {
             try
@@ -346,6 +360,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             searchHost.SelectionAvailableCondition.ValueChanged += HandleSelectionAvailableChanged;
 
             FindNextCommand = new AppCommand(obj => DoFindNext(), searchHost.CanSearchCondition & searchExpressionValidCondition);
+            CountOccurrencesCommand = new AppCommand(obj => DoCountOccurrences(), searchHost.CanSearchCondition & searchExpressionValidCondition);
             ReplaceCommand = new AppCommand(obj => DoReplace(), searchHost.CanSearchCondition & searchExpressionValidCondition);
             ReplaceAllCommand = new AppCommand(obj => DoReplaceAll(), searchHost.CanSearchCondition & searchExpressionValidCondition);
             CloseCommand = new AppCommand(obj => DoClose());
@@ -353,7 +368,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             DeleteSearchCommand = new AppCommand(obj => DoDeleteSearch(), storedSearchSelectedCondition);
 
             UpdateModel();
-        }
+        }        
 
         public void ShowReplace()
         {
@@ -400,6 +415,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         public ICommand CloseCommand { get; }
 
         public ICommand FindNextCommand { get; }
+
+        public ICommand CountOccurrencesCommand { get; }
 
         public ObservableCollection<string> LastReplaces { get; }
 
