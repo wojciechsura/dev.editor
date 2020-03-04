@@ -273,7 +273,8 @@
                                     </Grid.RowDefinitions>
 
                                     <Border Grid.Row="1" Grid.Column="0" x:Name="ContentPanel" BorderBrush="{TemplateBinding BorderBrush}" 
-                                            BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}">
+                                            BorderThickness="{TemplateBinding BorderThickness}" Background="{TemplateBinding Background}" 
+                                            KeyboardNavigation.TabNavigation="Local" KeyboardNavigation.DirectionalNavigation="Contained">
                                         <ContentPresenter Margin="{TemplateBinding Padding}" x:Name="PART_SelectedContentHost" 
                                                           Content="{TemplateBinding SelectedContent}" ContentTemplate="{TemplateBinding SelectedContentTemplate}" 
                                                           ContentTemplateSelector="{TemplateBinding SelectedContentTemplateSelector}" ContentSource="SelectedContent"/>

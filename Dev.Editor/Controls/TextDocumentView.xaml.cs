@@ -478,23 +478,19 @@ namespace Dev.Editor.Controls
                 viewModel = e.NewValue as TextDocumentViewModel;
                 InitializeViewModel(viewModel);
 
-                Dispatcher.BeginInvoke(new Action(() =>
+                if (viewModel.IsActive)
                 {
-                    if (viewModel != null && viewModel.IsActive)
-                    {
-                        // Focus fix. Sometimes editor is not focused. Now if active
-                        // document is switched, TextDocumentView control will ensure,
-                        // that text editor receives focus.
+                    // Focus fix. Sometimes editor is not focused. Now if active
+                    // document is switched, TextDocumentView control will ensure,
+                    // that text editor receives focus.
 
-                        if (viewModel.ActiveEditor == BusinessLogic.Types.Document.Text.ActiveEditor.Primary)
-                            teEditor.Focus();
-                        else if (viewModel.ActiveEditor == BusinessLogic.Types.Document.Text.ActiveEditor.Secondary)
-                            teEditor2.Focus();
-                        else
-                            throw new InvalidOperationException("Unsupported active editor!");
-                    }
-
-                }), DispatcherPriority.Normal);
+                    if (viewModel.ActiveEditor == BusinessLogic.Types.Document.Text.ActiveEditor.Primary)
+                        teEditor.Focus();
+                    else if (viewModel.ActiveEditor == BusinessLogic.Types.Document.Text.ActiveEditor.Secondary)
+                        teEditor2.Focus();
+                    else
+                        throw new InvalidOperationException("Unsupported active editor!");
+                }
             }
         }
 

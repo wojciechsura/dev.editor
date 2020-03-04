@@ -65,7 +65,11 @@
                        WordWrap="{Binding ElementName=Root, Path=Handler.WordWrap}"
                        ShowLineNumbers="{Binding ElementName=Root, Path=Handler.LineNumbers}"
                        ContextMenu="{StaticResource EditorContextMenu}"
-                       GotFocus="HandleEditorGotFocus" />
+                       GotFocus="HandleEditorGotFocus" 
+                       KeyboardNavigation.ControlTabNavigation="Contained"
+                       KeyboardNavigation.AcceptsReturn="True"
+                       KeyboardNavigation.DirectionalNavigation="Contained"
+                       KeyboardNavigation.TabNavigation="Contained"/>
 
         <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                       Style="{StaticResource EditorSplitter}"
@@ -85,6 +89,10 @@
                        ShowLineNumbers="{Binding ElementName=Root, Path=Handler.LineNumbers}"
                        ContextMenu="{StaticResource EditorContextMenu}"
                        GotFocus="HandleEditorGotFocus2"
+                       KeyboardNavigation.ControlTabNavigation="Contained"
+                       KeyboardNavigation.AcceptsReturn="True"
+                       KeyboardNavigation.DirectionalNavigation="Contained"
+                       KeyboardNavigation.TabNavigation="Contained"
                        Visibility="{Binding Editor2Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
         <Grid Grid.Row="3" Style="{StaticResource DocumentFooter}">
