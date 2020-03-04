@@ -50,8 +50,8 @@
             <SolidColorBrush x:Key="HoverTabBackgroundBrush" Color="#bad6f1" />
             <SolidColorBrush x:Key="RedTabBackgroundBrush" Color="#8C4043" />
             <SolidColorBrush x:Key="YellowTabBackgroundBrush" Color="#8A8C40" />
-            <SolidColorBrush x:Key="GreenTabBackgroundBrush" Color="#52C55A" />
-            <SolidColorBrush x:Key="BlueTabBackgroundBrush" Color="#40B5BA" />
+            <SolidColorBrush x:Key="GreenTabBackgroundBrush" Color="#55B05B" />
+            <SolidColorBrush x:Key="BlueTabBackgroundBrush" Color="#1FABB0" />
 
             <SolidColorBrush x:Key="TabScrollButtonForegroundBrush" Color="#dae9f8" />
             <SolidColorBrush x:Key="HoverTabScrollButtonForegroundBrush" Color="#ffffff" />
@@ -67,6 +67,20 @@
             <SolidColorBrush x:Key="ToolButtonCheckedBrush" Color="#DCB789" />
 
             <SolidColorBrush x:Key="DocumentButtonHoverForegroundBrush" Color="#3A9EFF" />
+
+            <!-- Document templates -->
+
+            <DataTemplate x:Key="TextDocumentTemplate" >
+                <controls:TextDocumentView />
+            </DataTemplate>
+
+            <DataTemplate x:Key="HexDocumentTemplate">
+                <controls:HexDocumentView />
+            </DataTemplate>
+
+            <DataTemplate x:Key="BinDocumentTemplate">
+                <controls:BinDocumentView />
+            </DataTemplate>
 
             <!-- Styles -->
 

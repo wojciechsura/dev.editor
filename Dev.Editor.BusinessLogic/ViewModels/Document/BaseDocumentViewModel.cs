@@ -29,6 +29,21 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             handler.RequestClose(this);
         }
 
+        private void DoCloseOthersCommand()
+        {
+            handler.RequestCloseOthers(this);
+        }
+
+        private void DoCloseAllButPinned()
+        {
+            handler.RequestCloseAllButPinned();
+        }
+
+        private void DoCloseAll()
+        {
+            handler.RequestCloseAll();
+        }
+
         private void HandleIsActiveChanged()
         {
             handler.ChildActivated(this);
@@ -62,6 +77,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
             SetTabColorCommand = new AppCommand(obj => DoSetTabColor((TabColor)obj));
             CloseCommand = new AppCommand(obj => DoClose());
+            CloseAllCommand = new AppCommand(obj => DoCloseAll());
+            CloseAllButPinnedCommand = new AppCommand(obj => DoCloseAllButPinned());
+            CloseOthersCommand = new AppCommand(obj => DoCloseOthersCommand());
         }
 
         private void DoSetTabColor(TabColor color)
@@ -96,6 +114,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         public IDocumentHandler Handler => handler;
 
         public ICommand CloseCommand { get; }
+        public ICommand CloseAllCommand { get; }
+        public ICommand CloseAllButPinnedCommand { get; }
+        public ICommand CloseOthersCommand { get; }
 
         public string FileName
         {

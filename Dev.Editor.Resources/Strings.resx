@@ -865,4 +865,34 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.View.Interface.ShowSecondaryDocumentTab" xml:space="preserve">
     <value>Second view</value>
   </data>
+  <data name="DocumentHeader.ContextMenu.TabColor" xml:space="preserve">
+    <value>Tab color</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Default" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Red" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Green" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Blue" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Yellow" xml:space="preserve">
+    <value>Yellow</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.CloseOthers" xml:space="preserve">
+    <value>Close others</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.CloseAll" xml:space="preserve">
+    <value>Close all</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.CloseAllButPinned" xml:space="preserve">
+    <value>Close all but pinned</value>
+  </data>
 </root>

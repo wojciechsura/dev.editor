@@ -865,4 +865,34 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.View.Interface.ShowSecondaryDocumentTab" xml:space="preserve">
     <value>Drugi widok</value>
   </data>
+  <data name="DocumentHeader.ContextMenu.Close" xml:space="preserve">
+    <value>Zamknij</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.CloseAll" xml:space="preserve">
+    <value>Zamknij wszystkie</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.CloseAllButPinned" xml:space="preserve">
+    <value>Zamknij wszystkie poza przypiętymi</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.CloseOthers" xml:space="preserve">
+    <value>Zamknij pozostałe</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor" xml:space="preserve">
+    <value>Kolor zakładki</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Blue" xml:space="preserve">
+    <value>Niebieski</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Default" xml:space="preserve">
+    <value>Domyślny</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Green" xml:space="preserve">
+    <value>Zielony</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Red" xml:space="preserve">
+    <value>Czerwony</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Yellow" xml:space="preserve">
+    <value>Żółty</value>
+  </data>
 </root>

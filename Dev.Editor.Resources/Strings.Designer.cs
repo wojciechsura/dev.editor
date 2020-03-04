@@ -352,6 +352,96 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close.
+        /// </summary>
+        public static string DocumentHeader_ContextMenu_Close {
+            get {
+                return ResourceManager.GetString("DocumentHeader.ContextMenu.Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close all.
+        /// </summary>
+        public static string DocumentHeader_ContextMenu_CloseAll {
+            get {
+                return ResourceManager.GetString("DocumentHeader.ContextMenu.CloseAll", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close all but pinned.
+        /// </summary>
+        public static string DocumentHeader_ContextMenu_CloseAllButPinned {
+            get {
+                return ResourceManager.GetString("DocumentHeader.ContextMenu.CloseAllButPinned", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Close others.
+        /// </summary>
+        public static string DocumentHeader_ContextMenu_CloseOthers {
+            get {
+                return ResourceManager.GetString("DocumentHeader.ContextMenu.CloseOthers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tab color.
+        /// </summary>
+        public static string DocumentHeader_ContextMenu_TabColor {
+            get {
+                return ResourceManager.GetString("DocumentHeader.ContextMenu.TabColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Blue.
+        /// </summary>
+        public static string DocumentHeader_ContextMenu_TabColor_Blue {
+            get {
+                return ResourceManager.GetString("DocumentHeader.ContextMenu.TabColor.Blue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Default.
+        /// </summary>
+        public static string DocumentHeader_ContextMenu_TabColor_Default {
+            get {
+                return ResourceManager.GetString("DocumentHeader.ContextMenu.TabColor.Default", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Green.
+        /// </summary>
+        public static string DocumentHeader_ContextMenu_TabColor_Green {
+            get {
+                return ResourceManager.GetString("DocumentHeader.ContextMenu.TabColor.Green", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Red.
+        /// </summary>
+        public static string DocumentHeader_ContextMenu_TabColor_Red {
+            get {
+                return ResourceManager.GetString("DocumentHeader.ContextMenu.TabColor.Red", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yellow.
+        /// </summary>
+        public static string DocumentHeader_ContextMenu_TabColor_Yellow {
+            get {
+                return ResourceManager.GetString("DocumentHeader.ContextMenu.TabColor.Yellow", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to XSLT sheets (*.xsl)|*.xsl.
         /// </summary>
         public static string Filter_Xslt {

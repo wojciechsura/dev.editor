@@ -160,6 +160,33 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
             }
         }
 
+        private void InternalRemoveDocumentAt(int index,
+            TabDocumentCollection<BaseDocumentViewModel> collection,
+            ref BaseDocumentViewModel selectedCollectionItem,
+            string selectedPropertyName)
+        {
+            if (index < 0 || index >= collection.Count)
+                throw new ArgumentOutOfRangeException(nameof(index));
+
+            var document = collection[index];
+            collection.RemoveAt(index);
+
+            if (selectedCollectionItem == document)
+            {
+                if (index >= collection.Count)
+                    index = collection.Count - 1;
+
+                if (index > 0 && index < collection.Count)
+                    selectedCollectionItem = collection[index];
+                else
+                    selectedCollectionItem = null;
+
+                OnPropertyChanged(selectedPropertyName);
+
+                UpdateActiveDocumentToSelected();
+            }
+        }
+
         private void InternalAddDocumentTo(BaseDocumentViewModel document,
             TabDocumentCollection<BaseDocumentViewModel> collection,
             ref BaseDocumentViewModel selectedCollectionItem,
@@ -251,6 +278,27 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
                     break;
                 case DocumentTabKind.Secondary:
                     InternalRemoveDocumentFrom(document,
+                        secondaryDocuments,
+                        ref selectedSecondaryDocument,
+                        nameof(SelectedSecondaryDocument));
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("Unsupported document tab kind!");
+            }
+        }
+
+        public void RemoveDocumentAt(DocumentTabKind documentTabKind, int index)
+        {
+            switch (documentTabKind)
+            {
+                case DocumentTabKind.Primary:
+                    InternalRemoveDocumentAt(index,
+                        primaryDocuments,
+                        ref selectedPrimaryDocument,
+                        nameof(SelectedPrimaryDocument));
+                    break;
+                case DocumentTabKind.Secondary:
+                    InternalRemoveDocumentAt(index,
                         secondaryDocuments,
                         ref selectedSecondaryDocument,
                         nameof(SelectedSecondaryDocument));

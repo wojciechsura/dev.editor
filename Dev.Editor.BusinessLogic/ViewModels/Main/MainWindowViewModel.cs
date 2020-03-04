@@ -467,6 +467,21 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 documentsManager.RemoveDocument(document);
         }
 
+        void IDocumentHandler.RequestCloseOthers(BaseDocumentViewModel baseDocumentViewModel)
+        {
+            CloseDocumentsWhere(doc => doc != baseDocumentViewModel);
+        }
+
+        void IDocumentHandler.RequestCloseAllButPinned()
+        {
+            CloseDocumentsWhere(doc => !doc.IsPinned);
+        }
+
+        void IDocumentHandler.RequestCloseAll()
+        {
+            CloseDocumentsWhere(doc => true);
+        }
+
         void IDocumentHandler.ChildActivated(BaseDocumentViewModel document)
         {
             documentsManager.ActiveDocument = document;
@@ -848,32 +863,41 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 access.SetWindowMaximized(true);
         }
 
-        public bool CanCloseApplication()
+        private bool CloseDocumentsWhere(Func<BaseDocumentViewModel, bool> predicate)
         {
-            bool CloseDocuments(ITabDocumentCollection<BaseDocumentViewModel> documents)
+            bool InternalCloseDocuments(DocumentTabKind documentTabKind)
             {
-                while (documents.Count > 0)
+                int i = 0;
+                while (i < documentsManager[documentTabKind].Count)
                 {
-                    documentsManager.ActiveDocument = documents[0];
-                    if (CanCloseDocument(documents[0]))
+                    if (predicate(documentsManager[documentTabKind][i]))
                     {
-                        documentsManager.RemoveDocument(documents[0]);
+                        if (CanCloseDocument(documentsManager[documentTabKind][i]))
+                        {
+                            documentsManager.RemoveDocumentAt(documentTabKind, i);
+                        }
+                        else
+                            return false;
                     }
                     else
                     {
-                        return false;
+                        i++;
                     }
                 }
 
                 return true;
             }
 
+            return InternalCloseDocuments(DocumentTabKind.Primary) && InternalCloseDocuments(DocumentTabKind.Secondary);
+        }
+
+        public bool CanCloseApplication()
+        {
             switch (configurationService.Configuration.Behavior.CloseBehavior.Value)
             {
                 case CloseBehavior.Standard:
                     {
-                        if (!(CloseDocuments(documentsManager.PrimaryDocuments) && 
-                            CloseDocuments(documentsManager.SecondaryDocuments)))
+                        if (!CloseDocumentsWhere(d => true))
                             return false;
 
                         break;
@@ -1029,5 +1053,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ObservableCollection<StoredSearchReplaceViewModel> StoredReplaces => storedReplaces;
 
         public DocumentsManager Documents => documentsManager;
+
+        bool IDocumentHandler.WordWrap => throw new NotImplementedException();
+
+        bool IDocumentHandler.LineNumbers => throw new NotImplementedException();
     }
 }

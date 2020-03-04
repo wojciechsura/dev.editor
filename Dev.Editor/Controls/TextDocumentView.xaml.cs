@@ -480,7 +480,7 @@ namespace Dev.Editor.Controls
 
                 Dispatcher.BeginInvoke(new Action(() =>
                 {
-                    if (viewModel.IsActive)
+                    if (viewModel != null && viewModel.IsActive)
                     {
                         // Focus fix. Sometimes editor is not focused. Now if active
                         // document is switched, TextDocumentView control will ensure,

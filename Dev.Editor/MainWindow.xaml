@@ -157,27 +157,54 @@
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="TabItem">
-                                <Border x:Name="TabBorder" BorderThickness="0" Background="{TemplateBinding Background}" 
+                                <Border x:Name="TabBorder" BorderThickness="0,0,0,2" BorderBrush="{Binding Path=Background, RelativeSource={RelativeSource Mode=Self}}" Background="{TemplateBinding Background}" 
                                         TextBlock.Foreground="{TemplateBinding Foreground}">
-                                    <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2" />
+                                    <ContentPresenter x:Name="ContentSite" HorizontalAlignment="Center" VerticalAlignment="Center" ContentSource="Header" Margin="6,2,6,0" />
 
                                     <Border.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Header="Tab color">
-                                                <MenuItem Header="Default" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Default}"
+                                            <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_Close}" Command="{Binding CloseCommand}" />
+                                            <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_CloseAll}" Command="{Binding CloseAllCommand}" />
+                                            <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_CloseAllButPinned}" Command="{Binding CloseAllButPinnedCommand}" />
+                                            <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_CloseOthers}" Command="{Binding CloseOthersCommand}" />
+                                            <Separator />
+                                            <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_TabColor}">
+                                                <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_TabColor_Default}" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Default}"
                                                           IsChecked="{Binding TabColor, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static dt:TabColor.Default}, Mode=OneWay}" />
-                                                <MenuItem Header="Red" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Red}"
+                                                <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_TabColor_Red}" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Red}"
                                                           IsChecked="{Binding TabColor, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static dt:TabColor.Red}, Mode=OneWay}"/>
-                                                <MenuItem Header="Yellow" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Yellow}"
+                                                <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_TabColor_Yellow}" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Yellow}"
                                                           IsChecked="{Binding TabColor, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static dt:TabColor.Yellow}, Mode=OneWay}"/>
-                                                    <MenuItem Header="Green" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Green}"
+                                                <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_TabColor_Green}" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Green}"
                                                               IsChecked="{Binding TabColor, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static dt:TabColor.Green}, Mode=OneWay}"/>
-                                                <MenuItem Header="Blue" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Blue}"
+                                                <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_TabColor_Blue}" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Blue}"
                                                           IsChecked="{Binding TabColor, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static dt:TabColor.Blue}, Mode=OneWay}"/>
                                             </MenuItem>
                                         </ContextMenu>
                                     </Border.ContextMenu>
                                 </Border>
+                                <ControlTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding TabColor}" Value="{x:Static dt:TabColor.Red}">
+                                        <DataTrigger.Setters>
+                                            <Setter TargetName="TabBorder" Property="BorderBrush" Value="{StaticResource RedTabBackgroundBrush}" />
+                                        </DataTrigger.Setters>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding TabColor}" Value="{x:Static dt:TabColor.Yellow}">
+                                        <DataTrigger.Setters>
+                                            <Setter TargetName="TabBorder" Property="BorderBrush" Value="{StaticResource YellowTabBackgroundBrush}" />
+                                        </DataTrigger.Setters>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding TabColor}" Value="{x:Static dt:TabColor.Green}">
+                                        <DataTrigger.Setters>
+                                            <Setter TargetName="TabBorder" Property="BorderBrush" Value="{StaticResource GreenTabBackgroundBrush}" />
+                                        </DataTrigger.Setters>
+                                    </DataTrigger>
+                                    <DataTrigger Binding="{Binding TabColor}" Value="{x:Static dt:TabColor.Blue}">
+                                        <DataTrigger.Setters>
+                                            <Setter TargetName="TabBorder" Property="BorderBrush" Value="{StaticResource BlueTabBackgroundBrush}" />
+                                        </DataTrigger.Setters>
+                                    </DataTrigger>
+                                </ControlTemplate.Triggers>
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>

@@ -14,6 +14,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         bool LineNumbers { get; }
 
         void RequestClose(BaseDocumentViewModel documentViewModel);
+        void RequestCloseOthers(BaseDocumentViewModel baseDocumentViewModel);
+        void RequestCloseAllButPinned();
+        void RequestCloseAll();
 
         ICommand CopyCommand { get; }
         ICommand CutCommand { get; }
