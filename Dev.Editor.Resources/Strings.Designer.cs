@@ -1198,6 +1198,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Saved replaces.
+        /// </summary>
+        public static string Ribbon_Home_Search_StoredReplaces {
+            get {
+                return ResourceManager.GetString("Ribbon.Home.Search.StoredReplaces", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Saved searches.
+        /// </summary>
+        public static string Ribbon_Home_Search_StoredSearches {
+            get {
+                return ResourceManager.GetString("Ribbon.Home.Search.StoredSearches", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove empty lines.
         /// </summary>
         public static string Ribbon_Lines_Cleanup_RemoveEmptyLines {

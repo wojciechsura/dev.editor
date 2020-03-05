@@ -910,4 +910,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Text.Convert.Htm" xml:space="preserve">
     <value>HTML entities</value>
   </data>
+  <data name="Ribbon.Home.Search.StoredReplaces" xml:space="preserve">
+    <value>Zapisane zamiany</value>
+  </data>
+  <data name="Ribbon.Home.Search.StoredSearches" xml:space="preserve">
+    <value>Zapisane wyszukania</value>
+  </data>
 </root>

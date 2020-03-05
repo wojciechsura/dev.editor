@@ -564,11 +564,13 @@
                     <f:SplitButton Header="{x:Static p:Strings.Ribbon_Home_Search_Search}" Command="{Binding SearchCommand}" SizeDefinition="Large"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search16.png">
+                        <f:GroupSeparatorMenuItem Header="{x:Static p:Strings.Ribbon_Home_Search_StoredSearches}" />
                         <ItemsControl ItemsSource="{Binding StoredSearches}" ItemTemplate="{StaticResource SearchItemTemplate}" />
                     </f:SplitButton>
                     <f:SplitButton Header="{x:Static p:Strings.Ribbon_Home_Search_Replace}" Command="{Binding ReplaceCommand}" SizeDefinition="Middle"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace16.png">
+                        <f:GroupSeparatorMenuItem Header="{x:Static p:Strings.Ribbon_Home_Search_StoredReplaces}" />
                         <ItemsControl ItemsSource="{Binding StoredReplaces}" ItemTemplate="{StaticResource SearchItemTemplate}" />
                     </f:SplitButton>
                     <f:Button Header="{x:Static p:Strings.Ribbon_Home_Search_FindNext}" Command="{Binding FindNextCommand}" SizeDefinition="Middle"
