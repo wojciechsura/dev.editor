@@ -689,7 +689,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             Base64EncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_ToBase64, "ConvertBase6416.png", obj => DoBase64Encode(), documentIsTextCondition);
             Base64DecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_FromBase64, "ConvertBase6416.png", obj => DoBase64Decode(), documentIsTextCondition);
-            HtmlEntitiesEncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Htm_Decode, "ConvertHtml16.png", obj => DoHtmlEntitiesEncode(), documentIsTextCondition);
+            HtmlEntitiesEncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Htm_Encode, "ConvertHtml16.png", obj => DoHtmlEntitiesEncode(), documentIsTextCondition);
             HtmlEntitiesDecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Htm_Decode, "ConvertHtml16.png", obj => DoHtmlEntitiesDecode(), documentIsTextCondition);
 
             FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, "FormatXml16.png", obj => DoFormatXml(), xmlToolsetAvailableCondition);
