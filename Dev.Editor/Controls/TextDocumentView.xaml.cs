@@ -135,29 +135,39 @@ namespace Dev.Editor.Controls
 
         private void UpdateActiveEditor()
         {
-            switch (viewModel.ActiveEditor)
+            Dispatcher.BeginInvoke(new Action(() =>
             {
-                case BusinessLogic.Types.Document.Text.ActiveEditor.Primary:
+                if (viewModel != null && viewModel.IsActive)
+                {
+                    switch (viewModel.ActiveEditor)
                     {
-                        SetActiveEditor(teEditor);
+                        case BusinessLogic.Types.Document.Text.ActiveEditor.Primary:
+                            {
+                                System.Diagnostics.Debug.WriteLine("Focusing editor 1");
 
-                        if (teEditor2.IsFocused)
-                            teEditor.Focus();
+                                SetActiveEditor(teEditor);
 
-                        break;
+                                if (teEditor2.IsFocused)
+                                    teEditor.Focus();
+
+                                break;
+                            }
+                        case BusinessLogic.Types.Document.Text.ActiveEditor.Secondary:
+                            {
+                                System.Diagnostics.Debug.WriteLine("Focusing editor 2");
+
+                                SetActiveEditor(teEditor2);
+
+                                if (teEditor.IsFocused)
+                                    teEditor2.Focus();
+
+                                break;
+                            }
+                        default:
+                            throw new InvalidOperationException("Unsupported editor!");
                     }
-                case BusinessLogic.Types.Document.Text.ActiveEditor.Secondary:
-                    {
-                        SetActiveEditor(teEditor2);
-
-                        if (teEditor.IsFocused)
-                            teEditor2.Focus();
-
-                        break;
-                    }
-                default:
-                    throw new InvalidOperationException("Unsupported editor!");
-            }
+                }
+            }), DispatcherPriority.ContextIdle);
         }
 
         private void HandleTextChanged(object sender, EventArgs e)

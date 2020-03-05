@@ -11,6 +11,22 @@ namespace Dev.Editor.Controls
 {
     public class TabControlExt : TabControl
     {
+        private ContentPresenter selectedContentPresenter;
+
+        public override void OnApplyTemplate()
+        {
+            base.OnApplyTemplate();
+
+            selectedContentPresenter = GetTemplateChild("PART_SelectedContentHost") as ContentPresenter;
+        }
+
+        public void FocusContent()
+        {
+            bool success = selectedContentPresenter.MoveFocus(new TraversalRequest(FocusNavigationDirection.First));
+            if (!success)
+                Focus();
+        }
+
         #region HeaderDoubleclickCommand
 
         public ICommand HeaderDoubleClickCommand

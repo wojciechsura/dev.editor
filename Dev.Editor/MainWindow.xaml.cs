@@ -226,10 +226,14 @@ namespace Dev.Editor
             }
             else if (e.PropertyName == nameof(DocumentsManager.ActiveDocumentTab))
             {
-                if (viewModel.Documents.ActiveDocumentTab == DocumentTabKind.Primary && !tcePrimary.IsFocused)
-                    tcePrimary.Focus();
-                else if (viewModel.Documents.ActiveDocumentTab == DocumentTabKind.Secondary && !tceSecondary.IsFocused)
-                    tceSecondary.Focus();
+                if (viewModel.Documents.ActiveDocumentTab == DocumentTabKind.Primary)
+                {
+                    tcePrimary.FocusContent();
+                }
+                else if (viewModel.Documents.ActiveDocumentTab == DocumentTabKind.Secondary)
+                {
+                    tceSecondary.FocusContent();
+                }
             }
         }
 
