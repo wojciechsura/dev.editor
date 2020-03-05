@@ -687,8 +687,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             SentenceCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Sentence, null, obj => DoSentenceCase(), documentIsTextCondition);
             InvertCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Invert, null, obj => DoInvertCase(), documentIsTextCondition);
 
-            Base64EncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_ToBase64, null, obj => DoBase64Encode(), documentIsTextCondition);
-            Base64DecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_FromBase64, null, obj => DoBase64Decode(), documentIsTextCondition);
+            Base64EncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_ToBase64, "ConvertBase6416.png", obj => DoBase64Encode(), documentIsTextCondition);
+            Base64DecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_FromBase64, "ConvertBase6416.png", obj => DoBase64Decode(), documentIsTextCondition);
+            HtmlEntitiesEncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Htm_Decode, "ConvertHtml16.png", obj => DoHtmlEntitiesEncode(), documentIsTextCondition);
+            HtmlEntitiesDecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Htm_Decode, "ConvertHtml16.png", obj => DoHtmlEntitiesDecode(), documentIsTextCondition);
 
             FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, "FormatXml16.png", obj => DoFormatXml(), xmlToolsetAvailableCondition);
             TransformXsltCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Transform_XSLT, null, obj => DoTransformXslt(), xmlToolsetAvailableCondition);

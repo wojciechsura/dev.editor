@@ -412,5 +412,11 @@
     <Resource Include="Resources\Images\DeleteLine16.png" />
     <Resource Include="Resources\Images\DeleteLine32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\ConvertBase6416.png" />
+    <Resource Include="Resources\Images\ConvertBase6432.png" />
+    <Resource Include="Resources\Images\ConvertHtml16.png" />
+    <Resource Include="Resources\Images\ConvertHtml32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -38,6 +39,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     return (false, null);
                 }
             });
+        }
+
+        private void DoHtmlEntitiesDecode()
+        {
+            TransformText(text => (true, HttpUtility.HtmlDecode(text)));
+        }
+
+        private void DoHtmlEntitiesEncode()
+        {
+            TransformText(text => (true, HttpUtility.HtmlEncode(text)));
         }
 
         private void DoInvertCase()

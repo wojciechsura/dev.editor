@@ -86,6 +86,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand Base64EncodeCommand { get; }
         public ICommand Base64DecodeCommand { get; }
 
+        public ICommand HtmlEntitiesEncodeCommand { get; }
+        public ICommand HtmlEntitiesDecodeCommand { get; }
+
         // XmlTools
 
         public ICommand FormatXmlCommand { get; }

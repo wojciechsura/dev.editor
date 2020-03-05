@@ -1576,6 +1576,33 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to HTML entities.
+        /// </summary>
+        public static string Ribbon_Text_Convert_Htm {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Convert.Htm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Decode HTML entities.
+        /// </summary>
+        public static string Ribbon_Text_Convert_Htm_Decode {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Convert.Htm.Decode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Encode HTML entities.
+        /// </summary>
+        public static string Ribbon_Text_Convert_Htm_Encode {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Convert.Htm.Encode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Hidden.
         /// </summary>
         public static string Ribbon_View_BottomPanelVisibility_Hidden {

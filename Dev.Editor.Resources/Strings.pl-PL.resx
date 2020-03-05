@@ -901,4 +901,13 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="SearchWindow.CountOccurrences" xml:space="preserve">
     <value>Policz wystąpienia</value>
   </data>
+  <data name="Ribbon.Text.Convert.Htm.Decode" xml:space="preserve">
+    <value>Dekoduj HTML entities</value>
+  </data>
+  <data name="Ribbon.Text.Convert.Htm.Encode" xml:space="preserve">
+    <value>Zakoduj HTML entities</value>
+  </data>
+  <data name="Ribbon.Text.Convert.Htm" xml:space="preserve">
+    <value>HTML entities</value>
+  </data>
 </root>

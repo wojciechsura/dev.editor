@@ -695,11 +695,20 @@
                         <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Case_Invert}" Command="{Binding InvertCaseCommand}"/>
                     </f:DropDownButton>
 
-                    <f:DropDownButton Size="Large" Header="{x:Static p:Strings.Ribbon_Text_Convert_Base64}">
+                    <f:DropDownButton Size="Large" Header="{x:Static p:Strings.Ribbon_Text_Convert_Base64}"
+                                      LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/ConvertBase6432.png"
+                                      Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/ConvertBase6416.png">
                         <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Base64_ToBase64}" Command="{Binding Base64EncodeCommand}" />
                         <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Base64_FromBase64}" Command="{Binding Base64DecodeCommand}" />
                     </f:DropDownButton>
 
+                    <f:DropDownButton Size="Large" Header="{x:Static p:Strings.Ribbon_Text_Convert_Htm}"
+                                      LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/ConvertHtml32.png"
+                                      Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/ConvertHtml16.png">
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Htm_Encode}" Command="{Binding HtmlEntitiesEncodeCommand}" />
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Htm_Decode}" Command="{Binding HtmlEntitiesDecodeCommand}" />
+                    </f:DropDownButton>
+                    
                 </f:RibbonGroupBox>
                 
             </f:RibbonTabItem>
