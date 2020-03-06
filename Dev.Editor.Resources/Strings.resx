@@ -916,4 +916,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Home.Search.StoredReplaces" xml:space="preserve">
     <value>Saved replaces</value>
   </data>
+  <data name="DocumentHeader.ContextMenu.MoveToOtherView" xml:space="preserve">
+    <value>Move to other view</value>
+  </data>
 </root>

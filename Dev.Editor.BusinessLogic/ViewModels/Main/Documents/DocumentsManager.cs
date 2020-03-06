@@ -158,6 +158,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
 
                 UpdateActiveDocumentToSelected();
             }
+
+            AutoAdjustSecondaryTabVisibility();
         }
 
         private void InternalRemoveDocumentAt(int index,
@@ -185,6 +187,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
 
                 UpdateActiveDocumentToSelected();
             }
+
+            AutoAdjustSecondaryTabVisibility();
         }
 
         private void InternalAddDocumentTo(BaseDocumentViewModel document,
@@ -317,14 +321,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
                     break;
                 case DocumentTabKind.Secondary:
                     InternalAddDocumentTo(document, secondaryDocuments, ref selectedSecondaryDocument, nameof(SelectedSecondaryDocument));
-
-                    if (!showSecondaryDocumentTab)
-                    {
-                        SetShowSecondaryDocumentsTab(true);
-                    }
+                    AutoAdjustSecondaryTabVisibility();
                     break;
                 default:
                     throw new InvalidEnumArgumentException("Unsupported document tab kind!");
+            }
+        }
+
+        private void AutoAdjustSecondaryTabVisibility()
+        {
+            if (!showSecondaryDocumentTab && secondaryDocuments.Count > 0)
+            {
+                SetShowSecondaryDocumentsTab(true);
+            }
+            else if (showSecondaryDocumentTab && secondaryDocuments.Count == 0)
+            {
+                SetShowSecondaryDocumentsTab(false);
+                SetActiveDocumentTab(DocumentTabKind.Primary);
             }
         }
 
@@ -442,7 +455,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
             sourceDocuments.Remove(documentViewModel);
             destinationDocuments.Add(documentViewModel);
 
+            AutoAdjustSecondaryTabVisibility();
+
             SetActiveDocument(documentViewModel);
+        }
+
+        public DocumentTabKind GetTabOf(BaseDocumentViewModel document)
+        {
+            if (primaryDocuments.Contains(document))
+                return DocumentTabKind.Primary;
+            else if (secondaryDocuments.Contains(document))
+                return DocumentTabKind.Secondary;
+            else
+                throw new ArgumentException(nameof(document));
         }
 
         // Public properties --------------------------------------------------

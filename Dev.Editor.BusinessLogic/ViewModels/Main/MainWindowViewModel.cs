@@ -493,6 +493,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         ICommand IDocumentHandler.PasteCommand => PasteCommand;
 
+        void IDocumentHandler.MoveToOtherView(BaseDocumentViewModel document)
+        {
+            var tab = documentsManager.GetTabOf(document);
+            switch (tab)
+            {
+                case DocumentTabKind.Primary:
+                    documentsManager.MoveDocumentTo(document, DocumentTabKind.Secondary);
+                    break;
+                case DocumentTabKind.Secondary:
+                    documentsManager.MoveDocumentTo(document, DocumentTabKind.Primary);
+                    break;
+                default:
+                    throw new InvalidEnumArgumentException("Unsupported tab kind!");
+            }
+            
+        }
+
         // IToolHandler implementation ----------------------------------------
 
         void IToolHandler.CloseTools()
@@ -744,7 +761,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 OpenParameters();
 
-                if (documentsManager.PrimaryDocuments.Count == 0)
+                if (!documentsManager.AllDocuments.Any())
                     DoNewTextDocument(DocumentTabKind.Primary);
             }
             else if (configurationService.Configuration.Behavior.CloseBehavior.Value == CloseBehavior.Standard)

@@ -168,6 +168,8 @@
                                             <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_CloseAllButPinned}" Command="{Binding CloseAllButPinnedCommand}" />
                                             <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_CloseOthers}" Command="{Binding CloseOthersCommand}" />
                                             <Separator />
+                                            <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_MoveToOtherView}" Command="{Binding MoveToOtherViewCommand}" />
+                                            <Separator />
                                             <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_TabColor}">
                                                 <MenuItem Header="{x:Static p:Strings.DocumentHeader_ContextMenu_TabColor_Default}" Command="{Binding SetTabColorCommand}" CommandParameter="{x:Static dt:TabColor.Default}"
                                                           IsChecked="{Binding TabColor, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static dt:TabColor.Default}, Mode=OneWay}" />

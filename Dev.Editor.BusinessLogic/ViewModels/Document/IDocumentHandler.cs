@@ -23,5 +23,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         ICommand PasteCommand { get; }
 
         void ChildActivated(BaseDocumentViewModel baseDocumentViewModel);
+        void MoveToOtherView(BaseDocumentViewModel baseDocumentViewModel);
     }
 }

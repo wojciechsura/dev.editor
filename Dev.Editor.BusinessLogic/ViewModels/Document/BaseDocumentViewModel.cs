@@ -49,6 +49,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             handler.ChildActivated(this);
         }
 
+        private void DoMoveToOtherViewCommand()
+        {
+            handler.MoveToOtherView(this);
+        }
+
         // Protected fields ---------------------------------------------------
 
         protected readonly IDocumentHandler handler;
@@ -80,6 +85,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             CloseAllCommand = new AppCommand(obj => DoCloseAll());
             CloseAllButPinnedCommand = new AppCommand(obj => DoCloseAllButPinned());
             CloseOthersCommand = new AppCommand(obj => DoCloseOthersCommand());
+            MoveToOtherViewCommand = new AppCommand(obj => DoMoveToOtherViewCommand());
         }
 
         private void DoSetTabColor(TabColor color)
@@ -117,6 +123,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         public ICommand CloseAllCommand { get; }
         public ICommand CloseAllButPinnedCommand { get; }
         public ICommand CloseOthersCommand { get; }
+        public ICommand MoveToOtherViewCommand { get; }
 
         public string FileName
         {

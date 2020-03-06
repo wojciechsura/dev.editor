@@ -388,6 +388,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Move to other view.
+        /// </summary>
+        public static string DocumentHeader_ContextMenu_MoveToOtherView {
+            get {
+                return ResourceManager.GetString("DocumentHeader.ContextMenu.MoveToOtherView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Tab color.
         /// </summary>
         public static string DocumentHeader_ContextMenu_TabColor {

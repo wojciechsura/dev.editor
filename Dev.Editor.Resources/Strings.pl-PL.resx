@@ -916,4 +916,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Home.Search.StoredSearches" xml:space="preserve">
     <value>Zapisane wyszukania</value>
   </data>
+  <data name="DocumentHeader.ContextMenu.MoveToOtherView" xml:space="preserve">
+    <value>Przenieś do drugiego widoku</value>
+  </data>
 </root>
