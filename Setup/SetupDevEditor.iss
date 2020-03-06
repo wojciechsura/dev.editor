@@ -36,26 +36,27 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\Dev.Editor.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\ControlzEx.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\Dev.Editor.BinAnalyzer.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\Dev.Editor.BusinessLogic.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\Dev.Editor.Common.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\Dev.Editor.Configuration.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\Dev.Editor.Dependencies.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\Dev.Editor.Resources.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\Fluent.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\Geometry.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\HexEditor.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\ICSharpCode.AvalonEdit.Dev.Editor.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\Irony.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\System.Windows.Interactivity.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\Unity.Abstractions.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\Unity.Container.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "D:\Dokumenty\Dev\VS\dev.editor\Dev.Editor\bin\Release\pl-PL\Dev.Editor.Resources.resources.dll"; DestDir: "{app}\pl-PL"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Dev.Editor.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\ControlzEx.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Dev.Editor.BinAnalyzer.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Dev.Editor.BusinessLogic.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Dev.Editor.Common.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Dev.Editor.Configuration.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Dev.Editor.Dependencies.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Dev.Editor.Resources.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Fluent.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Geometry.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\HexEditor.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\ICSharpCode.AvalonEdit.Dev.Editor.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Irony.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Unity.Abstractions.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Unity.Container.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Dev.Editor.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\pl-PL\Dev.Editor.Resources.resources.dll"; DestDir: "{app}\pl-PL\"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"

@@ -24,10 +24,10 @@
     FocusManager.FocusedElement="{Binding ElementName=tcePrimary}">
 
     <!-- Resources -->
-    
+
     <f:RibbonWindow.Resources>
         <ResourceDictionary>
-            
+
             <!-- Styles -->
 
             <Style TargetType="ButtonBase" x:Key="DocumentTabButtonStyle">
@@ -257,9 +257,9 @@
 
             <Style x:Key="DocumentTabControlStyle" TargetType="controls:TabControlExt">
                 <Style.Setters>
-                    
+
                     <!-- Template for the whole tab control -->
-                    
+
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="{x:Type controls:TabControlExt}">
@@ -317,8 +317,8 @@
                             </ControlTemplate>
                         </Setter.Value>
                     </Setter>
-                    
-                    <!-- Template for doument tab header -->                    
+
+                    <!-- Template for doument tab header -->
 
                     <Setter Property="ItemTemplate">
                         <Setter.Value>
@@ -407,8 +407,8 @@
                 </Style.Setters>
             </Style>
 
-            <!-- Converters -->          
-            
+            <!-- Converters -->
+
             <converters:SidePanelToColumnConverter x:Key="SidePanelToColumnConverter" />
             <converters:SidePanelToVisibilityConverter x:Key="SidePanelToVisibilityConverter" />
             <converters:SidePanelToTabPlacement x:Key="SidePanelToTabPlacement" />
@@ -416,7 +416,7 @@
             <converters:SearchReplaceOperationToImageConverter x:Key="SearchReplaceOperationToImageConverter" />
 
             <!-- Template selectors -->
-            
+
             <wpf:DocumentTemplateSelector x:Key="DocumentTemplateSelector" />
         </ResourceDictionary>
     </f:RibbonWindow.Resources>
@@ -438,12 +438,16 @@
     </f:RibbonWindow.InputBindings>
 
     <!-- Main content -->
-    
+
     <DockPanel Style="{StaticResource RootDockPanel}">
 
         <!-- Ribbon -->
-        
+
         <f:Ribbon DockPanel.Dock="Top" Focusable="False" FocusManager.IsFocusScope="True">
+            <f:Ribbon.KeyTipKeys>
+                <Key>F10</Key>
+            </f:Ribbon.KeyTipKeys>
+
             <f:Ribbon.Menu>
                 <f:ApplicationMenu>
                     <f:MenuItem Header="{x:Static p:Strings.Ribbon_Home_File_New}" Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/New32.png" Command="{Binding NewTextCommand}" />
@@ -455,7 +459,7 @@
             </f:Ribbon.Menu>
 
             <!-- Contextual group definitions -->
-            
+
             <f:Ribbon.ContextualGroups>
                 <f:RibbonContextualTabGroup x:Name="rctgXml" Header="{x:Static p:Strings.Ribbon_ContextGroup_Xml}" 
                                             Visibility="{Binding Documents.ActiveDocument.Highlighting.AdditionalToolset, Converter={StaticResource AdditionalToolsetToVisibilityConverter}, ConverterParameter={x:Static uit:AdditionalToolset.Xml}}"
@@ -709,11 +713,11 @@
                         <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Htm_Encode}" Command="{Binding HtmlEntitiesEncodeCommand}" />
                         <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Htm_Decode}" Command="{Binding HtmlEntitiesDecodeCommand}" />
                     </f:DropDownButton>
-                    
+
                 </f:RibbonGroupBox>
-                
+
             </f:RibbonTabItem>
-            
+
             <!-- XML tools tab -->
 
             <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_XmlTools}"
@@ -733,7 +737,7 @@
                     <f:Button Header="{x:Static p:Strings.Ribbon_XmlTools_Transform_XSLT}" Command="{Binding TransformXsltCommand}"
                               SizeDefinition="Large" />
                 </f:RibbonGroupBox>
-                
+
             </f:RibbonTabItem>
 
             <!-- Markdown tools tab -->
@@ -742,7 +746,7 @@
                              Group="{Binding ElementName=rctgMarkdown}">
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Markdown_Headers}">
-                                       
+
                     <f:Button SizeDefinition="Large" Header="{x:Static p:Strings.Ribbon_Markdown_Headers_H1}" Command="{Binding InsertMarkdownHeader1Command}"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/H132.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/H116.png"/>
@@ -782,7 +786,7 @@
                                   Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/H616.png"/>
 
                     </f:RibbonToolBar>
-                   
+
                 </f:RibbonGroupBox>
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Markdown_Blocks}">
@@ -824,7 +828,7 @@
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Markdown_Inline}">
 
                     <f:RibbonToolBar>
-                    
+
                         <f:RibbonToolBar.LayoutDefinitions>
                             <f:RibbonToolBarLayoutDefinition Size="Large">
                                 <f:RibbonToolBarRow>
@@ -866,13 +870,13 @@
                                   Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/HorizontalRule16.png"/>
 
                 </f:RibbonGroupBox>
-                
+
             </f:RibbonTabItem>
-            
+
         </f:Ribbon>
 
         <!-- Window content -->
-        
+
         <Grid Margin="{StaticResource HalfMargin}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
@@ -881,7 +885,7 @@
             </Grid.RowDefinitions>
 
             <!-- Main content -->
-            
+
             <Grid Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition x:Name="leftPanelColumn" />
@@ -892,7 +896,7 @@
                 </Grid.ColumnDefinitions>
 
                 <!-- Side panel -->
-                
+
                 <TabControl x:Name="rightPanel" Grid.Column="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToColumnConverter}}" 
                             VerticalAlignment="Stretch" HorizontalAlignment="Stretch" MinWidth="100"
                             Visibility="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToVisibilityConverter}}"
@@ -907,7 +911,7 @@
                     <TabItem DataContext="{Binding BinDefinitionsToolViewModel}">
                         <controls:BinDefinitionsTool />
                     </TabItem>
-                   
+
                 </TabControl>
 
                 <GridSplitter x:Name="leftPanelSplitter" Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" 
@@ -915,9 +919,9 @@
                               Style="{StaticResource VerticalRootGridSplitter}"/>
 
                 <!-- Document area -->
-                
+
                 <Grid Grid.Column="2">
-                                        
+
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="1*" x:Name="cdPrimary" />
                         <ColumnDefinition Width="Auto" />
@@ -935,7 +939,7 @@
                                             IsActiveDocumentTab="{Binding Documents.ActiveDocumentTab, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static mt:DocumentTabKind.Primary}}" />
 
                     <!-- Document tab splitter -->
-                    
+
                     <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center"
                                   Visibility="{Binding Documents.ShowSecondaryDocumentTab, Converter={StaticResource BooleanToVisibilityConverter}}"
                                   Style="{StaticResource VerticalRootGridSplitter}" />
