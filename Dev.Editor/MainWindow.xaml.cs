@@ -260,7 +260,13 @@ namespace Dev.Editor
 
         private void HandleWindowActivated(object sender, EventArgs e)
         {
-            viewModel.NotifyActivated();
+            // This happens as well before Loaded event, what may cause problems
+            // on application startup. Deferring call until Loaded has been executed.
+
+            Dispatcher.BeginInvoke(new Action(() =>
+            {
+                viewModel.NotifyActivated();
+            }), DispatcherPriority.ContextIdle);
         }
 
         private void DocumentTabItemPreviewMouseMove(object sender, MouseEventArgs e)

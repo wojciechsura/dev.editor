@@ -143,8 +143,6 @@ namespace Dev.Editor.Controls
                     {
                         case BusinessLogic.Types.Document.Text.ActiveEditor.Primary:
                             {
-                                System.Diagnostics.Debug.WriteLine("Focusing editor 1");
-
                                 SetActiveEditor(teEditor);
 
                                 if (teEditor2.IsFocused)
@@ -154,8 +152,6 @@ namespace Dev.Editor.Controls
                             }
                         case BusinessLogic.Types.Document.Text.ActiveEditor.Secondary:
                             {
-                                System.Diagnostics.Debug.WriteLine("Focusing editor 2");
-
                                 SetActiveEditor(teEditor2);
 
                                 if (teEditor.IsFocused)

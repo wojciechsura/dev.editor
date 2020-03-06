@@ -249,7 +249,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 InternalLoadHexDocument(hexDocument, filename);
 
-                if (index != null)
+                if (index == null)
                     documentsManager.AddDocument(hexDocument, documentTabKind);
                 else
                     documentsManager.InsertDocument(index.Value, hexDocument, documentTabKind);
@@ -547,7 +547,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             if (index < 0)
                 throw new ArgumentException("Invalid document!");
 
-            documentsManager.RemoveDocument(documentTabKind, document);
+            documentsManager.RemoveDocumentAt(documentTabKind, index);
 
             switch (document)
             {
