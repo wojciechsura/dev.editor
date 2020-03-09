@@ -459,12 +459,133 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
+        private void DoNewPrimaryText()
+        {
+            DoNewTextDocument(DocumentTabKind.Primary);
+        }
+
+        private void DoNewSecondaryText()
+        {
+            DoNewTextDocument(DocumentTabKind.Secondary);
+        }
+
+        private void VerifyRemovedAndModifiedDocuments()
+        {
+            void InternalVerifyRemovedAndModifiedDocuments(ITabDocumentCollection<BaseDocumentViewModel> documents)
+            {
+                // Check documents
+                int i = 0;
+
+                while (i < documents.Count)
+                {
+                    var document = documents[i];
+
+                    if (document.FilenameVirtual)
+                    {
+                        i++;
+                        continue;
+                    }
+
+                    // Checking if file still exists
+
+                    if (!File.Exists(document.FileName))
+                    {
+                        documentsManager.ActiveDocument = document;
+
+                        if (messagingService.AskYesNo(String.Format(Strings.Message_DocumentDeleted, document.FileName)) == false)
+                        {
+                            // Remove document
+                            documentsManager.RemoveDocument(document);
+                            continue;
+                        }
+                        else
+                        {
+                            string newFilename = System.IO.Path.GetFileName(document.FileName);
+
+                            document.SetFilename(newFilename, fileIconProvider.GetImageForFile(newFilename));
+                            document.FilenameVirtual = true;
+                        }
+                    }
+                    else
+                    {
+                        try
+                        {
+                            var fileModificationDate = System.IO.File.GetLastWriteTimeUtc(document.FileName);
+
+                            if (document.LastModificationDate < fileModificationDate)
+                            {
+                                documentsManager.ActiveDocument = document;
+
+                                if (messagingService.AskYesNo(String.Format(Strings.Message_DocumentModifiedOutsideEditor, document.FileName)) == true)
+                                {
+                                    int documentIndex = i;
+
+                                    ReplaceReloadDocument(documents.DocumentTabKind, document);
+                                }
+                                else
+                                {
+                                    // Set this date as new reference point. User will no
+                                    // longer be notified about this change, but will be
+                                    // notified about any next change.
+
+                                    document.LastModificationDate = fileModificationDate;
+                                }
+                            }
+                        }
+                        catch
+                        {
+                            // This is just for user's convenience.
+                            // Cannot get the date? Just ignore this document.                        
+                        }
+
+                        i++;
+                    }
+                }
+            }
+
+            InternalVerifyRemovedAndModifiedDocuments(documentsManager.PrimaryDocuments);
+            InternalVerifyRemovedAndModifiedDocuments(documentsManager.SecondaryDocuments);
+        }
+
+        private bool CloseDocumentsWhere(Func<BaseDocumentViewModel, bool> predicate)
+        {
+            bool InternalCloseDocuments(DocumentTabKind documentTabKind)
+            {
+                int i = 0;
+                while (i < documentsManager[documentTabKind].Count)
+                {
+                    if (predicate(documentsManager[documentTabKind][i]))
+                    {
+                        if (CanCloseDocument(documentsManager[documentTabKind][i]))
+                        {
+                            documentsManager.RemoveDocumentAt(documentTabKind, i);
+                        }
+                        else
+                            return false;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+
+                return true;
+            }
+
+            return InternalCloseDocuments(DocumentTabKind.Primary) && InternalCloseDocuments(DocumentTabKind.Secondary);
+        }
+
+        private void DoTryCloseDocument(BaseDocumentViewModel document)
+        {
+            if (CanCloseDocument(document))
+                documentsManager.RemoveDocument(document);
+        }
+
         // IDocumentHandler implementation ------------------------------------
 
         void IDocumentHandler.RequestClose(BaseDocumentViewModel document)
         {
-            if (CanCloseDocument(document))
-                documentsManager.RemoveDocument(document);
+            DoTryCloseDocument(document);
         }
 
         void IDocumentHandler.RequestCloseOthers(BaseDocumentViewModel baseDocumentViewModel)
@@ -773,97 +894,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 throw new InvalidOperationException("Invalid close behavior!");
         }
 
-        private void DoNewPrimaryText()
-        {
-            DoNewTextDocument(DocumentTabKind.Primary);
-        }
-
-        private void DoNewSecondaryText()
-        {
-            DoNewTextDocument(DocumentTabKind.Secondary);
-        }
-
         public void NotifyActivated()
         {
             VerifyRemovedAndModifiedDocuments();
-        }
-
-        private void VerifyRemovedAndModifiedDocuments()
-        {
-            void InternalVerifyRemovedAndModifiedDocuments(ITabDocumentCollection<BaseDocumentViewModel> documents)
-            {
-                // Check documents
-                int i = 0;
-
-                while (i < documents.Count)
-                {
-                    var document = documents[i];
-
-                    if (document.FilenameVirtual)
-                    {
-                        i++;
-                        continue;
-                    }
-
-                    // Checking if file still exists
-
-                    if (!File.Exists(document.FileName))
-                    {
-                        documentsManager.ActiveDocument = document;
-
-                        if (messagingService.AskYesNo(String.Format(Strings.Message_DocumentDeleted, document.FileName)) == false)
-                        {
-                            // Remove document
-                            documentsManager.RemoveDocument(document);
-                            continue;
-                        }
-                        else
-                        {
-                            string newFilename = System.IO.Path.GetFileName(document.FileName);
-
-                            document.SetFilename(newFilename, fileIconProvider.GetImageForFile(newFilename));
-                            document.FilenameVirtual = true;
-                        }
-                    }
-                    else
-                    {
-                        try
-                        {
-                            var fileModificationDate = System.IO.File.GetLastWriteTimeUtc(document.FileName);
-
-                            if (document.LastModificationDate < fileModificationDate)
-                            {
-                                documentsManager.ActiveDocument = document;
-
-                                if (messagingService.AskYesNo(String.Format(Strings.Message_DocumentModifiedOutsideEditor, document.FileName)) == true)
-                                {
-                                    int documentIndex = i;
-
-                                    ReplaceReloadDocument(documents.DocumentTabKind, document);
-                                }
-                                else
-                                {
-                                    // Set this date as new reference point. User will no
-                                    // longer be notified about this change, but will be
-                                    // notified about any next change.
-
-                                    document.LastModificationDate = fileModificationDate;
-                                }
-                            }
-                        }
-                        catch
-                        {
-                            // This is just for user's convenience.
-                            // Cannot get the date? Just ignore this document.                        
-                        }
-
-                        i++;
-                    }
-                }
-            }
-
-            InternalVerifyRemovedAndModifiedDocuments(documentsManager.PrimaryDocuments);
-            InternalVerifyRemovedAndModifiedDocuments(documentsManager.SecondaryDocuments);
         }
 
         public void NotifyLoaded()
@@ -882,32 +915,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 access.SetWindowMaximized(true);
         }
 
-        private bool CloseDocumentsWhere(Func<BaseDocumentViewModel, bool> predicate)
+        public void RequestCloseDocument(BaseDocumentViewModel document)
         {
-            bool InternalCloseDocuments(DocumentTabKind documentTabKind)
-            {
-                int i = 0;
-                while (i < documentsManager[documentTabKind].Count)
-                {
-                    if (predicate(documentsManager[documentTabKind][i]))
-                    {
-                        if (CanCloseDocument(documentsManager[documentTabKind][i]))
-                        {
-                            documentsManager.RemoveDocumentAt(documentTabKind, i);
-                        }
-                        else
-                            return false;
-                    }
-                    else
-                    {
-                        i++;
-                    }
-                }
-
-                return true;
-            }
-
-            return InternalCloseDocuments(DocumentTabKind.Primary) && InternalCloseDocuments(DocumentTabKind.Secondary);
+            DoTryCloseDocument(document);
         }
 
         public bool CanCloseApplication()

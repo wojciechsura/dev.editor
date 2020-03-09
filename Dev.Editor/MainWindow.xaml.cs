@@ -269,25 +269,39 @@ namespace Dev.Editor
             }), DispatcherPriority.ContextIdle);
         }
 
+        private void DocumentTabItemPreviewMouseDown(object sender, MouseButtonEventArgs e)
+        {
+            if (e.MiddleButton == MouseButtonState.Pressed)
+            {
+                var element = (FrameworkElement)sender;
+
+                var data = element.DataContext as BaseDocumentViewModel;
+                viewModel.RequestCloseDocument(data);
+
+                e.Handled = true;
+            }
+        }
+
+
         private void DocumentTabItemPreviewMouseMove(object sender, MouseEventArgs e)
         {            
             if (e.LeftButton == MouseButtonState.Pressed && !(e.OriginalSource is System.Windows.Controls.Button) && !(e.OriginalSource is System.Windows.Controls.Primitives.ToggleButton))
             {
-                var stackPanel = (StackPanel)sender;
+                var element = (FrameworkElement)sender;
 
-                var data = stackPanel.DataContext as BaseDocumentViewModel;
+                var data = element.DataContext as BaseDocumentViewModel;
                 DragDrop.DoDragDrop(sender as DependencyObject, new DragData(data), DragDropEffects.Move);
             }
         }
 
         private void DocumentTabItemDrop(object sender, DragEventArgs e)
         {
-            var stackPanel = (StackPanel)sender;
+            var element = (FrameworkElement)sender;
 
             var dragData = (DragData)e.Data.GetData(typeof(DragData));
             if (dragData != null)
             {
-                var data = stackPanel.DataContext;
+                var data = element.DataContext;
                 viewModel.ReorderDocument(dragData.DocumentViewModel, data as BaseDocumentViewModel);
             }
         }
