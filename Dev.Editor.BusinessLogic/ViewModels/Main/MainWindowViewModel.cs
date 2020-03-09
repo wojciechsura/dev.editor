@@ -695,14 +695,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             SortLinesAscendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Ordering_SortAscending, "SortAscending16.png", obj => DoSortAscending(), documentIsTextCondition);
             SortLinesDescendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Ordering_SortDescending, "SortDescending16.png", obj => DoSortDescending(), documentIsTextCondition);
-            RemoveEmptyLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveEmptyLines, null, obj => DoRemoveEmptyLines(), documentIsTextCondition);
-            RemoveWhitespaceLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveWhitespaceLines, null, obj => DoRemoveWhitespaceLines(), documentIsTextCondition);
+            RemoveEmptyLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveEmptyLines, "DeleteLine16.png", obj => DoRemoveEmptyLines(), documentIsTextCondition);
+            RemoveWhitespaceLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveWhitespaceLines, "DeleteLine16.png", obj => DoRemoveWhitespaceLines(), documentIsTextCondition);
 
-            LowercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Lowercase, null, obj => DoLowercase(), documentIsTextCondition);
-            UppercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Uppercase, null, obj => DoUppercase(), documentIsTextCondition);
-            NamingCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Naming, null, obj => DoNamingCase(), documentIsTextCondition);
-            SentenceCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Sentence, null, obj => DoSentenceCase(), documentIsTextCondition);
-            InvertCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Invert, null, obj => DoInvertCase(), documentIsTextCondition);
+            LowercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Lowercase, "Case16.png", obj => DoLowercase(), documentIsTextCondition);
+            UppercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Uppercase, "Case16.png", obj => DoUppercase(), documentIsTextCondition);
+            NamingCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Naming, "Case16.png", obj => DoNamingCase(), documentIsTextCondition);
+            SentenceCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Sentence, "Case16.png", obj => DoSentenceCase(), documentIsTextCondition);
+            InvertCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Invert, "Case16.png", obj => DoInvertCase(), documentIsTextCondition);
 
             Base64EncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_ToBase64, "ConvertBase6416.png", obj => DoBase64Encode(), documentIsTextCondition);
             Base64DecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_FromBase64, "ConvertBase6416.png", obj => DoBase64Decode(), documentIsTextCondition);
