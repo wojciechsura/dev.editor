@@ -2062,6 +2062,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string Tool_Explorer_Files_Open {
+            get {
+                return ResourceManager.GetString("Tool.Explorer.Files.Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open in hex editor.
+        /// </summary>
+        public static string Tool_Explorer_Files_OpenInHexeditor {
+            get {
+                return ResourceManager.GetString("Tool.Explorer.Files.OpenInHexeditor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show in Windows Explorer.
         /// </summary>
         public static string Tool_Explorer_Files_ShowInExplorer {

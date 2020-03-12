@@ -645,6 +645,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             LoadTextDocument(documentsManager.ActiveDocumentTab, path);
         }
 
+        void IExplorerHandler.OpenHexFile(string path)
+        {
+            LoadHexDocument(documentsManager.ActiveDocumentTab, path);
+        }
+
         string IExplorerHandler.GetCurrentDocumentPath()
         {
             return documentsManager.ActiveDocument.FileName;

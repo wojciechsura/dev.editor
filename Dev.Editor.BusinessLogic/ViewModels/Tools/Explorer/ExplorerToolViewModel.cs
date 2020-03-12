@@ -259,12 +259,25 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             SetLocationOfCurrentDocumentCommand = new AppCommand(obj => DoSetLocationOfCurrentDocument(), handler.CurrentDocumentHasPathCondition);
             OpenFolderInExplorerCommand = new AppCommand(obj => DoOpenFolderInExplorer(), folderSelectedCondition);
             SelectFileInExplorerCommand = new AppCommand(obj => DoSelectFileInExplorer(), fileSelectedCondition);
+            OpenTextCommand = new AppCommand(obj => DoOpenText(), fileSelectedCondition);
+            OpenHexCommand = new AppCommand(obj => DoOpenHex(), fileSelectedCondition);
 
             if (configurationService.Configuration.Tools.Explorer.LastFolder.Value != null)
             {
                 SetCurrentPath(configurationService.Configuration.Tools.Explorer.LastFolder.Value);
             }
         }
+
+        private void DoOpenHex()
+        {
+            explorerHandler.OpenHexFile(selectedFile.GetFullPath());
+        }
+
+        private void DoOpenText()
+        {
+            explorerHandler.OpenTextFile(selectedFile.GetFullPath());
+        }
+
 
         public void FileItemChosen()
         {
@@ -368,6 +381,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         public ICommand SelectFileInExplorerCommand { get; }
 
         public ICommand SetLocationOfCurrentDocumentCommand { get; }
+
+        public ICommand OpenTextCommand { get; }
+
+        public ICommand OpenHexCommand { get; }
 
         public override string Title => Strings.Tool_Explorer_Title;
 
