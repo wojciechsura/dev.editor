@@ -104,6 +104,7 @@
 
             <Style x:Key="RootGridSplitter" TargetType="GridSplitter">
                 <Style.Setters>
+                    <Setter Property="Focusable" Value="False" />
                     <Setter Property="Template">
                         <Setter.Value>
                             <ControlTemplate TargetType="GridSplitter">
@@ -325,7 +326,10 @@
                     <Setter Property="ItemTemplate">
                         <Setter.Value>
                             <DataTemplate>
-                                <StackPanel x:Name="spDocTabItemRoot" Orientation="Horizontal" PreviewMouseMove="DocumentTabItemPreviewMouseMove" Drop="DocumentTabItemDrop">
+                                <StackPanel x:Name="spDocTabItemRoot" Orientation="Horizontal"
+                                            PreviewMouseDown="DocumentTabItemPreviewMouseDown"
+                                            PreviewMouseMove="DocumentTabItemPreviewMouseMove" 
+                                            Drop="DocumentTabItemDrop">
                                     <Image Width="16" Height="16" Source="{Binding Icon}"/>
                                     <TextBlock Text="{Binding Title}" TextTrimming="CharacterEllipsis" MaxWidth="200" Margin="2"/>
                                     <TextBlock Text="•" Margin="2" Visibility="{Binding Changed, Converter={StaticResource BooleanToVisibilityConverter}}" />

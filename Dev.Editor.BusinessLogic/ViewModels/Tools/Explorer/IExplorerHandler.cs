@@ -12,6 +12,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
     {
         void OpenTextFile(string path);
 
+        void OpenHexFile(string path);
+
         string GetCurrentDocumentPath();
 
         BaseCondition CurrentDocumentHasPathCondition { get; }

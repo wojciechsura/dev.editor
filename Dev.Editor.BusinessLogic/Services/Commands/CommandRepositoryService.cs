@@ -54,7 +54,7 @@ namespace Dev.Editor.BusinessLogic.Services.Commands
         public List<CommandModel> FindMatching(string text)
         {
             return commands
-                .Where(c => IncrementalMatch(c.Title, text))
+                .Where(c => c.Title.ToLower().Contains(text.ToLower()))
                 .ToList();            
         }
     }

@@ -919,4 +919,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="DocumentHeader.ContextMenu.MoveToOtherView" xml:space="preserve">
     <value>Przenieś do drugiego widoku</value>
   </data>
+  <data name="Tool.Explorer.Files.Open" xml:space="preserve">
+    <value>Otwórz</value>
+  </data>
+  <data name="Tool.Explorer.Files.OpenInHexeditor" xml:space="preserve">
+    <value>Otwórz w hexedytorze</value>
+  </data>
 </root>
