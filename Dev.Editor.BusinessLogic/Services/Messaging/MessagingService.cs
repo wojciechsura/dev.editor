@@ -9,6 +9,7 @@ using System.Windows;
 
 namespace Dev.Editor.BusinessLogic.Services.Messaging
 {
+    // TODO move to main project!
     class MessagingService : IMessagingService
     {
         public bool AskYesNo(string message, string title = null)
