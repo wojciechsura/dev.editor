@@ -44,14 +44,24 @@
                             </Grid>
 
                             <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchOptions}" Padding="4">
-                                <StackPanel Orientation="Vertical">
-                                    <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_CaseSensitive}" 
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Orientation="Vertical">
+                                        <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_CaseSensitive}" 
                                             IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_OnlyFullWords}" 
+                                        <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_OnlyFullWords}" 
                                             IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <CheckBox Content="{x:Static p:Strings.SearchWindow_SearchBackwards}" 
+                                        <CheckBox Content="{x:Static p:Strings.SearchWindow_SearchBackwards}" 
                                             IsChecked="{Binding SearchBackwards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                </StackPanel>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Vertical">
+                                        <CheckBox Content="{x:Static p:Strings.SearchWindow_InSelection}" Margin="{StaticResource DialogItemsVMargin}" 
+                                                  IsEnabled="{Binding SelectionAvailable}" IsChecked="{Binding InSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    </StackPanel>
+                                </Grid>
                             </GroupBox>
                             <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchMode}" Padding="4">
                                 <StackPanel Orientation="Vertical">
@@ -74,6 +84,7 @@
                                 <Button Content="{x:Static p:Strings.SearchWindow_FindNext}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindNextCommand}" 
                                 IsDefault="True"/>
                                 <Button Content="{x:Static p:Strings.SearchWindow_CountOccurrences}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding CountOccurrencesCommand}" />
+                                <Separator Margin="{StaticResource DialogItemsVMargin}" />
                                 <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" 
                                 IsCancel="True"/>
                             </StackPanel>
@@ -113,40 +124,55 @@
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
                                 </Grid.RowDefinitions>
 
-                                <GroupBox Grid.Column="0" Grid.Row="0" Header="{x:Static p:Strings.SearchWindow_SearchOptions}" 
-                                      Padding="4" Margin="0,0,2,0">
-                                    <StackPanel Orientation="Vertical">
-                                        <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_CaseSensitive}" 
+                                <GroupBox Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Header="{x:Static p:Strings.SearchWindow_SearchOptions}" 
+                                      Padding="4">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*" />
+                                            <ColumnDefinition Width="1*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <StackPanel Grid.Column="0" Grid.Row="0" Orientation="Vertical">
+                                            <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_CaseSensitive}" 
                                             IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_OnlyFullWords}" 
+                                            <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_OnlyFullWords}" 
                                             IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                                        <CheckBox Content="{x:Static p:Strings.SearchWindow_SearchBackwards}" 
+                                            <CheckBox Content="{x:Static p:Strings.SearchWindow_SearchBackwards}" 
                                             IsChecked="{Binding SearchBackwards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                        </StackPanel>
+
+                                        <StackPanel Grid.Column="1" Grid.Row="0" Orientation="Vertical">
+                                            <StackPanel Grid.Column="1" Orientation="Vertical">
+                                                <CheckBox Content="{x:Static p:Strings.SearchWindow_InSelection}" Margin="{StaticResource DialogItemsVMargin}" 
+                                                          IsEnabled="{Binding SelectionAvailable}" IsChecked="{Binding InSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                            </StackPanel>
+                                        </StackPanel>
+                                    </Grid>
+                                </GroupBox>
+
+                                <GroupBox Grid.Column="0" Grid.Row="1" Header="{x:Static p:Strings.SearchWindow_SearchMode}" Padding="4"
+                                          Margin="0,0,2,0">
+                                    <StackPanel Orientation="Vertical">
+                                        <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeNormal}" 
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Normal}}"/>
+                                        <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeExtended}" 
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Extended}}"/>
+                                        <RadioButton Content="{x:Static p:Strings.SearchWindow_SearchModeRegex}" 
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.RegularExpressions}}"/>
                                     </StackPanel>
                                 </GroupBox>
 
-                                <GroupBox Grid.Column="1" Grid.Row="0" Header="{x:Static p:Strings.SearchWindow_ReplaceOptions}" 
-                                      Padding="4" Margin="2,0,0,0">
+                                <GroupBox Grid.Row="1" Grid.Column="1" Header="{x:Static p:Strings.SearchWindow_ReplaceOptions}" Padding="4"
+                                          Margin="2,0,0,0">
                                     <StackPanel Orientation="Vertical">
                                         <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_ShowSummary}"
                                               IsChecked="{Binding ShowReplaceSummary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                                     </StackPanel>
                                 </GroupBox>
-
                             </Grid>
-
-                            <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchMode}" Padding="4">
-                                <StackPanel Orientation="Vertical">
-                                    <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeNormal}" 
-                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Normal}}"/>
-                                    <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeExtended}" 
-                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Extended}}"/>
-                                    <RadioButton Content="{x:Static p:Strings.SearchWindow_SearchModeRegex}" 
-                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.RegularExpressions}}"/>
-                                </StackPanel>
-                            </GroupBox>
                         </StackPanel>
 
                         <DockPanel Margin="10,0,0,0">
@@ -158,10 +184,7 @@
                                 <Button Content="{x:Static p:Strings.SearchWindow_FindNext}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindNextCommand}" 
                                     IsDefault="True"/>
                                 <Button Content="{x:Static p:Strings.SearchWindow_Replace}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding ReplaceCommand}"/>
-                                <Separator Margin="{StaticResource DialogItemsVMargin}" />
                                 <Button Content="{x:Static p:Strings.SearchWindow_ReplaceAll}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding ReplaceAllCommand}"/>
-                                <CheckBox Content="{x:Static p:Strings.SearchWindow_InSelection}" Margin="{StaticResource DialogItemsVMargin}" 
-                                        IsEnabled="{Binding SelectionAvailable}" IsChecked="{Binding ReplaceAllInSelection, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 <Separator Margin="{StaticResource DialogItemsVMargin}" />
                                 <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" 
                                     IsCancel="true"/>

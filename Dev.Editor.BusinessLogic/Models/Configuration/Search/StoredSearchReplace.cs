@@ -17,7 +17,6 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Search
         {
             SearchName = new ConfigValue<string>("SearchName", this, "");
             IsCaseSensitive = new ConfigValue<bool>("IsCaseSensitive", this, false);
-            IsReplaceAllInSelection = new ConfigValue<bool>("IsReplaceAllInSelection", this, false);
             IsSearchBackwards = new ConfigValue<bool>("IsSearchBackwards", this, false);
             IsWholeWordsOnly = new ConfigValue<bool>("IsWholeWordsOnly", this, false);
             ShowReplaceSummary = new ConfigValue<bool>("ShowReplaceSummary", this, false);
@@ -29,7 +28,6 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration.Search
 
         public ConfigValue<string> SearchName { get; }
         public ConfigValue<bool> IsCaseSensitive { get; }
-        public ConfigValue<bool> IsReplaceAllInSelection { get; }
         public ConfigValue<bool> IsSearchBackwards { get; }
         public ConfigValue<bool> IsWholeWordsOnly { get; }
         public ConfigValue<bool> ShowReplaceSummary { get; }

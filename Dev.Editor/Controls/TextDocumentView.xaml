@@ -9,7 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800"
              x:Name="Root"
-             DataContextChanged="HandleDataContextChanged">
+             DataContextChanged="HandleDataContextChanged" PreviewKeyDown="HandlePreviewKeyDown">
     <UserControl.Resources>
         <ContextMenu x:Key="EditorContextMenu">
             <MenuItem Header="{x:Static r:Strings.TextEditor_ContextMenu_Cut}"

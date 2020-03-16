@@ -48,9 +48,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         private bool caseSensitive;
         private bool modelUpdatedSinceLastSearch = true;
         private string replace;
-        private bool replaceAllInSelection;
         private string search;
         private bool searchBackwards;
+        private bool inSelection;
         private SearchMode searchMode;
         private SearchReplaceModel searchReplaceModel;
         private bool selectionAvailable;
@@ -71,7 +71,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 .ForEach(srvm => storedSearches.Add(srvm));
         }
 
-        private void DoClose() => access.Close();
+        private void DoClose()
+        {
+            searchHost.ClearFindReplaceSegment();
+            access.Close();
+        }
 
         private void DoSaveSearch()
         {
@@ -81,7 +85,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             {
                 var newEntry = new StoredSearchReplace();
                 newEntry.IsCaseSensitive.Value = CaseSensitive;
-                newEntry.IsReplaceAllInSelection.Value = ReplaceAllInSelection;
                 newEntry.IsSearchBackwards.Value = SearchBackwards;
                 newEntry.IsWholeWordsOnly.Value = WholeWordsOnly;
                 newEntry.Operation.Value = CurrentOperation;
@@ -143,6 +146,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             try
             {
                 StoreLastSearchReplaceIfNeeded();
+
+                if (!searchReplaceModel.SearchPerformed)
+                {
+                    // If this is a new search, update search/replace segment
+                    // to define the search area.
+
+                    if (inSelection)
+                        searchHost.SetFindReplaceSegmentToSelection(searchReplaceModel.SearchBackwards);
+                    else
+                        searchHost.ClearFindReplaceSegment();
+                }
+
                 searchHost.FindNext(searchReplaceModel);
             }
             catch
@@ -208,7 +223,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         {
             SelectionAvailable = searchHost.SelectionAvailableCondition.GetValue();
             if (!SelectionAvailable)
-                ReplaceAllInSelection = false;
+                InSelection = false;
         }
 
         private void StoreLastSearchReplace()
@@ -241,7 +256,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 currentOperation,
                 SearchMode,
                 CaseSensitive,
-                ReplaceAllInSelection,
+                InSelection,
                 SearchBackwards,
                 WholeWordsOnly,
                 ShowReplaceSummary);
@@ -292,7 +307,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             var recentSearchSettings = configurationService.Configuration.SearchConfig.RecentSearchSettings;
 
             recentSearchSettings.CaseSensitive.Value = caseSensitive;
-            recentSearchSettings.ReplaceAllInSelection.Value = replaceAllInSelection;
+            recentSearchSettings.ReplaceAllInSelection.Value = inSelection;
             recentSearchSettings.SearchBackwards.Value = searchBackwards;
             recentSearchSettings.SearchMode.Value = searchMode;
             recentSearchSettings.ShowReplaceSummary.Value = showReplaceSummary;
@@ -330,7 +345,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             var recentSearchSettings = configurationService.Configuration.SearchConfig.RecentSearchSettings;
 
             caseSensitive = recentSearchSettings.CaseSensitive.Value;
-            replaceAllInSelection = recentSearchSettings.ReplaceAllInSelection.Value;
+            inSelection = recentSearchSettings.ReplaceAllInSelection.Value;
             searchBackwards = recentSearchSettings.SearchBackwards.Value;
             searchMode = recentSearchSettings.SearchMode.Value;
             showReplaceSummary = recentSearchSettings.ShowReplaceSummary.Value;
@@ -372,7 +387,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         public void ShowReplace()
         {
-            replaceAllInSelection = searchHost.SelectionAvailableCondition.GetValue();
+            inSelection = searchHost.SelectionAvailableCondition.GetValue();
 
             CurrentOperation = SearchReplaceOperation.Replace;
             
@@ -393,7 +408,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             if (SelectedStoredSearch != null)
             {
                 CaseSensitive = SelectedStoredSearch.StoredSearch.IsCaseSensitive.Value;
-                ReplaceAllInSelection = SelectedStoredSearch.StoredSearch.IsReplaceAllInSelection.Value;
                 SearchBackwards = SelectedStoredSearch.StoredSearch.IsSearchBackwards.Value;
                 WholeWordsOnly = SelectedStoredSearch.StoredSearch.IsWholeWordsOnly.Value;
                 CurrentOperation = SelectedStoredSearch.StoredSearch.Operation.Value;
@@ -430,10 +444,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         public ICommand ReplaceAllCommand { get; }
 
-        public bool ReplaceAllInSelection
+        public bool InSelection
         {
-            get => replaceAllInSelection;
-            set => Set(ref replaceAllInSelection, () => ReplaceAllInSelection, value, HandleSearchReplaceParamsChanged);
+            get => inSelection;
+            set => Set(ref inSelection, () => InSelection, value, HandleSearchReplaceParamsChanged);
         }
 
         public ICommand ReplaceCommand { get; }

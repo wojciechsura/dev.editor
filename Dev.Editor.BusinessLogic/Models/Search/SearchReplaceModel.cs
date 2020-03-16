@@ -27,5 +27,6 @@ namespace Dev.Editor.BusinessLogic.Models.Search
         public bool ShowReplaceSummary { get; }
 
         public bool SearchedFromBoundary { get; set; } = false;
+        public bool SearchPerformed { get; set; } = false;
     }
 }

@@ -17,5 +17,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         BaseCondition CanSearchCondition { get; }
         BaseCondition SelectionAvailableCondition { get; }
+
+        void SetFindReplaceSegmentToSelection(bool searchBackwards);
+        void ClearFindReplaceSegment();
     }
 }

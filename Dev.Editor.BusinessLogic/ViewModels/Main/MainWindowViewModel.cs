@@ -439,7 +439,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 storedSearchReplace.Operation.Value,
                 storedSearchReplace.SearchMode.Value,
                 storedSearchReplace.IsCaseSensitive.Value,
-                (selectionAvailableCondition.GetValue() && regularSelectionAvailableCondition.GetValue()),
+                selectionAvailableForSearchCondition.GetValue(),
                 storedSearchReplace.IsSearchBackwards.Value,
                 storedSearchReplace.IsWholeWordsOnly.Value,
                 storedSearchReplace.ShowReplaceSummary.Value);
@@ -766,6 +766,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             canSaveCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanSave, false);
             selectionAvailableCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.SelectionAvailable, false);
             regularSelectionAvailableCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.RegularSelectionAvailable, false);
+            searchAreaAvailableCondition = #error TODO
+            selectionAvailableForSearchCondition = regularSelectionAvailableCondition | searchAreaAvailableCondition;
             searchPerformedCondition = new MutableSourcePropertyNotNullCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.LastSearch);
             xmlToolsetAvailableCondition = new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Xml, false);
             markdownToolsetAvailableCondition = new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Markdown, false);

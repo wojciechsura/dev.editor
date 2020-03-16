@@ -10,6 +10,7 @@ using System.Text.RegularExpressions;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.Resources;
 using System.Collections.ObjectModel;
+using ICSharpCode.AvalonEdit.Document;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -17,15 +18,67 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
     {
         BaseCondition ISearchHost.CanSearchCondition => documentExistsCondition;
 
-        BaseCondition ISearchHost.SelectionAvailableCondition => regularSelectionAvailableCondition;
+        BaseCondition ISearchHost.SelectionAvailableCondition => selectionAvailableForSearchCondition;
 
-        private void InternalFindNext(SearchReplaceModel searchModel)
+        void ISearchHost.SetFindReplaceSegmentToSelection(bool searchBackwards)
         {
             var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
+            var selection = document.GetSelection();
+
+            document.FindReplaceSegment = new AnchorSegment(document.Document, selection.selStart, selection.selLength);
+            if (searchBackwards)
+            {
+                document.SetSelection(selection.selStart + selection.selLength, 0);
+            }
+            else
+            {
+                document.SetSelection(selection.selStart, 0);
+            }
+        }
+
+        void ISearchHost.ClearFindReplaceSegment()
+        {
+            var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
+
+            document.FindReplaceSegment = null;
+        }
+
+        private void InternalFindNext(SearchReplaceModel searchModel)
+        {
+            // Mark search as performed at least once
+            searchModel.SearchPerformed = true;
+
+            var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
+
+            // Search area
+            int searchStartOffset, searchEndOffset;
+
+            if (document.FindReplaceSegment != null)
+            {
+                // Search only within segment
+                searchStartOffset = document.FindReplaceSegment.Offset;
+                searchEndOffset = document.FindReplaceSegment.EndOffset;
+            }
+            else
+            {
+                // Search whole document
+                searchStartOffset = 0;
+                searchEndOffset = document.Document.TextLength - 1;
+            }
+
+            // Search origin
             (int selStart, int selLength) = document.GetSelection();
 
-            int start = searchModel.SearchBackwards ? selStart : selStart + selLength;
+            int start;
+            if (searchModel.SearchBackwards)
+            {
+                start = selStart;
+            }
+            else
+            {
+                start = selStart + selLength;
+            }
 
             Match match = searchModel.Regex.Match(document.Document.Text, start);
 
@@ -46,20 +99,39 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                         if (searchModel.SearchBackwards)
                         {
-                            match = searchModel.Regex.Match(document.Document.Text, document.Document.Text.Length);
+                            if (document.FindReplaceSegment != null)
+                                match = searchModel.Regex.Match(document.Document.Text, document.FindReplaceSegment.EndOffset);
+                            else
+                                match = searchModel.Regex.Match(document.Document.Text, document.Document.Text.Length);
                         }
                         else
                         {
-                            match = searchModel.Regex.Match(document.Document.Text, 0);
+                            if (document.FindReplaceSegment != null)
+                                match = searchModel.Regex.Match(document.Document.Text, document.FindReplaceSegment.Offset);
+                            else
+                                match = searchModel.Regex.Match(document.Document.Text, 0);
                         }
                     }
                 }
             }
 
-            if (match.Success)
-                document.SetSelection(match.Index, match.Length, true);
+            bool matchFound = match.Success;
+            bool matchWithinBounds;
+            if (document.FindReplaceSegment != null)
+            {
+                matchWithinBounds = match.Index >= document.FindReplaceSegment.Offset && match.Index + match.Length < document.FindReplaceSegment.EndOffset;
+            }
             else
-            { 
+            {
+                matchWithinBounds = true;
+            }
+
+            if (matchFound && matchWithinBounds)
+            {
+                document.SetSelection(match.Index, match.Length, true);
+            }
+            else
+            {
                 messagingService.Inform(Resources.Strings.Message_NoMorePatternsFound);
             }
         }

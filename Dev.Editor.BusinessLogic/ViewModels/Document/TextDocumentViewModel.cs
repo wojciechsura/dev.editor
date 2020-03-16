@@ -34,6 +34,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private double editor2Height;
         private bool editor2Visible;
         private ActiveEditor activeEditor;
+        private AnchorSegment findReplaceSegment;
 
         // Private methods ----------------------------------------------------
 
@@ -80,6 +81,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             editor2Height = 1.0;
             editor2Visible = false;
             activeEditor = ActiveEditor.Primary;
+            findReplaceSegment = null;
         }
 
         public void RunAsSingleHistoryEntry(Action action)
@@ -186,7 +188,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         public ICommand PasteCommand => handler.PasteCommand;
 
-
         public double Editor1Height
         {
             get => editor1Height;
@@ -209,6 +210,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         {
             get => activeEditor;
             set => Set(ref activeEditor, () => ActiveEditor, value);
+        }
+
+        public AnchorSegment FindReplaceSegment
+        {
+            get => findReplaceSegment;
+            set => Set(ref findReplaceSegment, () => FindReplaceSegment, value);
         }
     }
 }
