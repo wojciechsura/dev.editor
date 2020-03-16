@@ -49,26 +49,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void InternalFindNext(SearchReplaceModel searchModel)
         {
-            // Mark search as performed at least once
-            searchModel.SearchPerformed = true;
-
             var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
-            // Search area
-            int searchStartOffset, searchEndOffset;
+            bool MatchWithinBounds(Match m)
+            {
+                if (document.FindReplaceSegment != null)
+                    return m.Index >= document.FindReplaceSegment.Offset && m.Index + m.Length <= document.FindReplaceSegment.EndOffset;
+                else
+                    return true;
+            }
 
-            if (document.FindReplaceSegment != null)
-            {
-                // Search only within segment
-                searchStartOffset = document.FindReplaceSegment.Offset;
-                searchEndOffset = document.FindReplaceSegment.EndOffset;
-            }
-            else
-            {
-                // Search whole document
-                searchStartOffset = 0;
-                searchEndOffset = document.Document.TextLength - 1;
-            }
+            // Mark search as performed at least once
+            searchModel.SearchPerformed = true;
 
             // Search origin
             (int selStart, int selLength) = document.GetSelection();
@@ -85,7 +77,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             Match match = searchModel.Regex.Match(document.Document.Text, start);
 
-            if (!match.Success)  // start again from beginning or end
+            if (!match.Success || !MatchWithinBounds(match))  // start again from beginning or end
             {
                 if (!searchModel.SearchedFromBoundary)
                 {
@@ -118,18 +110,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 }
             }
 
-            bool matchFound = match.Success;
-            bool matchWithinBounds;
-            if (document.FindReplaceSegment != null)
-            {
-                matchWithinBounds = match.Index >= document.FindReplaceSegment.Offset && match.Index + match.Length < document.FindReplaceSegment.EndOffset;
-            }
-            else
-            {
-                matchWithinBounds = true;
-            }
-
-            if (matchFound && matchWithinBounds)
+            if (match.Success && MatchWithinBounds(match))
             {
                 document.SetSelection(match.Index, match.Length, true);
             }
@@ -171,6 +152,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             FindNext(replaceModel);
         }
 
+        (int selStart, int selLen) GetSelectionBlock(TextDocumentViewModel document)
+        {
+            if (document.FindReplaceSegment != null)
+                return (document.FindReplaceSegment.Offset, document.FindReplaceSegment.Length);
+            else
+                return document.GetSelection();
+        }
+
         public void ReplaceAll(SearchReplaceModel replaceModel)
         {
             var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
@@ -207,8 +196,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
             else
             {
-                (int selStart, int selLen) = document.GetSelection();
-                string selection = document.GetSelectedText();
+                (int selStart, int selLen) = GetSelectionBlock(document);
+               
+                string selection = document.Document.GetText(selStart, selLen);
 
                 int offset = 0;
 
@@ -241,12 +231,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         {
             var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
-            (int selStart, int selLength) = document.GetSelection();
+            (int selStart, int selLength) = GetSelectionBlock(document);
 
             string textToSearch;
+            
             if (searchModel.InSelection && selLength > 0)
             {
-                textToSearch = document.GetSelectedText();
+                textToSearch = document.Document.GetText(selStart, selLength);
             }
             else
             {
