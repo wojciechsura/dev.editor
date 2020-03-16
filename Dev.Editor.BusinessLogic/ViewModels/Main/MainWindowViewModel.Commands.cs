@@ -2,6 +2,7 @@
 using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.BusinessLogic.ViewModels.Main.Documents;
 using Dev.Editor.Common.Conditions;
+using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel> canRedoCondition;
         private readonly MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel> canSaveCondition;
         private readonly MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel> selectionAvailableCondition;
-        private readonly MutableSourcePropertyWatchCondition<DocumentsManager, TextDocumentViewModel> searchAreaAvailableCondition;
+        private readonly TextDocumentPropertyNotNullCondition<AnchorSegment> searchAreaAvailableCondition;
         private readonly BaseCondition selectionAvailableForSearchCondition;
         private readonly MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel> regularSelectionAvailableCondition;
         private readonly MutableSourcePropertyNotNullCondition<DocumentsManager, BaseDocumentViewModel> searchPerformedCondition;

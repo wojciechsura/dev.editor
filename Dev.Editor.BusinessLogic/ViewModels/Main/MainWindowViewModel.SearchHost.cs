@@ -24,16 +24,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         {
             var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
-            var selection = document.GetSelection();
+            if (document.FindReplaceSegment == null)
+            {
+                var selection = document.GetSelection();
 
-            document.FindReplaceSegment = new AnchorSegment(document.Document, selection.selStart, selection.selLength);
-            if (searchBackwards)
-            {
-                document.SetSelection(selection.selStart + selection.selLength, 0);
-            }
-            else
-            {
-                document.SetSelection(selection.selStart, 0);
+                document.FindReplaceSegment = new AnchorSegment(document.Document, selection.selStart, selection.selLength);
+                if (searchBackwards)
+                {
+                    document.SetSelection(selection.selStart + selection.selLength, 0);
+                }
+                else
+                {
+                    document.SetSelection(selection.selStart, 0);
+                }
             }
         }
 

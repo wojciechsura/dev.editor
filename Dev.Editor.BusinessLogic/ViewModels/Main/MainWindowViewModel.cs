@@ -49,6 +49,7 @@ using Dev.Editor.BusinessLogic.Services.SearchEncoder;
 using Dev.Editor.BusinessLogic.Services.Platform;
 using Dev.Editor.BusinessLogic.Types.Main;
 using Dev.Editor.BusinessLogic.ViewModels.Main.Documents;
+using ICSharpCode.AvalonEdit.Document;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -766,7 +767,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             canSaveCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanSave, false);
             selectionAvailableCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.SelectionAvailable, false);
             regularSelectionAvailableCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.RegularSelectionAvailable, false);
-            searchAreaAvailableCondition = #error TODO
+            searchAreaAvailableCondition = new TextDocumentPropertyNotNullCondition<AnchorSegment>(documentsManager, doc => doc.FindReplaceSegment, false);
             selectionAvailableForSearchCondition = regularSelectionAvailableCondition | searchAreaAvailableCondition;
             searchPerformedCondition = new MutableSourcePropertyNotNullCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.LastSearch);
             xmlToolsetAvailableCondition = new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Xml, false);
