@@ -146,56 +146,6 @@ namespace Dev.Editor.Controls
             }
         }
 
-        //private class DiffColorizingTransformer : DocumentColorizingTransformer
-        //{
-        //    private readonly bool[] changes;
-        //    private readonly DiffDisplayMode mode;
-
-        //    private readonly Brush deleteBrush;
-        //    private readonly Brush insertBrush;
-
-        //    private void SetDeleteBackground(VisualLineElement element)
-        //    {
-        //        element.BackgroundBrush = deleteBrush;
-        //    }
-
-        //    private void SetInsertBackground(VisualLineElement element)
-        //    {
-        //        element.BackgroundBrush = insertBrush;
-        //    }
-
-        //    public DiffColorizingTransformer(bool[] changes, DiffDisplayMode mode, Brush deleteBrush, Brush insertBrush)
-        //    {
-        //        this.changes = changes;
-        //        this.mode = mode;
-
-        //        this.deleteBrush = deleteBrush;
-        //        this.insertBrush = insertBrush;
-        //    }
-
-        //    protected override void ColorizeLine(DocumentLine line)
-        //    {
-        //        var lineNumber = line.LineNumber;
-        //        if (lineNumber < changes.Length && changes[lineNumber])
-        //        {
-        //            switch (mode)
-        //            {
-        //                case DiffDisplayMode.Delete:
-        //                    this.ChangeLinePart(line.Offset, line.EndOffset, SetDeleteBackground);
-        //                    break;
-        //                case DiffDisplayMode.Insert:
-        //                    this.ChangeLinePart(line.Offset, line.EndOffset, SetInsertBackground);
-        //                    break;
-        //                default:
-        //                    throw new InvalidEnumArgumentException("Unsupported diff display mode!");
-        //            }
-        //        }
-        //    }
-
-        //}
-
-        // Private fields -----------------------------------------------------
-
         private readonly Brush findReplaceSegmentBackground = new SolidColorBrush(Color.FromArgb(255, 230, 230, 230));
         private readonly Brush deleteBrush = new SolidColorBrush(Color.FromArgb(255, 255, 210, 210));
         private readonly Brush insertBrush = new SolidColorBrush(Color.FromArgb(255, 210, 255, 230));
