@@ -1,0 +1,63 @@
+﻿<Window x:Class="Dev.Editor.DiffConfigDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dvm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Document;assembly=Dev.Editor.BusinessLogic"
+        xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
+        xmlns:local="clr-namespace:Dev.Editor"
+        mc:Ignorable="d"
+        Title="{x:Static p:Strings.ConfigureDiffDialog_Title}" SizeToContent="WidthAndHeight">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <DataTemplate x:Key="DocumentComboItemTemplate" DataType="{x:Type dvm:TextDocumentViewModel}">
+                <Border BorderThickness="4,0,0,0" BorderBrush="{Binding TabColor, Converter={StaticResource TabColorToBrushConverter}}"
+                        Padding="2,0,0,0">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Width="16" Height="16" Source="{Binding Icon}" />
+                        <Label Content="{Binding Title}" Margin="2,0,0,0" />
+                    </StackPanel>
+                </Border>
+            </DataTemplate>
+        </ResourceDictionary>
+    </Window.Resources>
+    
+    <StackPanel Orientation="Vertical">
+        <GroupBox Header="{x:Static p:Strings.ConfigureDiffDialog_Source}" Margin="4">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.ConfigureDiffDialog_FirstDocument}" />
+                <ComboBox Width="200" Margin="4" Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Documents}" SelectedItem="{Binding FirstDocument}"
+                          ItemTemplate="{StaticResource DocumentComboItemTemplate}" />
+
+                <Label Grid.Row="0" Grid.Column="1" Content="{x:Static p:Strings.ConfigureDiffDialog_SecondDocument}" />
+                <ComboBox Width="200" Margin="4" Grid.Row="1" Grid.Column="1" ItemsSource="{Binding Documents}" SelectedItem="{Binding SecondDocument}"
+                          ItemTemplate="{StaticResource DocumentComboItemTemplate}"/>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Header="{x:Static p:Strings.ConfigureDiffDialog_Options}" Margin="4,0,4,4">
+            <StackPanel Orientation="Vertical">
+                <CheckBox Margin="4" IsChecked="{Binding IgnoreCase}" Content="{x:Static p:Strings.ConfigureDiffDialog_IgnoreCase}" />
+                <CheckBox Margin="4" IsChecked="{Binding IgnoreWhitespace}" Content="{x:Static p:Strings.ConfigureDiffDialog_IgnoreWhitespace}" />
+            </StackPanel>
+        </GroupBox>
+
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Command="{Binding OkCommand}" Style="{StaticResource DialogButton}" Content="{x:Static p:Strings.Ok}" />
+            <Button Command="{Binding CancelCommand}" Style="{StaticResource DialogButton}" Content="{x:Static p:Strings.Cancel}" />
+        </StackPanel>       
+    </StackPanel>
+</Window>

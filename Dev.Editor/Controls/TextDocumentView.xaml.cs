@@ -1,4 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Documents;
+using Dev.Editor.BusinessLogic.Types.Document.Text;
 using Dev.Editor.BusinessLogic.Types.Folding;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.Converters;
@@ -82,12 +83,126 @@ namespace Dev.Editor.Controls
             }
         }
 
+        private class DiffBackgroundRenderer : IBackgroundRenderer
+        {
+            private readonly bool[] changes;
+            private readonly DiffDisplayMode mode;
+
+            private readonly Brush deleteBrush;
+            private readonly Brush insertBrush;
+
+            public DiffBackgroundRenderer(bool[] changes, DiffDisplayMode mode, Brush deleteBrush, Brush insertBrush)
+            {
+                this.changes = changes;
+                this.mode = mode;
+
+                this.deleteBrush = deleteBrush;
+                this.insertBrush = insertBrush;
+            }
+
+            public void Draw(TextView textView, DrawingContext drawingContext)
+            {
+                Brush brush;
+
+                switch (mode)
+                {
+                    case DiffDisplayMode.Delete:
+                        brush = deleteBrush;
+                        break;
+                    case DiffDisplayMode.Insert:
+                        brush = insertBrush;
+                        break;
+                    default:
+                        throw new InvalidOperationException("Unsupported diff mode!");
+                }
+
+                textView.EnsureVisualLines();
+
+                foreach (var line in textView.VisualLines)
+                {
+                    var docLine = line.FirstDocumentLine;
+                    do
+                    {
+                        var lineNumber = docLine.LineNumber - 1;
+
+                        if (lineNumber < changes.Length && changes[lineNumber])
+                        {
+                            foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, docLine, true))
+                            {
+                                var fullRect = new Rect(rect.X, rect.Y, textView.ActualWidth - rect.X, rect.Height);
+                                drawingContext.DrawRectangle(brush, null, fullRect);
+                            }
+                        }
+
+                        docLine = docLine.NextLine;
+                    }
+                    while (docLine != null && docLine.PreviousLine != line.LastDocumentLine);
+                }
+            }
+
+            public KnownLayer Layer
+            {
+                get { return KnownLayer.Background; }
+            }
+        }
+
+        //private class DiffColorizingTransformer : DocumentColorizingTransformer
+        //{
+        //    private readonly bool[] changes;
+        //    private readonly DiffDisplayMode mode;
+
+        //    private readonly Brush deleteBrush;
+        //    private readonly Brush insertBrush;
+
+        //    private void SetDeleteBackground(VisualLineElement element)
+        //    {
+        //        element.BackgroundBrush = deleteBrush;
+        //    }
+
+        //    private void SetInsertBackground(VisualLineElement element)
+        //    {
+        //        element.BackgroundBrush = insertBrush;
+        //    }
+
+        //    public DiffColorizingTransformer(bool[] changes, DiffDisplayMode mode, Brush deleteBrush, Brush insertBrush)
+        //    {
+        //        this.changes = changes;
+        //        this.mode = mode;
+
+        //        this.deleteBrush = deleteBrush;
+        //        this.insertBrush = insertBrush;
+        //    }
+
+        //    protected override void ColorizeLine(DocumentLine line)
+        //    {
+        //        var lineNumber = line.LineNumber;
+        //        if (lineNumber < changes.Length && changes[lineNumber])
+        //        {
+        //            switch (mode)
+        //            {
+        //                case DiffDisplayMode.Delete:
+        //                    this.ChangeLinePart(line.Offset, line.EndOffset, SetDeleteBackground);
+        //                    break;
+        //                case DiffDisplayMode.Insert:
+        //                    this.ChangeLinePart(line.Offset, line.EndOffset, SetInsertBackground);
+        //                    break;
+        //                default:
+        //                    throw new InvalidEnumArgumentException("Unsupported diff display mode!");
+        //            }
+        //        }
+        //    }
+
+        //}
+
         // Private fields -----------------------------------------------------
 
         private readonly Brush findReplaceSegmentBackground = new SolidColorBrush(Color.FromArgb(255, 230, 230, 230));
+        private readonly Brush deleteBrush = new SolidColorBrush(Color.FromArgb(255, 255, 210, 210));
+        private readonly Brush insertBrush = new SolidColorBrush(Color.FromArgb(255, 210, 255, 230));
 
         private TextEditor currentEditor;
         private SegmentColorizingTransformer findReplaceSegmentTransformer;
+        private DiffBackgroundRenderer diffRenderer;
         private FoldingManager foldingManager;
         private FoldingManager foldingManager2;
         private BaseFoldingStrategy foldingStrategy;
@@ -136,6 +251,14 @@ namespace Dev.Editor.Controls
             findReplaceSegmentTransformer = null;
         }
 
+        private void ClearDiff()
+        {
+            if (diffRenderer == null)
+                throw new InvalidOperationException("Cannot clear diff - it is already empty!");
+
+            diffRenderer = null;
+        }
+
         private void ClearFolding()
         {
             foldingStrategy = null;
@@ -166,6 +289,16 @@ namespace Dev.Editor.Controls
             findReplaceSegmentTransformer = new SegmentColorizingTransformer(viewModel.FindReplaceSegment, findReplaceSegmentBackground);
         }
 
+        private void CreateDiff(TextDocumentViewModel viewModel)
+        {
+            if (diffRenderer != null)
+                throw new InvalidOperationException("Diff is already initialized!");
+            if (viewModel.DiffResult == null)
+                throw new InvalidOperationException("Viewmodel does not provide DiffResult!");
+
+            diffRenderer = new DiffBackgroundRenderer(viewModel.DiffResult.Changes, viewModel.DiffResult.Mode, deleteBrush, insertBrush);
+        }
+
         private void DeinitializeEditor(TextDocumentViewModel viewModel)
         {
             rdTopEditor.MinHeight = 0.0;
@@ -174,6 +307,8 @@ namespace Dev.Editor.Controls
 
             if (findReplaceSegmentTransformer != null)
                 UninstallFindReplaceSegment(teEditor);
+            if (diffRenderer != null)
+                UninstallDiff(teEditor);
 
             ClearFolding();
 
@@ -192,6 +327,8 @@ namespace Dev.Editor.Controls
 
             if (findReplaceSegmentTransformer != null)
                 UninstallFindReplaceSegment(teEditor2);
+            if (diffRenderer != null)
+                UninstallDiff(teEditor2);
 
             ClearFolding2();
 
@@ -216,6 +353,8 @@ namespace Dev.Editor.Controls
 
             if (findReplaceSegmentTransformer != null)
                 ClearFindReplaceSegment();
+            if (diffRenderer != null)
+                ClearDiff();
 
             viewModel.PropertyChanged -= HandleViewModelPropertyChanged;
             viewModel.EditorAccess = null;
@@ -344,6 +483,27 @@ namespace Dev.Editor.Controls
                         InstallFindReplaceSegment(teEditor2);
                 }
             }
+            else if (e.PropertyName == nameof(viewModel.DiffResult))
+            {
+                // Uninstall previous diff
+                if (diffRenderer != null)
+                {
+                    UninstallDiff(teEditor);
+                    if (viewModel.Editor2Visible)
+                        UninstallDiff(teEditor2);
+
+                    ClearDiff();
+                }
+
+                // Install new diff
+                if (viewModel.DiffResult != null)
+                {
+                    CreateDiff(viewModel);
+                    InstallDiff(teEditor);
+                    if (viewModel.Editor2Visible)
+                        InstallDiff(teEditor2);
+                }
+            }
         }
 
         private void InitializeEditor(TextDocumentViewModel newViewModel)
@@ -357,6 +517,8 @@ namespace Dev.Editor.Controls
 
             if (findReplaceSegmentTransformer != null)
                 InstallFindReplaceSegment(teEditor);
+            if (diffRenderer != null)
+                InstallDiff(teEditor);
 
             BindingOperations.SetBinding(rdTopEditor, RowDefinition.HeightProperty, new Binding
             {
@@ -379,6 +541,8 @@ namespace Dev.Editor.Controls
 
             if (findReplaceSegmentTransformer != null)
                 InstallFindReplaceSegment(teEditor2);
+            if (diffRenderer != null)
+                InstallDiff(teEditor2);
 
             BindingOperations.SetBinding(rdBottomEditor, RowDefinition.HeightProperty, new Binding
             {
@@ -401,6 +565,8 @@ namespace Dev.Editor.Controls
 
             if (newViewModel.FindReplaceSegment != null)
                 CreateFindReplaceSegment(newViewModel);
+            if (newViewModel.DiffResult != null)
+                CreateDiff(newViewModel);
 
             // Hooking text editor
             InitializeEditor(newViewModel);
@@ -420,6 +586,11 @@ namespace Dev.Editor.Controls
         private void InstallFindReplaceSegment(TextEditor editor)
         {
             editor.TextArea.TextView.LineTransformers.Add(findReplaceSegmentTransformer);
+        }
+
+        private void InstallDiff(TextEditor editor)
+        {
+            editor.TextArea.TextView.BackgroundRenderers.Add(diffRenderer);
         }
 
         private void RestoreEditorState(TextEditor editor, FoldingManager manager, TextEditorState editorState)
@@ -552,6 +723,11 @@ namespace Dev.Editor.Controls
             editor.TextArea.TextView.LineTransformers.Remove(findReplaceSegmentTransformer);
         }
 
+        private void UninstallDiff(TextEditor editor)
+        {
+            editor.TextArea.TextView.BackgroundRenderers.Remove(diffRenderer);
+        }
+
         private void UpdateActiveEditor()
         {
             Dispatcher.BeginInvoke(new Action(() =>
@@ -611,11 +787,13 @@ namespace Dev.Editor.Controls
         {
             if (e.Key == Key.Escape)
             {
-                if (viewModel != null && viewModel.FindReplaceSegment != null)
+                if (viewModel != null)
                 {
                     // Clear find/replace highlight on escape press
+                    if (viewModel.FindReplaceSegment != null)
+                        viewModel.FindReplaceSegment = null;
 
-                    viewModel.FindReplaceSegment = null;
+                    viewModel.RequestClearAllDiffs();
                 }
             }
         }

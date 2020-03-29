@@ -50,6 +50,7 @@ using Dev.Editor.BusinessLogic.Services.Platform;
 using Dev.Editor.BusinessLogic.Types.Main;
 using Dev.Editor.BusinessLogic.ViewModels.Main.Documents;
 using ICSharpCode.AvalonEdit.Document;
+using Dev.Editor.BusinessLogic.Services.TextComparison;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -71,6 +72,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly IEventBus eventBus;
         private readonly ISearchEncoderService searchEncoder;
         private readonly IPlatformService platformService;
+        private readonly ITextComparisonService textComparisonService;
 
         private readonly DocumentsManager documentsManager;
 
@@ -632,6 +634,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             
         }
 
+        void IDocumentHandler.RequestClearAllDiffs()
+        {
+            foreach (var doc in documentsManager.AllDocuments.OfType<TextDocumentViewModel>())
+            {
+                doc.DiffResult = null;
+            }
+        }
+
         // IToolHandler implementation ----------------------------------------
 
         void IToolHandler.CloseTools()
@@ -710,7 +720,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             IFileIconProvider fileIconProvider,
             ISearchEncoderService searchEncoder,
             IEventBus eventBus,
-            IPlatformService platformService)
+            IPlatformService platformService,
+            ITextComparisonService textComparisonService)
         {
             this.access = access;
             this.dialogService = dialogService;
@@ -724,6 +735,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             this.fileIconProvider = fileIconProvider;
             this.searchEncoder = searchEncoder;
             this.eventBus = eventBus;
+            this.textComparisonService = textComparisonService;
 
             documentsManager = new DocumentsManager();
 
@@ -858,6 +870,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             InsertMarkdownLinkCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Insert_Link, null, obj => DoInsertMarkdownLinkCommand(), markdownToolsetAvailableCondition);
             InsertMarkdownPictureCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Insert_Picture, null, obj => DoInsertMarkdownPictureCommand(), markdownToolsetAvailableCondition);
             InsertMarkdownHorizontalRuleCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Insert_Hr, null, obj => DoInsertMarkdownHorizontalRuleCommand(), markdownToolsetAvailableCondition);
+
+            CompareCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Comparing_Compare, "Compare16.png", obj => DoCompare());
 
             commandRepositoryService.RegisterCommand(Resources.Strings.Command_ToggleWordWrap, "WordWrap16.png", obj => DoToggleWordWrap());
             commandRepositoryService.RegisterCommand(Resources.Strings.Command_ToggleLineNumbers, "LineNumbers16.png", obj => DoToggleLineNumbers());

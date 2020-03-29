@@ -67,6 +67,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand ReplaceCommand { get; }
         public ICommand FindNextCommand { get; }
 
+        // Comparing
+
+        public ICommand CompareCommand { get; }
+
         // Navigation
 
         public ICommand NavigateCommand { get; }

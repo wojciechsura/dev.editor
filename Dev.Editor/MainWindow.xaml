@@ -587,6 +587,14 @@
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/FindNext16.png"/>
                 </f:RibbonGroupBox>
 
+                <!-- Compare -->
+
+                <f:RibbonGroupBox x:Name="grCompare" Header="{x:Static p:Strings.Ribbon_Home_Group_Comparing}">
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Home_Comparing_Compare}" Command="{Binding CompareCommand}" SizeDefinition="Large"
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Compare32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Compare16.png" />
+                </f:RibbonGroupBox>
+                
                 <!-- Navigation -->
 
                 <f:RibbonGroupBox x:Name="grNavigation" Header="{x:Static p:Strings.Ribbon_Home_Group_Navigation}">

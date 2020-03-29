@@ -925,4 +925,31 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Tool.Explorer.Files.OpenInHexeditor" xml:space="preserve">
     <value>Otwórz w hexedytorze</value>
   </data>
+  <data name="Ribbon.Home.Group.Comparing" xml:space="preserve">
+    <value>Porównywanie</value>
+  </data>
+  <data name="Ribbon_Home_Comparing_Compare" xml:space="preserve">
+    <value>Porównaj dokumenty</value>
+  </data>
+  <data name="ConfigureDiffDialog.Title" xml:space="preserve">
+    <value>Porównaj dokumenty</value>
+  </data>
+  <data name="ConfigureDiffDialog.Source" xml:space="preserve">
+    <value>Źródło</value>
+  </data>
+  <data name="ConfigureDiffDialog.FirstDocument" xml:space="preserve">
+    <value>Pierwszy dokument</value>
+  </data>
+  <data name="ConfigureDiffDialog.SecondDocument" xml:space="preserve">
+    <value>Drugi dokument</value>
+  </data>
+  <data name="ConfigureDiffDialog.Options" xml:space="preserve">
+    <value>Opcje</value>
+  </data>
+  <data name="ConfigureDiffDialog.IgnoreCase" xml:space="preserve">
+    <value>Ignoruj wielkość liter</value>
+  </data>
+  <data name="ConfigureDiffDialog.IgnoreWhitespace" xml:space="preserve">
+    <value>Ignoruj białe znaki</value>
+  </data>
 </root>

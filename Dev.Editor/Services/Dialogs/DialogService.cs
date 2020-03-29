@@ -85,5 +85,14 @@ namespace Dev.Editor.Services.Dialogs
                 return (false, null);
         }
 
+        public (bool, DiffConfigDialogResult) ShowDiffConfigDialog(DiffConfigDialogModel model)
+        {
+            var dialog = new DiffConfigDialog(model);
+            if (dialog.ShowDialog() == true)
+                return (true, dialog.Result);
+            else
+                return (false, null);
+        }
+
     }
 }

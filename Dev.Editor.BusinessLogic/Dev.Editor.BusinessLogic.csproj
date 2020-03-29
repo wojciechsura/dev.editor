@@ -84,11 +84,14 @@
     <Compile Include="Models\Configuration\Tools\Explorer\ExplorerConfig.cs" />
     <Compile Include="Models\Configuration\Tools\ToolsConfig.cs" />
     <Compile Include="Models\Configuration\UI\UIConfig.cs" />
+    <Compile Include="Models\Dialogs\DiffConfigDialogModel.cs" />
+    <Compile Include="Models\Dialogs\DiffConfigDialogResult.cs" />
     <Compile Include="Models\Dialogs\NameDialogModel.cs" />
     <Compile Include="Models\Dialogs\NameDialogResult.cs" />
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
     <Compile Include="Models\Dialogs\SaveDialogResult.cs" />
     <Compile Include="Models\Documents\BinDocumentState.cs" />
+    <Compile Include="Models\Documents\Text\DiffInfo.cs" />
     <Compile Include="Models\Documents\HexDocumentState.cs" />
     <Compile Include="Models\Documents\TextDocumentState.cs" />
     <Compile Include="Models\Documents\TextEditorState.cs" />
@@ -100,6 +103,9 @@
     <Compile Include="Models\Highlighting\HighlightingInfo.cs" />
     <Compile Include="Models\Messages\MessageModel.cs" />
     <Compile Include="Models\Search\SearchReplaceDescription.cs" />
+    <Compile Include="Models\TextComparison\ChangesResult.cs" />
+    <Compile Include="Models\TextComparison\ContinuousLineDiffResult.cs" />
+    <Compile Include="Models\TextComparison\LineDiffInfo.cs" />
     <Compile Include="Models\UI\BottomPanelVisibilityModel.cs" />
     <Compile Include="Models\UI\SidePanelPlacementModel.cs" />
     <Compile Include="Models\Navigation\BaseNavigationModel.cs" />
@@ -130,14 +136,19 @@
     <Compile Include="Services\SearchEncoder\SearchEncoderService.cs" />
     <Compile Include="Services\StartupInfo\IStartupInfoService.cs" />
     <Compile Include="Services\StartupInfo\StartupInfoService.cs" />
+    <Compile Include="Services\TextComparison\ITextComparisonService.cs" />
+    <Compile Include="Services\TextComparison\TextComparisonService.cs" />
     <Compile Include="Types\Behavior\CloseBehavior.cs" />
     <Compile Include="Types\Document\TabColor.cs" />
     <Compile Include="Types\Document\Text\ActiveEditor.cs" />
+    <Compile Include="Types\Document\Text\DiffDisplayMode.cs" />
     <Compile Include="Types\Folding\FoldingKind.cs" />
     <Compile Include="Types\Main\DocumentTabKind.cs" />
     <Compile Include="Types\Messages\MessageSeverity.cs" />
     <Compile Include="Types\Search\SearchMode.cs" />
     <Compile Include="Types\Search\SearchReplaceOperation.cs" />
+    <Compile Include="Types\TextComparison\ChangeType.cs" />
+    <Compile Include="Types\TextComparison\FreeIndexArray.cs" />
     <Compile Include="Types\Tools\Explorer\FileItemType.cs" />
     <Compile Include="Types\UI\AdditionalToolset.cs" />
     <Compile Include="Types\UI\BottomPanelVisibility.cs" />
@@ -152,6 +163,8 @@
     <Compile Include="ViewModels\Configuration\ConfigurationWindowViewModel.cs" />
     <Compile Include="ViewModels\Configuration\IConfigurationWindowAccess.cs" />
     <Compile Include="ViewModels\Configuration\SystemConfigurationViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\DiffConfigDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\IDiffConfigDialogAccess.cs" />
     <Compile Include="ViewModels\Dialogs\NameDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\INameDialogAccess.cs" />
     <Compile Include="ViewModels\Document\BaseDocumentViewModel.cs" />
@@ -249,6 +262,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Highlighting\BinDef.xshd" />
     <EmbeddedResource Include="Resources\Highlighting\INI.xshd" />
+    <Compile Include="ViewModels\Main\MainWindowViewModel.Comparing.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Highlighting\cpp.png" />

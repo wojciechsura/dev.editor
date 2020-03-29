@@ -90,6 +90,10 @@
     <Compile Include="Converters\BoolToIntegrationStateConverter.cs" />
     <Compile Include="Converters\DoubleToStarGridLengthConverter.cs" />
     <Compile Include="Converters\EqualsParameterToBoolConverter.cs" />
+    <Compile Include="Converters\TabColorToBrushConverter.cs" />
+    <Compile Include="DiffConfigDialog.xaml.cs">
+      <DependentUpon>DiffConfigDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\ArgumentInfo.cs" />
     <Compile Include="NameDialog.xaml.cs">
       <DependentUpon>NameDialog.xaml</DependentUpon>
@@ -147,6 +151,10 @@
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Wpf\MouseEvents.cs" />
     <Compile Include="Wpf\ParentData.cs" />
+    <Page Include="DiffConfigDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="NameDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -423,6 +431,10 @@
     <Resource Include="Resources\Images\ConvertBase6432.png" />
     <Resource Include="Resources\Images\ConvertHtml16.png" />
     <Resource Include="Resources\Images\ConvertHtml32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Compare16.png" />
+    <Resource Include="Resources\Images\Compare32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

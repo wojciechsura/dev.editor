@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows.Media;
 using Dev.Editor.BusinessLogic.Models.Documents;
+using Dev.Editor.BusinessLogic.Models.Documents.Text;
 using Dev.Editor.BusinessLogic.Models.Highlighting;
 using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.Types.Document.Text;
@@ -35,6 +36,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private bool editor2Visible;
         private ActiveEditor activeEditor;
         private AnchorSegment findReplaceSegment;
+        private DiffInfo diffResult;
 
         // Private methods ----------------------------------------------------
 
@@ -166,6 +168,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             editorAccess.FocusDocument();
         }
 
+        public void RequestClearAllDiffs()
+        {
+            handler.RequestClearAllDiffs();
+        }
+
+
         // Public properties --------------------------------------------------
 
         public TextDocument Document => document;
@@ -216,6 +224,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         {
             get => findReplaceSegment;
             set => Set(ref findReplaceSegment, () => FindReplaceSegment, value);
+        }
+
+        public DiffInfo DiffResult
+        {
+            get => diffResult;
+            set => Set(ref diffResult, () => DiffResult, value);
         }
     }
 }
