@@ -105,6 +105,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // Private methods ----------------------------------------------------
 
+        private void ClearAllDiffs()
+        {
+            foreach (var doc in documentsManager.AllDocuments.OfType<TextDocumentViewModel>())
+            {
+                doc.DiffResult = null;
+            }
+        }
+
         private void HandleSidePanelSizeChanged()
         {
             configurationService.Configuration.UI.SidePanelSize.Value = sidePanelSize;
@@ -636,10 +644,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         void IDocumentHandler.RequestClearAllDiffs()
         {
-            foreach (var doc in documentsManager.AllDocuments.OfType<TextDocumentViewModel>())
-            {
-                doc.DiffResult = null;
-            }
+            ClearAllDiffs();
         }
 
         // IToolHandler implementation ----------------------------------------
