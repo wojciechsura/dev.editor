@@ -112,7 +112,7 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
                 if (ignoreCase)
                     line = line.ToLower();
                 if (ignoreWhitespace)
-                    line = Regex.Replace(line, "\\s*", " ");
+                    line = Regex.Replace(line, "\\s*", " ").Trim();
 
                 if (hashedLines.ContainsKey(line))
                 {

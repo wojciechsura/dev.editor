@@ -24,6 +24,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             var preferredFirst = documentsManager.SelectedPrimaryDocument as TextDocumentViewModel;
             var preferredSecond = documentsManager.SelectedSecondaryDocument as TextDocumentViewModel;
 
+            if (preferredFirst == null && textDocuments.Count == 2)
+            {
+                if (textDocuments[0] == preferredSecond)
+                    preferredFirst = textDocuments[1];
+                else
+                    preferredFirst = textDocuments[0];
+            }
+
+            if (preferredSecond == null && textDocuments.Count == 2)
+            {
+                if (textDocuments[0] == preferredFirst)
+                    preferredSecond = textDocuments[1];
+                else
+                    preferredSecond = textDocuments[0];
+            }
+
             var model = new DiffConfigDialogModel(textDocuments, preferredFirst, preferredSecond);
             (bool result, DiffConfigDialogResult config) = dialogService.ShowDiffConfigDialog(model);
 
@@ -33,24 +49,31 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 var diffResult = textComparisonService.FindChanges(config.FirstDocument.Document, config.SecondDocument.Document, config.IgnoreCase, config.IgnoreWhitespace);
 
-                // Organizing view
+                if (diffResult.ChangesA.All(c => c == false) && diffResult.ChangesB.All(c => c == false))
+                {
+                    messagingService.Inform(Resources.Strings.Message_DocumentsAreSame);
+                }
+                else
+                {
+                    // Organizing view
 
-                // Turn on split view
-                documentsManager.ShowSecondaryDocumentTab = true;
+                    // Turn on split view
+                    documentsManager.ShowSecondaryDocumentTab = true;
 
-                // Show first document on primary pane
-                if (!documentsManager.PrimaryDocuments.Contains(config.FirstDocument))
-                    documentsManager.MoveDocumentTo(config.FirstDocument, DocumentTabKind.Primary);
-                documentsManager.SelectedPrimaryDocument = config.FirstDocument;
+                    // Show first document on primary pane
+                    if (!documentsManager.PrimaryDocuments.Contains(config.FirstDocument))
+                        documentsManager.MoveDocumentTo(config.FirstDocument, DocumentTabKind.Primary);
+                    documentsManager.SelectedPrimaryDocument = config.FirstDocument;
 
-                // Show second document on secondary pane
-                if (!documentsManager.SecondaryDocuments.Contains(config.SecondDocument))
-                    documentsManager.MoveDocumentTo(config.SecondDocument, DocumentTabKind.Secondary);
-                documentsManager.SelectedSecondaryDocument = config.SecondDocument;
+                    // Show second document on secondary pane
+                    if (!documentsManager.SecondaryDocuments.Contains(config.SecondDocument))
+                        documentsManager.MoveDocumentTo(config.SecondDocument, DocumentTabKind.Secondary);
+                    documentsManager.SelectedSecondaryDocument = config.SecondDocument;
 
-                // Show diffs in documents
-                config.FirstDocument.DiffResult = new DiffInfo(diffResult.ChangesA, DiffDisplayMode.Delete);
-                config.SecondDocument.DiffResult = new DiffInfo(diffResult.ChangesB, DiffDisplayMode.Insert);
+                    // Show diffs in documents
+                    config.FirstDocument.DiffResult = new DiffInfo(diffResult.ChangesA, DiffDisplayMode.Delete);
+                    config.SecondDocument.DiffResult = new DiffInfo(diffResult.ChangesB, DiffDisplayMode.Insert);
+                }
             }
         }
     }

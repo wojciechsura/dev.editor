@@ -952,4 +952,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="ConfigureDiffDialog.IgnoreWhitespace" xml:space="preserve">
     <value>Ignoruj białe znaki</value>
   </data>
+  <data name="Message.DocumentsAreSame" xml:space="preserve">
+    <value>Dokumenty nie mają żadnych różnic.</value>
+  </data>
 </root>
