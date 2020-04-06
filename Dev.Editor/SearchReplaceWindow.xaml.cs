@@ -38,13 +38,14 @@ namespace Dev.Editor
             {
                 Owner.Focus();
             }
+
+            viewModel.NotifyClosed();
         }
 
         private void HandleStoredSearchesDoubleClick(object sender, MouseButtonEventArgs e)
         {
             viewModel.StoredSearchSelected();
         }
-
 
         void ISearchReplaceWindowAccess.Close()
         {

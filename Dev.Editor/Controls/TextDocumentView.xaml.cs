@@ -14,6 +14,7 @@ using System.ComponentModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -57,30 +58,51 @@ namespace Dev.Editor.Controls
 
         private class SegmentColorizingTransformer : DocumentColorizingTransformer
         {
-            private readonly Brush brush;
-            private readonly AnchorSegment segment;
+            private readonly Brush selectionBrush = new SolidColorBrush(Color.FromArgb(255, 230, 230, 230));
+            private readonly Brush highlightedIdentifierBrush = new SolidColorBrush(Color.FromArgb(255, 150, 255, 210));
 
             private void SetBackgroundColor(VisualLineElement element)
             {
-                element.BackgroundBrush = brush;
+                element.BackgroundBrush = selectionBrush;
+            }
+
+            private void SetHighlightedIdentifier(VisualLineElement element)
+            {
+                element.BackgroundBrush = highlightedIdentifierBrush;
             }
 
             protected override void ColorizeLine(DocumentLine line)
             {
-                if (segment.Offset <= line.EndOffset && segment.EndOffset >= line.Offset)
+                if (Segment != null && Segment.Offset <= line.EndOffset && Segment.EndOffset >= line.Offset)
                 {
-                    int startOffset = Math.Max(line.Offset, segment.Offset);
-                    int endOffset = Math.Min(line.EndOffset, segment.EndOffset);
+                    int startOffset = Math.Max(line.Offset, Segment.Offset);
+                    int endOffset = Math.Min(line.EndOffset, Segment.EndOffset);
 
                     ChangeLinePart(startOffset, endOffset, SetBackgroundColor);
                 }
+
+                if (HighlightedIdentifier != null)
+                {
+                    string text = CurrentContext.Document.GetText(line);
+                    int start = 0;
+                    int index;
+                    while ((index = text.IndexOf(HighlightedIdentifier, start)) >= 0)
+                    {
+                        if ((index == 0 || !IsIdentifierChar(text[index - 1])) &&
+                            (index + HighlightedIdentifier.Length == text.Length || !IsIdentifierChar(text[index + HighlightedIdentifier.Length])))
+                        {
+                            ChangeLinePart(line.Offset + index,
+                                line.Offset + index + HighlightedIdentifier.Length,
+                                SetHighlightedIdentifier);
+                        }
+
+                        start = index + 1;
+                    }
+                }
             }
 
-            public SegmentColorizingTransformer(AnchorSegment segment, Brush brush)
-            {
-                this.segment = segment ?? throw new ArgumentNullException();
-                this.brush = brush ?? throw new ArgumentNullException();
-            }
+            public AnchorSegment Segment { get; set; }
+            public string HighlightedIdentifier { get; set; }
         }
 
         private class DiffBackgroundRenderer : IBackgroundRenderer
@@ -146,12 +168,17 @@ namespace Dev.Editor.Controls
             }
         }
 
-        private readonly Brush findReplaceSegmentBackground = new SolidColorBrush(Color.FromArgb(255, 230, 230, 230));
+        // Private fields -----------------------------------------------------
+
+        private readonly Regex identifierRegex = new Regex("^[a-zA-Z_][a-zA-Z0-9_]+$");
+
         private readonly Brush deleteBrush = new SolidColorBrush(Color.FromArgb(255, 255, 210, 210));
         private readonly Brush insertBrush = new SolidColorBrush(Color.FromArgb(255, 210, 255, 230));
 
+        private readonly SegmentColorizingTransformer colorizingTransformer;
+        private readonly SegmentColorizingTransformer colorizingTransformer2;
+
         private TextEditor currentEditor;
-        private SegmentColorizingTransformer findReplaceSegmentTransformer;
         private DiffBackgroundRenderer diffRenderer;
         private FoldingManager foldingManager;
         private FoldingManager foldingManager2;
@@ -193,14 +220,6 @@ namespace Dev.Editor.Controls
             return editorState;
         }
 
-        private void ClearFindReplaceSegment()
-        {
-            if (findReplaceSegmentTransformer == null)
-                throw new InvalidOperationException("Cannot clear FindReplaceSegment - it is already empty!");
-
-            findReplaceSegmentTransformer = null;
-        }
-
         private void ClearDiff()
         {
             if (diffRenderer == null)
@@ -229,16 +248,6 @@ namespace Dev.Editor.Controls
             }
         }
 
-        private void CreateFindReplaceSegment(TextDocumentViewModel viewModel)
-        {
-            if (findReplaceSegmentTransformer != null)
-                throw new InvalidOperationException("FindReplaceSegment is already initialized!");
-            if (viewModel.FindReplaceSegment == null)
-                throw new InvalidOperationException("Viewmodel does not provide FindReplaceSegment!");
-
-            findReplaceSegmentTransformer = new SegmentColorizingTransformer(viewModel.FindReplaceSegment, findReplaceSegmentBackground);
-        }
-
         private void CreateDiff(TextDocumentViewModel viewModel)
         {
             if (diffRenderer != null)
@@ -255,8 +264,6 @@ namespace Dev.Editor.Controls
             BindingOperations.ClearBinding(rdTopEditor, RowDefinition.HeightProperty);
             rdTopEditor.Height = new GridLength(1.0, GridUnitType.Star);
 
-            if (findReplaceSegmentTransformer != null)
-                UninstallFindReplaceSegment(teEditor);
             if (diffRenderer != null)
                 UninstallDiff(teEditor);
 
@@ -275,8 +282,6 @@ namespace Dev.Editor.Controls
             BindingOperations.ClearBinding(rdBottomEditor, RowDefinition.HeightProperty);
             rdBottomEditor.Height = new GridLength(0.0, GridUnitType.Auto);
 
-            if (findReplaceSegmentTransformer != null)
-                UninstallFindReplaceSegment(teEditor2);
             if (diffRenderer != null)
                 UninstallDiff(teEditor2);
 
@@ -295,14 +300,15 @@ namespace Dev.Editor.Controls
             TextDocumentState state = BuildCurrentState();
             viewModel.SaveState(state);
 
+            colorizingTransformer.Segment = null;
+            colorizingTransformer2.Segment = null;
+
             // Deinitializing editors
             if (viewModel.Editor2Visible)
                 DeinitializeEditor2(viewModel);
 
             DeinitializeEditor(viewModel);
 
-            if (findReplaceSegmentTransformer != null)
-                ClearFindReplaceSegment();
             if (diffRenderer != null)
                 ClearDiff();
 
@@ -361,9 +367,34 @@ namespace Dev.Editor.Controls
                 viewModel.ActiveEditor = BusinessLogic.Types.Document.Text.ActiveEditor.Secondary;
         }
 
-        private void HandleSelectionChanged(object sender, EventArgs e) => UpdateSelectionInfo(teEditor);
+        private void HandlePreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                if (viewModel != null)
+                {
+                    // Clear find/replace highlight on escape press
+                    if (viewModel.FindReplaceSegment != null)
+                        viewModel.FindReplaceSegment = null;
 
-        private void HandleSelectionChanged2(object sender, EventArgs e) => UpdateSelectionInfo(teEditor2);
+                    viewModel.RequestClearAllDiffs();
+                }
+            }
+        }
+
+        private void HandleSelectionChanged(object sender, EventArgs e)
+        {
+            UpdateSelectionInfo(teEditor);
+
+            ProcessSelectedIdentifierHighlight(teEditor, colorizingTransformer);
+        }
+
+        private void HandleSelectionChanged2(object sender, EventArgs e)
+        {
+            UpdateSelectionInfo(teEditor2);
+
+            ProcessSelectedIdentifierHighlight(teEditor2, colorizingTransformer2);
+        }
 
         private void HandleTextChanged(object sender, EventArgs e)
         {
@@ -400,6 +431,8 @@ namespace Dev.Editor.Controls
                     // Copy state from editor 1
                     var state = BuildEditorState(teEditor, foldingManager);
                     RestoreEditorState(teEditor2, foldingManager2, state);
+
+                    ProcessSelectedIdentifierHighlight(teEditor2, colorizingTransformer2);
                 }
                 else
                 {
@@ -414,24 +447,11 @@ namespace Dev.Editor.Controls
                 UpdateActiveEditor();
             }
             else if (e.PropertyName == nameof(viewModel.FindReplaceSegment))
-            {
-                // Clear previous segment
-                if (findReplaceSegmentTransformer != null)
-                {
-                    UninstallFindReplaceSegment(teEditor);
-                    if (viewModel.Editor2Visible)
-                        UninstallFindReplaceSegment(teEditor2);
-                    ClearFindReplaceSegment();
-                }
+            {                
+                colorizingTransformer.Segment = viewModel.FindReplaceSegment;
+                colorizingTransformer2.Segment = viewModel.FindReplaceSegment;
 
-                // Install new segment
-                if (viewModel.FindReplaceSegment != null)
-                {
-                    CreateFindReplaceSegment(viewModel);
-                    InstallFindReplaceSegment(teEditor);
-                    if (viewModel.Editor2Visible)
-                        InstallFindReplaceSegment(teEditor2);
-                }
+                RedrawEditors(viewModel);
             }
             else if (e.PropertyName == nameof(viewModel.DiffResult))
             {
@@ -465,8 +485,6 @@ namespace Dev.Editor.Controls
             teEditor.TextChanged += HandleTextChanged;
             teEditor.TextArea.SelectionChanged += HandleSelectionChanged;
 
-            if (findReplaceSegmentTransformer != null)
-                InstallFindReplaceSegment(teEditor);
             if (diffRenderer != null)
                 InstallDiff(teEditor);
 
@@ -489,8 +507,6 @@ namespace Dev.Editor.Controls
             teEditor2.TextChanged += HandleTextChanged2;
             teEditor2.TextArea.SelectionChanged += HandleSelectionChanged2;
 
-            if (findReplaceSegmentTransformer != null)
-                InstallFindReplaceSegment(teEditor2);
             if (diffRenderer != null)
                 InstallDiff(teEditor2);
 
@@ -513,8 +529,6 @@ namespace Dev.Editor.Controls
 
             var state = newViewModel.LoadState();
 
-            if (newViewModel.FindReplaceSegment != null)
-                CreateFindReplaceSegment(newViewModel);
             if (newViewModel.DiffResult != null)
                 CreateDiff(newViewModel);
 
@@ -523,24 +537,85 @@ namespace Dev.Editor.Controls
             if (state != null)
                 RestoreEditorState(teEditor, foldingManager, state.EditorState);
 
+            ProcessSelectedIdentifierHighlight(teEditor, colorizingTransformer);
+
             if (newViewModel.Editor2Visible)
             {
                 InitializeEditor2(newViewModel);
                 if (state != null)
                     RestoreEditorState(teEditor2, foldingManager, state.EditorState2);
+
+                ProcessSelectedIdentifierHighlight(teEditor2, colorizingTransformer2);
             }
 
-            UpdateActiveEditor();
-        }
+            colorizingTransformer.Segment = newViewModel.FindReplaceSegment;
+            colorizingTransformer2.Segment = newViewModel.FindReplaceSegment;
 
-        private void InstallFindReplaceSegment(TextEditor editor)
-        {
-            editor.TextArea.TextView.LineTransformers.Add(findReplaceSegmentTransformer);
+            RedrawEditors(newViewModel);
+
+            UpdateActiveEditor();
         }
 
         private void InstallDiff(TextEditor editor)
         {
             editor.TextArea.TextView.BackgroundRenderers.Add(diffRenderer);
+        }
+
+        private static bool IsIdentifierChar(char c)
+        {
+            return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_';
+        }       
+
+        private void ProcessSelectedIdentifierHighlight(TextEditor editor, SegmentColorizingTransformer colorizingTransformer)
+        {
+            if (editor.SelectionLength == 0)
+            {
+                SetIdentifierHighlightedWord(editor, colorizingTransformer, null);
+
+                return;
+            }
+
+            if (editor.SelectionStart > 0 && 
+                IsIdentifierChar(editor.Document.GetCharAt(editor.SelectionStart - 1)))
+            {
+                SetIdentifierHighlightedWord(editor, colorizingTransformer, null);
+
+                return;
+            }
+
+            if (editor.SelectionStart + editor.SelectionLength - 1 < editor.Document.TextLength - 1 && 
+                IsIdentifierChar(editor.Document.GetCharAt(editor.SelectionStart + editor.SelectionLength)))
+            {
+                SetIdentifierHighlightedWord(editor, colorizingTransformer, null);
+
+                return;
+            }
+
+            var selectedText = editor.Document.GetText(editor.SelectionStart, editor.SelectionLength);
+            if (!identifierRegex.IsMatch(selectedText))
+            {
+                SetIdentifierHighlightedWord(editor, colorizingTransformer, null);
+
+                return;
+            }
+
+            SetIdentifierHighlightedWord(editor, colorizingTransformer, selectedText);
+        }
+
+        private static void SetIdentifierHighlightedWord(TextEditor editor, SegmentColorizingTransformer colorizingTransformer, string highlightedWord)
+        {
+            if (colorizingTransformer.HighlightedIdentifier != highlightedWord)
+            {
+                colorizingTransformer.HighlightedIdentifier = highlightedWord;
+                editor.TextArea.TextView.Redraw();
+            }
+        }
+
+        private void RedrawEditors(TextDocumentViewModel viewModel)
+        {
+            teEditor.TextArea.TextView.Redraw();
+            if (viewModel.Editor2Visible)
+                teEditor2.TextArea.TextView.Redraw();
         }
 
         private void RestoreEditorState(TextEditor editor, FoldingManager manager, TextEditorState editorState)
@@ -668,11 +743,6 @@ namespace Dev.Editor.Controls
             }
         }
 
-        private void UninstallFindReplaceSegment(TextEditor editor)
-        {
-            editor.TextArea.TextView.LineTransformers.Remove(findReplaceSegmentTransformer);
-        }
-
         private void UninstallDiff(TextEditor editor)
         {
             editor.TextArea.TextView.BackgroundRenderers.Remove(diffRenderer);
@@ -733,21 +803,6 @@ namespace Dev.Editor.Controls
             viewModel.NotifyRegularSelectionAvailable(editor.SelectionLength > 0 && editor.TextArea.Selection.Segments.Count() == 1);
         }
 
-        private void HandlePreviewKeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.Escape)
-            {
-                if (viewModel != null)
-                {
-                    // Clear find/replace highlight on escape press
-                    if (viewModel.FindReplaceSegment != null)
-                        viewModel.FindReplaceSegment = null;
-
-                    viewModel.RequestClearAllDiffs();
-                }
-            }
-        }
-
         // Protected methods --------------------------------------------------
 
         protected void OnPropertyChanged(string propertyName)
@@ -760,6 +815,12 @@ namespace Dev.Editor.Controls
         public TextDocumentView()
         {
             InitializeComponent();
+
+            colorizingTransformer = new SegmentColorizingTransformer();
+            teEditor.TextArea.TextView.LineTransformers.Add(colorizingTransformer);
+
+            colorizingTransformer2 = new SegmentColorizingTransformer();
+            teEditor2.TextArea.TextView.LineTransformers.Add(colorizingTransformer2);
 
             RunOnAllEditors(editor =>
             {

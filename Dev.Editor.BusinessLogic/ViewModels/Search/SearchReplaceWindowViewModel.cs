@@ -73,7 +73,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         private void DoClose()
         {
-            searchHost.ClearFindReplaceSegment();
             access.Close();
         }
 
@@ -416,6 +415,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 SearchMode = SelectedStoredSearch.StoredSearch.SearchMode.Value;
                 ShowReplaceSummary = SelectedStoredSearch.StoredSearch.ShowReplaceSummary.Value;
             }
+        }
+
+        public void NotifyClosed()
+        {
+            searchHost.ClearFindReplaceSegment();
         }
 
         // Public properties --------------------------------------------------
