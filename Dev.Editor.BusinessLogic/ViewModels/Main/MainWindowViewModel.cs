@@ -740,6 +740,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             this.fileIconProvider = fileIconProvider;
             this.searchEncoder = searchEncoder;
             this.eventBus = eventBus;
+            this.platformService = platformService;
             this.textComparisonService = textComparisonService;
 
             documentsManager = new DocumentsManager();

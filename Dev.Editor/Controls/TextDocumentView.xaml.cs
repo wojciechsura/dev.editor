@@ -56,17 +56,17 @@ namespace Dev.Editor.Controls
             public int StartOffset { get; }
         }
 
-        private class SegmentColorizingTransformer : DocumentColorizingTransformer
+        private class ContextualBackgroundColorizer : DocumentColorizingTransformer
         {
-            private readonly Brush selectionBrush = new SolidColorBrush(Color.FromArgb(255, 230, 230, 230));
+            private readonly Brush searchSelectionBrush = new SolidColorBrush(Color.FromArgb(255, 230, 230, 230));
             private readonly Brush highlightedIdentifierBrush = new SolidColorBrush(Color.FromArgb(255, 150, 255, 210));
 
-            private void SetBackgroundColor(VisualLineElement element)
+            private void SetSearchSelectionBackground(VisualLineElement element)
             {
-                element.BackgroundBrush = selectionBrush;
+                element.BackgroundBrush = searchSelectionBrush;
             }
 
-            private void SetHighlightedIdentifier(VisualLineElement element)
+            private void SetHighlightedIdentifierBackground(VisualLineElement element)
             {
                 element.BackgroundBrush = highlightedIdentifierBrush;
             }
@@ -78,7 +78,7 @@ namespace Dev.Editor.Controls
                     int startOffset = Math.Max(line.Offset, Segment.Offset);
                     int endOffset = Math.Min(line.EndOffset, Segment.EndOffset);
 
-                    ChangeLinePart(startOffset, endOffset, SetBackgroundColor);
+                    ChangeLinePart(startOffset, endOffset, SetSearchSelectionBackground);
                 }
 
                 if (HighlightedIdentifier != null)
@@ -93,7 +93,7 @@ namespace Dev.Editor.Controls
                         {
                             ChangeLinePart(line.Offset + index,
                                 line.Offset + index + HighlightedIdentifier.Length,
-                                SetHighlightedIdentifier);
+                                SetHighlightedIdentifierBackground);
                         }
 
                         start = index + 1;
@@ -175,8 +175,8 @@ namespace Dev.Editor.Controls
         private readonly Brush deleteBrush = new SolidColorBrush(Color.FromArgb(255, 255, 210, 210));
         private readonly Brush insertBrush = new SolidColorBrush(Color.FromArgb(255, 210, 255, 230));
 
-        private readonly SegmentColorizingTransformer colorizingTransformer;
-        private readonly SegmentColorizingTransformer colorizingTransformer2;
+        private readonly ContextualBackgroundColorizer contextualBackgroundColorizer;
+        private readonly ContextualBackgroundColorizer contextualBackgroundColorizer2;
 
         private TextEditor currentEditor;
         private DiffBackgroundRenderer diffRenderer;
@@ -264,9 +264,6 @@ namespace Dev.Editor.Controls
             BindingOperations.ClearBinding(rdTopEditor, RowDefinition.HeightProperty);
             rdTopEditor.Height = new GridLength(1.0, GridUnitType.Star);
 
-            if (diffRenderer != null)
-                UninstallDiff(teEditor);
-
             ClearFolding();
 
             teEditor.TextArea.SelectionChanged -= HandleSelectionChanged;
@@ -274,6 +271,12 @@ namespace Dev.Editor.Controls
 
             teEditor.SyntaxHighlighting = null;
             teEditor.Document = null;
+
+            if (diffRenderer != null)
+                UninstallDiff(teEditor);
+
+            contextualBackgroundColorizer.Segment = null;
+            contextualBackgroundColorizer.HighlightedIdentifier = null;
         }
 
         private void DeinitializeEditor2(TextDocumentViewModel viewModel)
@@ -282,9 +285,6 @@ namespace Dev.Editor.Controls
             BindingOperations.ClearBinding(rdBottomEditor, RowDefinition.HeightProperty);
             rdBottomEditor.Height = new GridLength(0.0, GridUnitType.Auto);
 
-            if (diffRenderer != null)
-                UninstallDiff(teEditor2);
-
             ClearFolding2();
 
             teEditor2.TextArea.SelectionChanged -= HandleSelectionChanged2;
@@ -292,6 +292,12 @@ namespace Dev.Editor.Controls
 
             teEditor2.SyntaxHighlighting = null;
             teEditor2.Document = null;
+
+            if (diffRenderer != null)
+                UninstallDiff(teEditor2);
+
+            contextualBackgroundColorizer2.Segment = null;
+            contextualBackgroundColorizer2.HighlightedIdentifier = null;
         }
 
         private void DeinitializeViewModel(TextDocumentViewModel viewModel)
@@ -299,9 +305,6 @@ namespace Dev.Editor.Controls
             // Storing current state in the viewmodel
             TextDocumentState state = BuildCurrentState();
             viewModel.SaveState(state);
-
-            colorizingTransformer.Segment = null;
-            colorizingTransformer2.Segment = null;
 
             // Deinitializing editors
             if (viewModel.Editor2Visible)
@@ -386,14 +389,14 @@ namespace Dev.Editor.Controls
         {
             UpdateSelectionInfo(teEditor);
 
-            ProcessSelectedIdentifierHighlight(teEditor, colorizingTransformer);
+            TryHighlightSelectedIdentifier(teEditor, contextualBackgroundColorizer);
         }
 
         private void HandleSelectionChanged2(object sender, EventArgs e)
         {
             UpdateSelectionInfo(teEditor2);
 
-            ProcessSelectedIdentifierHighlight(teEditor2, colorizingTransformer2);
+            TryHighlightSelectedIdentifier(teEditor2, contextualBackgroundColorizer2);
         }
 
         private void HandleTextChanged(object sender, EventArgs e)
@@ -425,14 +428,15 @@ namespace Dev.Editor.Controls
             {
                 if (viewModel.Editor2Visible)
                 {
-                    // Displaying editor 2
-                    InitializeEditor2(viewModel);
-
                     // Copy state from editor 1
                     var state = BuildEditorState(teEditor, foldingManager);
+
+                    // Displaying editor 2
+                    InitializeEditor2(viewModel, state);
+
                     RestoreEditorState(teEditor2, foldingManager2, state);
 
-                    ProcessSelectedIdentifierHighlight(teEditor2, colorizingTransformer2);
+                    TryHighlightSelectedIdentifier(teEditor2, contextualBackgroundColorizer2);
                 }
                 else
                 {
@@ -444,12 +448,12 @@ namespace Dev.Editor.Controls
             }
             else if (e.PropertyName == nameof(viewModel.ActiveEditor))
             {
-                UpdateActiveEditor();
+                UpdateActiveEditorFromViewModel();
             }
             else if (e.PropertyName == nameof(viewModel.FindReplaceSegment))
             {                
-                colorizingTransformer.Segment = viewModel.FindReplaceSegment;
-                colorizingTransformer2.Segment = viewModel.FindReplaceSegment;
+                contextualBackgroundColorizer.Segment = viewModel.FindReplaceSegment;
+                contextualBackgroundColorizer2.Segment = viewModel.FindReplaceSegment;
 
                 RedrawEditors(viewModel);
             }
@@ -476,7 +480,7 @@ namespace Dev.Editor.Controls
             }
         }
 
-        private void InitializeEditor(TextDocumentViewModel newViewModel)
+        private void InitializeEditor(TextDocumentViewModel newViewModel, TextEditorState state)
         {
             teEditor.Document = newViewModel.Document;
             teEditor.SyntaxHighlighting = newViewModel.Highlighting.Definition;
@@ -496,9 +500,14 @@ namespace Dev.Editor.Controls
             });
 
             rdTopEditor.MinHeight = 50.0;
+
+            if (state != null)
+                RestoreEditorState(teEditor, foldingManager, state);
+
+            TryHighlightSelectedIdentifier(teEditor, contextualBackgroundColorizer);
         }
 
-        private void InitializeEditor2(TextDocumentViewModel newViewModel)
+        private void InitializeEditor2(TextDocumentViewModel newViewModel, TextEditorState state)
         {
             teEditor2.Document = newViewModel.Document;
             teEditor2.SyntaxHighlighting = newViewModel.Highlighting.Definition;
@@ -518,6 +527,11 @@ namespace Dev.Editor.Controls
             });
 
             rdBottomEditor.MinHeight = 50.0;
+
+            if (state != null)
+                RestoreEditorState(teEditor2, foldingManager, state);
+
+            TryHighlightSelectedIdentifier(teEditor2, contextualBackgroundColorizer2);
         }
 
         private void InitializeViewModel(TextDocumentViewModel newViewModel)
@@ -533,27 +547,17 @@ namespace Dev.Editor.Controls
                 CreateDiff(newViewModel);
 
             // Hooking text editor
-            InitializeEditor(newViewModel);
-            if (state != null)
-                RestoreEditorState(teEditor, foldingManager, state.EditorState);
-
-            ProcessSelectedIdentifierHighlight(teEditor, colorizingTransformer);
+            InitializeEditor(newViewModel, state?.EditorState);
 
             if (newViewModel.Editor2Visible)
-            {
-                InitializeEditor2(newViewModel);
-                if (state != null)
-                    RestoreEditorState(teEditor2, foldingManager, state.EditorState2);
+                InitializeEditor2(newViewModel, state?.EditorState2);
 
-                ProcessSelectedIdentifierHighlight(teEditor2, colorizingTransformer2);
-            }
-
-            colorizingTransformer.Segment = newViewModel.FindReplaceSegment;
-            colorizingTransformer2.Segment = newViewModel.FindReplaceSegment;
+            contextualBackgroundColorizer.Segment = newViewModel.FindReplaceSegment;
+            contextualBackgroundColorizer2.Segment = newViewModel.FindReplaceSegment;
 
             RedrawEditors(newViewModel);
 
-            UpdateActiveEditor();
+            UpdateActiveEditorFromViewModel();
         }
 
         private void InstallDiff(TextEditor editor)
@@ -563,10 +567,13 @@ namespace Dev.Editor.Controls
 
         private static bool IsIdentifierChar(char c)
         {
-            return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') || (c >= '0' && c <= '9') || c == '_';
+            return (c >= 'a' && c <= 'z') || 
+                (c >= 'A' && c <= 'Z') || 
+                (c >= '0' && c <= '9') || 
+                c == '_';
         }       
 
-        private void ProcessSelectedIdentifierHighlight(TextEditor editor, SegmentColorizingTransformer colorizingTransformer)
+        private void TryHighlightSelectedIdentifier(TextEditor editor, ContextualBackgroundColorizer colorizingTransformer)
         {
             if (editor.SelectionLength == 0)
             {
@@ -602,7 +609,7 @@ namespace Dev.Editor.Controls
             SetIdentifierHighlightedWord(editor, colorizingTransformer, selectedText);
         }
 
-        private static void SetIdentifierHighlightedWord(TextEditor editor, SegmentColorizingTransformer colorizingTransformer, string highlightedWord)
+        private static void SetIdentifierHighlightedWord(TextEditor editor, ContextualBackgroundColorizer colorizingTransformer, string highlightedWord)
         {
             if (colorizingTransformer.HighlightedIdentifier != highlightedWord)
             {
@@ -748,7 +755,7 @@ namespace Dev.Editor.Controls
             editor.TextArea.TextView.BackgroundRenderers.Remove(diffRenderer);
         }
 
-        private void UpdateActiveEditor()
+        private void UpdateActiveEditorFromViewModel()
         {
             Dispatcher.BeginInvoke(new Action(() =>
             {
@@ -816,11 +823,11 @@ namespace Dev.Editor.Controls
         {
             InitializeComponent();
 
-            colorizingTransformer = new SegmentColorizingTransformer();
-            teEditor.TextArea.TextView.LineTransformers.Add(colorizingTransformer);
+            contextualBackgroundColorizer = new ContextualBackgroundColorizer();
+            teEditor.TextArea.TextView.LineTransformers.Add(contextualBackgroundColorizer);
 
-            colorizingTransformer2 = new SegmentColorizingTransformer();
-            teEditor2.TextArea.TextView.LineTransformers.Add(colorizingTransformer2);
+            contextualBackgroundColorizer2 = new ContextualBackgroundColorizer();
+            teEditor2.TextArea.TextView.LineTransformers.Add(contextualBackgroundColorizer2);
 
             RunOnAllEditors(editor =>
             {
