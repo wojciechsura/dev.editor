@@ -71,7 +71,7 @@ namespace Dev.Editor
                 {
                     FocusManager.SetFocusedElement(this, cbReplaceSearch);
                     cbReplaceSearch.SelectAll();
-                    cbReplaceSearch.Focus();
+                    cbReplaceSearch.FocusTextBox();
                 }));
             
         }
@@ -83,7 +83,7 @@ namespace Dev.Editor
                 {
                     FocusManager.SetFocusedElement(this, cbSearchSearch);
                     cbSearchSearch.SelectAll();
-                    cbSearchSearch.Focus();
+                    cbSearchSearch.FocusTextBox();
                 }));
         }
 

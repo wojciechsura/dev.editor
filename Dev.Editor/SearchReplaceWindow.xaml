@@ -39,8 +39,9 @@
                                 </Grid.ColumnDefinitions>
 
                                 <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_SearchedText}"/>
-                                <c:ComboBoxEx x:Name="cbSearchSearch" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                      ItemsSource="{Binding LastSearches}" IsEditable="True" />
+                                <c:ComboBoxEx x:Name="cbSearchSearch" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
+                                              Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              ItemsSource="{Binding LastSearches}" IsEditable="True" />
                             </Grid>
 
                             <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchOptions}" Padding="4">

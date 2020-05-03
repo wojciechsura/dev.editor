@@ -22,5 +22,10 @@ namespace Dev.Editor.Controls
         {
             textBox?.SelectAll();
         }
+
+        public void FocusTextBox()
+        {
+            textBox?.Focus();
+        }
     }
 }

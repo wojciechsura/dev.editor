@@ -64,6 +64,8 @@ namespace Dev.Editor
 
         private readonly Lazy<DispatcherTimer> navigationTimer;
 
+        private bool handlingActivated = false;
+
         // Private methods ----------------------------------------------------
 
         private void SetupSidePanel()
@@ -260,13 +262,29 @@ namespace Dev.Editor
 
         private void HandleWindowActivated(object sender, EventArgs e)
         {
-            // This happens as well before Loaded event, what may cause problems
-            // on application startup. Deferring call until Loaded has been executed.
+            // It may happen, that WindowActivated will be called during processing
+            // of WindowActivated. Since we're using BeginInvoke, additional 
+            // measures must be taken to prevent nested calls - until the first one
+            // is processed properly.
 
-            Dispatcher.BeginInvoke(new Action(() =>
+            if (!handlingActivated)
             {
-                viewModel.NotifyActivated();
-            }), DispatcherPriority.ContextIdle);
+                // This event is called too before Loaded event, what may cause problems
+                // on application startup. Deferring call until Loaded has been executed.
+                Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    handlingActivated = true;
+
+                    try
+                    {
+                        viewModel.NotifyActivated();
+                    }
+                    finally
+                    {
+                        handlingActivated = false;
+                    }
+                }), DispatcherPriority.ContextIdle);
+            }
         }
 
         private void DocumentTabItemPreviewMouseDown(object sender, MouseButtonEventArgs e)
