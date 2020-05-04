@@ -283,7 +283,7 @@
                                     </Border>
 
                                     <ScrollViewer x:Name="HeaderPanel" Grid.Row="0" Grid.Column="0" HorizontalAlignment="Stretch" 
-                                                  VerticalAlignment="Stretch" Margin="0" HorizontalScrollBarVisibility="Hidden" 
+                                                  VerticalAlignment="Stretch" Margin="0" HorizontalScrollBarVisibility="Auto" 
                                                   VerticalScrollBarVisibility="Disabled" Focusable="False"
                                                   wpf:MouseEvents.DirectMouseDoubleClickCommand="{TemplateBinding HeaderDoubleClickCommand}"
                                                   wpf:ParentData.ParentItemsSource="{TemplateBinding ItemsSource}"
@@ -292,7 +292,7 @@
                                             <Style TargetType="{x:Type ScrollViewer}">
                                                 <Setter Property="Template">
                                                     <Setter.Value>
-                                                        <ControlTemplate>
+                                                        <ControlTemplate TargetType="ScrollViewer">
                                                             <Grid Margin="0" x:Name="HeaderPanel">
                                                                 <Grid.ColumnDefinitions>
                                                                     <ColumnDefinition Width="*"/>
@@ -302,7 +302,8 @@
                                                                     <RowDefinition Height="Auto"/>
                                                                 </Grid.RowDefinitions>
                                                                 <ScrollContentPresenter Grid.Column="0" Content="{TemplateBinding ScrollViewer.Content}" />
-                                                                <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Bottom">
+                                                                <StackPanel Orientation="Horizontal" Grid.Column="1" VerticalAlignment="Bottom"
+                                                                            Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}">
                                                                     <RepeatButton Content="3" FontFamily="Marlett" FontSize="12" Padding="2" MinHeight="24"
                                                                                       Command="ScrollBar.LineLeftCommand" Style="{StaticResource DocumentTabScrollButtonStyle}"/>
                                                                     <RepeatButton Content="4" FontFamily="Marlett" FontSize="12" Padding="2" MinHeight="24"
