@@ -832,6 +832,9 @@ namespace Dev.Editor.Controls
             RunOnAllEditors(editor =>
             {
                 editor.Options.AllowScrollBelowDocument = true;
+                editor.Options.AllowToggleOverstrikeMode = true;
+                editor.Options.ConvertTabsToSpaces = true;
+                editor.Options.ColumnRulerPosition = 80;
             });
         }
 
