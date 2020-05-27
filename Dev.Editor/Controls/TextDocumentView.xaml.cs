@@ -536,6 +536,8 @@ namespace Dev.Editor.Controls
 
         private void InitializeViewModel(TextDocumentViewModel newViewModel)
         {
+            System.Diagnostics.Debug.WriteLine($"Initializing viewmodel, newViewModel: {newViewModel?.Document?.FileName ?? "(none)"}");
+
             Handler = newViewModel.Handler;
 
             newViewModel.EditorAccess = this;
@@ -757,9 +759,13 @@ namespace Dev.Editor.Controls
 
         private void UpdateActiveEditorFromViewModel()
         {
+            System.Diagnostics.Debug.WriteLine($"Calling updateActiveEditorFromViewModel, viewModel: {viewModel?.FileName ?? "(none)"}, selected: {viewModel?.IsSelected.ToString() ?? "(none)"}");
+
             Dispatcher.BeginInvoke(new Action(() =>
             {
-                if (viewModel != null && viewModel.IsActive)
+                System.Diagnostics.Debug.WriteLine($"Executing updateActiveEditorFromViewMode, viewModel: {viewModel?.FileName ?? "(none)"}, selected: {viewModel?.IsSelected.ToString() ?? "(none)"}");
+
+                if (viewModel != null && viewModel.IsSelected)
                 {
                     switch (viewModel.ActiveEditor)
                     {

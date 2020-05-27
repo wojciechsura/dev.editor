@@ -19,6 +19,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         // Private fields -----------------------------------------------------
 
         private bool isActive;
+        private bool isSelected;
         private TabColor tabColor;
         private bool isPinned;
 
@@ -199,6 +200,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             set => Set(ref isActive, () => IsActive, value, HandleIsActiveChanged);
         }
 
+        public bool IsSelected 
+        {
+            get => isSelected;
+            set => Set(ref isSelected, () => IsSelected, value); 
+        }
+
         public TabColor TabColor
         {
             get => tabColor;
@@ -211,6 +218,5 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             set => Set(ref isPinned, () => IsPinned, value);
         }
 
-        public ICommand SetTabColorCommand { get; }
-    }
+        public ICommand SetTabColorCommand { get; }    }
 }

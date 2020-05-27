@@ -24,27 +24,60 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
 
         // Private methods ----------------------------------------------------
 
-        private void SetSelectedPrimaryDocument(BaseDocumentViewModel value)
+        private void DoSetSelectedPrimaryDocument(BaseDocumentViewModel value)
         {
-            if (value == selectedPrimaryDocument)
+            if (selectedPrimaryDocument == value)
                 return;
 
+            if (selectedPrimaryDocument != null)
+                selectedPrimaryDocument.IsSelected = false;
+
             selectedPrimaryDocument = value;
+
+            if (selectedPrimaryDocument != null)
+                selectedPrimaryDocument.IsSelected = true;
+
             OnPropertyChanged(nameof(SelectedPrimaryDocument));
+        }
+
+        private void DoSetSelectedSecondaryDocument(BaseDocumentViewModel value)
+        {
+            if (selectedSecondaryDocument == value)
+                return;
+
+            if (selectedSecondaryDocument != null)
+                selectedSecondaryDocument.IsSelected = false;
+
+            selectedSecondaryDocument = value;
+
+            if (selectedSecondaryDocument != null)
+                selectedSecondaryDocument.IsSelected = true;
+
+            OnPropertyChanged(nameof(SelectedSecondaryDocument));
+        }
+
+        private void SetSelectedPrimaryDocument(BaseDocumentViewModel value)
+        {
+            System.Diagnostics.Debug.WriteLine($"DocumentsManager.SetSelectedPrimaryDocument, ViewModel: {value?.FileName ?? "(none)"}");
+
+            if (value == selectedPrimaryDocument)
+                return;
+            
+            DoSetSelectedPrimaryDocument(value);
 
             UpdateActiveDocumentToSelected();
         }
 
         private void SetSelectedSecondaryDocument(BaseDocumentViewModel value)
         {
+            System.Diagnostics.Debug.WriteLine($"DocumentsManager.SetSelectedSecondaryDocument, ViewModel: {value?.FileName ?? "(none)"}");
+
             if (value == selectedSecondaryDocument)
                 return;
 
-            selectedSecondaryDocument = value;
-            OnPropertyChanged(nameof(SelectedSecondaryDocument));
+            DoSetSelectedSecondaryDocument(value);
 
-            if (activeDocumentTab == DocumentTabKind.Secondary)
-                DoSetActiveDocument(selectedSecondaryDocument);
+            UpdateActiveDocumentToSelected();
         }
 
         private void SetActiveDocument(BaseDocumentViewModel value)
@@ -62,12 +95,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
                     OnPropertyChanged(nameof(ActiveDocumentTab));
                 }
 
-                if (selectedPrimaryDocument != value)
-                {
-                    selectedPrimaryDocument = value;
-                    OnPropertyChanged(nameof(SelectedPrimaryDocument));
-                }
-
+                DoSetSelectedPrimaryDocument(value);
                 DoSetActiveDocument(value);
             }
             else if (secondaryDocuments.Contains(value))
@@ -78,12 +106,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
                     OnPropertyChanged(nameof(ActiveDocumentTab));
                 }
 
-                if (selectedSecondaryDocument != value)
-                {
-                    selectedSecondaryDocument = value;
-                    OnPropertyChanged(nameof(SelectedSecondaryDocument));
-                }
-
+                DoSetSelectedSecondaryDocument(value);
                 DoSetActiveDocument(value);
             }
             else
@@ -257,15 +280,27 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
         public void RemoveDocument(BaseDocumentViewModel document)
         {
             if (primaryDocuments.Contains(document))
-                InternalRemoveDocumentFrom(document, 
+            {
+                var selectedDocument = selectedPrimaryDocument;
+
+                InternalRemoveDocumentFrom(document,
                     primaryDocuments,
-                    ref selectedPrimaryDocument,
+                    ref selectedDocument,
                     nameof(SelectedPrimaryDocument));
+
+                DoSetSelectedPrimaryDocument(selectedDocument);
+            }
             else if (secondaryDocuments.Contains(document))
+            {
+                var selectedDocument = selectedSecondaryDocument;
+
                 InternalRemoveDocumentFrom(document,
                     secondaryDocuments,
-                    ref selectedSecondaryDocument,
+                    ref selectedDocument,
                     nameof(SelectedSecondaryDocument));
+
+                DoSetSelectedSecondaryDocument(selectedDocument);
+            }
             else
                 throw new ArgumentException(nameof(document));
         }
@@ -275,17 +310,29 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
             switch (documentTabKind)
             {
                 case DocumentTabKind.Primary:
-                    InternalRemoveDocumentFrom(document,
-                        primaryDocuments,
-                        ref selectedPrimaryDocument,
-                        nameof(SelectedPrimaryDocument));
-                    break;
+                    {
+                        var selectedDocument = selectedPrimaryDocument;
+
+                        InternalRemoveDocumentFrom(document,
+                            primaryDocuments,
+                            ref selectedDocument,
+                            nameof(SelectedPrimaryDocument));
+
+                        SetSelectedPrimaryDocument(selectedDocument);
+                        break;
+                    }
                 case DocumentTabKind.Secondary:
-                    InternalRemoveDocumentFrom(document,
-                        secondaryDocuments,
-                        ref selectedSecondaryDocument,
-                        nameof(SelectedSecondaryDocument));
-                    break;
+                    {
+                        var selectedDocument = selectedSecondaryDocument;
+
+                        InternalRemoveDocumentFrom(document,
+                            secondaryDocuments,
+                            ref selectedDocument,
+                            nameof(SelectedSecondaryDocument));
+
+                        SetSelectedSecondaryDocument(selectedDocument);
+                        break;
+                    }
                 default:
                     throw new InvalidEnumArgumentException("Unsupported document tab kind!");
             }
@@ -296,17 +343,29 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
             switch (documentTabKind)
             {
                 case DocumentTabKind.Primary:
-                    InternalRemoveDocumentAt(index,
-                        primaryDocuments,
-                        ref selectedPrimaryDocument,
-                        nameof(SelectedPrimaryDocument));
-                    break;
+                    {
+                        var selectedDocument = selectedPrimaryDocument;
+
+                        InternalRemoveDocumentAt(index,
+                            primaryDocuments,
+                            ref selectedDocument,
+                            nameof(SelectedPrimaryDocument));
+
+                        SetSelectedPrimaryDocument(selectedDocument);
+                        break;
+                    }
                 case DocumentTabKind.Secondary:
-                    InternalRemoveDocumentAt(index,
-                        secondaryDocuments,
-                        ref selectedSecondaryDocument,
-                        nameof(SelectedSecondaryDocument));
-                    break;
+                    {
+                        var selectedDocument = selectedSecondaryDocument;
+
+                        InternalRemoveDocumentAt(index,
+                            secondaryDocuments,
+                            ref selectedDocument,
+                            nameof(SelectedSecondaryDocument));
+
+                        SetSelectedSecondaryDocument(selectedDocument);
+                        break;
+                    }
                 default:
                     throw new InvalidEnumArgumentException("Unsupported document tab kind!");
             }
@@ -317,12 +376,24 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
             switch (documentTabKind)
             {
                 case DocumentTabKind.Primary:
-                    InternalAddDocumentTo(document, primaryDocuments, ref selectedPrimaryDocument, nameof(SelectedPrimaryDocument));
-                    break;
+                    {
+                        var selectedDocument = selectedPrimaryDocument;
+
+                        InternalAddDocumentTo(document, primaryDocuments, ref selectedDocument, nameof(SelectedPrimaryDocument));
+
+                        SetSelectedPrimaryDocument(selectedDocument);
+                        break;
+                    }
                 case DocumentTabKind.Secondary:
-                    InternalAddDocumentTo(document, secondaryDocuments, ref selectedSecondaryDocument, nameof(SelectedSecondaryDocument));
-                    AutoAdjustSecondaryTabVisibility();
-                    break;
+                    {
+                        var selectedDocument = selectedSecondaryDocument;
+
+                        InternalAddDocumentTo(document, secondaryDocuments, ref selectedDocument, nameof(SelectedSecondaryDocument));
+
+                        SetSelectedSecondaryDocument(selectedDocument);
+                        AutoAdjustSecondaryTabVisibility();
+                        break;
+                    }
                 default:
                     throw new InvalidEnumArgumentException("Unsupported document tab kind!");
             }
@@ -346,17 +417,29 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
             switch (documentTabKind)
             {
                 case DocumentTabKind.Primary:
-                    InternalInsertDocumentTo(index, document, primaryDocuments, ref selectedPrimaryDocument, nameof(SelectedPrimaryDocument));
-                    break;
-                case DocumentTabKind.Secondary:
-                    InternalInsertDocumentTo(index, document, secondaryDocuments, ref selectedSecondaryDocument, nameof(SelectedSecondaryDocument));
-
-                    if (!showSecondaryDocumentTab)
                     {
-                        showSecondaryDocumentTab = true;
-                        OnPropertyChanged(nameof(showSecondaryDocumentTab));
+                        var selectedDocument = selectedPrimaryDocument;
+
+                        InternalInsertDocumentTo(index, document, primaryDocuments, ref selectedDocument, nameof(SelectedPrimaryDocument));
+
+                        SetSelectedPrimaryDocument(selectedDocument);
+                        break;
                     }
-                    break;
+                case DocumentTabKind.Secondary:
+                    {
+                        var selectedDocument = selectedSecondaryDocument;
+
+                        InternalInsertDocumentTo(index, document, secondaryDocuments, ref selectedDocument, nameof(SelectedSecondaryDocument));
+
+                        SetSelectedSecondaryDocument(selectedDocument);
+
+                        if (!showSecondaryDocumentTab)
+                        {
+                            showSecondaryDocumentTab = true;
+                            OnPropertyChanged(nameof(showSecondaryDocumentTab));
+                        }
+                        break;
+                    }
                 default:
                     throw new InvalidEnumArgumentException("Unsupported document tab kind!");
             }
