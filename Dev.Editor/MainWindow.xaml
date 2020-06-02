@@ -705,16 +705,6 @@
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Text_Convert}">
 
-                    <f:DropDownButton SizeDefinition="Large" Header="{x:Static p:Strings.Ribbon_Text_Convert_Case}" 
-                                      LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Case32.png"
-                                      Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Case16.png">
-                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Case_Lowercase}" Command="{Binding LowercaseCommand}"/>
-                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Case_Uppercase}" Command="{Binding UppercaseCommand}"/>
-                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Case_Naming}" Command="{Binding NamingCaseCommand}"/>
-                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Case_Sentence}" Command="{Binding SentenceCaseCommand}"/>
-                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Case_Invert}" Command="{Binding InvertCaseCommand}"/>
-                    </f:DropDownButton>
-
                     <f:DropDownButton Size="Large" Header="{x:Static p:Strings.Ribbon_Text_Convert_Base64}"
                                       LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/ConvertBase6432.png"
                                       Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/ConvertBase6416.png">
@@ -722,13 +712,36 @@
                         <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Base64_FromBase64}" Command="{Binding Base64DecodeCommand}" />
                     </f:DropDownButton>
 
-                    <f:DropDownButton Size="Large" Header="{x:Static p:Strings.Ribbon_Text_Convert_Htm}"
+                </f:RibbonGroupBox>
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Text_Transform}">
+                    <f:DropDownButton SizeDefinition="Large" Header="{x:Static p:Strings.Ribbon_Text_Transform_Case}" 
+                                      LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Case32.png"
+                                      Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Case16.png">
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Transform_Case_Lowercase}" Command="{Binding LowercaseCommand}"/>
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Transform_Case_Uppercase}" Command="{Binding UppercaseCommand}"/>
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Transform_Case_Naming}" Command="{Binding NamingCaseCommand}"/>
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Transform_Case_Sentence}" Command="{Binding SentenceCaseCommand}"/>
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Transform_Case_Invert}" Command="{Binding InvertCaseCommand}"/>
+                    </f:DropDownButton>
+                </f:RibbonGroupBox>
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Text_Escape}">
+
+                        <f:DropDownButton Size="Large" Header="{x:Static p:Strings.Ribbon_Text_Escape_Htm}"
                                       LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/ConvertHtml32.png"
                                       Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/ConvertHtml16.png">
-                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Htm_Encode}" Command="{Binding HtmlEntitiesEncodeCommand}" />
-                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Convert_Htm_Decode}" Command="{Binding HtmlEntitiesDecodeCommand}" />
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Escape_Htm_Encode}" Command="{Binding HtmlEntitiesEncodeCommand}" />
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Escape_Htm_Decode}" Command="{Binding HtmlEntitiesDecodeCommand}" />
                     </f:DropDownButton>
 
+                    <f:DropDownButton Size="Large" Header="{x:Static p:Strings.Ribbon_Text_Escape_Escape}"
+                                      LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Escape32.png"
+                                      Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Escape16.png">
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Escape_Escape}" Command="{Binding EscapeCommand}" />
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Escape_Unescape}" Command="{Binding UnescapeCommand}" />
+                    </f:DropDownButton>
+                    
                 </f:RibbonGroupBox>
 
             </f:RibbonTabItem>

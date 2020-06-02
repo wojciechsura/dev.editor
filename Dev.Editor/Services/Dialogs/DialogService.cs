@@ -94,5 +94,13 @@ namespace Dev.Editor.Services.Dialogs
                 return (false, null);
         }
 
+        public (bool, EscapeConfigResult) ShowEscapeConfigDialog(EscapeConfigModel model)
+        {
+            var dialog = new EscapeConfigDialog(model);
+            if (dialog.ShowDialog() == true)
+                return (true, dialog.Result);
+            else
+                return (false, null);
+        }
     }
 }

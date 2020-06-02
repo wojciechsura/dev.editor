@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Dev.Editor.BusinessLogic.Models.Dialogs;
+using Dev.Editor.BusinessLogic.Models.TextTransform;
+using Dev.Editor.BusinessLogic.ViewModels.Dialogs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -49,6 +52,46 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private void DoHtmlEntitiesEncode()
         {
             TransformText(text => (true, HttpUtility.HtmlEncode(text)));
+        }
+
+        private void DoEscape()
+        {
+            (bool result, EscapeConfigResult model) = dialogService.ShowEscapeConfigDialog(new EscapeConfigModel(true));
+
+            if (result)
+                TransformText(text =>
+                {
+                    try
+                    {
+                        var transformed = textTransformService.Escape(text, new EscapeConfig(model.EscapeChar[0], model.IncludeSingleQuotes, model.IncludeDoubleQuotes, model.IncludeSpecialCharacters));
+                        return (true, transformed);
+                    }
+                    catch
+                    {
+                        messagingService.ShowError(Resources.Strings.Message_FailedToEscapeString);
+                        return (false, null);
+                    }
+                });
+        }
+
+        private void DoUnescape()
+        {
+            (bool result, EscapeConfigResult model) = dialogService.ShowEscapeConfigDialog(new EscapeConfigModel(false));
+
+            if (result)
+                TransformText(text =>
+                {
+                    try
+                    {
+                        var transformed = textTransformService.Unescape(text, new EscapeConfig(model.EscapeChar[0], model.IncludeSingleQuotes, model.IncludeDoubleQuotes, model.IncludeSpecialCharacters));
+                        return (true, transformed);
+                    }
+                    catch
+                    {
+                        messagingService.ShowError(Resources.Strings.Message_FailedToUnescapeString);
+                        return (false, null);
+                    }
+                });
         }
 
         private void DoInvertCase()

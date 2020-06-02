@@ -17,5 +17,6 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
         SearchReplaceWindowViewModel RequestSearchReplace(ISearchHost searchHost);
         (bool, NameDialogResult) ShowChooseNameDialog(NameDialogModel model);
         (bool, DiffConfigDialogResult) ShowDiffConfigDialog(DiffConfigDialogModel model);
+        (bool, EscapeConfigResult) ShowEscapeConfigDialog(EscapeConfigModel escapeConfigModel);
     }
 }

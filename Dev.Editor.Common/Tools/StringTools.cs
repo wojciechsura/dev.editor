@@ -9,7 +9,7 @@ namespace Dev.Editor.Common.Tools
     public static class StringTools
     {
         /// <remarks>https://referencesource.microsoft.com/system/R/43723ee9a1ef09ab.html</remarks>
-        private static int HexDigit(char ch)
+        public static int HexDigit(char ch)
         {
             int d;
 
@@ -26,7 +26,7 @@ namespace Dev.Editor.Common.Tools
         }
 
         ///<remarks>https://referencesource.microsoft.com/system/R/f9e89f1eede95acd.html</remarks>
-        private static char ScanOctal(string input, ref int pos)
+        public static char ScanOctal(this string input, ref int pos)
         {
             int chars = 3;
             int digit;
@@ -45,7 +45,7 @@ namespace Dev.Editor.Common.Tools
 
 
         /// <remarks>https://referencesource.microsoft.com/system/R/7cc9c5a36b728209.html</remarks>
-        private static char ScanHex(string input, ref int pos, int chars)
+        public static char ScanHex(this string input, ref int pos, int chars)
         {
             if (input.Length - pos < chars)
                 throw new ArgumentException("Invalid escape sequence!");
@@ -62,7 +62,7 @@ namespace Dev.Editor.Common.Tools
         }
 
         /// <remarks>https://referencesource.microsoft.com/system/R/224cee27e14210c4.html</remarks>
-        private static char ScanControl(string input, ref int pos)
+        public static char ScanControl(this string input, ref int pos)
         {
             pos++;
             if (pos >= input.Length)
@@ -151,7 +151,9 @@ namespace Dev.Editor.Common.Tools
                             pos++;
                             continue;
                         default:
-                            throw new ArgumentException("Invalid escape sequence!");
+                            sb.Append(input[pos]);
+                            pos++;
+                            break;
                     }
                 }
                 else

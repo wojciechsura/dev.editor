@@ -16,12 +16,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
     {
         private readonly List<TextDocumentViewModel> documents;
         private readonly IDiffConfigDialogAccess access;
+
+        private readonly Condition documentsSelectedCondition;
+        private readonly Condition documentsAreEqualCondition;
+        private readonly BaseCondition canConfirmCondition;
+
         private TextDocumentViewModel firstDocument;
         private TextDocumentViewModel secondDocument;
-
-        private Condition documentsSelectedCondition;
-        private Condition documentsAreEqualCondition;
-        private BaseCondition canConfirmCondition;
 
         private void DoOk()
         {

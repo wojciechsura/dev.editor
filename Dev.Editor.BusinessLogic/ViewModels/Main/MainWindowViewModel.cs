@@ -51,6 +51,7 @@ using Dev.Editor.BusinessLogic.Types.Main;
 using Dev.Editor.BusinessLogic.ViewModels.Main.Documents;
 using ICSharpCode.AvalonEdit.Document;
 using Dev.Editor.BusinessLogic.Services.TextComparison;
+using Dev.Editor.BusinessLogic.Services.TextTransform;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -73,7 +74,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly ISearchEncoderService searchEncoder;
         private readonly IPlatformService platformService;
         private readonly ITextComparisonService textComparisonService;
-
+        private readonly ITextTransformService textTransformService;
         private readonly DocumentsManager documentsManager;
 
         private readonly ObservableCollection<StoredSearchReplaceViewModel> storedSearches;
@@ -726,7 +727,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             ISearchEncoderService searchEncoder,
             IEventBus eventBus,
             IPlatformService platformService,
-            ITextComparisonService textComparisonService)
+            ITextComparisonService textComparisonService,
+            ITextTransformService textTransformService)
         {
             this.access = access;
             this.dialogService = dialogService;
@@ -742,6 +744,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             this.eventBus = eventBus;
             this.platformService = platformService;
             this.textComparisonService = textComparisonService;
+            this.textTransformService = textTransformService;
 
             documentsManager = new DocumentsManager();
 
@@ -845,16 +848,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             RemoveEmptyLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveEmptyLines, "DeleteLine16.png", obj => DoRemoveEmptyLines(), documentIsTextCondition);
             RemoveWhitespaceLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveWhitespaceLines, "DeleteLine16.png", obj => DoRemoveWhitespaceLines(), documentIsTextCondition);
 
-            LowercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Lowercase, "Case16.png", obj => DoLowercase(), documentIsTextCondition);
-            UppercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Uppercase, "Case16.png", obj => DoUppercase(), documentIsTextCondition);
-            NamingCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Naming, "Case16.png", obj => DoNamingCase(), documentIsTextCondition);
-            SentenceCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Sentence, "Case16.png", obj => DoSentenceCase(), documentIsTextCondition);
-            InvertCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Case_Invert, "Case16.png", obj => DoInvertCase(), documentIsTextCondition);
+            LowercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Transform_Case_Lowercase, "Case16.png", obj => DoLowercase(), documentIsTextCondition);
+            UppercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Transform_Case_Uppercase, "Case16.png", obj => DoUppercase(), documentIsTextCondition);
+            NamingCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Transform_Case_Naming, "Case16.png", obj => DoNamingCase(), documentIsTextCondition);
+            SentenceCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Transform_Case_Sentence, "Case16.png", obj => DoSentenceCase(), documentIsTextCondition);
+            InvertCaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Transform_Case_Invert, "Case16.png", obj => DoInvertCase(), documentIsTextCondition);
 
             Base64EncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_ToBase64, "ConvertBase6416.png", obj => DoBase64Encode(), documentIsTextCondition);
             Base64DecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_FromBase64, "ConvertBase6416.png", obj => DoBase64Decode(), documentIsTextCondition);
-            HtmlEntitiesEncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Htm_Encode, "ConvertHtml16.png", obj => DoHtmlEntitiesEncode(), documentIsTextCondition);
-            HtmlEntitiesDecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Htm_Decode, "ConvertHtml16.png", obj => DoHtmlEntitiesDecode(), documentIsTextCondition);
+            HtmlEntitiesEncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Htm_Encode, "ConvertHtml16.png", obj => DoHtmlEntitiesEncode(), documentIsTextCondition);
+            HtmlEntitiesDecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Htm_Decode, "ConvertHtml16.png", obj => DoHtmlEntitiesDecode(), documentIsTextCondition);
+            EscapeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Escape, "Escape16.png", obj => DoEscape(), documentIsTextCondition);
+            UnescapeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Unescape, "Unescape16.png", obj => DoUnescape(), documentIsTextCondition);
 
             FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, "FormatXml16.png", obj => DoFormatXml(), xmlToolsetAvailableCondition);
             TransformXsltCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Transform_XSLT, null, obj => DoTransformXslt(), xmlToolsetAvailableCondition);

@@ -682,22 +682,22 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Tab.Text" xml:space="preserve">
     <value>Text</value>
   </data>
-  <data name="Ribbon.Text.Convert.Case" xml:space="preserve">
+  <data name="Ribbon.Text.Transform.Case" xml:space="preserve">
     <value>Letter case</value>
   </data>
-  <data name="Ribbon.Text.Convert.Case.Lowercase" xml:space="preserve">
+  <data name="Ribbon.Text.Transform.Case.Lowercase" xml:space="preserve">
     <value>Lowercase</value>
   </data>
-  <data name="Ribbon.Text.Convert.Case.Uppercase" xml:space="preserve">
+  <data name="Ribbon.Text.Transform.Case.Uppercase" xml:space="preserve">
     <value>Uppercase</value>
   </data>
-  <data name="Ribbon.Text.Convert.Case.Naming" xml:space="preserve">
+  <data name="Ribbon.Text.Transform.Case.Naming" xml:space="preserve">
     <value>As in names</value>
   </data>
-  <data name="Ribbon.Text.Convert.Case.Sentence" xml:space="preserve">
+  <data name="Ribbon.Text.Transform.Case.Sentence" xml:space="preserve">
     <value>As in sentence</value>
   </data>
-  <data name="Ribbon.Text.Convert.Case.Invert" xml:space="preserve">
+  <data name="Ribbon.Text.Transform.Case.Invert" xml:space="preserve">
     <value>Invert case</value>
   </data>
   <data name="SearchWindow.ReplaceOptions" xml:space="preserve">
@@ -901,13 +901,13 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="SearchWindow.CountOccurrences" xml:space="preserve">
     <value>Count occurrences</value>
   </data>
-  <data name="Ribbon.Text.Convert.Htm.Encode" xml:space="preserve">
+  <data name="Ribbon.Text.Escape.Htm.Encode" xml:space="preserve">
     <value>Encode HTML entities</value>
   </data>
-  <data name="Ribbon.Text.Convert.Htm.Decode" xml:space="preserve">
+  <data name="Ribbon.Text.Escape.Htm.Decode" xml:space="preserve">
     <value>Decode HTML entities</value>
   </data>
-  <data name="Ribbon.Text.Convert.Htm" xml:space="preserve">
+  <data name="Ribbon.Text.Escape.Htm" xml:space="preserve">
     <value>HTML entities</value>
   </data>
   <data name="Ribbon.Home.Search.StoredSearches" xml:space="preserve">
@@ -928,7 +928,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Home.Group.Comparing" xml:space="preserve">
     <value>Comparing</value>
   </data>
-  <data name="Ribbon_Home_Comparing_Compare" xml:space="preserve">
+  <data name="Ribbon.Home.Comparing.Compare" xml:space="preserve">
     <value>Compare documents</value>
   </data>
   <data name="ConfigureDiffDialog.Title" xml:space="preserve">
@@ -954,5 +954,59 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   </data>
   <data name="Message.DocumentsAreSame" xml:space="preserve">
     <value>Documents have no differences.</value>
+  </data>
+  <data name="Ribbon.Text.Escape.Escape" xml:space="preserve">
+    <value>Escape</value>
+  </data>
+  <data name="Ribbon.Text.Escape.Unescape" xml:space="preserve">
+    <value>Unescape</value>
+  </data>
+  <data name="Ribbon.Text.Escape" xml:space="preserve">
+    <value>Escape</value>
+  </data>
+  <data name="Ribbon.Text.Transform" xml:space="preserve">
+    <value>Transformation</value>
+  </data>
+  <data name="ConfigureEscapeDialog.Title.Escape" xml:space="preserve">
+    <value>Escape</value>
+  </data>
+  <data name="ConfigureEscapeDialog.Title.Unescape" xml:space="preserve">
+    <value>Unescape</value>
+  </data>
+  <data name="ConfigureEscapeDialog.Configure" xml:space="preserve">
+    <value>Configuration</value>
+  </data>
+  <data name="ConfigureEscapeDialog.EscapeSpecialCharacters" xml:space="preserve">
+    <value>Include line breaks (\n), tabs (\t) etc.</value>
+  </data>
+  <data name="ConfigureEscapeDialog.EscapeSpecialCharacters.Label" xml:space="preserve">
+    <value>Special characters</value>
+  </data>
+  <data name="ConfigureEscapeDialog.EscapeCharacter" xml:space="preserve">
+    <value>Escape character</value>
+  </data>
+  <data name="ConfigureEscapeDialog.EscapeDoubleQuotes" xml:space="preserve">
+    <value>Escape double quotes</value>
+  </data>
+  <data name="ConfigureEscapeDialog.EscapeSingleQuotes" xml:space="preserve">
+    <value>Escape single quotes</value>
+  </data>
+  <data name="ConfigureEscapeDialog.EscapeDoubleQuotes.Label" xml:space="preserve">
+    <value>Double quotes</value>
+  </data>
+  <data name="ConfigureEscapeDialog.EscapeSingleQuotes.Label" xml:space="preserve">
+    <value>Single quotes</value>
+  </data>
+  <data name="ConfigureEscapeDialog.ForwardTitle" xml:space="preserve">
+    <value>Escape</value>
+  </data>
+  <data name="ConfigureEscapeDialog.BackwardTitle" xml:space="preserve">
+    <value>Unescape</value>
+  </data>
+  <data name="Message.FailedToEscapeString" xml:space="preserve">
+    <value>Failed to escape string!</value>
+  </data>
+  <data name="Message.FailedToUnescapeString" xml:space="preserve">
+    <value>Failed to unescape string!</value>
   </data>
 </root>

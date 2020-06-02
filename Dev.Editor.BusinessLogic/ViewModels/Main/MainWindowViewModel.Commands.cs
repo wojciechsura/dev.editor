@@ -96,6 +96,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand HtmlEntitiesEncodeCommand { get; }
         public ICommand HtmlEntitiesDecodeCommand { get; }
 
+        public ICommand EscapeCommand { get; }
+        public ICommand UnescapeCommand { get; }
+
         // XmlTools
 
         public ICommand FormatXmlCommand { get; }

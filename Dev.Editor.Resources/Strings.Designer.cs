@@ -361,6 +361,114 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unescape.
+        /// </summary>
+        public static string ConfigureEscapeDialog_BackwardTitle {
+            get {
+                return ResourceManager.GetString("ConfigureEscapeDialog.BackwardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Configuration.
+        /// </summary>
+        public static string ConfigureEscapeDialog_Configure {
+            get {
+                return ResourceManager.GetString("ConfigureEscapeDialog.Configure", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Escape character.
+        /// </summary>
+        public static string ConfigureEscapeDialog_EscapeCharacter {
+            get {
+                return ResourceManager.GetString("ConfigureEscapeDialog.EscapeCharacter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Escape double quotes.
+        /// </summary>
+        public static string ConfigureEscapeDialog_EscapeDoubleQuotes {
+            get {
+                return ResourceManager.GetString("ConfigureEscapeDialog.EscapeDoubleQuotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Double quotes.
+        /// </summary>
+        public static string ConfigureEscapeDialog_EscapeDoubleQuotes_Label {
+            get {
+                return ResourceManager.GetString("ConfigureEscapeDialog.EscapeDoubleQuotes.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Escape single quotes.
+        /// </summary>
+        public static string ConfigureEscapeDialog_EscapeSingleQuotes {
+            get {
+                return ResourceManager.GetString("ConfigureEscapeDialog.EscapeSingleQuotes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Single quotes.
+        /// </summary>
+        public static string ConfigureEscapeDialog_EscapeSingleQuotes_Label {
+            get {
+                return ResourceManager.GetString("ConfigureEscapeDialog.EscapeSingleQuotes.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Include line breaks (\n), tabs (\t) etc..
+        /// </summary>
+        public static string ConfigureEscapeDialog_EscapeSpecialCharacters {
+            get {
+                return ResourceManager.GetString("ConfigureEscapeDialog.EscapeSpecialCharacters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Special characters.
+        /// </summary>
+        public static string ConfigureEscapeDialog_EscapeSpecialCharacters_Label {
+            get {
+                return ResourceManager.GetString("ConfigureEscapeDialog.EscapeSpecialCharacters.Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Escape.
+        /// </summary>
+        public static string ConfigureEscapeDialog_ForwardTitle {
+            get {
+                return ResourceManager.GetString("ConfigureEscapeDialog.ForwardTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Escape.
+        /// </summary>
+        public static string ConfigureEscapeDialog_Title_Escape {
+            get {
+                return ResourceManager.GetString("ConfigureEscapeDialog.Title.Escape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unescape.
+        /// </summary>
+        public static string ConfigureEscapeDialog_Title_Unescape {
+            get {
+                return ResourceManager.GetString("ConfigureEscapeDialog.Title.Unescape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Dev.Editor.
         /// </summary>
         public static string DefaultDialogTitle {
@@ -765,6 +873,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to escape string!.
+        /// </summary>
+        public static string Message_FailedToEscapeString {
+            get {
+                return ResourceManager.GetString("Message.FailedToEscapeString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to unescape string!.
+        /// </summary>
+        public static string Message_FailedToUnescapeString {
+            get {
+                return ResourceManager.GetString("Message.FailedToUnescapeString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you want to save document {0} before closing?.
         /// </summary>
         public static string Message_FileNotSaved {
@@ -1103,7 +1229,7 @@ namespace Dev.Editor.Resources {
         /// </summary>
         public static string Ribbon_Home_Comparing_Compare {
             get {
-                return ResourceManager.GetString("Ribbon_Home_Comparing_Compare", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Home.Comparing.Compare", resourceCulture);
             }
         }
         
@@ -1639,83 +1765,119 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Letter case.
+        ///   Looks up a localized string similar to Escape.
         /// </summary>
-        public static string Ribbon_Text_Convert_Case {
+        public static string Ribbon_Text_Escape {
             get {
-                return ResourceManager.GetString("Ribbon.Text.Convert.Case", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Text.Escape", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invert case.
+        ///   Looks up a localized string similar to Escape.
         /// </summary>
-        public static string Ribbon_Text_Convert_Case_Invert {
+        public static string Ribbon_Text_Escape_Escape {
             get {
-                return ResourceManager.GetString("Ribbon.Text.Convert.Case.Invert", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Lowercase.
-        /// </summary>
-        public static string Ribbon_Text_Convert_Case_Lowercase {
-            get {
-                return ResourceManager.GetString("Ribbon.Text.Convert.Case.Lowercase", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to As in names.
-        /// </summary>
-        public static string Ribbon_Text_Convert_Case_Naming {
-            get {
-                return ResourceManager.GetString("Ribbon.Text.Convert.Case.Naming", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to As in sentence.
-        /// </summary>
-        public static string Ribbon_Text_Convert_Case_Sentence {
-            get {
-                return ResourceManager.GetString("Ribbon.Text.Convert.Case.Sentence", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Uppercase.
-        /// </summary>
-        public static string Ribbon_Text_Convert_Case_Uppercase {
-            get {
-                return ResourceManager.GetString("Ribbon.Text.Convert.Case.Uppercase", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Text.Escape.Escape", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to HTML entities.
         /// </summary>
-        public static string Ribbon_Text_Convert_Htm {
+        public static string Ribbon_Text_Escape_Htm {
             get {
-                return ResourceManager.GetString("Ribbon.Text.Convert.Htm", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Text.Escape.Htm", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Decode HTML entities.
         /// </summary>
-        public static string Ribbon_Text_Convert_Htm_Decode {
+        public static string Ribbon_Text_Escape_Htm_Decode {
             get {
-                return ResourceManager.GetString("Ribbon.Text.Convert.Htm.Decode", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Text.Escape.Htm.Decode", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Encode HTML entities.
         /// </summary>
-        public static string Ribbon_Text_Convert_Htm_Encode {
+        public static string Ribbon_Text_Escape_Htm_Encode {
             get {
-                return ResourceManager.GetString("Ribbon.Text.Convert.Htm.Encode", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Text.Escape.Htm.Encode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unescape.
+        /// </summary>
+        public static string Ribbon_Text_Escape_Unescape {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Escape.Unescape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transformation.
+        /// </summary>
+        public static string Ribbon_Text_Transform {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Transform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Letter case.
+        /// </summary>
+        public static string Ribbon_Text_Transform_Case {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Transform.Case", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invert case.
+        /// </summary>
+        public static string Ribbon_Text_Transform_Case_Invert {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Transform.Case.Invert", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Lowercase.
+        /// </summary>
+        public static string Ribbon_Text_Transform_Case_Lowercase {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Transform.Case.Lowercase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to As in names.
+        /// </summary>
+        public static string Ribbon_Text_Transform_Case_Naming {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Transform.Case.Naming", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to As in sentence.
+        /// </summary>
+        public static string Ribbon_Text_Transform_Case_Sentence {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Transform.Case.Sentence", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uppercase.
+        /// </summary>
+        public static string Ribbon_Text_Transform_Case_Uppercase {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Transform.Case.Uppercase", resourceCulture);
             }
         }
         

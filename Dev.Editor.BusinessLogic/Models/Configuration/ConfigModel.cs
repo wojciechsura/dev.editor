@@ -3,6 +3,7 @@ using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
 using Dev.Editor.BusinessLogic.Models.Configuration.Editor;
 using Dev.Editor.BusinessLogic.Models.Configuration.Internal;
 using Dev.Editor.BusinessLogic.Models.Configuration.Search;
+using Dev.Editor.BusinessLogic.Models.Configuration.StoredDefaults;
 using Dev.Editor.BusinessLogic.Models.Configuration.Tools;
 using Dev.Editor.BusinessLogic.Models.Configuration.UI;
 using Dev.Editor.Configuration;
@@ -11,6 +12,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Navigation;
 
 namespace Dev.Editor.BusinessLogic.Models.Configuration
 {
@@ -27,6 +29,7 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration
             Tools = new ToolsConfig(this);
             BinDefinitions = new BinDefinitionsConfig(this);
             SearchConfig = new SearchConfig(this);
+            StoredDefaults = new StoredDefaultsConfig(this);
         }
 
         public EditorConfig Editor { get; }
@@ -36,5 +39,6 @@ namespace Dev.Editor.BusinessLogic.Models.Configuration
         public ToolsConfig Tools { get; }
         public BinDefinitionsConfig BinDefinitions { get; }
         public SearchConfig SearchConfig { get; }
+        public StoredDefaultsConfig StoredDefaults { get; }
     }
 }

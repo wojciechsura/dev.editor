@@ -10,6 +10,7 @@ using Dev.Editor.BusinessLogic.Services.Registry;
 using Dev.Editor.BusinessLogic.Services.SearchEncoder;
 using Dev.Editor.BusinessLogic.Services.StartupInfo;
 using Dev.Editor.BusinessLogic.Services.TextComparison;
+using Dev.Editor.BusinessLogic.Services.TextTransform;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -40,6 +41,7 @@ namespace Dev.Editor.BusinessLogic.Dependencies
             container.RegisterType<IEventBus, EventBus>(new ContainerControlledLifetimeManager());
             container.RegisterType<ISearchEncoderService, SearchEncoderService>(new ContainerControlledLifetimeManager());
             container.RegisterType<ITextComparisonService, TextComparisonService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<ITextTransformService, TextTransformService>(new ContainerControlledLifetimeManager());
         }
     }
 }

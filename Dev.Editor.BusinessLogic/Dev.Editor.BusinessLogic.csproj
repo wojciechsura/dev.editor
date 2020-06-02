@@ -81,11 +81,15 @@
     <Compile Include="Models\Configuration\Search\LastSearchTexts.cs" />
     <Compile Include="Models\Configuration\Search\StoredSearchReplace.cs" />
     <Compile Include="Models\Configuration\Search\StoredSearchReplaces.cs" />
+    <Compile Include="Models\Configuration\StoredDefaults\EscapeDefaults.cs" />
+    <Compile Include="Models\Configuration\StoredDefaults\StoredDefaultsConfig.cs" />
     <Compile Include="Models\Configuration\Tools\Explorer\ExplorerConfig.cs" />
     <Compile Include="Models\Configuration\Tools\ToolsConfig.cs" />
     <Compile Include="Models\Configuration\UI\UIConfig.cs" />
     <Compile Include="Models\Dialogs\DiffConfigDialogModel.cs" />
     <Compile Include="Models\Dialogs\DiffConfigDialogResult.cs" />
+    <Compile Include="Models\Dialogs\EscapeConfigModel.cs" />
+    <Compile Include="Models\Dialogs\EscapeConfigResult.cs" />
     <Compile Include="Models\Dialogs\NameDialogModel.cs" />
     <Compile Include="Models\Dialogs\NameDialogResult.cs" />
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
@@ -106,6 +110,7 @@
     <Compile Include="Models\TextComparison\ChangesResult.cs" />
     <Compile Include="Models\TextComparison\ContinuousLineDiffResult.cs" />
     <Compile Include="Models\TextComparison\LineDiffInfo.cs" />
+    <Compile Include="Models\TextTransform\EscapeConfig.cs" />
     <Compile Include="Models\UI\BottomPanelVisibilityModel.cs" />
     <Compile Include="Models\UI\SidePanelPlacementModel.cs" />
     <Compile Include="Models\Navigation\BaseNavigationModel.cs" />
@@ -138,6 +143,8 @@
     <Compile Include="Services\StartupInfo\StartupInfoService.cs" />
     <Compile Include="Services\TextComparison\ITextComparisonService.cs" />
     <Compile Include="Services\TextComparison\TextComparisonService.cs" />
+    <Compile Include="Services\TextTransform\ITextTransformService.cs" />
+    <Compile Include="Services\TextTransform\TextTransformService.cs" />
     <Compile Include="Types\Behavior\CloseBehavior.cs" />
     <Compile Include="Types\Document\TabColor.cs" />
     <Compile Include="Types\Document\Text\ActiveEditor.cs" />
@@ -164,7 +171,9 @@
     <Compile Include="ViewModels\Configuration\IConfigurationWindowAccess.cs" />
     <Compile Include="ViewModels\Configuration\SystemConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\DiffConfigDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\EscapeConfigDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\IDiffConfigDialogAccess.cs" />
+    <Compile Include="ViewModels\Dialogs\IEscapeConfigDialogAccess.cs" />
     <Compile Include="ViewModels\Dialogs\NameDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\INameDialogAccess.cs" />
     <Compile Include="ViewModels\Document\BaseDocumentViewModel.cs" />

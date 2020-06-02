@@ -94,6 +94,9 @@
     <Compile Include="DiffConfigDialog.xaml.cs">
       <DependentUpon>DiffConfigDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="EscapeConfigDialog.xaml.cs">
+      <DependentUpon>EscapeConfigDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\ArgumentInfo.cs" />
     <Compile Include="NameDialog.xaml.cs">
       <DependentUpon>NameDialog.xaml</DependentUpon>
@@ -152,6 +155,10 @@
     <Compile Include="Wpf\MouseEvents.cs" />
     <Compile Include="Wpf\ParentData.cs" />
     <Page Include="DiffConfigDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="EscapeConfigDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -435,6 +442,10 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Compare16.png" />
     <Resource Include="Resources\Images\Compare32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Escape16.png" />
+    <Resource Include="Resources\Images\Escape32.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
