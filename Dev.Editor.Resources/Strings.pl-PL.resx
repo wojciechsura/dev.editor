@@ -1009,4 +1009,13 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Message.FailedToUnescapeString" xml:space="preserve">
     <value>Nie udało się usunąć znaków ucieczki z ciągu!</value>
   </data>
+  <data name="ExceptionWindow.Title" xml:space="preserve">
+    <value>Nieobsłużony wyjątek</value>
+  </data>
+  <data name="ExceptionWindow.Header" xml:space="preserve">
+    <value>Szczegóły wyjątku</value>
+  </data>
+  <data name="ExceptionWindow.ExceptionDetails" xml:space="preserve">
+    <value>W aplikacji wystąpił nieobsłużony wyjątek. Szczegóły znajdują się poniżej.</value>
+  </data>
 </root>

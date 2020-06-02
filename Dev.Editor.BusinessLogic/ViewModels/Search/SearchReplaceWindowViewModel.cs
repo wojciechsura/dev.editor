@@ -142,28 +142,20 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         private void DoFindNext()
         {
-            try
+            StoreLastSearchReplaceIfNeeded();
+
+            if (!searchReplaceModel.SearchPerformed)
             {
-                StoreLastSearchReplaceIfNeeded();
+                // If this is a new search, update search/replace segment
+                // to define the search area.
 
-                if (!searchReplaceModel.SearchPerformed)
-                {
-                    // If this is a new search, update search/replace segment
-                    // to define the search area.
-
-                    if (inSelection)
-                        searchHost.SetFindReplaceSegmentToSelection(searchReplaceModel.SearchBackwards);
-                    else
-                        searchHost.ClearFindReplaceSegment();
-                }
-
-                searchHost.FindNext(searchReplaceModel);
+                if (inSelection)
+                    searchHost.SetFindReplaceSegmentToSelection(searchReplaceModel.SearchBackwards);
+                else
+                    searchHost.ClearFindReplaceSegment();
             }
-            catch
-            {
-                messagingService.ShowError(Strings.Message_InvalidSearchPattern);
-                return;
-            }
+
+            searchHost.FindNext(searchReplaceModel);
         }
 
         private void DoCountOccurrences()

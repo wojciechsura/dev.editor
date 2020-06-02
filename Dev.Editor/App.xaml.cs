@@ -1,4 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Events;
+using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.Services.EventBus;
 using Dev.Editor.BusinessLogic.Services.StartupInfo;
 using Dev.Editor.Dependencies;
@@ -13,6 +14,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Threading;
 using Unity;
 
 namespace Dev.Editor
@@ -25,6 +27,7 @@ namespace Dev.Editor
         private readonly IEventBus eventBus;
         private readonly SingleInstanceService singleInstanceService;
         private readonly WinAPIService winAPIService;
+        private readonly IDialogService dialogService;
 
         public App()
         {
@@ -33,6 +36,15 @@ namespace Dev.Editor
             winAPIService = Dependencies.Container.Instance.Resolve<WinAPIService>();
             singleInstanceService = Dependencies.Container.Instance.Resolve<SingleInstanceService>();
             eventBus = Dependencies.Container.Instance.Resolve<IEventBus>();
+            dialogService = Dependencies.Container.Instance.Resolve<IDialogService>();
+
+            this.DispatcherUnhandledException += HandleApplicationException;
+        }
+
+        private void HandleApplicationException(object sender, DispatcherUnhandledExceptionEventArgs e)
+        {
+            dialogService.ShowExceptionDialog(e.Exception);
+            e.Handled = true;
         }
 
         private void HandleAppActivated(object sender, EventArgs e)

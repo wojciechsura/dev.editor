@@ -18,5 +18,6 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
         (bool, NameDialogResult) ShowChooseNameDialog(NameDialogModel model);
         (bool, DiffConfigDialogResult) ShowDiffConfigDialog(DiffConfigDialogModel model);
         (bool, EscapeConfigResult) ShowEscapeConfigDialog(EscapeConfigModel escapeConfigModel);
+        void ShowExceptionDialog(Exception e);
     }
 }

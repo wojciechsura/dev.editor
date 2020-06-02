@@ -102,5 +102,11 @@ namespace Dev.Editor.Services.Dialogs
             else
                 return (false, null);
         }
+
+        public void ShowExceptionDialog(Exception e)
+        {
+            var dialog = new ExceptionWindow(e);
+            dialog.ShowDialog();
+        }
     }
 }

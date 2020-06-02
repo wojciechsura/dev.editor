@@ -184,6 +184,8 @@
     <Compile Include="ViewModels\Document\HexDocumentViewModel.cs" />
     <Compile Include="ViewModels\Document\IDocumentHandler.cs" />
     <Compile Include="ViewModels\Document\ITextEditorAccess.cs" />
+    <Compile Include="ViewModels\ExceptionWindow\ExceptionWindowViewModel.cs" />
+    <Compile Include="ViewModels\ExceptionWindow\IExceptionWindowAccess.cs" />
     <Compile Include="ViewModels\Main\BinDefinitionViewModel.cs" />
     <Compile Include="ViewModels\Main\Documents\DocumentsManager.cs" />
     <Compile Include="Types\Main\IReadOnlyObservableCollection.cs" />
