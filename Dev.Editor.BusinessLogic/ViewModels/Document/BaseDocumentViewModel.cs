@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.Models.Highlighting;
+﻿using Dev.Editor.BusinessLogic.Models.Documents.Text;
+using Dev.Editor.BusinessLogic.Models.Highlighting;
 using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.Types.Document;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
@@ -22,6 +23,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private bool isSelected;
         private TabColor tabColor;
         private bool isPinned;
+        private DiffInfo diffResult;
 
         // Private methods ----------------------------------------------------
 
@@ -125,6 +127,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         public ICommand CloseAllButPinnedCommand { get; }
         public ICommand CloseOthersCommand { get; }
         public ICommand MoveToOtherViewCommand { get; }
+        public ICommand SetTabColorCommand { get; }
 
         public string FileName
         {
@@ -218,5 +221,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             set => Set(ref isPinned, () => IsPinned, value);
         }
 
-        public ICommand SetTabColorCommand { get; }    }
+        public DiffInfo DiffResult
+        {
+            get => diffResult;
+            set => Set(ref diffResult, () => DiffResult, value);
+        }
+
+    }
 }

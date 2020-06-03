@@ -594,6 +594,40 @@
                     <f:Button Header="{x:Static p:Strings.Ribbon_Home_Comparing_Compare}" Command="{Binding CompareCommand}" SizeDefinition="Large"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Compare32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Compare16.png" />
+
+                    <f:RibbonToolBar>
+                        <f:RibbonToolBar.LayoutDefinitions>
+
+                            <f:RibbonToolBarLayoutDefinition Size="Large">
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bPreviousChange" Size="Middle" />
+                                </f:RibbonToolBarRow>
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bNextChange" Size="Middle" />
+                                </f:RibbonToolBarRow>
+                            </f:RibbonToolBarLayoutDefinition>
+
+                            <f:RibbonToolBarLayoutDefinition Size="Middle">
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bPreviousChange" Size="Small" />
+                                </f:RibbonToolBarRow>
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bNextChange" Size="Small" />
+                                </f:RibbonToolBarRow>
+                            </f:RibbonToolBarLayoutDefinition>
+
+                        </f:RibbonToolBar.LayoutDefinitions>
+
+                        <f:Button x:Name="bPreviousChange" Header="{x:Static p:Strings.Ribbon_Home_Comparing_PreviousChange}" Command="{Binding PreviousChangeCommand}" 
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Up32.png"
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Up16.png"/>
+                        <f:Button x:Name="bNextChange" Header="{x:Static p:Strings.Ribbon_Home_Comparing_NextChange}" Command="{Binding NextChangeCommand}" 
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Down32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Down16.png"/>
+                        
+                    </f:RibbonToolBar>
+
+
                 </f:RibbonGroupBox>
                 
                 <!-- Navigation -->

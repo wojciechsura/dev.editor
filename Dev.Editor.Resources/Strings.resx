@@ -1018,4 +1018,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="ExceptionWindow.ExceptionDetails" xml:space="preserve">
     <value>Unhandled exception occurred in the application. You may find details below.</value>
   </data>
+  <data name="Ribbon.Home.Comparing.PreviousChange" xml:space="preserve">
+    <value>Previous change</value>
+  </data>
+  <data name="Ribbon.Home.Comparing.NextChange" xml:space="preserve">
+    <value>Next change</value>
+  </data>
 </root>

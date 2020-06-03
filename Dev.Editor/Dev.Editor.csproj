@@ -454,5 +454,9 @@
     <Resource Include="Resources\Images\Escape16.png" />
     <Resource Include="Resources\Images\Escape32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Down16.png" />
+    <Resource Include="Resources\Images\Down32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

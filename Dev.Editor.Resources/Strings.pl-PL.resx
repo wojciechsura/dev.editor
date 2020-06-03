@@ -1018,4 +1018,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="ExceptionWindow.ExceptionDetails" xml:space="preserve">
     <value>W aplikacji wystąpił nieobsłużony wyjątek. Szczegóły znajdują się poniżej.</value>
   </data>
+  <data name="Ribbon.Home.Comparing.NextChange" xml:space="preserve">
+    <value>Następna zmiana</value>
+  </data>
+  <data name="Ribbon.Home.Comparing.PreviousChange" xml:space="preserve">
+    <value>Poprzednia zmiana</value>
+  </data>
 </root>

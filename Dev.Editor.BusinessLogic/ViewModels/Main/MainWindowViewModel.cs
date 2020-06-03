@@ -52,6 +52,7 @@ using Dev.Editor.BusinessLogic.ViewModels.Main.Documents;
 using ICSharpCode.AvalonEdit.Document;
 using Dev.Editor.BusinessLogic.Services.TextComparison;
 using Dev.Editor.BusinessLogic.Services.TextTransform;
+using Dev.Editor.BusinessLogic.Models.Documents.Text;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -795,6 +796,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             markdownToolsetAvailableCondition = new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Markdown, false);
             documentPathVirtualCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.FilenameVirtual, true);
             documentHasPathCondition = documentExistsCondition & !documentPathVirtualCondition;
+            diffDataAvailableCondition = new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, DiffInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.DiffResult, result => result != null, false);
 
             // Initializing tools
 
@@ -883,6 +885,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             InsertMarkdownHorizontalRuleCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Insert_Hr, null, obj => DoInsertMarkdownHorizontalRuleCommand(), markdownToolsetAvailableCondition);
 
             CompareCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Comparing_Compare, "Compare16.png", obj => DoCompare());
+            PreviousChangeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Comparing_PreviousChange, "Up16.png", obj => DoPreviousChange());
+            NextChangeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Comparing_NextChange, "Down16.png", obj => DoNextChange());
 
             commandRepositoryService.RegisterCommand(Resources.Strings.Command_ToggleWordWrap, "WordWrap16.png", obj => DoToggleWordWrap());
             commandRepositoryService.RegisterCommand(Resources.Strings.Command_ToggleLineNumbers, "LineNumbers16.png", obj => DoToggleLineNumbers());

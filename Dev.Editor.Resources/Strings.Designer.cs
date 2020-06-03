@@ -1261,6 +1261,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Next change.
+        /// </summary>
+        public static string Ribbon_Home_Comparing_NextChange {
+            get {
+                return ResourceManager.GetString("Ribbon.Home.Comparing.NextChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Previous change.
+        /// </summary>
+        public static string Ribbon_Home_Comparing_PreviousChange {
+            get {
+                return ResourceManager.GetString("Ribbon.Home.Comparing.PreviousChange", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Copy.
         /// </summary>
         public static string Ribbon_Home_Edit_Copy {

@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.Models.Highlighting;
+﻿using Dev.Editor.BusinessLogic.Models.Documents.Text;
+using Dev.Editor.BusinessLogic.Models.Highlighting;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.BusinessLogic.ViewModels.Main.Documents;
 using Dev.Editor.Common.Conditions;
@@ -30,6 +31,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo> markdownToolsetAvailableCondition;
         private readonly MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel> documentPathVirtualCondition;
         private readonly BaseCondition documentHasPathCondition;
+        private readonly MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, DiffInfo> diffDataAvailableCondition;
 
         // Public properties --------------------------------------------------
 
@@ -70,6 +72,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         // Comparing
 
         public ICommand CompareCommand { get; }
+        public ICommand PreviousChangeCommand { get; }
+        public ICommand NextChangeCommand { get; }
 
         // Navigation
 

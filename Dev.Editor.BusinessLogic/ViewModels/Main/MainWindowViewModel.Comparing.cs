@@ -76,5 +76,55 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 }
             }
         }
+
+        private void DoPreviousChange()
+        {
+            var doc = documentsManager.ActiveDocument as TextDocumentViewModel;
+
+            (var start, _) = doc.GetSelection();
+
+            var line = doc.Document.GetLineByOffset(start).LineNumber - 1;
+
+            var diff = doc.DiffResult;
+
+            do
+            {
+                line--;
+                if (line >= 0 && diff.Changes[line])
+                    break;
+            }
+            while (line >= 0);
+
+            if (line >= 0)
+            {
+                var offset = doc.Document.GetOffset(line + 1, 0);
+                doc.SetSelection(offset, 0, true);
+            }
+        }
+
+        private void DoNextChange()
+        {
+            var doc = documentsManager.ActiveDocument as TextDocumentViewModel;
+
+            (var start, _) = doc.GetSelection();
+
+            var line = doc.Document.GetLineByOffset(start).LineNumber - 1;
+
+            var diff = doc.DiffResult;
+
+            do
+            {
+                line++;
+                if (line < diff.Changes.Length && diff.Changes[line])
+                    break;
+            }
+            while (line < diff.Changes.Length);
+
+            if (line < diff.Changes.Length)
+            {
+                var offset = doc.Document.GetOffset(line + 1, 0);
+                doc.SetSelection(offset, 0, true);
+            }
+        }
     }
 }

@@ -31,6 +31,9 @@ https://www.iconfinder.com/iconsets/picol-vector
 * Text icons by Benjamin Stawarz
 https://www.iconfinder.com/iconsets/text-icons-1
 
+* Basic by Pixelmixer
+https://findicons.com/pack/42/basic
+
 Libraries
 
 * AvalonEdit (MIT)
