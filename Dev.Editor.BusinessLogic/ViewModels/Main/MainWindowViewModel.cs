@@ -885,8 +885,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             InsertMarkdownHorizontalRuleCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Insert_Hr, null, obj => DoInsertMarkdownHorizontalRuleCommand(), markdownToolsetAvailableCondition);
 
             CompareCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Comparing_Compare, "Compare16.png", obj => DoCompare());
-            PreviousChangeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Comparing_PreviousChange, "Up16.png", obj => DoPreviousChange());
-            NextChangeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Comparing_NextChange, "Down16.png", obj => DoNextChange());
+            PreviousChangeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Comparing_PreviousChange, "Up16.png", obj => DoPreviousChange(), diffDataAvailableCondition);
+            NextChangeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Comparing_NextChange, "Down16.png", obj => DoNextChange(), diffDataAvailableCondition);
 
             commandRepositoryService.RegisterCommand(Resources.Strings.Command_ToggleWordWrap, "WordWrap16.png", obj => DoToggleWordWrap());
             commandRepositoryService.RegisterCommand(Resources.Strings.Command_ToggleLineNumbers, "LineNumbers16.png", obj => DoToggleLineNumbers());
