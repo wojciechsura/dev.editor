@@ -244,7 +244,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 textToSearch = document.Document.Text;
             }
 
-            var matches = searchModel.Regex.Matches(textToSearch, 0);
+            var matches = searchModel.CountOccurrencesRegex.Matches(textToSearch, 0);
 
             if (matches.Count == 0)
                 messagingService.Inform(Resources.Strings.Message_NoMorePatternsFound);

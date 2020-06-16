@@ -9,9 +9,10 @@ namespace Dev.Editor.BusinessLogic.Models.Search
 {
     public class SearchReplaceModel 
     {
-        public SearchReplaceModel(Regex regex, string replace, bool searchBackwards, bool isRegexReplace, bool inSelection, bool showReplaceSummary)
+        public SearchReplaceModel(Regex searchRegex, Regex countOccurrencesRegex, string replace, bool searchBackwards, bool isRegexReplace, bool inSelection, bool showReplaceSummary)
         {
-            Regex = regex;
+            Regex = searchRegex;
+            CountOccurrencesRegex = countOccurrencesRegex;
             Replace = replace;
             SearchBackwards = searchBackwards;
             IsRegexReplace = isRegexReplace;
@@ -20,6 +21,7 @@ namespace Dev.Editor.BusinessLogic.Models.Search
         }
 
         public Regex Regex { get; }
+        public Regex CountOccurrencesRegex { get; }
         public string Replace { get; }
         public bool SearchBackwards { get; }
         public bool IsRegexReplace { get; }

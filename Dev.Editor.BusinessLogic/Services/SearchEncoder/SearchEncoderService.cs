@@ -127,6 +127,7 @@ namespace Dev.Editor.BusinessLogic.Services.SearchEncoder
         public SearchReplaceModel SearchDescriptionToModel(SearchReplaceDescription description)
         {
             Regex searchRegex;
+            Regex countOccurrencesRegex;
 
             try
             {
@@ -134,7 +135,13 @@ namespace Dev.Editor.BusinessLogic.Services.SearchEncoder
                     description.IsSearchBackwards,
                     description.IsCaseSensitive,
                     description.IsWholeWordsOnly,
-                    description.SearchMode);                
+                    description.SearchMode);
+
+                countOccurrencesRegex = GetSearchRegex(description.Search,
+                    false,
+                    description.IsCaseSensitive,
+                    description.IsWholeWordsOnly,
+                    description.SearchMode);
             }
             catch
             {
@@ -144,6 +151,7 @@ namespace Dev.Editor.BusinessLogic.Services.SearchEncoder
             string replaceText = GetReplaceText(description.Replace, description.SearchMode);
 
             return new SearchReplaceModel(searchRegex,
+                countOccurrencesRegex,
                 replaceText,
                 description.IsSearchBackwards,
                 description.SearchMode == SearchMode.RegularExpressions,
