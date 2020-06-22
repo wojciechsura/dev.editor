@@ -79,33 +79,30 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             if (!match.Success || !MatchWithinBounds(match))  // start again from beginning or end
             {
-                if (!searchModel.SearchedFromBoundary)
+                bool continueFromBoundary;
+
+                if (searchModel.SearchBackwards)
+                    continueFromBoundary = messagingService.AskYesNo(Strings.Message_SearchReachedBeginning);
+                else
+                    continueFromBoundary = messagingService.AskYesNo(Strings.Message_SearchReachedEnd);
+
+                if (continueFromBoundary)
                 {
-                    bool continueFromBoundary;
+                    searchModel.SearchedFromBoundary = true;
 
                     if (searchModel.SearchBackwards)
-                        continueFromBoundary = messagingService.AskYesNo(Strings.Message_SearchReachedBeginning);
-                    else
-                        continueFromBoundary = messagingService.AskYesNo(Strings.Message_SearchReachedEnd);
-
-                    if (continueFromBoundary)
                     {
-                        searchModel.SearchedFromBoundary = true;
-
-                        if (searchModel.SearchBackwards)
-                        {
-                            if (document.FindReplaceSegment != null)
-                                match = searchModel.Regex.Match(document.Document.Text, document.FindReplaceSegment.EndOffset);
-                            else
-                                match = searchModel.Regex.Match(document.Document.Text, document.Document.Text.Length);
-                        }
+                        if (document.FindReplaceSegment != null)
+                            match = searchModel.Regex.Match(document.Document.Text, document.FindReplaceSegment.EndOffset);
                         else
-                        {
-                            if (document.FindReplaceSegment != null)
-                                match = searchModel.Regex.Match(document.Document.Text, document.FindReplaceSegment.Offset);
-                            else
-                                match = searchModel.Regex.Match(document.Document.Text, 0);
-                        }
+                            match = searchModel.Regex.Match(document.Document.Text, document.Document.Text.Length);
+                    }
+                    else
+                    {
+                        if (document.FindReplaceSegment != null)
+                            match = searchModel.Regex.Match(document.Document.Text, document.FindReplaceSegment.Offset);
+                        else
+                            match = searchModel.Regex.Match(document.Document.Text, 0);
                     }
                 }
             }
