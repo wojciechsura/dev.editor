@@ -113,6 +113,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             editorAccess.FocusDocument();
         }
 
+        public override string ToString()
+        {
+            return $"HexDocument, {base.ToString()}";
+        }
+
         // Public properties --------------------------------------------------
 
         public HexByteContainer Document => document;

@@ -24,7 +24,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private bool isSelected;
         private TabColor tabColor;
         private bool isPinned;
-        private DiffInfo diffResult;
 
         // Private methods ----------------------------------------------------
 
@@ -56,6 +55,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private void DoMoveToOtherViewCommand()
         {
             handler.MoveToOtherView(this);
+        }
+
+        private void DoSetTabColor(TabColor color)
+        {
+            TabColor = color;
         }
 
         // Protected fields ---------------------------------------------------
@@ -90,11 +94,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             CloseAllButPinnedCommand = new AppCommand(obj => DoCloseAllButPinned());
             CloseOthersCommand = new AppCommand(obj => DoCloseOthersCommand());
             MoveToOtherViewCommand = new AppCommand(obj => DoMoveToOtherViewCommand());
-        }
-
-        private void DoSetTabColor(TabColor color)
-        {
-            TabColor = color;
         }
 
         public virtual void SetFilename(string filename, ImageSource icon)
@@ -224,10 +223,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             set => Set(ref isPinned, () => IsPinned, value);
         }
 
-        public DiffInfo DiffResult
+        public override string ToString()
         {
-            get => diffResult;
-            set => Set(ref diffResult, () => DiffResult, value);
+            StringBuilder result = new StringBuilder();
+            result.Append(FileName);
+            if (FilenameVirtual)
+                result.Append(" (V)");
+
+            if (Changed)
+                result.Append(" *");
+            if (IsActive)
+                result.Append(" Act");
+            if (IsSelected)
+                result.Append(" Sel");
+            if (IsPinned)
+                result.Append(" Pin");
+
+            return result.ToString();
         }
 
     }

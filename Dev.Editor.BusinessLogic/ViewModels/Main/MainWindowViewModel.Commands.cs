@@ -31,7 +31,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> markdownToolsetAvailableCondition;
         private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> documentPathVirtualCondition;
         private readonly BaseCondition documentHasPathCondition;
-        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> diffDataAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager, TextDocumentViewModel> diffDataAvailableCondition;
 
         // Public properties --------------------------------------------------
 

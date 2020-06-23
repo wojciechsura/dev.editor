@@ -67,6 +67,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             storedState = state;
         }
 
+        public override string ToString()
+        {
+            return $"BinDocument, {base.ToString()}";
+        }
 
         // Public properties --------------------------------------------------
 

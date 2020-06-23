@@ -833,8 +833,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 doc => doc.FilenameVirtual,
                 true);
             documentHasPathCondition = documentExistsCondition & !documentPathVirtualCondition;
-            diffDataAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager,
-                dm => dm.ActiveDocument,
+            diffDataAvailableCondition = new LambdaCondition<DocumentsManager, TextDocumentViewModel>(documentsManager,
+                dm => dm.ActiveDocument as TextDocumentViewModel,
                 doc => doc.DiffResult != null,
                 false);
 

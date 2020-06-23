@@ -48,7 +48,8 @@ namespace Dev.Editor.Common.Conditions
 
             source = newSource;
 
-            newSource.PropertyChanged += HandleSourcePropertyChanged;
+            if (source != null)
+                source.PropertyChanged += HandleSourcePropertyChanged;
 
             UpdateValue();
         }

@@ -36,6 +36,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private bool editor2Visible;
         private ActiveEditor activeEditor;
         private AnchorSegment findReplaceSegment;
+        private DiffInfo diffResult;
 
         // Private methods ----------------------------------------------------
 
@@ -172,6 +173,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             handler.RequestClearAllDiffs();
         }
 
+        public override string ToString()
+        {
+            return $"TextDocument, {base.ToString()}";
+        }
 
         // Public properties --------------------------------------------------
 
@@ -223,6 +228,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         {
             get => findReplaceSegment;
             set => Set(ref findReplaceSegment, () => FindReplaceSegment, value);
+        }
+
+        public DiffInfo DiffResult
+        {
+            get => diffResult;
+            set => Set(ref diffResult, () => DiffResult, value);
         }
     }
 }

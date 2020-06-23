@@ -172,7 +172,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Documents
                 if (index >= collection.Count)
                     index = collection.Count - 1;
 
-                if (index > 0 && index < collection.Count)
+                if (index >= 0 && index < collection.Count)
                     selectedCollectionItem = collection[index];
                 else
                     selectedCollectionItem = null;
