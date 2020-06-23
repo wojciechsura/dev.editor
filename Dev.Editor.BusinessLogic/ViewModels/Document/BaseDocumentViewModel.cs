@@ -2,6 +2,7 @@
 using Dev.Editor.BusinessLogic.Models.Highlighting;
 using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.Types.Document;
+using Dev.Editor.BusinessLogic.Types.UI;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.Common.Commands;
 using System;
@@ -196,7 +197,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         }
 
         public abstract HighlightingInfo Highlighting { get; set; }
-        
+
+        public AdditionalToolset HighlightingToolset => Highlighting?.AdditionalToolset ?? AdditionalToolset.None;
+
         public bool IsActive 
         {
             get => isActive; 

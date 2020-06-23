@@ -817,12 +817,26 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 doc => doc.FindReplaceSegment != null, 
                 false);
             selectionAvailableForSearchCondition = regularSelectionAvailableCondition | searchAreaAvailableCondition;
-            searchPerformedCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.LastSearch != null);
-            xmlToolsetAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => (doc.Highlighting?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Xml, false);
-            markdownToolsetAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => (doc.Highlighting?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Markdown, false);
-            documentPathVirtualCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.FilenameVirtual, true);
+            searchPerformedCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager,
+                dm => dm.ActiveDocument,
+                doc => doc.LastSearch != null);
+            xmlToolsetAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager,
+                dm => dm.ActiveDocument,
+                doc => doc.HighlightingToolset == AdditionalToolset.Xml,
+                false);
+            markdownToolsetAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager,
+                dm => dm.ActiveDocument,
+                doc => doc.HighlightingToolset == AdditionalToolset.Markdown,
+                false);
+            documentPathVirtualCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager,
+                dm => dm.ActiveDocument,
+                doc => doc.FilenameVirtual,
+                true);
             documentHasPathCondition = documentExistsCondition & !documentPathVirtualCondition;
-            diffDataAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.DiffResult != null, false);
+            diffDataAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager,
+                dm => dm.ActiveDocument,
+                doc => doc.DiffResult != null,
+                false);
 
             // Initializing tools
 
