@@ -50,11 +50,6 @@
     <Compile Include="Conditions\Expressions\ExpressionHandler.cs" />
     <Compile Include="Conditions\Expressions\IChainedExpressionHandler.cs" />
     <Compile Include="Conditions\LambdaCondition.cs" />
-    <Compile Include="Conditions\MutablePropertyFuncCondition.cs" />
-    <Compile Include="Conditions\MutablePropertyNotNullCondition.cs" />
-    <Compile Include="Conditions\MutableSourcePropertyFuncCondition.cs" />
-    <Compile Include="Conditions\MutableSourcePropertyNotNullCondition.cs" />
-    <Compile Include="Conditions\MutableSourcePropertyWatchCondition.cs" />
     <Compile Include="Conditions\NegateCondition.cs" />
     <Compile Include="Conditions\PropertyWatchCondition.cs" />
     <Compile Include="Conditions\SwitchCondition.cs" />

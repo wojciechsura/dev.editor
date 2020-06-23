@@ -782,21 +782,47 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             // Initializing conditions
 
-            documentExistsCondition = new MutablePropertyNotNullCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument);
-            documentIsTextCondition = new MutablePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, ad => ad is TextDocumentViewModel);
-            canUndoCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanUndo, false);
-            canRedoCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanRedo, false);
-            canSaveCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.CanSave, false);
-            selectionAvailableCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.SelectionAvailable, false);
-            regularSelectionAvailableCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.RegularSelectionAvailable, false);
-            searchAreaAvailableCondition = new TextDocumentPropertyNotNullCondition<AnchorSegment>(documentsManager, doc => doc.FindReplaceSegment, false);
+            documentExistsCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
+                dm => dm.ActiveDocument, 
+                a => a != null);
+            documentIsTextCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
+                dm => dm.ActiveDocument, 
+                ad => ad is TextDocumentViewModel);
+            canUndoCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
+                dm => dm.ActiveDocument, 
+                doc => doc.CanUndo, 
+                false);
+            canRedoCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
+                dm => dm.ActiveDocument, 
+                doc => doc.CanRedo, 
+                false);
+            canSaveCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
+                dm => dm.ActiveDocument, 
+                doc => doc.CanSave, 
+                false);
+            selectionAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
+                dm => dm.ActiveDocument, 
+                doc => doc.SelectionAvailable, 
+                false);
+            regularSelectionAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
+                dm => dm.ActiveDocument, 
+                doc => doc.RegularSelectionAvailable, 
+                false);
+            searchAreaAvailableCondition = new LambdaCondition<DocumentsManager, TextDocumentViewModel>(documentsManager, 
+                dm => dm.ActiveDocument as TextDocumentViewModel, 
+                td => td.FindReplaceSegment != null, 
+                false);
+            searchAreaAvailableCondition = new LambdaCondition<DocumentsManager, TextDocumentViewModel>(documentsManager, 
+                dm => dm.ActiveDocument as TextDocumentViewModel, 
+                doc => doc.FindReplaceSegment != null, 
+                false);
             selectionAvailableForSearchCondition = regularSelectionAvailableCondition | searchAreaAvailableCondition;
-            searchPerformedCondition = new MutableSourcePropertyNotNullCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.LastSearch);
-            xmlToolsetAvailableCondition = new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Xml, false);
-            markdownToolsetAvailableCondition = new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.Highlighting, hi => (hi?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Markdown, false);
-            documentPathVirtualCondition = new MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.FilenameVirtual, true);
+            searchPerformedCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.LastSearch != null);
+            xmlToolsetAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => (doc.Highlighting?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Xml, false);
+            markdownToolsetAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => (doc.Highlighting?.AdditionalToolset ?? AdditionalToolset.None) == AdditionalToolset.Markdown, false);
+            documentPathVirtualCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.FilenameVirtual, true);
             documentHasPathCondition = documentExistsCondition & !documentPathVirtualCondition;
-            diffDataAvailableCondition = new MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, DiffInfo>(documentsManager, dm => dm.ActiveDocument, doc => doc.DiffResult, result => result != null, false);
+            diffDataAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, dm => dm.ActiveDocument, doc => doc.DiffResult != null, false);
 
             // Initializing tools
 

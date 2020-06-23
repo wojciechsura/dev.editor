@@ -17,21 +17,21 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
     {
         // Private fields -----------------------------------------------------
 
-        private readonly MutablePropertyNotNullCondition<DocumentsManager, BaseDocumentViewModel> documentExistsCondition;
-        private readonly MutablePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel> documentIsTextCondition;
-        private readonly MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel> canUndoCondition;
-        private readonly MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel> canRedoCondition;
-        private readonly MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel> canSaveCondition;
-        private readonly MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel> selectionAvailableCondition;
-        private readonly TextDocumentPropertyNotNullCondition<AnchorSegment> searchAreaAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> documentExistsCondition;
+        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> documentIsTextCondition;
+        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> canUndoCondition;
+        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> canRedoCondition;
+        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> canSaveCondition;
+        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> selectionAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager, TextDocumentViewModel> searchAreaAvailableCondition;
         private readonly BaseCondition selectionAvailableForSearchCondition;
-        private readonly MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel> regularSelectionAvailableCondition;
-        private readonly MutableSourcePropertyNotNullCondition<DocumentsManager, BaseDocumentViewModel> searchPerformedCondition;
-        private readonly MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo> xmlToolsetAvailableCondition;
-        private readonly MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, HighlightingInfo> markdownToolsetAvailableCondition;
-        private readonly MutableSourcePropertyWatchCondition<DocumentsManager, BaseDocumentViewModel> documentPathVirtualCondition;
+        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> regularSelectionAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> searchPerformedCondition;
+        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> xmlToolsetAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> markdownToolsetAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> documentPathVirtualCondition;
         private readonly BaseCondition documentHasPathCondition;
-        private readonly MutableSourcePropertyFuncCondition<DocumentsManager, BaseDocumentViewModel, DiffInfo> diffDataAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> diffDataAvailableCondition;
 
         // Public properties --------------------------------------------------
 
