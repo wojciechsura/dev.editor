@@ -20,6 +20,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
     {
         // Private fields -----------------------------------------------------
 
+        private readonly Guid guid;
+
         private bool isActive;
         private bool isSelected;
         private TabColor tabColor;
@@ -81,9 +83,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         // Public methods -----------------------------------------------------
 
-        public BaseDocumentViewModel(IDocumentHandler handler)
+        public BaseDocumentViewModel(IDocumentHandler handler, Guid guid)
         {
             this.handler = handler;
+            this.guid = guid;
             this.isActive = false;
             this.tabColor = TabColor.Default;
             this.isPinned = false;
@@ -222,6 +225,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             get => isPinned;
             set => Set(ref isPinned, () => IsPinned, value);
         }
+
+        public Guid Guid => guid;
 
         public override string ToString()
         {

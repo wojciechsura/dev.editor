@@ -19,7 +19,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         // Public methods -----------------------------------------------------
 
-        public BinDocumentViewModel(IDocumentHandler handler) : base(handler)
+        public BinDocumentViewModel(IDocumentHandler handler, Guid guid) : base(handler, guid)
         {
             canUndo = false;
             canRedo = false;

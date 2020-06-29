@@ -111,7 +111,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 
             if (document == null)
             {
-                var textDocument = new TextDocumentViewModel(this);
+                var textDocument = new TextDocumentViewModel(this, Guid.NewGuid());
                 
                 InternalLoadTextDocument(textDocument, filename);
 
@@ -151,7 +151,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoNewTextDocument(DocumentTabKind documentTabKind, string initialText = null, int? index = null)
         {
-            var newDocument = new TextDocumentViewModel(this);
+            var newDocument = new TextDocumentViewModel(this, Guid.NewGuid());
             
             int i = 1;
             while (documentsManager.AllDocuments.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
@@ -245,7 +245,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             if (document == null)
             {
-                var hexDocument = new HexDocumentViewModel(this);
+                var hexDocument = new HexDocumentViewModel(this, Guid.NewGuid());
 
                 InternalLoadHexDocument(hexDocument, filename);
 
@@ -286,7 +286,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoNewHexDocument(DocumentTabKind documentTabKind, int? index = null)
         {
-            var newDocument = new HexDocumentViewModel(this);
+            var newDocument = new HexDocumentViewModel(this, Guid.NewGuid());
 
             int i = 1;
             while (documentsManager.AllDocuments.Any(d => d.FileName.Equals(GenerateBlankFileName(i))))
@@ -369,7 +369,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 
             if (document == null)
             {
-                var binDocument = new BinDocumentViewModel(this);
+                var binDocument = new BinDocumentViewModel(this, Guid.NewGuid());
 
                 InternalLoadBinDocument(binDocument, filename, binDefinition);
 

@@ -43,8 +43,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         // Public methods -----------------------------------------------------
 
-        public HexDocumentViewModel(IDocumentHandler handler)
-            : base(handler)
+        public HexDocumentViewModel(IDocumentHandler handler, Guid guid)
+            : base(handler, guid)
         {
             document = new HexByteContainer();
             document.Changed += HandleDocumentChanged;

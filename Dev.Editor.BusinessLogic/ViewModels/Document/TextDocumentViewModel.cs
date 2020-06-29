@@ -58,8 +58,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         // Public methods -----------------------------------------------------
 
-        public TextDocumentViewModel(IDocumentHandler handler)
-            : base(handler)
+        public TextDocumentViewModel(IDocumentHandler handler, Guid guid)
+            : base(handler, guid)
         {
             document = new TextDocument();
             document.UndoStack.PropertyChanged += HandleUndoStackPropertyChanged;

@@ -53,6 +53,7 @@ using ICSharpCode.AvalonEdit.Document;
 using Dev.Editor.BusinessLogic.Services.TextComparison;
 using Dev.Editor.BusinessLogic.Services.TextTransform;
 using Dev.Editor.BusinessLogic.Models.Documents.Text;
+using System.Windows.Media.Effects;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -139,8 +140,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         {
             int storedFileIndex = 0;
 
+            InternalConfig internalConfiguration = configurationService.Configuration.Internal;
             bool StoreDocuments(ITabDocumentCollection<BaseDocumentViewModel> documents)
             {
+                void StoreGeneralDocumentInfo(BaseDocumentViewModel document, BaseStoredFile storedFile, string storedFilename)
+                {
+                    storedFile.Filename.Value = document.FileName;
+                    storedFile.FilenameIsVirtual.Value = document.FilenameVirtual;
+                    storedFile.IsDirty.Value = document.Changed;
+                    storedFile.StoredFilename.Value = storedFilename;
+                    storedFile.LastModifiedDate.Value = document.LastModificationDate.Ticks;
+                    storedFile.DocumentTabKind.Value = documents.DocumentTabKind;
+                    storedFile.TabColor.Value = document.TabColor;
+                    storedFile.IsPinned.Value = document.IsPinned;
+                    storedFile.Guid.Value = document.Guid.ToString();
+                }
+
                 var storedFilesPath = pathService.StoredFilesPath;
 
                 for (int i = 0; i < documents.Count; i++)
@@ -159,75 +174,69 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                         return false;
                     }
 
-                    // TODO remove duplicated code
+                    BaseStoredFile storedFile;
+
                     switch (document)
                     {
                         case TextDocumentViewModel textDocument:
                             {
-                                var storedFile = new TextStoredFile();
-                                storedFile.Filename.Value = textDocument.FileName;
-                                storedFile.FilenameIsVirtual.Value = textDocument.FilenameVirtual;
-                                storedFile.IsDirty.Value = textDocument.Changed;
-                                storedFile.StoredFilename.Value = storedFilename;
-                                storedFile.HighlightingName.Value = textDocument.Highlighting?.Name;
-                                storedFile.LastModifiedDate.Value = textDocument.LastModificationDate.Ticks;
-                                storedFile.DocumentTabKind.Value = documents.DocumentTabKind;
-                                storedFile.TabColor.Value = textDocument.TabColor;
-                                storedFile.IsPinned.Value = textDocument.IsPinned;
+                                storedFile = new TextStoredFile();
+                                StoreGeneralDocumentInfo(textDocument, storedFile, storedFilename);
 
-                                configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
+                                ((TextStoredFile)storedFile).HighlightingName.Value = textDocument.Highlighting?.Name;
+                                
                                 break;
                             }
                         case HexDocumentViewModel hexDocument:
                             {
-                                var storedFile = new HexStoredFile();
-                                storedFile.Filename.Value = hexDocument.FileName;
-                                storedFile.FilenameIsVirtual.Value = hexDocument.FilenameVirtual;
-                                storedFile.IsDirty.Value = hexDocument.Changed;
-                                storedFile.StoredFilename.Value = storedFilename;
-                                storedFile.LastModifiedDate.Value = hexDocument.LastModificationDate.Ticks;
-                                storedFile.DocumentTabKind.Value = documents.DocumentTabKind;
-                                storedFile.TabColor.Value = hexDocument.TabColor;
-                                storedFile.IsPinned.Value = hexDocument.IsPinned;
+                                storedFile = new HexStoredFile();
+                                StoreGeneralDocumentInfo(hexDocument, storedFile, storedFilename);
 
-                                configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                                 break;
                             }
                         case BinDocumentViewModel binDocument:
                             {
-                                var storedFile = new BinStoredFile();
-                                storedFile.Filename.Value = binDocument.FileName;
-                                storedFile.FilenameIsVirtual.Value = binDocument.FilenameVirtual;
-                                storedFile.IsDirty.Value = binDocument.Changed;
-                                storedFile.StoredFilename.Value = document.FileName;
-                                storedFile.DefinitionUid.Value = binDocument.Definition.Uid.Value;
-                                storedFile.LastModifiedDate.Value = binDocument.LastModificationDate.Ticks;
-                                storedFile.DocumentTabKind.Value = documents.DocumentTabKind;
-                                storedFile.TabColor.Value = binDocument.TabColor;
-                                storedFile.IsPinned.Value = binDocument.IsPinned;
+                                storedFile = new BinStoredFile();
+                                StoreGeneralDocumentInfo(binDocument, storedFile, storedFilename);
 
-                                configurationService.Configuration.Internal.StoredFiles.Add(storedFile);
                                 break;
                             }
                         default:
                             throw new InvalidOperationException("Unsupported document type!");
                     }
+
+                    internalConfiguration.StoredFiles.Add(storedFile);
                 }
 
                 return true;
             }
 
-            configurationService.Configuration.Internal.StoredFiles.Clear();
+            internalConfiguration.StoredFiles.Clear();
 
-            return StoreDocuments(documentsManager.PrimaryDocuments) && 
+            bool stored = StoreDocuments(documentsManager.PrimaryDocuments) && 
                 StoreDocuments(documentsManager.SecondaryDocuments);
+
+            if (stored)
+            {
+                internalConfiguration.PrimarySelectedDocument.Value = documentsManager.SelectedPrimaryDocument?.Guid.ToString() ?? string.Empty;
+                internalConfiguration.SecondarySelectedDocument.Value = documentsManager.SelectedSecondaryDocument?.Guid.ToString() ?? string.Empty;
+                internalConfiguration.ActiveDocument.Value = documentsManager.ActiveDocument?.Guid.ToString() ?? string.Empty;
+            }
+
+            return stored;
         }
 
         private void RestoreFiles()
         {
-            for (int i = 0; i < configurationService.Configuration.Internal.StoredFiles.Count; i++)
+            InternalConfig internalConfg = configurationService.Configuration.Internal;
+
+            for (int i = 0; i < internalConfg.StoredFiles.Count; i++)
             {
-                var file = configurationService.Configuration.Internal.StoredFiles[i];
+                var file = internalConfg.StoredFiles[i];
+
+                Guid fileGuid;
+                if (!Guid.TryParse(file.Guid.Value, out fileGuid))
+                    fileGuid = Guid.NewGuid(); ;
 
                 BaseDocumentViewModel document = null;
 
@@ -238,7 +247,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                         {
                             try
                             {
-                                var textDocument = new TextDocumentViewModel(this);
+                                var textDocument = new TextDocumentViewModel(this, fileGuid);
 
                                 InternalReadTextDocument(textDocument, textStoredFile.StoredFilename.Value);
 
@@ -272,7 +281,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                         {
                             try
                             {
-                                var hexDocument = new HexDocumentViewModel(this);
+                                var hexDocument = new HexDocumentViewModel(this, fileGuid);
 
                                 InternalReadHexDocument((HexDocumentViewModel)hexDocument, hexStoredFile.StoredFilename.Value);
 
@@ -301,7 +310,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 if (def == null)
                                     continue;
 
-                                var binDocument = new BinDocumentViewModel(this);
+                                var binDocument = new BinDocumentViewModel(this, fileGuid);
 
                                 InternalReadBinDocument((BinDocumentViewModel)binDocument, binStoredFile.StoredFilename.Value, def);
 
@@ -328,6 +337,29 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 if (document != null)
                     documentsManager.AddDocument(document, file.DocumentTabKind.Value);
+            }
+
+            // Restore left selected, right selected and active document
+
+            if (Guid.TryParse(internalConfg.PrimarySelectedDocument.Value, out Guid selectedPrimaryGuid))
+            {
+                var document = documentsManager.PrimaryDocuments.FirstOrDefault(doc => doc.Guid == selectedPrimaryGuid);
+                if (document != null)
+                    documentsManager.SelectedPrimaryDocument = document;
+            }
+
+            if (Guid.TryParse(internalConfg.SecondarySelectedDocument.Value, out Guid selectedSecondaryGuid))
+            {
+                var document = documentsManager.SecondaryDocuments.FirstOrDefault(doc => doc.Guid == selectedSecondaryGuid);
+                if (document != null)
+                    documentsManager.SelectedSecondaryDocument = document;
+            }
+
+            if (Guid.TryParse(internalConfg.ActiveDocument.Value, out Guid activeGuid))
+            {
+                var document = documentsManager.AllDocuments.FirstOrDefault(doc => doc.Guid == activeGuid);
+                if (document != null)
+                    documentsManager.ActiveDocument = document;
             }
         }
 
