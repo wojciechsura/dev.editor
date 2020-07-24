@@ -9,7 +9,15 @@ namespace Dev.Editor.BusinessLogic.Models.Search
 {
     public class SearchReplaceModel 
     {
-        public SearchReplaceModel(Regex searchRegex, Regex countOccurrencesRegex, string replace, bool searchBackwards, bool isRegexReplace, bool inSelection, bool showReplaceSummary)
+        public SearchReplaceModel(Regex searchRegex,
+            Regex countOccurrencesRegex,
+            string replace,
+            bool searchBackwards,
+            bool isRegexReplace,
+            bool inSelection,
+            bool showReplaceSummary,
+            string location,
+            string fileMask)
         {
             Regex = searchRegex;
             CountOccurrencesRegex = countOccurrencesRegex;
@@ -18,6 +26,8 @@ namespace Dev.Editor.BusinessLogic.Models.Search
             IsRegexReplace = isRegexReplace;
             InSelection = inSelection;
             ShowReplaceSummary = showReplaceSummary;
+            Location = location;
+            FileMask = fileMask;
         }
 
         public Regex Regex { get; }
@@ -27,7 +37,8 @@ namespace Dev.Editor.BusinessLogic.Models.Search
         public bool IsRegexReplace { get; }
         public bool InSelection { get; }
         public bool ShowReplaceSummary { get; }
-
+        public string Location { get; }
+        public string FileMask { get; }
         public bool SearchedFromBoundary { get; set; } = false;
         public bool SearchPerformed { get; set; } = false;
     }

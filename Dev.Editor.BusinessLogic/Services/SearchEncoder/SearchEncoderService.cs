@@ -156,7 +156,9 @@ namespace Dev.Editor.BusinessLogic.Services.SearchEncoder
                 description.IsSearchBackwards,
                 description.SearchMode == SearchMode.RegularExpressions,
                 description.IsInSelection,
-                description.ShowReplaceSummary);            
+                description.ShowReplaceSummary,
+                description.Location,
+                description.FileMask);            
         }
     }
 }

@@ -20,5 +20,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         void SetFindReplaceSegmentToSelection(bool searchBackwards);
         void ClearFindReplaceSegment();
+        void FindInFiles(SearchReplaceModel searchReplaceModel);
     }
 }

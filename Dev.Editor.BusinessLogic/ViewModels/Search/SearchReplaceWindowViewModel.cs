@@ -16,6 +16,7 @@ using Dev.Editor.Resources;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -58,6 +59,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         private SearchReplaceOperation currentOperation;
         private bool showReplaceSummary;
         private bool storedSearchPanelVisible;
+        private string location;
+        private string fileMask;
 
         // Private methods ----------------------------------------------------
 
@@ -158,6 +161,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             searchHost.FindNext(searchReplaceModel);
         }
 
+        private void DoFindInFiles()
+        {
+            StoreLastSearchReplaceIfNeeded();
+
+            // Validate location
+
+            if (!Directory.Exists(location))
+            {
+                messagingService.ShowError(Strings.Message_LocationInvalid);
+                return;
+            }
+
+            searchHost.FindInFiles(searchReplaceModel);
+        }
+
+
         private void DoCountOccurrences()
         {
             try
@@ -170,6 +189,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 messagingService.ShowError(Strings.Message_InvalidSearchPattern);
                 return;
             }
+        }
+
+        private void DoPickLocation()
+        {
+            (bool result, string newLocation) = dialogService.ShowChooseFolderDialog(location);
+
+            if (result)
+                Location = newLocation;
         }
 
         private void DoReplace()
@@ -250,7 +277,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
                 InSelection,
                 SearchBackwards,
                 WholeWordsOnly,
-                ShowReplaceSummary);
+                ShowReplaceSummary,
+                Location,
+                FileMask);
         }
 
         private void UpdateModel()
@@ -330,6 +359,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             this.searchEncoderService = searchEncoderService;
             this.dialogService = dialogService;
 
+            this.fileMask = "*.*";
+            this.location = "";
+
             eventBus.Register((IEventListener<ApplicationShutdownEvent>)this);
             eventBus.Register((IEventListener<StoredSearchesChangedEvent>)this);
 
@@ -366,15 +398,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             searchHost.SelectionAvailableCondition.ValueChanged += HandleSelectionAvailableChanged;
 
             FindNextCommand = new AppCommand(obj => DoFindNext(), searchHost.CanSearchCondition & searchExpressionValidCondition);
+            FindInFilesCommand = new AppCommand(obj => DoFindInFiles(), searchExpressionValidCondition);
             CountOccurrencesCommand = new AppCommand(obj => DoCountOccurrences(), searchHost.CanSearchCondition & searchExpressionValidCondition);
             ReplaceCommand = new AppCommand(obj => DoReplace(), searchHost.CanSearchCondition & searchExpressionValidCondition);
             ReplaceAllCommand = new AppCommand(obj => DoReplaceAll(), searchHost.CanSearchCondition & searchExpressionValidCondition);
             CloseCommand = new AppCommand(obj => DoClose());
             SaveSearchCommand = new AppCommand(obj => DoSaveSearch());
             DeleteSearchCommand = new AppCommand(obj => DoDeleteSearch(), storedSearchSelectedCondition);
+            PickLocationCommand = new AppCommand(obj => DoPickLocation());
 
             UpdateModel();
-        }        
+        }
 
         public void ShowReplace()
         {
@@ -390,6 +424,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         {
             CurrentOperation = SearchReplaceOperation.Search;
             
+            access.FocusFindInFiles();
+            access.ShowAndFocus();
+        }
+
+        public void ShowFindInFiles()
+        {
+            CurrentOperation = SearchReplaceOperation.FindInFiles;
+
             access.FocusSearch();
             access.ShowAndFocus();
         }
@@ -451,6 +493,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         public ICommand SaveSearchCommand { get; }
 
         public ICommand DeleteSearchCommand { get; }
+
+        public ICommand FindInFilesCommand { get; }
+
+        public ICommand PickLocationCommand { get; }
+
+        public string Location
+        {
+            get => location;
+            set => Set(ref location, () => Location, value, HandleSearchReplaceParamsChanged);
+        }
+
+        public string FileMask
+        {
+            get => fileMask;
+            set => Set(ref fileMask, () => FileMask, value, HandleSearchReplaceParamsChanged);
+        }
 
         public string Search
         {

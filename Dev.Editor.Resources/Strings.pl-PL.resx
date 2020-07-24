@@ -1024,4 +1024,19 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Home.Comparing.PreviousChange" xml:space="preserve">
     <value>Poprzednia zmiana</value>
   </data>
+  <data name="SearchWindow.SearchInFilesTab" xml:space="preserve">
+    <value>Znajdź w plikach</value>
+  </data>
+  <data name="SearchWindow.Location" xml:space="preserve">
+    <value>Katalog</value>
+  </data>
+  <data name="Ellipsis" xml:space="preserve">
+    <value>...</value>
+  </data>
+  <data name="SearchWindow.FileMask" xml:space="preserve">
+    <value>Maska plików</value>
+  </data>
+  <data name="Message.LocationInvalid" xml:space="preserve">
+    <value>Nieprawidłowy katalog do przeszukania!</value>
+  </data>
 </root>

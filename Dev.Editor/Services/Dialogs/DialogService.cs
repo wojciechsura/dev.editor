@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Dev.Editor.Services.Dialogs
 {
@@ -107,6 +108,19 @@ namespace Dev.Editor.Services.Dialogs
         {
             var dialog = new ExceptionWindow(e);
             dialog.ShowDialog();
+        }
+
+        public (bool result, string newLocation) ShowChooseFolderDialog(string location)
+        {
+            var dialog = new CommonOpenFileDialog();
+            dialog.IsFolderPicker = true;
+            dialog.InitialDirectory = location;
+            CommonFileDialogResult result = dialog.ShowDialog();
+
+            if (result == CommonFileDialogResult.Ok)
+                return (true, dialog.FileName);
+            else
+                return (false, null);
         }
     }
 }

@@ -487,7 +487,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 selectionAvailableForSearchCondition.GetValue(),
                 storedSearchReplace.IsSearchBackwards.Value,
                 storedSearchReplace.IsWholeWordsOnly.Value,
-                storedSearchReplace.ShowReplaceSummary.Value);
+                storedSearchReplace.ShowReplaceSummary.Value,
+                storedSearchReplace.Location.Value,
+                storedSearchReplace.FileMask.Value);
 
             var searchModel = searchEncoder.SearchDescriptionToModel(desc);
 

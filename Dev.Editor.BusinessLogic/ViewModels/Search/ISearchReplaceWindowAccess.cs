@@ -12,5 +12,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         void FocusSearch();
         void FocusReplace();
         void Close();
+        void FocusFindInFiles();
     }
 }

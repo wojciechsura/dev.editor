@@ -19,5 +19,6 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
         (bool, DiffConfigDialogResult) ShowDiffConfigDialog(DiffConfigDialogModel model);
         (bool, EscapeConfigResult) ShowEscapeConfigDialog(EscapeConfigModel escapeConfigModel);
         void ShowExceptionDialog(Exception e);
+        (bool result, string newLocation) ShowChooseFolderDialog(string location);
     }
 }

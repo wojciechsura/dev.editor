@@ -248,5 +248,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             else
                 messagingService.Inform(String.Format(Resources.Strings.Message_FoundOccurrences, matches.Count));
         }
+
+        public void FindInFiles(SearchReplaceModel searchReplaceModel)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

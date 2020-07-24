@@ -18,7 +18,9 @@ namespace Dev.Editor.BusinessLogic.Models.Search
             bool isInSelection,
             bool isSearchBackwards,
             bool isWholeWordsOnly,
-            bool showReplaceSummary)
+            bool showReplaceSummary,
+            string location,
+            string fileMask)
         {
             Search = search;
             Replace = replace;
@@ -29,6 +31,8 @@ namespace Dev.Editor.BusinessLogic.Models.Search
             IsSearchBackwards = isSearchBackwards;
             IsWholeWordsOnly = isWholeWordsOnly;
             ShowReplaceSummary = showReplaceSummary;
+            Location = location;
+            FileMask = fileMask;
         }
 
         public bool IsCaseSensitive { get; }
@@ -36,6 +40,8 @@ namespace Dev.Editor.BusinessLogic.Models.Search
         public bool IsSearchBackwards { get; }
         public bool IsWholeWordsOnly { get; }
         public bool ShowReplaceSummary { get; }
+        public string Location { get; }
+        public string FileMask { get; }
         public SearchReplaceOperation Operation { get; }
         public string Replace { get; }
         public string Search { get; }

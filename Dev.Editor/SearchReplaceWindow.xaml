@@ -15,20 +15,26 @@
         SizeToContent="WidthAndHeight" ResizeMode="NoResize" Closing="HandleWindowClosing" ShowInTaskbar="False"
         WindowStartupLocation="CenterOwner">
     <Window.Resources>
-        <converters:SearchOperationToIndexConverter x:Key="SearchOperationToIndexConverter" />
-        <converters:SearchReplaceOperationToImageConverter x:Key="SearchReplaceOperationToImageConverter" />
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <converters:SearchOperationToIndexConverter x:Key="SearchOperationToIndexConverter" />
+            <converters:SearchReplaceOperationToImageConverter x:Key="SearchReplaceOperationToImageConverter" />
+        </ResourceDictionary>
     </Window.Resources>
 
     <StackPanel Orientation="Horizontal">
 
-        <TabControl x:Name="tcTabs" Margin="{StaticResource DialogWindowPadding}" SelectedIndex="{Binding CurrentOperation, Mode=TwoWay, Converter={StaticResource SearchOperationToIndexConverter}}">
+        <TabControl x:Name="tcTabs" Margin="{StaticResource DialogWindowPadding}" 
+                    SelectedIndex="{Binding CurrentOperation, Mode=TwoWay, Converter={StaticResource SearchOperationToIndexConverter}}">
 
             <!-- Search -->
 
             <TabItem x:Name="tSearch" Header="{x:Static p:Strings.SearchWindow_SearchTab}" wpf:AccessKeyScopeControl.IsAccessKeyScope="True">
                 <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchTab}" Padding="4">
                     <StackPanel Orientation="Horizontal">
-                        <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Vertical" Width="350">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -44,7 +50,7 @@
                                               ItemsSource="{Binding LastSearches}" IsEditable="True" />
                             </Grid>
 
-                            <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchOptions}" Padding="4">
+                            <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchOptions}" Padding="4" Width="350">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="1*" />
@@ -64,7 +70,7 @@
                                     </StackPanel>
                                 </Grid>
                             </GroupBox>
-                            <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchMode}" Padding="4">
+                            <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchMode}" Padding="4" Width="350">
                                 <StackPanel Orientation="Vertical">
                                     <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeNormal}" 
                                                 IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Normal}}"/>
@@ -98,7 +104,7 @@
                 <GroupBox Header="{x:Static p:Strings.SearchWindow_ReplaceTab}" Padding="4">
                     <StackPanel Orientation="Horizontal">
 
-                        <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Vertical" Width="350">
                             <Grid>
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto" />
@@ -129,7 +135,7 @@
                                 </Grid.RowDefinitions>
 
                                 <GroupBox Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Header="{x:Static p:Strings.SearchWindow_SearchOptions}" 
-                                      Padding="4">
+                                      Padding="4" Width="350">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="1*" />
@@ -155,7 +161,7 @@
                                 </GroupBox>
 
                                 <GroupBox Grid.Column="0" Grid.Row="1" Header="{x:Static p:Strings.SearchWindow_SearchMode}" Padding="4"
-                                          Margin="0,0,2,0">
+                                          Margin="0,0,2,0" Width="175">
                                     <StackPanel Orientation="Vertical">
                                         <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeNormal}" 
                                                 IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Normal}}"/>
@@ -167,7 +173,7 @@
                                 </GroupBox>
 
                                 <GroupBox Grid.Row="1" Grid.Column="1" Header="{x:Static p:Strings.SearchWindow_ReplaceOptions}" Padding="4"
-                                          Margin="2,0,0,0">
+                                          Margin="2,0,0,0" Width="175">
                                     <StackPanel Orientation="Vertical">
                                         <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_ShowSummary}"
                                               IsChecked="{Binding ShowReplaceSummary, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
@@ -194,9 +200,96 @@
                     </StackPanel>
                 </GroupBox>
             </TabItem>
+
+            <TabItem x:Name="tSearchInFiles" Header="{x:Static p:Strings.SearchWindow_SearchInFilesTab}" wpf:AccessKeyScopeControl.IsAccessKeyScope="True">
+                <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchInFilesTab}" Padding="4">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical" Width="350">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="250" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_SearchedText}"/>
+                                <c:ComboBoxEx x:Name="cbSearchInFilesSearch" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
+                                              Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              ItemsSource="{Binding LastSearches}" IsEditable="True" />
+                            </Grid>
+
+                            <GroupBox Header="{x:Static p:Strings.SearchWindow_Location}" Padding="4" Width="350" >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_Location}"></Label>
+
+                                    <DockPanel Grid.Row="0" Grid.Column="1">
+                                        <Button DockPanel.Dock="Right" Content="{x:Static p:Strings.Ellipsis}" Margin="0,4,4,4" Padding="6,0"
+                                                Command="{Binding PickLocationCommand}"/>
+                                        <TextBox Margin="4" Text="{Binding Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                 HorizontalAlignment="Stretch" />
+                                    </DockPanel>
+
+                                    <Label Grid.Row="1" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_FileMask}"></Label>
+
+                                    <TextBox Grid.Row="1" Grid.Column="1" Margin="4" Text="{Binding FileMask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             HorizontalAlignment="Stretch"/>
+
+                                </Grid>
+                            </GroupBox>
+                            
+                            <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchOptions}" Padding="4" Width="350">
+                                <StackPanel Grid.Column="0" Orientation="Vertical">
+                                    <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_CaseSensitive}" 
+                                        IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_OnlyFullWords}" 
+                                        IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Content="{x:Static p:Strings.SearchWindow_SearchBackwards}" 
+                                        IsChecked="{Binding SearchBackwards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchMode}" Padding="4" Width="350">
+                                <StackPanel Orientation="Vertical">
+                                    <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeNormal}" 
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Normal}}"/>
+                                    <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeExtended}" 
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Extended}}"/>
+                                    <RadioButton Content="{x:Static p:Strings.SearchWindow_SearchModeRegex}" 
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.RegularExpressions}}"/>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+
+                        <DockPanel Margin="10,0,0,0">
+
+                            <ToggleButton DockPanel.Dock="Bottom" Content="»" Width="24" Height="24" HorizontalAlignment="Right" 
+                                          IsChecked="{Binding StoredSearchPanelVisible, Mode=TwoWay}"/>
+
+                            <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                                <Button Content="Find in files" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindInFilesCommand}" 
+                                IsDefault="True"/>
+                                <Separator Margin="{StaticResource DialogItemsVMargin}" />
+                                <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" 
+                                IsCancel="True"/>
+                            </StackPanel>
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+            </TabItem>
+
         </TabControl>
 
-        <DockPanel Width="250" Visibility="{Binding StoredSearchPanelVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
+        <DockPanel Width="250" Visibility="{Binding StoredSearchPanelVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,4,4,4">
 
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
                 <Button Command="{Binding SaveSearchCommand}" Style="{StaticResource FirstToolButton}">
@@ -207,7 +300,7 @@
                 </Button>
             </StackPanel>
 
-            <ListBox ItemsSource="{Binding StoredSearches}" SelectedItem="{Binding SelectedStoredSearch, Mode=TwoWay}" MouseDoubleClick="HandleStoredSearchesDoubleClick">
+            <ListBox ItemsSource="{Binding StoredSearches}" SelectedItem="{Binding SelectedStoredSearch, Mode=TwoWay}" MouseDoubleClick="HandleStoredSearchesDoubleClick" Margin="4">
                 <ListBox.ItemTemplate>
                     <DataTemplate DataType="{x:Type vm:StoredSearchViewModel}">
                         <DockPanel>

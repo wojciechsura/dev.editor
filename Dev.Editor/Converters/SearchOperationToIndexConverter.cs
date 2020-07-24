@@ -22,6 +22,8 @@ namespace Dev.Editor.Converters
                         return 0;
                     case SearchReplaceOperation.Replace:
                         return 1;
+                    case SearchReplaceOperation.FindInFiles:
+                        return 2;
                     default:
                         throw new InvalidEnumArgumentException("Unsupported search operation!");
                 }
@@ -40,6 +42,8 @@ namespace Dev.Editor.Converters
                         return SearchReplaceOperation.Search;
                     case 1:
                         return SearchReplaceOperation.Replace;
+                    case 2:
+                        return SearchReplaceOperation.FindInFiles;
                     default:
                         throw new ArgumentOutOfRangeException("Unsupported index!");
                 }
