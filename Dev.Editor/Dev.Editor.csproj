@@ -95,6 +95,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\DocumentTabHeader.cs" />
+    <Compile Include="Controls\SearchResultsTool.xaml.cs">
+      <DependentUpon>SearchResultsTool.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Converters\BoolToIntegrationStateConverter.cs" />
     <Compile Include="Converters\DoubleToStarGridLengthConverter.cs" />
     <Compile Include="Converters\EqualsParameterToBoolConverter.cs" />
@@ -165,6 +168,10 @@
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
     <Compile Include="Wpf\MouseEvents.cs" />
     <Compile Include="Wpf\ParentData.cs" />
+    <Page Include="Controls\SearchResultsTool.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="DiffConfigDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

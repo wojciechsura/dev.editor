@@ -165,6 +165,8 @@
     <Compile Include="ViewModels\BottomTools\Base\IBottomToolHandler.cs" />
     <Compile Include="ViewModels\BottomTools\Messages\IMessagesHandler.cs" />
     <Compile Include="ViewModels\BottomTools\Messages\MessagesBottomToolViewModel.cs" />
+    <Compile Include="ViewModels\BottomTools\SearchResults\ISearchResultsHandler.cs" />
+    <Compile Include="ViewModels\BottomTools\SearchResults\SearchResultsBottomToolViewModel.cs" />
     <Compile Include="ViewModels\Configuration\BaseConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Configuration\BehaviorConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Configuration\ConfigurationWindowViewModel.cs" />

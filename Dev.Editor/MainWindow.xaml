@@ -1056,6 +1056,10 @@
                 <TabItem DataContext="{Binding MessagesBottomToolViewModel}">
                     <controls:MessagesBottomTool />
                 </TabItem>
+
+                <TabItem DataContext="{Binding SearchResultsBottomToolViewModel}">
+                    <controls:SearchResultsTool />
+                </TabItem>
             </TabControl>
 
             <Popup x:Name="pNavigation" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,0,0,0" StaysOpen="False"

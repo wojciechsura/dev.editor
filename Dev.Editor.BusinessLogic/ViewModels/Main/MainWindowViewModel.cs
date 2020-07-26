@@ -54,11 +54,13 @@ using Dev.Editor.BusinessLogic.Services.TextComparison;
 using Dev.Editor.BusinessLogic.Services.TextTransform;
 using Dev.Editor.BusinessLogic.Models.Documents.Text;
 using System.Windows.Media.Effects;
+using Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
     public partial class MainWindowViewModel : BaseViewModel, IDocumentHandler,
-        IExplorerHandler, IBinDefinitionsHandler, IMessagesHandler, IEventListener<StoredSearchesChangedEvent>
+        IExplorerHandler, IBinDefinitionsHandler, IMessagesHandler, ISearchResultsHandler, 
+        IEventListener<StoredSearchesChangedEvent>
     {
         // Private fields -----------------------------------------------------
 
@@ -105,6 +107,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly BinDefinitionsToolViewModel binDefinitionsToolViewModel;
 
         private readonly MessagesBottomToolViewModel messagesBottomToolViewModel;
+        private readonly SearchResultsBottomToolViewModel searchResultsBottomToolViewModel;
 
         // Private methods ----------------------------------------------------
 
@@ -890,6 +893,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             // Initializeing bottom tools
 
             messagesBottomToolViewModel = new MessagesBottomToolViewModel(this, imageResources);
+            searchResultsBottomToolViewModel = new SearchResultsBottomToolViewModel(this, imageResources);
 
             // Initializing commands
 
@@ -1187,6 +1191,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public BinDefinitionsToolViewModel BinDefinitionsToolViewModel => binDefinitionsToolViewModel;
 
         public MessagesBottomToolViewModel MessagesBottomToolViewModel => messagesBottomToolViewModel;
+
+        public SearchResultsBottomToolViewModel SearchResultsBottomToolViewModel => searchResultsBottomToolViewModel;
 
         public ObservableCollection<StoredSearchReplaceViewModel> StoredSearches => storedSearches;
 

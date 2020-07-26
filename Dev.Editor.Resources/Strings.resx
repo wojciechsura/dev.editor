@@ -1039,4 +1039,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Message.LocationInvalid" xml:space="preserve">
     <value>Invalid folder for search!</value>
   </data>
+  <data name="BottomTool.SearchResults.Title" xml:space="preserve">
+    <value>Search results</value>
+  </data>
 </root>

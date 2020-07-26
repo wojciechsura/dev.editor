@@ -15,6 +15,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.Base
         protected readonly IBottomToolHandler handler;
 
         public static string MessagesUid = "messages";
+        public static string SearchResultsUid = "searchResults";
 
         private void DoCloseBottomTools()
         {
