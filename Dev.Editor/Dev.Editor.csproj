@@ -154,6 +154,9 @@
     <Compile Include="Converters\SidePanelToVisibilityConverter.cs" />
     <Compile Include="Converters\TextDocToBoolConverter.cs" />
     <Compile Include="Dependencies\Configuration.cs" />
+    <Compile Include="ProgressWindow.xaml.cs">
+      <DependentUpon>ProgressWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SearchReplaceWindow.xaml.cs">
       <DependentUpon>SearchReplaceWindow.xaml</DependentUpon>
     </Compile>
@@ -240,6 +243,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="ProgressWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Resources\SidePanelResources.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -1042,4 +1042,16 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="BottomTool.SearchResults.Title" xml:space="preserve">
     <value>Search results</value>
   </data>
+  <data name="ProgressWindow.Title" xml:space="preserve">
+    <value>Operation in progress...</value>
+  </data>
+  <data name="ProgressWindow.GroupboxTitle" xml:space="preserve">
+    <value>Operation in progress</value>
+  </data>
+  <data name="FindInFiles.ProcessingDirectory" xml:space="preserve">
+    <value>Processing directory {0}...</value>
+  </data>
+  <data name="FindInFiles.SearchingInFile" xml:space="preserve">
+    <value>Searching in file {0}...</value>
+  </data>
 </root>

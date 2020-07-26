@@ -676,6 +676,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Processing directory {0}....
+        /// </summary>
+        public static string FindInFiles_ProcessingDirectory {
+            get {
+                return ResourceManager.GetString("FindInFiles.ProcessingDirectory", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Searching in file {0}....
+        /// </summary>
+        public static string FindInFiles_SearchingInFile {
+            get {
+                return ResourceManager.GetString("FindInFiles.SearchingInFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cannot perform assignment to {0}. Reason:
         ///{1}.
         /// </summary>
@@ -1257,6 +1275,24 @@ namespace Dev.Editor.Resources {
         public static string OpenBinaryFile_Title {
             get {
                 return ResourceManager.GetString("OpenBinaryFile.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Operation in progress.
+        /// </summary>
+        public static string ProgressWindow_GroupboxTitle {
+            get {
+                return ResourceManager.GetString("ProgressWindow.GroupboxTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Operation in progress....
+        /// </summary>
+        public static string ProgressWindow_Title {
+            get {
+                return ResourceManager.GetString("ProgressWindow.Title", resourceCulture);
             }
         }
         

@@ -11,5 +11,7 @@
     <Style TargetType="TextBox">
         <Setter Property="Padding" Value="2" />
     </Style>
+
+    <Thickness x:Key="DefaultMargin">4</Thickness>
     
 </ResourceDictionary>

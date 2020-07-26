@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using System.ComponentModel;
 
 namespace Dev.Editor.Services.Dialogs
 {
@@ -121,6 +122,12 @@ namespace Dev.Editor.Services.Dialogs
                 return (true, dialog.FileName);
             else
                 return (false, null);
+        }
+
+        public void ShowProgressDialog(BackgroundWorker worker)
+        {
+            var progressWindow = new ProgressWindow(worker);
+            progressWindow.ShowDialog();
         }
     }
 }

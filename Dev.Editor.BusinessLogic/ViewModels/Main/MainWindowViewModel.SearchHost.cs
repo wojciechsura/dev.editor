@@ -11,6 +11,8 @@ using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.Resources;
 using System.Collections.ObjectModel;
 using ICSharpCode.AvalonEdit.Document;
+using Dev.Editor.BusinessLogic.ViewModels.Main.Search;
+using System.ComponentModel;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -250,6 +252,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         }
 
         public void FindInFiles(SearchReplaceModel searchReplaceModel)
+        {
+            var worker = new FindInFilesWorker(searchReplaceModel);
+            worker.RunWorkerCompleted += HandleFindInFilesCompleted;
+
+            dialogService.ShowProgressDialog(worker);
+        }
+
+        private void HandleFindInFilesCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             throw new NotImplementedException();
         }
