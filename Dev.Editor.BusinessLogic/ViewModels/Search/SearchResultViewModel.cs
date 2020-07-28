@@ -9,19 +9,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 {
     public class SearchResultViewModel
     {
-        public SearchResultViewModel(FormattedText display, FileSearchResultViewModel parent, int line, int column) 
+        public SearchResultViewModel(string display, int line, int column) 
         {
-            if (parent == null)
-                throw new ArgumentNullException(nameof(parent));
-
             Display = display;
-            Parent = parent;
             Line = line;
             Column = column;
         }
 
-        public FormattedText Display { get; }
-        public FileSearchResultViewModel Parent { get; }
+        public string Display { get; }
         public int Line { get; }
         public int Column { get; }
     }

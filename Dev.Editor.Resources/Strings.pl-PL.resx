@@ -1049,7 +1049,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
     <value>Operacja w trakcie</value>
   </data>
   <data name="FindInFiles.ProcessingDirectory" xml:space="preserve">
-    <value>Przetwarzam katalog {0}...</value>
+    <value>Przetwarzam katalog {0}, znalezionych plików: {1}</value>
   </data>
   <data name="FindInFiles.SearchingInFile" xml:space="preserve">
     <value>Szukam w pliku {0}...</value>

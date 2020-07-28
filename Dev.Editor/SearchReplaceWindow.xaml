@@ -254,8 +254,6 @@
                                         IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                     <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_OnlyFullWords}" 
                                         IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                                    <CheckBox Content="{x:Static p:Strings.SearchWindow_SearchBackwards}" 
-                                        IsChecked="{Binding SearchBackwards, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                                 </StackPanel>
                             </GroupBox>
                             <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchMode}" Padding="4" Width="350">

@@ -1049,7 +1049,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
     <value>Operation in progress</value>
   </data>
   <data name="FindInFiles.ProcessingDirectory" xml:space="preserve">
-    <value>Processing directory {0}...</value>
+    <value>Processing directory {0}, files found so far: {1}</value>
   </data>
   <data name="FindInFiles.SearchingInFile" xml:space="preserve">
     <value>Searching in file {0}...</value>

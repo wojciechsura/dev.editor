@@ -209,9 +209,12 @@
     <Compile Include="ViewModels\Main\TextDocumentPropertyWatchCondition.cs" />
     <Compile Include="ViewModels\ProgressWindow\IProgressWindowAccess.cs" />
     <Compile Include="ViewModels\ProgressWindow\ProgressWindowViewModel.cs" />
+    <Compile Include="ViewModels\Search\BaseFilesystemSearchResultViewModel.cs" />
     <Compile Include="ViewModels\Search\FileSearchResultViewModel.cs" />
+    <Compile Include="ViewModels\Search\FolderSearchResultViewModel.cs" />
     <Compile Include="ViewModels\Search\ISearchHost.cs" />
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />
+    <Compile Include="ViewModels\Search\RootSearchResultViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchResultViewModel.cs" />
     <Compile Include="ViewModels\Search\StoredSearchViewModel.cs" />

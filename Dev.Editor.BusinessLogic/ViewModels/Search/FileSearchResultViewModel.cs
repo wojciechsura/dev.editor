@@ -7,19 +7,17 @@ using System.Windows.Media;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Search
 {
-    public class FileSearchResultViewModel
+    public class FileSearchResultViewModel : BaseFilesystemSearchResultViewModel
     {
-        public FileSearchResultViewModel(FormattedText display, string fullPath, List<SearchResultViewModel> results)
+        public FileSearchResultViewModel(string fullPath, List<SearchResultViewModel> results)
         {
             if (string.IsNullOrEmpty(fullPath))
                 throw new ArgumentException("Invalid path!", nameof(fullPath));
 
-            Display = display;
             FullPath = fullPath;
             Results = results;
         }
 
-        public FormattedText Display { get; }
         public string FullPath { get; }
         public List<SearchResultViewModel> Results { get; }
     }

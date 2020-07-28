@@ -128,6 +128,7 @@ namespace Dev.Editor.BusinessLogic.Services.SearchEncoder
         {
             Regex searchRegex;
             Regex countOccurrencesRegex;
+            Regex findInFilesRegex;
 
             try
             {
@@ -142,6 +143,8 @@ namespace Dev.Editor.BusinessLogic.Services.SearchEncoder
                     description.IsCaseSensitive,
                     description.IsWholeWordsOnly,
                     description.SearchMode);
+
+                findInFilesRegex = countOccurrencesRegex;
             }
             catch
             {
@@ -152,6 +155,7 @@ namespace Dev.Editor.BusinessLogic.Services.SearchEncoder
 
             return new SearchReplaceModel(searchRegex,
                 countOccurrencesRegex,
+                findInFilesRegex,
                 replaceText,
                 description.IsSearchBackwards,
                 description.SearchMode == SearchMode.RegularExpressions,
