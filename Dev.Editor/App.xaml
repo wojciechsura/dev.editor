@@ -60,6 +60,8 @@
             <SolidColorBrush x:Key="ToolHeaderForegroundBrush" Color="#e3ebf2" />
             <SolidColorBrush x:Key="ToolHeaderBackgroundBrush" Color="#40668c" />
             <SolidColorBrush x:Key="ToolBackgroundBrush" Color="#ccdef0" />
+            <SolidColorBrush x:Key="ToolForegroundBrush" Color="#000000" />
+            <SolidColorBrush x:Key="ToolInactiveForgroundBrush" Color="#a0a0a0" />
 
             <SolidColorBrush x:Key="ToolButtonHoverBorderBrush" Color="#89b3dc" />
             <SolidColorBrush x:Key="ToolButtonHoverBackgroundBrush" Color="#d9e7f4" />
@@ -70,6 +72,8 @@
             <SolidColorBrush x:Key="DocumentButtonHoverForegroundBrush" Color="#3A9EFF" />
 
             <SolidColorBrush x:Key="TextEmphasizeBackgroundBrush" Color="#f5bc83" />
+
+            <SolidColorBrush x:Key="TransparentButtonHoverBrush" Color="#3A9EFF" />
 
             <!-- Document templates -->
 
@@ -154,6 +158,38 @@
                                         <Trigger.Setters>
                                             <Setter TargetName="bRoot" Property="Opacity" Value="0.4" />
                                         </Trigger.Setters>
+                                    </Trigger>
+                                </ControlTemplate.Triggers>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style.Setters>
+            </Style>
+
+            <Style x:Key="TransparentButton" TargetType="Button">
+                <Style.Setters>
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="Button">
+                                <Border x:Name="ContentBorder" TextBlock.Foreground="{TemplateBinding Foreground}"
+                                        TextBlock.FontSize="10" Margin="0">
+                                    <Grid x:Name="ContentGrid" Margin="2,2,2,2" HorizontalAlignment="Center" VerticalAlignment="Center">
+                                        <ContentPresenter />
+                                    </Grid>
+                                </Border>
+
+                                <ControlTemplate.Triggers>
+                                    <Trigger Property="IsPressed" Value="True">
+                                        <Trigger.Setters>
+                                            <Setter TargetName="ContentGrid" Property="Margin">
+                                                <Setter.Value>
+                                                    <Thickness Top="3" Left="3" Right="1" Bottom="1" />
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Trigger.Setters>
+                                    </Trigger>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter TargetName="ContentBorder" Property="TextElement.Foreground" Value="{StaticResource TransparentButtonHoverBrush}" />
                                     </Trigger>
                                 </ControlTemplate.Triggers>
                             </ControlTemplate>

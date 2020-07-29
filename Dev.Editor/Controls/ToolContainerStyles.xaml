@@ -46,7 +46,7 @@
             </Setter>
         </Style.Setters>
     </Style>
-
+       
     <Style TargetType="local:ToolContainer">
         <Style.Setters>
             <Setter Property="Template">

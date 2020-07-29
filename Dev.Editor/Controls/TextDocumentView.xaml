@@ -44,16 +44,23 @@
                 <Setter Property="Height" Value="4" />
             </Style.Setters>
         </Style>
-    </UserControl.Resources>
-    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*" x:Name="rdTopEditor"/>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" x:Name="rdBottomEditor"/>
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
 
-        <ae:TextEditor x:Name="teEditor"
+        <Style x:Key="ToolWindowMutedText" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="{StaticResource ToolInactiveForgroundBrush}" />
+            <Setter Property="Margin" Value="4" />
+            <Setter Property="FontSize" Value="10" />
+        </Style>
+    </UserControl.Resources>
+    <Grid>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" x:Name="rdTopEditor"/>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" x:Name="rdBottomEditor"/>
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <ae:TextEditor x:Name="teEditor"
                        Grid.Row="0"
                        Grid.Column="0"
                        VerticalAlignment="Stretch"
@@ -71,12 +78,12 @@
                        KeyboardNavigation.DirectionalNavigation="Contained"
                        KeyboardNavigation.TabNavigation="Contained"/>
 
-        <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
+            <GridSplitter Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                       Style="{StaticResource EditorSplitter}"
                       Visibility="{Binding Editor2Visible, Converter={StaticResource BooleanToVisibilityConverter}}"
                       IsTabStop="False" Focusable="False"/>
 
-        <ae:TextEditor x:Name="teEditor2"
+            <ae:TextEditor x:Name="teEditor2"
                        Grid.Row="2"
                        Grid.Column="0"
                        VerticalAlignment="Stretch"
@@ -95,13 +102,25 @@
                        KeyboardNavigation.TabNavigation="Contained"
                        Visibility="{Binding Editor2Visible, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-        <Grid Grid.Row="3" Style="{StaticResource DocumentFooter}">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
+            <Grid Grid.Row="3" Style="{StaticResource DocumentFooter}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-            <ToggleButton Style="{StaticResource DocumentFooterToggleButton}" Grid.Column="1" Content="{x:Static r:Strings.TextEditor_Footer_Split}" IsChecked="{Binding Editor2Visible}" />
+                <ToggleButton Style="{StaticResource DocumentFooterToggleButton}" Grid.Column="1" Content="{x:Static r:Strings.TextEditor_Footer_Split}" IsChecked="{Binding Editor2Visible}" />
+            </Grid>
         </Grid>
+
+        <StackPanel Orientation="Vertical" Background="{StaticResource ToolBackgroundBrush}" HorizontalAlignment="Right" VerticalAlignment="Top">
+            <StackPanel Orientation="Horizontal" Margin="4,4,4,0">
+                <Label>Quick search</Label>
+                <TextBox Width="150" Margin="4,4,4,0"/>
+                <Button Command="{Binding CloseQuickSearchCommand}" Style="{StaticResource TransparentButton}" FontFamily="Marlett" Margin="4">r</Button>
+            </StackPanel>
+            <TextBlock Style="{StaticResource ToolWindowMutedText}" HorizontalAlignment="Center">Press Ctrl+F second time to open Find window</TextBlock>
+            <Border Background="{StaticResource ToolHeaderBackgroundBrush}" Height="4" />
+        </StackPanel>
+
     </Grid>
 </UserControl>
