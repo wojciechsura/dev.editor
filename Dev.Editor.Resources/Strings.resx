@@ -1054,4 +1054,19 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="FindInFiles.SearchingInFile" xml:space="preserve">
     <value>Searching in file {0}...</value>
   </data>
+  <data name="SearchWindow.FindInFiles" xml:space="preserve">
+    <value>Find in files</value>
+  </data>
+  <data name="BottomTool.SearchResults.SearchResultsFor" xml:space="preserve">
+    <value>Search results for </value>
+  </data>
+  <data name="BottomTool.SeachResults.In" xml:space="preserve">
+    <value> in </value>
+  </data>
+  <data name="Operation.SearchingInFiles" xml:space="preserve">
+    <value>Searching in files</value>
+  </data>
+  <data name="Ribbon.Home.Search.FindInFiles" xml:space="preserve">
+    <value>Find in files</value>
+  </data>
 </root>

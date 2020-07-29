@@ -118,6 +118,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  in .
+        /// </summary>
+        public static string BottomTool_SeachResults_In {
+            get {
+                return ResourceManager.GetString("BottomTool.SeachResults.In", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search results for .
+        /// </summary>
+        public static string BottomTool_SearchResults_SearchResultsFor {
+            get {
+                return ResourceManager.GetString("BottomTool.SearchResults.SearchResultsFor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search results.
         /// </summary>
         public static string BottomTool_SearchResults_Title {
@@ -1279,6 +1297,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Searching in files.
+        /// </summary>
+        public static string Operation_SearchingInFiles {
+            get {
+                return ResourceManager.GetString("Operation.SearchingInFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operation in progress.
         /// </summary>
         public static string ProgressWindow_GroupboxTitle {
@@ -1500,6 +1527,15 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Home_Navigation_Navigate {
             get {
                 return ResourceManager.GetString("Ribbon.Home.Navigation.Navigate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find in files.
+        /// </summary>
+        public static string Ribbon_Home_Search_FindInFiles {
+            get {
+                return ResourceManager.GetString("Ribbon.Home.Search.FindInFiles", resourceCulture);
             }
         }
         
@@ -2193,6 +2229,15 @@ namespace Dev.Editor.Resources {
         public static string SearchWindow_FileMask {
             get {
                 return ResourceManager.GetString("SearchWindow.FileMask", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find in files.
+        /// </summary>
+        public static string SearchWindow_FindInFiles {
+            get {
+                return ResourceManager.GetString("SearchWindow.FindInFiles", resourceCulture);
             }
         }
         

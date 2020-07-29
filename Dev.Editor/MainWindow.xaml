@@ -579,6 +579,9 @@
                         <f:GroupSeparatorMenuItem Header="{x:Static p:Strings.Ribbon_Home_Search_StoredSearches}" />
                         <ItemsControl ItemsSource="{Binding StoredSearches}" ItemTemplate="{StaticResource SearchItemTemplate}" />
                     </f:SplitButton>
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Home_Search_FindInFiles}" Command="{Binding FindInFilesCommand}" SizeDefinition="Middle"
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search16.png" />
                     <f:SplitButton Header="{x:Static p:Strings.Ribbon_Home_Search_Replace}" Command="{Binding ReplaceCommand}" SizeDefinition="Middle"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace16.png">

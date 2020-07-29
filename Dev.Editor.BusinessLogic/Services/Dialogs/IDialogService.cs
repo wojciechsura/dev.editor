@@ -21,6 +21,6 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
         (bool, EscapeConfigResult) ShowEscapeConfigDialog(EscapeConfigModel escapeConfigModel);
         void ShowExceptionDialog(Exception e);
         (bool result, string newLocation) ShowChooseFolderDialog(string location);
-        void ShowProgressDialog(BackgroundWorker worker);
+        void ShowProgressDialog(string operationTitle, BackgroundWorker worker);
     }
 }

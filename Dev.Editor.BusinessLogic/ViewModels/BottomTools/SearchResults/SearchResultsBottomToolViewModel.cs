@@ -10,6 +10,9 @@ using Dev.Editor.BusinessLogic.Services.ImageResources;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
 using System.Collections.ObjectModel;
 using Dev.Editor.BusinessLogic.ViewModels.FindInFiles;
+using Dev.Editor.Common.Conditions;
+using System.Windows.Input;
+using Dev.Editor.Common.Commands;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 {
@@ -21,6 +24,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
         private readonly ImageSource icon;
         private readonly ObservableCollection<RootSearchResultViewModel> searchResults = new ObservableCollection<RootSearchResultViewModel>();
 
+        private readonly Condition resultsNonEmptyCondition;
+
+        private void DoClearSearchResults()
+        {
+            searchResults.Clear();
+            resultsNonEmptyCondition.Value = false;
+        }
+
         public SearchResultsBottomToolViewModel(ISearchResultsHandler searchResultsHandler, IImageResources imageResources)
             : base(searchResultsHandler)
         {
@@ -28,6 +39,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             this.imageResources = imageResources;
 
             icon = imageResources.GetIconByName("Search16.png");
+
+            resultsNonEmptyCondition = new Condition(false);
+
+            ClearSearchResultsCommand = new AppCommand(obj => DoClearSearchResults(), resultsNonEmptyCondition);
         }
 
         public void NotifyItemDoubleClicked(object selectedResult)
@@ -44,6 +59,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
                 searchResults.Clear();
 
             searchResults.Insert(0, results);
+
+            resultsNonEmptyCondition.Value = true;
         }
 
         public override string Title => Strings.BottomTool_SearchResults_Title;
@@ -53,5 +70,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
         public override string Uid => SearchResultsUid;
 
         public ObservableCollection<RootSearchResultViewModel> SearchResults => searchResults;
+
+        public ICommand ClearSearchResultsCommand { get; }
     }
 }

@@ -124,9 +124,9 @@ namespace Dev.Editor.Services.Dialogs
                 return (false, null);
         }
 
-        public void ShowProgressDialog(BackgroundWorker worker)
+        public void ShowProgressDialog(string operationTitle, BackgroundWorker worker)
         {
-            var progressWindow = new ProgressWindow(worker);
+            var progressWindow = new ProgressWindow(operationTitle, worker);
             progressWindow.ShowDialog();
         }
     }

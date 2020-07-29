@@ -16,7 +16,7 @@
         </ResourceDictionary>
     </Window.Resources>
     <StackPanel Orientation="Vertical">
-        <GroupBox Margin="{StaticResource DefaultMargin}" Header="{x:Static res:Strings.ProgressWindow_GroupboxTitle}">
+        <GroupBox Margin="{StaticResource DefaultMargin}" Header="{Binding OperationTitle}">
             <StackPanel Orientation="Vertical">
                 <Label Margin="4,4,4,0" MinHeight="23" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
                        Content="{Binding CurrentOperation}"/>

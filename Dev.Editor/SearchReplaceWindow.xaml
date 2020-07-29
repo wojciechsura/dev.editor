@@ -274,7 +274,7 @@
                                           IsChecked="{Binding StoredSearchPanelVisible, Mode=TwoWay}"/>
 
                             <StackPanel Orientation="Vertical" Margin="10,0,0,0">
-                                <Button Content="Find in files" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindInFilesCommand}" 
+                                <Button Content="{x:Static p:Strings.SearchWindow_FindInFiles}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindInFilesCommand}" 
                                 IsDefault="True"/>
                                 <Separator Margin="{StaticResource DialogItemsVMargin}" />
                                 <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" 

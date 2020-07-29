@@ -9,58 +9,65 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" DataContextChanged="HandleDataContextChanged">
     <local:ToolContainer Header="{x:Static p:Strings.BottomTool_SearchResults_Title}" CloseCommand="{Binding CloseBottomToolsCommand}">
-        <TreeView ItemsSource="{Binding SearchResults}" MouseDoubleClick="HandleTreeDoubleClick">
-            <TreeView.Resources>
-                <ResourceDictionary>
-                    <Style TargetType="TreeViewItem">
-                        <Style.Setters>
-                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
-                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                        </Style.Setters>
-                    </Style>
+        <DockPanel>
+            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
+                <Button Margin="4" Command="{Binding ClearSearchResultsCommand}" Style="{StaticResource ToolButton}">
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Delete16.png" />
+                </Button>
+            </StackPanel>
+            <TreeView ItemsSource="{Binding SearchResults}" MouseDoubleClick="HandleTreeDoubleClick">
+                <TreeView.Resources>
+                    <ResourceDictionary>
+                        <Style TargetType="TreeViewItem">
+                            <Style.Setters>
+                                <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                                <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                            </Style.Setters>
+                        </Style>
 
-                    <HierarchicalDataTemplate DataType="{x:Type f:RootSearchResultViewModel}" ItemsSource="{Binding Results}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding Icon}" Margin="2" />
-                            <TextBlock Margin="2">
-                                <Run Text="Search results for " />
+                        <HierarchicalDataTemplate DataType="{x:Type f:RootSearchResultViewModel}" ItemsSource="{Binding Results}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Icon}" Margin="2" />
+                                <TextBlock Margin="2">
+                                <Run Text="{x:Static p:Strings.BottomTool_SearchResults_SearchResultsFor}" />
                                 <Run Text="{Binding SearchPattern, Mode=OneWay}" FontWeight="Bold" />
-                                <Run Text=" in " />
+                                <Run Text="{x:Static p:Strings.BottomTool_SeachResults_In}" />
                                 <Run Text="{Binding FullPath, Mode=OneWay}" FontWeight="Bold"/>
-                            </TextBlock>
-                        </StackPanel>
-                    </HierarchicalDataTemplate>
+                                </TextBlock>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
 
-                    <HierarchicalDataTemplate DataType="{x:Type f:FolderSearchResultViewModel}" ItemsSource="{Binding Files}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding Icon}" Margin="2" />
-                            <TextBlock Margin="2">
+                        <HierarchicalDataTemplate DataType="{x:Type f:FolderSearchResultViewModel}" ItemsSource="{Binding Files}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Icon}" Margin="2" />
+                                <TextBlock Margin="2">
                                 <Run Text="{Binding Name, Mode=OneWay}" />
-                            </TextBlock>
-                        </StackPanel>
-                    </HierarchicalDataTemplate>
+                                </TextBlock>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
 
-                    <HierarchicalDataTemplate DataType="{x:Type f:FileSearchResultViewModel}" ItemsSource="{Binding Results}">
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="{Binding Icon}" Margin="2" />
-                            <TextBlock Margin="2">
+                        <HierarchicalDataTemplate DataType="{x:Type f:FileSearchResultViewModel}" ItemsSource="{Binding Results}">
+                            <StackPanel Orientation="Horizontal">
+                                <Image Source="{Binding Icon}" Margin="2" />
+                                <TextBlock Margin="2">
                                 <Run Text="{Binding Name, Mode=OneWay}" />
-                            </TextBlock>
-                        </StackPanel>
-                    </HierarchicalDataTemplate>
+                                </TextBlock>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
 
-                    <DataTemplate DataType="{x:Type f:SearchResultViewModel}">
-                        <StackPanel Orientation="Horizontal">
-                            <TextBlock MinWidth="100" Text="{Binding Location}" />
-                            <TextBlock Margin="2">
+                        <DataTemplate DataType="{x:Type f:SearchResultViewModel}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock MinWidth="64" Text="{Binding Location}" />
+                                <TextBlock Margin="2">
                             <Run Text="{Binding Before, Mode=OneWay}" />
                             <Run Text="{Binding Match, Mode=OneWay}" Background="{StaticResource TextEmphasizeBackgroundBrush}" />
                             <Run Text="{Binding After, Mode=OneWay}" />
-                        </TextBlock>
-                        </StackPanel>
-                    </DataTemplate>
-                </ResourceDictionary>
-            </TreeView.Resources>
-        </TreeView>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ResourceDictionary>
+                </TreeView.Resources>
+            </TreeView>
+        </DockPanel>
     </local:ToolContainer>
 </UserControl>

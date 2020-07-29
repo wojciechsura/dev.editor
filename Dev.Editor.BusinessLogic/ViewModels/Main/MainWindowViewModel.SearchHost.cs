@@ -260,7 +260,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             var worker = new FindInFilesWorker(searchReplaceModel);
             worker.RunWorkerCompleted += HandleFindInFilesCompleted;
 
-            dialogService.ShowProgressDialog(worker);
+            dialogService.ShowProgressDialog(Strings.Operation_SearchingInFiles, worker);
         }
 
         private void HandleFindInFilesCompleted(object sender, RunWorkerCompletedEventArgs e)

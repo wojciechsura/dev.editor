@@ -18,9 +18,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.ProgressWindow
         private string currentOperation;
         private Condition cancelAvailableCondition;
         private int progress;
-       
-        public ProgressWindowViewModel(BackgroundWorker worker, IProgressWindowAccess access)
+        private string operationTitle;
+
+        public ProgressWindowViewModel(string operationTitle, BackgroundWorker worker, IProgressWindowAccess access)
         {
+            OperationTitle = operationTitle;
             this.worker = worker;
             this.access = access;
             currentOperation = String.Empty;
@@ -71,6 +73,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.ProgressWindow
         {
             get => progress;
             set => Set(ref progress, () => Progress, value);
+        }
+
+        public string OperationTitle
+        {
+            get => operationTitle;
+            set => Set(ref operationTitle, () => OperationTitle, value);
         }
     }
 }

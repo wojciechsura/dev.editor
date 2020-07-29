@@ -29,5 +29,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         {
             InternalFindNext(documentsManager.ActiveDocument.LastSearch);
         }
+
+        private void DoFindInFiles()
+        {
+            var searchViewModel = dialogService.RequestSearchReplace(this);
+            searchViewModel.ShowFindInFiles();
+        }
     }
 }
