@@ -757,7 +757,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // ISearchResultsHandler implementation -------------------------------
 
-        void ISearchResultsHandler.OpenFileSearchResult(string fullPath, int line, int column)
+        void ISearchResultsHandler.OpenFileSearchResult(string fullPath, int line, int column, int length)
         {
             var document = LoadTextDocument(documentsManager.ActiveDocumentTab, fullPath);
 
@@ -766,7 +766,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 access.WhenUIReady(() =>
                 {
                     var offset = textDocument.Document.GetOffset(line, column);
-                    textDocument.SetSelection(offset, 0, true);
+                    textDocument.SetSelection(offset, length, true);
                     textDocument.FocusDocument();
                 });
             }

@@ -29,10 +29,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="{Binding Icon}" Margin="2" />
                                 <TextBlock Margin="2">
-                                <Run Text="{x:Static p:Strings.BottomTool_SearchResults_SearchResultsFor}" />
-                                <Run Text="{Binding SearchPattern, Mode=OneWay}" FontWeight="Bold" />
-                                <Run Text="{x:Static p:Strings.BottomTool_SeachResults_In}" />
-                                <Run Text="{Binding FullPath, Mode=OneWay}" FontWeight="Bold"/>
+                                    <Run Text="{x:Static p:Strings.BottomTool_SearchResults_SearchResultsFor}" /><Run Text="{Binding SearchPattern, Mode=OneWay}" FontWeight="Bold" /><Run Text="{x:Static p:Strings.BottomTool_SeachResults_In}" /><Run Text="{Binding FullPath, Mode=OneWay}" FontWeight="Bold"/><Run Text=" (" /><Run Text="{Binding Count, Mode=OneWay}" /><Run Text=")" />
                                 </TextBlock>
                             </StackPanel>
                         </HierarchicalDataTemplate>
@@ -40,18 +37,14 @@
                         <HierarchicalDataTemplate DataType="{x:Type f:FolderSearchResultViewModel}" ItemsSource="{Binding Files}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="{Binding Icon}" Margin="2" />
-                                <TextBlock Margin="2">
-                                <Run Text="{Binding Name, Mode=OneWay}" />
-                                </TextBlock>
+                                <TextBlock Margin="2" Text="{Binding Display, Mode=OneWay}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
                         <HierarchicalDataTemplate DataType="{x:Type f:FileSearchResultViewModel}" ItemsSource="{Binding Results}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="{Binding Icon}" Margin="2" />
-                                <TextBlock Margin="2">
-                                <Run Text="{Binding Name, Mode=OneWay}" />
-                                </TextBlock>
+                                <TextBlock Margin="2" Text="{Binding Display, Mode=OneWay}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
@@ -59,9 +52,7 @@
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock MinWidth="64" Text="{Binding Location}" />
                                 <TextBlock Margin="2">
-                            <Run Text="{Binding Before, Mode=OneWay}" />
-                            <Run Text="{Binding Match, Mode=OneWay}" Background="{StaticResource TextEmphasizeBackgroundBrush}" />
-                            <Run Text="{Binding After, Mode=OneWay}" />
+                            <Run Text="{Binding Before, Mode=OneWay}" /><Run Text="{Binding Match, Mode=OneWay}" Background="{StaticResource TextEmphasizeBackgroundBrush}" /><Run Text="{Binding After, Mode=OneWay}" />
                                 </TextBlock>
                             </StackPanel>
                         </DataTemplate>

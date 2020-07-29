@@ -265,9 +265,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void HandleFindInFilesCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            List<BaseSearchResultViewModel> GenerateResultList(BaseSearchContainerItem container)
+            List<BaseFilesystemSearchResultViewModel> GenerateResultList(BaseSearchContainerItem container)
             {
-                var results = new List<BaseSearchResultViewModel>();
+                var results = new List<BaseFilesystemSearchResultViewModel>();
 
                 foreach (var item in container)
                 {
@@ -279,11 +279,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 return results;
             }
 
-            BaseSearchResultViewModel BuildItemRecursive(BaseSearchItem item)
+            BaseFilesystemSearchResultViewModel BuildItemRecursive(BaseSearchItem item)
             {
                 if (item is FolderSearchItem searchedFolder)
                 {
-                    List<BaseSearchResultViewModel> results = GenerateResultList(searchedFolder);
+                    List<BaseFilesystemSearchResultViewModel> results = GenerateResultList(searchedFolder);
 
                     if (results.Any())
                         return new FolderSearchResultViewModel(System.IO.Path.GetFileName(searchedFolder.Path), fileIconProvider.GetImageForFolder(searchedFolder.Path), results);
@@ -302,7 +302,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                                 searchResult.Match, 
                                 searchResult.After, 
                                 searchResult.Row + 1, 
-                                searchResult.Col + 1);
+                                searchResult.Col + 1,
+                                searchResult.Length);
 
                             resultList.Add(resultViewModel);
                         }
@@ -318,7 +319,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             RootSearchResultViewModel BuildResults(RootSearchItem root)
             {
-                List<BaseSearchResultViewModel> results = GenerateResultList(root);
+                List<BaseFilesystemSearchResultViewModel> results = GenerateResultList(root);
 
                 return new RootSearchResultViewModel(root.Path, root.SearchPattern, imageResources.GetIconByName("Search16.png"), results);
             }

@@ -7,7 +7,7 @@ using System.Windows.Media;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.FindInFiles
 {
-    public class FileSearchResultViewModel : BaseSearchResultViewModel
+    public class FileSearchResultViewModel : BaseFilesystemSearchResultViewModel
     {
         public FileSearchResultViewModel(string name, ImageSource icon, List<SearchResultViewModel> results)
         {
@@ -21,6 +21,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.FindInFiles
 
         public string Name { get; }
         public ImageSource Icon { get; }
-        public List<SearchResultViewModel> Results { get; }
+        public IReadOnlyList<SearchResultViewModel> Results { get; }
+
+        public override int Count => Results.Count;
+        public string Display => $"{Name} ({Count})";
     }
 }

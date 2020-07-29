@@ -148,7 +148,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Search
                         else
                             after = after + "...";
 
-                        var result = new ResultSearchItem(file.Path, row, col, before, matchContent, after);
+                        var result = new ResultSearchItem(file.Path, row, col, match.Length, before, matchContent, after);
                         file.Add(result);
 
                         index = match.Index + match.Length;

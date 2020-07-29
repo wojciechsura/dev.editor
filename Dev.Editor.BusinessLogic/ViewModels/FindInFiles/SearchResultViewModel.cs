@@ -9,7 +9,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.FindInFiles
 {
     public class SearchResultViewModel : BaseSearchResultViewModel
     {
-        public SearchResultViewModel(string fullPath, string before, string match, string after, int line, int column) 
+        public SearchResultViewModel(string fullPath, string before, string match, string after, int line, int column, int length) 
         {
             FullPath = fullPath;
             Before = before;
@@ -17,6 +17,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.FindInFiles
             After = after;
             Line = line;
             Column = column;
+            Length = length;
         }
 
         public string FullPath { get; }
@@ -25,6 +26,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.FindInFiles
         public string After { get; }
         public int Line { get; }
         public int Column { get; }
+        public int Length { get; }
 
         public string Location => $"({Line}, {Column})";
     }

@@ -49,7 +49,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
         {
             if (selectedResult is SearchResultViewModel searchResult)
             {
-                searchResultsHandler.OpenFileSearchResult(searchResult.FullPath, searchResult.Line, searchResult.Column);
+                searchResultsHandler.OpenFileSearchResult(searchResult.FullPath, searchResult.Line, searchResult.Column, searchResult.Length);
             }
         }
 
