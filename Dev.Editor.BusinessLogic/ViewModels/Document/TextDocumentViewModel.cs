@@ -38,6 +38,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private AnchorSegment findReplaceSegment;
         private DiffInfo diffResult;
 
+        private string quickSearchText;
+        private bool quickSearchVisible;
+
         // Private methods ----------------------------------------------------
 
         private void HandleUndoStackPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -84,6 +87,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             editor2Visible = false;
             activeEditor = ActiveEditor.Primary;
             findReplaceSegment = null;
+
+            quickSearchText = "";
+            quickSearchVisible = false;
+
+            CloseQuickSearchCommand = new AppCommand(obj => CloseQuickSearch());
         }
 
         public void RunAsSingleHistoryEntry(Action action)
@@ -178,6 +186,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             return $"TextDocument, {base.ToString()}";
         }
 
+        public void ShowQuickSearch()
+        {
+            QuickSearchText = "";
+            QuickSearchVisible = true;
+
+            editorAccess.FocusQuickSearch();
+        }
+
+        public void CloseQuickSearch()
+        {
+            QuickSearchVisible = false;
+        }
+
         // Public properties --------------------------------------------------
 
         public TextDocument Document => document;
@@ -199,6 +220,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         public ICommand CutCommand => handler.CutCommand;
 
         public ICommand PasteCommand => handler.PasteCommand;
+
+        public ICommand CloseQuickSearchCommand { get; }
 
         public double Editor1Height
         {
@@ -234,6 +257,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         {
             get => diffResult;
             set => Set(ref diffResult, () => DiffResult, value);
+        }
+
+        public string QuickSearchText
+        {
+            get => quickSearchText;
+            set => Set(ref quickSearchText, () => QuickSearchText, value);
+        }
+
+        public bool QuickSearchVisible
+        {
+            get => quickSearchVisible;
+            set => Set(ref quickSearchVisible, () => QuickSearchVisible, value);
         }
     }
 }

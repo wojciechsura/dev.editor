@@ -112,10 +112,11 @@
             </Grid>
         </Grid>
 
-        <StackPanel Orientation="Vertical" Background="{StaticResource ToolBackgroundBrush}" HorizontalAlignment="Right" VerticalAlignment="Top">
+        <StackPanel Orientation="Vertical" Background="{StaticResource ToolBackgroundBrush}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                    Visibility="{Binding QuickSearchVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
             <StackPanel Orientation="Horizontal" Margin="4,4,4,0">
                 <Label>Quick search</Label>
-                <TextBox Width="150" Margin="4,4,4,0"/>
+                <TextBox x:Name="tbQuickSearch" Width="150" Margin="4,4,4,0" Text="{Binding QuickSearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                 <Button Command="{Binding CloseQuickSearchCommand}" Style="{StaticResource TransparentButton}" FontFamily="Marlett" Margin="4">r</Button>
             </StackPanel>
             <TextBlock Style="{StaticResource ToolWindowMutedText}" HorizontalAlignment="Center">Press Ctrl+F second time to open Find window</TextBlock>

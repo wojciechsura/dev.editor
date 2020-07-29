@@ -376,6 +376,13 @@ namespace Dev.Editor.Controls
             {
                 if (viewModel != null)
                 {
+                    // If QuickSearch is shown, close it.
+                    if (viewModel.QuickSearchVisible)
+                    {
+                        viewModel.CloseQuickSearch();
+                        return;
+                    }    
+
                     // Clear find/replace highlight on escape press
                     if (viewModel.FindReplaceSegment != null)
                         viewModel.FindReplaceSegment = null;
@@ -893,6 +900,11 @@ namespace Dev.Editor.Controls
         {
             var editor = GetActiveEditor();
             editor.Select(selStart, selLength);
+        }
+
+        public void FocusQuickSearch()
+        {
+            tbQuickSearch.Focus();
         }
 
         // Public properties --------------------------------------------------

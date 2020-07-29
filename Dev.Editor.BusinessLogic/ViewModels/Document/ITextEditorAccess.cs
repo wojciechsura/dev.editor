@@ -19,5 +19,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         string GetSelectedText();
         void RunAsSingleHistoryOperation(Action action);
         void FocusDocument();
+        void FocusQuickSearch();
     }
 }

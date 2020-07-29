@@ -15,8 +15,26 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
 		private void DoSearch()
         {
-            var searchViewModel = dialogService.RequestSearchReplace(this);
-            searchViewModel.ShowSearch();
+            if (documentsManager.ActiveDocument is TextDocumentViewModel textDocument)
+            {
+                if (!textDocument.QuickSearchVisible)
+                {
+                    textDocument.ShowQuickSearch();
+                }
+                else
+                {
+                    var searchedText = textDocument.QuickSearchText;
+                    textDocument.CloseQuickSearch();
+                    var searchViewModel = dialogService.RequestSearchReplace(this);
+                    searchViewModel.Search = searchedText;
+                    searchViewModel.ShowSearch();
+                }
+            }
+            else
+            {
+                var searchViewModel = dialogService.RequestSearchReplace(this);
+                searchViewModel.ShowSearch();
+            }
         }
 
 		private void DoReplace()
