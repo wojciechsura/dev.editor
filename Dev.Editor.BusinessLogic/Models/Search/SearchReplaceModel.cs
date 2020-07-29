@@ -12,6 +12,7 @@ namespace Dev.Editor.BusinessLogic.Models.Search
         public SearchReplaceModel(Regex searchRegex,
             Regex countOccurrencesRegex,
             Regex findInFilesRegex,
+            string search,
             string replace,
             bool searchBackwards,
             bool isRegexReplace,
@@ -23,6 +24,7 @@ namespace Dev.Editor.BusinessLogic.Models.Search
             Regex = searchRegex;
             CountOccurrencesRegex = countOccurrencesRegex;
             FindInFilesRegex = findInFilesRegex;
+            Search = search;
             Replace = replace;
             SearchBackwards = searchBackwards;
             IsRegexReplace = isRegexReplace;
@@ -35,6 +37,7 @@ namespace Dev.Editor.BusinessLogic.Models.Search
         public Regex Regex { get; }
         public Regex CountOccurrencesRegex { get; }
         public Regex FindInFilesRegex { get; }
+        public string Search { get; }
         public string Replace { get; }
         public bool SearchBackwards { get; }
         public bool IsRegexReplace { get; }

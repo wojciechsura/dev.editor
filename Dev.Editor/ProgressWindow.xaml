@@ -7,7 +7,7 @@
         xmlns:res="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
         mc:Ignorable="d"
         Title="{x:Static res:Strings.ProgressWindow_Title}" SizeToContent="Height" Width="400"
-        Loaded="HandleWindowLoaded">
+        ShowInTaskbar="False" Loaded="HandleWindowLoaded">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -20,7 +20,8 @@
             <StackPanel Orientation="Vertical">
                 <Label Margin="4,4,4,0" MinHeight="23" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" 
                        Content="{Binding CurrentOperation}"/>
-                <ProgressBar Margin="{StaticResource DefaultMargin}" HorizontalAlignment="Stretch" Height="23"/>
+                <ProgressBar Margin="{StaticResource DefaultMargin}" HorizontalAlignment="Stretch" Height="23"
+                             Minimum="0" Maximum="100" Value="{Binding Progress}"/>
             </StackPanel>
         </GroupBox>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">

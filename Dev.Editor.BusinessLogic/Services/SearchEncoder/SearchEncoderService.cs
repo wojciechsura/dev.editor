@@ -156,6 +156,7 @@ namespace Dev.Editor.BusinessLogic.Services.SearchEncoder
             return new SearchReplaceModel(searchRegex,
                 countOccurrencesRegex,
                 findInFilesRegex,
+                description.Search,
                 replaceText,
                 description.IsSearchBackwards,
                 description.SearchMode == SearchMode.RegularExpressions,

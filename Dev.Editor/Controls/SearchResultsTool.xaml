@@ -5,9 +5,62 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Dev.Editor.Controls"
              xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
+             xmlns:f="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.FindInFiles;assembly=Dev.Editor.BusinessLogic"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="800" DataContextChanged="HandleDataContextChanged">
     <local:ToolContainer Header="{x:Static p:Strings.BottomTool_SearchResults_Title}" CloseCommand="{Binding CloseBottomToolsCommand}">
-        <TreeView />
+        <TreeView ItemsSource="{Binding SearchResults}" MouseDoubleClick="HandleTreeDoubleClick">
+            <TreeView.Resources>
+                <ResourceDictionary>
+                    <Style TargetType="TreeViewItem">
+                        <Style.Setters>
+                            <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
+                            <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                        </Style.Setters>
+                    </Style>
+
+                    <HierarchicalDataTemplate DataType="{x:Type f:RootSearchResultViewModel}" ItemsSource="{Binding Results}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding Icon}" Margin="2" />
+                            <TextBlock Margin="2">
+                                <Run Text="Search results for " />
+                                <Run Text="{Binding SearchPattern, Mode=OneWay}" FontWeight="Bold" />
+                                <Run Text=" in " />
+                                <Run Text="{Binding FullPath, Mode=OneWay}" FontWeight="Bold"/>
+                            </TextBlock>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type f:FolderSearchResultViewModel}" ItemsSource="{Binding Files}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding Icon}" Margin="2" />
+                            <TextBlock Margin="2">
+                                <Run Text="{Binding Name, Mode=OneWay}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <HierarchicalDataTemplate DataType="{x:Type f:FileSearchResultViewModel}" ItemsSource="{Binding Results}">
+                        <StackPanel Orientation="Horizontal">
+                            <Image Source="{Binding Icon}" Margin="2" />
+                            <TextBlock Margin="2">
+                                <Run Text="{Binding Name, Mode=OneWay}" />
+                            </TextBlock>
+                        </StackPanel>
+                    </HierarchicalDataTemplate>
+
+                    <DataTemplate DataType="{x:Type f:SearchResultViewModel}">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock MinWidth="100" Text="{Binding Location}" />
+                            <TextBlock Margin="2">
+                            <Run Text="{Binding Before, Mode=OneWay}" />
+                            <Run Text="{Binding Match, Mode=OneWay}" Background="{StaticResource TextEmphasizeBackgroundBrush}" />
+                            <Run Text="{Binding After, Mode=OneWay}" />
+                        </TextBlock>
+                        </StackPanel>
+                    </DataTemplate>
+                </ResourceDictionary>
+            </TreeView.Resources>
+        </TreeView>
     </local:ToolContainer>
 </UserControl>

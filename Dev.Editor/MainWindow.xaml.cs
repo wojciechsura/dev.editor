@@ -430,6 +430,11 @@ namespace Dev.Editor
             this.Activate();
         }
 
+        void IMainWindowAccess.WhenUIReady(Action action)
+        {
+            Dispatcher.BeginInvoke(action, DispatcherPriority.Render);
+        }
+
         // Public methods -----------------------------------------------------
 
         // private DispatcherTimer tmp;

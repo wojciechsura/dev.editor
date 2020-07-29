@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BusinessLogic.ViewModels.Search
+namespace Dev.Editor.BusinessLogic.Types.Tools
 {
-    public class BaseFilesystemSearchResultViewModel
+    public enum SideTool
     {
+        Explorer = 0,
+        BinaryDefinitions = 1
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;
+using Dev.Editor.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,19 +55,11 @@ namespace Dev.Editor.Controls
         {
         }
 
-        static TreeViewItem VisualUpwardSearch(DependencyObject source)
-        {
-            while (source != null && !(source is TreeViewItem))
-                source = VisualTreeHelper.GetParent(source);
-
-            return source as TreeViewItem;
-        }
-
         private void HandleFolderListPreviewMouseDown(object sender, MouseButtonEventArgs e)
         {
             if (e.ChangedButton == MouseButton.Right)
             {
-                TreeViewItem treeViewItem = VisualUpwardSearch(e.OriginalSource as DependencyObject);
+                TreeViewItem treeViewItem = TreeViewHelper.VisualUpwardSearch(e.OriginalSource as DependencyObject);
 
                 if (treeViewItem != null)
                 {

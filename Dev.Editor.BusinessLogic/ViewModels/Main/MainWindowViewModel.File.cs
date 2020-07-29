@@ -11,6 +11,8 @@ using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
 using Dev.Editor.BinAnalyzer.Exceptions;
 using Dev.Editor.BusinessLogic.Models.Messages;
 using Dev.Editor.BusinessLogic.Types.Main;
+using Dev.Editor.BusinessLogic.Types.Tools;
+using Dev.Editor.BusinessLogic.Types.BottomTools;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -105,7 +107,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         }
 
-        private void LoadTextDocument(DocumentTabKind documentTabKind, string filename, int? index = null)
+        private BaseDocumentViewModel LoadTextDocument(DocumentTabKind documentTabKind, string filename, int? index = null)
         {
             var document = FindDocument(filename);
                 
@@ -124,6 +126,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
 
             documentsManager.ActiveDocument = document;
+
+            return document;
         }
 
 		private bool SaveTextDocument(TextDocumentViewModel document)
@@ -239,7 +243,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             document.LastModificationDate = modificationDate;
         }
 
-        private void LoadHexDocument(DocumentTabKind documentTabKind, string filename, int? index = null)
+        private BaseDocumentViewModel LoadHexDocument(DocumentTabKind documentTabKind, string filename, int? index = null)
         {
             var document = FindDocument(filename);
 
@@ -257,7 +261,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 document = hexDocument;
             }
 
-            documentsManager.ActiveDocument = document;            
+            documentsManager.ActiveDocument = document;
+
+            return document;
         }
 
         private bool SaveHexDocument(HexDocumentViewModel document)
@@ -326,9 +332,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             {
                 SidePanelPlacement = Types.UI.SidePanelPlacement.Right;
             }
-
-            #warning TODO!
-            // SelectedTool = binDefinitionsToolViewModel;
+            
+            SelectedSideTool = SideTool.BinaryDefinitions;
 
             messagingService.Inform(Strings.Message_UseSidePanelToOpenBinFile);
         }
@@ -363,7 +368,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             document.LastModificationDate = modificationDate;
         }
 
-        private void LoadBinDocument(DocumentTabKind documentTabKind, string filename, BinDefinition binDefinition, int? index = null)
+        private BaseDocumentViewModel LoadBinDocument(DocumentTabKind documentTabKind, string filename, BinDefinition binDefinition, int? index = null)
         {
             var document = FindDocument(filename);
                 
@@ -382,6 +387,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
 
             documentsManager.ActiveDocument = document;
+
+            return document;
         }
 
         private void DoOpenBinDocument(DocumentTabKind documents, BinDefinition binDefinition)
@@ -408,8 +415,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                     BottomPanelVisibility = Types.UI.BottomPanelVisibility.Visible;
 
-                    #warning TODO!
-                    // SelectedBottomTool = messagesBottomToolViewModel;
+                    SelectedBottomTool = BottomTool.Messages;
                 }
                 catch (Exception e)
                 {
@@ -420,9 +426,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     messagingService.ShowError(string.Format(Strings.Message_CannotOpenBinFile));
 
                     BottomPanelVisibility = Types.UI.BottomPanelVisibility.Visible;
-                    
-                    #warning TODO!
-                    // SelectedBottomTool = messagesBottomToolViewModel;
+
+                    SelectedBottomTool = BottomTool.Messages;
                 }
             }
         }

@@ -99,8 +99,10 @@
       <DependentUpon>SearchResultsTool.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\BoolToIntegrationStateConverter.cs" />
+    <Compile Include="Converters\BottomToolToIntConverter.cs" />
     <Compile Include="Converters\DoubleToStarGridLengthConverter.cs" />
     <Compile Include="Converters\EqualsParameterToBoolConverter.cs" />
+    <Compile Include="Converters\SideToolToIntConverter.cs" />
     <Compile Include="Converters\TabColorToBrushConverter.cs" />
     <Compile Include="DiffConfigDialog.xaml.cs">
       <DependentUpon>DiffConfigDialog.xaml</DependentUpon>
@@ -111,6 +113,7 @@
     <Compile Include="ExceptionWindow.xaml.cs">
       <DependentUpon>ExceptionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\TreeViewHelper.cs" />
     <Compile Include="Models\ArgumentInfo.cs" />
     <Compile Include="NameDialog.xaml.cs">
       <DependentUpon>NameDialog.xaml</DependentUpon>

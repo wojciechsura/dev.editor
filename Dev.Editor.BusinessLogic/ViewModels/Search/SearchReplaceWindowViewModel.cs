@@ -174,6 +174,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             }
 
             searchHost.FindInFiles(searchReplaceModel);
+
+            // Find in files closes the search window, because progress window appears instead
+            access.Close();
         }
 
 

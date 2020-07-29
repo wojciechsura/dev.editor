@@ -48,7 +48,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.ProgressWindow
         {
             Progress = e.ProgressPercentage;
             if (e.UserState is string strUserState)
-                currentOperation = strUserState;
+                CurrentOperation = strUserState;
         }
 
         private void DoCancel()

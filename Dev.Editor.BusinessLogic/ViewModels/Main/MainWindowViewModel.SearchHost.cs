@@ -13,6 +13,10 @@ using System.Collections.ObjectModel;
 using ICSharpCode.AvalonEdit.Document;
 using Dev.Editor.BusinessLogic.ViewModels.Main.Search;
 using System.ComponentModel;
+using Dev.Editor.BusinessLogic.Types.BottomTools;
+using Dev.Editor.BusinessLogic.Types.UI;
+using Dev.Editor.BusinessLogic.Models.FindInFiles;
+using Dev.Editor.BusinessLogic.ViewModels.FindInFiles;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -261,7 +265,74 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void HandleFindInFilesCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            throw new NotImplementedException();
+            List<BaseSearchResultViewModel> GenerateResultList(BaseSearchContainerItem container)
+            {
+                var results = new List<BaseSearchResultViewModel>();
+
+                foreach (var item in container)
+                {
+                    var builtItem = BuildItemRecursive(item);
+                    if (builtItem != null)
+                        results.Add(builtItem);
+                }
+
+                return results;
+            }
+
+            BaseSearchResultViewModel BuildItemRecursive(BaseSearchItem item)
+            {
+                if (item is FolderSearchItem searchedFolder)
+                {
+                    List<BaseSearchResultViewModel> results = GenerateResultList(searchedFolder);
+
+                    if (results.Any())
+                        return new FolderSearchResultViewModel(System.IO.Path.GetFileName(searchedFolder.Path), fileIconProvider.GetImageForFolder(searchedFolder.Path), results);
+                    else
+                        return null;
+                }
+                else if (item is FileSearchItem searchedFile)
+                {
+                    if (searchedFile.Any())
+                    {
+                        var resultList = new List<SearchResultViewModel>();
+                        foreach (var searchResult in searchedFile)
+                        {
+                            var resultViewModel = new SearchResultViewModel(searchResult.FullPath,
+                                searchResult.Before, 
+                                searchResult.Match, 
+                                searchResult.After, 
+                                searchResult.Row + 1, 
+                                searchResult.Col + 1);
+
+                            resultList.Add(resultViewModel);
+                        }
+
+                        return new FileSearchResultViewModel(System.IO.Path.GetFileName(searchedFile.Path), fileIconProvider.GetImageForFile(searchedFile.Path), resultList);
+                    }
+                    else
+                        return null;
+                }
+                else
+                    throw new ArgumentException("Unsupported search item!");
+            }
+
+            RootSearchResultViewModel BuildResults(RootSearchItem root)
+            {
+                List<BaseSearchResultViewModel> results = GenerateResultList(root);
+
+                return new RootSearchResultViewModel(root.Path, root.SearchPattern, imageResources.GetIconByName("Search16.png"), results);
+            }
+
+            var result = e.Result as RootSearchItem;
+            var searchResults = BuildResults(result);
+
+            if (result != null)
+            {
+                SearchResultsBottomToolViewModel.AddResults(searchResults);
+
+                BottomPanelVisibility = BottomPanelVisibility.Visible;
+                SelectedBottomTool = BottomTool.SearchResults;
+            }
         }
     }
 }

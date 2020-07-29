@@ -9,5 +9,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 {
     public interface ISearchResultsHandler : IBottomToolHandler
     {
+        void OpenFileSearchResult(string fullPath, int line, int column);
     }
 }

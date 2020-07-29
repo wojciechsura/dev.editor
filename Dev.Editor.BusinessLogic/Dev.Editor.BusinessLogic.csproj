@@ -146,6 +146,7 @@
     <Compile Include="Services\TextTransform\ITextTransformService.cs" />
     <Compile Include="Services\TextTransform\TextTransformService.cs" />
     <Compile Include="Types\Behavior\CloseBehavior.cs" />
+    <Compile Include="Types\BottomTools\BottomTool.cs" />
     <Compile Include="Types\Document\TabColor.cs" />
     <Compile Include="Types\Document\Text\ActiveEditor.cs" />
     <Compile Include="Types\Document\Text\DiffDisplayMode.cs" />
@@ -157,6 +158,7 @@
     <Compile Include="Types\TextComparison\ChangeType.cs" />
     <Compile Include="Types\TextComparison\FreeIndexArray.cs" />
     <Compile Include="Types\Tools\Explorer\FileItemType.cs" />
+    <Compile Include="Types\Tools\SideTool.cs" />
     <Compile Include="Types\UI\AdditionalToolset.cs" />
     <Compile Include="Types\UI\BottomPanelVisibility.cs" />
     <Compile Include="Types\UI\SidePanelPlacement.cs" />
@@ -201,22 +203,28 @@
     <Compile Include="ViewModels\Main\MainWindowViewModel.Text.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.View.Editor.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.XmlTools.cs" />
-    <Compile Include="ViewModels\Main\Search\FindInFilesWorker.cs">
+    <Compile Include="Models\FindInFiles\BaseSearchContainerItem.cs" />
+    <Compile Include="Models\FindInFiles\BaseSearchItem.cs" />
+    <Compile Include="Models\FindInFiles\FileSearchItem.cs" />
+    <Compile Include="ViewModels\Main\FindInFiles\FindInFilesWorker.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Models\FindInFiles\FolderSearchItem.cs" />
+    <Compile Include="Models\FindInFiles\ResultSearchItem.cs" />
+    <Compile Include="Models\FindInFiles\RootSearchItem.cs" />
     <Compile Include="ViewModels\Main\StoredSearchReplaceViewModel.cs" />
     <Compile Include="ViewModels\Main\TextDocumentPropertyNotNullCondition.cs" />
     <Compile Include="ViewModels\Main\TextDocumentPropertyWatchCondition.cs" />
     <Compile Include="ViewModels\ProgressWindow\IProgressWindowAccess.cs" />
     <Compile Include="ViewModels\ProgressWindow\ProgressWindowViewModel.cs" />
-    <Compile Include="ViewModels\Search\BaseFilesystemSearchResultViewModel.cs" />
-    <Compile Include="ViewModels\Search\FileSearchResultViewModel.cs" />
-    <Compile Include="ViewModels\Search\FolderSearchResultViewModel.cs" />
+    <Compile Include="ViewModels\FindInFiles\BaseSearchResultViewModel.cs" />
+    <Compile Include="ViewModels\FindInFiles\FileSearchResultViewModel.cs" />
+    <Compile Include="ViewModels\FindInFiles\FolderSearchResultViewModel.cs" />
     <Compile Include="ViewModels\Search\ISearchHost.cs" />
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />
-    <Compile Include="ViewModels\Search\RootSearchResultViewModel.cs" />
+    <Compile Include="ViewModels\FindInFiles\RootSearchResultViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />
-    <Compile Include="ViewModels\Search\SearchResultViewModel.cs" />
+    <Compile Include="ViewModels\FindInFiles\SearchResultViewModel.cs" />
     <Compile Include="ViewModels\Search\StoredSearchViewModel.cs" />
     <Compile Include="ViewModels\Tools\Base\BaseToolViewModel.cs" />
     <Compile Include="ViewModels\Tools\Base\IToolHandler.cs" />

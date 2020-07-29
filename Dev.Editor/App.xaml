@@ -69,6 +69,8 @@
 
             <SolidColorBrush x:Key="DocumentButtonHoverForegroundBrush" Color="#3A9EFF" />
 
+            <SolidColorBrush x:Key="TextEmphasizeBackgroundBrush" Color="#f5bc83" />
+
             <!-- Document templates -->
 
             <DataTemplate x:Key="TextDocumentTemplate" >

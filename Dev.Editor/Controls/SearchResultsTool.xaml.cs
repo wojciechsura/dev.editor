@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults;
+using Dev.Editor.Helpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,9 +22,25 @@ namespace Dev.Editor.Controls
     /// </summary>
     public partial class SearchResultsTool : UserControl
     {
+        private SearchResultsBottomToolViewModel viewModel;
+
+        private void HandleDataContextChanged(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            viewModel = e.NewValue as SearchResultsBottomToolViewModel;
+        }
+
         public SearchResultsTool()
         {
             InitializeComponent();
+        }
+
+        private void HandleTreeDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            TreeViewItem treeViewItem = TreeViewHelper.VisualUpwardSearch(e.OriginalSource as DependencyObject);
+            if (treeViewItem != null)
+            {
+                viewModel.NotifyItemDoubleClicked(treeViewItem.DataContext);
+            }            
         }
     }
 }

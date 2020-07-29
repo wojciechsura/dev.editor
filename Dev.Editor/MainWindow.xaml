@@ -421,6 +421,8 @@
             <converters:SidePanelToTabPlacement x:Key="SidePanelToTabPlacement" />
             <converters:AdditionalToolsetToVisibilityConverter x:Key="AdditionalToolsetToVisibilityConverter" />
             <converters:SearchReplaceOperationToImageConverter x:Key="SearchReplaceOperationToImageConverter" />
+            <converters:SideToolToIntConverter x:Key="SideToolToIntConverter" />
+            <converters:BottomToolToIntConverter x:Key="BottomToolToIntConverter" />
 
             <!-- Template selectors -->
 
@@ -964,7 +966,7 @@
                             Visibility="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToVisibilityConverter}}"
                             TabStripPlacement="{Binding SidePanelPlacement, Converter={StaticResource SidePanelToTabPlacement}}"                                    
                             Margin="{StaticResource HalfMargin}" Padding="0" BorderThickness="0"
-                            ItemContainerStyle="{StaticResource SidePanelTabItem}">
+                            ItemContainerStyle="{StaticResource SidePanelTabItem}" SelectedIndex="{Binding SelectedSideTool, Mode=TwoWay, Converter={StaticResource SideToolToIntConverter}}">
 
                     <TabItem DataContext="{Binding ExplorerToolViewModel}">
                         <controls:ExplorerTool />
@@ -1023,7 +1025,7 @@
                               Style="{StaticResource VerticalRootGridSplitter}"/>
             </Grid>
 
-            <!-- Navigation popup -->
+            <!-- Bottom panel -->
 
             <GridSplitter x:Name="bottomPanelSplitter" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"
                           Visibility="{Binding BottomPanelVisibility, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static uit:BottomPanelVisibility.Visible}}"
@@ -1031,8 +1033,7 @@
 
             <TabControl x:Name="bottomPanel" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MinHeight="100" Margin="{StaticResource HalfMargin}"
                     Visibility="{Binding BottomPanelVisibility, Converter={StaticResource EnumToVisibilityConverter}, ConverterParameter={x:Static uit:BottomPanelVisibility.Visible}}"
-                    TabStripPlacement="Bottom"
-                        Padding="0" BorderThickness="0">
+                    TabStripPlacement="Bottom" Padding="0" BorderThickness="0" SelectedIndex="{Binding SelectedBottomTool, Mode=TwoWay, Converter={StaticResource BottomToolToIntConverter}}">
                 <TabControl.Resources>
                     <Style TargetType="TabItem" BasedOn="{StaticResource RootTabItem}">
                         <Style.Setters>

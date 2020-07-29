@@ -55,6 +55,9 @@ using Dev.Editor.BusinessLogic.Services.TextTransform;
 using Dev.Editor.BusinessLogic.Models.Documents.Text;
 using System.Windows.Media.Effects;
 using Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults;
+using Dev.Editor.BusinessLogic.Types.BottomTools;
+using Dev.Editor.BusinessLogic.Types.Tools;
+using System.Windows.Threading;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -96,10 +99,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private SidePanelPlacement sidePanelPlacement;
         private List<SidePanelPlacementModel> sidePanelPlacements;
         private double sidePanelSize;
+        private SideTool selectedSideTool;
 
         private BottomPanelVisibility bottomPanelVisibility;
         private List<BottomPanelVisibilityModel> bottomPanelVisibilities;
         private double bottomPanelSize;
+        private BottomTool selectedBottomTool;
 
         // Tools
 
@@ -750,6 +755,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             BuildStoredSearchReplaceViewModels();
         }
 
+        // ISearchResultsHandler implementation -------------------------------
+
+        void ISearchResultsHandler.OpenFileSearchResult(string fullPath, int line, int column)
+        {
+            var document = LoadTextDocument(documentsManager.ActiveDocumentTab, fullPath);
+
+            if (document is TextDocumentViewModel textDocument)
+            {
+                access.WhenUIReady(() =>
+                {
+                    var offset = textDocument.Document.GetOffset(line, column);
+                    textDocument.SetSelection(offset, 0, true);
+                    textDocument.FocusDocument();
+                });
+            }
+        }
+
         // Public methods -----------------------------------------------------
 
         public MainWindowViewModel(IMainWindowAccess access,
@@ -805,6 +827,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             // BottomPanel
 
             bottomPanelVisibility = configurationService.Configuration.UI.BottomPanelVisibility.Value;
+            selectedBottomTool = BottomTool.Messages;
+            selectedSideTool = SideTool.Explorer;
 
             bottomPanelVisibilities = new List<BottomPanelVisibilityModel>
             {
@@ -1184,6 +1208,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         {
             get => bottomPanelSize;
             set => Set(ref bottomPanelSize, () => BottomPanelSize, value, HandleBottomPanelSizeChanged);
+        }
+
+        public BottomTool SelectedBottomTool
+        {
+            get => selectedBottomTool;
+            set => Set(ref selectedBottomTool, () => SelectedBottomTool, value);
+        }
+
+        public SideTool SelectedSideTool
+        {
+            get => selectedSideTool;
+            set => Set(ref selectedSideTool, () => SelectedSideTool, value);
         }
 
         public ExplorerToolViewModel ExplorerToolViewModel => explorerToolViewModel;
