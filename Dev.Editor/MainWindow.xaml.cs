@@ -411,8 +411,33 @@ namespace Dev.Editor
 
         void IMainWindowAccess.SetWindowLocation(Point point)
         {
+            const int MIN_PIXELS_ON_SCREEN = 64;
+
             this.Left = point.X;
             this.Top = point.Y;
+
+            // Ensure, that window is visible
+
+            var converter = new ScreenBoundsConverter(this);
+
+            foreach (var screen in System.Windows.Forms.Screen.AllScreens)
+            {
+                Rect bounds = converter.ConvertBounds(screen.Bounds);
+
+                double commonX = Math.Min(bounds.Right, this.Left + this.Width) - Math.Max(bounds.Left, this.Left);
+                double commonY = Math.Min(bounds.Bottom, this.Top + this.Height) - Math.Max(bounds.Top, this.Top);
+
+                if (commonX > MIN_PIXELS_ON_SCREEN && commonY > MIN_PIXELS_ON_SCREEN)
+                {
+                    return;
+                }
+            }
+
+            var mainScreen = System.Windows.Forms.Screen.PrimaryScreen;
+            Rect mainBounds = converter.ConvertBounds(mainScreen.Bounds);
+
+            Left = mainBounds.Left;
+            Top = mainBounds.Top;
         }
 
         void IMainWindowAccess.SetWindowMaximized(bool maximized)

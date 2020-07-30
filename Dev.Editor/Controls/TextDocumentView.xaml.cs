@@ -920,5 +920,13 @@ namespace Dev.Editor.Controls
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        private void HandleQuickSearchKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                viewModel.NotifyQuickSearchEnterPressed();
+            }
+        }
     }
 }

@@ -58,6 +58,8 @@ using Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults;
 using Dev.Editor.BusinessLogic.Types.BottomTools;
 using Dev.Editor.BusinessLogic.Types.Tools;
 using System.Windows.Threading;
+using Dev.Editor.BusinessLogic.Types.Search;
+using System.Text.RegularExpressions;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -689,6 +691,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         void IDocumentHandler.RequestClearAllDiffs()
         {
             ClearAllDiffs();
+        }
+
+        bool IDocumentHandler.PerformQuickSearch(string quickSearchText, bool next)
+        {
+            return DoPerformQuickSearch(quickSearchText, next);
         }
 
         // IToolHandler implementation ----------------------------------------

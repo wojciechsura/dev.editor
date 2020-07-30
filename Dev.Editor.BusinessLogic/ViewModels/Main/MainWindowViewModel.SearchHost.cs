@@ -17,6 +17,7 @@ using Dev.Editor.BusinessLogic.Types.BottomTools;
 using Dev.Editor.BusinessLogic.Types.UI;
 using Dev.Editor.BusinessLogic.Models.FindInFiles;
 using Dev.Editor.BusinessLogic.ViewModels.FindInFiles;
+using Dev.Editor.BusinessLogic.Types.Search;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -333,6 +334,34 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 BottomPanelVisibility = BottomPanelVisibility.Visible;
                 SelectedBottomTool = BottomTool.SearchResults;
+            }
+        }
+
+        private bool DoPerformQuickSearch(string quickSearchText, bool next)
+        {
+            var description = new SearchReplaceDescription(quickSearchText, null, SearchReplaceOperation.Search,
+                SearchMode.Normal, false, false, false, false, false, null, null);
+
+            var searchModel = searchEncoder.SearchDescriptionToModel(description);
+            documentsManager.ActiveDocument.LastSearch = searchModel;
+
+            var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
+
+            // Search origin
+            (int selStart, int selLength) = document.GetSelection();
+
+            int start = next ? selStart + selLength : selStart;
+
+            Match match = searchModel.Regex.Match(document.Document.Text, start);
+
+            if (match.Success)
+            {
+                document.SetSelection(match.Index, match.Length, true);
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }

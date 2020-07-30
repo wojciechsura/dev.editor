@@ -40,6 +40,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         private string quickSearchText;
         private bool quickSearchVisible;
+        private bool quickSearchFound;
 
         // Private methods ----------------------------------------------------
 
@@ -57,7 +58,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         {
             if (editorAccess == null)
                 throw new InvalidOperationException("No editor attached!");
-        }        
+        }
+
+        private void HandleQuickSearchTextChanged()
+        {
+            QuickSearchFound = handler.PerformQuickSearch(quickSearchText, false);
+        }
 
         // Public methods -----------------------------------------------------
 
@@ -199,6 +205,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             QuickSearchVisible = false;
         }
 
+        public void NotifyQuickSearchEnterPressed()
+        {
+            handler.PerformQuickSearch(quickSearchText, true);
+        }
+
         // Public properties --------------------------------------------------
 
         public TextDocument Document => document;
@@ -262,13 +273,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         public string QuickSearchText
         {
             get => quickSearchText;
-            set => Set(ref quickSearchText, () => QuickSearchText, value);
+            set => Set(ref quickSearchText, () => QuickSearchText, value, HandleQuickSearchTextChanged);
         }
 
         public bool QuickSearchVisible
         {
             get => quickSearchVisible;
             set => Set(ref quickSearchVisible, () => QuickSearchVisible, value);
+        }
+
+        public bool QuickSearchFound
+        {
+            get => quickSearchFound;
+            set => Set(ref quickSearchFound, () => QuickSearchFound, value);
         }
     }
 }

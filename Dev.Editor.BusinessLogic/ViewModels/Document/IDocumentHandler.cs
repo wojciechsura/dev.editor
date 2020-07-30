@@ -25,5 +25,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         void ChildActivated(BaseDocumentViewModel baseDocumentViewModel);
         void MoveToOtherView(BaseDocumentViewModel baseDocumentViewModel);
         void RequestClearAllDiffs();
+        bool PerformQuickSearch(string quickSearchText, bool next);
     }
 }
