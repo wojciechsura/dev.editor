@@ -203,6 +203,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         public void CloseQuickSearch()
         {
             QuickSearchVisible = false;
+            editorAccess.FocusDocument();
         }
 
         public void NotifyQuickSearchEnterPressed()
