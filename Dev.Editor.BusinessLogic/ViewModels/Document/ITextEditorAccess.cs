@@ -20,5 +20,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         void RunAsSingleHistoryOperation(Action action);
         void FocusDocument();
         void FocusQuickSearch();
+
+        bool QuickSearchFocused { get; }
     }
 }

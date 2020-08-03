@@ -283,6 +283,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             set => Set(ref quickSearchVisible, () => QuickSearchVisible, value);
         }
 
+        public bool QuickSearchFocused => editorAccess.QuickSearchFocused;
+
         public bool QuickSearchFound
         {
             get => quickSearchFound;

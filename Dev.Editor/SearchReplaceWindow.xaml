@@ -13,7 +13,7 @@
         mc:Ignorable="d"
         Title="{x:Static p:Strings.SearchWindow_Title}" 
         SizeToContent="WidthAndHeight" ResizeMode="NoResize" Closing="HandleWindowClosing" ShowInTaskbar="False"
-        WindowStartupLocation="CenterOwner">
+        WindowStartupLocation="CenterOwner" PreviewKeyDown="HandleWindowPreviewKeyDown">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -47,7 +47,7 @@
                                 <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_SearchedText}"/>
                                 <c:ComboBoxEx x:Name="cbSearchSearch" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
                                               Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              ItemsSource="{Binding LastSearches}" IsEditable="True" />
+                                              ItemsSource="{Binding LastSearches}" IsEditable="True" ShouldPreserveUserEnteredPrefix="True" />
                             </Grid>
 
                             <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchOptions}" Padding="4" Width="350">
@@ -92,8 +92,7 @@
                                 IsDefault="True"/>
                                 <Button Content="{x:Static p:Strings.SearchWindow_CountOccurrences}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding CountOccurrencesCommand}" />
                                 <Separator Margin="{StaticResource DialogItemsVMargin}" />
-                                <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" 
-                                IsCancel="True"/>
+                                <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" />
                             </StackPanel>
                         </DockPanel>
                     </StackPanel>
@@ -117,11 +116,13 @@
 
                                 <Label Margin="{StaticResource DialogItemsVMargin}" Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_SearchedText}"/>
                                 <c:ComboBoxEx x:Name="cbReplaceSearch" Margin="{StaticResource DialogItemsVMargin}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
-                                        Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding LastSearches}" IsEditable="True"/>
+                                        Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding LastSearches}" IsEditable="True"
+                                              ShouldPreserveUserEnteredPrefix="True" />
 
                                 <Label Grid.Row="1" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_ReplaceWith}" />
                                 <c:ComboBoxEx Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" 
-                                        Text="{Binding Replace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding LastReplaces}" IsEditable="True" />
+                                        Text="{Binding Replace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding LastReplaces}" IsEditable="True" 
+                                              ShouldPreserveUserEnteredPrefix="True" />
                             </Grid>
 
                             <Grid>
@@ -193,8 +194,7 @@
                                 <Button Content="{x:Static p:Strings.SearchWindow_Replace}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding ReplaceCommand}"/>
                                 <Button Content="{x:Static p:Strings.SearchWindow_ReplaceAll}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding ReplaceAllCommand}"/>
                                 <Separator Margin="{StaticResource DialogItemsVMargin}" />
-                                <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" 
-                                    IsCancel="true"/>
+                                <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" />
                             </StackPanel>
                         </DockPanel>
                     </StackPanel>
@@ -217,7 +217,7 @@
                                 <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_SearchedText}"/>
                                 <c:ComboBoxEx x:Name="cbSearchInFilesSearch" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" 
                                               Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-                                              ItemsSource="{Binding LastSearches}" IsEditable="True" />
+                                              ItemsSource="{Binding LastSearches}" IsEditable="True" ShouldPreserveUserEnteredPrefix="True" />
                             </Grid>
 
                             <GroupBox Header="{x:Static p:Strings.SearchWindow_Location}" Padding="4" Width="350" >
@@ -277,8 +277,7 @@
                                 <Button Content="{x:Static p:Strings.SearchWindow_FindInFiles}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding FindInFilesCommand}" 
                                 IsDefault="True"/>
                                 <Separator Margin="{StaticResource DialogItemsVMargin}" />
-                                <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" 
-                                IsCancel="True"/>
+                                <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" />
                             </StackPanel>
                         </DockPanel>
                     </StackPanel>

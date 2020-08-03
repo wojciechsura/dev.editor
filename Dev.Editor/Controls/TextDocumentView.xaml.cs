@@ -823,6 +823,8 @@ namespace Dev.Editor.Controls
             viewModel.NotifyRegularSelectionAvailable(editor.SelectionLength > 0 && editor.TextArea.Selection.Segments.Count() == 1);
         }
 
+        private bool GetQuickSearchFocused() => tbQuickSearch.IsFocused;
+
         // Protected methods --------------------------------------------------
 
         protected void OnPropertyChanged(string propertyName)
@@ -926,6 +928,14 @@ namespace Dev.Editor.Controls
             if (e.Key == Key.Enter)
             {
                 viewModel.NotifyQuickSearchEnterPressed();
+            }
+        }
+
+        public bool QuickSearchFocused
+        {
+            get
+            {
+                return GetQuickSearchFocused();
             }
         }
     }

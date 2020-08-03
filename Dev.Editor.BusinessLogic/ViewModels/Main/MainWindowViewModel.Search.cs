@@ -17,7 +17,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         {
             if (documentsManager.ActiveDocument is TextDocumentViewModel textDocument)
             {
-                if (!textDocument.QuickSearchVisible)
+                if (!textDocument.QuickSearchVisible || !textDocument.QuickSearchFocused)
                 {
                     textDocument.ShowQuickSearch();
                 }

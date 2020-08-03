@@ -103,5 +103,13 @@ namespace Dev.Editor
             Show();
             Focus();
         }
+
+        private void HandleWindowPreviewKeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Escape)
+            {
+                viewModel.NotifyEscapePressed();
+            }
+        }
     }
 }

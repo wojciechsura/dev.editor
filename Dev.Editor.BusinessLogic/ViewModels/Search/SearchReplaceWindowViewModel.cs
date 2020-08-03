@@ -113,6 +113,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             }
         }
 
+        public void NotifyEscapePressed()
+        {
+            access.Close();
+        }
+
         private void DoDeleteSearch()
         {
             if (messagingService.AskYesNo(String.Format(Strings.Message_StoredSearchDeleteConfirmation, SelectedStoredSearch.SearchName)) == true)
@@ -427,7 +432,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         {
             CurrentOperation = SearchReplaceOperation.Search;
             
-            access.FocusFindInFiles();
+            access.FocusSearch();
             access.ShowAndFocus();
         }
 
@@ -435,7 +440,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         {
             CurrentOperation = SearchReplaceOperation.FindInFiles;
 
-            access.FocusSearch();
+            access.FocusFindInFiles();
             access.ShowAndFocus();
         }
 
