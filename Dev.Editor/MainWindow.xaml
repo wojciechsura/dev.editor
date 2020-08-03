@@ -777,6 +777,9 @@
                     <f:DropDownButton Size="Large" Header="{x:Static p:Strings.Ribbon_Text_Escape_Escape}"
                                       LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Escape32.png"
                                       Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Escape16.png">
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Escape_Escape_Backslash}" Command="{Binding EscapeCommand}" CommandParameter="\" />
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Escape_Unescape_Backslash}" Command="{Binding UnescapeCommand}" CommandParameter="\" />
+                        <Separator />
                         <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Escape_Escape}" Command="{Binding EscapeCommand}" />
                         <f:MenuItem Header="{x:Static p:Strings.Ribbon_Text_Escape_Unescape}" Command="{Binding UnescapeCommand}" />
                     </f:DropDownButton>

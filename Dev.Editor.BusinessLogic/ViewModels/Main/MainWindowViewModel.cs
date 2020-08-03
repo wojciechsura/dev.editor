@@ -970,8 +970,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             Base64DecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Convert_Base64_FromBase64, "ConvertBase6416.png", obj => DoBase64Decode(), documentIsTextCondition);
             HtmlEntitiesEncodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Htm_Encode, "ConvertHtml16.png", obj => DoHtmlEntitiesEncode(), documentIsTextCondition);
             HtmlEntitiesDecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Htm_Decode, "ConvertHtml16.png", obj => DoHtmlEntitiesDecode(), documentIsTextCondition);
-            EscapeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Escape, "Escape16.png", obj => DoEscape(), documentIsTextCondition);
-            UnescapeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Unescape, "Unescape16.png", obj => DoUnescape(), documentIsTextCondition);
+            EscapeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Escape, "Escape16.png", obj => DoEscape(obj), documentIsTextCondition);
+            UnescapeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Unescape, "Unescape16.png", obj => DoUnescape(obj), documentIsTextCondition);
 
             FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, "FormatXml16.png", obj => DoFormatXml(), xmlToolsetAvailableCondition);
             TransformXsltCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Transform_XSLT, null, obj => DoTransformXslt(), xmlToolsetAvailableCondition);

@@ -956,10 +956,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
     <value>Dokumenty nie mają żadnych różnic.</value>
   </data>
   <data name="Ribbon.Text.Escape.Escape" xml:space="preserve">
-    <value>Dodaj znaki ucieczki</value>
+    <value>Dodaj znaki ucieczki...</value>
   </data>
   <data name="Ribbon.Text.Escape.Unescape" xml:space="preserve">
-    <value>Usuń znaki ucieczki</value>
+    <value>Usuń znaki ucieczki...</value>
   </data>
   <data name="Ribbon.Text.Escape" xml:space="preserve">
     <value>Znaki ucieczki</value>
@@ -1068,5 +1068,11 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   </data>
   <data name="Ribbon.Home.Search.FindInFiles" xml:space="preserve">
     <value>Szukaj w plikach</value>
+  </data>
+  <data name="Ribbon.Text.Escape.Escape.Backslash" xml:space="preserve">
+    <value>Dodaj znaki \</value>
+  </data>
+  <data name="Ribbon.Text.Escape.Unescape.Backslash" xml:space="preserve">
+    <value>Usuń znaki \</value>
   </data>
 </root>

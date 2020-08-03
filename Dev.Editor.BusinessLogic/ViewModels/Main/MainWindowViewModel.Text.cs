@@ -54,44 +54,71 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             TransformText(text => (true, HttpUtility.HtmlEncode(text)));
         }
 
-        private void DoEscape()
+        private void DoEscape(object parameter = null)
         {
-            (bool result, EscapeConfigResult model) = dialogService.ShowEscapeConfigDialog(new EscapeConfigModel(true));
+            EscapeConfigResult model;
 
-            if (result)
-                TransformText(text =>
-                {
-                    try
-                    {
-                        var transformed = textTransformService.Escape(text, new EscapeConfig(model.EscapeChar[0], model.IncludeSingleQuotes, model.IncludeDoubleQuotes, model.IncludeSpecialCharacters));
-                        return (true, transformed);
-                    }
-                    catch
-                    {
-                        messagingService.ShowError(Resources.Strings.Message_FailedToEscapeString);
-                        return (false, null);
-                    }
-                });
+            if (parameter is string str && str == "\\")
+            {
+                PerformEscape(new EscapeConfigResult("\\", true, true, true));
+            }
+            else
+            {
+                bool result;
+                (result, model) = dialogService.ShowEscapeConfigDialog(new EscapeConfigModel(true));
+
+                if (result)
+                    PerformEscape(model);
+            }
         }
 
-        private void DoUnescape()
+        private void PerformEscape(EscapeConfigResult model)
         {
-            (bool result, EscapeConfigResult model) = dialogService.ShowEscapeConfigDialog(new EscapeConfigModel(false));
-
-            if (result)
-                TransformText(text =>
+            TransformText(text =>
+            {
+                try
                 {
-                    try
-                    {
-                        var transformed = textTransformService.Unescape(text, new EscapeConfig(model.EscapeChar[0], model.IncludeSingleQuotes, model.IncludeDoubleQuotes, model.IncludeSpecialCharacters));
-                        return (true, transformed);
-                    }
-                    catch
-                    {
-                        messagingService.ShowError(Resources.Strings.Message_FailedToUnescapeString);
-                        return (false, null);
-                    }
-                });
+                    var transformed = textTransformService.Escape(text, new EscapeConfig(model.EscapeChar[0], model.IncludeSingleQuotes, model.IncludeDoubleQuotes, model.IncludeSpecialCharacters));
+                    return (true, transformed);
+                }
+                catch
+                {
+                    messagingService.ShowError(Resources.Strings.Message_FailedToEscapeString);
+                    return (false, null);
+                }
+            });
+        }
+
+        private void DoUnescape(object parameter = null)
+        {
+            if (parameter is string str && str == "\\")
+            {
+                PerformUnescape(new EscapeConfigResult("\\", true, true, true));
+            }
+            else
+            {
+                (bool result, EscapeConfigResult model) = dialogService.ShowEscapeConfigDialog(new EscapeConfigModel(false));
+
+                if (result)
+                    PerformUnescape(model);
+            }
+        }
+
+        private void PerformUnescape(EscapeConfigResult model)
+        {
+            TransformText(text =>
+            {
+                try
+                {
+                    var transformed = textTransformService.Unescape(text, new EscapeConfig(model.EscapeChar[0], model.IncludeSingleQuotes, model.IncludeDoubleQuotes, model.IncludeSpecialCharacters));
+                    return (true, transformed);
+                }
+                catch
+                {
+                    messagingService.ShowError(Resources.Strings.Message_FailedToUnescapeString);
+                    return (false, null);
+                }
+            });
         }
 
         private void DoInvertCase()

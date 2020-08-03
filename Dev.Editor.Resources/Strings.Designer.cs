@@ -1918,11 +1918,20 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Escape.
+        ///   Looks up a localized string similar to Escape....
         /// </summary>
         public static string Ribbon_Text_Escape_Escape {
             get {
                 return ResourceManager.GetString("Ribbon.Text.Escape.Escape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Escape with \.
+        /// </summary>
+        public static string Ribbon_Text_Escape_Escape_Backslash {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Escape.Escape.Backslash", resourceCulture);
             }
         }
         
@@ -1954,11 +1963,20 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unescape.
+        ///   Looks up a localized string similar to Unescape....
         /// </summary>
         public static string Ribbon_Text_Escape_Unescape {
             get {
                 return ResourceManager.GetString("Ribbon.Text.Escape.Unescape", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unescape with \.
+        /// </summary>
+        public static string Ribbon_Text_Escape_Unescape_Backslash {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Escape.Unescape.Backslash", resourceCulture);
             }
         }
         
