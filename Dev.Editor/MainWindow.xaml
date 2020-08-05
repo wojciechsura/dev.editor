@@ -17,6 +17,7 @@
     xmlns:uit="clr-namespace:Dev.Editor.BusinessLogic.Types.UI;assembly=Dev.Editor.BusinessLogic"
     xmlns:mt="clr-namespace:Dev.Editor.BusinessLogic.Types.Main;assembly=Dev.Editor.BusinessLogic"
     xmlns:dt="clr-namespace:Dev.Editor.BusinessLogic.Types.Document;assembly=Dev.Editor.BusinessLogic"
+    xmlns:mh="clr-namespace:Dev.Editor.BusinessLogic.Models.Highlighting;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
     Title="Dev.Editor" Height="450" Width="800" UseLayoutRounding="True"
     Closing="HandleWindowClosing" Loaded="HandleLoaded" Activated="HandleWindowActivated"
@@ -680,27 +681,21 @@
                 <!-- Syntax highlighting -->
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_View_View_SyntaxHighlighting}">
-
-                    <f:InRibbonGallery ItemsSource="{Binding Highlightings}" 
-                                       ItemWidth="80"
-                                       ItemHeight="58"
-                                       MinItemsInRow="6" 
-                                       MaxItemsInRow="8" 
-                                       SelectedItem="{Binding Documents.ActiveDocument.Highlighting}"
-                                       IsEnabled="{Binding Documents.ActiveDocument, Converter={StaticResource TextDocToBoolConverter}}"
-                                       GroupBy="Initial">
-                        <f:InRibbonGallery.ItemTemplate>
-                            <DataTemplate>
-                                <StackPanel Orientation="Vertical">
-                                    <Image Width="32" Height="32" Source="{Binding Icon}"/>
-                                    <Label Content="{Binding Name}" HorizontalAlignment="Stretch" HorizontalContentAlignment="Center"/>
+                    <Label Content="{x:Static p:Strings.Ribbon_View_View_SyntaxHighlighting}" />
+                    <f:ComboBox ItemsSource="{Binding Highlightings}" SelectedItem="{Binding Documents.ActiveDocument.Highlighting}" 
+                                IsEnabled="{Binding Documents.ActiveDocument, Converter={StaticResource TextDocToBoolConverter}}"
+                                Width="200" IsEditable="False">
+                        <f:ComboBox.ItemTemplate>
+                            <DataTemplate DataType="{x:Type mh:HighlightingInfo}">
+                                <StackPanel Orientation="Horizontal">
+                                    <Image Width="16" Height="16" Source="{Binding Icon}" />
+                                    <TextBlock Margin="4" Text="{Binding Name}" VerticalAlignment="Center"/>
                                 </StackPanel>
                             </DataTemplate>
-                        </f:InRibbonGallery.ItemTemplate>
-                    </f:InRibbonGallery>
-
+                        </f:ComboBox.ItemTemplate>
+                    </f:ComboBox>
                 </f:RibbonGroupBox>
-
+                
             </f:RibbonTabItem>
 
             <!-- Lines tab -->
