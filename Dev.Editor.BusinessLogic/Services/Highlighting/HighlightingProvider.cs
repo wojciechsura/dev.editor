@@ -212,6 +212,14 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
                 false,
                 AdditionalToolset.Markdown);
 
+            RegisterHighlighting("Feature (Gherkin)",
+                new[] { ".feature" },
+                "feature.xshd",
+                null,
+                FoldingKind.None,
+                false,
+                AdditionalToolset.None);
+
             // Sort highlightings
             allHighlightingInfos.Sort((i1, i2) => i1.Name.CompareTo(i2.Name));
 

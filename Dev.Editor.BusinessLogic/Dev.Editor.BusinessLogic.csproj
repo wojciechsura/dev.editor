@@ -295,6 +295,7 @@
     <EmbeddedResource Include="Resources\Highlighting\BinDef.xshd" />
     <EmbeddedResource Include="Resources\Highlighting\INI.xshd" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Comparing.cs" />
+    <EmbeddedResource Include="Resources\Highlighting\feature.xshd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Highlighting\cpp.png" />
