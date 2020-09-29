@@ -907,6 +907,7 @@ namespace Dev.Editor.Controls
         public void FocusQuickSearch()
         {
             tbQuickSearch.Focus();
+            tbQuickSearch.SelectAll();
         }
 
         // Public properties --------------------------------------------------

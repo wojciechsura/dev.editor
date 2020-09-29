@@ -19,7 +19,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             {
                 if (!textDocument.QuickSearchVisible || !textDocument.QuickSearchFocused)
                 {
-                    textDocument.ShowQuickSearch();
+                    if (textDocument.RegularSelectionAvailable)
+                    {
+                        var selection = textDocument.GetSelectedText();
+                        if (selection.Contains("\r") || selection.Contains("\n"))
+                            textDocument.ShowQuickSearch();
+                        else
+                            textDocument.ShowQuickSearch(selection);
+                    }
+                    else
+                    {
+                        textDocument.ShowQuickSearch();
+                    }
                 }
                 else
                 {

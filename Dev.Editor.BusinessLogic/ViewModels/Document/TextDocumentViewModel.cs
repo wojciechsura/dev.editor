@@ -192,9 +192,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             return $"TextDocument, {base.ToString()}";
         }
 
-        public void ShowQuickSearch()
+        public void ShowQuickSearch(string quickSearchText = "")
         {
-            QuickSearchText = "";
+            QuickSearchText = quickSearchText;
             QuickSearchVisible = true;
 
             editorAccess.FocusQuickSearch();
