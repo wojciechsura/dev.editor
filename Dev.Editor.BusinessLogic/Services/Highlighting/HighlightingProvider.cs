@@ -143,7 +143,7 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
                 FoldingKind.None);
 
             RegisterHighlighting("C++",
-                new[] { ".c", ".h", ".cc", ".cpp", ".hpp" },
+                new[] { ".c", ".h", ".cc", ".cpp", ".hpp", ".ino" },
                 "CPP.xshd",
                 "cpp.png",
                 FoldingKind.Braces);
