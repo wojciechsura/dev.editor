@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dev.Editor.BusinessLogic", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dev.Editor.Common", "Dev.Editor.Common\Dev.Editor.Common.csproj", "{B40F69AF-B0C3-4153-B68D-8945787242C7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ICSharpCode.AvalonEdit", "ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj", "{7DF2E8A9-9EB7-442C-91B4-073DAC5EB54C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ICSharpCode.AvalonEdit", "ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj", "{7DF2E8A9-9EB7-442C-91B4-073DAC5EB54C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dev.Editor.Resources", "Dev.Editor.Resources\Dev.Editor.Resources.csproj", "{6F537829-9BF6-428C-95FD-00170E8ACC60}"
 EndProject
@@ -37,6 +37,11 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "HexEditor", "HexEditor", "{664E29B8-1E2B-4236-A54A-CA175394C328}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dev.Editor.BinAnalyzer", "Dev.Editor.BinAnalyzer\Dev.Editor.BinAnalyzer.csproj", "{A8D1529F-2CA1-4F58-86B6-7A3F69E49575}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6AD221B8-09CB-4918-A00C-0C858E1E872A}"
+	ProjectSection(SolutionItems) = preProject
+		Changelog.txt = Changelog.txt
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
