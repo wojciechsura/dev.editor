@@ -65,6 +65,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             QuickSearchFound = handler.PerformQuickSearch(quickSearchText, false);
         }
 
+        private void HandleHighlightingChanged()
+        {
+            OnPropertyChanged(() => HighlightingToolset);
+        }
+
         // Public methods -----------------------------------------------------
 
         public TextDocumentViewModel(IDocumentHandler handler, Guid guid)
@@ -218,7 +223,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         public override HighlightingInfo Highlighting
         {
             get => highlighting;
-            set => Set(ref highlighting, () => Highlighting, value);
+            set => Set(ref highlighting, () => Highlighting, value, HandleHighlightingChanged);
         }
 
         public ITextEditorAccess EditorAccess
