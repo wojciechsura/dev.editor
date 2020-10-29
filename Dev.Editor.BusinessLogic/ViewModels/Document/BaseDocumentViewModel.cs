@@ -4,7 +4,7 @@ using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.Types.Document;
 using Dev.Editor.BusinessLogic.Types.UI;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
-using Dev.Editor.Common.Commands;
+using Spooksoft.VisualStateManager.Commands;
 using System;
 using System.Collections.Generic;
 using System.IO;

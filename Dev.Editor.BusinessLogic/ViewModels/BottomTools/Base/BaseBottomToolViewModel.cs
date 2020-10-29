@@ -1,5 +1,6 @@
 ﻿using Dev.Editor.BusinessLogic.ViewModels.Base;
-using Dev.Editor.Common.Commands;
+using Spooksoft.VisualStateManager.Commands;
+using Spooksoft.VisualStateManager.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;

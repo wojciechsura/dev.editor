@@ -1,7 +1,7 @@
 ﻿using Dev.Editor.BusinessLogic.Services.Paths;
 using Dev.Editor.BusinessLogic.Services.Registry;
-using Dev.Editor.Common.Commands;
-using Dev.Editor.Common.Conditions;
+using Spooksoft.VisualStateManager.Commands;
+using Spooksoft.VisualStateManager.Conditions;
 using Dev.Editor.Resources;
 using System;
 using System.Collections.Generic;

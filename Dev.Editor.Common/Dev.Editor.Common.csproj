@@ -41,20 +41,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Commands\AppCommand.cs" />
-    <Compile Include="Conditions\BaseCondition.cs" />
-    <Compile Include="Conditions\BaseLambdaCondition.cs" />
-    <Compile Include="Conditions\CompositeCondition.cs" />
-    <Compile Include="Conditions\Condition.cs" />
-    <Compile Include="Conditions\Expressions\BaseExpressionHandler.cs" />
-    <Compile Include="Conditions\Expressions\ExpressionHandler.cs" />
-    <Compile Include="Conditions\Expressions\IChainedExpressionHandler.cs" />
-    <Compile Include="Conditions\LambdaCondition.cs" />
-    <Compile Include="Conditions\NegateCondition.cs" />
-    <Compile Include="Conditions\PropertyWatchCondition.cs" />
-    <Compile Include="Conditions\SwitchCondition.cs" />
-    <Compile Include="Conditions\Utils\MemberAccessExtractor.cs" />
-    <Compile Include="Conditions\ValueChangedEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\IEnumerableHelper.cs" />
     <Compile Include="Tools\StringTools.cs" />

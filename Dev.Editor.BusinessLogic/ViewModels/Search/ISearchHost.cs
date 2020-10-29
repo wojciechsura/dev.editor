@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dev.Editor.BusinessLogic.Models.Search;
-using Dev.Editor.Common.Conditions;
+using Spooksoft.VisualStateManager.Conditions;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Search
 {

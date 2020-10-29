@@ -1,6 +1,6 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
-using Dev.Editor.Common.Conditions;
+using Spooksoft.VisualStateManager.Conditions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

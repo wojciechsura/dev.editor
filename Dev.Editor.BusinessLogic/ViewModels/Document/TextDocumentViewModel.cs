@@ -13,8 +13,8 @@ using Dev.Editor.BusinessLogic.Models.Highlighting;
 using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.Types.Document.Text;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
-using Dev.Editor.Common.Commands;
-using Dev.Editor.Common.Conditions;
+using Spooksoft.VisualStateManager.Commands;
+using Spooksoft.VisualStateManager.Conditions;
 using ICSharpCode.AvalonEdit;
 using ICSharpCode.AvalonEdit.Document;
 

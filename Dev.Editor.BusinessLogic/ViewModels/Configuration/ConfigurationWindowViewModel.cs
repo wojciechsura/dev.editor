@@ -4,7 +4,7 @@ using Dev.Editor.BusinessLogic.Services.Messaging;
 using Dev.Editor.BusinessLogic.Services.Paths;
 using Dev.Editor.BusinessLogic.Services.Registry;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
-using Dev.Editor.Common.Commands;
+using Spooksoft.VisualStateManager.Commands;
 using System;
 using System.Collections.Generic;
 using System.Linq;

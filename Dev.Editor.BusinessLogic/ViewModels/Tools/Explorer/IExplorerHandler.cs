@@ -1,5 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.ViewModels.Tools.Base;
-using Dev.Editor.Common.Conditions;
+using Spooksoft.VisualStateManager.Conditions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

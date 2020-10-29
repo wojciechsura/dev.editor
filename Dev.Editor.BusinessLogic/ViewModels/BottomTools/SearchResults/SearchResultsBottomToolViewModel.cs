@@ -10,9 +10,9 @@ using Dev.Editor.BusinessLogic.Services.ImageResources;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
 using System.Collections.ObjectModel;
 using Dev.Editor.BusinessLogic.ViewModels.FindInFiles;
-using Dev.Editor.Common.Conditions;
+using Spooksoft.VisualStateManager.Conditions;
 using System.Windows.Input;
-using Dev.Editor.Common.Commands;
+using Spooksoft.VisualStateManager.Commands;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 {

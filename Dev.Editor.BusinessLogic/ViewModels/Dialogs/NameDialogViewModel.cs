@@ -1,8 +1,8 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
 using Dev.Editor.BusinessLogic.Models.Dialogs;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
-using Dev.Editor.Common.Commands;
-using Dev.Editor.Common.Conditions;
+using Spooksoft.VisualStateManager.Commands;
+using Spooksoft.VisualStateManager.Conditions;
 using System;
 using System.Collections.Generic;
 using System.Linq;

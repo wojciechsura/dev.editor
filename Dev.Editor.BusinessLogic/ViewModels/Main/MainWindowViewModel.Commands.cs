@@ -2,7 +2,7 @@
 using Dev.Editor.BusinessLogic.Models.Highlighting;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.BusinessLogic.ViewModels.Main.Documents;
-using Dev.Editor.Common.Conditions;
+using Spooksoft.VisualStateManager.Conditions;
 using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Collections.Generic;
