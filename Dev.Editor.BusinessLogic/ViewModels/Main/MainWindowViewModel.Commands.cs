@@ -54,6 +54,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand OpenBinCommand { get; }
         public ICommand SaveCommand { get; }
         public ICommand SaveAsCommand { get; }
+        public ICommand CloseCurrentDocumentCommand { get; }
 
         // Edit
 

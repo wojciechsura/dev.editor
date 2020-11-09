@@ -441,10 +441,12 @@
         <KeyBinding Key="Z" Modifiers="Ctrl" Command="{Binding UndoCommand}" />
         <KeyBinding Key="Z" Modifiers="Ctrl+Shift" Command="{Binding RedoCommand}" />
         <KeyBinding Key="F" Modifiers="Ctrl" Command="{Binding SearchCommand}" />
+        <KeyBinding Key="F" Modifiers="Ctrl+Shift" Command="{Binding FindInFilesCommand}" />
         <KeyBinding Key="H" Modifiers="Ctrl" Command="{Binding ReplaceCommand}" />
         <KeyBinding Key="L" Modifiers="Ctrl" Command="{Binding FindNextCommand}" />
         <KeyBinding Key="F3" Command="{Binding FindNextCommand}" />
         <KeyBinding Key="P" Modifiers="Ctrl" Command="{Binding NavigateCommand}" />
+        <KeyBinding Key="F4" Modifiers="Ctrl" Command="{Binding CloseCurrentDocumentCommand}" />
     </f:RibbonWindow.InputBindings>
 
     <!-- Main content -->

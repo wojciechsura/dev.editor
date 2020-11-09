@@ -1075,4 +1075,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Text.Escape.Unescape.Backslash" xml:space="preserve">
     <value>Usuń znaki \</value>
   </data>
+  <data name="Command.CloseCurrentDocument" xml:space="preserve">
+    <value>Zamknij bieżący dokument</value>
+  </data>
 </root>

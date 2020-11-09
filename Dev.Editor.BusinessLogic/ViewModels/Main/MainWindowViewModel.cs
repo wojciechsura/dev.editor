@@ -943,6 +943,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             OpenBinCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_OpenBin, "Open16.png", obj => DoOpenBinDocument());
             SaveCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_Save, "Save16.png", obj => DoSaveDocument(), canSaveCondition);
             SaveAsCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_File_SaveAs, "Save16.png", obj => DoSaveDocumentAs(), canSaveCondition);
+            CloseCurrentDocumentCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Command_CloseCurrentDocument, null, obj => DoCloseCurrentDocument(), documentExistsCondition);
 
             UndoCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Edit_Undo, "Undo16.png", obj => DoUndo(), canUndoCondition);
             RedoCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Edit_Redo, "Redo16.png", obj => DoRedo(), canRedoCondition);

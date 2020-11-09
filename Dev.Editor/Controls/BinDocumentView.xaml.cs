@@ -24,7 +24,6 @@ namespace Dev.Editor.Controls
     /// </summary>
     public partial class BinDocumentView : UserControl, IBinEditorAccess, INotifyPropertyChanged
     {
-        private IDocumentHandler handler;
         private BinDocumentViewModel viewModel;
 
         private BinDocumentState BuildCurrentState()

@@ -29,8 +29,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Search
         // Private fields -----------------------------------------------------
 
         private readonly SearchReplaceModel model;
-        private readonly IFileIconProvider fileIconProvider;
-        private readonly IImageResources imageResources;
 
         // Private methods ----------------------------------------------------
 

@@ -154,6 +154,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Close current document.
+        /// </summary>
+        public static string Command_CloseCurrentDocument {
+            get {
+                return ResourceManager.GetString("Command.CloseCurrentDocument", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Syntax highlighting {0}.
         /// </summary>
         public static string Command_SetHighlighting {

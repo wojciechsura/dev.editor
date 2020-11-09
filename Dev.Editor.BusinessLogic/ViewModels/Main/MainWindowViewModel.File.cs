@@ -575,5 +575,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     throw new InvalidOperationException("Unsupported document type!");
             }
         }
+
+        private void DoCloseCurrentDocument()
+        {
+            DoTryCloseDocument(documentsManager.ActiveDocument);
+        }
     }
 }
