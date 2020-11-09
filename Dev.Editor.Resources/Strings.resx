@@ -1078,4 +1078,13 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Command.CloseCurrentDocument" xml:space="preserve">
     <value>Close current document</value>
   </data>
+  <data name="SearchWindow.ReplaceInFilesTab" xml:space="preserve">
+    <value>Replace in files</value>
+  </data>
+  <data name="SearchWindow.ReplaceInFiles" xml:space="preserve">
+    <value>Replace in files</value>
+  </data>
+  <data name="Ribbon.Home.Search.ReplaceInFiles" xml:space="preserve">
+    <value>Replace in files</value>
+  </data>
 </root>

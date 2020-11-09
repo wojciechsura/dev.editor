@@ -7,9 +7,9 @@ using System.Windows.Media;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.FindInFiles
 {
-    public class RootSearchResultViewModel : BaseFilesystemSearchResultViewModel
+    public class SearchResultsViewModel : BaseFilesystemSearchResultViewModel
     {
-        public RootSearchResultViewModel(string fullPath, string searchPattern, ImageSource icon, List<BaseFilesystemSearchResultViewModel> results)
+        public SearchResultsViewModel(string fullPath, string searchPattern, ImageSource icon, List<BaseFilesystemSearchResultViewModel> results)
         {
             FullPath = fullPath;
             SearchPattern = searchPattern;

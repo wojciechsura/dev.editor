@@ -72,6 +72,7 @@
             <SolidColorBrush x:Key="DocumentButtonHoverForegroundBrush" Color="#3A9EFF" />
 
             <SolidColorBrush x:Key="TextEmphasizeBackgroundBrush" Color="#f5bc83" />
+            <SolidColorBrush x:Key="TextReplaceBackgroundBrush" Color="#a0fb83" />
 
             <SolidColorBrush x:Key="TransparentButtonHoverBrush" Color="#3A9EFF" />
 

@@ -70,6 +70,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand ReplaceCommand { get; }
         public ICommand FindNextCommand { get; }
         public ICommand FindInFilesCommand { get; }
+        public ICommand ReplaceInFilesCommand { get; }
 
         // Comparing
 

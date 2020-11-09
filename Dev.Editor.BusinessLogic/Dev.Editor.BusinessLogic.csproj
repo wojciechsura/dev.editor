@@ -107,6 +107,7 @@
     <Compile Include="Models\Events\ApplicationShutdownEvent.cs" />
     <Compile Include="Models\Events\BaseEvent.cs" />
     <Compile Include="Models\Events\StoredSearchesChangedEvent.cs" />
+    <Compile Include="Models\FindInFiles\FindInFilesWorkerResult.cs" />
     <Compile Include="Models\Highlighting\HighlightingInfo.cs" />
     <Compile Include="Models\Messages\MessageModel.cs" />
     <Compile Include="Models\Search\SearchReplaceDescription.cs" />
@@ -194,6 +195,8 @@
     <Compile Include="ViewModels\ExceptionWindow\ExceptionWindowViewModel.cs" />
     <Compile Include="ViewModels\ExceptionWindow\IExceptionWindowAccess.cs" />
     <Compile Include="ViewModels\FindInFiles\BaseFilesystemSearchResultViewModel.cs" />
+    <Compile Include="ViewModels\FindInFiles\ReplaceResultsViewModel.cs" />
+    <Compile Include="ViewModels\FindInFiles\ReplaceResultViewModel.cs" />
     <Compile Include="ViewModels\Main\BinDefinitionViewModel.cs" />
     <Compile Include="ViewModels\Main\Documents\DocumentsManager.cs" />
     <Compile Include="Types\Main\IReadOnlyObservableCollection.cs" />
@@ -226,7 +229,7 @@
     <Compile Include="ViewModels\FindInFiles\FolderSearchResultViewModel.cs" />
     <Compile Include="ViewModels\Search\ISearchHost.cs" />
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />
-    <Compile Include="ViewModels\FindInFiles\RootSearchResultViewModel.cs" />
+    <Compile Include="ViewModels\FindInFiles\SearchResultsViewModel.cs" />
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />
     <Compile Include="ViewModels\FindInFiles\SearchResultViewModel.cs" />
     <Compile Include="ViewModels\Search\StoredSearchViewModel.cs" />

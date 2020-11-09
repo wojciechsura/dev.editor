@@ -15,7 +15,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.FindInFiles
         public BaseSearchResultViewModel()
         {
             isSelected = false;
-            isExpanded = false;
+            isExpanded = true;
         }
 
         public bool IsSelected 

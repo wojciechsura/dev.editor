@@ -15,19 +15,7 @@ namespace Dev.Editor.Converters
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is SearchReplaceOperation operation)
-            {
-                switch (operation)
-                {
-                    case SearchReplaceOperation.Search:
-                        return 0;
-                    case SearchReplaceOperation.Replace:
-                        return 1;
-                    case SearchReplaceOperation.FindInFiles:
-                        return 2;
-                    default:
-                        throw new InvalidEnumArgumentException("Unsupported search operation!");
-                }
-            }
+                return (int)operation;
 
             return Binding.DoNothing;
         }
@@ -35,19 +23,7 @@ namespace Dev.Editor.Converters
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value is int index)
-            {
-                switch (index)
-                {
-                    case 0:
-                        return SearchReplaceOperation.Search;
-                    case 1:
-                        return SearchReplaceOperation.Replace;
-                    case 2:
-                        return SearchReplaceOperation.FindInFiles;
-                    default:
-                        throw new ArgumentOutOfRangeException("Unsupported index!");
-                }
-            }
+                return (SearchReplaceOperation)index;
 
             return Binding.DoNothing;
         }

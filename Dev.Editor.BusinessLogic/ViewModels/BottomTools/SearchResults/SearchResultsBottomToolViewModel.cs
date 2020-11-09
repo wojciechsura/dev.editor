@@ -22,7 +22,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
         private readonly IImageResources imageResources;
 
         private readonly ImageSource icon;
-        private readonly ObservableCollection<RootSearchResultViewModel> searchResults = new ObservableCollection<RootSearchResultViewModel>();
+        private readonly ObservableCollection<SearchResultsViewModel> searchResults = new ObservableCollection<SearchResultsViewModel>();
 
         private readonly Condition resultsNonEmptyCondition;
 
@@ -53,7 +53,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             }
         }
 
-        public void AddResults(RootSearchResultViewModel results, bool clearExisting = true)
+        public void AddResults(SearchResultsViewModel results, bool clearExisting = true)
         {
             if (clearExisting)
                 searchResults.Clear();
@@ -69,7 +69,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 
         public override string Uid => SearchResultsUid;
 
-        public ObservableCollection<RootSearchResultViewModel> SearchResults => searchResults;
+        public ObservableCollection<SearchResultsViewModel> SearchResults => searchResults;
 
         public ICommand ClearSearchResultsCommand { get; }
     }

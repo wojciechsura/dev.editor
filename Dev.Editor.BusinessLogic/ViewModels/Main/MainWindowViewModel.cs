@@ -955,6 +955,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             ReplaceCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Search_Replace, "Replace16.png", obj => DoReplace(), documentIsTextCondition);
             FindNextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Search_FindNext, "FindNext16.png", obj => DoFindNext(), documentIsTextCondition & searchPerformedCondition);
             FindInFilesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Search_FindInFiles, "Search16.png", obj => DoFindInFiles());
+            ReplaceInFilesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Search_ReplaceInFiles, "Replace16.png", obj => DoReplaceInFiles());
 
             SortLinesAscendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Ordering_SortAscending, "SortAscending16.png", obj => DoSortAscending(), documentIsTextCondition);
             SortLinesDescendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Ordering_SortDescending, "SortDescending16.png", obj => DoSortDescending(), documentIsTextCondition);

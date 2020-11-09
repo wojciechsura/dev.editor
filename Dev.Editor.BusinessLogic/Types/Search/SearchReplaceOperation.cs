@@ -8,8 +8,9 @@ namespace Dev.Editor.BusinessLogic.Types.Search
 {
     public enum SearchReplaceOperation
     {
-        Search,
-        Replace,
-        FindInFiles
+        Search = 0,
+        Replace = 1,
+        FindInFiles = 2,
+        ReplaceInFiles = 3
     }
 }

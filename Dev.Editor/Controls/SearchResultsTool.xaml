@@ -25,7 +25,7 @@
                             </Style.Setters>
                         </Style>
 
-                        <HierarchicalDataTemplate DataType="{x:Type f:RootSearchResultViewModel}" ItemsSource="{Binding Results}">
+                        <HierarchicalDataTemplate DataType="{x:Type f:SearchResultsViewModel}" ItemsSource="{Binding Results}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="{Binding Icon}" Margin="2" />
                                 <TextBlock Margin="2">
@@ -48,11 +48,21 @@
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
+                        <DataTemplate DataType="{x:Type f:ReplaceResultViewModel}">
+                            <StackPanel Orientation="Horizontal">
+                                <CheckBox IsChecked="{Binding IsChecked}" />
+                                <TextBlock MinWidth="64" Text="{Binding Location}" />
+                                <TextBlock Margin="2">
+                                    <Run Text="{Binding Before, Mode=OneWay}" /><Run Text="{Binding Match, Mode=OneWay}" Background="{StaticResource TextEmphasizeBackgroundBrush}" /><Run Text="{Binding After, Mode=OneWay}" />   <Run>→</Run>   <Run Text="{Binding Before, Mode=OneWay}" /><Run Text="{Binding ReplaceWith, Mode=OneWay}" Background="{StaticResource TextReplaceBackgroundBrush}" /><Run Text="{Binding After, Mode=OneWay}" />
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+
                         <DataTemplate DataType="{x:Type f:SearchResultViewModel}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock MinWidth="64" Text="{Binding Location}" />
                                 <TextBlock Margin="2">
-                            <Run Text="{Binding Before, Mode=OneWay}" /><Run Text="{Binding Match, Mode=OneWay}" Background="{StaticResource TextEmphasizeBackgroundBrush}" /><Run Text="{Binding After, Mode=OneWay}" />
+                                    <Run Text="{Binding Before, Mode=OneWay}" /><Run Text="{Binding Match, Mode=OneWay}" Background="{StaticResource TextEmphasizeBackgroundBrush}" /><Run Text="{Binding After, Mode=OneWay}" />
                                 </TextBlock>
                             </StackPanel>
                         </DataTemplate>

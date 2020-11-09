@@ -284,6 +284,95 @@
                 </GroupBox>
             </TabItem>
 
+            <TabItem x:Name="tReplaceInFiles" Header="{x:Static p:Strings.SearchWindow_ReplaceInFilesTab}" wpf:AccessKeyScopeControl.IsAccessKeyScope="True">
+                <GroupBox Header="{x:Static p:Strings.SearchWindow_ReplaceInFilesTab}" Padding="4">
+                    <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Vertical" Width="350">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="100" />
+                                    <ColumnDefinition Width="250" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label Grid.Row="0" Grid.Column="0" Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchedText}"/>
+                                <c:ComboBoxEx x:Name="cbReplaceInFilesSearch" Grid.Row="0" Grid.Column="1" Margin="{StaticResource DialogItemsVMargin}"  HorizontalAlignment="Stretch" 
+                                              Text="{Binding Search, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                              ItemsSource="{Binding LastSearches}" IsEditable="True" ShouldPreserveUserEnteredPrefix="True" />
+
+                                <Label Grid.Row="1" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_ReplaceWith}" />
+                                <c:ComboBoxEx Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" 
+                                        Text="{Binding Replace, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ItemsSource="{Binding LastReplaces}" IsEditable="True" 
+                                              ShouldPreserveUserEnteredPrefix="True" />
+                            </Grid>
+
+                            <GroupBox Header="{x:Static p:Strings.SearchWindow_Location}" Padding="4" Width="350" >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="1*" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_Location}"></Label>
+
+                                    <DockPanel Grid.Row="0" Grid.Column="1">
+                                        <Button DockPanel.Dock="Right" Content="{x:Static p:Strings.Ellipsis}" Margin="0,4,4,4" Padding="6,0"
+                                                Command="{Binding PickLocationCommand}"/>
+                                        <TextBox Margin="4" Text="{Binding Location, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                 HorizontalAlignment="Stretch" />
+                                    </DockPanel>
+
+                                    <Label Grid.Row="1" Grid.Column="0" Content="{x:Static p:Strings.SearchWindow_FileMask}"></Label>
+
+                                    <TextBox Grid.Row="1" Grid.Column="1" Margin="4" Text="{Binding FileMask, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                             HorizontalAlignment="Stretch"/>
+
+                                </Grid>
+                            </GroupBox>
+
+                            <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchOptions}" Padding="4" Width="350">
+                                <StackPanel Grid.Column="0" Orientation="Vertical">
+                                    <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_CaseSensitive}" 
+                                        IsChecked="{Binding CaseSensitive, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                    <CheckBox Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_OnlyFullWords}" 
+                                        IsChecked="{Binding WholeWordsOnly, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                                </StackPanel>
+                            </GroupBox>
+                            <GroupBox Header="{x:Static p:Strings.SearchWindow_SearchMode}" Padding="4" Width="350">
+                                <StackPanel Orientation="Vertical">
+                                    <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeNormal}" 
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Normal}}"/>
+                                    <RadioButton Margin="{StaticResource DialogItemsVMargin}" Content="{x:Static p:Strings.SearchWindow_SearchModeExtended}" 
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.Extended}}"/>
+                                    <RadioButton Content="{x:Static p:Strings.SearchWindow_SearchModeRegex}" 
+                                                IsChecked="{Binding SearchMode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SearchMode.RegularExpressions}}"/>
+                                </StackPanel>
+                            </GroupBox>
+                        </StackPanel>
+
+                        <DockPanel Margin="10,0,0,0">
+
+                            <ToggleButton DockPanel.Dock="Bottom" Content="»" Width="24" Height="24" HorizontalAlignment="Right" 
+                                          IsChecked="{Binding StoredSearchPanelVisible, Mode=TwoWay}"/>
+
+                            <StackPanel Orientation="Vertical" Margin="10,0,0,0">
+                                <Button Content="{x:Static p:Strings.SearchWindow_ReplaceInFiles}" Width="150" Margin="{StaticResource DialogItemsVMargin}" Command="{Binding ReplaceInFilesCommand}" 
+                                IsDefault="True"/>
+                                <Separator Margin="{StaticResource DialogItemsVMargin}" />
+                                <Button Content="{x:Static p:Strings.SearchWindow_Close}" Width="150" Command="{Binding CloseCommand}" />
+                            </StackPanel>
+                        </DockPanel>
+                    </StackPanel>
+                </GroupBox>
+            </TabItem>
+
         </TabControl>
 
         <DockPanel Width="250" Visibility="{Binding StoredSearchPanelVisible, Converter={StaticResource BooleanToVisibilityConverter}}" Margin="0,4,4,4">

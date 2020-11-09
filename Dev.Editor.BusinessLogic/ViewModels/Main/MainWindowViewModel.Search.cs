@@ -64,5 +64,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             var searchViewModel = dialogService.RequestSearchReplace(this);
             searchViewModel.ShowFindInFiles();
         }
+
+        private void DoReplaceInFiles()
+        {
+            var searchViewModel = dialogService.RequestSearchReplace(this);
+            searchViewModel.ShowReplaceInFiles();
+        }
     }
 }

@@ -184,6 +184,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             access.Close();
         }
 
+        private void DoReplaceInFiles()
+        {
+            StoreLastSearchReplaceIfNeeded();
+
+            // Validate location
+
+            if (!Directory.Exists(location))
+            {
+                messagingService.ShowError(Strings.Message_LocationInvalid);
+                return;
+            }
+
+            searchHost.ReplaceInFiles(searchReplaceModel);
+
+            // Find in files closes the search window, because progress window appears instead
+            access.Close();
+        }
 
         private void DoCountOccurrences()
         {
@@ -407,6 +424,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
             FindNextCommand = new AppCommand(obj => DoFindNext(), searchHost.CanSearchCondition & searchExpressionValidCondition);
             FindInFilesCommand = new AppCommand(obj => DoFindInFiles(), searchExpressionValidCondition);
+            ReplaceInFilesCommand = new AppCommand(obj => DoReplaceInFiles(), searchExpressionValidCondition);
             CountOccurrencesCommand = new AppCommand(obj => DoCountOccurrences(), searchHost.CanSearchCondition & searchExpressionValidCondition);
             ReplaceCommand = new AppCommand(obj => DoReplace(), searchHost.CanSearchCondition & searchExpressionValidCondition);
             ReplaceAllCommand = new AppCommand(obj => DoReplaceAll(), searchHost.CanSearchCondition & searchExpressionValidCondition);
@@ -441,6 +459,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             CurrentOperation = SearchReplaceOperation.FindInFiles;
 
             access.FocusFindInFiles();
+            access.ShowAndFocus();
+        }
+
+        public void ShowReplaceInFiles()
+        {
+            CurrentOperation = SearchReplaceOperation.ReplaceInFiles;
+
+            access.FocusReplaceInFiles();
             access.ShowAndFocus();
         }
 
@@ -503,6 +529,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         public ICommand DeleteSearchCommand { get; }
 
         public ICommand FindInFilesCommand { get; }
+
+        public ICommand ReplaceInFilesCommand { get; }
 
         public ICommand PickLocationCommand { get; }
 

@@ -98,6 +98,17 @@ namespace Dev.Editor
                 }));
         }
 
+        public void FocusReplaceInFiles()
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.ContextIdle,
+                new Action(delegate ()
+                {
+                    FocusManager.SetFocusedElement(this, cbReplaceInFilesSearch);
+                    cbReplaceInFilesSearch.SelectAll();
+                    cbReplaceInFilesSearch.FocusTextBox();
+                }));
+        }
+
         public void ShowAndFocus()
         {
             Show();

@@ -2,6 +2,7 @@
 using Dev.Editor.BusinessLogic.Models.Search;
 using Dev.Editor.BusinessLogic.Services.FileIcons;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
+using Dev.Editor.BusinessLogic.Types.Search;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
 using Dev.Editor.Resources;
 using System;
@@ -29,6 +30,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Search
         // Private fields -----------------------------------------------------
 
         private readonly SearchReplaceModel model;
+        private readonly SearchReplaceOperation operation;
 
         // Private methods ----------------------------------------------------
 
@@ -139,6 +141,20 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Search
                                 contents.Substring(match.Index + match.Length - MAX_CONTENT_LENGTH / 2, MAX_CONTENT_LENGTH / 2);
 
                         var after = contents.Substring(match.Index + match.Length, CHARS_BEFORE_AFTER);
+                        var offset = match.Index;
+
+                        string replaceWith = null;
+                        if (operation == SearchReplaceOperation.ReplaceInFiles)
+                        {
+                            if (model.IsRegexReplace)
+                            {
+                                replaceWith = model.FindInFilesRegex.Replace(match.Value, model.Replace);                                
+                            }
+                            else
+                            {
+                                replaceWith = model.Replace;
+                            }
+                        }
 
                         int firstLineBreakInAfter = Math.Min(after.IndexOf('\n'), after.IndexOf("\r\n"));
                         if (firstLineBreakInAfter >= 0)
@@ -146,7 +162,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Search
                         else
                             after = after + "...";
 
-                        var result = new ResultSearchItem(file.Path, row, col, match.Length, before, matchContent, after);
+
+                        var result = new ResultSearchItem(file.Path, row, col, offset, match.Length, before, matchContent, replaceWith, after);
                         file.Add(result);
 
                         index = match.Index + match.Length;
@@ -186,16 +203,20 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Search
 
             // Build results
 
-            e.Result = root;
+            e.Result = new FindInFilesWorkerResult(root, operation);
         }
 
         // Public methods -----------------------------------------------------
 
-        public FindInFilesWorker(SearchReplaceModel model)
+        public FindInFilesWorker(SearchReplaceModel model, SearchReplaceOperation operation)
         {
+            if (!(new[] { SearchReplaceOperation.FindInFiles, SearchReplaceOperation.ReplaceInFiles }.Contains(operation)))
+                throw new ArgumentOutOfRangeException(nameof(operation));
+
             this.WorkerSupportsCancellation = true;
             this.WorkerReportsProgress = true;
             this.model = model;
+            this.operation = operation;
         }
     }
 }

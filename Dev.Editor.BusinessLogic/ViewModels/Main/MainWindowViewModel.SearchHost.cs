@@ -258,7 +258,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         public void FindInFiles(SearchReplaceModel searchReplaceModel)
         {
-            var worker = new FindInFilesWorker(searchReplaceModel);
+            var worker = new FindInFilesWorker(searchReplaceModel, SearchReplaceOperation.FindInFiles);
+            worker.RunWorkerCompleted += HandleFindInFilesCompleted;
+
+            dialogService.ShowProgressDialog(Strings.Operation_SearchingInFiles, worker);
+        }
+
+        public void ReplaceInFiles(SearchReplaceModel searchReplaceModel)
+        {
+            var worker = new FindInFilesWorker(searchReplaceModel, SearchReplaceOperation.ReplaceInFiles);
             worker.RunWorkerCompleted += HandleFindInFilesCompleted;
 
             dialogService.ShowProgressDialog(Strings.Operation_SearchingInFiles, worker);
@@ -266,13 +274,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void HandleFindInFilesCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            List<BaseFilesystemSearchResultViewModel> GenerateResultList(BaseSearchContainerItem container)
+            List<BaseFilesystemSearchResultViewModel> GenerateResultList(BaseSearchContainerItem container, SearchReplaceOperation operation)
             {
                 var results = new List<BaseFilesystemSearchResultViewModel>();
 
                 foreach (var item in container)
                 {
-                    var builtItem = BuildItemRecursive(item);
+                    var builtItem = BuildItemRecursive(item, operation);
                     if (builtItem != null)
                         results.Add(builtItem);
                 }
@@ -280,11 +288,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 return results;
             }
 
-            BaseFilesystemSearchResultViewModel BuildItemRecursive(BaseSearchItem item)
+            BaseFilesystemSearchResultViewModel BuildItemRecursive(BaseSearchItem item, SearchReplaceOperation operation)
             {
                 if (item is FolderSearchItem searchedFolder)
                 {
-                    List<BaseFilesystemSearchResultViewModel> results = GenerateResultList(searchedFolder);
+                    List<BaseFilesystemSearchResultViewModel> results = GenerateResultList(searchedFolder, operation);
 
                     if (results.Any())
                         return new FolderSearchResultViewModel(System.IO.Path.GetFileName(searchedFolder.Path), fileIconProvider.GetImageForFolder(searchedFolder.Path), results);
@@ -298,13 +306,40 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                         var resultList = new List<SearchResultViewModel>();
                         foreach (var searchResult in searchedFile)
                         {
-                            var resultViewModel = new SearchResultViewModel(searchResult.FullPath,
-                                searchResult.Before, 
-                                searchResult.Match, 
-                                searchResult.After, 
-                                searchResult.Row + 1, 
-                                searchResult.Col + 1,
-                                searchResult.Length);
+                            SearchResultViewModel resultViewModel;
+
+                            switch (operation)
+                            {
+                                case SearchReplaceOperation.FindInFiles:
+                                    {
+                                        resultViewModel = new SearchResultViewModel(searchResult.FullPath,
+                                            searchResult.Before,
+                                            searchResult.Match,
+                                            searchResult.After,
+                                            searchResult.Row + 1,
+                                            searchResult.Col + 1,
+                                            searchResult.Offset,
+                                            searchResult.Length);
+
+                                        break;
+                                    }
+                                case SearchReplaceOperation.ReplaceInFiles:
+                                    {
+                                        resultViewModel = new ReplaceResultViewModel(searchResult.FullPath,
+                                            searchResult.Before,
+                                            searchResult.Match,
+                                            searchResult.ReplaceWith,
+                                            searchResult.After,
+                                            searchResult.Row + 1,
+                                            searchResult.Col + 1,
+                                            searchResult.Offset,
+                                            searchResult.Length);
+                                        break;
+                                    }
+                                default:
+                                    throw new InvalidOperationException("Invalid search/replace operation!");
+                            }
+
 
                             resultList.Add(resultViewModel);
                         }
@@ -318,15 +353,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     throw new ArgumentException("Unsupported search item!");
             }
 
-            RootSearchResultViewModel BuildResults(RootSearchItem root)
+            SearchResultsViewModel BuildResults(RootSearchItem root, SearchReplaceOperation operation)
             {
-                List<BaseFilesystemSearchResultViewModel> results = GenerateResultList(root);
+                List<BaseFilesystemSearchResultViewModel> results = GenerateResultList(root, operation);
 
-                return new RootSearchResultViewModel(root.Path, root.SearchPattern, imageResources.GetIconByName("Search16.png"), results);
+                return new SearchResultsViewModel(root.Path, root.SearchPattern, imageResources.GetIconByName("Search16.png"), results);
             }
 
-            var result = e.Result as RootSearchItem;
-            var searchResults = BuildResults(result);
+            var result = e.Result as FindInFilesWorkerResult;
+            var searchResults = BuildResults(result.Root, result.Operation);
 
             if (result != null)
             {
