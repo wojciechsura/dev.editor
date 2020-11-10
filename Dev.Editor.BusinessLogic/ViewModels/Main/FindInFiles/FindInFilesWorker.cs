@@ -126,8 +126,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Search
                         }
 
                         var before = contents.Substring(Math.Max(0, match.Index - CHARS_BEFORE_AFTER), Math.Min(match.Index, CHARS_BEFORE_AFTER));
-                        int lastLineBreakInBefore = Math.Max(before.LastIndexOf('\n') + 1, before.LastIndexOf("\r\n") + 2);
-                        if (lastLineBreakInBefore >= 0)
+                        int lastLineFeed = before.LastIndexOf('\n');
+                        int lastLineFeedCarriageReturn = before.LastIndexOf("\r\n");
+                        int lastLineBreakInBefore = Math.Max(lastLineFeed >= 0 ? lastLineFeed + 1 : -1, lastLineFeedCarriageReturn >= 0 ? lastLineFeedCarriageReturn + 2 : -1);
+
+                        if (lastLineBreakInBefore >= 0 )
                             before = before.Substring(lastLineBreakInBefore);
                         else
                             before = "..." + before;
@@ -140,7 +143,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.Search
                                 " ... " +
                                 contents.Substring(match.Index + match.Length - MAX_CONTENT_LENGTH / 2, MAX_CONTENT_LENGTH / 2);
 
-                        var after = contents.Substring(match.Index + match.Length, CHARS_BEFORE_AFTER);
+                        var after = contents.Substring(match.Index + match.Length, Math.Min(CHARS_BEFORE_AFTER, contents.Length - (match.Index + match.Length)));
                         var offset = match.Index;
 
                         string replaceWith = null;

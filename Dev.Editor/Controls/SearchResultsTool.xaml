@@ -14,6 +14,9 @@
                 <Button Margin="4" Command="{Binding ClearSearchResultsCommand}" Style="{StaticResource ToolButton}">
                     <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Delete16.png" />
                 </Button>
+                <Button Margin="4" Command="{Binding PerformReplaceCommand}" Style="{StaticResource ToolButton}">
+                    <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace16.png" />
+                </Button>
             </StackPanel>
             <TreeView ItemsSource="{Binding SearchResults}" MouseDoubleClick="HandleTreeDoubleClick">
                 <TreeView.Resources>

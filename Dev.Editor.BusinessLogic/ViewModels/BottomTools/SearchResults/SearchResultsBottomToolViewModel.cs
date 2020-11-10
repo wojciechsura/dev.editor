@@ -22,14 +22,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
         private readonly IImageResources imageResources;
 
         private readonly ImageSource icon;
-        private readonly ObservableCollection<SearchResultsViewModel> searchResults = new ObservableCollection<SearchResultsViewModel>();
 
-        private readonly Condition resultsNonEmptyCondition;
+        private readonly BaseCondition resultsNonEmptyCondition;
+        private readonly BaseCondition resultsAreReplaceCondition;
+
+        private SearchResultsViewModel searchResults;
 
         private void DoClearSearchResults()
         {
-            searchResults.Clear();
-            resultsNonEmptyCondition.Value = false;
+            searchResults = null;
+            OnPropertyChanged(() => SearchResults);
+        }
+
+        private void DoPerformReplace()
+        {
+            searchResultsHandler.PerformReplaceInFiles((ReplaceResultsViewModel)searchResults);
+            searchResults = null;
+            OnPropertyChanged(() => SearchResults);
         }
 
         public SearchResultsBottomToolViewModel(ISearchResultsHandler searchResultsHandler, IImageResources imageResources)
@@ -38,11 +47,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             this.searchResultsHandler = searchResultsHandler;
             this.imageResources = imageResources;
 
+            searchResults = null;
             icon = imageResources.GetIconByName("Search16.png");
 
-            resultsNonEmptyCondition = new Condition(false);
+            resultsNonEmptyCondition = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults != null);
+            resultsAreReplaceCondition = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.FirstOrDefault() is ReplaceResultsViewModel);
 
             ClearSearchResultsCommand = new AppCommand(obj => DoClearSearchResults(), resultsNonEmptyCondition);
+            PerformReplaceCommand = new AppCommand(obj => DoPerformReplace(), resultsAreReplaceCondition);
         }
 
         public void NotifyItemDoubleClicked(object selectedResult)
@@ -53,14 +65,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             }
         }
 
-        public void AddResults(SearchResultsViewModel results, bool clearExisting = true)
+        public void SetResults(SearchResultsViewModel results)
         {
-            if (clearExisting)
-                searchResults.Clear();
-
-            searchResults.Insert(0, results);
-
-            resultsNonEmptyCondition.Value = true;
+            this.searchResults = results;
+            OnPropertyChanged(() => SearchResults);
         }
 
         public override string Title => Strings.BottomTool_SearchResults_Title;
@@ -69,8 +77,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 
         public override string Uid => SearchResultsUid;
 
-        public ObservableCollection<SearchResultsViewModel> SearchResults => searchResults;
+        public IEnumerable<SearchResultsViewModel> SearchResults
+        {
+            get 
+            { 
+                yield return searchResults; 
+            }
+        }
 
         public ICommand ClearSearchResultsCommand { get; }
+
+        public ICommand PerformReplaceCommand { get; }
     }
 }

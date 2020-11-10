@@ -344,7 +344,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                             resultList.Add(resultViewModel);
                         }
 
-                        return new FileSearchResultViewModel(System.IO.Path.GetFileName(searchedFile.Path), fileIconProvider.GetImageForFile(searchedFile.Path), resultList);
+                        return new FileSearchResultViewModel(searchedFile.Path, System.IO.Path.GetFileName(searchedFile.Path), fileIconProvider.GetImageForFile(searchedFile.Path), resultList);
                     }
                     else
                         return null;
@@ -357,7 +357,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             {
                 List<BaseFilesystemSearchResultViewModel> results = GenerateResultList(root, operation);
 
-                return new SearchResultsViewModel(root.Path, root.SearchPattern, imageResources.GetIconByName("Search16.png"), results);
+                if (operation == SearchReplaceOperation.FindInFiles)
+                    return new SearchResultsViewModel(root.Path, root.SearchPattern, imageResources.GetIconByName("Search16.png"), results);
+                else if (operation == SearchReplaceOperation.ReplaceInFiles)
+                    return new ReplaceResultsViewModel(root.Path, root.SearchPattern, imageResources.GetIconByName("Search16.png"), results);
+                else
+                    throw new ArgumentOutOfRangeException(nameof(operation));
             }
 
             var result = e.Result as FindInFilesWorkerResult;
@@ -365,7 +370,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             if (result != null)
             {
-                SearchResultsBottomToolViewModel.AddResults(searchResults);
+                SearchResultsBottomToolViewModel.SetResults(searchResults);
 
                 BottomPanelVisibility = BottomPanelVisibility.Visible;
                 SelectedBottomTool = BottomTool.SearchResults;

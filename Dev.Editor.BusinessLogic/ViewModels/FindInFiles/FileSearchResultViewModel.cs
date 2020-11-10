@@ -9,19 +9,21 @@ namespace Dev.Editor.BusinessLogic.ViewModels.FindInFiles
 {
     public class FileSearchResultViewModel : BaseFilesystemSearchResultViewModel
     {
-        public FileSearchResultViewModel(string name, ImageSource icon, List<SearchResultViewModel> results)
+        public FileSearchResultViewModel(string fullPath, string name, ImageSource icon, List<SearchResultViewModel> results)
         {
             if (string.IsNullOrEmpty(name))
                 throw new ArgumentException("Invalid path!", nameof(name));
 
+            FullPath = fullPath;
             Name = name;
             Icon = icon;
             Results = results;
         }
 
+        public string FullPath { get; }
         public string Name { get; }
         public ImageSource Icon { get; }
-        public IReadOnlyList<SearchResultViewModel> Results { get; }
+        public List<SearchResultViewModel> Results { get; }
 
         public override int Count => Results.Count;
         public string Display => $"{Name} ({Count})";

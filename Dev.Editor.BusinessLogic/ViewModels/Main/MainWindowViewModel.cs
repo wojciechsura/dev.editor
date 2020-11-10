@@ -60,6 +60,8 @@ using Dev.Editor.BusinessLogic.Types.Tools;
 using System.Windows.Threading;
 using Dev.Editor.BusinessLogic.Types.Search;
 using System.Text.RegularExpressions;
+using Dev.Editor.BusinessLogic.ViewModels.FindInFiles;
+using System.Collections.Specialized;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -638,6 +640,86 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 documentsManager.RemoveDocument(document);
         }
 
+        private void PerformReplaceInFile(FileSearchResultViewModel file)
+        {
+            try
+            {
+                var result = new StringBuilder();
+                var searchResults = new List<SearchResultViewModel>();
+
+                using (var fs = new FileStream(file.FullPath, FileMode.Open, FileAccess.Read))
+                using (var reader = new StreamReader(fs))
+                {
+                    int readChars = 0;
+
+                    for (int i = 0; i < file.Results.Count; i++)
+                    {
+                        var replaceResult = (ReplaceResultViewModel)file.Results[i];
+
+                        if (replaceResult.IsChecked)
+                        {
+                            // Append characters until found match
+                            int countBeforeMatch = replaceResult.Offset - readChars;
+                            if (countBeforeMatch > 0)
+                            {
+                                char[] data = new char[countBeforeMatch];
+                                reader.ReadBlock(data, 0, countBeforeMatch);
+                                result.Append(data);
+
+                                readChars += countBeforeMatch;
+                            }
+
+                            // Append replaced text to the result buffer
+                            result.Append(replaceResult.ReplaceWith);
+
+                            // Skip old text in the original file
+                            char[] tmp = new char[replaceResult.Match.Length];
+                            reader.ReadBlock(tmp, 0, replaceResult.Match.Length);
+                            readChars += replaceResult.Match.Length;
+                        }
+                    }
+
+                    // Read remaining data to end
+                    char[] buffer = new char[1024];
+                    int count;
+                    do
+                    {
+                        count = reader.ReadBlock(buffer, 0, 1024);
+                        if (count > 0)
+                        {
+                            result.Append(buffer, 0, count);
+                        }
+                    }
+                    while (count > 0);
+                }
+
+                using (var fs = new FileStream(file.FullPath, FileMode.Create, FileAccess.Write))
+                using (var writer = new StreamWriter(fs))
+                {
+                    writer.Write(result.ToString());
+                }
+            }
+            catch
+            {
+
+            }
+        }
+
+        private void PerformReplaceInFilesRecursive(BaseFilesystemSearchResultViewModel item)
+        {
+            if (item is FolderSearchResultViewModel folder)
+            {
+                foreach (var entry in folder.Files)
+                {
+                    PerformReplaceInFilesRecursive(entry);
+                }
+            }
+            else if (item is FileSearchResultViewModel file)
+            {
+                PerformReplaceInFile(file);
+            }
+        }
+
         // IDocumentHandler implementation ------------------------------------
 
         void IDocumentHandler.RequestClose(BaseDocumentViewModel document)
@@ -776,6 +858,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                     textDocument.SetSelection(offset, length, true);
                     textDocument.FocusDocument();
                 });
+            }
+        }
+
+        void ISearchResultsHandler.PerformReplaceInFiles(ReplaceResultsViewModel replaceResults)
+        {
+            foreach (var item in replaceResults.Results)
+            {
+                PerformReplaceInFilesRecursive(item);
             }
         }
 
