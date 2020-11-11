@@ -1118,6 +1118,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             navigationText = String.Empty;
             navigationItems = new ObservableCollection<BaseNavigationModel>();
 
+            // Events
+
+            eventBus.Register<StoredSearchesChangedEvent>(this);
+
             // Applying current close behavior
 
             if (configurationService.Configuration.Behavior.CloseBehavior.Value == CloseBehavior.Fluent)
