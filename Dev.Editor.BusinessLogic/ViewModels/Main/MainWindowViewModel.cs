@@ -986,6 +986,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 dm => dm.ActiveDocument,
                 doc => doc.HighlightingToolset == AdditionalToolset.Markdown,
                 false);
+            jsonToolsetAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager,
+                dm => dm.ActiveDocument,
+                doc => doc.HighlightingToolset == AdditionalToolset.Json);
             documentPathVirtualCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager,
                 dm => dm.ActiveDocument,
                 doc => doc.FilenameVirtual,
@@ -1085,6 +1088,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             InsertMarkdownLinkCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Insert_Link, null, obj => DoInsertMarkdownLinkCommand(), markdownToolsetAvailableCondition);
             InsertMarkdownPictureCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Insert_Picture, null, obj => DoInsertMarkdownPictureCommand(), markdownToolsetAvailableCondition);
             InsertMarkdownHorizontalRuleCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Insert_Hr, null, obj => DoInsertMarkdownHorizontalRuleCommand(), markdownToolsetAvailableCondition);
+
+            FormatJsonCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_JsonTools_Formatting_Format, "FormatXml16.png", obj => DoFormatJson(), jsonToolsetAvailableCondition);
 
             CompareCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Comparing_Compare, "Compare16.png", obj => DoCompare());
             PreviousChangeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Comparing_PreviousChange, "Up16.png", obj => DoPreviousChange(), diffDataAvailableCondition);

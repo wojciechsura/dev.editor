@@ -29,6 +29,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> searchPerformedCondition;
         private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> xmlToolsetAvailableCondition;
         private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> markdownToolsetAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> jsonToolsetAvailableCondition;
         private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> documentPathVirtualCondition;
         private readonly BaseCondition documentHasPathCondition;
         private readonly LambdaCondition<DocumentsManager, TextDocumentViewModel> diffDataAvailableCondition;
@@ -130,5 +131,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand InsertMarkdownLinkCommand { get; }
         public ICommand InsertMarkdownPictureCommand { get; }
         public ICommand InsertMarkdownHorizontalRuleCommand { get; }
+
+        // JsonTools
+
+        public ICommand FormatJsonCommand { get; }
     }   
 }

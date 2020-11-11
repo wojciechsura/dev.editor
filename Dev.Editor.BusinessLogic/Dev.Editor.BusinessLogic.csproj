@@ -204,6 +204,7 @@
     <Compile Include="ViewModels\Main\IMainWindowAccess.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Commands.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />
+    <Compile Include="ViewModels\Main\MainWindowViewModel.JsonTools.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Lines.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Navigation.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.ProcessingTools.cs" />
@@ -302,6 +303,7 @@
     <EmbeddedResource Include="Resources\Highlighting\INI.xshd" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Comparing.cs" />
     <EmbeddedResource Include="Resources\Highlighting\feature.xshd" />
+    <EmbeddedResource Include="Resources\Highlighting\json.xshd" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Highlighting\cpp.png" />
@@ -427,6 +429,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Highlighting\MarkDown.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Highlighting\json.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

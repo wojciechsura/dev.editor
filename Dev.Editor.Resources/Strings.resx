@@ -781,7 +781,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Command.SetHighlighting" xml:space="preserve">
     <value>Syntax highlighting {0}</value>
   </data>
-  <data name="Ribbon.ContentGroup.Markdown" xml:space="preserve">
+  <data name="Ribbon.ContextGroup.Markdown" xml:space="preserve">
     <value>Markdown</value>
   </data>
   <data name="Ribbon.Markdown.Headers.H1" xml:space="preserve">
@@ -1086,5 +1086,20 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   </data>
   <data name="Ribbon.Home.Search.ReplaceInFiles" xml:space="preserve">
     <value>Replace in files</value>
+  </data>
+  <data name="Ribbon.ContextGroup.Json" xml:space="preserve">
+    <value>Json</value>
+  </data>
+  <data name="Ribbon.Tab.JsonTools" xml:space="preserve">
+    <value>Json</value>
+  </data>
+  <data name="Ribbon.JsonTools.Formatting.Format" xml:space="preserve">
+    <value>Format Json</value>
+  </data>
+  <data name="Ribbon.JsonTools.Group.Formatting" xml:space="preserve">
+    <value>Formatting</value>
+  </data>
+  <data name="Message.CannotFormatInvalidJson" xml:space="preserve">
+    <value>Cannot format - Json is invalid.</value>
   </data>
 </root>

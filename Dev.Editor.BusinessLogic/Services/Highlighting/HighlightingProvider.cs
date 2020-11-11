@@ -124,6 +124,14 @@ namespace Dev.Editor.BusinessLogic.Services.Highlighting
                 "js.png",
                 FoldingKind.Braces);
 
+            RegisterHighlighting("Json",
+                new[] { ".json" },
+                "json.xshd",
+                "json.png",
+                FoldingKind.Braces,
+                false,
+                AdditionalToolset.Json);
+
             RegisterHighlighting("CSS",
                 new[] { ".css" },
                 "CSS.xshd",

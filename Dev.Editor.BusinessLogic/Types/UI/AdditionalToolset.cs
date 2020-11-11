@@ -10,6 +10,7 @@ namespace Dev.Editor.BusinessLogic.Types.UI
     {
         None,
         Xml,
-        Markdown
+        Markdown,
+        Json
     }
 }

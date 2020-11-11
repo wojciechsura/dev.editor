@@ -817,6 +817,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cannot format - Json is invalid..
+        /// </summary>
+        public static string Message_CannotFormatInvalidJson {
+            get {
+                return ResourceManager.GetString("Message.CannotFormatInvalidJson", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Cannot format - XML is invalid..
         /// </summary>
         public static string Message_CannotFormatInvalidXml {
@@ -1333,11 +1342,20 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Json.
+        /// </summary>
+        public static string Ribbon_ContextGroup_Json {
+            get {
+                return ResourceManager.GetString("Ribbon.ContextGroup.Json", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Markdown.
         /// </summary>
-        public static string Ribbon_ContentGroup_Markdown {
+        public static string Ribbon_ContextGroup_Markdown {
             get {
-                return ResourceManager.GetString("Ribbon.ContentGroup.Markdown", resourceCulture);
+                return ResourceManager.GetString("Ribbon.ContextGroup.Markdown", resourceCulture);
             }
         }
         
@@ -1603,6 +1621,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Format Json.
+        /// </summary>
+        public static string Ribbon_JsonTools_Formatting_Format {
+            get {
+                return ResourceManager.GetString("Ribbon.JsonTools.Formatting.Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Formatting.
+        /// </summary>
+        public static string Ribbon_JsonTools_Group_Formatting {
+            get {
+                return ResourceManager.GetString("Ribbon.JsonTools.Group.Formatting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Remove empty lines.
         /// </summary>
         public static string Ribbon_Lines_Cleanup_RemoveEmptyLines {
@@ -1842,6 +1878,15 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Tab_Home {
             get {
                 return ResourceManager.GetString("Ribbon.Tab.Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Json.
+        /// </summary>
+        public static string Ribbon_Tab_JsonTools {
+            get {
+                return ResourceManager.GetString("Ribbon.Tab.JsonTools", resourceCulture);
             }
         }
         

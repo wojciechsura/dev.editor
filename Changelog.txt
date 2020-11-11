@@ -6,3 +6,5 @@ Version 1.0.1
 Not releasd yet
 + Added Find in files and Close Current Document shortcuts
 + Added Replacing in files
++ Added Json highlighting
++ Added Json formatting

@@ -476,9 +476,12 @@
                 <f:RibbonContextualTabGroup x:Name="rctgXml" Header="{x:Static p:Strings.Ribbon_ContextGroup_Xml}" 
                                             Visibility="{Binding Documents.ActiveDocument.Highlighting.AdditionalToolset, Converter={StaticResource AdditionalToolsetToVisibilityConverter}, ConverterParameter={x:Static uit:AdditionalToolset.Xml}}"
                                             Background="#0000a0" />
-                <f:RibbonContextualTabGroup x:Name="rctgMarkdown" Header="{x:Static p:Strings.Ribbon_ContentGroup_Markdown}"
+                <f:RibbonContextualTabGroup x:Name="rctgMarkdown" Header="{x:Static p:Strings.Ribbon_ContextGroup_Markdown}"
                                             Visibility="{Binding Documents.ActiveDocument.Highlighting.AdditionalToolset, Converter={StaticResource AdditionalToolsetToVisibilityConverter}, ConverterParameter={x:Static uit:AdditionalToolset.Markdown}}"
                                             Background="#00a000" />
+                <f:RibbonContextualTabGroup x:Name="rctgJson" Header="{x:Static p:Strings.Ribbon_ContextGroup_Json}"
+                                            Visibility="{Binding Documents.ActiveDocument.Highlighting.AdditionalToolset, Converter={StaticResource AdditionalToolsetToVisibilityConverter}, ConverterParameter={x:Static uit:AdditionalToolset.Json}}"
+                                            Background="#a00000" />
             </f:Ribbon.ContextualGroups>
 
             <!-- Home tab -->
@@ -943,6 +946,22 @@
 
             </f:RibbonTabItem>
 
+            <!-- Json tools tab -->
+
+            <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_JsonTools}"
+                             Group="{Binding ElementName=rctgJson}">
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_JsonTools_Group_Formatting}">
+
+                    <f:Button Header="{x:Static p:Strings.Ribbon_JsonTools_Formatting_Format}" Command="{Binding FormatJsonCommand}"
+                              SizeDefinition="Large" 
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/FormatXml32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/FormatXml16.png"/>
+
+                </f:RibbonGroupBox>
+
+            </f:RibbonTabItem>            
+            
         </f:Ribbon>
 
         <!-- Window content -->
