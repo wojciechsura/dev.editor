@@ -2,7 +2,7 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Dev.Editor"
-#define MyAppVersion "1.0"
+#define MyAppVersion "1.0.1.0"
 #define MyAppPublisher "Spooksoft"
 #define MyAppURL "http://www.spooksoft.pl"
 #define MyAppExeName "dev.editor.exe"
@@ -57,6 +57,7 @@ Source: "..\Dev.Editor\bin\Release\Unity.Abstractions.dll"; DestDir: "{app}"; Fl
 Source: "..\Dev.Editor\bin\Release\Unity.Container.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\pl-PL\Dev.Editor.Resources.resources.dll"; DestDir: "{app}\pl-PL\"; Flags: ignoreversion
+Source: "..\Changelog.txt"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
