@@ -165,6 +165,7 @@
     <Compile Include="SearchReplaceWindow.xaml.cs">
       <DependentUpon>SearchReplaceWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Services\AppVersion\AppVersionService.cs" />
     <Compile Include="Services\Dialogs\DialogService.cs" />
     <Compile Include="Services\ImageResources\ImageResources.cs" />
     <Compile Include="Services\Platform\PlatformService.cs" />

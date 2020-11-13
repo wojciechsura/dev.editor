@@ -19,7 +19,7 @@
     xmlns:dt="clr-namespace:Dev.Editor.BusinessLogic.Types.Document;assembly=Dev.Editor.BusinessLogic"
     xmlns:mh="clr-namespace:Dev.Editor.BusinessLogic.Models.Highlighting;assembly=Dev.Editor.BusinessLogic"
     mc:Ignorable="d"
-    Title="Dev.Editor" Height="450" Width="800" UseLayoutRounding="True"
+    Title="{Binding Title}" Height="450" Width="800" UseLayoutRounding="True"
     Closing="HandleWindowClosing" Loaded="HandleLoaded" Activated="HandleWindowActivated"
     Drop="HandleDrop" AllowDrop="True"
     FocusManager.FocusedElement="{Binding ElementName=tcePrimary}">

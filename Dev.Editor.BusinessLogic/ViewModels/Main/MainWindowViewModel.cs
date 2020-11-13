@@ -1,67 +1,68 @@
-﻿using Dev.Editor.BusinessLogic.Models.Dialogs;
-using Dev.Editor.Resources;
+﻿using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
+using Dev.Editor.BusinessLogic.Models.Configuration.Internal;
+using Dev.Editor.BusinessLogic.Models.Configuration.Search;
+using Dev.Editor.BusinessLogic.Models.Dialogs;
+using Dev.Editor.BusinessLogic.Models.Documents.Text;
+using Dev.Editor.BusinessLogic.Models.Events;
+using Dev.Editor.BusinessLogic.Models.Highlighting;
+using Dev.Editor.BusinessLogic.Models.Navigation;
+using Dev.Editor.BusinessLogic.Models.Search;
+using Dev.Editor.BusinessLogic.Models.UI;
+using Dev.Editor.BusinessLogic.Services.Commands;
+using Dev.Editor.BusinessLogic.Services.Config;
 using Dev.Editor.BusinessLogic.Services.Dialogs;
+using Dev.Editor.BusinessLogic.Services.EventBus;
+using Dev.Editor.BusinessLogic.Services.FileIcons;
+using Dev.Editor.BusinessLogic.Services.Highlighting;
+using Dev.Editor.BusinessLogic.Services.ImageResources;
 using Dev.Editor.BusinessLogic.Services.Messaging;
+using Dev.Editor.BusinessLogic.Services.Paths;
+using Dev.Editor.BusinessLogic.Services.Platform;
+using Dev.Editor.BusinessLogic.Services.SearchEncoder;
+using Dev.Editor.BusinessLogic.Services.StartupInfo;
+using Dev.Editor.BusinessLogic.Services.TextComparison;
+using Dev.Editor.BusinessLogic.Services.TextTransform;
+using Dev.Editor.BusinessLogic.Types.Behavior;
+using Dev.Editor.BusinessLogic.Types.BottomTools;
+using Dev.Editor.BusinessLogic.Types.Main;
+using Dev.Editor.BusinessLogic.Types.Search;
+using Dev.Editor.BusinessLogic.Types.Tools;
+using Dev.Editor.BusinessLogic.Types.UI;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
+using Dev.Editor.BusinessLogic.ViewModels.BottomTools.Base;
+using Dev.Editor.BusinessLogic.ViewModels.BottomTools.Messages;
+using Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
+using Dev.Editor.BusinessLogic.ViewModels.FindInFiles;
+using Dev.Editor.BusinessLogic.ViewModels.Main.Documents;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
+using Dev.Editor.BusinessLogic.ViewModels.Tools.Base;
+using Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions;
+using Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;
+using Dev.Editor.Common.Tools;
+using Dev.Editor.Resources;
+using ICSharpCode.AvalonEdit.Document;
+using Microsoft.Win32;
 using Spooksoft.VisualStateManager.Commands;
 using Spooksoft.VisualStateManager.Conditions;
-using Microsoft.Win32;
-using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.ComponentModel;
 using System.IO;
 using System.Linq;
+using System.Reflection;
+using System.Text.RegularExpressions;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using Dev.Editor.BusinessLogic.Services.Config;
-using Dev.Editor.BusinessLogic.Types.Behavior;
-using Dev.Editor.BusinessLogic.Models.Configuration.Internal;
-using Dev.Editor.BusinessLogic.Services.Paths;
-using Dev.Editor.BusinessLogic.Services.StartupInfo;
-using Dev.Editor.BusinessLogic.Services.Highlighting;
-using Dev.Editor.BusinessLogic.Models.Highlighting;
-using Dev.Editor.BusinessLogic.Services.Commands;
-using System.Windows.Media;
-using System.Reflection;
-using System.Windows.Media.Imaging;
-using Dev.Editor.BusinessLogic.Services.ImageResources;
-using Dev.Editor.BusinessLogic.Models.Navigation;
-using Dev.Editor.BusinessLogic.Services.FileIcons;
-using Dev.Editor.BusinessLogic.Types.UI;
-using Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer;
-using Dev.Editor.BusinessLogic.ViewModels.Tools.Base;
-using Dev.Editor.BusinessLogic.Models.UI;
-using Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions;
-using Dev.Editor.Common.Tools;
 using System.Windows.Data;
-using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
-using Dev.Editor.BusinessLogic.ViewModels.BottomTools.Base;
-using Dev.Editor.BusinessLogic.ViewModels.BottomTools.Messages;
-using Dev.Editor.BusinessLogic.Services.EventBus;
-using Dev.Editor.BusinessLogic.Models.Events;
-using Dev.Editor.BusinessLogic.Models.Configuration.Search;
-using Dev.Editor.BusinessLogic.Models.Search;
-using Dev.Editor.BusinessLogic.Services.SearchEncoder;
-using Dev.Editor.BusinessLogic.Services.Platform;
-using Dev.Editor.BusinessLogic.Types.Main;
-using Dev.Editor.BusinessLogic.ViewModels.Main.Documents;
-using ICSharpCode.AvalonEdit.Document;
-using Dev.Editor.BusinessLogic.Services.TextComparison;
-using Dev.Editor.BusinessLogic.Services.TextTransform;
-using Dev.Editor.BusinessLogic.Models.Documents.Text;
+using System.Windows.Input;
 using System.Windows.Media.Effects;
-using Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults;
-using Dev.Editor.BusinessLogic.Types.BottomTools;
-using Dev.Editor.BusinessLogic.Types.Tools;
+using System.Windows.Media.Imaging;
+using System.Windows.Media;
 using System.Windows.Threading;
-using Dev.Editor.BusinessLogic.Types.Search;
-using System.Text.RegularExpressions;
-using Dev.Editor.BusinessLogic.ViewModels.FindInFiles;
-using System.Collections.Specialized;
+using System;
+using Dev.Editor.BusinessLogic.Services.AppVersion;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -86,6 +87,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly IPlatformService platformService;
         private readonly ITextComparisonService textComparisonService;
         private readonly ITextTransformService textTransformService;
+        private readonly IAppVersionService appVersionService;
         private readonly DocumentsManager documentsManager;
 
         private readonly ObservableCollection<StoredSearchReplaceViewModel> storedSearches;
@@ -885,7 +887,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             IEventBus eventBus,
             IPlatformService platformService,
             ITextComparisonService textComparisonService,
-            ITextTransformService textTransformService)
+            ITextTransformService textTransformService,
+            IAppVersionService appVersionService)
         {
             this.access = access;
             this.dialogService = dialogService;
@@ -902,6 +905,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             this.platformService = platformService;
             this.textComparisonService = textComparisonService;
             this.textTransformService = textTransformService;
+            this.appVersionService = appVersionService;
+
+            Title = string.Format(Resources.Strings.MainWindow_Title, appVersionService.GetAppVersion());
 
             documentsManager = new DocumentsManager();
 
@@ -1348,5 +1354,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         bool IDocumentHandler.WordWrap => throw new NotImplementedException();
 
         bool IDocumentHandler.LineNumbers => throw new NotImplementedException();
+
+        public string Title { get; }
     }
 }

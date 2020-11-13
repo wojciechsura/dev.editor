@@ -1102,4 +1102,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Message.CannotFormatInvalidJson" xml:space="preserve">
     <value>Cannot format - Json is invalid.</value>
   </data>
+  <data name="MainWindow.Title" xml:space="preserve">
+    <value>Dev.Editor {0}</value>
+  </data>
 </root>

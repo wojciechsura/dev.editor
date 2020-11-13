@@ -120,6 +120,7 @@
     <Compile Include="Models\Navigation\BaseNavigationModel.cs" />
     <Compile Include="Models\Navigation\CommandNavigationModel.cs" />
     <Compile Include="Models\Search\SearchReplaceModel.cs" />
+    <Compile Include="Services\AppVersion\IAppVersionService.cs" />
     <Compile Include="Services\Commands\CommandRepositoryService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Commands\ICommandRepositoryService.cs" />

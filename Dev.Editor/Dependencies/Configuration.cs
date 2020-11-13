@@ -1,7 +1,9 @@
-﻿using Dev.Editor.BusinessLogic.Services.Dialogs;
+﻿using Dev.Editor.BusinessLogic.Services.AppVersion;
+using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
 using Dev.Editor.BusinessLogic.Services.Platform;
 using Dev.Editor.BusinessLogic.Services.Registry;
+using Dev.Editor.Services.AppVersion;
 using Dev.Editor.Services.Dialogs;
 using Dev.Editor.Services.ImageResources;
 using Dev.Editor.Services.Platform;
@@ -33,6 +35,7 @@ namespace Dev.Editor.Dependencies
             container.RegisterType<SingleInstanceService>(new ContainerControlledLifetimeManager());
             container.RegisterType<WinAPIService>(new ContainerControlledLifetimeManager());
             container.RegisterType<IRegistryService, RegistryService>(new ContainerControlledLifetimeManager());
+            container.RegisterType<IAppVersionService, AppVersionService>(new ContainerControlledLifetimeManager());
 
             Dev.Editor.BusinessLogic.Dependencies.Configuration.Configure(container);
 
