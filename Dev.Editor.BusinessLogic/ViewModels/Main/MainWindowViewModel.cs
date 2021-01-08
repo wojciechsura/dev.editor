@@ -63,6 +63,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using System;
 using Dev.Editor.BusinessLogic.Services.AppVersion;
+using Dev.Editor.BusinessLogic.ViewModels.Tools.Project;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -115,6 +116,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         // Tools
 
         private readonly ExplorerToolViewModel explorerToolViewModel;
+        private readonly ProjectToolViewModel projectToolViewModel;
         private readonly BinDefinitionsToolViewModel binDefinitionsToolViewModel;
 
         private readonly MessagesBottomToolViewModel messagesBottomToolViewModel;
@@ -1013,6 +1015,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 this, 
                 eventBus, 
                 platformService);
+            projectToolViewModel = new ProjectToolViewModel(this,
+                eventBus,
+                imageResources);
             binDefinitionsToolViewModel = new BinDefinitionsToolViewModel(this,
                 imageResources,
                 configurationService,
@@ -1338,6 +1343,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         }
 
         public ExplorerToolViewModel ExplorerToolViewModel => explorerToolViewModel;
+
+        public ProjectToolViewModel ProjectToolViewModel => projectToolViewModel;
 
         public BinDefinitionsToolViewModel BinDefinitionsToolViewModel => binDefinitionsToolViewModel;
 

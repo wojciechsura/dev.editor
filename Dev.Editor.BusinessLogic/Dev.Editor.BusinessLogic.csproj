@@ -247,6 +247,7 @@
     <Compile Include="ViewModels\Tools\Explorer\IExplorerHandler.cs" />
     <Compile Include="ViewModels\Tools\Explorer\IExplorerToolAccess.cs" />
     <Compile Include="ViewModels\Tools\Explorer\IFileItemHandler.cs" />
+    <Compile Include="ViewModels\Tools\Project\ProjectToolViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Dev.Editor.BinAnalyzer\Dev.Editor.BinAnalyzer.csproj">

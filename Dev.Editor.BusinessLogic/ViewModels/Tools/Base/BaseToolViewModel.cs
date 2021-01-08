@@ -15,6 +15,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Base
         protected readonly IToolHandler handler;
 
         public static string ExplorerUid = "explorer";
+        public static string ProjectUid = "project";
         public static string BinaryDefinitionsUid = "binaryDefinitions";
 
         private void DoCloseTools()

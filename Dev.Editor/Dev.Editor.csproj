@@ -97,6 +97,9 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Controls\DocumentTabHeader.cs" />
+    <Compile Include="Controls\ProjectTool.xaml.cs">
+      <DependentUpon>ProjectTool.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Controls\SearchResultsTool.xaml.cs">
       <DependentUpon>SearchResultsTool.xaml</DependentUpon>
     </Compile>
@@ -178,6 +181,10 @@
     <Compile Include="Wpf\MouseEvents.cs" />
     <Compile Include="Wpf\ParentData.cs" />
     <Compile Include="Wpf\ScreenBoundsConverter.cs" />
+    <Page Include="Controls\ProjectTool.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\SearchResultsTool.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
