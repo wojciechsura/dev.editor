@@ -55,6 +55,7 @@ Source: "..\Dev.Editor\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags
 Source: "..\Dev.Editor\bin\Release\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Unity.Abstractions.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Unity.Container.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Spooksoft.VisualStateManager.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\pl-PL\Dev.Editor.Resources.resources.dll"; DestDir: "{app}\pl-PL\"; Flags: ignoreversion
 Source: "..\Changelog.txt"; DestDir: "{app}"; Flags: ignoreversion
