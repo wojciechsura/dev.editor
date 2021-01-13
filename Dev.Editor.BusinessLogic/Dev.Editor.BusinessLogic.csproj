@@ -158,6 +158,7 @@
     <Compile Include="Types\Folding\FoldingKind.cs" />
     <Compile Include="Types\Main\DocumentTabKind.cs" />
     <Compile Include="Types\Messages\MessageSeverity.cs" />
+    <Compile Include="Types\PropertyChange\BasePropertyChangeNotifier.cs" />
     <Compile Include="Types\Search\SearchMode.cs" />
     <Compile Include="Types\Search\SearchReplaceOperation.cs" />
     <Compile Include="Types\TextComparison\ChangeType.cs" />
@@ -221,6 +222,7 @@
     <Compile Include="Models\FindInFiles\FolderSearchItem.cs" />
     <Compile Include="Models\FindInFiles\ResultSearchItem.cs" />
     <Compile Include="Models\FindInFiles\RootSearchItem.cs" />
+    <Compile Include="ViewModels\Main\Projects\ProjectManager.cs" />
     <Compile Include="ViewModels\Main\StoredSearchReplaceViewModel.cs" />
     <Compile Include="ViewModels\Main\TextDocumentPropertyNotNullCondition.cs" />
     <Compile Include="ViewModels\Main\TextDocumentPropertyWatchCondition.cs" />
@@ -229,6 +231,9 @@
     <Compile Include="ViewModels\FindInFiles\BaseSearchResultViewModel.cs" />
     <Compile Include="ViewModels\FindInFiles\FileSearchResultViewModel.cs" />
     <Compile Include="ViewModels\FindInFiles\FolderSearchResultViewModel.cs" />
+    <Compile Include="ViewModels\Projects\BaseProjectItemViewModel.cs" />
+    <Compile Include="ViewModels\Projects\ProjectFileViewModel.cs" />
+    <Compile Include="ViewModels\Projects\ProjectFolderViewModel.cs" />
     <Compile Include="ViewModels\Search\ISearchHost.cs" />
     <Compile Include="ViewModels\Search\ISearchReplaceWindowAccess.cs" />
     <Compile Include="ViewModels\FindInFiles\SearchResultsViewModel.cs" />

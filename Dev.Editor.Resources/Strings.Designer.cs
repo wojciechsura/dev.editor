@@ -1549,6 +1549,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Project.
+        /// </summary>
+        public static string Ribbon_Home_Group_Project {
+            get {
+                return ResourceManager.GetString("Ribbon.Home.Group.Project", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search.
         /// </summary>
         public static string Ribbon_Home_Group_Search {
@@ -1563,6 +1572,15 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Home_Navigation_Navigate {
             get {
                 return ResourceManager.GetString("Ribbon.Home.Navigation.Navigate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open folder....
+        /// </summary>
+        public static string Ribbon_Home_Project_Open {
+            get {
+                return ResourceManager.GetString("Ribbon.Home.Project.Open", resourceCulture);
             }
         }
         

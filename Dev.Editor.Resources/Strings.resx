@@ -1108,4 +1108,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Tool.Project.Title" xml:space="preserve">
     <value>Project</value>
   </data>
+  <data name="Ribbon.Home.Group.Project" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="Ribbon.Home.Project.Open" xml:space="preserve">
+    <value>Open folder...</value>
+  </data>
 </root>

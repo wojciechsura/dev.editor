@@ -1,6 +1,7 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Events;
 using Dev.Editor.BusinessLogic.Services.EventBus;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
+using Dev.Editor.BusinessLogic.ViewModels.Main.Projects;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.Base;
 using Dev.Editor.Resources;
 using System;
@@ -16,13 +17,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Project
     {
         private readonly IEventBus eventBus;
         private readonly IImageResources imageResources;
+        private readonly ProjectManager projectManager;
         private readonly ImageSource icon;
 
-        public ProjectToolViewModel(IToolHandler handler, IEventBus eventBus, IImageResources imageResources)
+        public ProjectToolViewModel(IToolHandler handler, 
+            IEventBus eventBus, 
+            IImageResources imageResources,
+            ProjectManager projectManager)
             : base(handler)
         {
             this.eventBus = eventBus;
             this.imageResources = imageResources;
+            this.projectManager = projectManager;
 
             eventBus.Register((IEventListener<ApplicationActivatedEvent>)this);
 

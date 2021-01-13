@@ -602,6 +602,14 @@
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/FindNext16.png"/>
                 </f:RibbonGroupBox>
 
+                <!-- Project -->
+
+                <f:RibbonGroupBox x:Name="grProject" Header="{x:Static p:Strings.Ribbon_Home_Group_Project}">
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Home_Project_Open}" Command="{Binding OpenProjectCommand}" SizeDefinition="Large"
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open16.png" />
+                </f:RibbonGroupBox>
+                
                 <!-- Compare -->
 
                 <f:RibbonGroupBox x:Name="grCompare" Header="{x:Static p:Strings.Ribbon_Home_Group_Comparing}">

@@ -64,6 +64,7 @@ using System.Windows.Threading;
 using System;
 using Dev.Editor.BusinessLogic.Services.AppVersion;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.Project;
+using Dev.Editor.BusinessLogic.ViewModels.Main.Projects;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -90,6 +91,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly ITextTransformService textTransformService;
         private readonly IAppVersionService appVersionService;
         private readonly DocumentsManager documentsManager;
+        private readonly ProjectManager projectManager;
 
         private readonly ObservableCollection<StoredSearchReplaceViewModel> storedSearches;
         private readonly ObservableCollection<StoredSearchReplaceViewModel> storedReplaces;
@@ -724,6 +726,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
+        private void DoOpenProject()
+        {
+            (bool result, string location) = dialogService.ShowChooseFolderDialog(null);
+            if (result)
+            {
+                projectManager.OpenProject(location);
+            }
+        }
+
         // IDocumentHandler implementation ------------------------------------
 
         void IDocumentHandler.RequestClose(BaseDocumentViewModel document)
@@ -912,6 +923,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             Title = string.Format(Resources.Strings.MainWindow_Title, appVersionService.GetAppVersion());
 
             documentsManager = new DocumentsManager();
+            projectManager = new ProjectManager();
 
             wordWrap = configurationService.Configuration.Editor.WordWrap.Value;
             lineNumbers = configurationService.Configuration.Editor.LineNumbers.Value;
@@ -1017,7 +1029,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 platformService);
             projectToolViewModel = new ProjectToolViewModel(this,
                 eventBus,
-                imageResources);
+                imageResources,
+                projectManager);
             binDefinitionsToolViewModel = new BinDefinitionsToolViewModel(this,
                 imageResources,
                 configurationService,
@@ -1060,6 +1073,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             FindNextCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Search_FindNext, "FindNext16.png", obj => DoFindNext(), documentIsTextCondition & searchPerformedCondition);
             FindInFilesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Search_FindInFiles, "Search16.png", obj => DoFindInFiles());
             ReplaceInFilesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Search_ReplaceInFiles, "Replace16.png", obj => DoReplaceInFiles());
+
+            OpenProjectCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Home_Project_Open, "Open16.png", obj => DoOpenProject());
 
             SortLinesAscendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Ordering_SortAscending, "SortAscending16.png", obj => DoSortAscending(), documentIsTextCondition);
             SortLinesDescendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Ordering_SortDescending, "SortDescending16.png", obj => DoSortDescending(), documentIsTextCondition);

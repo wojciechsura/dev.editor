@@ -73,6 +73,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand FindInFilesCommand { get; }
         public ICommand ReplaceInFilesCommand { get; }
 
+        // Project
+
+        public ICommand OpenProjectCommand { get; }
+
         // Comparing
 
         public ICommand CompareCommand { get; }
