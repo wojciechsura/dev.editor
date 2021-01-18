@@ -1144,4 +1144,67 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="BottomTool.SearchResults.DuplicatedLinesHeader" xml:space="preserve">
     <value>Search results for duplicated lines. Total number of blocks: </value>
   </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Title" xml:space="preserve">
+    <value>Configure search for duplicated lines</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Group.Input" xml:space="preserve">
+    <value>Input</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Add" xml:space="preserve">
+    <value>Add...</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.AddFiles" xml:space="preserve">
+    <value>Add files...</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.AddFolder" xml:space="preserve">
+    <value>Add folder...</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.EditHint" xml:space="preserve">
+    <value>Double-click an item to edit.</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.MinimumLineCount" xml:space="preserve">
+    <value>Minimum line count</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.MinimumFileCount" xml:space="preserve">
+    <value>Minimum file count</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Group.Analysis" xml:space="preserve">
+    <value>Analysis</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.IgnoreTrailingWhitespace" xml:space="preserve">
+    <value>Ignore trailing whitespace</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Files" xml:space="preserve">
+    <value>Files</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.ExcludedFilesMasks" xml:space="preserve">
+    <value>Excluded files masks</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.SearchFoldersRecursively" xml:space="preserve">
+    <value>Search folders recursively</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Group.ResultSorting" xml:space="preserve">
+    <value>Result sorting</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.ByLineFirst" xml:space="preserve">
+    <value>By line count, then by file count</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.ByFileFirst" xml:space="preserve">
+    <value>By file count, then by line count</value>
+  </data>
+  <data name="BottomTool_SearchResults_FragmentDuplicatedIn" xml:space="preserve">
+    <value>Fragment duplicated in </value>
+  </data>
+  <data name="BottomTool_SearchResults_FragmentDuplicatedIn2" xml:space="preserve">
+    <value> files (line count: </value>
+  </data>
+  <data name="BottomTool_SearchResults_FragmentDuplicatedIn3" xml:space="preserve">
+    <value>)</value>
+  </data>
+  <data name="BottomTool_SearchResults_FileReference1" xml:space="preserve">
+    <value>File: </value>
+  </data>
+  <data name="BottomTool_SearchResults_FileReference2" xml:space="preserve">
+    <value>, lines </value>
+  </data>
 </root>

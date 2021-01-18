@@ -8,11 +8,13 @@ namespace Dev.Editor.BusinessLogic.Models.DuplicatedLines
 {
     public class DuplicatedLinesResult
     {
-        public DuplicatedLinesResult(List<DuplicatedLinesResultEntry> entries)
+        public DuplicatedLinesResult(List<DuplicatedLinesResultEntry> entries, DuplicatedLinesFinderConfig config)
         {
             Entries = entries;
+            Config = config;
         }
 
         public List<DuplicatedLinesResultEntry> Entries { get; }
+        public DuplicatedLinesFinderConfig Config { get; }
     }
 }

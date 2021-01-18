@@ -1144,4 +1144,67 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="BottomTool.SearchResults.DuplicatedLinesHeader" xml:space="preserve">
     <value>Wyniki wyszukiwania powielonych linii. Liczba znalezionych bloków: </value>
   </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Add" xml:space="preserve">
+    <value>Dodaj...</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.AddFiles" xml:space="preserve">
+    <value>Dodaj pliki...</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.AddFolder" xml:space="preserve">
+    <value>Dodaj katalog...</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.ByFileFirst" xml:space="preserve">
+    <value>Według liczby plików, potem linii</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.ByLineFirst" xml:space="preserve">
+    <value>Według liczby linii, potem plików</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.EditHint" xml:space="preserve">
+    <value>Kliknij dwukrotnie element, by go edytować.</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.ExcludedFilesMasks" xml:space="preserve">
+    <value>Wyklucz pliki według maski</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Files" xml:space="preserve">
+    <value>Pliki</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Group.Analysis" xml:space="preserve">
+    <value>Analiza</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Group.Input" xml:space="preserve">
+    <value>Wejście</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Group.ResultSorting" xml:space="preserve">
+    <value>Sortowanie wyników</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.IgnoreTrailingWhitespace" xml:space="preserve">
+    <value>Ignoruj otaczające białe znaki</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.MinimumFileCount" xml:space="preserve">
+    <value>Minimalna liczba plików</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.MinimumLineCount" xml:space="preserve">
+    <value>Minimalna liczba linii</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.SearchFoldersRecursively" xml:space="preserve">
+    <value>Przeszukaj katalogi rekurencyjnie</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Title" xml:space="preserve">
+    <value>Konfiguracja wyszukiwania powielonych linii</value>
+  </data>
+  <data name="BottomTool_SearchResults_FragmentDuplicatedIn" xml:space="preserve">
+    <value>Fragment powielony w </value>
+  </data>
+  <data name="BottomTool_SearchResults_FragmentDuplicatedIn2" xml:space="preserve">
+    <value> plikach (linii: </value>
+  </data>
+  <data name="BottomTool_SearchResults_FragmentDuplicatedIn3" xml:space="preserve">
+    <value>)</value>
+  </data>
+  <data name="BottomTool_SearchResults_FileReference1" xml:space="preserve">
+    <value>Plik: </value>
+  </data>
+  <data name="BottomTool_SearchResults_FileReference2" xml:space="preserve">
+    <value>, linie </value>
+  </data>
 </root>

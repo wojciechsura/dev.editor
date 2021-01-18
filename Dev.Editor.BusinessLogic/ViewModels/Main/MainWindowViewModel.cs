@@ -729,7 +729,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoOpenProject()
         {
-            (bool result, string location) = dialogService.ShowChooseFolderDialog(null);
+            string startFolder = null;
+            if (this.sidePanelPlacement != SidePanelPlacement.Hidden)
+                startFolder = explorerToolViewModel.SelectedFolder.GetFullPath();
+
+            (bool result, string location) = dialogService.ShowChooseFolderDialog(startFolder);
             if (result)
             {
                 projectManager.OpenProject(location);

@@ -8,8 +8,10 @@
         xmlns:b="clr-namespace:Dev.Editor.Behaviors"
         xmlns:local="clr-namespace:Dev.Editor"
         xmlns:vm="Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines"
+        xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
+        xmlns:t="clr-namespace:Dev.Editor.BusinessLogic.Types.DuplicatedLines;assembly=Dev.Editor.BusinessLogic"
         mc:Ignorable="d"
-        Title="Configure search for duplicated lines" SizeToContent="WidthAndHeight" ResizeMode="NoResize" ShowInTaskbar="False" 
+        Title="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_Title}" SizeToContent="WidthAndHeight" ResizeMode="NoResize" ShowInTaskbar="False" 
         WindowStartupLocation="CenterOwner">
     <Window.Resources>
         <ResourceDictionary>
@@ -18,12 +20,23 @@
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Window.Resources>
-    <StackPanel Orientation="Vertical">
-        <GroupBox Header="Input" Margin="{StaticResource DefaultMargin}">
-            <Grid Width="400">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+        
+        <GroupBox Grid.Column="0" Grid.Row="0" Grid.RowSpan="3" Header="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_Group_Input}" Margin="{StaticResource DialogItemsExceptBottomMargin}">
+            <Grid Width="400" Margin="{StaticResource DialogItemsMargin}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="1*" />
                 </Grid.RowDefinitions>
 
                 <Grid Grid.Row="0" Margin="{StaticResource DialogItemsBottomMargin}">
@@ -39,83 +52,95 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBox Grid.Row="0" Grid.Column="0" Text="{Binding Entry, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
-                    <Button Grid.Row="0" Grid.Column="1" Margin="{StaticResource DialogItemsLeftMargin}" Command="{Binding AddEntryCommand}">
-                        <Image Source="Add16.png" Width="16" Height="16"/>
+                    <Button Grid.Row="0" Grid.Column="1" Margin="{StaticResource DialogItemsLeftMargin}" Command="{Binding AddEntryCommand}"
+                            Style="{StaticResource ImageButton}">
+                        <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Add16.png" Width="16" Height="16"/>
                     </Button>
-                    <Button Grid.Row="0" Grid.Column="2" Margin="{StaticResource DialogItemsLeftMargin}" Command="{Binding RemoveEntryCommand}">
+                    <Button  Grid.Row="0" Grid.Column="2" Margin="{StaticResource DialogItemsLeftMargin}" Command="{Binding RemoveEntryCommand}"
+                             Style="{StaticResource ImageButton}">
                         <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Delete16.png" />
                     </Button>
                     <Separator Grid.Row="0" Grid.Column="3" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" DockPanel.Dock="Right" Margin="{StaticResource DialogItemsLeftMargin}" />
-                    <Button Grid.Row="0" Grid.Column="4" Content="Add..." DockPanel.Dock="Right" Margin="{StaticResource DialogItemsLeftMargin}">
+                    <Button Grid.Row="0" Grid.Column="4" Content="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_Add}" DockPanel.Dock="Right" Margin="{StaticResource DialogItemsLeftMargin}">
                         <i:Interaction.Behaviors>
                             <b:DropDownButtonBehavior />
                         </i:Interaction.Behaviors>
                         <Button.ContextMenu>
                             <ContextMenu>
-                                <MenuItem Header="Add files..." Command="{Binding AddFilesCommand}"/>
-                                <MenuItem Header="Add folder..." Command="{Binding AddFolderCommand}"/>
+                                <MenuItem Header="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_AddFiles}" Command="{Binding AddFilesCommand}"/>
+                                <MenuItem Header="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_AddFolder}" Command="{Binding AddFolderCommand}"/>
                             </ContextMenu>
                         </Button.ContextMenu>
                     </Button>
                 </Grid>
 
-                <StackPanel Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch">
-                    <ListBox Height="200" ItemsSource="{Binding Sources}" DisplayMemberPath="Path" SelectedItem="{Binding SelectedEntry}"
+                <DockPanel Grid.Row="1" VerticalAlignment="Stretch" HorizontalAlignment="Stretch">
+                    <Label DockPanel.Dock="Bottom" Content="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_EditHint}" />
+                    <ListBox ItemsSource="{Binding Sources}" DisplayMemberPath="Path" SelectedItem="{Binding SelectedEntry}"
                              MouseDoubleClick="SourceListDoubleClick"/>
-                    <Label>Double-click an item to edit.</Label>
-                </StackPanel>
+                </DockPanel>
             </Grid>
         </GroupBox>
 
-        <GroupBox Header="Configuration">
-            <Grid>
+        <GroupBox Grid.Column="1" Grid.Row="0" Header="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_Group_Analysis}" Margin="{StaticResource DialogItemsExceptBottomMargin}">
+            <Grid Margin="{StaticResource DialogItemsMargin}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
+
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
 
-                <Label Grid.Row="0" Grid.Column="0" Content="Minimum line count" Margin="{StaticResource DefaultMargin}"/>
-                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="{StaticResource DefaultMargin}"
-                         VerticalAlignment="Center" PreviewTextInput="AcceptOnlyNumeric" MaxLength="4"
-                         Text="{Binding MinimumLines, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_MinimumLineCount}" Margin="{StaticResource DialogItemsBottomMargin}"/>
+                <TextBox Grid.Row="0" Grid.Column="1" HorizontalAlignment="Stretch" Margin="{StaticResource DialogItemsBottomMargin}"
+                        VerticalAlignment="Center" PreviewTextInput="AcceptOnlyNumeric" MaxLength="4"
+                        Text="{Binding MinimumLines, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <Label Grid.Row="1" Grid.Column="0" Content="Minimum file count" Margin="{StaticResource DefaultMargin}"/>
-                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="{StaticResource DefaultMargin}"
-                         VerticalAlignment="Center" PreviewTextInput="AcceptOnlyNumeric" MaxLength="4"
-                         Text="{Binding MinimumFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                <Label Grid.Row="1" Grid.Column="0" Content="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_MinimumFileCount}" Margin="{StaticResource DialogItemsBottomMargin}"/>
+                <TextBox Grid.Row="1" Grid.Column="1" HorizontalAlignment="Stretch" Margin="{StaticResource DialogItemsBottomMargin}"
+                        VerticalAlignment="Center" PreviewTextInput="AcceptOnlyNumeric" MaxLength="4"
+                        Text="{Binding MinimumFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <Label Grid.Row="2" Grid.Column="0" Content="Whitespace" Margin="{StaticResource DefaultMargin}" />
-                <CheckBox Grid.Row="2" Grid.Column="1" Content="Ignore trailing whitespace" Margin="{StaticResource DefaultMargin}" 
-                          VerticalAlignment="Center" IsChecked="{Binding TrimLines, Mode=TwoWay}"/>
-
-                <Separator Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="{StaticResource DefaultMargin}"/>
-
-                <Label Grid.Row="4" Grid.Column="0" Content="Excluded files masks" Margin="{StaticResource DefaultMargin}" />
-                <StackPanel Grid.Row="4" Grid.Column="1" Orientation="Vertical" HorizontalAlignment="Stretch">
-                    <TextBox HorizontalAlignment="Stretch" Margin="{StaticResource DefaultMargin}" Text="{Binding ExcludedFileMasks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
-                    <Label>Use semicolon (;) to separate entries</Label>
-                </StackPanel>
-
-                <Label Grid.Row="5" Grid.Column="0" Content="Recursive" Margin="{StaticResource DefaultMargin}" />
-                <CheckBox Grid.Row="5" Grid.Column="1" Content="Search folders recursively" Margin="{StaticResource DefaultMargin}" 
-                          VerticalAlignment="Center" IsChecked="{Binding Recursive, Mode=TwoWay}"/>
-
+                <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_IgnoreTrailingWhitespace}"
+                        IsChecked="{Binding TrimLines, Mode=TwoWay}"/>
             </Grid>
         </GroupBox>
+
+        <GroupBox Grid.Column="1" Grid.Row="1" Header="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_Files}" Margin="{StaticResource DialogItemsExceptBottomMargin}">
+            <Grid Margin="{StaticResource DialogItemsMargin}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_ExcludedFilesMasks}" />
+                <TextBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Margin="{StaticResource DialogItemsBottomMargin}" Text="{Binding ExcludedFileMasks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_SearchFoldersRecursively}" Margin="{StaticResource DefaultMargin}" 
+                          VerticalAlignment="Center" IsChecked="{Binding Recursive, Mode=TwoWay}"/>
+            </Grid>
+        </GroupBox>
+
+        <GroupBox Grid.Column="1" Grid.Row="2" Header="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_Group_ResultSorting}" Margin="{StaticResource DialogItemsMargin}">
+            <StackPanel Orientation="Vertical" Margin="{StaticResource DialogItemsMargin}">
+                <RadioButton Content="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_ByLineFirst}" Margin="{StaticResource DialogItemsBottomMargin}"
+                             IsChecked="{Binding ResultSortKind, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:DuplicatedLinesResultSortKind.FirstByLinesThenByFiles}}"/>
+                <RadioButton Content="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_ByFileFirst}"
+                             IsChecked="{Binding ResultSortKind, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:DuplicatedLinesResultSortKind.FirstByFilesThenByLines}}"/>
+            </StackPanel>
+        </GroupBox>
         
-        <Grid>
+        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="{StaticResource DialogItemsMargin}">
             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                 <Button Style="{StaticResource DialogButton}" Command="{Binding OkCommand}" Content="{x:Static res:Strings.Ok}" />
                 <Button Style="{StaticResource DialogButton}" Command="{Binding CancelCommand}" Content="{x:Static res:Strings.Cancel}" IsCancel="True" />
             </StackPanel>
         </Grid>
-    </StackPanel>
+    </Grid>
 </Window>

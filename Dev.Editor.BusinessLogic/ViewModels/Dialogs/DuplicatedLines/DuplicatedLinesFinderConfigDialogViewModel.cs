@@ -1,6 +1,7 @@
 ﻿using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
 using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.Services.Messaging;
+using Dev.Editor.BusinessLogic.Types.DuplicatedLines;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
 using Dev.Editor.Resources;
 using Spooksoft.VisualStateManager.Commands;
@@ -31,6 +32,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
         private bool recursive;
         private readonly BaseCondition entryNotNullCondition;
         private readonly BaseCondition entrySelectedCondition;
+        private DuplicatedLinesResultSortKind resultSortKind;
 
         private void DoAddEntry()
         {
@@ -100,6 +102,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
             minimumLines = 5;
             recursive = false;
             trimLines = true;
+            resultSortKind = DuplicatedLinesResultSortKind.FirstByLinesThenByFiles;
 
             entryNotNullCondition = new LambdaCondition<DuplicatedLinesFinderConfigDialogViewModel>(this,
                 vm => !String.IsNullOrEmpty(vm.Entry));
@@ -133,7 +136,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
                 ExcludeMasks = ExcludedFileMasks,
                 MinFiles = MinimumFiles,
                 MinLines = MinimumLines,
-                Trim = TrimLines
+                Trim = TrimLines,
+                ResultSortKind = resultSortKind
             };
 
             access.CloseDialog(model, true);
@@ -236,6 +240,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
         {
             get => excludedFileMasks;
             set => Set(ref excludedFileMasks, () => ExcludedFileMasks, value);
+        }
+        public DuplicatedLinesResultSortKind ResultSortKind
+        {
+            get => resultSortKind; 
+            set => Set(ref resultSortKind, () => ResultSortKind, value);
         }
     }
 }

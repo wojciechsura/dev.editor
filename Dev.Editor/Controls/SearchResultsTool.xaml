@@ -58,7 +58,7 @@
                         <DataTemplate DataType="{x:Type f:ReplaceResultViewModel}">
                             <StackPanel Orientation="Horizontal">
                                 <CheckBox IsChecked="{Binding IsChecked}" />
-                                <TextBlock MinWidth="64" Text="{Binding Location}" />
+                                <TextBlock MinWidth="64" Margin="2" Text="{Binding Location}" />
                                 <TextBlock Margin="2">
                                     <Run Text="{Binding Before, Mode=OneWay}" /><Run Text="{Binding Match, Mode=OneWay}" Background="{StaticResource TextEmphasizeBackgroundBrush}" /><Run Text="{Binding After, Mode=OneWay}" />   <Run>→</Run>   <Run Text="{Binding Before, Mode=OneWay}" /><Run Text="{Binding ReplaceWith, Mode=OneWay}" Background="{StaticResource TextReplaceBackgroundBrush}" /><Run Text="{Binding After, Mode=OneWay}" />
                                 </TextBlock>
@@ -67,7 +67,7 @@
 
                         <DataTemplate DataType="{x:Type f:SearchResultViewModel}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock MinWidth="64" Text="{Binding Location}" />
+                                <TextBlock MinWidth="64" Margin="2" Text="{Binding Location}" />
                                 <TextBlock Margin="2">
                                     <Run Text="{Binding Before, Mode=OneWay}" /><Run Text="{Binding Match, Mode=OneWay}" Background="{StaticResource TextEmphasizeBackgroundBrush}" /><Run Text="{Binding After, Mode=OneWay}" />
                                 </TextBlock>
@@ -78,31 +78,31 @@
 
                         <HierarchicalDataTemplate DataType="{x:Type dl:DuplicatedLinesResultViewModel}" ItemsSource="{Binding Cases}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock Text="{x:Static p:Strings.BottomTool_SearchResults_DuplicatedLinesHeader}" />
-                                <TextBlock>
-                                    <Run Text="{Binding TotalLines, Mode=OneWay}" FontWeight="Bold" />
+                                <TextBlock Text="{x:Static p:Strings.BottomTool_SearchResults_DuplicatedLinesHeader}" Margin="2" />
+                                <TextBlock Margin="2">
+                                    <Run Text="{Binding TotalLines, Mode=OneWay}" FontWeight="Bold"/>
                                 </TextBlock>
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
                         <HierarchicalDataTemplate DataType="{x:Type dl:DuplicatedLineCaseViewModel}" ItemsSource="{Binding Details}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock>
-                                    <Run Text="Fragment duplicated in " /><Run Text="{Binding Files, Mode=OneWay}" FontWeight="Bold" /><Run Text=" files (line count: " /><Run Text="{Binding Lines, Mode=OneWay}" FontWeight="Bold" /><Run Text=")" />
+                                <TextBlock Margin="2">
+                                    <Run Text="{x:Static p:Strings.BottomTool_SearchResults_FragmentDuplicatedIn}" /><Run Text="{Binding Files, Mode=OneWay}" FontWeight="Bold" /><Run Text="{x:Static p:Strings.BottomTool_SearchResults_FragmentDuplicatedIn2}" /><Run Text="{Binding Lines, Mode=OneWay}" FontWeight="Bold" /><Run Text="{x:Static p:Strings.BottomTool_SearchResults_FragmentDuplicatedIn3}" />
                                 </TextBlock>
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
                         <DataTemplate DataType="{x:Type dl:FileReferenceViewModel}">
                             <StackPanel Orientation="Horizontal">
-                                <TextBlock>
-                                    <Run Text="File: " /><Run Text="{Binding Path, Mode=OneWay}" FontWeight="Bold" /><Run Text=", lines "/><Run Text="{Binding StartLine, Mode=OneWay}" FontWeight="Bold"/><Run Text=" through "/><Run Text="{Binding EndLine, Mode=OneWay}" FontWeight="Bold"/>
+                                <TextBlock Margin="2">
+                                    <Run Text="{x:Static p:Strings.BottomTool_SearchResults_FileReference1}" /><Run Text="{Binding Path, Mode=OneWay}" FontWeight="Bold" /><Run Text="{x:Static p:Strings.BottomTool_SearchResults_FileReference2}"/><Run Text="{Binding StartLine, Mode=OneWay}" FontWeight="Bold"/><Run Text=" through "/><Run Text="{Binding EndLine, Mode=OneWay}" FontWeight="Bold"/>
                                 </TextBlock>
                             </StackPanel>
                         </DataTemplate>
 
                         <DataTemplate DataType="{x:Type dl:DuplicatedContentPreviewViewModel}">
-                            <TextBlock FontFamily="Consolas" Text="{Binding Text}"></TextBlock>
+                            <TextBlock FontFamily="Consolas" Text="{Binding Text}" Margin="2"/>
                         </DataTemplate>
                         
                     </ResourceDictionary>

@@ -2,7 +2,6 @@
 using Dev.Editor.Resources;
 using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
-using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
-using Microsoft.WindowsAPICodePack.Dialogs;
 using System.ComponentModel;
 using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
+using Microsoft.Win32;
 
 namespace Dev.Editor.Services.Dialogs
 {
@@ -126,15 +125,24 @@ namespace Dev.Editor.Services.Dialogs
 
         public (bool result, string newLocation) ShowChooseFolderDialog(string location)
         {
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                return (true, dialog.SelectedPath);
+            else
+                return (false, null);            
+
+            /*
             var dialog = new CommonOpenFileDialog();
             dialog.IsFolderPicker = true;
             dialog.InitialDirectory = location;
+            
             CommonFileDialogResult result = dialog.ShowDialog();
 
             if (result == CommonFileDialogResult.Ok)
                 return (true, dialog.FileName);
             else
                 return (false, null);
+            */
         }
 
         public void ShowProgressDialog(string operationTitle, BackgroundWorker worker)

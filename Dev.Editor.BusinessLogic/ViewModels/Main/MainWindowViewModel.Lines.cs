@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Dev.Editor.BusinessLogic.Types.UI;
 using Dev.Editor.BusinessLogic.Types.BottomTools;
+using Dev.Editor.BusinessLogic.Types.DuplicatedLines;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -21,10 +22,29 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         {
             var result = e.Result as DuplicatedLinesResult;
 
-            List<DuplicatedLinesResultEntry> sortedEntries = result.Entries
-                .OrderByDescending(entry => entry.Lines.Count)
-                .ThenByDescending(entry => entry.Filenames.Count)
-                .ToList();
+            List<DuplicatedLinesResultEntry> sortedEntries = null;
+
+            switch (result.Config.ResultSortKind)
+            {
+                case DuplicatedLinesResultSortKind.FirstByLinesThenByFiles:
+                    {
+                        sortedEntries = result.Entries
+                            .OrderByDescending(entry => entry.Lines.Count)
+                            .ThenByDescending(entry => entry.Filenames.Count)
+                            .ToList();
+                        break;
+                    }
+                case DuplicatedLinesResultSortKind.FirstByFilesThenByLines:
+                    {
+                        sortedEntries = result.Entries
+                            .OrderByDescending(entry => entry.Filenames.Count)
+                            .ThenByDescending(entry => entry.Lines.Count)
+                            .ToList();
+                        break;
+                    }
+                default:
+                    throw new InvalidEnumArgumentException("Unsupported result sorting kind!");
+            }
 
             List<DuplicatedLineCaseViewModel> cases = new List<DuplicatedLineCaseViewModel>();
 

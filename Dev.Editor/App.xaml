@@ -38,6 +38,15 @@
             <Thickness x:Key="DialogItemsLeftMargin" Left="4" />
             <Thickness x:Key="DialogItemsRightMargin" Right="4" />
 
+            <Thickness x:Key="DialogItemsExceptBottomMargin" Left="4" Top="4" Right="4" Bottom="0" />
+            <Thickness x:Key="DialogItemsExceptTopMargin" Left="4" Top="0" Right="4" Bottom="4" />
+            <Thickness x:Key="DialogItemsExceptLeftMargin" Left="0" Top="4" Right="4" Bottom="4" />
+            <Thickness x:Key="DialogItemsExceptRightMargin" Left="4" Top="4" Right="0" Bottom="4" />
+
+            <Thickness x:Key="DialogItemsMargin" Left="4" Top="4" Right="4" Bottom="4" />
+
+            <Thickness x:Key="DefaultMargin">4</Thickness>
+
             <Thickness x:Key="HalfMargin" Left="3" Right="3" Top="3" Bottom="3" />
 
             <!-- Colors -->
@@ -99,7 +108,15 @@
 
             <Style TargetType="Button">
                 <Style.Setters>
-                    <Setter Property="Height" Value="23" />
+                    <Setter Property="MinHeight" Value="23" />
+                    <Setter Property="Padding" Value="10,2" />
+                </Style.Setters>
+            </Style>
+
+            <Style TargetType="Button" x:Key="ImageButton">
+                <Style.Setters>
+                    <Setter Property="Width" Value="24" />
+                    <Setter Property="Height" Value="24" />
                 </Style.Setters>
             </Style>
             

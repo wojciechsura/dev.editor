@@ -226,7 +226,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
             if (CancellationPending)
                 return;
 
-            e.Result = new DuplicatedLinesResult(result);
+            e.Result = new DuplicatedLinesResult(result, config);
         }
 
         // Public methods -----------------------------------------------------
