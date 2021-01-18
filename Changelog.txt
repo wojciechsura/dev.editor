@@ -1,3 +1,7 @@
+Version 1.0.2
+(date pending)
++ Added searching for duplicated lines in files
+
 Version 1.0.1
 13.11.2020
 + Added shortcuts for  Find in files and Close Current Document
