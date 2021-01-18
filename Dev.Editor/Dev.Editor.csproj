@@ -96,6 +96,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Behaviors\DropDownButtonBehavior.cs" />
     <Compile Include="Controls\DocumentTabHeader.cs" />
     <Compile Include="Controls\ProjectTool.xaml.cs">
       <DependentUpon>ProjectTool.xaml</DependentUpon>
@@ -112,12 +113,16 @@
     <Compile Include="DiffConfigDialog.xaml.cs">
       <DependentUpon>DiffConfigDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="DuplicatedLinesFinderConfigWindow.xaml.cs">
+      <DependentUpon>DuplicatedLinesFinderConfigWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="EscapeConfigDialog.xaml.cs">
       <DependentUpon>EscapeConfigDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="ExceptionWindow.xaml.cs">
       <DependentUpon>ExceptionWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\ListBoxHelper.cs" />
     <Compile Include="Helpers\TreeViewHelper.cs" />
     <Compile Include="Models\ArgumentInfo.cs" />
     <Compile Include="NameDialog.xaml.cs">
@@ -190,6 +195,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="DiffConfigDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="DuplicatedLinesFinderConfigWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -493,6 +502,9 @@
   <ItemGroup>
     <Resource Include="Resources\Images\Down16.png" />
     <Resource Include="Resources\Images\Down32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Add16.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

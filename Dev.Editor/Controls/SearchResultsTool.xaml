@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:Dev.Editor.Controls"
              xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
              xmlns:f="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.FindInFiles;assembly=Dev.Editor.BusinessLogic"
+             xmlns:dl="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.DuplicatedLines;assembly=Dev.Editor.BusinessLogic"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" DataContextChanged="HandleDataContextChanged">
     <local:ToolContainer Header="{x:Static p:Strings.BottomTool_SearchResults_Title}" CloseCommand="{Binding CloseBottomToolsCommand}">
@@ -18,7 +19,8 @@
                     <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace16.png" />
                 </Button>
             </StackPanel>
-            <TreeView ItemsSource="{Binding SearchResults}" MouseDoubleClick="HandleTreeDoubleClick">
+            <TreeView ItemsSource="{Binding SearchResults}" MouseDoubleClick="HandleTreeDoubleClick" VirtualizingStackPanel.IsVirtualizing="True"
+                VirtualizingStackPanel.VirtualizationMode="Recycling">
                 <TreeView.Resources>
                     <ResourceDictionary>
                         <Style TargetType="TreeViewItem">
@@ -28,6 +30,8 @@
                             </Style.Setters>
                         </Style>
 
+                        <!-- Search results -->
+                        
                         <HierarchicalDataTemplate DataType="{x:Type f:SearchResultsViewModel}" ItemsSource="{Binding Results}">
                             <StackPanel Orientation="Horizontal">
                                 <Image Source="{Binding Icon}" Margin="2" />
@@ -69,6 +73,38 @@
                                 </TextBlock>
                             </StackPanel>
                         </DataTemplate>
+                        
+                        <!-- Duplicated line results -->
+
+                        <HierarchicalDataTemplate DataType="{x:Type dl:DuplicatedLinesResultViewModel}" ItemsSource="{Binding Cases}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock Text="{x:Static p:Strings.BottomTool_SearchResults_DuplicatedLinesHeader}" />
+                                <TextBlock>
+                                    <Run Text="{Binding TotalLines, Mode=OneWay}" FontWeight="Bold" />
+                                </TextBlock>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <HierarchicalDataTemplate DataType="{x:Type dl:DuplicatedLineCaseViewModel}" ItemsSource="{Binding Details}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock>
+                                    <Run Text="Fragment duplicated in " /><Run Text="{Binding Files, Mode=OneWay}" FontWeight="Bold" /><Run Text=" files (line count: " /><Run Text="{Binding Lines, Mode=OneWay}" FontWeight="Bold" /><Run Text=")" />
+                                </TextBlock>
+                            </StackPanel>
+                        </HierarchicalDataTemplate>
+
+                        <DataTemplate DataType="{x:Type dl:FileReferenceViewModel}">
+                            <StackPanel Orientation="Horizontal">
+                                <TextBlock>
+                                    <Run Text="File: " /><Run Text="{Binding Path, Mode=OneWay}" FontWeight="Bold" /><Run Text=", lines "/><Run Text="{Binding StartLine, Mode=OneWay}" FontWeight="Bold"/><Run Text=" through "/><Run Text="{Binding EndLine, Mode=OneWay}" FontWeight="Bold"/>
+                                </TextBlock>
+                            </StackPanel>
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type dl:DuplicatedContentPreviewViewModel}">
+                            <TextBlock FontFamily="Consolas" Text="{Binding Text}"></TextBlock>
+                        </DataTemplate>
+                        
                     </ResourceDictionary>
                 </TreeView.Resources>
             </TreeView>

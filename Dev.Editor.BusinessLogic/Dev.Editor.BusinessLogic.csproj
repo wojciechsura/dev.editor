@@ -44,6 +44,9 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Management.Automation, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.PowerShell.5.ReferenceAssemblies.1.1.0\lib\net4\System.Management.Automation.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
     </Reference>
@@ -103,6 +106,10 @@
     <Compile Include="Models\Documents\TextDocumentState.cs" />
     <Compile Include="Models\Documents\TextEditorState.cs" />
     <Compile Include="Models\Documents\FoldSectionState.cs" />
+    <Compile Include="Models\DuplicatedLines\DuplicatedLinesFileInfo.cs" />
+    <Compile Include="Models\DuplicatedLines\DuplicatedLinesFinderConfig.cs" />
+    <Compile Include="Models\DuplicatedLines\DuplicatedLinesResult.cs" />
+    <Compile Include="Models\DuplicatedLines\DuplicatedLinesResultEntry.cs" />
     <Compile Include="Models\Events\ApplicationActivatedEvent.cs" />
     <Compile Include="Models\Events\ApplicationShutdownEvent.cs" />
     <Compile Include="Models\Events\BaseEvent.cs" />
@@ -181,11 +188,14 @@
     <Compile Include="ViewModels\Configuration\IConfigurationWindowAccess.cs" />
     <Compile Include="ViewModels\Configuration\SystemConfigurationViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\DiffConfigDialogViewModel.cs" />
+    <Compile Include="ViewModels\Dialogs\DuplicatedLines\DuplicatedLinesFinderConfigDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\EscapeConfigDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\IDiffConfigDialogAccess.cs" />
+    <Compile Include="ViewModels\Dialogs\DuplicatedLines\IDuplicatedLinesFinderConfigDialogAccess.cs" />
     <Compile Include="ViewModels\Dialogs\IEscapeConfigDialogAccess.cs" />
     <Compile Include="ViewModels\Dialogs\NameDialogViewModel.cs" />
     <Compile Include="ViewModels\Dialogs\INameDialogAccess.cs" />
+    <Compile Include="ViewModels\Dialogs\DuplicatedLines\SourceEntry.cs" />
     <Compile Include="ViewModels\Document\BaseDocumentViewModel.cs" />
     <Compile Include="ViewModels\Document\BinDocumentViewModel.cs" />
     <Compile Include="ViewModels\Document\IBinEditorAccess.cs" />
@@ -194,6 +204,11 @@
     <Compile Include="ViewModels\Document\HexDocumentViewModel.cs" />
     <Compile Include="ViewModels\Document\IDocumentHandler.cs" />
     <Compile Include="ViewModels\Document\ITextEditorAccess.cs" />
+    <Compile Include="ViewModels\DuplicatedLines\BaseDuplicatedLineDetailsViewModel.cs" />
+    <Compile Include="ViewModels\DuplicatedLines\DuplicatedContentPreviewViewModel.cs" />
+    <Compile Include="ViewModels\DuplicatedLines\DuplicatedLineCaseViewModel.cs" />
+    <Compile Include="ViewModels\DuplicatedLines\DuplicatedLinesResultViewModel.cs" />
+    <Compile Include="ViewModels\DuplicatedLines\FileReferenceViewModel.cs" />
     <Compile Include="ViewModels\ExceptionWindow\ExceptionWindowViewModel.cs" />
     <Compile Include="ViewModels\ExceptionWindow\IExceptionWindowAccess.cs" />
     <Compile Include="ViewModels\FindInFiles\BaseFilesystemSearchResultViewModel.cs" />
@@ -203,6 +218,9 @@
     <Compile Include="ViewModels\Main\Documents\DocumentsManager.cs" />
     <Compile Include="Types\Main\IReadOnlyObservableCollection.cs" />
     <Compile Include="Types\Main\TabDocumentCollection.cs" />
+    <Compile Include="ViewModels\Main\DuplicatedLines\DuplicatedLinesWorker.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="ViewModels\Main\IMainWindowAccess.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.Commands.cs" />
     <Compile Include="ViewModels\Main\MainWindowViewModel.cs" />
@@ -228,7 +246,7 @@
     <Compile Include="ViewModels\Main\TextDocumentPropertyWatchCondition.cs" />
     <Compile Include="ViewModels\ProgressWindow\IProgressWindowAccess.cs" />
     <Compile Include="ViewModels\ProgressWindow\ProgressWindowViewModel.cs" />
-    <Compile Include="ViewModels\FindInFiles\BaseSearchResultViewModel.cs" />
+    <Compile Include="ViewModels\BottomTools\SearchResults\BaseSearchResultViewModel.cs" />
     <Compile Include="ViewModels\FindInFiles\FileSearchResultViewModel.cs" />
     <Compile Include="ViewModels\FindInFiles\FolderSearchResultViewModel.cs" />
     <Compile Include="ViewModels\Projects\BaseProjectItemViewModel.cs" />

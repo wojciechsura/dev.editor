@@ -12,6 +12,7 @@ using System.Windows;
 using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
 using Microsoft.WindowsAPICodePack.Dialogs;
 using System.ComponentModel;
+using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
 
 namespace Dev.Editor.Services.Dialogs
 {
@@ -47,6 +48,18 @@ namespace Dev.Editor.Services.Dialogs
                 return new OpenDialogResult(true, dialog.FileName);
             else
                 return new OpenDialogResult(false, null);
+        }
+
+        public (bool result, List<string> files) ShowOpenFilesDialog(string filter = null, string title = null, string path = null)
+        {
+            OpenFileDialog dialog = new OpenFileDialog();
+            SetupFileDialog(dialog, filter, title, null, path);
+            dialog.Multiselect = true;
+
+            if (dialog.ShowDialog() == true)
+                return (true, dialog.FileNames.ToList());
+            else
+                return (false, null);
         }
 
         public SearchReplaceWindowViewModel RequestSearchReplace(ISearchHost searchHost)
@@ -128,6 +141,15 @@ namespace Dev.Editor.Services.Dialogs
         {
             var progressWindow = new ProgressWindow(operationTitle, worker);
             progressWindow.ShowDialog();
+        }
+
+        public (bool, DuplicatedLinesFinderConfig) ShowDuplicatedLinesFinderConfigDialog()
+        {
+            var dialog = new DuplicatedLinesFinderConfigDialog();
+            if (dialog.ShowDialog() == true)
+                return (true, dialog.Result);
+            else
+                return (false, null);
         }
     }
 }

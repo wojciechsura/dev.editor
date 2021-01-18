@@ -1114,4 +1114,34 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Home.Project.Open" xml:space="preserve">
     <value>Open folder...</value>
   </data>
+  <data name="Ribbon.Lines.Tools.FindDuplicatedLines" xml:space="preserve">
+    <value>Find duplicated lines</value>
+  </data>
+  <data name="Ribbon.Lines.Group.Tools" xml:space="preserve">
+    <value>Tools</value>
+  </data>
+  <data name="Operation.SearchingForDuplicatedLines" xml:space="preserve">
+    <value>Searching for duplicated lines</value>
+  </data>
+  <data name="FindDuplicatedLines.FileLoadProgress" xml:space="preserve">
+    <value>Loading lines from {0}...</value>
+  </data>
+  <data name="FindDuplicatedLines.AnalyzingProgress" xml:space="preserve">
+    <value>Analyzing line {0} from {1}...</value>
+  </data>
+  <data name="Message.MissingDirectoryPartForPath" xml:space="preserve">
+    <value>Missing directory part for path: {0}</value>
+  </data>
+  <data name="Message.MaskNotAllowedInDirectoryForPath" xml:space="preserve">
+    <value>Mask not allowed in directory part for path: {0}</value>
+  </data>
+  <data name="Message.DirectoryDoesNotExistsForPath" xml:space="preserve">
+    <value>Directory does not exists for path: {0}</value>
+  </data>
+  <data name="Message.FailedToFindFiles" xml:space="preserve">
+    <value>Failed to find files in path {0}. Error: {1}</value>
+  </data>
+  <data name="BottomTool.SearchResults.DuplicatedLinesHeader" xml:space="preserve">
+    <value>Search results for duplicated lines. Total number of blocks: </value>
+  </data>
 </root>

@@ -65,6 +65,7 @@ using System;
 using Dev.Editor.BusinessLogic.Services.AppVersion;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.Project;
 using Dev.Editor.BusinessLogic.ViewModels.Main.Projects;
+using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -1080,6 +1081,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             SortLinesDescendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Ordering_SortDescending, "SortDescending16.png", obj => DoSortDescending(), documentIsTextCondition);
             RemoveEmptyLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveEmptyLines, "DeleteLine16.png", obj => DoRemoveEmptyLines(), documentIsTextCondition);
             RemoveWhitespaceLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveWhitespaceLines, "DeleteLine16.png", obj => DoRemoveWhitespaceLines(), documentIsTextCondition);
+            FindDuplicatedLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Tools_FindDuplicatedLines, "Compare16.png", obj => DoFindDuplicatedLines());
 
             LowercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Transform_Case_Lowercase, "Case16.png", obj => DoLowercase(), documentIsTextCondition);
             UppercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Transform_Case_Uppercase, "Case16.png", obj => DoUppercase(), documentIsTextCondition);

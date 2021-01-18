@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BusinessLogic.ViewModels.FindInFiles
+namespace Dev.Editor.BusinessLogic.ViewModels.DuplicatedLines
 {
-    public abstract class BaseFilesystemSearchResultViewModel : BaseSearchResultViewModel
+    public class BaseDuplicatedLineDetailsViewModel : BaseSearchResultViewModel
     {
-        public abstract int Count { get; }
+
     }
 }

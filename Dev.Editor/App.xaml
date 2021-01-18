@@ -32,7 +32,12 @@
             <!-- Layout -->
             
             <Thickness x:Key="DialogWindowPadding" Top="10" Left="10" Right="10" Bottom="10" />
-            <Thickness x:Key="DialogItemsVMargin" Bottom="4" />
+            
+            <Thickness x:Key="DialogItemsBottomMargin" Bottom="4" />
+            <Thickness x:Key="DialogItemsTopMargin" Top="4" />
+            <Thickness x:Key="DialogItemsLeftMargin" Left="4" />
+            <Thickness x:Key="DialogItemsRightMargin" Right="4" />
+
             <Thickness x:Key="HalfMargin" Left="3" Right="3" Top="3" Bottom="3" />
 
             <!-- Colors -->

@@ -1114,4 +1114,34 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Home.Project.Open" xml:space="preserve">
     <value>Otwórz folder...</value>
   </data>
+  <data name="Ribbon.Lines.Tools.FindDuplicatedLines" xml:space="preserve">
+    <value>Znajdź powielone linie</value>
+  </data>
+  <data name="Ribbon.Lines.Group.Tools" xml:space="preserve">
+    <value>Narzędzia</value>
+  </data>
+  <data name="Operation.SearchingForDuplicatedLines" xml:space="preserve">
+    <value>Wyszukiwanie powielonych linii</value>
+  </data>
+  <data name="FindDuplicatedLines.FileLoadProgress" xml:space="preserve">
+    <value>Ładuję linie z pliku {0}...</value>
+  </data>
+  <data name="FindDuplicatedLines.AnalyzingProgress" xml:space="preserve">
+    <value>Analizuję linię {0} z {1}...</value>
+  </data>
+  <data name="Message.MissingDirectoryPartForPath" xml:space="preserve">
+    <value>Brakuje pełnej ścieżki dla: {0}</value>
+  </data>
+  <data name="Message.MaskNotAllowedInDirectoryForPath" xml:space="preserve">
+    <value>Znaki wieloznaczne nie są dozwolone w ścieżce dla: {0}</value>
+  </data>
+  <data name="Message.DirectoryDoesNotExistsForPath" xml:space="preserve">
+    <value>Ścieżka nie istnieje dla: {0}</value>
+  </data>
+  <data name="Message.FailedToFindFiles" xml:space="preserve">
+    <value>Nie udało się znaleźć plików dla ścieżki {0}. Błąd: {1}</value>
+  </data>
+  <data name="BottomTool.SearchResults.DuplicatedLinesHeader" xml:space="preserve">
+    <value>Wyniki wyszukiwania powielonych linii. Liczba znalezionych bloków: </value>
+  </data>
 </root>

@@ -747,6 +747,16 @@
 
                 </f:RibbonGroupBox>
 
+                <!-- Tools -->
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Lines_Group_Tools}">
+                    
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Lines_Tools_FindDuplicatedLines}" Command="{Binding FindDuplicatedLinesCommand}"
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Compare32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Compare16.png" />
+
+                </f:RibbonGroupBox>
+                
             </f:RibbonTabItem>
 
             <!-- Text tab -->

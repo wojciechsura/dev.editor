@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Dev.Editor.BusinessLogic.ViewModels.FindInFiles
+namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 {
     public class BaseSearchResultViewModel : BaseViewModel
     {
@@ -18,7 +18,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.FindInFiles
             isExpanded = true;
         }
 
-        public bool IsSelected 
+        public bool IsSelected
         {
             get => isSelected;
             set => Set(ref isSelected, () => IsSelected, value);

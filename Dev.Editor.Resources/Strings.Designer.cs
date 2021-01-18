@@ -127,6 +127,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search results for duplicated lines. Total number of blocks: .
+        /// </summary>
+        public static string BottomTool_SearchResults_DuplicatedLinesHeader {
+            get {
+                return ResourceManager.GetString("BottomTool.SearchResults.DuplicatedLinesHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search results for .
         /// </summary>
         public static string BottomTool_SearchResults_SearchResultsFor {
@@ -703,6 +712,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Analyzing line {0} from {1}....
+        /// </summary>
+        public static string FindDuplicatedLines_AnalyzingProgress {
+            get {
+                return ResourceManager.GetString("FindDuplicatedLines.AnalyzingProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Loading lines from {0}....
+        /// </summary>
+        public static string FindDuplicatedLines_FileLoadProgress {
+            get {
+                return ResourceManager.GetString("FindDuplicatedLines.FileLoadProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Processing directory {0}, files found so far: {1}.
         /// </summary>
         public static string FindInFiles_ProcessingDirectory {
@@ -898,6 +925,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Directory does not exists for path: {0}.
+        /// </summary>
+        public static string Message_DirectoryDoesNotExistsForPath {
+            get {
+                return ResourceManager.GetString("Message.DirectoryDoesNotExistsForPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File {0} was deleted. Do you want to keep it in the editor?.
         /// </summary>
         public static string Message_DocumentDeleted {
@@ -990,6 +1026,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Failed to find files in path {0}. Error: {1}.
+        /// </summary>
+        public static string Message_FailedToFindFiles {
+            get {
+                return ResourceManager.GetString("Message.FailedToFindFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Failed to unescape string!.
         /// </summary>
         public static string Message_FailedToUnescapeString {
@@ -1040,6 +1085,24 @@ namespace Dev.Editor.Resources {
         public static string Message_LocationInvalid {
             get {
                 return ResourceManager.GetString("Message.LocationInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mask not allowed in directory part for path: {0}.
+        /// </summary>
+        public static string Message_MaskNotAllowedInDirectoryForPath {
+            get {
+                return ResourceManager.GetString("Message.MaskNotAllowedInDirectoryForPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Missing directory part for path: {0}.
+        /// </summary>
+        public static string Message_MissingDirectoryPartForPath {
+            get {
+                return ResourceManager.GetString("Message.MissingDirectoryPartForPath", resourceCulture);
             }
         }
         
@@ -1320,6 +1383,15 @@ namespace Dev.Editor.Resources {
         public static string OpenBinaryFile_Title {
             get {
                 return ResourceManager.GetString("OpenBinaryFile.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Searching for duplicated lines.
+        /// </summary>
+        public static string Operation_SearchingForDuplicatedLines {
+            get {
+                return ResourceManager.GetString("Operation.SearchingForDuplicatedLines", resourceCulture);
             }
         }
         
@@ -1702,6 +1774,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Tools.
+        /// </summary>
+        public static string Ribbon_Lines_Group_Tools {
+            get {
+                return ResourceManager.GetString("Ribbon.Lines.Group.Tools", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Sort ascending.
         /// </summary>
         public static string Ribbon_Lines_Ordering_SortAscending {
@@ -1716,6 +1797,15 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Lines_Ordering_SortDescending {
             get {
                 return ResourceManager.GetString("Ribbon.Lines.Ordering.SortDescending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Find duplicated lines.
+        /// </summary>
+        public static string Ribbon_Lines_Tools_FindDuplicatedLines {
+            get {
+                return ResourceManager.GetString("Ribbon.Lines.Tools.FindDuplicatedLines", resourceCulture);
             }
         }
         

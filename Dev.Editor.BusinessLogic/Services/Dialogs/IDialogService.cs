@@ -1,4 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Dialogs;
+using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
 using System;
 using System.Collections.Generic;
@@ -11,8 +12,11 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
 {
     public interface IDialogService
     {
+        // TODO refactor to multiple returned values
         OpenDialogResult ShowOpenDialog(string filter = null, string title = null, string filename = null, string path = null);
         SaveDialogResult ShowSaveDialog(string filter = null, string title = null, string filename = null, string path = null);
+        (bool result, List<string> files) ShowOpenFilesDialog(string filter = null, string title = null, string path = null);
+
         void ShowConfigurationDialog();
 
         SearchReplaceWindowViewModel RequestSearchReplace(ISearchHost searchHost);
@@ -22,5 +26,6 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
         void ShowExceptionDialog(Exception e);
         (bool result, string newLocation) ShowChooseFolderDialog(string location);
         void ShowProgressDialog(string operationTitle, BackgroundWorker worker);
+        (bool, DuplicatedLinesFinderConfig) ShowDuplicatedLinesFinderConfigDialog();
     }
 }

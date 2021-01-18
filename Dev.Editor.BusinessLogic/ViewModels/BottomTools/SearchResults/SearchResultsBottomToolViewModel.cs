@@ -13,6 +13,7 @@ using Dev.Editor.BusinessLogic.ViewModels.FindInFiles;
 using Spooksoft.VisualStateManager.Conditions;
 using System.Windows.Input;
 using Spooksoft.VisualStateManager.Commands;
+using Dev.Editor.BusinessLogic.ViewModels.DuplicatedLines;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 {
@@ -26,7 +27,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
         private readonly BaseCondition resultsNonEmptyCondition;
         private readonly BaseCondition resultsAreReplaceCondition;
 
-        private SearchResultsViewModel searchResults;
+        private BaseSearchResultViewModel searchResults;
 
         private void DoClearSearchResults()
         {
@@ -63,9 +64,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             {
                 searchResultsHandler.OpenFileSearchResult(searchResult.FullPath, searchResult.Line, searchResult.Column, searchResult.Length);
             }
+            else if (selectedResult is FileReferenceViewModel fileRef)
+            {
+                searchResultsHandler.OpenFileSearchResult(fileRef.Path, fileRef.StartLine, 0, 0);
+            }
         }
 
-        public void SetResults(SearchResultsViewModel results)
+        public void SetResults(BaseSearchResultViewModel results)
         {
             this.searchResults = results;
             OnPropertyChanged(() => SearchResults);
@@ -77,7 +82,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 
         public override string Uid => SearchResultsUid;
 
-        public IEnumerable<SearchResultsViewModel> SearchResults
+        public IEnumerable<BaseSearchResultViewModel> SearchResults
         {
             get 
             { 
