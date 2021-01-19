@@ -457,7 +457,7 @@ namespace Dev.Editor
 
         void IMainWindowAccess.WhenUIReady(Action action)
         {
-            Dispatcher.BeginInvoke(action, DispatcherPriority.Render);
+            Dispatcher.BeginInvoke(action, DispatcherPriority.ApplicationIdle);
         }
 
         // Public methods -----------------------------------------------------

@@ -349,25 +349,29 @@ namespace Dev.Editor.Controls
                     // that text editor receives focus.
 
                     if (viewModel.ActiveEditor == BusinessLogic.Types.Document.Text.ActiveEditor.Primary)
-                        teEditor.Focus();
+                        Dispatcher.BeginInvoke(new Action(() => teEditor.Focus()), DispatcherPriority.ContextIdle);
                     else if (viewModel.ActiveEditor == BusinessLogic.Types.Document.Text.ActiveEditor.Secondary)
-                        teEditor2.Focus();
+                        Dispatcher.BeginInvoke(new Action(() => teEditor2.Focus()), DispatcherPriority.ContextIdle);
                     else
                         throw new InvalidOperationException("Unsupported active editor!");
                 }
             }
         }
 
+        private void SetViewModelActiveEditor(ActiveEditor editor)
+        {
+            if (viewModel.ActiveEditor != editor)
+                viewModel.ActiveEditor = editor;
+        }
+
         private void HandleEditorGotFocus(object sender, RoutedEventArgs e)
         {
-            if (viewModel.ActiveEditor != BusinessLogic.Types.Document.Text.ActiveEditor.Primary)
-                viewModel.ActiveEditor = BusinessLogic.Types.Document.Text.ActiveEditor.Primary;
+            SetViewModelActiveEditor(ActiveEditor.Primary);
         }
 
         private void HandleEditorGotFocus2(object sender, RoutedEventArgs e)
         {
-            if (viewModel.ActiveEditor != BusinessLogic.Types.Document.Text.ActiveEditor.Secondary)
-                viewModel.ActiveEditor = BusinessLogic.Types.Document.Text.ActiveEditor.Secondary;
+            SetViewModelActiveEditor(ActiveEditor.Secondary);
         }
 
         private void HandlePreviewKeyDown(object sender, KeyEventArgs e)
@@ -667,7 +671,6 @@ namespace Dev.Editor.Controls
         private void SetActiveEditor(TextEditor editor)
         {
             currentEditor = editor;
-
             UpdateSelectionInfo(currentEditor);
         }
 
