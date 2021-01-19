@@ -497,5 +497,9 @@
     <Resource Include="Resources\Images\Down16.png" />
     <Resource Include="Resources\Images\Down32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Duplicates16.png" />
+    <Resource Include="Resources\Images\Duplicates32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
