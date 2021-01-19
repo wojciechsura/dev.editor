@@ -1192,19 +1192,28 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="DuplicatedLinesFinderConfigWindow.Title" xml:space="preserve">
     <value>Konfiguracja wyszukiwania powielonych linii</value>
   </data>
-  <data name="BottomTool_SearchResults_FragmentDuplicatedIn" xml:space="preserve">
+  <data name="BottomTool.SearchResults.FragmentDuplicatedIn" xml:space="preserve">
     <value>Fragment powielony w </value>
   </data>
-  <data name="BottomTool_SearchResults_FragmentDuplicatedIn2" xml:space="preserve">
+  <data name="BottomTool.SearchResults.FragmentDuplicatedIn2" xml:space="preserve">
     <value> plikach (linii: </value>
   </data>
-  <data name="BottomTool_SearchResults_FragmentDuplicatedIn3" xml:space="preserve">
+  <data name="BottomTool.SearchResults.FragmentDuplicatedIn3" xml:space="preserve">
     <value>)</value>
   </data>
-  <data name="BottomTool_SearchResults_FileReference1" xml:space="preserve">
+  <data name="BottomTool.SearchResults.FileReference1" xml:space="preserve">
     <value>Plik: </value>
   </data>
-  <data name="BottomTool_SearchResults_FileReference2" xml:space="preserve">
+  <data name="BottomTool.SearchResults.FileReference2" xml:space="preserve">
     <value>, linie </value>
+  </data>
+  <data name="Message.InvalidLineRegularExpression" xml:space="preserve">
+    <value>Nieprawidłowe wyrażenie regularne wykluczania linii!</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.ExcludeLinesByRegularExpression" xml:space="preserve">
+    <value>Wyklucz linie według wyrażenia regularnego</value>
+  </data>
+  <data name="BottomTool.SearchResults.FileReference3" xml:space="preserve">
+    <value> do </value>
   </data>
 </root>

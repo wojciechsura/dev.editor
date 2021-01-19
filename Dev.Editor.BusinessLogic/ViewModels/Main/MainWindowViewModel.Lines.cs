@@ -122,7 +122,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoFindDuplicatedLines()
         {
-            (bool result, DuplicatedLinesFinderConfig config) = dialogService.ShowDuplicatedLinesFinderConfigDialog();
+            string defaultFolder = GetExplorerFolderIfPossible();
+            var model = new DuplicatedLinesFinderConfigModel(defaultFolder);
+
+            (bool result, DuplicatedLinesFinderConfig config) = dialogService.ShowDuplicatedLinesFinderConfigDialog(model);
 
             if (result)
             {

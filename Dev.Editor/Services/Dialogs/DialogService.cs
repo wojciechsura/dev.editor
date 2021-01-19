@@ -126,6 +126,7 @@ namespace Dev.Editor.Services.Dialogs
         public (bool result, string newLocation) ShowChooseFolderDialog(string location)
         {
             var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            dialog.SelectedPath = location;
             if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 return (true, dialog.SelectedPath);
             else
@@ -151,9 +152,9 @@ namespace Dev.Editor.Services.Dialogs
             progressWindow.ShowDialog();
         }
 
-        public (bool, DuplicatedLinesFinderConfig) ShowDuplicatedLinesFinderConfigDialog()
+        public (bool, DuplicatedLinesFinderConfig) ShowDuplicatedLinesFinderConfigDialog(DuplicatedLinesFinderConfigModel model)
         {
-            var dialog = new DuplicatedLinesFinderConfigDialog();
+            var dialog = new DuplicatedLinesFinderConfigDialog(model);
             if (dialog.ShowDialog() == true)
                 return (true, dialog.Result);
             else

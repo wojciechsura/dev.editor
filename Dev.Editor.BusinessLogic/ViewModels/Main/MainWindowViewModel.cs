@@ -729,15 +729,21 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoOpenProject()
         {
-            string startFolder = null;
-            if (this.sidePanelPlacement != SidePanelPlacement.Hidden)
-                startFolder = explorerToolViewModel.SelectedFolder.GetFullPath();
+            string startFolder = GetExplorerFolderIfPossible();
 
             (bool result, string location) = dialogService.ShowChooseFolderDialog(startFolder);
             if (result)
             {
                 projectManager.OpenProject(location);
             }
+        }
+
+        private string GetExplorerFolderIfPossible()
+        {
+            string startFolder = null;
+            if (this.sidePanelPlacement != SidePanelPlacement.Hidden)
+                startFolder = explorerToolViewModel.SelectedFolder.GetFullPath();
+            return startFolder;
         }
 
         // IDocumentHandler implementation ------------------------------------

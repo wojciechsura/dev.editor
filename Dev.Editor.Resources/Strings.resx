@@ -1192,19 +1192,28 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="DuplicatedLinesFinderConfigWindow.ByFileFirst" xml:space="preserve">
     <value>By file count, then by line count</value>
   </data>
-  <data name="BottomTool_SearchResults_FragmentDuplicatedIn" xml:space="preserve">
+  <data name="BottomTool.SearchResults.FragmentDuplicatedIn" xml:space="preserve">
     <value>Fragment duplicated in </value>
   </data>
-  <data name="BottomTool_SearchResults_FragmentDuplicatedIn2" xml:space="preserve">
+  <data name="BottomTool.SearchResults.FragmentDuplicatedIn2" xml:space="preserve">
     <value> files (line count: </value>
   </data>
-  <data name="BottomTool_SearchResults_FragmentDuplicatedIn3" xml:space="preserve">
+  <data name="BottomTool.SearchResults.FragmentDuplicatedIn3" xml:space="preserve">
     <value>)</value>
   </data>
-  <data name="BottomTool_SearchResults_FileReference1" xml:space="preserve">
+  <data name="BottomTool.SearchResults.FileReference1" xml:space="preserve">
     <value>File: </value>
   </data>
-  <data name="BottomTool_SearchResults_FileReference2" xml:space="preserve">
+  <data name="BottomTool.SearchResults.FileReference2" xml:space="preserve">
     <value>, lines </value>
+  </data>
+  <data name="Message.InvalidLineRegularExpression" xml:space="preserve">
+    <value>Invalid line exclusion regular expression!</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.ExcludeLinesByRegularExpression" xml:space="preserve">
+    <value>Exclude lines by regular expression</value>
+  </data>
+  <data name="BottomTool.SearchResults.FileReference3" xml:space="preserve">
+    <value> through </value>
   </data>
 </root>

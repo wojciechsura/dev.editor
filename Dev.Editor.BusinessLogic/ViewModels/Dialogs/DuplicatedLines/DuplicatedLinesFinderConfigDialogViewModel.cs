@@ -12,6 +12,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
@@ -22,7 +23,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
         private readonly IDuplicatedLinesFinderConfigDialogAccess access;
         private readonly IDialogService dialogService;
         private readonly IMessagingService messagingService;
-
+        private string defaultFolder;
         private string entry;
         private SourceEntry selectedEntry;
         private int minimumLines;
@@ -33,6 +34,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
         private readonly BaseCondition entryNotNullCondition;
         private readonly BaseCondition entrySelectedCondition;
         private DuplicatedLinesResultSortKind resultSortKind;
+        private string lineExclusionRegex;
 
         private void DoAddEntry()
         {
@@ -65,12 +67,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
 
         private void DoAddFolder()
         {
-            (bool result, string folder) = dialogService.ShowChooseFolderDialog(null);
+            (bool result, string folder) = dialogService.ShowChooseFolderDialog(defaultFolder);
             if (result)
             {
                 var newEntry = new SourceEntry(Path.Combine(folder, "*.*"));
                 Sources.Add(newEntry);
                 SelectedEntry = newEntry;
+
+                defaultFolder = folder;
             }
         }
 
@@ -92,12 +96,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
         }
 
         public DuplicatedLinesFinderConfigDialogViewModel(IDuplicatedLinesFinderConfigDialogAccess access,
+            DuplicatedLinesFinderConfigModel model,
             IDialogService dialogService, 
             IMessagingService messagingService)
         {
             this.access = access;
             this.dialogService = dialogService;
             this.messagingService = messagingService;
+            this.defaultFolder = model.DefaultFolder;
+
             minimumFiles = 2;
             minimumLines = 5;
             recursive = false;
@@ -130,6 +137,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
             if (!result)
                 return;
 
+            Regex lineRegex = null;
+            try
+            {
+                if (!string.IsNullOrEmpty(lineExclusionRegex))
+                    lineRegex = new Regex(lineExclusionRegex);
+            }
+            catch
+            {
+                messagingService.ShowError(Strings.Message_InvalidLineRegularExpression);
+                return;
+
+            }
+
             DuplicatedLinesFinderConfig model = new DuplicatedLinesFinderConfig
             {
                 SourcePaths = paths,
@@ -137,7 +157,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
                 MinFiles = MinimumFiles,
                 MinLines = MinimumLines,
                 Trim = TrimLines,
-                ResultSortKind = resultSortKind
+                ResultSortKind = resultSortKind,
+                LineExclusionRegex = lineRegex
             };
 
             access.CloseDialog(model, true);
@@ -228,6 +249,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
         {
             get => trimLines;
             set => Set(ref trimLines, () => TrimLines, value);
+        }
+
+        public string LineExclusionRegex
+        {
+            get => lineExclusionRegex;
+            set => Set(ref lineExclusionRegex, () => LineExclusionRegex, value);
         }
 
         public bool Recursive

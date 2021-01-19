@@ -26,6 +26,6 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
         void ShowExceptionDialog(Exception e);
         (bool result, string newLocation) ShowChooseFolderDialog(string location);
         void ShowProgressDialog(string operationTitle, BackgroundWorker worker);
-        (bool, DuplicatedLinesFinderConfig) ShowDuplicatedLinesFinderConfigDialog();
+        (bool, DuplicatedLinesFinderConfig) ShowDuplicatedLinesFinderConfigDialog(DuplicatedLinesFinderConfigModel model);
     }
 }

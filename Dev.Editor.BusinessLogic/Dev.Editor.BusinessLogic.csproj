@@ -108,6 +108,7 @@
     <Compile Include="Models\Documents\FoldSectionState.cs" />
     <Compile Include="Models\DuplicatedLines\DuplicatedLinesFileInfo.cs" />
     <Compile Include="Models\DuplicatedLines\DuplicatedLinesFinderConfig.cs" />
+    <Compile Include="Models\DuplicatedLines\DuplicatedLinesFinderConfigModel.cs" />
     <Compile Include="Models\DuplicatedLines\DuplicatedLinesResult.cs" />
     <Compile Include="Models\DuplicatedLines\DuplicatedLinesResultEntry.cs" />
     <Compile Include="Models\Events\ApplicationActivatedEvent.cs" />

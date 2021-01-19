@@ -96,7 +96,7 @@
                         <DataTemplate DataType="{x:Type dl:FileReferenceViewModel}">
                             <StackPanel Orientation="Horizontal">
                                 <TextBlock Margin="2">
-                                    <Run Text="{x:Static p:Strings.BottomTool_SearchResults_FileReference1}" /><Run Text="{Binding Path, Mode=OneWay}" FontWeight="Bold" /><Run Text="{x:Static p:Strings.BottomTool_SearchResults_FileReference2}"/><Run Text="{Binding StartLine, Mode=OneWay}" FontWeight="Bold"/><Run Text=" through "/><Run Text="{Binding EndLine, Mode=OneWay}" FontWeight="Bold"/>
+                                    <Run Text="{x:Static p:Strings.BottomTool_SearchResults_FileReference1}" /><Run Text="{Binding Path, Mode=OneWay}" FontWeight="Bold" /><Run Text="{x:Static p:Strings.BottomTool_SearchResults_FileReference2}"/><Run Text="{Binding StartLine, Mode=OneWay}" FontWeight="Bold"/><Run Text="{x:Static p:Strings.BottomTool_SearchResults_FileReference3}"/><Run Text="{Binding EndLine, Mode=OneWay}" FontWeight="Bold"/>
                                 </TextBlock>
                             </StackPanel>
                         </DataTemplate>

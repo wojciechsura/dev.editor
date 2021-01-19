@@ -92,8 +92,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
                 for (int lineIndex = 0; lineIndex < sourceLines.Length; lineIndex++)
                 {
                     totalLines++;
+                    
+                    if (config.LineExclusionRegex?.IsMatch(sourceLines[lineIndex]) ?? false)
+                        continue;
 
                     string line;
+
                     if (config.Trim)
                         line = sourceLines[lineIndex].Trim();
                     else

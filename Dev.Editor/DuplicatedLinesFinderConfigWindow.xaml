@@ -82,9 +82,11 @@
             </Grid>
         </GroupBox>
 
-        <GroupBox Grid.Column="1" Grid.Row="0" Header="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_Group_Analysis}" Margin="{StaticResource DialogItemsExceptBottomMargin}">
+        <GroupBox MinWidth="300" Grid.Column="1" Grid.Row="0" Header="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_Group_Analysis}" Margin="{StaticResource DialogItemsExceptBottomMargin}">
             <Grid Margin="{StaticResource DialogItemsMargin}">
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
@@ -105,8 +107,11 @@
                         VerticalAlignment="Center" PreviewTextInput="AcceptOnlyNumeric" MaxLength="4"
                         Text="{Binding MinimumFiles, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
 
-                <CheckBox Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_IgnoreTrailingWhitespace}"
-                        IsChecked="{Binding TrimLines, Mode=TwoWay}"/>
+                <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Content="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_ExcludeLinesByRegularExpression}" />
+                <TextBox Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Text="{Binding LineExclusionRegex, Mode=TwoWay}" Margin="{StaticResource DialogItemsExceptTopMargin}" />
+
+                <CheckBox Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Content="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_IgnoreTrailingWhitespace}"
+                        IsChecked="{Binding TrimLines, Mode=TwoWay}" Margin="{StaticResource DialogItemsMargin}"/>
             </Grid>
         </GroupBox>
 
@@ -118,7 +123,7 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="1*" />
                 </Grid.ColumnDefinitions>
                 <Label Grid.Row="0" Grid.Column="0" Content="{x:Static p:Strings.DuplicatedLinesFinderConfigWindow_ExcludedFilesMasks}" />
                 <TextBox Grid.Row="1" Grid.Column="0" HorizontalAlignment="Stretch" Margin="{StaticResource DialogItemsBottomMargin}" Text="{Binding ExcludedFileMasks, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
