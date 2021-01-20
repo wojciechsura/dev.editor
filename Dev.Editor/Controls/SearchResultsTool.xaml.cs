@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
 using System.Windows.Data;
 using System.Windows.Documents;
 using System.Windows.Input;
@@ -32,6 +33,15 @@ namespace Dev.Editor.Controls
         public SearchResultsTool()
         {
             InitializeComponent();
+
+            BindingOperations.SetBinding(filterPopup, Popup.IsOpenProperty, new Binding(nameof(ToggleButton.IsChecked))
+            {
+                Source = btnFilterPopup
+            });
+            BindingOperations.SetBinding(filterPopup, Popup.PlacementTargetProperty, new Binding()
+            {
+                Source = btnFilterPopup
+            });
         }
 
         private void HandleTreeDoubleClick(object sender, MouseButtonEventArgs e)

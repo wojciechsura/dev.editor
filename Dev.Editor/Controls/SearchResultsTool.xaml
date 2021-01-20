@@ -7,17 +7,31 @@
              xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
              xmlns:f="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.FindInFiles;assembly=Dev.Editor.BusinessLogic"
              xmlns:dl="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.DuplicatedLines;assembly=Dev.Editor.BusinessLogic"
+             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" DataContextChanged="HandleDataContextChanged">
     <local:ToolContainer Header="{x:Static p:Strings.BottomTool_SearchResults_Title}" CloseCommand="{Binding CloseBottomToolsCommand}">
         <DockPanel>
             <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                <Button Margin="4" Command="{Binding ClearSearchResultsCommand}" Style="{StaticResource ToolButton}">
+                <Button Margin="{StaticResource DialogItemsMargin}" Command="{Binding ClearSearchResultsCommand}" Style="{StaticResource ToolButton}">
                     <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Delete16.png" />
                 </Button>
-                <Button Margin="4" Command="{Binding PerformReplaceCommand}" Style="{StaticResource ToolButton}">
+                <Button Margin="{StaticResource DialogItemsExceptLeftMargin}" Command="{Binding PerformReplaceCommand}" Style="{StaticResource ToolButton}">
                     <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Replace16.png" />
                 </Button>
+                <Separator Margin="{StaticResource DialogItemsExceptLeftMargin}" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" DockPanel.Dock="Right" />
+                <Label Margin="{StaticResource DialogItemsExceptLeftMargin}" Content="{x:Static p:Strings.BottomTool_SearchResults_Filter}" />
+                <TextBox Width="200" Margin="{StaticResource DialogItemsVerticalOnlyMargin}" Text="{Binding Filter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, Delay=500}"/>
+                
+                <ToggleButton x:Name="btnFilterPopup" Margin="{StaticResource DialogItemsExceptLeftMargin}" Style="{StaticResource ToolButton}" FontFamily="Marlett" Content="6"/>
+                <Popup x:Name="filterPopup" StaysOpen="False" Placement="Bottom">
+                    <Border Background="{StaticResource ToolPopupBackgroundBrush}">
+                        <StackPanel Orientation="Vertical" Margin="{StaticResource DialogItemsMargin}">
+                            <CheckBox IsChecked="{Binding FilterCaseSensitive, Mode=TwoWay}" Margin="{StaticResource DialogItemsMargin}" Content="{x:Static p:Strings.BottomTool_SearchResults_FilterCaseSensitive}" />
+                            <CheckBox IsChecked="{Binding FilterExcludes, Mode=TwoWay}" Margin="{StaticResource DialogItemsExceptTopMargin}" Content="{x:Static p:Strings.BottomTool_SearchResults_FilterExcludeMatching}" />
+                        </StackPanel>
+                    </Border>
+                </Popup>
             </StackPanel>
             <TreeView ItemsSource="{Binding SearchResults}" MouseDoubleClick="HandleTreeDoubleClick" VirtualizingStackPanel.IsVirtualizing="True"
                 VirtualizingStackPanel.VirtualizationMode="Recycling">
@@ -27,6 +41,7 @@
                             <Style.Setters>
                                 <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                                 <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
+                                <Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             </Style.Setters>
                         </Style>
 
@@ -38,6 +53,7 @@
                                 <TextBlock Margin="2">
                                     <Run Text="{x:Static p:Strings.BottomTool_SearchResults_SearchResultsFor}" /><Run Text="{Binding SearchPattern, Mode=OneWay}" FontWeight="Bold" /><Run Text="{x:Static p:Strings.BottomTool_SeachResults_In}" /><Run Text="{Binding FullPath, Mode=OneWay}" FontWeight="Bold"/><Run Text=" (" /><Run Text="{Binding Count, Mode=OneWay}" /><Run Text=")" />
                                 </TextBlock>
+                                <TextBlock Margin="2" Text="{x:Static p:Strings.BottomTool_SearchResults_FilteredSuffix}" Visibility="{Binding IsFiltered, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
 
@@ -82,6 +98,7 @@
                                 <TextBlock Margin="2">
                                     <Run Text="{Binding TotalLines, Mode=OneWay}" FontWeight="Bold"/>
                                 </TextBlock>
+                                <TextBlock Margin="2" Text="{x:Static p:Strings.BottomTool_SearchResults_FilteredSuffix}" Visibility="{Binding IsFiltered, Converter={StaticResource BooleanToVisibilityConverter}}" />
                             </StackPanel>
                         </HierarchicalDataTemplate>
 

@@ -42,6 +42,9 @@
             <Thickness x:Key="DialogItemsExceptTopMargin" Left="4" Top="0" Right="4" Bottom="4" />
             <Thickness x:Key="DialogItemsExceptLeftMargin" Left="0" Top="4" Right="4" Bottom="4" />
             <Thickness x:Key="DialogItemsExceptRightMargin" Left="4" Top="4" Right="0" Bottom="4" />
+            
+            <Thickness x:Key="DialogItemsVerticalOnlyMargin" Left="0" Top="4" Right="0" Bottom="4" />
+            <Thickness x:Key="DialogItemsHorizontalOnlyMargin" Left="4" Top="0" Right="4" Bottom="0" />
 
             <Thickness x:Key="DialogItemsMargin" Left="4" Top="4" Right="4" Bottom="4" />
 
@@ -76,6 +79,7 @@
             <SolidColorBrush x:Key="ToolBackgroundBrush" Color="#ccdef0" />
             <SolidColorBrush x:Key="ToolForegroundBrush" Color="#000000" />
             <SolidColorBrush x:Key="ToolInactiveForgroundBrush" Color="#a0a0a0" />
+            <SolidColorBrush x:Key="ToolPopupBackgroundBrush" Color="#b3c8de" />
 
             <SolidColorBrush x:Key="ToolButtonHoverBorderBrush" Color="#89b3dc" />
             <SolidColorBrush x:Key="ToolButtonHoverBackgroundBrush" Color="#d9e7f4" />
@@ -154,13 +158,13 @@
                 </Style.Triggers>
             </Style>
 
-            <Style x:Key="ToolButton" TargetType="Button">
+            <Style x:Key="ToolButton" TargetType="ButtonBase">
                 <Style.Setters>
                     <Setter Property="Padding" Value="2" />
                     <Setter Property="Margin" Value="0,2" />
                     <Setter Property="Template">
                         <Setter.Value>
-                            <ControlTemplate TargetType="Button">
+                            <ControlTemplate TargetType="ButtonBase">
                                 <Border x:Name="bRoot" BorderBrush="Transparent" Background="Transparent" BorderThickness="1">
                                     <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}" />
                                 </Border>

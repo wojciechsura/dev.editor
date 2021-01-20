@@ -1216,4 +1216,16 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="BottomTool.SearchResults.FileReference3" xml:space="preserve">
     <value> do </value>
   </data>
+  <data name="BottomTool_SearchResults_Filter" xml:space="preserve">
+    <value>Filtruj</value>
+  </data>
+  <data name="BottomTool_SearchResults_FilterCaseSensitive" xml:space="preserve">
+    <value>Uwzględniaj wielkość liter</value>
+  </data>
+  <data name="BottomTool_SearchResults_FilteredSuffix" xml:space="preserve">
+    <value> (filtrowany)</value>
+  </data>
+  <data name="BottomTool_SearchResults_FilterExcludeMatching" xml:space="preserve">
+    <value>Wyklucz pasujące</value>
+  </data>
 </root>

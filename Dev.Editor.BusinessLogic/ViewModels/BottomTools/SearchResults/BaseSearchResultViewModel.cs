@@ -11,11 +11,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
     {
         private bool isSelected;
         private bool isExpanded;
+        private bool isVisible;
 
         public BaseSearchResultViewModel()
         {
             isSelected = false;
             isExpanded = true;
+            isVisible = true;
         }
 
         public bool IsSelected
@@ -28,6 +30,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
         {
             get => isExpanded;
             set => Set(ref isExpanded, () => IsExpanded, value);
+        }
+
+        public bool IsVisible
+        {
+            get => isVisible;
+            set => Set(ref isVisible, () => IsVisible, value);
         }
     }
 }

@@ -27,19 +27,37 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
         private readonly BaseCondition resultsNonEmptyCondition;
         private readonly BaseCondition resultsAreReplaceCondition;
 
-        private BaseSearchResultViewModel searchResults;
+        private readonly ObservableCollection<BaseSearchResultRootViewModel> searchResults;
+        private string filter;
+        private bool filterCaseSensitive;
+        private bool filterExcludes;
 
         private void DoClearSearchResults()
         {
-            searchResults = null;
-            OnPropertyChanged(() => SearchResults);
+            searchResults.Clear();
         }
 
         private void DoPerformReplace()
         {
-            searchResultsHandler.PerformReplaceInFiles((ReplaceResultsViewModel)searchResults);
-            searchResults = null;
-            OnPropertyChanged(() => SearchResults);
+            var replaceResults = searchResults.OfType<ReplaceResultsViewModel>().ToList();
+
+            foreach (var result in replaceResults)
+            {
+                searchResultsHandler.PerformReplaceInFiles((ReplaceResultsViewModel)result);
+                searchResults.Remove(result);
+            }
+        }
+
+        private void HandleFilterChanged()
+        {
+            if (SearchResults.Any())
+                foreach (var result in SearchResults)
+                {
+                    if (!string.IsNullOrEmpty(filter))
+                        result.ApplyFilter(filter, filterCaseSensitive, filterExcludes);
+                    else
+                        result.ClearFilter();
+                }
         }
 
         public SearchResultsBottomToolViewModel(ISearchResultsHandler searchResultsHandler, IImageResources imageResources)
@@ -48,10 +66,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             this.searchResultsHandler = searchResultsHandler;
             this.imageResources = imageResources;
 
-            searchResults = null;
+            searchResults = new ObservableCollection<BaseSearchResultRootViewModel>();
             icon = imageResources.GetIconByName("Search16.png");
 
-            resultsNonEmptyCondition = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults != null);
+            resultsNonEmptyCondition = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.Any());
             resultsAreReplaceCondition = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.FirstOrDefault() is ReplaceResultsViewModel);
 
             ClearSearchResultsCommand = new AppCommand(obj => DoClearSearchResults(), resultsNonEmptyCondition);
@@ -70,9 +88,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             }
         }
 
-        public void SetResults(BaseSearchResultViewModel results)
+        public void SetResults(BaseSearchResultRootViewModel results)
         {
-            this.searchResults = results;
+            searchResults.Clear();
+            Filter = null;
+
+            searchResults.Add(results);
             OnPropertyChanged(() => SearchResults);
         }
 
@@ -82,12 +103,30 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 
         public override string Uid => SearchResultsUid;
 
-        public IEnumerable<BaseSearchResultViewModel> SearchResults
+        public ObservableCollection<BaseSearchResultRootViewModel> SearchResults
         {
             get 
-            { 
-                yield return searchResults; 
+            {
+                return searchResults;
             }
+        }
+
+        public string Filter
+        {
+            get => filter;
+            set => Set(ref filter, () => Filter, value, () => HandleFilterChanged());
+        }
+
+        public bool FilterCaseSensitive
+        {
+            get => filterCaseSensitive;
+            set => Set(ref filterCaseSensitive, () => FilterCaseSensitive, value, () => HandleFilterChanged());
+        }
+
+        public bool FilterExcludes
+        {
+            get => filterExcludes;
+            set => Set(ref filterExcludes, () => FilterExcludes, value, () => HandleFilterChanged());
         }
 
         public ICommand ClearSearchResultsCommand { get; }

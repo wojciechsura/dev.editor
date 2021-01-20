@@ -163,6 +163,42 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter.
+        /// </summary>
+        public static string BottomTool_SearchResults_Filter {
+            get {
+                return ResourceManager.GetString("BottomTool_SearchResults_Filter", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Case sensitive.
+        /// </summary>
+        public static string BottomTool_SearchResults_FilterCaseSensitive {
+            get {
+                return ResourceManager.GetString("BottomTool_SearchResults_FilterCaseSensitive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  (filtered).
+        /// </summary>
+        public static string BottomTool_SearchResults_FilteredSuffix {
+            get {
+                return ResourceManager.GetString("BottomTool_SearchResults_FilteredSuffix", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Exclude matching.
+        /// </summary>
+        public static string BottomTool_SearchResults_FilterExcludeMatching {
+            get {
+                return ResourceManager.GetString("BottomTool_SearchResults_FilterExcludeMatching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fragment duplicated in .
         /// </summary>
         public static string BottomTool_SearchResults_FragmentDuplicatedIn {
