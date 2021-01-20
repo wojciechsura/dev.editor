@@ -1183,14 +1183,14 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="DuplicatedLinesFinderConfigWindow.SearchFoldersRecursively" xml:space="preserve">
     <value>Search folders recursively</value>
   </data>
-  <data name="DuplicatedLinesFinderConfigWindow.Group.ResultSorting" xml:space="preserve">
-    <value>Result sorting</value>
+  <data name="DuplicatedLinesFinderConfigWindow.Group.Results" xml:space="preserve">
+    <value>Results</value>
   </data>
   <data name="DuplicatedLinesFinderConfigWindow.ByLineFirst" xml:space="preserve">
-    <value>By line count, then by file count</value>
+    <value>Sort by line count, then by file count</value>
   </data>
   <data name="DuplicatedLinesFinderConfigWindow.ByFileFirst" xml:space="preserve">
-    <value>By file count, then by line count</value>
+    <value>Sort by file count, then by line count</value>
   </data>
   <data name="BottomTool.SearchResults.FragmentDuplicatedIn" xml:space="preserve">
     <value>Fragment duplicated in </value>
@@ -1233,5 +1233,14 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   </data>
   <data name="BottomTool_SearchResults_FilterContents" xml:space="preserve">
     <value>Filter contents</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.MergeCommonResults" xml:space="preserve">
+    <value>Merge common results (slow)</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.AllowedDifferentLines" xml:space="preserve">
+    <value>Allowed differing lines</value>
+  </data>
+  <data name="FindDuplicatedLines_MergingCommonResults" xml:space="preserve">
+    <value>Merging results {0} from {1}</value>
   </data>
 </root>

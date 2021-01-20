@@ -1154,10 +1154,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
     <value>Dodaj katalog...</value>
   </data>
   <data name="DuplicatedLinesFinderConfigWindow.ByFileFirst" xml:space="preserve">
-    <value>Według liczby plików, potem linii</value>
+    <value>Sortuj według liczby plików, potem linii</value>
   </data>
   <data name="DuplicatedLinesFinderConfigWindow.ByLineFirst" xml:space="preserve">
-    <value>Według liczby linii, potem plików</value>
+    <value>Sortuj według liczby linii, potem plików</value>
   </data>
   <data name="DuplicatedLinesFinderConfigWindow.EditHint" xml:space="preserve">
     <value>Kliknij dwukrotnie element, by go edytować.</value>
@@ -1174,8 +1174,8 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="DuplicatedLinesFinderConfigWindow.Group.Input" xml:space="preserve">
     <value>Wejście</value>
   </data>
-  <data name="DuplicatedLinesFinderConfigWindow.Group.ResultSorting" xml:space="preserve">
-    <value>Sortowanie wyników</value>
+  <data name="DuplicatedLinesFinderConfigWindow.Group.Results" xml:space="preserve">
+    <value>Wyniki</value>
   </data>
   <data name="DuplicatedLinesFinderConfigWindow.IgnoreTrailingWhitespace" xml:space="preserve">
     <value>Ignoruj otaczające białe znaki</value>
@@ -1233,5 +1233,14 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   </data>
   <data name="BottomTool_SearchResults_FilterFiles" xml:space="preserve">
     <value>Filtruj nazwy plików</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.MergeCommonResults" xml:space="preserve">
+    <value>Scalaj podobne wyniki (wolne)</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.AllowedDifferentLines" xml:space="preserve">
+    <value>Liczba różnych linii</value>
+  </data>
+  <data name="FindDuplicatedLines_MergingCommonResults" xml:space="preserve">
+    <value>Scalanie wyników {0} z {1}</value>
   </data>
 </root>

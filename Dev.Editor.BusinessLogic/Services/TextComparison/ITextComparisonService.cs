@@ -10,7 +10,7 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
 {
     public interface ITextComparisonService
     {
-        ChangesResult FindChanges(TextDocument documentA, TextDocument documentB, bool ignoreCase = false, bool ignoreWhitespace = false);
-        ContinuousLineDiffResult GenerateContinuousLineDiff(TextDocument documentA, TextDocument documentB, bool ignoreCase = false, bool ignoreWhitespace = false);
+        ChangesResult FindChanges(IReadOnlyList<string> documentA, IReadOnlyList<string> documentB, bool ignoreCase = false, bool ignoreWhitespace = false);
+        ContinuousLineDiffResult GenerateContinuousLineDiff(IReadOnlyList<string> documentA, IReadOnlyList<string> documentB, bool ignoreCase = false, bool ignoreWhitespace = false);
     }
 }

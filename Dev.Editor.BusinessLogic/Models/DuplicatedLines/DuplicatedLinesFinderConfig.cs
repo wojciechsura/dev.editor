@@ -15,7 +15,9 @@ namespace Dev.Editor.BusinessLogic.Models.DuplicatedLines
         public int MinLines { get; set; }
         public string ExcludeMasks { get; set; }
         public List<string> SourcePaths { get; set; }
-        public DuplicatedLinesResultSortKind ResultSortKind { get; internal set; }
-        public Regex LineExclusionRegex { get; internal set; }
+        public DuplicatedLinesResultSortKind ResultSortKind { get; set; }
+        public Regex LineExclusionRegex { get; set; }
+        public bool MergeCommonResults { get; set; }
+        public int AllowedDifferentLines { get; set; }
     }
 }

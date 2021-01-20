@@ -35,6 +35,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
         private readonly BaseCondition entrySelectedCondition;
         private DuplicatedLinesResultSortKind resultSortKind;
         private string lineExclusionRegex;
+        private bool mergeCommonResults;
+        private int allowedDifferentLines;
 
         private void DoAddEntry()
         {
@@ -110,6 +112,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
             recursive = false;
             trimLines = true;
             resultSortKind = DuplicatedLinesResultSortKind.FirstByLinesThenByFiles;
+            mergeCommonResults = false;
+            allowedDifferentLines = 2;
 
             entryNotNullCondition = new LambdaCondition<DuplicatedLinesFinderConfigDialogViewModel>(this,
                 vm => !String.IsNullOrEmpty(vm.Entry));
@@ -158,7 +162,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
                 MinLines = MinimumLines,
                 Trim = TrimLines,
                 ResultSortKind = resultSortKind,
-                LineExclusionRegex = lineRegex
+                LineExclusionRegex = lineRegex,
+                MergeCommonResults = mergeCommonResults,
+                AllowedDifferentLines = allowedDifferentLines
             };
 
             access.CloseDialog(model, true);
@@ -272,6 +278,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
         {
             get => resultSortKind; 
             set => Set(ref resultSortKind, () => ResultSortKind, value);
+        }
+
+        public bool MergeCommonResults
+        {
+            get => mergeCommonResults;
+            set => Set(ref mergeCommonResults, () => MergeCommonResults, value);
+        }
+
+        public int AllowedDifferentLines
+        {
+            get => allowedDifferentLines;
+            set => Set(ref allowedDifferentLines, () => AllowedDifferentLines, value);
         }
     }
 }

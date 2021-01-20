@@ -157,6 +157,7 @@
     <Compile Include="Services\StartupInfo\StartupInfoService.cs" />
     <Compile Include="Services\TextComparison\ITextComparisonService.cs" />
     <Compile Include="Services\TextComparison\TextComparisonService.cs" />
+    <Compile Include="Services\TextComparison\TextDocumentAsList.cs" />
     <Compile Include="Services\TextTransform\ITextTransformService.cs" />
     <Compile Include="Services\TextTransform\TextTransformService.cs" />
     <Compile Include="Types\Behavior\CloseBehavior.cs" />

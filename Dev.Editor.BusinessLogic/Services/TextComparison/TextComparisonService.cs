@@ -1,6 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Models.TextComparison;
 using Dev.Editor.BusinessLogic.Types.TextComparison;
-using ICSharpCode.AvalonEdit.Document;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -100,15 +99,15 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
 
         // Private methods ----------------------------------------------------
 
-        private int[] DocumentToHashLines(TextDocument doc, Hashtable hashedLines, bool ignoreCase, bool ignoreWhitespace)
+        private int[] DocumentToHashLines(IReadOnlyList<string> lines, Hashtable hashedLines, bool ignoreCase, bool ignoreWhitespace)
         {
-            var result = new int[doc.LineCount];
+            var result = new int[lines.Count];
 
             int nextIndex = hashedLines.Count;
 
-            for (int i = 0; i < doc.LineCount; i++)
+            for (int i = 0; i < lines.Count; i++)
             {
-                string line = doc.GetText(doc.Lines[i].Offset, doc.Lines[i].Length);
+                string line = lines[i];
                 if (ignoreCase)
                     line = line.ToLower();
                 if (ignoreWhitespace)
@@ -276,7 +275,7 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
             throw new Exception("Broken algorithm - should never reach this place.");
         }
 
-        private TextComparisonContext GenerateComparisonContext(TextDocument documentA, TextDocument documentB, bool ignoreCase, bool ignoreWhitespace)
+        private TextComparisonContext GenerateComparisonContext(IReadOnlyList<string> documentA, IReadOnlyList<string> documentB, bool ignoreCase, bool ignoreWhitespace)
         {
             Hashtable hashedLines = new Hashtable();
 
@@ -285,12 +284,6 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
 
             var context = new TextComparisonContext(dataA, dataB);
             return context;
-        }
-
-        private string GetLine(TextDocument document, int lineIndex)
-        {
-            var line = document.GetLineByNumber(lineIndex);
-            return document.GetText(line.Offset, line.Length);
         }
 
         private void InternalEvalDiff(TextComparisonContext context, TextComparisonRange range)            
@@ -369,7 +362,7 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
 
         // Public methods -----------------------------------------------------
 
-        public ChangesResult FindChanges(TextDocument documentA, TextDocument documentB, bool ignoreCase = false, bool ignoreWhitespace = false)
+        public ChangesResult FindChanges(IReadOnlyList<string> documentA, IReadOnlyList<string> documentB, bool ignoreCase = false, bool ignoreWhitespace = false)
         {
             TextComparisonContext context = GenerateComparisonContext(documentA, documentB, ignoreCase, ignoreWhitespace);
             InternalEvalDiff(context, context.FullRange);
@@ -377,7 +370,7 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
             return new ChangesResult(context.AChanges, context.BChanges);
         }
 
-        public ContinuousLineDiffResult GenerateContinuousLineDiff(TextDocument documentA, TextDocument documentB, bool ignoreCase = false, bool ignoreWhitespace = false)
+        public ContinuousLineDiffResult GenerateContinuousLineDiff(IReadOnlyList<string> documentA, IReadOnlyList<string> documentB, bool ignoreCase = false, bool ignoreWhitespace = false)
         {
             TextComparisonContext context = GenerateComparisonContext(documentA, documentB, ignoreCase, ignoreWhitespace);
             InternalEvalDiff(context, context.FullRange);
@@ -393,25 +386,25 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
                 while (posB < block.InsertStartB)
                 {
                     
-                    result.Add(new LineDiffInfo(ChangeType.Unchanged, GetLine(documentB, posB)));
+                    result.Add(new LineDiffInfo(ChangeType.Unchanged, documentB[posB]));
                     posB++;
                 }
 
                 for (int i = 0; i < block.DeleteCountA; i++)
                 {
-                    result.Add(new LineDiffInfo(ChangeType.Deleted, GetLine(documentA, i + block.DeleteStartA)));
+                    result.Add(new LineDiffInfo(ChangeType.Deleted, documentA[i + block.DeleteStartA]));
                 }
 
                 for (int i = 0; i < block.InsertCountB; i++)
                 {
-                    result.Add(new LineDiffInfo(ChangeType.Inserted, GetLine(documentB, posB)));
+                    result.Add(new LineDiffInfo(ChangeType.Inserted, documentB[posB]));
                     posB++;
                 }
             }
 
             while (posB < context.BData.Length)
             {
-                result.Add(new LineDiffInfo(ChangeType.Unchanged, GetLine(documentB, posB)));
+                result.Add(new LineDiffInfo(ChangeType.Unchanged, documentB[posB]));
                 posB++;
             }
 

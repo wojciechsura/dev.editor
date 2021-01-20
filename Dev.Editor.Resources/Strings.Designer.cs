@@ -802,7 +802,16 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By file count, then by line count.
+        ///   Looks up a localized string similar to Allowed differing lines.
+        /// </summary>
+        public static string DuplicatedLinesFinderConfigWindow_AllowedDifferentLines {
+            get {
+                return ResourceManager.GetString("DuplicatedLinesFinderConfigWindow.AllowedDifferentLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sort by file count, then by line count.
         /// </summary>
         public static string DuplicatedLinesFinderConfigWindow_ByFileFirst {
             get {
@@ -811,7 +820,7 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to By line count, then by file count.
+        ///   Looks up a localized string similar to Sort by line count, then by file count.
         /// </summary>
         public static string DuplicatedLinesFinderConfigWindow_ByLineFirst {
             get {
@@ -874,11 +883,11 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Result sorting.
+        ///   Looks up a localized string similar to Results.
         /// </summary>
-        public static string DuplicatedLinesFinderConfigWindow_Group_ResultSorting {
+        public static string DuplicatedLinesFinderConfigWindow_Group_Results {
             get {
-                return ResourceManager.GetString("DuplicatedLinesFinderConfigWindow.Group.ResultSorting", resourceCulture);
+                return ResourceManager.GetString("DuplicatedLinesFinderConfigWindow.Group.Results", resourceCulture);
             }
         }
         
@@ -888,6 +897,15 @@ namespace Dev.Editor.Resources {
         public static string DuplicatedLinesFinderConfigWindow_IgnoreTrailingWhitespace {
             get {
                 return ResourceManager.GetString("DuplicatedLinesFinderConfigWindow.IgnoreTrailingWhitespace", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merge common results (slow).
+        /// </summary>
+        public static string DuplicatedLinesFinderConfigWindow_MergeCommonResults {
+            get {
+                return ResourceManager.GetString("DuplicatedLinesFinderConfigWindow.MergeCommonResults", resourceCulture);
             }
         }
         
@@ -987,6 +1005,15 @@ namespace Dev.Editor.Resources {
         public static string FindDuplicatedLines_FileLoadProgress {
             get {
                 return ResourceManager.GetString("FindDuplicatedLines.FileLoadProgress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Merging results {0} from {1}.
+        /// </summary>
+        public static string FindDuplicatedLines_MergingCommonResults {
+            get {
+                return ResourceManager.GetString("FindDuplicatedLines_MergingCommonResults", resourceCulture);
             }
         }
         

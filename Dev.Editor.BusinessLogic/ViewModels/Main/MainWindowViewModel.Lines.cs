@@ -20,6 +20,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
     {
         private void HandleFindDuplicatedLinesCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
+            if (e.Cancelled)
+                return;
+
             var result = e.Result as DuplicatedLinesResult;
 
             List<DuplicatedLinesResultEntry> sortedEntries = null;
@@ -129,7 +132,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             if (result)
             {
-                var worker = new DuplicatedLinesWorker(config);
+                var worker = new DuplicatedLinesWorker(config, textComparisonService);
                 worker.RunWorkerCompleted += HandleFindDuplicatedLinesCompleted;
 
                 dialogService.ShowProgressDialog(Strings.Operation_SearchingInFiles, worker);

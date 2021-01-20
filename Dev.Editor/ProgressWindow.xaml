@@ -25,8 +25,7 @@
             </StackPanel>
         </GroupBox>
         <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Style="{StaticResource DialogButton}" Command="{Binding CancelCommand}" Content="{x:Static res:Strings.Cancel}" IsCancel="True" 
-                    IsEnabled="{Binding CancelAvailable}"/>
+            <Button Style="{StaticResource DialogButton}" Command="{Binding CancelCommand}" Content="{x:Static res:Strings.Cancel}" IsCancel="True" />
         </StackPanel>
     </StackPanel>
 </Window>

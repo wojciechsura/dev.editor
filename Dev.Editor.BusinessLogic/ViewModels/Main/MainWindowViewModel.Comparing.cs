@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Dev.Editor.BusinessLogic.Models.Documents.Text;
 using Dev.Editor.BusinessLogic.Types.Document.Text;
 using Dev.Editor.BusinessLogic.Types.Main;
+using Dev.Editor.BusinessLogic.Services.TextComparison;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -47,7 +48,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             {
                 ClearAllDiffs();
 
-                var diffResult = textComparisonService.FindChanges(config.FirstDocument.Document, config.SecondDocument.Document, config.IgnoreCase, config.IgnoreWhitespace);
+                var diffResult = textComparisonService.FindChanges(new TextDocumentAsList(config.FirstDocument.Document), new TextDocumentAsList(config.SecondDocument.Document), config.IgnoreCase, config.IgnoreWhitespace);
 
                 if (diffResult.ChangesA.All(c => c == false) && diffResult.ChangesB.All(c => c == false))
                 {

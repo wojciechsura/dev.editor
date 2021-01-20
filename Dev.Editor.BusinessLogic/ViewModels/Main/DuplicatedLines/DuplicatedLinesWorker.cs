@@ -1,4 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
+using Dev.Editor.BusinessLogic.Services.TextComparison;
 using Dev.Editor.Resources;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
     public class DuplicatedLinesWorker : BackgroundWorker
     {
         private readonly DuplicatedLinesFinderConfig config;
+        private readonly int stepSizePercent;
+        private readonly ITextComparisonService textComparisonService;
 
         // Private types ------------------------------------------------------
 
@@ -57,6 +60,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
             public LineReference Next { get; set; }
         }
 
+        private class FilenameComparer : IEqualityComparer<DuplicatedLinesFileInfo>
+        {
+            public bool Equals(DuplicatedLinesFileInfo x, DuplicatedLinesFileInfo y)
+            {
+                return x.Path == y.Path;
+            }
+
+            public int GetHashCode(DuplicatedLinesFileInfo obj)
+            {
+                return obj.Path.GetHashCode();
+            }
+        }
+
         // Private methods ----------------------------------------------------
 
         private Dictionary<int, List<LineInfo>> LoadLines()
@@ -79,7 +95,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
 
                 var path = config.SourcePaths[sourceIndex];
 
-                ReportProgress(sourceIndex * 50 / config.SourcePaths.Count, String.Format(Strings.FindDuplicatedLines_FileLoadProgress, path));
+                ReportProgress(sourceIndex * stepSizePercent / config.SourcePaths.Count, String.Format(Strings.FindDuplicatedLines_FileLoadProgress, path));
 
                 if (excludePatterns.Any(p => p.IsMatch(path)))
                     continue;
@@ -93,7 +109,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
                 {
                     totalLines++;
                     
+                    // Ignore excluded lines
                     if (config.LineExclusionRegex?.IsMatch(sourceLines[lineIndex]) ?? false)
+                        continue;
+
+                    // Ignore empty lines
+                    if (String.IsNullOrWhiteSpace(sourceLines[lineIndex]))
                         continue;
 
                     string line;
@@ -184,7 +205,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
                         return null;
 
                     current++;
-                    ReportProgress(50 + 50 * current / total, String.Format(Strings.FindDuplicatedLines_AnalyzingProgress, current + 1, total));
+
+                    ReportProgress(stepSizePercent + stepSizePercent * current / total, String.Format(Strings.FindDuplicatedLines_AnalyzingProgress, current + 1, total));
 
                     // If line is unique, just continue
                     if (lineInfo.LineReferences.Count < 2)
@@ -218,6 +240,68 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
             return result;
         }
 
+        private void MergeCommonResults(List<DuplicatedLinesResultEntry> result)
+        {
+            for (int i = 0; i < result.Count - 1; i++)
+            {
+                if (CancellationPending)
+                    return;
+
+                var originalEntry = result[i];
+                var newEntry = result[i];
+                
+                ReportProgress(2 * stepSizePercent + stepSizePercent * i / result.Count, String.Format(Strings.FindDuplicatedLines_MergingCommonResults, i + 1, result.Count));
+
+                int j = i + 1;
+                while (j < result.Count)
+                {
+                    // Check, if i-th and j-th results are similar
+
+                    // If line counts differs too much, results cannot be similar
+                    if (Math.Abs(originalEntry.Lines.Count - result[j].Lines.Count) > config.AllowedDifferentLines)
+                    {
+                        j++;
+                        continue;
+                    }
+
+                    var comparisonResult = textComparisonService.FindChanges(originalEntry.Lines, result[j].Lines, false, config.Trim);
+
+                    var commonLines = comparisonResult.ChangesA.Concat(comparisonResult.ChangesB).Count(x => !x);
+                    var differingLines = comparisonResult.ChangesA.Length + comparisonResult.ChangesB.Length - commonLines;
+                    
+                    if (commonLines >= 2 * config.MinLines && differingLines < config.AllowedDifferentLines)
+                    {
+                        // Merge j-th result into common result, remove j-th result
+                        var uniqueFiles = newEntry.Filenames.Union(result[j].Filenames).Distinct(new FilenameComparer());
+                        var files = new List<DuplicatedLinesFileInfo>();
+
+                        foreach (var file in uniqueFiles)
+                        {
+                            var left = newEntry.Filenames.FirstOrDefault(f => f.Path == file.Path);
+                            var right = result[j].Filenames.FirstOrDefault(f => f.Path == file.Path);
+
+                            var entries = new[] { left, right };
+
+                            var newFile = new DuplicatedLinesFileInfo(file.Path,
+                                entries.Where(e => e != null).Min(e => e.StartLine),
+                                entries.Where(e => e != null).Max(e => e.EndLine));
+                            files.Add(newFile);
+                        }
+
+                        newEntry = new DuplicatedLinesResultEntry(files,
+                            result[i].Lines.Count > result[j].Lines.Count ? result[i].Lines : result[j].Lines);
+
+                        result.RemoveAt(j);
+                    }
+                    else
+                        j++;
+                }
+
+                if (originalEntry != newEntry)
+                    result[i] = newEntry;
+            }
+        }
+
         // Protected methods --------------------------------------------------
 
         protected override void OnDoWork(DoWorkEventArgs e)
@@ -230,14 +314,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
             if (CancellationPending)
                 return;
 
+            if (config.MergeCommonResults)
+            {
+                MergeCommonResults(result);
+            }
+
             e.Result = new DuplicatedLinesResult(result, config);
         }
 
         // Public methods -----------------------------------------------------
 
-        public DuplicatedLinesWorker(DuplicatedLinesFinderConfig config)
+        public DuplicatedLinesWorker(DuplicatedLinesFinderConfig config, ITextComparisonService textComparisonService)
         {
             this.config = config;
+            this.textComparisonService = textComparisonService;
+
+            this.stepSizePercent = config.MergeCommonResults ? 33 : 50;
             this.WorkerSupportsCancellation = true;
             this.WorkerReportsProgress = true;
         }
