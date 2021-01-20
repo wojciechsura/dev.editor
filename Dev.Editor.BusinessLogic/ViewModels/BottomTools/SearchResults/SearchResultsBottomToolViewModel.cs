@@ -27,37 +27,33 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
         private readonly BaseCondition resultsNonEmptyCondition;
         private readonly BaseCondition resultsAreReplaceCondition;
 
-        private readonly ObservableCollection<BaseSearchResultRootViewModel> searchResults;
+        private BaseSearchResultRootViewModel searchResults;
         private string filter;
         private bool filterCaseSensitive;
         private bool filterExcludes;
 
         private void DoClearSearchResults()
         {
-            searchResults.Clear();
+            searchResults = null;
+            OnPropertyChanged(() => SearchResults);
         }
 
         private void DoPerformReplace()
         {
-            var replaceResults = searchResults.OfType<ReplaceResultsViewModel>().ToList();
-
-            foreach (var result in replaceResults)
-            {
-                searchResultsHandler.PerformReplaceInFiles((ReplaceResultsViewModel)result);
-                searchResults.Remove(result);
-            }
+            searchResultsHandler.PerformReplaceInFiles((ReplaceResultsViewModel)searchResults);
+            searchResults = null;
+            OnPropertyChanged(() => SearchResults);
         }
 
         private void HandleFilterChanged()
         {
-            if (SearchResults.Any())
-                foreach (var result in SearchResults)
-                {
-                    if (!string.IsNullOrEmpty(filter))
-                        result.ApplyFilter(filter, filterCaseSensitive, filterExcludes);
-                    else
-                        result.ClearFilter();
-                }
+            if (searchResults != null)
+            {
+                if (!string.IsNullOrEmpty(filter))
+                    searchResults.ApplyFilter(filter, filterCaseSensitive, filterExcludes);
+                else
+                    searchResults.ClearFilter();
+            }
         }
 
         public SearchResultsBottomToolViewModel(ISearchResultsHandler searchResultsHandler, IImageResources imageResources)
@@ -66,11 +62,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             this.searchResultsHandler = searchResultsHandler;
             this.imageResources = imageResources;
 
-            searchResults = new ObservableCollection<BaseSearchResultRootViewModel>();
+            searchResults = null;
             icon = imageResources.GetIconByName("Search16.png");
 
-            resultsNonEmptyCondition = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.Any());
-            resultsAreReplaceCondition = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.FirstOrDefault() is ReplaceResultsViewModel);
+            resultsNonEmptyCondition = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.Single() != null);
+            resultsAreReplaceCondition = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.SingleOrDefault() is ReplaceResultsViewModel);
 
             ClearSearchResultsCommand = new AppCommand(obj => DoClearSearchResults(), resultsNonEmptyCondition);
             PerformReplaceCommand = new AppCommand(obj => DoPerformReplace(), resultsAreReplaceCondition);
@@ -90,10 +86,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 
         public void SetResults(BaseSearchResultRootViewModel results)
         {
-            searchResults.Clear();
+            // Setting search results to null to prevent Filter to fire
+            searchResults = null;
             Filter = null;
 
-            searchResults.Add(results);
+            searchResults = results;
             OnPropertyChanged(() => SearchResults);
         }
 
@@ -103,11 +100,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 
         public override string Uid => SearchResultsUid;
 
-        public ObservableCollection<BaseSearchResultRootViewModel> SearchResults
+        public IEnumerable<BaseSearchResultRootViewModel> SearchResults
         {
             get 
             {
-                return searchResults;
+                yield return searchResults;
             }
         }
 
