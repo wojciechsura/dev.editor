@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults;
+﻿using Dev.Editor.BusinessLogic.Models.SearchResults;
+using Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,26 +20,26 @@ namespace Dev.Editor.BusinessLogic.ViewModels.DuplicatedLines
             Cases = cases;
         }
 
-        public override void ApplyFilter(string filter, bool caseSensitive, bool exclude)
+        public override void ApplyFilter(SearchResultFilterModel model)
         {
-            string updatedFilter = caseSensitive ? filter : filter.ToLower();
+            string updatedFilter = model.CaseSensitive ? model.Filter : model.Filter.ToLower();
 
             foreach (var c in Cases)
             {
                 bool filterMatches = false;
 
-                if (caseSensitive)
+                if (model.CaseSensitive)
                 {
-                    filterMatches = c.Details.OfType<FileReferenceViewModel>().Any(f => f.Path.Contains(updatedFilter)) ||
-                        c.Details.OfType<DuplicatedContentPreviewViewModel>().Any(cp => cp.Text.Contains(updatedFilter));
+                    filterMatches = (model.FilterFilenames && c.Details.OfType<FileReferenceViewModel>().Any(f => f.Path.Contains(updatedFilter))) ||
+                        (model.FilterContents && c.Details.OfType<DuplicatedContentPreviewViewModel>().Any(cp => cp.Text.Contains(updatedFilter)));
                 }
                 else
                 {
-                    filterMatches = c.Details.OfType<FileReferenceViewModel>().Any(f => f.Path.ToLower().Contains(updatedFilter)) ||
-                        c.Details.OfType<DuplicatedContentPreviewViewModel>().Any(cp => cp.Text.ToLower().Contains(updatedFilter));
+                    filterMatches = (model.FilterFilenames && c.Details.OfType<FileReferenceViewModel>().Any(f => f.Path.ToLower().Contains(updatedFilter))) ||
+                        (model.FilterContents && c.Details.OfType<DuplicatedContentPreviewViewModel>().Any(cp => cp.Text.ToLower().Contains(updatedFilter)));
                 }
 
-                c.IsVisible = filterMatches ^ exclude;
+                c.IsVisible = filterMatches ^ model.FilterExcludes;
             }
 
             IsFiltered = true;

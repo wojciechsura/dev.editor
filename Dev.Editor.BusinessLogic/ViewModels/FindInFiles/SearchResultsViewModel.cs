@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults;
+﻿using Dev.Editor.BusinessLogic.Models.SearchResults;
+using Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,11 +27,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.FindInFiles
             Count = results.Sum(r => r.Count);
         }
 
-        public override void ApplyFilter(string filter, bool caseSensitive, bool exclude)
+        public override void ApplyFilter(SearchResultFilterModel model)
         {
             foreach (var result in Results)
             {
-                ApplyFilterRecursive(result, filter, caseSensitive, exclude);
+                ApplyFilterRecursive(result, model);
             }
 
             IsFiltered = true;
@@ -56,23 +57,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.FindInFiles
             }
         }
 
-        private bool ApplyFilterRecursive(BaseFilesystemSearchResultViewModel result, string filter, bool caseSensitive, bool exclude)
+        private bool ApplyFilterRecursive(BaseFilesystemSearchResultViewModel result, SearchResultFilterModel model)
         {
-            string updatedFilter = caseSensitive ? filter : filter.ToLower();
+            string updatedFilter = model.CaseSensitive ? model.Filter : model.Filter.ToLower();
             bool anyVisible = false;
 
             if (result is FileSearchResultViewModel fileViewModel)
             {
-                string data = caseSensitive ? fileViewModel.Name : fileViewModel.Name.ToLower();
+                string data = model.CaseSensitive ? fileViewModel.Name : fileViewModel.Name.ToLower();
 
-                fileViewModel.IsVisible = data.Contains(updatedFilter) ^ exclude;
+                fileViewModel.IsVisible = data.Contains(updatedFilter) ^ model.FilterExcludes;
                 anyVisible = fileViewModel.IsVisible;
             }
             else if (result is FolderSearchResultViewModel folderViewModel)
             {
                 foreach (var item in folderViewModel.Files)
                 {
-                    anyVisible |= ApplyFilterRecursive(item, filter, caseSensitive, exclude);
+                    anyVisible |= ApplyFilterRecursive(item, model);
                 }
 
                 folderViewModel.IsVisible = anyVisible;

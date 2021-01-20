@@ -29,6 +29,9 @@
                         <StackPanel Orientation="Vertical" Margin="{StaticResource DialogItemsMargin}">
                             <CheckBox IsChecked="{Binding FilterCaseSensitive, Mode=TwoWay}" Margin="{StaticResource DialogItemsMargin}" Content="{x:Static p:Strings.BottomTool_SearchResults_FilterCaseSensitive}" />
                             <CheckBox IsChecked="{Binding FilterExcludes, Mode=TwoWay}" Margin="{StaticResource DialogItemsExceptTopMargin}" Content="{x:Static p:Strings.BottomTool_SearchResults_FilterExcludeMatching}" />
+                            <Separator Margin="{StaticResource DialogItemsExceptTopMargin}" />
+                            <CheckBox IsChecked="{Binding FilterFiles, Mode=TwoWay}" Margin="{StaticResource DialogItemsExceptTopMargin}" Content="{x:Static p:Strings.BottomTool_SearchResults_FilterFiles}" />
+                            <CheckBox IsChecked="{Binding FilterContents, Mode=TwoWay}" Margin="{StaticResource DialogItemsExceptTopMargin}" Content="{x:Static p:Strings.BottomTool_SearchResults_FilterContents}" IsEnabled="{Binding CanFilterContents}" />
                         </StackPanel>
                     </Border>
                 </Popup>

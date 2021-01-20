@@ -1,6 +1,7 @@
 Version 1.0.2
 (date pending)
 + Added searching for duplicated lines in files
++ Added search result filtering
 
 Version 1.0.1
 13.11.2020

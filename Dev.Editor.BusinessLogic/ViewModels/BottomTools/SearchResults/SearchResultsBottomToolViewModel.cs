@@ -14,6 +14,7 @@ using Spooksoft.VisualStateManager.Conditions;
 using System.Windows.Input;
 using Spooksoft.VisualStateManager.Commands;
 using Dev.Editor.BusinessLogic.ViewModels.DuplicatedLines;
+using Dev.Editor.BusinessLogic.Models.SearchResults;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 {
@@ -26,11 +27,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 
         private readonly BaseCondition resultsNonEmptyCondition;
         private readonly BaseCondition resultsAreReplaceCondition;
+        private readonly BaseCondition resultsCanFilterContents;
 
         private BaseSearchResultRootViewModel searchResults;
         private string filter;
         private bool filterCaseSensitive;
         private bool filterExcludes;
+        private bool filterFiles;
+        private bool filterContents;
 
         private void DoClearSearchResults()
         {
@@ -50,7 +54,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             if (searchResults != null)
             {
                 if (!string.IsNullOrEmpty(filter))
-                    searchResults.ApplyFilter(filter, filterCaseSensitive, filterExcludes);
+                    searchResults.ApplyFilter(new SearchResultFilterModel(filter, filterCaseSensitive, filterExcludes, filterFiles, filterContents));
                 else
                     searchResults.ClearFilter();
             }
@@ -67,6 +71,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 
             resultsNonEmptyCondition = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.Single() != null);
             resultsAreReplaceCondition = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.SingleOrDefault() is ReplaceResultsViewModel);
+            
+            resultsCanFilterContents = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.SingleOrDefault() is DuplicatedLinesResultViewModel);
+            resultsCanFilterContents.ValueChanged += (s, e) => OnPropertyChanged(() => CanFilterContents);
 
             ClearSearchResultsCommand = new AppCommand(obj => DoClearSearchResults(), resultsNonEmptyCondition);
             PerformReplaceCommand = new AppCommand(obj => DoPerformReplace(), resultsAreReplaceCondition);
@@ -126,8 +133,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             set => Set(ref filterExcludes, () => FilterExcludes, value, () => HandleFilterChanged());
         }
 
+        public bool FilterFiles
+        {
+            get => filterFiles;
+            set => Set(ref filterFiles, () => FilterFiles, value, () => HandleFilterChanged());
+        }
+
+        public bool FilterContents
+        {
+            get => filterContents;
+            set => Set(ref filterContents, () => FilterContents, value, () => HandleFilterChanged());
+        }
+
         public ICommand ClearSearchResultsCommand { get; }
 
         public ICommand PerformReplaceCommand { get; }
+
+        public bool CanFilterContents => resultsCanFilterContents.GetValue();
     }
 }

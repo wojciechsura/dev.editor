@@ -1228,4 +1228,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="BottomTool_SearchResults_FilterExcludeMatching" xml:space="preserve">
     <value>Wyklucz pasujące</value>
   </data>
+  <data name="BottomTool_SearchResults_FilterContents" xml:space="preserve">
+    <value>Filtruj zawartość</value>
+  </data>
+  <data name="BottomTool_SearchResults_FilterFiles" xml:space="preserve">
+    <value>Filtruj nazwy plików</value>
+  </data>
 </root>

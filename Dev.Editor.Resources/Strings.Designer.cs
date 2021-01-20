@@ -181,6 +181,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Filter contents.
+        /// </summary>
+        public static string BottomTool_SearchResults_FilterContents {
+            get {
+                return ResourceManager.GetString("BottomTool_SearchResults_FilterContents", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to  (filtered).
         /// </summary>
         public static string BottomTool_SearchResults_FilteredSuffix {
@@ -195,6 +204,15 @@ namespace Dev.Editor.Resources {
         public static string BottomTool_SearchResults_FilterExcludeMatching {
             get {
                 return ResourceManager.GetString("BottomTool_SearchResults_FilterExcludeMatching", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Filter file names.
+        /// </summary>
+        public static string BottomTool_SearchResults_FilterFiles {
+            get {
+                return ResourceManager.GetString("BottomTool_SearchResults_FilterFiles", resourceCulture);
             }
         }
         
