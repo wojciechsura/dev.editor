@@ -66,6 +66,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             this.searchResultsHandler = searchResultsHandler;
             this.imageResources = imageResources;
 
+            filter = null;
+            filterCaseSensitive = false;
+            filterExcludes = false;
+            filterFiles = true;
+            filterContents = true;
+
             searchResults = null;
             icon = imageResources.GetIconByName("Search16.png");
 
