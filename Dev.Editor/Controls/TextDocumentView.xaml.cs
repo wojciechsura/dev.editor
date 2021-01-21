@@ -365,12 +365,14 @@ namespace Dev.Editor.Controls
         }
 
         private void HandleEditorGotFocus(object sender, RoutedEventArgs e)
-        {
-            SetViewModelActiveEditor(ActiveEditor.Primary);
+        {   
+            if (viewModel != null)
+                SetViewModelActiveEditor(ActiveEditor.Primary);
         }
 
         private void HandleEditorGotFocus2(object sender, RoutedEventArgs e)
         {
+            if (viewModel != null)
             SetViewModelActiveEditor(ActiveEditor.Secondary);
         }
 
