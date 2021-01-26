@@ -3461,7 +3461,7 @@
         </member>
         <member name="F:ICSharpCode.AvalonEdit.Editing.RectangleSelection.BoxSelectRightByWord">
             <summary>
-            Expands the selection left by one word, creating a rectangular selection.
+            Expands the selection right by one word, creating a rectangular selection.
             Key gesture: Ctrl+Alt+Shift+Right
             </summary>
         </member>
@@ -3473,7 +3473,7 @@
         </member>
         <member name="F:ICSharpCode.AvalonEdit.Editing.RectangleSelection.BoxSelectDownByLine">
             <summary>
-            Expands the selection up by one line, creating a rectangular selection.
+            Expands the selection down by one line, creating a rectangular selection.
             Key gesture: Alt+Shift+Down
             </summary>
         </member>
@@ -6817,11 +6817,6 @@
             <summary>
             Collapses the specified text section.
             Runtime: O(log n)
-            </summary>
-        </member>
-        <member name="M:ICSharpCode.AvalonEdit.Rendering.HeightTree.CheckAllContainedIn(System.Collections.Generic.IEnumerable{ICSharpCode.AvalonEdit.Rendering.CollapsedLineSection},System.Collections.Generic.ICollection{ICSharpCode.AvalonEdit.Rendering.CollapsedLineSection})">
-            <summary>
-            Checks that all elements in list1 are contained in list2.
             </summary>
         </member>
         <member name="P:ICSharpCode.AvalonEdit.Rendering.HeightTreeLineNode.TotalHeight">
