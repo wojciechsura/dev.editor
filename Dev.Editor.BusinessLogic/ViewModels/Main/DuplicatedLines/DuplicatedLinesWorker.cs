@@ -32,15 +32,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
 
         private class LineInfo
         {
-            public LineInfo(string line, string originalLine)
+            public LineInfo(string line, string originalLine, int lineKey)
             {
                 Line = line;
                 OriginalLine = originalLine;
+                LineKey = lineKey;
                 LineReferences = new List<LineReference>();
             }
 
             public string Line { get; }
             public string OriginalLine { get; }
+            public int LineKey { get; }
             public List<LineReference> LineReferences { get; }
         }
 
@@ -135,9 +137,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
 
                     lineInfo = lineInfos.FirstOrDefault(l => l.Line == line);
                     if (lineInfo == null)
-                    {
-                        uniqueLines++;
-                        lineInfo = new LineInfo(line, sourceLines[lineIndex]);
+                    {                        
+                        lineInfo = new LineInfo(line, sourceLines[lineIndex], uniqueLines++);
                         lineInfos.Add(lineInfo);
                     }
 
@@ -175,9 +176,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
                 {
                     var filenames = references.Select(r => new DuplicatedLinesFileInfo(r.File.Path, r.LineNumber - lines + 1, r.LineNumber))
                         .ToList();
-                    var text = new List<string>(chain.Select(li => li.OriginalLine));
+                    var text = chain.Select(li => li.OriginalLine).ToList();
+                    var keys = chain.Select(li => li.LineKey).ToArray();
 
-                    var result = new DuplicatedLinesResultEntry(filenames, text);
+                    var result = new DuplicatedLinesResultEntry(filenames, text, keys);
                     results.Add(result);
                 }
             }
@@ -264,7 +266,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
                         continue;
                     }
 
-                    var comparisonResult = textComparisonService.FindChanges(originalEntry.Lines, result[j].Lines, false, config.Trim);
+                    var comparisonResult = textComparisonService.FindChanges(originalEntry.LineKeys, result[j].LineKeys);
 
                     var commonLines = comparisonResult.ChangesA.Concat(comparisonResult.ChangesB).Count(x => !x);
                     var differingLines = comparisonResult.ChangesA.Length + comparisonResult.ChangesB.Length - commonLines;
@@ -289,7 +291,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main.DuplicatedLines
                         }
 
                         newEntry = new DuplicatedLinesResultEntry(files,
-                            result[i].Lines.Count > result[j].Lines.Count ? result[i].Lines : result[j].Lines);
+                            result[i].Lines.Count > result[j].Lines.Count ? result[i].Lines : result[j].Lines, Array.Empty<int>());
 
                         result.RemoveAt(j);
                     }

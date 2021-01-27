@@ -370,6 +370,14 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
             return new ChangesResult(context.AChanges, context.BChanges);
         }
 
+        public ChangesResult FindChanges(int[] aData, int[] bData)
+        {
+            TextComparisonContext context = new TextComparisonContext(aData, bData);
+            InternalEvalDiff(context, context.FullRange);
+
+            return new ChangesResult(context.AChanges, context.BChanges);
+        }
+
         public ContinuousLineDiffResult GenerateContinuousLineDiff(IReadOnlyList<string> documentA, IReadOnlyList<string> documentB, bool ignoreCase = false, bool ignoreWhitespace = false)
         {
             TextComparisonContext context = GenerateComparisonContext(documentA, documentB, ignoreCase, ignoreWhitespace);
