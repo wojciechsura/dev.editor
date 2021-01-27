@@ -29,6 +29,7 @@
     <PackageIcon>images\AvalonEditNuGetPackageIcon.png</PackageIcon>
     <PackageTags>WPF Text Editor SharpDevelop AvalonEdit</PackageTags>
     <PackageReleaseNotes>Changes are detailed at https://github.com/icsharpcode/AvalonEdit/blob/master/ChangeLog.md</PackageReleaseNotes>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
   </PropertyGroup>
 
   <PropertyGroup Condition=" '$(TargetFramework)' == 'netcoreapp3.0' ">

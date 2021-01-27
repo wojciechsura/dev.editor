@@ -245,7 +245,6 @@
     <Compile Include="Models\FindInFiles\FolderSearchItem.cs" />
     <Compile Include="Models\FindInFiles\ResultSearchItem.cs" />
     <Compile Include="Models\FindInFiles\RootSearchItem.cs" />
-    <Compile Include="ViewModels\Main\Projects\ProjectManager.cs" />
     <Compile Include="ViewModels\Main\StoredSearchReplaceViewModel.cs" />
     <Compile Include="ViewModels\Main\TextDocumentPropertyNotNullCondition.cs" />
     <Compile Include="ViewModels\Main\TextDocumentPropertyWatchCondition.cs" />
@@ -275,6 +274,7 @@
     <Compile Include="ViewModels\Tools\Explorer\IExplorerHandler.cs" />
     <Compile Include="ViewModels\Tools\Explorer\IExplorerToolAccess.cs" />
     <Compile Include="ViewModels\Tools\Explorer\IFileItemHandler.cs" />
+    <Compile Include="ViewModels\Tools\Project\IProjectHandler.cs" />
     <Compile Include="ViewModels\Tools\Project\ProjectToolViewModel.cs" />
   </ItemGroup>
   <ItemGroup>

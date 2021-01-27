@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Dev.Editor.BusinessLogic.ViewModels.Projects;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,12 @@ namespace Dev.Editor.Controls
         public ProjectTool()
         {
             InitializeComponent();
+        }
+
+        private void HandleFileItemDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            var fileVm = (sender as FrameworkElement).DataContext as ProjectFileViewModel;
+            fileVm.NotifyDoubleClicked();
         }
     }
 }

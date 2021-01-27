@@ -64,14 +64,13 @@ using System.Windows.Threading;
 using System;
 using Dev.Editor.BusinessLogic.Services.AppVersion;
 using Dev.Editor.BusinessLogic.ViewModels.Tools.Project;
-using Dev.Editor.BusinessLogic.ViewModels.Main.Projects;
 using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
     public partial class MainWindowViewModel : BaseViewModel, IDocumentHandler,
         IExplorerHandler, IBinDefinitionsHandler, IMessagesHandler, ISearchResultsHandler, 
-        IEventListener<StoredSearchesChangedEvent>
+        IProjectHandler, IEventListener<StoredSearchesChangedEvent>
     {
         // Private fields -----------------------------------------------------
 
@@ -92,7 +91,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private readonly ITextTransformService textTransformService;
         private readonly IAppVersionService appVersionService;
         private readonly DocumentsManager documentsManager;
-        private readonly ProjectManager projectManager;
 
         private readonly ObservableCollection<StoredSearchReplaceViewModel> storedSearches;
         private readonly ObservableCollection<StoredSearchReplaceViewModel> storedReplaces;
@@ -734,7 +732,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             (bool result, string location) = dialogService.ShowChooseFolderDialog(startFolder);
             if (result)
             {
-                projectManager.OpenProject(location);
+                projectToolViewModel.OpenProject(location);
             }
         }
 
@@ -831,6 +829,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         }
 
         BaseCondition IExplorerHandler.CurrentDocumentHasPathCondition => documentHasPathCondition;
+
+        // IProjectHandler implementation -------------------------------------
+
+        void IProjectHandler.OpenFolderAsProject()
+        {
+            DoOpenProject();
+        }
+
+        void IProjectHandler.TryOpenFile(string path)
+        {
+            LoadTextDocument(documentsManager.ActiveDocumentTab, path);
+        }
 
         // IBinDefinitionsHandler implementation ------------------------------
 
@@ -934,7 +944,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             Title = string.Format(Resources.Strings.MainWindow_Title, appVersionService.GetAppVersion());
 
             documentsManager = new DocumentsManager();
-            projectManager = new ProjectManager();
 
             wordWrap = configurationService.Configuration.Editor.WordWrap.Value;
             lineNumbers = configurationService.Configuration.Editor.LineNumbers.Value;
@@ -1039,9 +1048,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 eventBus, 
                 platformService);
             projectToolViewModel = new ProjectToolViewModel(this,
+                this,
                 eventBus,
                 imageResources,
-                projectManager);
+                fileIconProvider);
             binDefinitionsToolViewModel = new BinDefinitionsToolViewModel(this,
                 imageResources,
                 configurationService,
