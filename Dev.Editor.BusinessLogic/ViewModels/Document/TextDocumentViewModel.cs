@@ -41,6 +41,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private string quickSearchText;
         private bool quickSearchVisible;
         private bool quickSearchFound;
+        private bool quickSearchCaseSensitive;
+        private bool quickSearchWholeWord;
+        private bool quickSearchRegex;
 
         // Private methods ----------------------------------------------------
 
@@ -62,7 +65,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         private void HandleQuickSearchTextChanged()
         {
-            QuickSearchFound = handler.PerformQuickSearch(quickSearchText, false);
+            QuickSearchFound = handler.PerformQuickSearch(quickSearchText, false, quickSearchCaseSensitive, quickSearchWholeWord, quickSearchRegex);
         }
 
         private void HandleHighlightingChanged()
@@ -213,7 +216,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
 
         public void NotifyQuickSearchEnterPressed()
         {
-            handler.PerformQuickSearch(quickSearchText, true);
+            handler.PerformQuickSearch(quickSearchText, true, quickSearchCaseSensitive, quickSearchWholeWord, quickSearchRegex);
         }
 
         // Public properties --------------------------------------------------
@@ -280,6 +283,24 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         {
             get => quickSearchText;
             set => Set(ref quickSearchText, () => QuickSearchText, value, HandleQuickSearchTextChanged);
+        }
+
+        public bool QuickSearchCaseSensitive
+        {
+            get => quickSearchCaseSensitive;
+            set => Set(ref quickSearchCaseSensitive, () => QuickSearchCaseSensitive, value);
+        }
+
+        public bool QuickSearchWholeWord
+        {
+            get => quickSearchWholeWord;
+            set => Set(ref quickSearchWholeWord, () => QuickSearchWholeWord, value);
+        }
+
+        public bool QuickSearchRegex
+        {
+            get => quickSearchRegex;
+            set => Set(ref quickSearchRegex, () => QuickSearchRegex, value);
         }
 
         public bool QuickSearchVisible

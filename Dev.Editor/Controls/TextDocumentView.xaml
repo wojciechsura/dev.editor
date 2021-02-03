@@ -114,11 +114,22 @@
 
         <StackPanel Orientation="Vertical" Background="{StaticResource ToolBackgroundBrush}" HorizontalAlignment="Right" VerticalAlignment="Top"
                     Visibility="{Binding QuickSearchVisible, Converter={StaticResource BooleanToVisibilityConverter}}">
-            <StackPanel Orientation="Horizontal" Margin="4,4,4,0">
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource DialogItemsExceptBottomMargin}">
                 <Label>Quick search</Label>
-                <TextBox x:Name="tbQuickSearch" Width="150" Margin="4,4,4,0" Text="{Binding QuickSearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                <TextBox x:Name="tbQuickSearch" Width="150" Margin="{StaticResource DialogItemsHorizontalOnlyMargin}" Text="{Binding QuickSearchText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          PreviewKeyDown="HandleQuickSearchKeyDown"/>
-                <Button Command="{Binding CloseQuickSearchCommand}" Style="{StaticResource TransparentButton}" FontFamily="Marlett" Margin="4">r</Button>
+                <Button Command="{Binding CloseQuickSearchCommand}" Style="{StaticResource TransparentButton}" FontFamily="Marlett" Margin="{StaticResource DialogItemsHorizontalOnlyMargin}">r</Button>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Margin="{StaticResource DialogItemsExceptBottomMargin}">
+                <ToggleButton Width="24" Height="24" Margin="{StaticResource DialogItemsRightMargin}" Style="{StaticResource ToggleToolButton}" IsChecked="{Binding QuickSearchCaseSensitive, Mode=TwoWay}">
+                    <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/CaseSensitive16.png" Width="16" Height="16"/>
+                </ToggleButton>
+                <ToggleButton Width="24" Height="24" Margin="{StaticResource DialogItemsRightMargin}" Style="{StaticResource ToggleToolButton}" IsChecked="{Binding QuickSearchWholeWord, Mode=TwoWay}">
+                    <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/WholeWord16.png" Width="16" Height="16"/>
+                </ToggleButton>
+                <ToggleButton Width="24" Height="24" Style="{StaticResource ToggleToolButton}" IsChecked="{Binding QuickSearchRegex, Mode=TwoWay}">
+                    <Image Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Regex16.png" Width="16" Height="16"/>
+                </ToggleButton>
             </StackPanel>
             <TextBlock Style="{StaticResource ToolWindowMutedText}" HorizontalAlignment="Center">Press Ctrl+F second time to open Find window</TextBlock>
             <Border Background="{StaticResource ToolHeaderBackgroundBrush}" Height="4" />

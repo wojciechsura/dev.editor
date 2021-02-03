@@ -501,5 +501,10 @@
     <Resource Include="Resources\Images\Duplicates16.png" />
     <Resource Include="Resources\Images\Duplicates32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\CaseSensitive16.png" />
+    <Resource Include="Resources\Images\Regex16.png" />
+    <Resource Include="Resources\Images\WholeWord16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

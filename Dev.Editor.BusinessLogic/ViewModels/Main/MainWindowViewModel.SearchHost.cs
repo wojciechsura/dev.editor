@@ -377,10 +377,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
-        private bool DoPerformQuickSearch(string quickSearchText, bool next)
+        private bool DoPerformQuickSearch(string quickSearchText, bool next, bool caseSensitive, bool wholeWord, bool regex)
         {
-            var description = new SearchReplaceDescription(quickSearchText, null, SearchReplaceOperation.Search,
-                SearchMode.Normal, false, false, false, false, false, null, null);
+            var description = new SearchReplaceDescription(quickSearchText,
+                null,
+                SearchReplaceOperation.Search,
+                regex ? SearchMode.RegularExpressions : SearchMode.Normal,
+                caseSensitive,
+                false,
+                false,
+                wholeWord,
+                false,
+                null,
+                null);
 
             var searchModel = searchEncoder.SearchDescriptionToModel(description);
             documentsManager.ActiveDocument.LastSearch = searchModel;

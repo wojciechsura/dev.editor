@@ -799,9 +799,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             ClearAllDiffs();
         }
 
-        bool IDocumentHandler.PerformQuickSearch(string quickSearchText, bool next)
+        bool IDocumentHandler.PerformQuickSearch(string quickSearchText, bool next, bool caseSensitive, bool wholeWord, bool regex)
         {
-            return DoPerformQuickSearch(quickSearchText, next);
+            return DoPerformQuickSearch(quickSearchText, next, caseSensitive, wholeWord, regex);
         }
 
         // IToolHandler implementation ----------------------------------------

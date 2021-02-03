@@ -193,6 +193,43 @@
                 </Style.Setters>
             </Style>
 
+            <Style x:Key="ToggleToolButton" TargetType="ToggleButton">
+                <Setter Property="Padding" Value="2" />
+                <Setter Property="Margin" Value="0,2" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ToggleButton">
+                            <Border x:Name="bRoot" BorderBrush="Transparent" Background="Transparent" BorderThickness="1">
+                                <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}" />
+                            </Border>
+                            <ControlTemplate.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="bRoot" Property="BorderBrush" Value="{StaticResource ToolButtonHoverBorderBrush}" />
+                                        <Setter TargetName="bRoot" Property="Background" Value="{StaticResource ToolButtonHoverBackgroundBrush}" />
+                                    </Trigger.Setters>
+                                </Trigger>
+                                <Trigger Property="IsPressed" Value="True">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="bRoot" Property="BorderBrush" Value="{StaticResource ToolButtonDownBorderBrush}" />
+                                        <Setter TargetName="bRoot" Property="Background" Value="{StaticResource ToolButtonDownBackgroundBrush}" />
+                                    </Trigger.Setters>
+                                </Trigger>
+                                <Trigger Property="IsEnabled" Value="False">
+                                    <Trigger.Setters>
+                                        <Setter TargetName="bRoot" Property="Opacity" Value="0.4" />
+                                    </Trigger.Setters>
+                                </Trigger>
+                                <Trigger Property="IsChecked" Value="True">
+                                    <Setter TargetName="bRoot" Property="BorderBrush" Value="{StaticResource ToolButtonCheckedBrush}" />
+                                    <Setter TargetName="bRoot" Property="Background" Value="{StaticResource ToolButtonDownBackgroundBrush}" />
+                                </Trigger>
+                            </ControlTemplate.Triggers>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+            
             <Style x:Key="TransparentButton" TargetType="Button">
                 <Style.Setters>
                     <Setter Property="Template">
@@ -276,6 +313,7 @@
                                     <Trigger Property="IsChecked" Value="True">
                                         <Trigger.Setters>
                                             <Setter TargetName="bMain" Property="BorderBrush" Value="{StaticResource ToolButtonCheckedBrush}" />
+                                            <Setter TargetName="bMain" Property="Background" Value="{StaticResource ToolButtonDownBackgroundBrush}" />
                                         </Trigger.Setters>
                                     </Trigger>
                                 </ControlTemplate.Triggers>
