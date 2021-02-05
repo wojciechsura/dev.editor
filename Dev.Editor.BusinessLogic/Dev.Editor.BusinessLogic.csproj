@@ -118,6 +118,7 @@
     <Compile Include="Models\FindInFiles\FindInFilesWorkerResult.cs" />
     <Compile Include="Models\Highlighting\HighlightingInfo.cs" />
     <Compile Include="Models\Messages\MessageModel.cs" />
+    <Compile Include="Models\Navigation\FileProjectNavigationModel.cs" />
     <Compile Include="Models\SearchResults\SearchResultFilterModel.cs" />
     <Compile Include="Models\Search\SearchReplaceDescription.cs" />
     <Compile Include="Models\TextComparison\ChangesResult.cs" />

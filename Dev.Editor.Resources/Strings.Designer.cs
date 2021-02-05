@@ -1647,6 +1647,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Commands.
+        /// </summary>
+        public static string Navigation_Group_Commands {
+            get {
+                return ResourceManager.GetString("Navigation.Group.Commands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project files.
+        /// </summary>
+        public static string Navigation_Group_ProjectFiles {
+            get {
+                return ResourceManager.GetString("Navigation.Group.ProjectFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Navigation.
         /// </summary>
         public static string NavigationPopup_Header {

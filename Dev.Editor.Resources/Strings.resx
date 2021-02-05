@@ -1243,4 +1243,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="FindDuplicatedLines_MergingCommonResults" xml:space="preserve">
     <value>Merging results {0} from {1}</value>
   </data>
+  <data name="Navigation.Group.Commands" xml:space="preserve">
+    <value>Commands</value>
+  </data>
+  <data name="Navigation.Group.ProjectFiles" xml:space="preserve">
+    <value>Project files</value>
+  </data>
 </root>

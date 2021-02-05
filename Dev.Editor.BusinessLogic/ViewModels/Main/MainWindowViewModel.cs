@@ -1255,8 +1255,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 int index = navigationItems.IndexOf(selectedNavigationItem);
                 if (index > 0)
                     SelectedNavigationItem = navigationItems[index - 1];
-                access.EnsureSelectedNavigationItemVisible();
             }
+            else
+            {
+                SelectedNavigationItem = navigationItems.LastOrDefault();
+            }
+
+            access.EnsureSelectedNavigationItemVisible();
         }
 
         public void SelectNextNavigationItem()
@@ -1266,8 +1271,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 int index = navigationItems.IndexOf(selectedNavigationItem);
                 if (index < navigationItems.Count - 1)
                     SelectedNavigationItem = navigationItems[index + 1];
-                access.EnsureSelectedNavigationItemVisible();
             }
+            else
+            {
+                SelectedNavigationItem = navigationItems.FirstOrDefault();
+            }
+
+            access.EnsureSelectedNavigationItemVisible();
         }
 
         public void NotifyFilesDropped(string[] files)

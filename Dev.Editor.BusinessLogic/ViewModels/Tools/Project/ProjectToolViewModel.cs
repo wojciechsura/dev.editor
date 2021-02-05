@@ -115,11 +115,36 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Project
         private void ProjectLoader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             Items = e.Result as List<BaseProjectItemViewModel>;
+            opened = true;
         }
 
         private void DoOpenFolderAsProject()
         {
             projectHandler.OpenFolderAsProject();
+        }
+
+        private void FindProjectItemsRecursive(IReadOnlyList<BaseProjectItemViewModel> items, string navigationText, List<ProjectFileViewModel> result)
+        {
+            foreach (var item in items)
+            {
+                if (item is ProjectFolderViewModel folder)
+                {
+                    FindProjectItemsRecursive(folder.Children, navigationText, result);
+                }
+                else if (item is ProjectFileViewModel file)
+                {
+                    if (file.Filename.ToLower().Contains(navigationText.ToLower()))
+                        result.Add(file);
+                    else
+                    {
+                        var filenameCaps = new string(file.Filename.Where(c => char.IsUpper(c)).ToArray());
+                        if (filenameCaps.Contains(navigationText.ToUpper()))
+                            result.Add(file);
+                    }
+                }
+                else
+                    throw new InvalidOperationException("Unsupported project item!");
+            }
         }
 
         // Public methods -----------------------------------------------------
@@ -147,9 +172,21 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Project
             OpenFolderAsProjectCommand = new AppCommand(obj => DoOpenFolderAsProject());
         }
 
+        public List<ProjectFileViewModel> FindMatching(string navigationText)
+        {
+            var result = new List<ProjectFileViewModel>();
+
+            if (opened)
+            {
+                FindProjectItemsRecursive(items, navigationText, result);
+            }
+
+            return result;
+        }
+
         public void Receive(ApplicationActivatedEvent @event)
         {
-            // TODO
+            #warning TODO
         }
 
         public void OpenProject(string location)
