@@ -106,7 +106,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoOpenSubstitutionCipher()
         {
-
+            dialogService.OpenSubstitutionCipherWindow(this);
         }
 
         private void PerformUnescape(EscapeConfigResult model)

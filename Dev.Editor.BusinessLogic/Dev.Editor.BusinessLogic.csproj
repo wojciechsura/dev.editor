@@ -181,6 +181,8 @@
     <Compile Include="Types\UI\AdditionalToolset.cs" />
     <Compile Include="Types\UI\BottomPanelVisibility.cs" />
     <Compile Include="Types\UI\SidePanelPlacement.cs" />
+    <Compile Include="ViewModels\Alphabet\AlphabetDialogViewModel.cs" />
+    <Compile Include="ViewModels\Alphabet\IAlphabetDialogWindowAccess.cs" />
     <Compile Include="ViewModels\Base\BaseViewModel.cs" />
     <Compile Include="ViewModels\BottomTools\Base\BaseBottomToolViewModel.cs" />
     <Compile Include="ViewModels\BottomTools\Base\IBottomToolHandler.cs" />
@@ -264,6 +266,7 @@
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />
     <Compile Include="ViewModels\FindInFiles\SearchResultViewModel.cs" />
     <Compile Include="ViewModels\Search\StoredSearchViewModel.cs" />
+    <Compile Include="ViewModels\SubstitutionCipher\AlphabetEntryViewModel.cs" />
     <Compile Include="ViewModels\SubstitutionCipher\ISubstitutionCipherHost.cs" />
     <Compile Include="ViewModels\SubstitutionCipher\SubstitutionCipherWindowViewModel.cs" />
     <Compile Include="ViewModels\Tools\Base\BaseToolViewModel.cs" />
@@ -338,6 +341,7 @@
     <Compile Include="ViewModels\Main\MainWindowViewModel.Comparing.cs" />
     <EmbeddedResource Include="Resources\Highlighting\feature.xshd" />
     <EmbeddedResource Include="Resources\Highlighting\json.xshd" />
+    <Compile Include="ViewModels\Main\MainWindowViewModel.Cipher.cs" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Highlighting\cpp.png" />

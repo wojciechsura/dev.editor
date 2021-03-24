@@ -1,6 +1,7 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Dialogs;
 using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
+using Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -27,5 +28,7 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
         (bool result, string newLocation) ShowChooseFolderDialog(string location);
         void ShowProgressDialog(string operationTitle, BackgroundWorker worker);
         (bool, DuplicatedLinesFinderConfig) ShowDuplicatedLinesFinderConfigDialog(DuplicatedLinesFinderConfigModel model);
+        void OpenSubstitutionCipherWindow(ISubstitutionCipherHost host);
+        (bool, string) ShowAlphabetDialog(string previousAlphabet = null);
     }
 }

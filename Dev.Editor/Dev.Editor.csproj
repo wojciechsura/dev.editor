@@ -90,6 +90,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AlphabetDialogWindow.xaml.cs">
+      <DependentUpon>AlphabetDialogWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Behaviors\DropDownButtonBehavior.cs" />
     <Compile Include="Controls\DocumentTabHeader.cs" />
     <Compile Include="Controls\ProjectTool.xaml.cs">
@@ -183,6 +186,10 @@
     <Compile Include="Wpf\MouseEvents.cs" />
     <Compile Include="Wpf\ParentData.cs" />
     <Compile Include="Wpf\ScreenBoundsConverter.cs" />
+    <Page Include="AlphabetDialogWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Controls\ProjectTool.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -174,5 +174,14 @@ namespace Dev.Editor.Services.Dialogs
 
             substitutionCipherWindows[host].Show();
         }
+
+        public (bool, string) ShowAlphabetDialog(string previousAlphabet = null)
+        {
+            var dialog = new AlphabetDialogWindow(previousAlphabet);
+            if (dialog.ShowDialog() == true)
+                return (true, dialog.Result);
+            else
+                return (false, null);
+        }
     }
 }
