@@ -267,7 +267,9 @@
     <Compile Include="ViewModels\FindInFiles\SearchResultViewModel.cs" />
     <Compile Include="ViewModels\Search\StoredSearchViewModel.cs" />
     <Compile Include="ViewModels\SubstitutionCipher\AlphabetEntryViewModel.cs" />
+    <Compile Include="ViewModels\SubstitutionCipher\IAlphabetEntryHandler.cs" />
     <Compile Include="ViewModels\SubstitutionCipher\ISubstitutionCipherHost.cs" />
+    <Compile Include="ViewModels\SubstitutionCipher\ISubstitutionCipherWindowAccess.cs" />
     <Compile Include="ViewModels\SubstitutionCipher\SubstitutionCipherWindowViewModel.cs" />
     <Compile Include="ViewModels\Tools\Base\BaseToolViewModel.cs" />
     <Compile Include="ViewModels\Tools\Base\IToolHandler.cs" />

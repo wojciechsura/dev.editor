@@ -42,7 +42,7 @@
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
 
-            <ae:TextEditor Grid.Row="0" Style="{StaticResource CipherTextEditor}"/>
+            <ae:TextEditor Grid.Row="0" Style="{StaticResource CipherTextEditor}" Document="{Binding PlaintextDoc}"/>
 
             <ItemsControl Grid.Row="1" MinHeight="16"
                           BorderBrush="{x:Static SystemColors.InactiveBorderBrush}" BorderThickness="1"
@@ -66,7 +66,7 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <ae:TextEditor Grid.Row="2" Style="{StaticResource CipherTextEditor}"/>
+            <ae:TextEditor Grid.Row="2" Style="{StaticResource CipherTextEditor}" Document="{Binding CipherDoc}"/>
         </Grid>
     </DockPanel>
 </f:RibbonWindow>
