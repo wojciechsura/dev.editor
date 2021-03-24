@@ -173,6 +173,7 @@
     <Compile Include="Types\PropertyChange\BasePropertyChangeNotifier.cs" />
     <Compile Include="Types\Search\SearchMode.cs" />
     <Compile Include="Types\Search\SearchReplaceOperation.cs" />
+    <Compile Include="Types\SubstitutionCipher\SubstitutionCipherMode.cs" />
     <Compile Include="Types\TextComparison\ChangeType.cs" />
     <Compile Include="Types\TextComparison\FreeIndexArray.cs" />
     <Compile Include="Types\Tools\Explorer\FileItemType.cs" />
@@ -263,6 +264,8 @@
     <Compile Include="ViewModels\Search\SearchReplaceWindowViewModel.cs" />
     <Compile Include="ViewModels\FindInFiles\SearchResultViewModel.cs" />
     <Compile Include="ViewModels\Search\StoredSearchViewModel.cs" />
+    <Compile Include="ViewModels\SubstitutionCipher\ISubstitutionCipherHost.cs" />
+    <Compile Include="ViewModels\SubstitutionCipher\SubstitutionCipherWindowViewModel.cs" />
     <Compile Include="ViewModels\Tools\Base\BaseToolViewModel.cs" />
     <Compile Include="ViewModels\Tools\Base\IToolHandler.cs" />
     <Compile Include="ViewModels\Tools\BinDefinitions\BinDefinitionsToolViewModel.cs" />

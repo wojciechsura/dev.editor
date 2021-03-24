@@ -100,8 +100,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 (bool result, EscapeConfigResult model) = dialogService.ShowEscapeConfigDialog(new EscapeConfigModel(false));
 
                 if (result)
-                    PerformUnescape(model);
+                    PerformUnescape(model);                    
             }
+        }
+
+        private void DoOpenSubstitutionCipher()
+        {
+
         }
 
         private void PerformUnescape(EscapeConfigResult model)

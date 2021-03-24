@@ -112,6 +112,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand EscapeCommand { get; }
         public ICommand UnescapeCommand { get; }
 
+        public ICommand OpenSubstitutionCipherCommand { get; }
+
         // XmlTools
 
         public ICommand FormatXmlCommand { get; }

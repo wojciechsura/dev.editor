@@ -12,12 +12,14 @@ using Dev.Editor.BusinessLogic.Models.Configuration.BinDefinitions;
 using System.ComponentModel;
 using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
 using Microsoft.Win32;
+using Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher;
 
 namespace Dev.Editor.Services.Dialogs
 {
     class DialogService : IDialogService
     {
         private readonly Dictionary<ISearchHost, SearchReplaceWindow> searchWindows = new Dictionary<ISearchHost, SearchReplaceWindow>();
+        private readonly Dictionary<ISubstitutionCipherHost, SubstitutionCipherWindow> substitutionCipherWindows = new Dictionary<ISubstitutionCipherHost, SubstitutionCipherWindow>();
 
         private void SetupFileDialog(FileDialog dialog, string filter, string title, string filename, string path)
         {
@@ -159,6 +161,18 @@ namespace Dev.Editor.Services.Dialogs
                 return (true, dialog.Result);
             else
                 return (false, null);
+        }
+
+        public void OpenSubstitutionCipherWindow(ISubstitutionCipherHost host)
+        {
+            if (!substitutionCipherWindows.ContainsKey(host))
+            {
+                SubstitutionCipherWindow substitutionCipherWindow = new SubstitutionCipherWindow(host);
+                substitutionCipherWindow.Owner = Application.Current.MainWindow;
+                substitutionCipherWindows.Add(host, substitutionCipherWindow);
+            }
+
+            substitutionCipherWindows[host].Show();
         }
     }
 }

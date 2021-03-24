@@ -174,6 +174,9 @@
     <Compile Include="Services\Registry\RegistryService.cs" />
     <Compile Include="Services\SingleInstance\SingleInstanceService.cs" />
     <Compile Include="Services\WinAPI\WinAPIService.cs" />
+    <Compile Include="SubstitutionCipherWindow.xaml.cs">
+      <DependentUpon>SubstitutionCipherWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Wpf\AccessKeyScopeControl.cs" />
     <Compile Include="Wpf\DocumentTemplateSelector.cs" />
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
@@ -269,6 +272,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SearchReplaceWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="SubstitutionCipherWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

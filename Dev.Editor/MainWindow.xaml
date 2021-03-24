@@ -807,6 +807,12 @@
                     
                 </f:RibbonGroupBox>
 
+                <f:RibbonGroupBox Header="#Cipher">
+                    <f:Button Header="#Substitution cipher" Command="{Binding OpenSubstitutionCipherCommand}"
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Duplicates32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Duplicates16.png" />
+                </f:RibbonGroupBox>
+                
             </f:RibbonTabItem>
 
             <!-- XML tools tab -->
