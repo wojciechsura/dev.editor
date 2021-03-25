@@ -93,6 +93,7 @@
             <SolidColorBrush x:Key="TextReplaceBackgroundBrush" Color="#a0fb83" />
 
             <SolidColorBrush x:Key="TransparentButtonHoverBrush" Color="#3A9EFF" />
+            <SolidColorBrush x:Key="ErrorBackgroundBrush" Color="#ffe0e0" />
 
             <!-- Document templates -->
 
@@ -109,6 +110,12 @@
             </DataTemplate>
 
             <!-- Styles -->
+
+            <Style x:Key="RootDockPanel" TargetType="DockPanel">
+                <Style.Setters>
+                    <Setter Property="Background" Value="{StaticResource FormBackgroundBrush}" />
+                </Style.Setters>
+            </Style>
 
             <Style TargetType="Button">
                 <Style.Setters>

@@ -7,21 +7,29 @@
                 xmlns:ae="http://icsharpcode.net/sharpdevelop/avalonedit"
                 xmlns:local="clr-namespace:Dev.Editor"                
                 xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher;assembly=Dev.Editor.BusinessLogic"
+                xmlns:t="clr-namespace:Dev.Editor.BusinessLogic.Types.SubstitutionCipher;assembly=Dev.Editor.BusinessLogic"
                 mc:Ignorable="d"
                 Title="SubstitutionCipherWindow" Height="450" Width="800"
                 WindowStartupLocation="CenterOwner">
     <Window.Resources>
-        <Style x:Key="CipherTextEditor" TargetType="{x:Type ae:TextEditor}">
-            <Style.Triggers>
-                <Trigger Property="IsReadOnly" Value="True">
-                    <Trigger.Setters>
-                        <Setter Property="Background" Value="#e0e0e0" />
-                    </Trigger.Setters>
-                </Trigger>
-            </Style.Triggers>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            
+            <Style x:Key="CipherTextEditor" TargetType="{x:Type ae:TextEditor}">
+                <Style.Triggers>
+                    <Trigger Property="IsReadOnly" Value="True">
+                        <Trigger.Setters>
+                            <Setter Property="Background" Value="#e0e0e0" />
+                        </Trigger.Setters>
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+        </ResourceDictionary>
     </Window.Resources>
-    <DockPanel>
+    
+    <DockPanel Style="{StaticResource RootDockPanel}">
         <f:Ribbon DockPanel.Dock="Top">
             <f:RibbonTabItem Header="#Home">
                 <f:RibbonGroupBox Header="#General">
@@ -29,20 +37,28 @@
                         <f:MenuItem Header="#Resolve from source" />
                     </f:SplitButton>
                     <f:DropDownButton Header="#Mode">
-                        <f:MenuItem Header="#Ciphering" />
-                        <f:MenuItem Header="#Unciphering" />
+                        <f:MenuItem Header="#Ciphering" 
+                                    IsChecked="{Binding Mode, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static t:SubstitutionCipherMode.Cipher}}"
+                                    Command="{Binding SwitchModeToCipherCommand}"/>
+                        <f:MenuItem Header="#Unciphering" 
+                                    IsChecked="{Binding Mode, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static t:SubstitutionCipherMode.Uncipher}}"
+                                    Command="{Binding SwitchModeToUncipherCommand}"/>
                     </f:DropDownButton>
                 </f:RibbonGroupBox>
             </f:RibbonTabItem>
         </f:Ribbon>
-        <Grid>
+        <Grid Margin="{StaticResource HalfMargin}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="1*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
 
-            <ae:TextEditor Grid.Row="0" Style="{StaticResource CipherTextEditor}" Document="{Binding PlaintextDoc}"/>
+            <ae:TextEditor Grid.Row="0" Style="{StaticResource CipherTextEditor}" Document="{Binding PlaintextDoc}"
+                           IsReadOnly="{Binding Mode, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static t:SubstitutionCipherMode.Uncipher}}"
+                           BorderThickness="0"
+                           FontFamily="Consolas"      
+                           FontSize="10pt"/>
 
             <ItemsControl Grid.Row="1" MinHeight="16"
                           BorderBrush="{x:Static SystemColors.InactiveBorderBrush}" BorderThickness="1"
@@ -58,15 +74,27 @@
                         <Border Margin="{StaticResource DialogItemsExceptRightMargin}" Background="{x:Static SystemColors.ControlBrush}"
                                 CornerRadius="3">
                             <StackPanel Orientation="Vertical" Margin="{StaticResource DefaultMargin}">
-                                <Label Content="{Binding Plaintext}" />
-                                <TextBox MaxLength="1" Text="{Binding Cipher, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                                <Label Content="{Binding Plaintext}" FontFamily="Consolas"/>
+                                <TextBox x:Name="tbCipher" MaxLength="1" Text="{Binding Cipher, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                         FontFamily="Consolas"/>
                             </StackPanel>
                         </Border>
+                        <DataTemplate.Triggers>
+                            <DataTrigger Binding="{Binding IsDoubled}" Value="True">
+                                <DataTrigger.Setters>
+                                    <Setter TargetName="tbCipher" Property="Background" Value="{StaticResource ErrorBackgroundBrush}" />
+                                </DataTrigger.Setters>
+                            </DataTrigger>
+                        </DataTemplate.Triggers>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
 
-            <ae:TextEditor Grid.Row="2" Style="{StaticResource CipherTextEditor}" Document="{Binding CipherDoc}"/>
+            <ae:TextEditor Grid.Row="2" Style="{StaticResource CipherTextEditor}" Document="{Binding CipherDoc}"
+                           IsReadOnly="{Binding Mode, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static t:SubstitutionCipherMode.Cipher}}"
+                           BorderThickness="0"
+                           FontFamily="Consolas"      
+                           FontSize="10pt"/>
         </Grid>
     </DockPanel>
 </f:RibbonWindow>

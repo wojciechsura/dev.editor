@@ -37,6 +37,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             {
                 Key = key;
                 Data = data;
+                Forward = forward;
             }
 
             public Dictionary<char, char> Key { get; }
@@ -183,19 +184,59 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 
         private void HandleCipherTextChanged(object sender, DocumentChangeEventArgs e)
         {
-            RestartActionTimer();
+            if (mode == SubstitutionCipherMode.Uncipher)
+                RestartActionTimer();
         }
 
         private void HandlePlaintextChanged(object sender, DocumentChangeEventArgs e)
         {
+            if (mode == SubstitutionCipherMode.Cipher)
+                RestartActionTimer();
+        }
+
+        private void HandleModeChanged()
+        {
             RestartActionTimer();
         }
+
+        private void ValidateAlphabet()
+        {
+            if (alphabet == null)
+                return;
+
+            var groups = alphabet.GroupBy(e => e.Cipher?.ToLowerInvariant());
+
+            foreach (var group in groups)
+            {
+                if (group.Count() == 1 || string.IsNullOrEmpty(group.Key))
+                {
+                    foreach (var item in group)
+                        item.IsDoubled = false;
+                }
+                else
+                {
+                    foreach (var item in group)
+                        item.IsDoubled = true;
+                }
+            }
+        }
+
+        private void DoSwitchModeToUncipher()
+        {
+            Mode = SubstitutionCipherMode.Uncipher;
+        }
+
+        private void DoSwitchModeToCipher()
+        {
+            Mode = SubstitutionCipherMode.Cipher;
+        }
+
 
         // IAlphabetEntryHandler implementation -------------------------------
 
         void IAlphabetEntryHandler.NotifyChanged(AlphabetEntryViewModel alphabetEntryViewModel)
         {
-            // TODO verify duplicates
+            ValidateAlphabet();
 
             RestartActionTimer();
         }
@@ -216,9 +257,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             cipherDoc.Changed += HandleCipherTextChanged;
 
             EnterAlphabetCommand = new AppCommand(obj => DoEnterAlphabet());
+            SwitchModeToCipherCommand = new AppCommand(obj => DoSwitchModeToCipher());
+            SwitchModeToUncipherCommand = new AppCommand(obj => DoSwitchModeToUncipher());
         }
 
         public void NotifyActionTimerElapsed()
+        {
+            StartCipherOperation();
+        }
+
+        private void StartCipherOperation()
         {
             if (currentWorker != null)
             {
@@ -228,7 +276,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 
             Dictionary<char, char> key;
             if (alphabet != null)
-                key = alphabet.Where(e => !String.IsNullOrEmpty(e.Cipher)).ToDictionary(e => e.Plaintext[0], e => e.Cipher[0]);
+                key = alphabet
+                    .Where(e => !String.IsNullOrEmpty(e.Cipher) && !e.IsDoubled)
+                    .ToDictionary(e => e.Plaintext[0], e => e.Cipher[0]);
             else
                 key = new Dictionary<char, char>();
 
@@ -271,11 +321,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
         public SubstitutionCipherMode Mode
         {
             get => mode;
-            set => Set(ref mode, () => Mode, value);
+            set => Set(ref mode, () => Mode, value, HandleModeChanged);
         }
 
         public ObservableCollection<AlphabetEntryViewModel> Alphabet => alphabet;
 
         public ICommand EnterAlphabetCommand { get; }
+
+        public ICommand SwitchModeToCipherCommand { get; }
+
+        public ICommand SwitchModeToUncipherCommand { get; }
     }
 }

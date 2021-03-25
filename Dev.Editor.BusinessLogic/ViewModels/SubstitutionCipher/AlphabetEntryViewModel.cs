@@ -10,13 +10,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
     public class AlphabetEntryViewModel : BaseViewModel
     {
         private readonly IAlphabetEntryHandler handler;
-        private readonly char plaintext;
-        private char? cipher;
+        private readonly string plaintext;
+        private string cipher;
         private bool isDoubled;
+
+        private void HandleCipherChanged()
+        {
+            handler.NotifyChanged(this);
+        }
 
         public AlphabetEntryViewModel(char plaintext, IAlphabetEntryHandler handler)
         {
-            this.plaintext = plaintext;
+            this.plaintext = plaintext.ToString();
             this.handler = handler;
             cipher = null;
             isDoubled = false;
@@ -26,23 +31,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 
         public string Cipher
         {
-            get => cipher.ToString();
-            set
-            {
-                if (string.IsNullOrEmpty(value))
-                    cipher = null;
-                else
-                    cipher = value[0];
-
-                OnPropertyChanged(() => Cipher);
-                handler.NotifyChanged(this);
-            }
+            get => cipher;
+            set => Set(ref cipher, () => Cipher, value, HandleCipherChanged);
         }
 
         public bool IsDoubled
         {
             get => isDoubled;
-            set => Set(ref isDoubled, () => isDoubled, value);
+            set => Set(ref isDoubled, () => IsDoubled, value);
         }
     }
 }

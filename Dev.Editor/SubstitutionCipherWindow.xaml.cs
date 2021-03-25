@@ -29,7 +29,7 @@ namespace Dev.Editor
 
         private void HandleTimerTick(object sender, EventArgs e)
         {
-            timer.Stop();
+            (sender as DispatcherTimer).Stop();
             viewModel.NotifyActionTimerElapsed();
         }
 
@@ -44,7 +44,7 @@ namespace Dev.Editor
             InitializeComponent();
 
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Interval = TimeSpan.FromMilliseconds(300);
             timer.Tick += HandleTimerTick;
 
             viewModel = Dependencies.Container.Instance.Resolve<SubstitutionCipherWindowViewModel>(new ParameterOverride("host", host),

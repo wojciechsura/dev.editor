@@ -97,12 +97,6 @@
                 </Style.Setters>
             </Style>
 
-            <Style x:Key="RootDockPanel" TargetType="DockPanel">
-                <Style.Setters>
-                    <Setter Property="Background" Value="{StaticResource FormBackgroundBrush}" />
-                </Style.Setters>
-            </Style>
-
             <Style x:Key="RootGridSplitter" TargetType="GridSplitter">
                 <Style.Setters>
                     <Setter Property="Focusable" Value="False" />
