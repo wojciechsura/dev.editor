@@ -23,19 +23,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
     {
         // Private types ------------------------------------------------------
 
-        private class UniqueValueComparer : IEqualityComparer<KeyValuePair<char, char>>
-        {
-            public bool Equals(KeyValuePair<char, char> x, KeyValuePair<char, char> y)
-            {
-                return x.Value.Equals(y.Value);
-            }
-
-            public int GetHashCode(KeyValuePair<char, char> obj)
-            {
-                return obj.Value.GetHashCode();
-            }
-        }
-
         private class WorkerInput
         {
             public WorkerInput(Dictionary<char, char> key, string data, bool forward)
@@ -62,63 +49,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 
         private class CipherWorker : BackgroundWorker
         {
-            public CipherWorker()
+            private readonly ISubstitutionCipherService substitutionCipherService;
+
+            public CipherWorker(ISubstitutionCipherService substitutionCipherService)
             {
                 WorkerSupportsCancellation = true;
+                this.substitutionCipherService = substitutionCipherService;
             }
 
             protected override void OnDoWork(DoWorkEventArgs e)
             {
                 var input = e.Argument as WorkerInput;
-
-                if (input.Data == null)
-                {
-                    e.Result = null;
-                    return;
-                }
-
-                if (input.Key == null)
-                    throw new InvalidOperationException("Key cannot be null!");
-                if (input.Key.Any(kvp => !char.IsLower(kvp.Key) || !char.IsLower(kvp.Value)))
-                    throw new InvalidOperationException("Only lowercase letters are allowed in the key!");
-
-                Dictionary<char, char> key;
-                if (input.Forward)
-                    key = input.Key;
-                else
-                {
-                    key = input.Key
-                        .Distinct(new UniqueValueComparer())
-                        .ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
-                }
-
-                StringBuilder result = new StringBuilder();
-                
-                foreach (var dataChar in input.Data)
-                {
-                    bool isUpper = char.IsUpper(dataChar);
-
-                    var dataCharKey = char.ToLowerInvariant(dataChar);
-                    if (key.ContainsKey(dataCharKey))
-                    {
-                        if (isUpper)
-                            result.Append(char.ToUpper(key[dataCharKey]));
-                        else
-                            result.Append(key[dataCharKey]);
-                    }
-                    else
-                    {
-                        result.Append(dataCharKey);
-                    }
-
-                    if (CancellationPending)
-                    {
-                        e.Result = null;
-                        return;
-                    }
-                }
-
-                e.Result = new WorkerOutput(result.ToString());
+                var result = substitutionCipherService.Process(input.Key, input.Data, input.Forward, () => CancellationPending);
+                e.Result = new WorkerOutput(result);
             }
         }
 
@@ -137,21 +80,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             protected override void OnDoWork(DoWorkEventArgs e)
             {
                 var data = e.Argument as string[];
-
-                var statsModel = substitutionCipherService.InitializeLanguageStatisticsModel();
-
-                for (int i = 0; i < data.Length; i++)
-                {
-                    if (CancellationPending)
-                        return;
-
-                    ReportProgress(i * 100 / data.Length);
-
-                    var line = data[i];
-                    substitutionCipherService.AddLineToLanguageStatisticsModel(statsModel, line);
-                }
-
-                var info = substitutionCipherService.BuildLanguageInfoModel(statsModel);
+                var info = substitutionCipherService.BuildLanguageInfoModel(data, () => CancellationPending, progress => ReportProgress(progress));
                 e.Result = info;
             }
         }
@@ -176,6 +105,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
         private readonly ObservableCollection<AlphabetEntryViewModel> alphabet = new ObservableCollection<AlphabetEntryViewModel>();
 
         private readonly BaseCondition languageDataAvailableCondition;
+        private readonly BaseCondition modeIsUncipher;
 
         // Private methods ----------------------------------------------------
 
@@ -279,12 +209,34 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 
         private void DoSaveLanguageData()
         {
-            throw new NotImplementedException();
+            var result = dialogService.ShowSaveDialog("#Language data files (*.langdata)|*.langdata");
+            if (result.Result)
+            {
+                try
+                {
+                    substitutionCipherService.SaveLanguageInfoModel(result.FileName, languageData);
+                }
+                catch 
+                {
+                    messagingService.ShowError("#Failed to save language data!");
+                }
+            }
         }
 
         private void DoOpenLanguageData()
         {
-            throw new NotImplementedException();
+            var result = dialogService.ShowOpenDialog("#Language data files (*.langdata)|*.langdata");
+            if (result.Result)
+            {
+                try
+                {
+                    LanguageData = substitutionCipherService.LoadLanguageInfoModel(result.FileName);
+                }
+                catch
+                {
+                    messagingService.ShowError("#Failed to load language data!");
+                }
+            }
         }
 
         private void DoGenerateLanguageData()
@@ -315,6 +267,53 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             if (!e.Cancelled)
             {
                 LanguageData = e.Result as LanguageInfoModel;
+            }
+        }
+
+        private void DoSolveFromLetterFreq()
+        {
+            int? findAlphabetPlaintextEntry(char c)
+            {
+                for (int i = 0; i < alphabet.Count; i++)
+                    if (alphabet[i].Plaintext[0] == c)
+                        return i;
+
+                return null;
+            }
+
+            var plain = alphabet.Select(e => e.Plaintext[0]);
+            var cipher = alphabet.Where(e => !string.IsNullOrEmpty(e.Cipher)).Select(e => e.Cipher[0]);
+
+            // If user did not enter any cipher values, assume the same alphabet as plain
+            if (!cipher.Any())
+                cipher = new List<char>(plain);
+
+            var letterStats = cipherDoc.Text
+                .ToLowerInvariant()
+                .GroupBy(c => c)
+                .Where(g => cipher.Contains(g.Key))
+                .Select(g => new { Character = g.Key, Count = g.Count() })
+                .OrderByDescending(x => x.Count)
+                .ToList();
+
+            var letterFreqs = languageData.LetterFrequencies
+                .OrderByDescending(lf => lf.Value)
+                .ToList();
+
+            int letterFreqIndex = 0;
+            int cipherIndex = 0;
+
+            while (letterFreqIndex < letterFreqs.Count() && cipherIndex < letterStats.Count())
+            {
+                // Try to find plain letter from letter freqs
+                int? alphabetIndex = findAlphabetPlaintextEntry(letterFreqs[letterFreqIndex].Key);
+                if (alphabetIndex != null)
+                {
+                    alphabet[alphabetIndex.Value].Cipher = letterStats[cipherIndex].Character.ToString();
+                    cipherIndex++;
+                }
+
+                letterFreqIndex++;
             }
         }
 
@@ -349,6 +348,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             cipherDoc.Changed += HandleCipherTextChanged;
 
             languageDataAvailableCondition = new LambdaCondition<SubstitutionCipherWindowViewModel>(this, vm => vm.LanguageData != null, false);
+            modeIsUncipher = new LambdaCondition<SubstitutionCipherWindowViewModel>(this, vm => vm.Mode == SubstitutionCipherMode.Uncipher);
 
             EnterAlphabetCommand = new AppCommand(obj => DoEnterAlphabet());
             SwitchModeToCipherCommand = new AppCommand(obj => DoSwitchModeToCipher());
@@ -357,6 +357,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             GenerateLanguageDataCommand = new AppCommand(obj => DoGenerateLanguageData());
             OpenLanguageDataCommand = new AppCommand(obj => DoOpenLanguageData());
             SaveLanguageDataCommand = new AppCommand(obj => DoSaveLanguageData(), languageDataAvailableCondition);
+            SolveFromLetterFreqCommand = new AppCommand(obj => DoSolveFromLetterFreq(), languageDataAvailableCondition & modeIsUncipher);
         }
 
         public void NotifyActionTimerElapsed()
@@ -405,7 +406,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             }
 
             var input = new WorkerInput(key, data, forward);
-            currentWorker = new CipherWorker();
+            currentWorker = new CipherWorker(substitutionCipherService);
             currentWorker.RunWorkerCompleted += completeHandler;
             currentWorker.RunWorkerAsync(input);
         }
@@ -436,5 +437,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
         public ICommand GenerateLanguageDataCommand { get; }
         public ICommand OpenLanguageDataCommand { get; }
         public ICommand SaveLanguageDataCommand { get; }
+        public ICommand SolveFromLetterFreqCommand { get; }
     }
 }

@@ -76,6 +76,11 @@
                         <f:Button x:Name="bSaveLanguageData" Header="#Save" Size="Middle" Command="{Binding SaveLanguageDataCommand}" />
 
                     </f:RibbonToolBar>
+
+                    <Separator />
+
+                    <f:Button Header="Solve from letter freq." Command="{Binding SolveFromLetterFreqCommand}" />
+
                 </f:RibbonGroupBox>
             </f:RibbonTabItem>
         </f:Ribbon>

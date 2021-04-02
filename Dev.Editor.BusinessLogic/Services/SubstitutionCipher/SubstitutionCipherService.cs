@@ -18,6 +18,21 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
         private const double MinimumSequenceFitness = -10.0; // Log10(MinimumSequenceFrequency)
         private const string Header = "LANGINFO";
 
+        // Private types ------------------------------------------------------
+
+        private class UniqueValueComparer : IEqualityComparer<KeyValuePair<char, char>>
+        {
+            public bool Equals(KeyValuePair<char, char> x, KeyValuePair<char, char> y)
+            {
+                return x.Value.Equals(y.Value);
+            }
+
+            public int GetHashCode(KeyValuePair<char, char> obj)
+            {
+                return obj.Value.GetHashCode();
+            }
+        }
+
         // Private methods ----------------------------------------------------
 
         private void ValidateSeqStats(Dictionary<int, Dictionary<string, SequenceInfoModel>> sequences)
@@ -49,70 +64,79 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
             return Math.Log10(Math.Max(MinimumSequenceFrequency, freq));
         }
 
-        // Public methods -----------------------------------------------------
-
-        public LanguageStatisticsModel InitializeLanguageStatisticsModel()
+        private LanguageStatisticsModel GenerateLanguageStatisticsModel(string[] lines, Func<bool> checkCancellation, Action<int> reportProgress)
         {
-            var result = new LanguageStatisticsModel();
+            var model = new LanguageStatisticsModel();
             for (int i = MinChars; i <= MaxChars; i++)
-                result.Sequences[i] = new Dictionary<string, int>();
+                model.Sequences[i] = new Dictionary<string, int>();
 
-            return result;
-        }
-
-        public void AddLineToLanguageStatisticsModel(LanguageStatisticsModel model, string line)
-        {
-            char[] chars = new char[MaxChars];
-            int nextChar = 0;
-            int totalChars = 0;
-
-            foreach (var ch in line)
+            for (int l = 0; l < lines.Length; l++)
             {
-                if (char.IsLetter(ch))
+                if (checkCancellation?.Invoke() ?? false)
+                    return null;
+
+                reportProgress?.Invoke(l * 100 / lines.Length);
+
+                string line = lines[l];
+
+                char[] chars = new char[MaxChars];
+                int nextChar = 0;
+                int totalChars = 0;
+
+                foreach (var ch in line)
                 {
-                    var lowerCh = Char.ToLowerInvariant(ch);
-
-                    if (model.LetterStats.ContainsKey(lowerCh))
-                        model.LetterStats[lowerCh]++;
-                    else
-                        model.LetterStats[lowerCh] = 1;
-
-                    chars[nextChar++] = lowerCh;
-                    nextChar %= MaxChars;
-                    totalChars++;
-
-                    if (totalChars >= MinChars)
+                    if (char.IsLetter(ch))
                     {
-                        StringBuilder sb = new StringBuilder();
-                        int index = (nextChar - Math.Min(totalChars, MaxChars));
-                        if (index < 0)
-                            index += MaxChars;
+                        var lowerCh = Char.ToLowerInvariant(ch);
 
-                        for (int i = 1; i < MinChars; i++)
-                            sb.Append(chars[(index + i - 1) % MaxChars]);
+                        if (model.LetterStats.ContainsKey(lowerCh))
+                            model.LetterStats[lowerCh]++;
+                        else
+                            model.LetterStats[lowerCh] = 1;
 
-                        for (int i = MinChars; i <= Math.Min(MaxChars, totalChars); i++)
+                        chars[nextChar++] = lowerCh;
+                        nextChar %= MaxChars;
+                        totalChars++;
+
+                        if (totalChars >= MinChars)
                         {
-                            sb.Append(chars[(index + i - 1) % MaxChars]);
-                            var seq = sb.ToString();
+                            StringBuilder sb = new StringBuilder();
+                            int index = (nextChar - Math.Min(totalChars, MaxChars));
+                            if (index < 0)
+                                index += MaxChars;
 
-                            if (model.Sequences[i].ContainsKey(seq))
-                                model.Sequences[i][seq]++;
-                            else
-                                model.Sequences[i][seq] = 1;
+                            for (int i = 1; i < MinChars; i++)
+                                sb.Append(chars[(index + i - 1) % MaxChars]);
+
+                            for (int i = MinChars; i <= Math.Min(MaxChars, totalChars); i++)
+                            {
+                                sb.Append(chars[(index + i - 1) % MaxChars]);
+                                var seq = sb.ToString();
+
+                                if (model.Sequences[i].ContainsKey(seq))
+                                    model.Sequences[i][seq]++;
+                                else
+                                    model.Sequences[i][seq] = 1;
+                            }
                         }
                     }
-                }
-                else
-                {
-                    nextChar = 0;
-                    totalChars = 0;
+                    else
+                    {
+                        nextChar = 0;
+                        totalChars = 0;
+                    }
                 }
             }
-        }      
-        
-        public LanguageInfoModel BuildLanguageInfoModel(LanguageStatisticsModel model)
+
+            return model;
+        }
+
+        // Public methods -----------------------------------------------------
+
+        public LanguageInfoModel BuildLanguageInfoModel(string[] lines, Func<bool> checkCancellation, Action<int> reportProgress)
         {
+            var model = GenerateLanguageStatisticsModel(lines, checkCancellation, reportProgress);
+
             // Sanity check
 
             if (model.LetterStats.Any(l => !char.IsLower(l.Key)))
@@ -244,7 +268,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
                         seqInfo[seq] = new SequenceInfoModel(freq, FitnessFromFrequency(freq));
                     }
 
-                    sequences[seqCount] = seqInfo;
+                    sequences[seqLength] = seqInfo;
                 }
             }
 
@@ -254,6 +278,54 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
             ValidateSeqStats(sequences);
 
             return new LanguageInfoModel(letters, sequences);
+        }
+
+        public string Process(Dictionary<char, char> inputKey, string data, bool forward, Func<bool> checkCancellation = null)
+        {
+            if (data == null)
+                return null;
+
+            if (inputKey == null)
+                throw new InvalidOperationException("Key cannot be null!");
+            if (inputKey.Any(kvp => !char.IsLower(kvp.Key) || !char.IsLower(kvp.Value)))
+                throw new InvalidOperationException("Only lowercase letters are allowed in the key!");
+
+            Dictionary<char, char> key;
+            if (forward)
+                key = inputKey;
+            else
+            {
+                key = inputKey
+                    .Distinct(new UniqueValueComparer())
+                    .ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+            }
+
+            StringBuilder result = new StringBuilder();
+
+            foreach (var dataChar in data)
+            {
+                bool isUpper = char.IsUpper(dataChar);
+
+                var dataCharKey = char.ToLowerInvariant(dataChar);
+                if (key.ContainsKey(dataCharKey))
+                {
+                    if (isUpper)
+                        result.Append(char.ToUpper(key[dataCharKey]));
+                    else
+                        result.Append(key[dataCharKey]);
+                }
+                else
+                {
+                    result.Append(dataChar);
+                }
+
+                if (checkCancellation?.Invoke() ?? false)
+                {
+                    return null;
+                }
+            }
+
+            return result.ToString();
         }
     }
 }

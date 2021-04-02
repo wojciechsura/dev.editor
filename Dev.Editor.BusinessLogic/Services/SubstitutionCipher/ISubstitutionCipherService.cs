@@ -9,8 +9,9 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
 {
     public interface ISubstitutionCipherService
     {
-        void AddLineToLanguageStatisticsModel(LanguageStatisticsModel model, string line);
-        LanguageInfoModel BuildLanguageInfoModel(LanguageStatisticsModel model);
-        LanguageStatisticsModel InitializeLanguageStatisticsModel();
+        LanguageInfoModel BuildLanguageInfoModel(string[] lines, Func<bool> checkCancellation, Action<int> reportProgress);
+        LanguageInfoModel LoadLanguageInfoModel(string filename);
+        string Process(Dictionary<char, char> inputKey, string data, bool forward, Func<bool> checkCancellation = null);
+        void SaveLanguageInfoModel(string filename, LanguageInfoModel model);
     }
 }
