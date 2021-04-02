@@ -25,13 +25,14 @@ namespace Dev.Editor
     {
         private ProgressWindowViewModel viewModel;
 
-        public ProgressWindow(string operationTitle, BackgroundWorker worker)
+        public ProgressWindow(string operationTitle, BackgroundWorker worker, object workerParameter)
         {
             InitializeComponent();
 
             viewModel = Dependencies.Container.Instance.Resolve<ProgressWindowViewModel>(
                 new ParameterOverride("operationTitle", operationTitle),
                 new ParameterOverride("worker", worker),
+                new ParameterOverride("workerParameter", workerParameter),
                 new ParameterOverride("access", this));
             DataContext = viewModel;
         }

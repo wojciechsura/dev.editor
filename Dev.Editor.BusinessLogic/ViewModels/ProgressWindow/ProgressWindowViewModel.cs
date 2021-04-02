@@ -14,16 +14,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.ProgressWindow
     public class ProgressWindowViewModel : BaseViewModel
     {
         private readonly BackgroundWorker worker;
+        private object workerParameter;
         private readonly IProgressWindowAccess access;
         private string currentOperation;
         private Condition cancelAvailableCondition;
         private int progress;
         private string operationTitle;
 
-        public ProgressWindowViewModel(string operationTitle, BackgroundWorker worker, IProgressWindowAccess access)
+        public ProgressWindowViewModel(string operationTitle, BackgroundWorker worker, object workerParameter, IProgressWindowAccess access)
         {
             OperationTitle = operationTitle;
             this.worker = worker;
+            this.workerParameter = workerParameter;
+
             this.access = access;
             currentOperation = String.Empty;
             progress = 0;
@@ -43,7 +46,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.ProgressWindow
 
         public void NotifyLoaded()
         {
-            worker.RunWorkerAsync();
+            worker.RunWorkerAsync(workerParameter);
         }
 
         private void HandleWorkerProgressChanged(object sender, ProgressChangedEventArgs e)

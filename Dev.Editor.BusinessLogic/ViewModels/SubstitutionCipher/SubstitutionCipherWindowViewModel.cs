@@ -1,12 +1,17 @@
-﻿using Dev.Editor.BusinessLogic.Services.Dialogs;
+﻿using Dev.Editor.BusinessLogic.Models.SubstitutionCipher;
+using Dev.Editor.BusinessLogic.Services.Dialogs;
+using Dev.Editor.BusinessLogic.Services.Messaging;
+using Dev.Editor.BusinessLogic.Services.SubstitutionCipher;
 using Dev.Editor.BusinessLogic.Types.SubstitutionCipher;
 using Dev.Editor.BusinessLogic.ViewModels.Base;
 using ICSharpCode.AvalonEdit.Document;
 using Spooksoft.VisualStateManager.Commands;
+using Spooksoft.VisualStateManager.Conditions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -117,19 +122,60 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             }
         }
 
+        private class LanguageDataBuilderWorker : BackgroundWorker
+        {
+            private readonly ISubstitutionCipherService substitutionCipherService;
+
+            public LanguageDataBuilderWorker(ISubstitutionCipherService substitutionCipherService)
+            {
+                this.substitutionCipherService = substitutionCipherService;
+
+                WorkerSupportsCancellation = true;
+                WorkerReportsProgress = true;
+            }
+
+            protected override void OnDoWork(DoWorkEventArgs e)
+            {
+                var data = e.Argument as string[];
+
+                var statsModel = substitutionCipherService.InitializeLanguageStatisticsModel();
+
+                for (int i = 0; i < data.Length; i++)
+                {
+                    if (CancellationPending)
+                        return;
+
+                    ReportProgress(i * 100 / data.Length);
+
+                    var line = data[i];
+                    substitutionCipherService.AddLineToLanguageStatisticsModel(statsModel, line);
+                }
+
+                var info = substitutionCipherService.BuildLanguageInfoModel(statsModel);
+                e.Result = info;
+            }
+        }
+
         // Private fields -----------------------------------------------------
 
         private readonly ISubstitutionCipherHost host;
         private readonly IDialogService dialogService;
+        private readonly IMessagingService messagingService;
+        private readonly ISubstitutionCipherService substitutionCipherService;
         private readonly ISubstitutionCipherWindowAccess access;
 
         private readonly TextDocument plaintextDoc;
         private readonly TextDocument cipherDoc;
+        
         private SubstitutionCipherMode mode;
+
+        private LanguageInfoModel languageData;
 
         private CipherWorker currentWorker;
 
         private readonly ObservableCollection<AlphabetEntryViewModel> alphabet = new ObservableCollection<AlphabetEntryViewModel>();
+
+        private readonly BaseCondition languageDataAvailableCondition;
 
         // Private methods ----------------------------------------------------
 
@@ -231,6 +277,46 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             Mode = SubstitutionCipherMode.Cipher;
         }
 
+        private void DoSaveLanguageData()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DoOpenLanguageData()
+        {
+            throw new NotImplementedException();
+        }
+
+        private void DoGenerateLanguageData()
+        {
+            var result = dialogService.ShowOpenDialog("#Text files (*.txt)|*.txt");
+            if (result.Result)
+            {
+                string[] lines;
+                try
+                {
+                    lines = File.ReadAllLines(result.FileName);
+                }
+                catch (IOException)
+                {
+                    messagingService.ShowError("#Failed to open language sample file!");
+                    return;
+                }
+
+                var worker = new LanguageDataBuilderWorker(substitutionCipherService);
+                worker.RunWorkerCompleted += HandleLanguageDataBuilt;
+
+                dialogService.ShowProgressDialog("#Building language data...", worker, lines);
+            }
+        }
+
+        private void HandleLanguageDataBuilt(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (!e.Cancelled)
+            {
+                LanguageData = e.Result as LanguageInfoModel;
+            }
+        }
 
         // IAlphabetEntryHandler implementation -------------------------------
 
@@ -243,9 +329,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 
         // Public methods -----------------------------------------------------
 
-        public SubstitutionCipherWindowViewModel(IDialogService dialogService, ISubstitutionCipherWindowAccess access, ISubstitutionCipherHost host)
+        public SubstitutionCipherWindowViewModel(IDialogService dialogService, 
+            IMessagingService messagingService, 
+            ISubstitutionCipherService substitutionCipherService,
+            ISubstitutionCipherWindowAccess access, 
+            ISubstitutionCipherHost host)
         {
             this.dialogService = dialogService;
+            this.messagingService = messagingService;
+            this.substitutionCipherService = substitutionCipherService;
             this.access = access;
             this.host = host;
 
@@ -256,9 +348,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             cipherDoc = new TextDocument();
             cipherDoc.Changed += HandleCipherTextChanged;
 
+            languageDataAvailableCondition = new LambdaCondition<SubstitutionCipherWindowViewModel>(this, vm => vm.LanguageData != null, false);
+
             EnterAlphabetCommand = new AppCommand(obj => DoEnterAlphabet());
             SwitchModeToCipherCommand = new AppCommand(obj => DoSwitchModeToCipher());
             SwitchModeToUncipherCommand = new AppCommand(obj => DoSwitchModeToUncipher());
+
+            GenerateLanguageDataCommand = new AppCommand(obj => DoGenerateLanguageData());
+            OpenLanguageDataCommand = new AppCommand(obj => DoOpenLanguageData());
+            SaveLanguageDataCommand = new AppCommand(obj => DoSaveLanguageData(), languageDataAvailableCondition);
         }
 
         public void NotifyActionTimerElapsed()
@@ -324,12 +422,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             set => Set(ref mode, () => Mode, value, HandleModeChanged);
         }
 
+        public LanguageInfoModel LanguageData
+        {
+            get => languageData;
+            set => Set(ref languageData, () => LanguageData, value);
+        }
+
         public ObservableCollection<AlphabetEntryViewModel> Alphabet => alphabet;
 
         public ICommand EnterAlphabetCommand { get; }
-
         public ICommand SwitchModeToCipherCommand { get; }
-
         public ICommand SwitchModeToUncipherCommand { get; }
+        public ICommand GenerateLanguageDataCommand { get; }
+        public ICommand OpenLanguageDataCommand { get; }
+        public ICommand SaveLanguageDataCommand { get; }
     }
 }

@@ -121,6 +121,9 @@
     <Compile Include="Models\Navigation\FileProjectNavigationModel.cs" />
     <Compile Include="Models\SearchResults\SearchResultFilterModel.cs" />
     <Compile Include="Models\Search\SearchReplaceDescription.cs" />
+    <Compile Include="Models\SubstitutionCipher\LanguageInfoModel.cs" />
+    <Compile Include="Models\SubstitutionCipher\LanguageStatisticsModel.cs" />
+    <Compile Include="Models\SubstitutionCipher\SequenceInfoModel.cs" />
     <Compile Include="Models\TextComparison\ChangesResult.cs" />
     <Compile Include="Models\TextComparison\ContinuousLineDiffResult.cs" />
     <Compile Include="Models\TextComparison\LineDiffInfo.cs" />
@@ -156,6 +159,8 @@
     <Compile Include="Services\SearchEncoder\SearchEncoderService.cs" />
     <Compile Include="Services\StartupInfo\IStartupInfoService.cs" />
     <Compile Include="Services\StartupInfo\StartupInfoService.cs" />
+    <Compile Include="Services\SubstitutionCipher\ISubstitutionCipherService.cs" />
+    <Compile Include="Services\SubstitutionCipher\SubstitutionCipherService.cs" />
     <Compile Include="Services\TextComparison\ITextComparisonService.cs" />
     <Compile Include="Services\TextComparison\TextComparisonService.cs" />
     <Compile Include="Services\TextComparison\TextDocumentAsList.cs" />

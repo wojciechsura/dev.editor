@@ -45,6 +45,38 @@
                                     Command="{Binding SwitchModeToUncipherCommand}"/>
                     </f:DropDownButton>
                 </f:RibbonGroupBox>
+
+                <f:RibbonGroupBox Header="#Language data">
+                    <f:Button Header="#Generate" Command="{Binding GenerateLanguageDataCommand}" />
+
+                    <f:RibbonToolBar Size="Large">
+                        <f:RibbonToolBar.LayoutDefinitions>
+
+                            <f:RibbonToolBarLayoutDefinition Size="Large">
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bOpenLanguageData" Size="Middle" />
+                                </f:RibbonToolBarRow>
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bSaveLanguageData" Size="Middle" />
+                                </f:RibbonToolBarRow>
+                            </f:RibbonToolBarLayoutDefinition>
+
+                            <f:RibbonToolBarLayoutDefinition Size="Middle">
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bOpenLanguageData" Size="Small" />
+                                </f:RibbonToolBarRow>
+                                <f:RibbonToolBarRow>
+                                    <f:RibbonToolBarControlDefinition Target="bSaveLanguageData" Size="Small" />
+                                </f:RibbonToolBarRow>
+                            </f:RibbonToolBarLayoutDefinition>
+
+                        </f:RibbonToolBar.LayoutDefinitions>
+
+                        <f:Button x:Name="bOpenLanguageData" Header="#Open" Size="Middle" Command="{Binding OpenLanguageDataCommand}" />
+                        <f:Button x:Name="bSaveLanguageData" Header="#Save" Size="Middle" Command="{Binding SaveLanguageDataCommand}" />
+
+                    </f:RibbonToolBar>
+                </f:RibbonGroupBox>
             </f:RibbonTabItem>
         </f:Ribbon>
         <Grid Margin="{StaticResource HalfMargin}">

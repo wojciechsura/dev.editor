@@ -27,6 +27,7 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
         void ShowExceptionDialog(Exception e);
         (bool result, string newLocation) ShowChooseFolderDialog(string location);
         void ShowProgressDialog(string operationTitle, BackgroundWorker worker);
+        void ShowProgressDialog(string operationTiele, BackgroundWorker worker, object workerParameter);
         (bool, DuplicatedLinesFinderConfig) ShowDuplicatedLinesFinderConfigDialog(DuplicatedLinesFinderConfigModel model);
         void OpenSubstitutionCipherWindow(ISubstitutionCipherHost host);
         (bool, string) ShowAlphabetDialog(string previousAlphabet = null);

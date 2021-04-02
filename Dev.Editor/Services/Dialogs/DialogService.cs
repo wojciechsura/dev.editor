@@ -150,7 +150,13 @@ namespace Dev.Editor.Services.Dialogs
 
         public void ShowProgressDialog(string operationTitle, BackgroundWorker worker)
         {
-            var progressWindow = new ProgressWindow(operationTitle, worker);
+            var progressWindow = new ProgressWindow(operationTitle, worker, null);
+            progressWindow.ShowDialog();
+        }
+
+        public void ShowProgressDialog(string operationTitle, BackgroundWorker worker, object workerParameter)
+        {
+            var progressWindow = new ProgressWindow(operationTitle, worker, workerParameter);
             progressWindow.ShowDialog();
         }
 
