@@ -23,9 +23,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
     {
         // Private types ------------------------------------------------------
 
-        private class WorkerInput
+        private class CipherWorkerInput
         {
-            public WorkerInput(Dictionary<char, char> key, string data, bool forward)
+            public CipherWorkerInput(Dictionary<char, char> key, string data, bool forward)
             {
                 Key = key;
                 Data = data;
@@ -37,14 +37,38 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             public bool Forward { get; }
         }
 
-        private class WorkerOutput
+        private class CipherWorkerOutput
         {
-            public WorkerOutput(string result)
+            public CipherWorkerOutput(string result)
             {
                 Result = result;
             }
 
             public string Result { get; }
+        }
+
+        private class CrackWorkerInput
+        {
+            public CrackWorkerInput(Dictionary<char, char> key, string data, LanguageInfoModel languageInfo)
+            {
+                Key = key;
+                Data = data;
+                LanguageInfo = languageInfo;
+            }
+
+            public Dictionary<char, char> Key { get; }
+            public string Data { get; }
+            public LanguageInfoModel LanguageInfo { get; }
+        }
+
+        private class CrackWorkerOutput
+        {
+            public CrackWorkerOutput(Dictionary<char, char> bestKey)
+            {
+                BestKey = bestKey;
+            }
+
+            public Dictionary<char, char> BestKey { get; }
         }
 
         private class CipherWorker : BackgroundWorker
@@ -59,9 +83,28 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 
             protected override void OnDoWork(DoWorkEventArgs e)
             {
-                var input = e.Argument as WorkerInput;
+                var input = e.Argument as CipherWorkerInput;
                 var result = substitutionCipherService.Process(input.Key, input.Data, input.Forward, () => CancellationPending);
-                e.Result = new WorkerOutput(result);
+                e.Result = new CipherWorkerOutput(result);
+            }
+        }
+
+        private class CrackWorker : BackgroundWorker
+        {
+            private readonly ISubstitutionCipherService substitutionCipherService;
+
+            public CrackWorker(ISubstitutionCipherService substitutionCipherService)
+            {
+                WorkerSupportsCancellation = true;
+                WorkerReportsProgress = true;
+                this.substitutionCipherService = substitutionCipherService;
+            }
+
+            protected override void OnDoWork(DoWorkEventArgs e)
+            {
+                var input = e.Argument as CrackWorkerInput;
+                var result = substitutionCipherService.TrySolve(input.Data, input.Key, input.LanguageInfo, () => CancellationPending, progress => ReportProgress(progress));
+                e.Result = new CrackWorkerOutput(result);
             }
         }
 
@@ -111,13 +154,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 
         private void SetPlaintext(object sender, RunWorkerCompletedEventArgs e)
         {
-            var result = e.Result as WorkerOutput;
+            var result = e.Result as CipherWorkerOutput;
             plaintextDoc.Text = result.Result;
         }
 
         private void SetCipherText(object sender, RunWorkerCompletedEventArgs e)
         {
-            var result = e.Result as WorkerOutput;
+            var result = e.Result as CipherWorkerOutput;
             cipherDoc.Text = result.Result;
         }
 
@@ -270,17 +313,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             }
         }
 
+        private int? FindAlphabetPlaintextEntry(char c)
+        {
+            for (int i = 0; i < alphabet.Count; i++)
+                if (alphabet[i].Plaintext[0] == c)
+                    return i;
+
+            return null;
+        }
+
         private void DoSolveFromLetterFreq()
         {
-            int? findAlphabetPlaintextEntry(char c)
-            {
-                for (int i = 0; i < alphabet.Count; i++)
-                    if (alphabet[i].Plaintext[0] == c)
-                        return i;
-
-                return null;
-            }
-
             var plain = alphabet.Select(e => e.Plaintext[0]);
             var cipher = alphabet.Where(e => !string.IsNullOrEmpty(e.Cipher)).Select(e => e.Cipher[0]);
 
@@ -306,7 +349,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             while (letterFreqIndex < letterFreqs.Count() && cipherIndex < letterStats.Count())
             {
                 // Try to find plain letter from letter freqs
-                int? alphabetIndex = findAlphabetPlaintextEntry(letterFreqs[letterFreqIndex].Key);
+                int? alphabetIndex = FindAlphabetPlaintextEntry(letterFreqs[letterFreqIndex].Key);
                 if (alphabetIndex != null)
                 {
                     alphabet[alphabetIndex.Value].Cipher = letterStats[cipherIndex].Character.ToString();
@@ -315,12 +358,66 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 
                 letterFreqIndex++;
             }
+
+            StartCipherOperation();
+        }
+
+        private void DoCrack()
+        {
+            Dictionary<char, char> key;
+            if (alphabet != null)
+            {
+                key = alphabet
+                    .Where(e => !String.IsNullOrEmpty(e.Cipher) && !e.IsDoubled)
+                    .ToDictionary(e => e.Plaintext.ToLowerInvariant()[0], e => e.Cipher.ToLowerInvariant()[0]);
+
+                // If user entered no ciphers in alphabet, copy plaintexts instead
+                if (!key.Any())
+                {
+                    key = alphabet
+                        .ToDictionary(e => e.Plaintext.ToLowerInvariant()[0], e => e.Plaintext.ToLowerInvariant()[0]);
+                }
+            }
+            else
+                key = new Dictionary<char, char>();
+
+            var input = new CrackWorkerInput(key, cipherDoc.Text, languageData);
+
+            var worker = new CrackWorker(substitutionCipherService);
+            worker.RunWorkerCompleted += HandleCrackWorkerFinished;
+            
+            dialogService.ShowProgressDialog("#Cracking cipher...", worker, input);
+        }
+
+        private void HandleCrackWorkerFinished(object sender, RunWorkerCompletedEventArgs e)
+        {
+            if (!e.Cancelled)
+            {
+                var output = e.Result as CrackWorkerOutput;
+
+                foreach (var kvp in output.BestKey)
+                {
+                    var index = FindAlphabetPlaintextEntry(kvp.Key);
+                    if (index != null)
+                        alphabet[index.Value].SetCipherSilently(kvp.Value.ToString());
+                }
+
+                StartCipherOperation();
+            }
         }
 
         // IAlphabetEntryHandler implementation -------------------------------
 
-        void IAlphabetEntryHandler.NotifyChanged(AlphabetEntryViewModel alphabetEntryViewModel)
+        void IAlphabetEntryHandler.NotifyChanged(AlphabetEntryViewModel alphabetEntryViewModel, string previousCipher)
         {
+            if (!string.IsNullOrEmpty(alphabetEntryViewModel.Cipher))
+            {
+                // If there is entry with the same cipher, replace it automatically with previous cipher.
+                var entry = alphabet.FirstOrDefault(ae => ae != alphabetEntryViewModel && ae.Cipher == alphabetEntryViewModel.Cipher);
+                if (entry != null)
+                    entry.SetCipherSilently(previousCipher);
+            }
+
             ValidateAlphabet();
 
             RestartActionTimer();
@@ -358,6 +455,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             OpenLanguageDataCommand = new AppCommand(obj => DoOpenLanguageData());
             SaveLanguageDataCommand = new AppCommand(obj => DoSaveLanguageData(), languageDataAvailableCondition);
             SolveFromLetterFreqCommand = new AppCommand(obj => DoSolveFromLetterFreq(), languageDataAvailableCondition & modeIsUncipher);
+            CrackCommand = new AppCommand(obj => DoCrack(), languageDataAvailableCondition & modeIsUncipher);
         }
 
         public void NotifyActionTimerElapsed()
@@ -377,7 +475,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             if (alphabet != null)
                 key = alphabet
                     .Where(e => !String.IsNullOrEmpty(e.Cipher) && !e.IsDoubled)
-                    .ToDictionary(e => e.Plaintext[0], e => e.Cipher[0]);
+                    .ToDictionary(e => e.Plaintext.ToLowerInvariant()[0], e => e.Cipher.ToLowerInvariant()[0]);
             else
                 key = new Dictionary<char, char>();
 
@@ -405,7 +503,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
                     throw new InvalidEnumArgumentException("Unsupported cipher mode!");
             }
 
-            var input = new WorkerInput(key, data, forward);
+            var input = new CipherWorkerInput(key, data, forward);
             currentWorker = new CipherWorker(substitutionCipherService);
             currentWorker.RunWorkerCompleted += completeHandler;
             currentWorker.RunWorkerAsync(input);
@@ -438,5 +536,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
         public ICommand OpenLanguageDataCommand { get; }
         public ICommand SaveLanguageDataCommand { get; }
         public ICommand SolveFromLetterFreqCommand { get; }
+
+        public ICommand CrackCommand { get; }
     }
 }

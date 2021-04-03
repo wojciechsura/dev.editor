@@ -18,6 +18,9 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
         private const double MinimumSequenceFitness = -10.0; // Log10(MinimumSequenceFrequency)
         private const string Header = "LANGINFO";
 
+        private const int MaxIterations = 10000;
+        private const int MaxIterationsWithoutImprovement = 1000;
+
         // Private types ------------------------------------------------------
 
         private class UniqueValueComparer : IEqualityComparer<KeyValuePair<char, char>>
@@ -64,7 +67,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
             return Math.Log10(Math.Max(MinimumSequenceFrequency, freq));
         }
 
-        private LanguageStatisticsModel GenerateLanguageStatisticsModel(string[] lines, Func<bool> checkCancellation, Action<int> reportProgress)
+        private LanguageStatisticsModel GenerateLanguageStatisticsModel(string[] lines, Func<bool> checkCancellation = null, Action<int> reportProgress = null)
         {
             var model = new LanguageStatisticsModel();
             for (int i = MinChars; i <= MaxChars; i++)
@@ -129,6 +132,49 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
             }
 
             return model;
+        }
+
+        private double EvalFitness(string text, LanguageInfoModel languageInfo, int charsToCompare)
+        {
+            double result = 0.0;
+
+            char[] buffer = new char[charsToCompare];
+
+            int index = 0;
+            int bufferIndex = 0;
+            int letterCount = 0;
+
+            while (index < text.Length && letterCount < charsToCompare - 1)
+            {
+                if (char.IsLetter(text[index]))
+                {
+                    buffer[bufferIndex++] = Char.ToLowerInvariant(text[index]);
+                    letterCount++;
+                }
+
+                index++;
+            }
+
+            for (; index < text.Length; index++)
+            {
+                if (char.IsLetter(text[index]))
+                {
+                    buffer[bufferIndex++] = Char.ToLowerInvariant(text[index]);
+                    bufferIndex %= charsToCompare;
+
+                    StringBuilder sb = new StringBuilder();
+                    for (int i = 0; i < charsToCompare; i++)
+                        sb.Append(char.ToLowerInvariant(buffer[(bufferIndex + i) % charsToCompare]));
+
+                    var key = sb.ToString();
+                    if (languageInfo.SequenceFrequencies[charsToCompare].ContainsKey(key))
+                        result += languageInfo.SequenceFrequencies[charsToCompare][key].Fitness;
+                    else
+                        result += MinimumSequenceFitness;
+                }
+            }
+
+            return result;
         }
 
         // Public methods -----------------------------------------------------
@@ -287,7 +333,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
 
             if (inputKey == null)
                 throw new InvalidOperationException("Key cannot be null!");
-            if (inputKey.Any(kvp => !char.IsLower(kvp.Key) || !char.IsLower(kvp.Value)))
+            if (inputKey.Any(kvp => (char.IsLetter(kvp.Key) && !char.IsLower(kvp.Key)) || (char.IsLetter(kvp.Value) && !char.IsLower(kvp.Value))))
                 throw new InvalidOperationException("Only lowercase letters are allowed in the key!");
 
             Dictionary<char, char> key;
@@ -316,7 +362,10 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
                 }
                 else
                 {
-                    result.Append(dataChar);
+                    if (Char.IsWhiteSpace(dataChar))
+                        result.Append(dataChar);
+                    else
+                        result.Append("·");
                 }
 
                 if (checkCancellation?.Invoke() ?? false)
@@ -326,6 +375,119 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
             }
 
             return result.ToString();
+        }
+
+        public Dictionary<char, char> TrySolve(string cipher, 
+            Dictionary<char, char> initialKey, 
+            LanguageInfoModel languageInfo, 
+            Func<bool> checkCancellation = null, 
+            Action<int> reportProgress = null)
+        {
+            var Random = new Random((int)DateTime.Now.Ticks);
+
+            int charsToCompare = 2;
+
+            var possiblePlaintext = Process(initialKey, cipher, false);
+            var bestFitness = EvalFitness(possiblePlaintext, languageInfo, charsToCompare);
+            var bestKey = new Dictionary<char, char>(initialKey);
+
+            var iterationsWithoutProgress = 0;
+
+            for (int i = 0; i < MaxIterations; i++)
+            {
+                reportProgress?.Invoke(i * 100 / MaxIterations);
+
+                var key = new Dictionary<char, char>(initialKey);
+                var keys = key.Keys.ToList();
+                var values = key.Values.ToList();
+
+                for (int j = values.Count - 1; j >= 0; j--)
+                {
+                    // Replace j-th entry with random one
+                    int rndIndex = Random.Next(j + 1);
+
+                    var tmp = values[rndIndex];
+                    values[rndIndex] = values[j];
+                    values[j] = tmp;
+
+                    key[keys[j]] = values[j];
+                }
+
+                int index1 = 0;
+                int index2 = 1;
+
+                possiblePlaintext = Process(key, cipher, false);
+                var fitness = EvalFitness(possiblePlaintext, languageInfo, charsToCompare);
+
+                while (true)
+                {
+                    if (checkCancellation?.Invoke() ?? false)
+                        return null;
+
+                    // Randomize two indices to exchange
+                    char cipher1 = key[keys[index1]];
+                    char cipher2 = key[keys[index2]];
+
+                    // Exchange key entries
+                    key[keys[index1]] = cipher2;
+                    key[keys[index2]] = cipher1;
+
+                    // Try to uncipher the message
+                    possiblePlaintext = Process(key, cipher, false);
+
+                    // Evaluate new fitness
+                    var newFitness = EvalFitness(possiblePlaintext, languageInfo, charsToCompare);
+
+                    if (newFitness > fitness)
+                    {
+                        // Change stays
+                        fitness = newFitness;
+
+                        // Repeat replacing key from the beginning
+                        index1 = 0;
+                        index2 = 1;
+                    }
+                    else
+                    {
+                        // Revert change
+                        key[keys[index1]] = cipher1;
+                        key[keys[index2]] = cipher2;
+
+                        // Try next replacement
+                        index2++;
+                        if (index2 >= keys.Count)
+                        {
+                            index1++;
+                            index2 = index1 + 1;
+                        }
+
+                        if (index2 >= keys.Count)
+                            break;
+                    }
+                }
+
+                // Fitness now represents best fitness from this iteration
+
+                if (fitness > bestFitness)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Fitness improved from {bestFitness} to {fitness} for key {String.Join("", key.Values)}");
+
+                    bestKey = new Dictionary<char, char>(key);
+                    bestFitness = fitness;
+
+                    iterationsWithoutProgress = 0;
+                }
+                else
+                {
+                    iterationsWithoutProgress++;
+                }
+
+                if (iterationsWithoutProgress > MaxIterationsWithoutImprovement)
+                    break;
+            }
+ 
+            // Return the best key found
+            return bestKey;
         }
     }
 }

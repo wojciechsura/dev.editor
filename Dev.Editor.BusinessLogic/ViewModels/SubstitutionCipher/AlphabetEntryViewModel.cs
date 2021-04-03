@@ -11,12 +11,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
     {
         private readonly IAlphabetEntryHandler handler;
         private readonly string plaintext;
+        private string previousCipher;
         private string cipher;
         private bool isDoubled;
 
         private void HandleCipherChanged()
         {
-            handler.NotifyChanged(this);
+            handler.NotifyChanged(this, previousCipher);
+            previousCipher = cipher;
         }
 
         public AlphabetEntryViewModel(char plaintext, IAlphabetEntryHandler handler)
@@ -27,12 +29,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             isDoubled = false;
         }
 
+        public void SetCipherSilently(string newCipher)
+        {
+            cipher = newCipher;
+            previousCipher = newCipher;
+            OnPropertyChanged(() => Cipher);
+        }
+
         public string Plaintext => plaintext.ToString();
 
         public string Cipher
         {
             get => cipher;
-            set => Set(ref cipher, () => Cipher, value, HandleCipherChanged);
+            set => Set(ref cipher, () => Cipher, value?.ToLowerInvariant(), HandleCipherChanged);
         }
 
         public bool IsDoubled

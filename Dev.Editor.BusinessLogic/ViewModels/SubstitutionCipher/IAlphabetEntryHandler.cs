@@ -8,6 +8,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 {
     public interface IAlphabetEntryHandler
     {
-        void NotifyChanged(AlphabetEntryViewModel alphabetEntryViewModel);
+        void NotifyChanged(AlphabetEntryViewModel alphabetEntryViewModel, string previousCipher);
     }
 }

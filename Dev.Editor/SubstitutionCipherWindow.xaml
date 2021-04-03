@@ -10,7 +10,8 @@
                 xmlns:t="clr-namespace:Dev.Editor.BusinessLogic.Types.SubstitutionCipher;assembly=Dev.Editor.BusinessLogic"
                 mc:Ignorable="d"
                 Title="SubstitutionCipherWindow" Height="450" Width="800"
-                WindowStartupLocation="CenterOwner">
+                WindowStartupLocation="CenterOwner"
+                Closing="HandleWindowClosing">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -79,7 +80,11 @@
 
                     <Separator />
 
-                    <f:Button Header="Solve from letter freq." Command="{Binding SolveFromLetterFreqCommand}" />
+                    <f:Button Header="#Solve from letter freq." Command="{Binding SolveFromLetterFreqCommand}" />
+
+                    <Separator />
+
+                    <f:Button Header="#Crack" Command="{Binding CrackCommand}" />
 
                 </f:RibbonGroupBox>
             </f:RibbonTabItem>
