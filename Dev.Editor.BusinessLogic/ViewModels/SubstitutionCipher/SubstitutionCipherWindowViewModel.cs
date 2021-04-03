@@ -284,13 +284,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 
         private void DoGenerateLanguageData()
         {
-            var result = dialogService.ShowOpenDialog("#Text files (*.txt)|*.txt");
-            if (result.Result)
+            (bool result, List<string> files) = dialogService.ShowOpenFilesDialog("#Text files (*.txt)|*.txt");
+            if (result)
             {
                 string[] lines;
                 try
                 {
-                    lines = File.ReadAllLines(result.FileName);
+                    lines = files.SelectMany(file => File.ReadAllLines(file))
+                        .ToArray();
                 }
                 catch (IOException)
                 {

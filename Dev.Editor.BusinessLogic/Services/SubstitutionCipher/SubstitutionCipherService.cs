@@ -385,7 +385,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
         {
             var Random = new Random((int)DateTime.Now.Ticks);
 
-            int charsToCompare = 2;
+            int charsToCompare = 4;
 
             var possiblePlaintext = Process(initialKey, cipher, false);
             var bestFitness = EvalFitness(possiblePlaintext, languageInfo, charsToCompare);
