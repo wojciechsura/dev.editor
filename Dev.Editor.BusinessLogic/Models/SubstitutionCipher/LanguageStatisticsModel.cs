@@ -10,11 +10,11 @@ namespace Dev.Editor.BusinessLogic.Models.SubstitutionCipher
     {
         public LanguageStatisticsModel()
         {
-            Sequences = new Dictionary<int, Dictionary<string, int>>();
+            Sequences = new Dictionary<int, int[]>();
             LetterStats = new Dictionary<char, int>();
         }
 
-        public Dictionary<int, Dictionary<string, int>> Sequences { get; }
+        public Dictionary<int, int[]> Sequences { get; }
         public Dictionary<char, int> LetterStats { get; }
     }
 }

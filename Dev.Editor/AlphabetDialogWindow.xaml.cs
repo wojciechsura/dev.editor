@@ -24,11 +24,12 @@ namespace Dev.Editor
     {
         private readonly AlphabetDialogViewModel viewModel;
 
-        public AlphabetDialogWindow(string previousAlphabet = null)
+        public AlphabetDialogWindow(string message, string previousAlphabet = null)
         {
             InitializeComponent();
 
             viewModel = Dependencies.Container.Instance.Resolve<AlphabetDialogViewModel>(new ParameterOverride("access", this),
+                new ParameterOverride("message", message),
                 new ParameterOverride("previousAlphabet", previousAlphabet));
             this.DataContext = viewModel;
         }

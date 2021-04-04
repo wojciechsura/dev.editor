@@ -30,6 +30,6 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
         void ShowProgressDialog(string operationTiele, BackgroundWorker worker, object workerParameter);
         (bool, DuplicatedLinesFinderConfig) ShowDuplicatedLinesFinderConfigDialog(DuplicatedLinesFinderConfigModel model);
         void OpenSubstitutionCipherWindow(ISubstitutionCipherHost host);
-        (bool, string) ShowAlphabetDialog(string previousAlphabet = null);
+        (bool, string) ShowAlphabetDialog(string message, string previousAlphabet = null);
     }
 }

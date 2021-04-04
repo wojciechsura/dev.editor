@@ -32,7 +32,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Alphabet
             set => Set(ref alphabet, () => Alphabet, value);
         }
 
-        public AlphabetDialogViewModel(IAlphabetDialogWindowAccess access, string previousAlphabet = null)
+        public AlphabetDialogViewModel(IAlphabetDialogWindowAccess access, string message, string previousAlphabet = null)
         {
             if (string.IsNullOrEmpty(previousAlphabet))
                 alphabet = "abcdefghijklmnopqrstuvwxyz";
@@ -48,5 +48,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Alphabet
 
         public ICommand OkCommand { get; }
         public ICommand CancelCommand { get; }
+
+        public string Message { get; }
     }
 }

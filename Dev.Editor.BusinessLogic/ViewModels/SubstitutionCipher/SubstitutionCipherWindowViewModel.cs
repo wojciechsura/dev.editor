@@ -71,6 +71,18 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             public Dictionary<char, char> BestKey { get; }
         }
 
+        private class LanguageBuilderInput
+        {
+            public LanguageBuilderInput(string[] lines, string alphabet)
+            {
+                Lines = lines;
+                Alphabet = alphabet;
+            }
+
+            public string[] Lines { get; }
+            public string Alphabet { get; }
+        }
+
         private class CipherWorker : BackgroundWorker
         {
             private readonly ISubstitutionCipherService substitutionCipherService;
@@ -108,6 +120,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             }
         }
 
+
+
         private class LanguageDataBuilderWorker : BackgroundWorker
         {
             private readonly ISubstitutionCipherService substitutionCipherService;
@@ -122,8 +136,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 
             protected override void OnDoWork(DoWorkEventArgs e)
             {
-                var data = e.Argument as string[];
-                var info = substitutionCipherService.BuildLanguageInfoModel(data, () => CancellationPending, progress => ReportProgress(progress));
+                var data = e.Argument as LanguageBuilderInput;
+                var info = substitutionCipherService.BuildLanguageInfoModel(data.Lines, data.Alphabet, () => CancellationPending, progress => ReportProgress(progress));
                 e.Result = info;
             }
         }
@@ -299,10 +313,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
                     return;
                 }
 
-                var worker = new LanguageDataBuilderWorker(substitutionCipherService);
-                worker.RunWorkerCompleted += HandleLanguageDataBuilt;
+                // Extract alphabet first and confirm with user
+                var alphabet = substitutionCipherService.ExtractAlphabet(lines);
 
-                dialogService.ShowProgressDialog("#Building language data...", worker, lines);
+                (bool alphabetResult, string newAlphabet) = dialogService.ShowAlphabetDialog("#Verify language alphabet", alphabet);
+                if (alphabetResult)
+                {
+                    LanguageBuilderInput input = new LanguageBuilderInput(lines, newAlphabet);
+
+                    var worker = new LanguageDataBuilderWorker(substitutionCipherService);
+                    worker.RunWorkerCompleted += HandleLanguageDataBuilt;
+
+                    dialogService.ShowProgressDialog("#Building language data...", worker, input);
+                }
             }
         }
 

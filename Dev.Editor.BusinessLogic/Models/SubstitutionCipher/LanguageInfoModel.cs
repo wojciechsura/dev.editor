@@ -8,13 +8,17 @@ namespace Dev.Editor.BusinessLogic.Models.SubstitutionCipher
 {
     public class LanguageInfoModel
     {
-        public LanguageInfoModel(Dictionary<char, double> letterFrequencies, Dictionary<int, Dictionary<string, SequenceInfoModel>> sequenceFrequencies)
+        public LanguageInfoModel(Dictionary<char, int> alphabet, 
+            Dictionary<char, double> letterFrequencies, 
+            Dictionary<int, SequenceInfoModel[]> sequenceFrequencies)
         {
+            Alphabet = alphabet;
             LetterFrequencies = letterFrequencies;
             SequenceFrequencies = sequenceFrequencies;
         }
 
+        public Dictionary<char, int> Alphabet { get; }
         public Dictionary<char, double> LetterFrequencies { get; }
-        public Dictionary<int, Dictionary<string, SequenceInfoModel>> SequenceFrequencies { get; }
+        public Dictionary<int, SequenceInfoModel[]> SequenceFrequencies { get; }
     }
 }

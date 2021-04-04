@@ -8,12 +8,14 @@ namespace Dev.Editor.BusinessLogic.Models.SubstitutionCipher
 {
     public class SequenceInfoModel
     {
-        public SequenceInfoModel(double frequency, double fitness)
+        public SequenceInfoModel(int count, double frequency, double fitness)
         {
+            Count = count;
             Frequency = frequency;
             Fitness = fitness;
         }
 
+        public int Count { get; }
         public double Frequency { get; }
         public double Fitness { get; }
     }

@@ -24,7 +24,7 @@
 
         <GroupBox Header="#Alphabet" Margin="4" Padding="4">
             <StackPanel Orientation="Vertical">
-                <Label Grid.Row="0" Grid.ColumnSpan="2" Margin="{StaticResource DialogItemsExceptBottomMargin}">#Enter alphabet of the plaintext</Label>
+                <Label Grid.Row="0" Grid.ColumnSpan="2" Margin="{StaticResource DialogItemsExceptBottomMargin}" Content="{Binding Message}" />
                 <TextBox Grid.Row="1" Grid.Column="1" Margin="{StaticResource DefaultMargin}" 
                          Text="{Binding Alphabet, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
             </StackPanel>
