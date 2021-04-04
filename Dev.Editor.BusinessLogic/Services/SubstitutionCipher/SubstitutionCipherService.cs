@@ -263,7 +263,6 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
                 foreach (var seqKvp in model.SequenceFrequencies)
                 {
                     writer.Write(seqKvp.Key);
-
                     writer.Write(seqKvp.Value.Length);
 
                     foreach (var seqModel in seqKvp.Value)
@@ -334,7 +333,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
                         int cnt = reader.ReadInt32();
                         double freq = reader.ReadDouble();
 
-                        seqInfos[j] = new SequenceInfoModel(cnt, freq, FitnessFromFrequency(freq));
+                        seqInfos[seqLength] = new SequenceInfoModel(cnt, freq, FitnessFromFrequency(freq));
                     }
 
                     sequences[i] = seqInfos;
