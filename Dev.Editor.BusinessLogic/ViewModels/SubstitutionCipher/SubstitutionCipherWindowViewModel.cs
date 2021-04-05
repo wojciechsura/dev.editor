@@ -189,25 +189,30 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             (bool result, string newAlphabet) = dialogService.ShowAlphabetDialog(previousAlphabet);
             if (result)
             {
-                // Move entries from old to new alphabet
-                var previous = alphabet.ToList();
-                alphabet.Clear();
-
-                if (!string.IsNullOrEmpty(newAlphabet))
-                {
-                    foreach (char ch in newAlphabet.Distinct().OrderBy(x => x))
-                    {
-                        var entry = new AlphabetEntryViewModel(ch, this);
-                        var oldEntry = previous.FirstOrDefault(e => e.Plaintext.Equals(entry.Plaintext));
-                        if (oldEntry != null)
-                            entry.Cipher = oldEntry.Cipher;
-
-                        alphabet.Add(entry);
-                    }
-                }
-
-                RestartActionTimer();
+                SetNewAlphabet(newAlphabet);
             }
+        }
+
+        private void SetNewAlphabet(string newAlphabet)
+        {
+            // Move entries from old to new alphabet
+            var previous = alphabet.ToList();
+            alphabet.Clear();
+
+            if (!string.IsNullOrEmpty(newAlphabet))
+            {
+                foreach (char ch in newAlphabet.Distinct().OrderBy(x => x))
+                {
+                    var entry = new AlphabetEntryViewModel(ch, this);
+                    var oldEntry = previous.FirstOrDefault(e => e.Plaintext.Equals(entry.Plaintext));
+                    if (oldEntry != null)
+                        entry.Cipher = oldEntry.Cipher;
+
+                    alphabet.Add(entry);
+                }
+            }
+
+            RestartActionTimer();
         }
 
         private void RestartActionTimer()
@@ -230,6 +235,16 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
         private void HandleModeChanged()
         {
             RestartActionTimer();
+        }
+
+        private void HandleLanguageDataChanged()
+        {
+            if (LanguageData != null)
+            {
+                SetNewAlphabet(String.Join(String.Empty, LanguageData.Alphabet
+                    .OrderBy(kvp => kvp.Key)
+                    .Select(kvp => kvp.Key)));
+            }
         }
 
         private void ValidateAlphabet()
@@ -471,7 +486,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             languageDataAvailableCondition = new LambdaCondition<SubstitutionCipherWindowViewModel>(this, vm => vm.LanguageData != null, false);
             modeIsUncipher = new LambdaCondition<SubstitutionCipherWindowViewModel>(this, vm => vm.Mode == SubstitutionCipherMode.Uncipher);
 
-            EnterAlphabetCommand = new AppCommand(obj => DoEnterAlphabet());
+            EnterAlphabetCommand = new AppCommand(obj => DoEnterAlphabet(), !languageDataAvailableCondition);
             SwitchModeToCipherCommand = new AppCommand(obj => DoSwitchModeToCipher());
             SwitchModeToUncipherCommand = new AppCommand(obj => DoSwitchModeToUncipher());
 
@@ -548,7 +563,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
         public LanguageInfoModel LanguageData
         {
             get => languageData;
-            set => Set(ref languageData, () => LanguageData, value);
+            set => Set(ref languageData, () => LanguageData, value, HandleLanguageDataChanged);
         }
 
         public ObservableCollection<AlphabetEntryViewModel> Alphabet => alphabet;
