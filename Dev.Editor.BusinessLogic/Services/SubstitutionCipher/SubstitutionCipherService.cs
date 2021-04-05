@@ -14,8 +14,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
 
         private const int MinChars = 2;
         private const int MaxChars = 4;
-        private const int BitsPerChar = 6;
-        private const int MaxCharsPerAlphabet = 1 << BitsPerChar;
+        private const int MaxCharsPerAlphabet = 256;
         private const double MinimumSequenceFrequency = 0.0000000001;
         private const double MinimumSequenceFitness = -10.0; // Log10(MinimumSequenceFrequency)
         private const string Header = "LANGINFO";
@@ -71,16 +70,27 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
             return Math.Log10(Math.Max(MinimumSequenceFrequency, freq));
         }
 
-        private LanguageStatisticsModel GenerateLanguageStatisticsModel(string[] lines, Dictionary<char, int> alphabet, Func<bool> checkCancellation = null, Action<int> reportProgress = null)
+        private LanguageStatisticsModel GenerateLanguageStatisticsModel(string[] lines, 
+            Dictionary<char, int> alphabet, 
+            Func<bool> checkCancellation = null, 
+            Action<int> reportProgress = null)
         {
             if (alphabet.Count > MaxCharsPerAlphabet)
                 throw new ArgumentException($"Maximum of {MaxCharsPerAlphabet} characters per alphabet is supported!");
 
+            int bitsPerChar = 1;
+            int maxAlphabetEntries = 2;
+
+            while (maxAlphabetEntries < alphabet.Count)
+            {
+                bitsPerChar++;
+                maxAlphabetEntries <<= 1;
+            }
 
             // Building model from all possible combinations of digrams, trigrams, quadgrams
-            var model = new LanguageStatisticsModel();
+            var model = new LanguageStatisticsModel(bitsPerChar);
             for (int i = MinChars; i <= MaxChars; i++)
-                model.Sequences[i] = new int[1 << (BitsPerChar * i)];
+                model.Sequences[i] = new int[1 << (bitsPerChar * i)];
             foreach (var ch in alphabet.Keys)
                 model.LetterStats[ch] = 0;
 
@@ -98,7 +108,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
                 for (int i = 0; i <= MaxChars; i++)
                 {
                     current[i] = 0;
-                    mask[i] = (1 << (BitsPerChar * i)) - 1;
+                    mask[i] = (1 << (bitsPerChar * i)) - 1;
                 }
 
                 int totalChars = 0;
@@ -115,7 +125,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
                         totalChars++;
 
                         for (int i = MinChars; i <= MaxChars; i++)
-                            current[i] = ((current[i] << BitsPerChar) + letterCode) & mask[i];
+                            current[i] = ((current[i] << bitsPerChar) + letterCode) & mask[i];
 
                         for (int i = MinChars; i <= Math.Min(totalChars, MaxChars); i++)
                         {
@@ -138,7 +148,10 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
             return model;
         }
 
-        private double EvalFitness(string cipher, Dictionary<char, char> decodingKey, LanguageInfoModel languageInfo, int charsToCompare)
+        private double EvalFitness(string cipher, 
+            Dictionary<char, char> decodingKey, 
+            LanguageInfoModel languageInfo, 
+            int charsToCompare)
         {
             // If cipher is too short to begin with, return worst possible value
             if (cipher.Length < charsToCompare)
@@ -147,7 +160,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
             double result = 0.0;
 
             int current = 0;
-            int mask = (1 << (BitsPerChar * charsToCompare)) - 1;
+            int mask = (1 << (languageInfo.BitsPerChar * charsToCompare)) - 1;
 
             int charsProcessed = 0;
             int currentChar = 0;
@@ -158,7 +171,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
                 {
                     if (languageInfo.Alphabet.TryGetValue(decoded, out int code))
                     {
-                        current = ((current << BitsPerChar) + code) & mask;
+                        current = ((current << languageInfo.BitsPerChar) + code) & mask;
                         charsProcessed++;
 
                         if (charsProcessed >= charsToCompare)
@@ -179,37 +192,41 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
 
         // Public methods -----------------------------------------------------
 
-        public LanguageInfoModel BuildLanguageInfoModel(string[] lines, string alphabet, Func<bool> checkCancellation, Action<int> reportProgress)
+        public LanguageInfoModel BuildLanguageInfoModel(string[] lines, 
+            string alphabet, 
+            Func<bool> checkCancellation, 
+            Action<int> reportProgress)
         {
             // Speeds up letter code lookup in the alphabet
+            
             var alphabetDict = new Dictionary<char, int>();
             for (int i = 0; i < alphabet.Length; i++)
                 alphabetDict[char.ToLowerInvariant(alphabet[i])] = i;
 
-            var model = GenerateLanguageStatisticsModel(lines, alphabetDict, checkCancellation, reportProgress);
+            var langStats = GenerateLanguageStatisticsModel(lines, alphabetDict, checkCancellation, reportProgress);
 
             // Sanity check
 
-            if (model.LetterStats.Any(l => !char.IsLower(l.Key)))
+            if (langStats.LetterStats.Any(l => !char.IsLower(l.Key)))
                 throw new ArgumentException("Letter keys must be all lowercase!");
-            if (model.LetterStats.Any(l => l.Value <= 0))
+            if (langStats.LetterStats.Any(l => l.Value <= 0))
                 throw new ArgumentException("Invalid letter statistics (entry with occurences equal to 0 or less)");
 
             // Letters
 
-            var letterSum = model.LetterStats
+            var letterSum = langStats.LetterStats
                 .Sum(kvp => kvp.Value);
 
             Dictionary<char, double> letterFreqs;
             if (letterSum > 0)
-                letterFreqs = model.LetterStats
+                letterFreqs = langStats.LetterStats
                     .Select(kvp => new KeyValuePair<char, double>(kvp.Key, (float)kvp.Value / letterSum))
                     .ToDictionary(kvp => kvp.Key, kvp => kvp.Value);
             else
                 letterFreqs = new Dictionary<char, double>();
 
             var sequenceFreqs = new Dictionary<int, SequenceInfoModel[]>();
-            foreach (var seq in model.Sequences)
+            foreach (var seq in langStats.Sequences)
             {
                 var sum = seq.Value.Sum();
 
@@ -223,7 +240,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
                         .ToArray();
             }
 
-            return new LanguageInfoModel(alphabetDict, letterFreqs, sequenceFreqs);
+            return new LanguageInfoModel(langStats.BitsPerChar, alphabetDict, letterFreqs, sequenceFreqs);
         }
 
         public void SaveLanguageInfoModel(string filename, LanguageInfoModel model)
@@ -238,6 +255,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
 
                 // Alphabet
 
+                writer.Write(model.BitsPerChar);
                 writer.Write(model.Alphabet.Count);
 
                 foreach (var kvp in model.Alphabet)
@@ -280,6 +298,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
             var alphabet = new Dictionary<char, int>();
             var letters = new Dictionary<char, double>();
             var sequences = new Dictionary<int, SequenceInfoModel[]>();
+            int bitsPerChar;
 
             using (FileStream fs = new FileStream(filename, FileMode.Open, FileAccess.Read))
             using (BinaryReader reader = new BinaryReader(fs))
@@ -295,6 +314,8 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
                     throw new IOException("Unsupported language file version!");
 
                 // Alphabet
+
+                bitsPerChar = reader.ReadInt32();
 
                 int alphabetSize = reader.ReadInt32();
                 for (int i = 0; i < alphabetSize; i++)
@@ -333,10 +354,10 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
                         int cnt = reader.ReadInt32();
                         double freq = reader.ReadDouble();
 
-                        seqInfos[seqLength] = new SequenceInfoModel(cnt, freq, FitnessFromFrequency(freq));
+                        seqInfos[j] = new SequenceInfoModel(cnt, freq, FitnessFromFrequency(freq));
                     }
 
-                    sequences[i] = seqInfos;
+                    sequences[seqLength] = seqInfos;
                 }
             }
 
@@ -346,7 +367,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
             ValidateLetterStats(letters);
             ValidateSeqStats(sequences);
 
-            return new LanguageInfoModel(alphabet, letters, sequences);
+            return new LanguageInfoModel(bitsPerChar, alphabet, letters, sequences);
         }
 
         public string Process(Dictionary<char, char> inputKey, string data, bool forward, Func<bool> checkCancellation = null)

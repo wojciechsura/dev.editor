@@ -39,6 +39,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Alphabet
             else
                 alphabet = previousAlphabet;
 
+            Message = message;
+
             alphabetNonEmptyCondition = new LambdaCondition<AlphabetDialogViewModel>(this, vm => vm.Alphabet != null, false);
 
             OkCommand = new AppCommand(obj => DoOk(), alphabetNonEmptyCondition);

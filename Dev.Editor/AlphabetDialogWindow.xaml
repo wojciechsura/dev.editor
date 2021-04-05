@@ -4,8 +4,10 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Dev.Editor"
-        xmlns:res="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
+        xmlns:res="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources" 
+        xmlns:a="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.Alphabet;assembly=Dev.Editor.BusinessLogic"         
         mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=a:AlphabetDialogViewModel}"
         Title="#Alphabet" SizeToContent="WidthAndHeight">
     <Window.Resources>
         <ResourceDictionary>
