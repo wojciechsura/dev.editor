@@ -1249,4 +1249,79 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Navigation.Group.ProjectFiles" xml:space="preserve">
     <value>Pliki projektu</value>
   </data>
+  <data name="SubCipher.Ribbon.General.SourceAlphabet" xml:space="preserve">
+    <value>Źródłowy alfabet</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.General.SourceAlphabet.ResolveFromSource" xml:space="preserve">
+    <value>Pobierz z tekstu</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Group.General" xml:space="preserve">
+    <value>Ogólne</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Group.LanguageData" xml:space="preserve">
+    <value>Dane językowe</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Group.Mode" xml:space="preserve">
+    <value>Tryb</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Group.Solve" xml:space="preserve">
+    <value>Rozwiąż</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.LanguageData.Generate" xml:space="preserve">
+    <value>Wygeneruj</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.LanguageData.Open" xml:space="preserve">
+    <value>Otwórz</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.LanguageData.Save" xml:space="preserve">
+    <value>Zapisz</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Mode.Ciphering" xml:space="preserve">
+    <value>Szyfrowanie</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Mode.Unciphering" xml:space="preserve">
+    <value>Rozszyfrowanie</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Solve.Crack" xml:space="preserve">
+    <value>Złam</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Solve.UseLetterFrequency" xml:space="preserve">
+    <value>Użyj częstotliwości liter</value>
+  </data>
+  <data name="SubCipher.Ribbon.Tab.Home" xml:space="preserve">
+    <value>Narzędzia główne</value>
+  </data>
+  <data name="SubCipher.Filter.LangData" xml:space="preserve">
+    <value>Pliki danych językowych (*.langdata)|*.langdata</value>
+  </data>
+  <data name="SubCipher.Alphabet.VerifyLanguageAlphabet" xml:space="preserve">
+    <value>Sprawdź alfabet dla języka</value>
+  </data>
+  <data name="SubCipher.Filter.TextFiles" xml:space="preserve">
+    <value>Pliki tekstowe (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*</value>
+  </data>
+  <data name="SubCipher.Title" xml:space="preserve">
+    <value>Przetwarzanie szyfru podstawieniowego</value>
+  </data>
+  <data name="Message_BuildingLangData" xml:space="preserve">
+    <value>Budowanie danych języka...</value>
+  </data>
+  <data name="Message_CrackingCipher" xml:space="preserve">
+    <value>Łamanie szyfru...</value>
+  </data>
+  <data name="Message_FailedToLoadLangData" xml:space="preserve">
+    <value>Nie udało się wczytać danych języka!</value>
+  </data>
+  <data name="Message_FailedToOpenLangSampleFile" xml:space="preserve">
+    <value>Nie udało się otworzyć pliku z przykładem języka!</value>
+  </data>
+  <data name="Message_FailedToSaveLangData" xml:space="preserve">
+    <value>Nie udało się zapisać danych języka!</value>
+  </data>
+  <data name="Ribbon.Text.Cipher.SubCipher" xml:space="preserve">
+    <value>Szyfr podstawieniowy</value>
+  </data>
+  <data name="Ribbon.Text.Group.Cipher" xml:space="preserve">
+    <value>Szyfrowanie</value>
+  </data>
 </root>

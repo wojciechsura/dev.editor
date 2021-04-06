@@ -34,6 +34,19 @@ https://www.iconfinder.com/iconsets/text-icons-1
 * Basic by Pixelmixer
 https://findicons.com/pack/42/basic
 
+* Office and Entertainment icon pack
+https://findicons.com/pack/1035/human_o2
+
+* Plastic Donut
+https://iconscout.com/contributors/plastic-donut
+
+* Adrian Valeanu
+https://www.iconfinder.com/designmodo
+
+* Atrous .
+https://iconscout.com/contributors/atrous
+
+
 Libraries
 
 * AvalonEdit (MIT)

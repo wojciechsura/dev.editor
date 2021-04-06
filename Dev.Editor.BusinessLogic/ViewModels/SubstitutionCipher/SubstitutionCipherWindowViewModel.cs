@@ -281,7 +281,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 
         private void DoSaveLanguageData()
         {
-            var result = dialogService.ShowSaveDialog("#Language data files (*.langdata)|*.langdata");
+            var result = dialogService.ShowSaveDialog(Resources.Strings.SubCipher_Filter_LangData);
             if (result.Result)
             {
                 try
@@ -290,14 +290,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
                 }
                 catch 
                 {
-                    messagingService.ShowError("#Failed to save language data!");
+                    messagingService.ShowError(Resources.Strings.Message_FailedToSaveLangData);
                 }
             }
         }
 
         private void DoOpenLanguageData()
         {
-            var result = dialogService.ShowOpenDialog("#Language data files (*.langdata)|*.langdata");
+            var result = dialogService.ShowOpenDialog(Resources.Strings.SubCipher_Filter_LangData);
             if (result.Result)
             {
                 try
@@ -306,14 +306,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
                 }
                 catch
                 {
-                    messagingService.ShowError("#Failed to load language data!");
+                    messagingService.ShowError(Resources.Strings.Message_FailedToLoadLangData);
                 }
             }
         }
 
         private void DoGenerateLanguageData()
         {
-            (bool result, List<string> files) = dialogService.ShowOpenFilesDialog("#Text files (*.txt)|*.txt");
+            (bool result, List<string> files) = dialogService.ShowOpenFilesDialog(Resources.Strings.SubCipher_Filter_TextFiles);
             if (result)
             {
                 string[] lines;
@@ -324,14 +324,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
                 }
                 catch (IOException)
                 {
-                    messagingService.ShowError("#Failed to open language sample file!");
+                    messagingService.ShowError(Resources.Strings.Message_FailedToOpenLangSampleFile);
                     return;
                 }
 
                 // Extract alphabet first and confirm with user
                 var alphabet = substitutionCipherService.ExtractAlphabet(lines);
 
-                (bool alphabetResult, string newAlphabet) = dialogService.ShowAlphabetDialog("#Verify language alphabet", alphabet);
+                (bool alphabetResult, string newAlphabet) = dialogService.ShowAlphabetDialog(Resources.Strings.SubCipher_Alphabet_VerifyLanguageAlphabet, alphabet);
                 if (alphabetResult)
                 {
                     LanguageBuilderInput input = new LanguageBuilderInput(lines, newAlphabet);
@@ -339,7 +339,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
                     var worker = new LanguageDataBuilderWorker(substitutionCipherService);
                     worker.RunWorkerCompleted += HandleLanguageDataBuilt;
 
-                    dialogService.ShowProgressDialog("#Building language data...", worker, input);
+                    dialogService.ShowProgressDialog(Resources.Strings.Message_BuildingLangData, worker, input);
                 }
             }
         }
@@ -425,7 +425,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             var worker = new CrackWorker(substitutionCipherService);
             worker.RunWorkerCompleted += HandleCrackWorkerFinished;
             
-            dialogService.ShowProgressDialog("#Cracking cipher...", worker, input);
+            dialogService.ShowProgressDialog(Resources.Strings.Message_CrackingCipher, worker, input);
         }
 
         private void HandleCrackWorkerFinished(object sender, RunWorkerCompletedEventArgs e)

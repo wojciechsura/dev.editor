@@ -1249,4 +1249,79 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Navigation.Group.ProjectFiles" xml:space="preserve">
     <value>Project files</value>
   </data>
+  <data name="SubCipher.Ribbon.Tab.Home" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Group.General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="SubCipher.Ribbon.General.SourceAlphabet" xml:space="preserve">
+    <value>Source alphabet</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.General.SourceAlphabet.ResolveFromSource" xml:space="preserve">
+    <value>Resolve from source</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Group.Mode" xml:space="preserve">
+    <value>Mode</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Mode.Ciphering" xml:space="preserve">
+    <value>Ciphering</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Mode.Unciphering" xml:space="preserve">
+    <value>Unciphering</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Group.LanguageData" xml:space="preserve">
+    <value>Language data</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.LanguageData.Generate" xml:space="preserve">
+    <value>Generate</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.LanguageData.Open" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.LanguageData.Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Group.Solve" xml:space="preserve">
+    <value>Solve</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Solve.UseLetterFrequency" xml:space="preserve">
+    <value>Use letter frequency</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Solve.Crack" xml:space="preserve">
+    <value>Crack</value>
+  </data>
+  <data name="SubCipher.Filter.LangData" xml:space="preserve">
+    <value>Language data files (*.langdata)|*.langdata</value>
+  </data>
+  <data name="Message_FailedToSaveLangData" xml:space="preserve">
+    <value>Failed to save language data!</value>
+  </data>
+  <data name="Message_FailedToLoadLangData" xml:space="preserve">
+    <value>Failed to load language data!</value>
+  </data>
+  <data name="SubCipher.Filter.TextFiles" xml:space="preserve">
+    <value>Text files (*.txt)|*.txt|All files (*.*)|*.*</value>
+  </data>
+  <data name="Message_FailedToOpenLangSampleFile" xml:space="preserve">
+    <value>Failed to open language sample file!</value>
+  </data>
+  <data name="SubCipher.Alphabet.VerifyLanguageAlphabet" xml:space="preserve">
+    <value>Verify language alphabet</value>
+  </data>
+  <data name="Message_BuildingLangData" xml:space="preserve">
+    <value>Building language data...</value>
+  </data>
+  <data name="Message_CrackingCipher" xml:space="preserve">
+    <value>Cracking cipher...</value>
+  </data>
+  <data name="SubCipher.Title" xml:space="preserve">
+    <value>Substitution cipher processing</value>
+  </data>
+  <data name="Ribbon.Text.Group.Cipher" xml:space="preserve">
+    <value>Cipher</value>
+  </data>
+  <data name="Ribbon.Text.Cipher.SubCipher" xml:space="preserve">
+    <value>Substitution cipher</value>
+  </data>
 </root>

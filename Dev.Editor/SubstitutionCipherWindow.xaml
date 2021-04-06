@@ -8,8 +8,9 @@
                 xmlns:local="clr-namespace:Dev.Editor"                
                 xmlns:vm="clr-namespace:Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher;assembly=Dev.Editor.BusinessLogic"
                 xmlns:t="clr-namespace:Dev.Editor.BusinessLogic.Types.SubstitutionCipher;assembly=Dev.Editor.BusinessLogic"
+                xmlns:p="clr-namespace:Dev.Editor.Resources;assembly=Dev.Editor.Resources"
                 mc:Ignorable="d"
-                Title="SubstitutionCipherWindow" Height="450" Width="800"
+                Title="{x:Static p:Strings.SubCipher_Title}" Height="450" Width="800"
                 WindowStartupLocation="CenterOwner"
                 Closing="HandleWindowClosing">
     <Window.Resources>
@@ -32,23 +33,32 @@
     
     <DockPanel Style="{StaticResource RootDockPanel}">
         <f:Ribbon DockPanel.Dock="Top">
-            <f:RibbonTabItem Header="#Home">
-                <f:RibbonGroupBox Header="#General">
-                    <f:SplitButton Header="#Source alphabet" Command="{Binding EnterAlphabetCommand}">
-                        <f:MenuItem Header="#Resolve from source" />
+            <f:RibbonTabItem Header="{x:Static p:Strings.SubCipher_Ribbon_Tab_Home}">
+                <f:RibbonGroupBox Header="{x:Static p:Strings.SubCipher_Ribbon_Home_Group_General}">
+                    <f:SplitButton Header="{x:Static p:Strings.SubCipher_Ribbon_General_SourceAlphabet}" Command="{Binding EnterAlphabetCommand}"
+                                   Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Abc16.png"
+                                   LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Abc32.png">
+                        <f:MenuItem Header="{x:Static p:Strings.SubCipher_Ribbon_Home_General_SourceAlphabet_ResolveFromSource}" />
                     </f:SplitButton>
-                    <f:DropDownButton Header="#Mode">
-                        <f:MenuItem Header="#Ciphering" 
-                                    IsChecked="{Binding Mode, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static t:SubstitutionCipherMode.Cipher}}"
-                                    Command="{Binding SwitchModeToCipherCommand}"/>
-                        <f:MenuItem Header="#Unciphering" 
-                                    IsChecked="{Binding Mode, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static t:SubstitutionCipherMode.Uncipher}}"
-                                    Command="{Binding SwitchModeToUncipherCommand}"/>
-                    </f:DropDownButton>
                 </f:RibbonGroupBox>
 
-                <f:RibbonGroupBox Header="#Language data">
-                    <f:Button Header="#Generate" Command="{Binding GenerateLanguageDataCommand}" />
+                <f:RibbonGroupBox Header="{x:Static p:Strings.SubCipher_Ribbon_Home_Group_Mode}">
+                    <f:ToggleButton Header="{x:Static p:Strings.SubCipher_Ribbon_Home_Mode_Ciphering}" 
+                                    IsChecked="{Binding Mode, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static t:SubstitutionCipherMode.Cipher}}"
+                                    Command="{Binding SwitchModeToCipherCommand}"
+                                    Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Lock16.png"
+                                    LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Lock32.png"/>
+                    <f:ToggleButton Header="{x:Static p:Strings.SubCipher_Ribbon_Home_Mode_Unciphering}" 
+                                    IsChecked="{Binding Mode, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static t:SubstitutionCipherMode.Uncipher}}"
+                                    Command="{Binding SwitchModeToUncipherCommand}"
+                                    Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/LockOpen16.png"
+                                    LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/LockOpen32.png"/>
+                </f:RibbonGroupBox>
+
+                <f:RibbonGroupBox Header="{x:Static p:Strings.SubCipher_Ribbon_Home_Group_LanguageData}">
+                    <f:Button Header="{x:Static p:Strings.SubCipher_Ribbon_Home_LanguageData_Generate}" Command="{Binding GenerateLanguageDataCommand}" 
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Book16.png"
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Book32.png"/>
 
                     <f:RibbonToolBar Size="Large">
                         <f:RibbonToolBar.LayoutDefinitions>
@@ -73,18 +83,26 @@
 
                         </f:RibbonToolBar.LayoutDefinitions>
 
-                        <f:Button x:Name="bOpenLanguageData" Header="#Open" Size="Middle" Command="{Binding OpenLanguageDataCommand}" />
-                        <f:Button x:Name="bSaveLanguageData" Header="#Save" Size="Middle" Command="{Binding SaveLanguageDataCommand}" />
+                        <f:Button x:Name="bOpenLanguageData" Header="{x:Static p:Strings.SubCipher_Ribbon_Home_LanguageData_Open}" Size="Middle" Command="{Binding OpenLanguageDataCommand}" 
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open16.png"
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Open32.png"/>
+                        <f:Button x:Name="bSaveLanguageData" Header="{x:Static p:Strings.SubCipher_Ribbon_Home_LanguageData_Save}" Size="Middle" Command="{Binding SaveLanguageDataCommand}" 
+                                  Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save16.png"
+                                  LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Save16.png"/>
 
                     </f:RibbonToolBar>
 
-                    <Separator />
+                </f:RibbonGroupBox>
 
-                    <f:Button Header="#Solve from letter freq." Command="{Binding SolveFromLetterFreqCommand}" />
+                <f:RibbonGroupBox Header="{x:Static p:Strings.SubCipher_Ribbon_Home_Group_Solve}">
 
-                    <Separator />
+                    <f:Button Header="{x:Static p:Strings.SubCipher_Ribbon_Home_Solve_UseLetterFrequency}" Command="{Binding SolveFromLetterFreqCommand}" 
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Calc16.png"
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Calc32.png"/>
 
-                    <f:Button Header="#Crack" Command="{Binding CrackCommand}" />
+                    <f:Button Header="{x:Static p:Strings.SubCipher_Ribbon_Home_Solve_Crack}" Command="{Binding CrackCommand}" 
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Safe16.png"
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Safe32.png"/>
 
                 </f:RibbonGroupBox>
             </f:RibbonTabItem>

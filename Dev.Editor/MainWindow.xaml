@@ -801,10 +801,10 @@
                     
                 </f:RibbonGroupBox>
 
-                <f:RibbonGroupBox Header="#Cipher">
-                    <f:Button Header="#Substitution cipher" Command="{Binding OpenSubstitutionCipherCommand}"
-                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Duplicates32.png"
-                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Duplicates16.png" />
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Text_Group_Cipher}">
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Text_Cipher_SubCipher}" Command="{Binding OpenSubstitutionCipherCommand}"
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Abc32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Abc16.png" />
                 </f:RibbonGroupBox>
                 
             </f:RibbonTabItem>

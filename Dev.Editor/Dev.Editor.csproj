@@ -520,5 +520,27 @@
     <Resource Include="Resources\Images\Regex16.png" />
     <Resource Include="Resources\Images\WholeWord16.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Abc16.png" />
+    <Resource Include="Resources\Images\Abc32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Lock16.png" />
+    <Resource Include="Resources\Images\Lock32.png" />
+    <Resource Include="Resources\Images\LockOpen16.png" />
+    <Resource Include="Resources\Images\LockOpen32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Safe16.png" />
+    <Resource Include="Resources\Images\Safe32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Book16.png" />
+    <Resource Include="Resources\Images\Book32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Calc16.png" />
+    <Resource Include="Resources\Images\Calc32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

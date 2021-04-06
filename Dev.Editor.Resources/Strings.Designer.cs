@@ -1132,6 +1132,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Building language data....
+        /// </summary>
+        public static string Message_BuildingLangData {
+            get {
+                return ResourceManager.GetString("Message_BuildingLangData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cannot add binary definition, error: {0}.
         /// </summary>
         public static string Message_CannotAddBinDefinition {
@@ -1209,6 +1218,15 @@ namespace Dev.Editor.Resources {
         public static string Message_CannotTransformXslt {
             get {
                 return ResourceManager.GetString("Message.CannotTransformXslt", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cracking cipher....
+        /// </summary>
+        public static string Message_CrackingCipher {
+            get {
+                return ResourceManager.GetString("Message_CrackingCipher", resourceCulture);
             }
         }
         
@@ -1319,6 +1337,33 @@ namespace Dev.Editor.Resources {
         public static string Message_FailedToFindFiles {
             get {
                 return ResourceManager.GetString("Message.FailedToFindFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to load language data!.
+        /// </summary>
+        public static string Message_FailedToLoadLangData {
+            get {
+                return ResourceManager.GetString("Message_FailedToLoadLangData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to open language sample file!.
+        /// </summary>
+        public static string Message_FailedToOpenLangSampleFile {
+            get {
+                return ResourceManager.GetString("Message_FailedToOpenLangSampleFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Failed to save language data!.
+        /// </summary>
+        public static string Message_FailedToSaveLangData {
+            get {
+                return ResourceManager.GetString("Message_FailedToSaveLangData", resourceCulture);
             }
         }
         
@@ -2368,6 +2413,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Substitution cipher.
+        /// </summary>
+        public static string Ribbon_Text_Cipher_SubCipher {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Cipher.SubCipher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Convertion.
         /// </summary>
         public static string Ribbon_Text_Convert {
@@ -2472,6 +2526,15 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Text_Escape_Unescape_Backslash {
             get {
                 return ResourceManager.GetString("Ribbon.Text.Escape.Unescape.Backslash", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cipher.
+        /// </summary>
+        public static string Ribbon_Text_Group_Cipher {
+            get {
+                return ResourceManager.GetString("Ribbon.Text.Group.Cipher", resourceCulture);
             }
         }
         
@@ -2958,6 +3021,168 @@ namespace Dev.Editor.Resources {
         public static string SearchWindow_Title {
             get {
                 return ResourceManager.GetString("SearchWindow.Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Verify language alphabet.
+        /// </summary>
+        public static string SubCipher_Alphabet_VerifyLanguageAlphabet {
+            get {
+                return ResourceManager.GetString("SubCipher.Alphabet.VerifyLanguageAlphabet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language data files (*.langdata)|*.langdata.
+        /// </summary>
+        public static string SubCipher_Filter_LangData {
+            get {
+                return ResourceManager.GetString("SubCipher.Filter.LangData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Text files (*.txt)|*.txt|All files (*.*)|*.*.
+        /// </summary>
+        public static string SubCipher_Filter_TextFiles {
+            get {
+                return ResourceManager.GetString("SubCipher.Filter.TextFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Source alphabet.
+        /// </summary>
+        public static string SubCipher_Ribbon_General_SourceAlphabet {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.General.SourceAlphabet", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Resolve from source.
+        /// </summary>
+        public static string SubCipher_Ribbon_Home_General_SourceAlphabet_ResolveFromSource {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.Home.General.SourceAlphabet.ResolveFromSource", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string SubCipher_Ribbon_Home_Group_General {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.Home.Group.General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Language data.
+        /// </summary>
+        public static string SubCipher_Ribbon_Home_Group_LanguageData {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.Home.Group.LanguageData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Mode.
+        /// </summary>
+        public static string SubCipher_Ribbon_Home_Group_Mode {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.Home.Group.Mode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Solve.
+        /// </summary>
+        public static string SubCipher_Ribbon_Home_Group_Solve {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.Home.Group.Solve", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate.
+        /// </summary>
+        public static string SubCipher_Ribbon_Home_LanguageData_Generate {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.Home.LanguageData.Generate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Open.
+        /// </summary>
+        public static string SubCipher_Ribbon_Home_LanguageData_Open {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.Home.LanguageData.Open", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string SubCipher_Ribbon_Home_LanguageData_Save {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.Home.LanguageData.Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ciphering.
+        /// </summary>
+        public static string SubCipher_Ribbon_Home_Mode_Ciphering {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.Home.Mode.Ciphering", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unciphering.
+        /// </summary>
+        public static string SubCipher_Ribbon_Home_Mode_Unciphering {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.Home.Mode.Unciphering", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Crack.
+        /// </summary>
+        public static string SubCipher_Ribbon_Home_Solve_Crack {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.Home.Solve.Crack", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use letter frequency.
+        /// </summary>
+        public static string SubCipher_Ribbon_Home_Solve_UseLetterFrequency {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.Home.Solve.UseLetterFrequency", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Home.
+        /// </summary>
+        public static string SubCipher_Ribbon_Tab_Home {
+            get {
+                return ResourceManager.GetString("SubCipher.Ribbon.Tab.Home", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Substitution cipher processing.
+        /// </summary>
+        public static string SubCipher_Title {
+            get {
+                return ResourceManager.GetString("SubCipher.Title", resourceCulture);
             }
         }
         
