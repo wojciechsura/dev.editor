@@ -9,5 +9,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
     public interface ISubstitutionCipherWindowAccess
     {
         void RestartActionTimer();
+        void FocusAlphabetEntry(AlphabetEntryViewModel alphabetEntryToFocus);
     }
 }

@@ -120,7 +120,7 @@
                            FontFamily="Consolas"      
                            FontSize="10pt"/>
 
-            <ItemsControl Grid.Row="1" MinHeight="16"
+            <ItemsControl x:Name="icAlphabet" Grid.Row="1" MinHeight="16"
                           BorderBrush="{x:Static SystemColors.InactiveBorderBrush}" BorderThickness="1"
                           Margin="{StaticResource DialogItemsVerticalOnlyMargin}"
                           ItemsSource="{Binding Alphabet}">
@@ -136,7 +136,7 @@
                             <StackPanel Orientation="Vertical" Margin="{StaticResource DefaultMargin}">
                                 <Label Content="{Binding Plaintext}" FontFamily="Consolas"/>
                                 <TextBox x:Name="tbCipher" MaxLength="1" Text="{Binding Cipher, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                         FontFamily="Consolas"/>
+                                         FontFamily="Consolas" GotFocus="HandleTbCipherGotFocus"/>
                             </StackPanel>
                         </Border>
                         <DataTemplate.Triggers>

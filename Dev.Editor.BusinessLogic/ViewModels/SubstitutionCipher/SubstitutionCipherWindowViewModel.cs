@@ -137,7 +137,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             protected override void OnDoWork(DoWorkEventArgs e)
             {
                 var data = e.Argument as LanguageBuilderInput;
-                var info = substitutionCipherService.BuildLanguageInfoModel(data.Lines, data.Alphabet, () => CancellationPending, progress => ReportProgress(progress));
+                var info = substitutionCipherService.BuildLanguageInfoModel(data.Lines, 
+                    data.Alphabet, 
+                    () => CancellationPending, 
+                    progress => ReportProgress(progress));
                 e.Result = info;
             }
         }
@@ -458,8 +461,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             }
 
             ValidateAlphabet();
-
             RestartActionTimer();
+
+            if (!String.IsNullOrEmpty(alphabetEntryViewModel.Cipher))
+            {
+                int index = alphabet.IndexOf(alphabetEntryViewModel);
+                if (index < alphabet.Count - 1)
+                {
+                    var alphabetEntryToFocus = alphabet[index + 1];
+                    access.FocusAlphabetEntry(alphabetEntryToFocus);
+                }
+            }
         }
 
         // Public methods -----------------------------------------------------

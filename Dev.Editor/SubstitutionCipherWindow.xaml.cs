@@ -66,5 +66,21 @@ namespace Dev.Editor
                 Owner.Focus();
             }
         }
+
+        private void HandleTbCipherGotFocus(object sender, RoutedEventArgs e)
+        {
+            (sender as System.Windows.Controls.TextBox).SelectAll();
+        }
+
+        public void FocusAlphabetEntry(AlphabetEntryViewModel alphabetEntryToFocus)
+        {
+            var container = icAlphabet.ItemContainerGenerator.ContainerFromItem(alphabetEntryToFocus);
+            if (container != null && container is ContentPresenter presenter)
+            {
+                DataTemplate dataTemplate = presenter.ContentTemplate;
+                var textBox = (System.Windows.Controls.TextBox)dataTemplate.FindName("tbCipher", presenter);
+                textBox?.Focus();
+            }
+        }
     }
 }
