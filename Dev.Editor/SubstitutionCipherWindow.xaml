@@ -44,12 +44,12 @@
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.SubCipher_Ribbon_Home_Group_Mode}">
                     <f:ToggleButton Header="{x:Static p:Strings.SubCipher_Ribbon_Home_Mode_Ciphering}" 
-                                    IsChecked="{Binding Mode, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static t:SubstitutionCipherMode.Cipher}}"
+                                    IsChecked="{Binding Mode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SubstitutionCipherMode.Cipher}}"
                                     Command="{Binding SwitchModeToCipherCommand}"
                                     Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Lock16.png"
                                     LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Lock32.png"/>
                     <f:ToggleButton Header="{x:Static p:Strings.SubCipher_Ribbon_Home_Mode_Unciphering}" 
-                                    IsChecked="{Binding Mode, Converter={StaticResource EqualsParameterToBoolConverter}, ConverterParameter={x:Static t:SubstitutionCipherMode.Uncipher}}"
+                                    IsChecked="{Binding Mode, Converter={StaticResource RadioToEnumConverter}, ConverterParameter={x:Static t:SubstitutionCipherMode.Uncipher}}"
                                     Command="{Binding SwitchModeToUncipherCommand}"
                                     Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/LockOpen16.png"
                                     LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/LockOpen32.png"/>
