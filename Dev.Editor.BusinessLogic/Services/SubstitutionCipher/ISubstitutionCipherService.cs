@@ -11,7 +11,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
     {
         LanguageInfoModel BuildLanguageInfoModel(string[] lines, string alphabet, Func<bool> checkCancellation, Action<int> reportProgress);
         LanguageInfoModel LoadLanguageInfoModel(string filename);
-        string Process(Dictionary<char, char> inputKey, string data, bool forward, Func<bool> checkCancellation = null);
+        string Process(Dictionary<char, char> inputKey, string data, bool forward, bool useUnrecognizedCharsDirectly, Func<bool> checkCancellation = null);
         void SaveLanguageInfoModel(string filename, LanguageInfoModel model);
         Dictionary<char, char> TrySolve(string cipher, Dictionary<char, char> initialKey, LanguageInfoModel languageInfo, Func<bool> checkCancellation = null, Action<int> reportProgress = null);
         string ExtractAlphabet(string[] lines);

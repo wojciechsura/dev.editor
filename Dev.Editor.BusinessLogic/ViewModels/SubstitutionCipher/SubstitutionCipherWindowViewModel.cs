@@ -25,13 +25,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
 
         private class CipherWorkerInput
         {
-            public CipherWorkerInput(Dictionary<char, char> key, string data, bool forward)
+            public CipherWorkerInput(Dictionary<char, char> key, string data, bool forward, bool useUnrecognizedCharsDirectly)
             {
                 Key = key;
                 Data = data;
                 Forward = forward;
+                UseUnrecognizedCharsDirectly = useUnrecognizedCharsDirectly;
             }
 
+            public bool UseUnrecognizedCharsDirectly { get; }
             public Dictionary<char, char> Key { get; }
             public string Data { get; }
             public bool Forward { get; }
@@ -96,7 +98,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             protected override void OnDoWork(DoWorkEventArgs e)
             {
                 var input = e.Argument as CipherWorkerInput;
-                var result = substitutionCipherService.Process(input.Key, input.Data, input.Forward, () => CancellationPending);
+                var result = substitutionCipherService.Process(input.Key, input.Data, input.Forward, input.UseUnrecognizedCharsDirectly, () => CancellationPending);
                 e.Result = new CipherWorkerOutput(result);
             }
         }
@@ -119,8 +121,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
                 e.Result = new CrackWorkerOutput(result);
             }
         }
-
-
 
         private class LanguageDataBuilderWorker : BackgroundWorker
         {
@@ -533,6 +533,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             string data;
             bool forward;
             RunWorkerCompletedEventHandler completeHandler;
+            bool useUnrecognizedCharsDirectly;
 
             switch (mode)
             {
@@ -541,6 +542,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
                         data = plaintextDoc.Text;
                         forward = true;
                         completeHandler = SetCipherText;
+                        useUnrecognizedCharsDirectly = true;
                         break;
                     }
                 case SubstitutionCipherMode.Uncipher:
@@ -548,13 +550,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
                         data = cipherDoc.Text;
                         forward = false;
                         completeHandler = SetPlaintext;
+                        useUnrecognizedCharsDirectly = !(alphabet?.Any(e => String.IsNullOrEmpty(e.Cipher)) ?? true);
                         break;
                     }
                 default:
                     throw new InvalidEnumArgumentException("Unsupported cipher mode!");
             }
 
-            var input = new CipherWorkerInput(key, data, forward);
+            var input = new CipherWorkerInput(key, data, forward, useUnrecognizedCharsDirectly);
             currentWorker = new CipherWorker(substitutionCipherService);
             currentWorker.RunWorkerCompleted += completeHandler;
             currentWorker.RunWorkerAsync(input);

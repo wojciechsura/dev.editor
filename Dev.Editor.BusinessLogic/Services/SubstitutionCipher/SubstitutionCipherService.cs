@@ -370,7 +370,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
             return new LanguageInfoModel(bitsPerChar, alphabet, letters, sequences);
         }
 
-        public string Process(Dictionary<char, char> inputKey, string data, bool forward, Func<bool> checkCancellation = null)
+        public string Process(Dictionary<char, char> inputKey, string data, bool forward, bool useUnrecognizedCharsDirectly, Func<bool> checkCancellation = null)
         {
             if (data == null)
                 return null;
@@ -406,7 +406,7 @@ namespace Dev.Editor.BusinessLogic.Services.SubstitutionCipher
                 }
                 else
                 {
-                    if (Char.IsWhiteSpace(dataChar))
+                    if (Char.IsWhiteSpace(dataChar) || useUnrecognizedCharsDirectly)
                         result.Append(dataChar);
                     else
                         result.Append("·");
