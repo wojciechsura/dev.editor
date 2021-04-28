@@ -121,6 +121,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         // MarkdownTools
 
+        public ICommand MarkdownHtmlPreviewCommand { get; }
         public ICommand InsertMarkdownHeader1Command { get; }
         public ICommand InsertMarkdownHeader2Command { get; }
         public ICommand InsertMarkdownHeader3Command { get; }

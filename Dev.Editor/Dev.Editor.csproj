@@ -180,6 +180,9 @@
     <Compile Include="SubstitutionCipherWindow.xaml.cs">
       <DependentUpon>SubstitutionCipherWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WebBrowserWindow.xaml.cs">
+      <DependentUpon>WebBrowserWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Wpf\AccessKeyScopeControl.cs" />
     <Compile Include="Wpf\DocumentTemplateSelector.cs" />
     <Compile Include="Converters\InverseBooleanToVisibilityConverter.cs" />
@@ -284,6 +287,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="SubstitutionCipherWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WebBrowserWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

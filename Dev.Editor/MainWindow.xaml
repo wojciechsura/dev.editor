@@ -836,6 +836,12 @@
             <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_MarkdownTools}"
                              Group="{Binding ElementName=rctgMarkdown}">
 
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Markdown_Rendering}">
+                    <f:Button SizeDefinition="Large" Header="{x:Static p:Strings.Ribbon_Markdown_Rendering_HtmlPreview}" Command="{Binding MarkdownHtmlPreviewCommand}" 
+                              LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search32.png"
+                              Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Search16.png" />
+                </f:RibbonGroupBox>
+                
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Markdown_Headers}">
 
                     <f:Button SizeDefinition="Large" Header="{x:Static p:Strings.Ribbon_Markdown_Headers_H1}" Command="{Binding InsertMarkdownHeader1Command}"

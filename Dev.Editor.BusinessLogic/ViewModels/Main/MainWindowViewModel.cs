@@ -1120,6 +1120,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, "FormatXml16.png", obj => DoFormatXml(), xmlToolsetAvailableCondition);
             TransformXsltCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Transform_XSLT, null, obj => DoTransformXslt(), xmlToolsetAvailableCondition);
 
+            MarkdownHtmlPreviewCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Command_Markdown_HtmlPreview, "Search16.png", obj => DoMarkdownHtmlPreview(), markdownToolsetAvailableCondition);
             InsertMarkdownHeader1Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H1, "H116.png", obj => DoInsertMarkdownHeader1(), markdownToolsetAvailableCondition);
             InsertMarkdownHeader2Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H2, "H216.png", obj => DoInsertMarkdownHeader2(), markdownToolsetAvailableCondition);
             InsertMarkdownHeader3Command = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Markdown_Headers_H3, "H316.png", obj => DoInsertMarkdownHeader3(), markdownToolsetAvailableCondition);

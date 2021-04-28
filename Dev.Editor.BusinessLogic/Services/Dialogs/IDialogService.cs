@@ -2,6 +2,7 @@
 using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
 using Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher;
+using Dev.Editor.BusinessLogic.ViewModels.WebBrowserWindow;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -31,5 +32,6 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
         (bool, DuplicatedLinesFinderConfig) ShowDuplicatedLinesFinderConfigDialog(DuplicatedLinesFinderConfigModel model);
         void OpenSubstitutionCipherWindow(ISubstitutionCipherHost host);
         (bool, string) ShowAlphabetDialog(string message, string previousAlphabet = null);
+        WebBrowserWindowViewModel RequestWebBrowser(IWebBrowserHost webBrowserHost);
     }
 }

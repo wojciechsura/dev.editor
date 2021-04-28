@@ -1324,4 +1324,16 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Text.Group.Cipher" xml:space="preserve">
     <value>Szyfrowanie</value>
   </data>
+  <data name="WebBrowser_Title" xml:space="preserve">
+    <value>Przeglądarka internetowa</value>
+  </data>
+  <data name="Ribbon.Markdown.Rendering" xml:space="preserve">
+    <value>Renderowanie</value>
+  </data>
+  <data name="Ribbon.Markdown.Rendering.HtmlPreview" xml:space="preserve">
+    <value>Podgląd jako HTML</value>
+  </data>
+  <data name="Command.Markdown.HtmlPreview" xml:space="preserve">
+    <value>Podgląd Markdown jako HTML</value>
+  </data>
 </root>

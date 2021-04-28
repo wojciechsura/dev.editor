@@ -13,11 +13,13 @@ using System.ComponentModel;
 using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
 using Microsoft.Win32;
 using Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher;
+using Dev.Editor.BusinessLogic.ViewModels.WebBrowserWindow;
 
 namespace Dev.Editor.Services.Dialogs
 {
     class DialogService : IDialogService
     {
+        private readonly Dictionary<IWebBrowserHost, WebBrowserWindow> webBrowserWindows = new Dictionary<IWebBrowserHost, WebBrowserWindow>();
         private readonly Dictionary<ISearchHost, SearchReplaceWindow> searchWindows = new Dictionary<ISearchHost, SearchReplaceWindow>();
         private readonly Dictionary<ISubstitutionCipherHost, SubstitutionCipherWindow> substitutionCipherWindows = new Dictionary<ISubstitutionCipherHost, SubstitutionCipherWindow>();
 
@@ -188,6 +190,19 @@ namespace Dev.Editor.Services.Dialogs
                 return (true, dialog.Result);
             else
                 return (false, null);
+        }
+
+        public WebBrowserWindowViewModel RequestWebBrowser(IWebBrowserHost webBrowserHost)
+        {
+            if (!webBrowserWindows.ContainsKey(webBrowserHost))
+            {
+                WebBrowserWindow webBrowserWindow = new WebBrowserWindow(webBrowserHost);
+                webBrowserWindow.Owner = Application.Current.MainWindow;
+                webBrowserWindows.Add(webBrowserHost, webBrowserWindow);
+            }
+
+            return webBrowserWindows[webBrowserHost].ViewModel;
+
         }
     }
 }

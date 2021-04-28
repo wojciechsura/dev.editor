@@ -5,6 +5,7 @@ Version 1.0.2
 + Added opening folder as a project and displaying project contents
 + Added navigating through project files
 + Added substitution cipher processor and solver
++ Added Markdown preview in built-in HTML window
 
 Version 1.0.1
 13.11.2020
