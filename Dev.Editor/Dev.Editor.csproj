@@ -550,5 +550,6 @@
     <Resource Include="Resources\Images\Calc16.png" />
     <Resource Include="Resources\Images\Calc32.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

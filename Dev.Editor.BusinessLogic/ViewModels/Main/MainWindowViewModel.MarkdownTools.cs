@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -21,10 +22,19 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
             string html = Markdown.ToHtml(document.Document.Text);
+            string pre, post;
+
+            var preStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Dev.Editor.BusinessLogic.Resources.Html.markdown-pre.html");
+            using (StreamReader sr = new StreamReader(preStream))
+                pre = sr.ReadToEnd();
+
+            var postStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Dev.Editor.BusinessLogic.Resources.Html.markdown-post.html");
+            using (StreamReader sr = new StreamReader(postStream))
+                post = sr.ReadToEnd();
 
             var webBrowserViewModel = dialogService.RequestWebBrowser(this);
             webBrowserViewModel.ShowWindow();
-            webBrowserViewModel.DisplayHtml(html);
+            webBrowserViewModel.DisplayHtml(pre + html + post);
         }
 
         private void DoInsertMarkdownHeader1()
