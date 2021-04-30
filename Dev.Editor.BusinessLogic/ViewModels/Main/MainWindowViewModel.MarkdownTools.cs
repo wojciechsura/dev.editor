@@ -21,7 +21,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         {
             var document = (TextDocumentViewModel)documentsManager.ActiveDocument;
 
-            string html = Markdown.ToHtml(document.Document.Text);
+            var pipeline = new MarkdownPipelineBuilder()
+                .Use(new Markdig.Extensions.Tables.PipeTableExtension());
+
+            string html = Markdown.ToHtml(document.Document.Text, pipeline.Build());
             string pre, post;
 
             var preStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("Dev.Editor.BusinessLogic.Resources.Html.markdown-pre.html");
