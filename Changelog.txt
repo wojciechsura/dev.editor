@@ -6,6 +6,7 @@ Version 1.0.2
 + Added navigating through project files
 + Added substitution cipher processor and solver
 + Added Markdown preview in built-in HTML window
++ Added Execute command to Explorer tool window
 
 Version 1.0.1
 13.11.2020
