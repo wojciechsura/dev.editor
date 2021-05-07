@@ -823,6 +823,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             LoadHexDocument(documentsManager.ActiveDocumentTab, path);
         }
 
+        void IExplorerHandler.Execute(string path)
+        {
+            platformService.Execute(path);
+        }
+
         string IExplorerHandler.GetCurrentDocumentPath()
         {
             return documentsManager.ActiveDocument.FileName;

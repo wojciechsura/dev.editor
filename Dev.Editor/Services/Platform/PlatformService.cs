@@ -18,5 +18,10 @@ namespace Dev.Editor.Services.Platform
         {
             System.Diagnostics.Process.Start("explorer.exe", $"/open, \"{path}\"");
         }
+
+        public void Execute(string path)
+        {
+            System.Diagnostics.Process.Start(path);
+        }
     }
 }

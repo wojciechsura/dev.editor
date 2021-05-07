@@ -10,5 +10,6 @@ namespace Dev.Editor.BusinessLogic.Services.Platform
     {
         void ShowInExplorer(string path);
         void SelectInExplorer(string path);
+        void Execute(string path);
     }
 }

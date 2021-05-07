@@ -261,6 +261,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             SelectFileInExplorerCommand = new AppCommand(obj => DoSelectFileInExplorer(), fileSelectedCondition);
             OpenTextCommand = new AppCommand(obj => DoOpenText(), fileSelectedCondition);
             OpenHexCommand = new AppCommand(obj => DoOpenHex(), fileSelectedCondition);
+            ExecuteCommand = new AppCommand(obj => DoExecute(), fileSelectedCondition);
 
             if (configurationService.Configuration.Tools.Explorer.LastFolder.Value != null)
             {
@@ -278,6 +279,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
             explorerHandler.OpenTextFile(selectedFile.GetFullPath());
         }
 
+        private void DoExecute()
+        {
+            explorerHandler.Execute(selectedFile.GetFullPath());
+        }
 
         public void FileItemChosen()
         {
@@ -385,6 +390,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         public ICommand OpenTextCommand { get; }
 
         public ICommand OpenHexCommand { get; }
+
+        public ICommand ExecuteCommand { get; }
 
         public override string Title => Strings.Tool_Explorer_Title;
 

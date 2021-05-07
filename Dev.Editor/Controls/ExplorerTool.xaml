@@ -68,6 +68,8 @@
                             <MenuItem Header="{x:Static p:Strings.Tool_Explorer_Files_Open}" Command="{Binding OpenTextCommand}" />
                             <MenuItem Header="{x:Static p:Strings.Tool_Explorer_Files_OpenInHexeditor}" Command="{Binding OpenHexCommand}" />
                             <Separator />
+                            <MenuItem Header="{x:Static p:Strings.Tool_Explorer_Files_Execute}" Command="{Binding ExecuteCommand}" />
+                            <Separator />
                             <MenuItem Header="{x:Static p:Strings.Tool_Explorer_Files_ShowInExplorer}" Command="{Binding SelectFileInExplorerCommand}" />
                         </ContextMenu>
                     </ListBox.ContextMenu>
