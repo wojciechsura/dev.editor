@@ -1,5 +1,5 @@
 Version 1.0.2
-(date pending)
+20.05.2021
 + Added searching for duplicated lines in files
 + Added search result filtering
 + Added opening folder as a project and displaying project contents
