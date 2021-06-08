@@ -14,10 +14,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
 {
     public class NameDialogViewModel : BaseViewModel
     {
+        private SimpleCondition NameNotEmptyCondition;
+
         private string name;
         private INameDialogAccess access;
-
-        private Condition NameNotEmptyCondition;
 
         private void HandleNameChanged()
         {
@@ -26,7 +26,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
 
         private void InitializeCommands()
         {
-            NameNotEmptyCondition = new Condition(!string.IsNullOrWhiteSpace(Name));
+            NameNotEmptyCondition = new SimpleCondition(!string.IsNullOrWhiteSpace(Name));
 
             OkCommand = new AppCommand(obj => DoOk(), NameNotEmptyCondition);
             CancelCommand = new AppCommand(obj => DoCancel());

@@ -19,7 +19,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Configuration
         private readonly IRegistryService registryService;
         private readonly IPathService pathService;
         private readonly BaseCondition integrationDisabledCondition;
-        private readonly Condition integrationEnabledCondition;
+        private readonly SimpleCondition integrationEnabledCondition;
         private bool systemIntegrationState;
 
         private void CheckCurrentIntegrationState()
@@ -52,7 +52,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Configuration
             this.registryService = registryService;
             this.pathService = pathService;
 
-            integrationEnabledCondition = new Condition(systemIntegrationState);
+            integrationEnabledCondition = new SimpleCondition(systemIntegrationState);
             integrationDisabledCondition = !integrationEnabledCondition;
 
             CheckCurrentIntegrationState();

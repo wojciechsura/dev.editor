@@ -3,6 +3,11 @@
                     xmlns:c="clr-namespace:Dev.Editor.Controls"
                     xmlns:local="clr-namespace:Dev.Editor.Controls">
 
+    <SolidColorBrush x:Key="FlatButtonHoverBorderBrush" Color="#89b3dc" />
+    <SolidColorBrush x:Key="FlatButtonHoverBackgroundBrush" Color="#d9e7f4" />
+    <SolidColorBrush x:Key="FlatButtonDownBorderBrush" Color="#89b3dc" />
+    <SolidColorBrush x:Key="FlatButtonDownBackgroundBrush" Color="#ebf2fa" />
+
     <Style x:Key="{x:Type c:TreeViewEx}" TargetType="{x:Type c:TreeViewEx}">
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
         <Setter Property="BorderThickness" Value="0"/>
@@ -48,5 +53,57 @@
                 </Setter>
             </Trigger>
         </Style.Triggers>
+    </Style>
+
+    <Style x:Key="FlatButton" TargetType="{x:Type Button}" BasedOn="{StaticResource {x:Type Button}}">
+        <Style.Setters>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ButtonBase">
+                        <Border x:Name="bRoot" BorderBrush="Transparent" Background="Transparent" BorderThickness="1">
+                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="{TemplateBinding Padding}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.Setters>
+                                    <Setter TargetName="bRoot" Property="BorderBrush" Value="{StaticResource FlatButtonHoverBorderBrush}" />
+                                    <Setter TargetName="bRoot" Property="Background" Value="{StaticResource FlatButtonHoverBackgroundBrush}" />
+                                </Trigger.Setters>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Trigger.Setters>
+                                    <Setter TargetName="bRoot" Property="BorderBrush" Value="{StaticResource FlatButtonDownBorderBrush}" />
+                                    <Setter TargetName="bRoot" Property="Background" Value="{StaticResource FlatButtonDownBackgroundBrush}" />
+                                </Trigger.Setters>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Trigger.Setters>
+                                    <Setter TargetName="bRoot" Property="Opacity" Value="0.4" />
+                                </Trigger.Setters>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
+    
+    <Style x:Key="{x:Type c:FilterTextBox}" TargetType="{x:Type c:FilterTextBox}" BasedOn="{StaticResource {x:Type TextBox}}">
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type c:FilterTextBox}">
+                    <Border Name="Border" CornerRadius="2" Padding="2" BorderThickness="1"
+                            Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}">
+                        <DockPanel>
+                            <Image DockPanel.Dock="Left" Margin="2" Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Filter16.png" />
+                            <Button DockPanel.Dock="Right" Style="{StaticResource FlatButton}" Width="20" Height="20" Padding="1" Command="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ClearCommand}">
+                                <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Delete16.png" />
+                            </Button>
+                            <ScrollViewer Margin="0" x:Name="PART_ContentHost" />
+                        </DockPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
     </Style>
 </ResourceDictionary>

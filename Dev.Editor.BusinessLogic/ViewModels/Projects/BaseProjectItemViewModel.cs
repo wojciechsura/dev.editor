@@ -18,7 +18,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Projects
         private ImageSource icon;
         private bool isExpanded;
         private bool isSelected;
-        private bool isVisible;
+        private bool isIncludedByFilter;
 
         protected readonly IProjectHandler projectHandler;
 
@@ -31,7 +31,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Projects
 
             isExpanded = false;
             isSelected = false;
-            isVisible = true;
+            isIncludedByFilter = true;
         }
 
         public bool IsExpanded
@@ -46,10 +46,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Projects
             set => Set(ref isSelected, () => IsSelected, value);
         }
 
-        public bool IsVisible
+        public bool IsIncludedByFilter
         {
-            get => isVisible; 
-            set => Set(ref isVisible, () => IsVisible, value);
+            get => isIncludedByFilter;
+            set => Set(ref isIncludedByFilter, () => IsIncludedByFilter, value);
         }
 
         public string Path => path;

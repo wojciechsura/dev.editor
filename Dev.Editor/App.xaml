@@ -28,6 +28,7 @@
             <c:DataTypeToImageConverter x:Key="DataTypeToImageConverter" />
             <c:EqualsParameterToBoolConverter x:Key="EqualsParameterToBoolConverter" />
             <c:TabColorToBrushConverter x:Key="TabColorToBrushConverter" />
+            <c:FilterToBackgroundConverter x:Key="FilterToBackgroundConverter" />
 
             <!-- Layout -->
             

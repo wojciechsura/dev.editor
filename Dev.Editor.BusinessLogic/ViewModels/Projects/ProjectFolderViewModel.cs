@@ -19,8 +19,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Projects
             : base(path, icon, projectHandler)
         {
             this.children = children;
-        }        
+        }
 
         public IReadOnlyList<BaseProjectItemViewModel> Children => children;
+
+        public IEnumerable<BaseProjectItemViewModel> DisplayedChildren => children.Where(c => c.IsIncludedByFilter);
     }
 }

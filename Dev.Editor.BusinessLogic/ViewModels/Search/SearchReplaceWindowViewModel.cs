@@ -40,8 +40,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
         private readonly ISearchEncoderService searchEncoderService;
         private readonly IDialogService dialogService;
 
-        private readonly Condition searchExpressionValidCondition;
-        private readonly Condition storedSearchSelectedCondition;
+        private readonly SimpleCondition searchExpressionValidCondition;
+        private readonly SimpleCondition storedSearchSelectedCondition;
 
         private readonly ObservableCollection<StoredSearchViewModel> storedSearches = new ObservableCollection<StoredSearchViewModel>();
         private StoredSearchViewModel selectedStoredSearch;
@@ -416,8 +416,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             else
                 replace = null;
 
-            searchExpressionValidCondition = new Condition(false);
-            storedSearchSelectedCondition = new Condition(SelectedStoredSearch != null);
+            searchExpressionValidCondition = new SimpleCondition(false);
+            storedSearchSelectedCondition = new SimpleCondition(SelectedStoredSearch != null);
 
             selectionAvailable = searchHost.SelectionAvailableCondition.GetValue();
             searchHost.SelectionAvailableCondition.ValueChanged += HandleSelectionAvailableChanged;

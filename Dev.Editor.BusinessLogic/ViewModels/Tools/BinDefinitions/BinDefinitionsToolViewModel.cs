@@ -40,7 +40,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions
 
         private readonly ObservableCollection<BinDefinitionViewModel> binDefinitions;
         private BinDefinitionViewModel selectedBinDefinition;
-        private readonly Condition binDefinitionSelected;
+        private readonly SimpleCondition binDefinitionSelected;
 
         // Private methods ----------------------------------------------------
 
@@ -158,7 +158,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.BinDefinitions
 
             // Condition
 
-            binDefinitionSelected = new Condition(selectedBinDefinition != null);
+            binDefinitionSelected = new SimpleCondition(selectedBinDefinition != null);
 
             // Commands
 

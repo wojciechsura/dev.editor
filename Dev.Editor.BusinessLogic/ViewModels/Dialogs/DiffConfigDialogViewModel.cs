@@ -17,8 +17,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
         private readonly List<TextDocumentViewModel> documents;
         private readonly IDiffConfigDialogAccess access;
 
-        private readonly Condition documentsSelectedCondition;
-        private readonly Condition documentsAreEqualCondition;
+        private readonly SimpleCondition documentsSelectedCondition;
+        private readonly SimpleCondition documentsAreEqualCondition;
         private readonly BaseCondition canConfirmCondition;
 
         private TextDocumentViewModel firstDocument;
@@ -46,8 +46,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
             firstDocument = model.PreferredFirst;
             secondDocument = model.PreferredSecond;
 
-            documentsSelectedCondition = new Condition(firstDocument != null && secondDocument != null);
-            documentsAreEqualCondition = new Condition(firstDocument == secondDocument);
+            documentsSelectedCondition = new SimpleCondition(firstDocument != null && secondDocument != null);
+            documentsAreEqualCondition = new SimpleCondition(firstDocument == secondDocument);
             canConfirmCondition = documentsSelectedCondition & !documentsAreEqualCondition;
 
             OkCommand = new AppCommand(obj => DoOk(), canConfirmCondition);

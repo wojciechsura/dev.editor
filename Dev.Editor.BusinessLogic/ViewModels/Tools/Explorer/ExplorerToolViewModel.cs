@@ -36,9 +36,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
         private readonly IImageResources imageResources;
         private readonly IPlatformService platformService;
 
+        private readonly SimpleCondition fileSelectedCondition;
+        private readonly SimpleCondition folderSelectedCondition;
+
         private IExplorerToolAccess access;
-        private Condition fileSelectedCondition;
-        private Condition folderSelectedCondition;
         private double folderTreeHeight;
         private FileItemViewModel selectedFile;
         private FolderItemViewModel selectedFolder;
@@ -253,8 +254,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Explorer
 
             folderTreeHeight = configurationService.Configuration.Tools.Explorer.FolderTreeHeight.Value;
 
-            folderSelectedCondition = new Condition(selectedFolder != null);
-            fileSelectedCondition = new Condition(selectedFile != null);
+            folderSelectedCondition = new SimpleCondition(selectedFolder != null);
+            fileSelectedCondition = new SimpleCondition(selectedFile != null);
 
             SetLocationOfCurrentDocumentCommand = new AppCommand(obj => DoSetLocationOfCurrentDocument(), handler.CurrentDocumentHasPathCondition);
             OpenFolderInExplorerCommand = new AppCommand(obj => DoOpenFolderInExplorer(), folderSelectedCondition);

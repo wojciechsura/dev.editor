@@ -11,5 +11,4 @@
     <Style TargetType="TextBox">
         <Setter Property="Padding" Value="2" />
     </Style>
-
 </ResourceDictionary>

@@ -10,23 +10,25 @@
              d:DesignHeight="450" d:DesignWidth="800">
     <local:ToolContainer Header="{x:Static res:Strings.Tool_Project_Title}" CloseCommand="{Binding CloseToolsCommand}">
         <DockPanel>
-            <StackPanel Orientation="Horizontal" DockPanel.Dock="Top">
-                <Button Margin="4" Style="{StaticResource ToolButton}" Command="{Binding OpenFolderAsProjectCommand}">
+            <DockPanel DockPanel.Dock="Top">
+                <Button DockPanel.Dock="Left" Margin="4" Style="{StaticResource ToolButton}" Command="{Binding OpenFolderAsProjectCommand}">
                     <Image Width="16" Height="16" Source="pack://application:,,,/Dev.Editor;component/Resources/Images/Open16.png" />
                 </Button>
-            </StackPanel>
+                <local:FilterTextBox Margin="{StaticResource DefaultMargin}" Text="{Binding ProjectFilter, UpdateSourceTrigger=PropertyChanged, Delay=500}"
+                                     Background="{Binding ProjectFilter, Converter={StaticResource FilterToBackgroundConverter}}"/>
+            </DockPanel>
 
-            <TreeView x:Name="tvProjectItems" ItemsSource="{Binding Items}" BorderThickness="0" VirtualizingPanel.IsVirtualizing="True">
+            <TreeView x:Name="tvProjectItems" ItemsSource="{Binding Items}" BorderThickness="0" VirtualizingPanel.IsVirtualizing="True"
+                      Background="{Binding ProjectFilter, Converter={StaticResource FilterToBackgroundConverter}}">
                 <TreeView.Resources>
                     <Style TargetType="TreeViewItem">
                         <Style.Setters>
                             <Setter Property="IsExpanded" Value="{Binding IsExpanded, Mode=TwoWay}" />
                             <Setter Property="IsSelected" Value="{Binding IsSelected, Mode=TwoWay}" />
-                            <Setter Property="Visibility" Value="{Binding IsVisible, Converter={StaticResource BooleanToVisibilityConverter}}" />
                         </Style.Setters>
                     </Style>
 
-                    <HierarchicalDataTemplate DataType="{x:Type vm:ProjectFolderViewModel}" ItemsSource="{Binding Children}">
+                    <HierarchicalDataTemplate DataType="{x:Type vm:ProjectFolderViewModel}" ItemsSource="{Binding DisplayedChildren}">
                         <StackPanel Orientation="Horizontal">
                             <Image Width="16" Height="16" Source="{Binding Icon}" VerticalAlignment="Center" Margin="1,1,4,1"/>
                             <TextBlock Text="{Binding Display}" VerticalAlignment="Center"/>

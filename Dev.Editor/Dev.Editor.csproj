@@ -54,6 +54,9 @@
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
+    <Reference Include="Spooksoft.VisualStateManager, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Spooksoft.VisualStateManager.1.0.2\lib\net461\Spooksoft.VisualStateManager.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -95,6 +98,7 @@
     </Compile>
     <Compile Include="Behaviors\DropDownButtonBehavior.cs" />
     <Compile Include="Controls\DocumentTabHeader.cs" />
+    <Compile Include="Controls\FilterTextBox.cs" />
     <Compile Include="Controls\ProjectTool.xaml.cs">
       <DependentUpon>ProjectTool.xaml</DependentUpon>
     </Compile>
@@ -105,6 +109,7 @@
     <Compile Include="Converters\BottomToolToIntConverter.cs" />
     <Compile Include="Converters\DoubleToStarGridLengthConverter.cs" />
     <Compile Include="Converters\EqualsParameterToBoolConverter.cs" />
+    <Compile Include="Converters\FilterToBackgroundConverter.cs" />
     <Compile Include="Converters\SideToolToIntConverter.cs" />
     <Compile Include="Converters\TabColorToBrushConverter.cs" />
     <Compile Include="DiffConfigDialog.xaml.cs">
@@ -550,6 +555,9 @@
     <Resource Include="Resources\Images\Calc16.png" />
     <Resource Include="Resources\Images\Calc32.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Resource Include="Resources\Images\Filter16.png" />
+    <Resource Include="Resources\Images\Filter32.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

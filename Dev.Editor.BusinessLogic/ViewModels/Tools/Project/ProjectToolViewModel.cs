@@ -109,12 +109,15 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Project
         private IReadOnlyList<BaseProjectItemViewModel> items;
 
         private BackgroundWorker projectLoader;
+        private string projectFilter;
 
         // Private methods ----------------------------------------------------
 
         private void ProjectLoader_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            Items = e.Result as List<BaseProjectItemViewModel>;
+            items = e.Result as List<BaseProjectItemViewModel>;
+            OnPropertyChanged(() => Items);
+
             opened = true;
         }
 
@@ -144,6 +147,63 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Project
                 }
                 else
                     throw new InvalidOperationException("Unsupported project item!");
+            }
+        }
+
+        private void ClearFilterRecursive(IReadOnlyList<BaseProjectItemViewModel> items)
+        {
+            foreach (var item in items)
+            {
+                if (item is ProjectFileViewModel file)
+                {
+                    file.IsIncludedByFilter = true;
+                }
+                else if (item is ProjectFolderViewModel folder)
+                {
+                    folder.IsIncludedByFilter = true;
+                    ClearFilterRecursive(folder.Children);
+                }
+                else
+                    throw new InvalidOperationException("Unsupported project item!");
+            }
+        }
+
+        private bool ApplyFilterRecursive(IReadOnlyList<BaseProjectItemViewModel> items, string filter)
+        {
+
+            bool anyChildIncluded = false;
+
+            foreach (var item in items)
+            {
+                if (item is ProjectFileViewModel file)
+                {
+                    file.IsIncludedByFilter = System.IO.Path.GetFileName(file.Path).ToLower().Contains(filter.ToLower());
+                }
+                else if (item is ProjectFolderViewModel folder)
+                {
+                    // Folder is shown if any of its subfolders contains item, which matches filter
+                    folder.IsIncludedByFilter = ApplyFilterRecursive(folder.Children, filter);
+                }
+                else
+                    throw new InvalidOperationException("Unsupported project item!");
+
+                anyChildIncluded |= item.IsIncludedByFilter;
+            }
+
+            return anyChildIncluded;
+
+        }
+
+        private void HandleFilterChanged()
+        {
+            if (opened)
+            {
+                if (string.IsNullOrEmpty(projectFilter))
+                    ClearFilterRecursive(items);
+                else
+                    ApplyFilterRecursive(items, projectFilter);
+
+                OnPropertyChanged(() => Items);
             }
         }
 
@@ -210,7 +270,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Project
         {
             Path = null;
             Opened = false;
-            Items = null;
+            
+            items = null;
+            OnPropertyChanged(() => Items);
         }
 
         // Public properties --------------------------------------------------
@@ -233,12 +295,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Tools.Project
             set => Set(ref path, () => Path, value);
         }
 
-        public IReadOnlyList<BaseProjectItemViewModel> Items
-        {
-            get => items;
-            set => Set(ref items, () => Items, value);
-        }
+        public IEnumerable<BaseProjectItemViewModel> Items => items.Where(i => i.IsIncludedByFilter);
 
         public ICommand OpenFolderAsProjectCommand { get; }
+
+        public string ProjectFilter
+        {
+            get => projectFilter;
+            set => Set(ref projectFilter, () => ProjectFilter, value, HandleFilterChanged);
+        }
     }
 }

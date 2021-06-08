@@ -14,10 +14,11 @@ namespace Dev.Editor.BusinessLogic.ViewModels.ProgressWindow
     public class ProgressWindowViewModel : BaseViewModel
     {
         private readonly BackgroundWorker worker;
-        private object workerParameter;
         private readonly IProgressWindowAccess access;
+        private readonly SimpleCondition cancelAvailableCondition;
+
+        private object workerParameter;
         private string currentOperation;
-        private Condition cancelAvailableCondition;
         private int progress;
         private string operationTitle;
 
@@ -34,7 +35,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.ProgressWindow
             worker.ProgressChanged += HandleWorkerProgressChanged;
             worker.RunWorkerCompleted += HandleWorkerCompleted;
 
-            cancelAvailableCondition = new Condition(worker.WorkerSupportsCancellation);
+            cancelAvailableCondition = new SimpleCondition(worker.WorkerSupportsCancellation);
 
             CancelCommand = new AppCommand(obj => DoCancel(), cancelAvailableCondition);
         }

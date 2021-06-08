@@ -17,7 +17,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
     {
         private readonly IConfigurationService configurationService;
 
-        private readonly Condition escapeCharacterEnteredCondition;
+        private readonly SimpleCondition escapeCharacterEnteredCondition;
         private readonly IEscapeConfigDialogAccess access;
 
         private readonly bool forward;
@@ -63,7 +63,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
             includeSingleQuotes = escapeDefaults.IncludeSingleQuotes.Value;
             includeSpecialCharacters = escapeDefaults.IncludeSpecialCharacters.Value;
 
-            escapeCharacterEnteredCondition = new Condition((escapeChar?.Length ?? 0) == 1);
+            escapeCharacterEnteredCondition = new SimpleCondition((escapeChar?.Length ?? 0) == 1);
 
             OkCommand = new AppCommand(obj => DoOk(), escapeCharacterEnteredCondition);
             CancelCommand = new AppCommand(obj => DoCancel());
