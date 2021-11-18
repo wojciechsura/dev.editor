@@ -42,8 +42,8 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
-    <Reference Include="Spooksoft.VisualStateManager, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Spooksoft.VisualStateManager.1.0.2\lib\net461\Spooksoft.VisualStateManager.dll</HintPath>
+    <Reference Include="Spooksoft.VisualStateManager, Version=1.0.6.0, Culture=neutral, PublicKeyToken=c726a4605d926245, processorArchitecture=MSIL">
+      <HintPath>..\packages\Spooksoft.VisualStateManager.1.0.6\lib\net461\Spooksoft.VisualStateManager.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">

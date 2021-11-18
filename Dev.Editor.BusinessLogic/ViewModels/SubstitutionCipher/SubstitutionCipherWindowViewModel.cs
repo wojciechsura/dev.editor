@@ -496,7 +496,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher
             cipherDoc.Changed += HandleCipherTextChanged;
 
             languageDataAvailableCondition = new LambdaCondition<SubstitutionCipherWindowViewModel>(this, vm => vm.LanguageData != null, false);
-            modeIsUncipher = new LambdaCondition<SubstitutionCipherWindowViewModel>(this, vm => vm.Mode == SubstitutionCipherMode.Uncipher);
+            modeIsUncipher = new LambdaCondition<SubstitutionCipherWindowViewModel>(this, vm => vm.Mode == SubstitutionCipherMode.Uncipher, false);
 
             EnterAlphabetCommand = new AppCommand(obj => DoEnterAlphabet(), !languageDataAvailableCondition);
             SwitchModeToCipherCommand = new AppCommand(obj => DoSwitchModeToCipher());

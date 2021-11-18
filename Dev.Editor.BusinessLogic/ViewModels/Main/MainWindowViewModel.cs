@@ -985,64 +985,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
             // Initializing conditions
 
-            documentExistsCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
-                dm => dm.ActiveDocument, 
-                a => a != null);
-            documentIsTextCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
-                dm => dm.ActiveDocument, 
-                ad => ad is TextDocumentViewModel);
-            canUndoCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
-                dm => dm.ActiveDocument, 
-                doc => doc.CanUndo, 
-                false);
-            canRedoCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
-                dm => dm.ActiveDocument, 
-                doc => doc.CanRedo, 
-                false);
-            canSaveCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
-                dm => dm.ActiveDocument, 
-                doc => doc.CanSave, 
-                false);
-            selectionAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
-                dm => dm.ActiveDocument, 
-                doc => doc.SelectionAvailable, 
-                false);
-            regularSelectionAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager, 
-                dm => dm.ActiveDocument, 
-                doc => doc.RegularSelectionAvailable, 
-                false);
-            searchAreaAvailableCondition = new LambdaCondition<DocumentsManager, TextDocumentViewModel>(documentsManager, 
-                dm => dm.ActiveDocument as TextDocumentViewModel, 
-                td => td.FindReplaceSegment != null, 
-                false);
-            searchAreaAvailableCondition = new LambdaCondition<DocumentsManager, TextDocumentViewModel>(documentsManager, 
-                dm => dm.ActiveDocument as TextDocumentViewModel, 
-                doc => doc.FindReplaceSegment != null, 
-                false);
+            documentExistsCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument != null, false);
+            documentIsTextCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument is TextDocumentViewModel, false);
+            canUndoCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.CanUndo, false);
+            canRedoCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.CanRedo, false);
+            canSaveCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.CanSave, false);
+            selectionAvailableCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.SelectionAvailable, false);
+            regularSelectionAvailableCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.RegularSelectionAvailable, false);
+            searchAreaAvailableCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => (dm.ActiveDocument as TextDocumentViewModel).FindReplaceSegment != null, false);
             selectionAvailableForSearchCondition = regularSelectionAvailableCondition | searchAreaAvailableCondition;
-            searchPerformedCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager,
-                dm => dm.ActiveDocument,
-                doc => doc.LastSearch != null);
-            xmlToolsetAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager,
-                dm => dm.ActiveDocument,
-                doc => doc.HighlightingToolset == AdditionalToolset.Xml,
-                false);
-            markdownToolsetAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager,
-                dm => dm.ActiveDocument,
-                doc => doc.HighlightingToolset == AdditionalToolset.Markdown,
-                false);
-            jsonToolsetAvailableCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager,
-                dm => dm.ActiveDocument,
-                doc => doc.HighlightingToolset == AdditionalToolset.Json);
-            documentPathVirtualCondition = new LambdaCondition<DocumentsManager, BaseDocumentViewModel>(documentsManager,
-                dm => dm.ActiveDocument,
-                doc => doc.FilenameVirtual,
-                true);
+            searchPerformedCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.LastSearch != null, false);
+            xmlToolsetAvailableCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.HighlightingToolset == AdditionalToolset.Xml, false);
+            markdownToolsetAvailableCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.HighlightingToolset == AdditionalToolset.Markdown, false);
+            jsonToolsetAvailableCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.HighlightingToolset == AdditionalToolset.Json, false);
+            documentPathVirtualCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.FilenameVirtual, true);
             documentHasPathCondition = documentExistsCondition & !documentPathVirtualCondition;
-            diffDataAvailableCondition = new LambdaCondition<DocumentsManager, TextDocumentViewModel>(documentsManager,
-                dm => dm.ActiveDocument as TextDocumentViewModel,
-                doc => doc.DiffResult != null,
-                false);
+            diffDataAvailableCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => (dm.ActiveDocument as TextDocumentViewModel).DiffResult != null, false);
 
             // Initializing tools
 

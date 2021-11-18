@@ -17,22 +17,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
     {
         // Private fields -----------------------------------------------------
 
-        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> documentExistsCondition;
-        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> documentIsTextCondition;
-        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> canUndoCondition;
-        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> canRedoCondition;
-        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> canSaveCondition;
-        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> selectionAvailableCondition;
-        private readonly LambdaCondition<DocumentsManager, TextDocumentViewModel> searchAreaAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager> documentExistsCondition;
+        private readonly LambdaCondition<DocumentsManager> documentIsTextCondition;
+        private readonly LambdaCondition<DocumentsManager> canUndoCondition;
+        private readonly LambdaCondition<DocumentsManager> canRedoCondition;
+        private readonly LambdaCondition<DocumentsManager> canSaveCondition;
+        private readonly LambdaCondition<DocumentsManager> selectionAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager> searchAreaAvailableCondition;
         private readonly BaseCondition selectionAvailableForSearchCondition;
-        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> regularSelectionAvailableCondition;
-        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> searchPerformedCondition;
-        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> xmlToolsetAvailableCondition;
-        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> markdownToolsetAvailableCondition;
-        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> jsonToolsetAvailableCondition;
-        private readonly LambdaCondition<DocumentsManager, BaseDocumentViewModel> documentPathVirtualCondition;
+        private readonly LambdaCondition<DocumentsManager> regularSelectionAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager> searchPerformedCondition;
+        private readonly LambdaCondition<DocumentsManager> xmlToolsetAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager> markdownToolsetAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager> jsonToolsetAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager> documentPathVirtualCondition;
         private readonly BaseCondition documentHasPathCondition;
-        private readonly LambdaCondition<DocumentsManager, TextDocumentViewModel> diffDataAvailableCondition;
+        private readonly LambdaCondition<DocumentsManager> diffDataAvailableCondition;
 
         // Public properties --------------------------------------------------
 

@@ -115,10 +115,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
             mergeCommonResults = false;
             allowedDifferentLines = 2;
 
-            entryNotNullCondition = new LambdaCondition<DuplicatedLinesFinderConfigDialogViewModel>(this,
-                vm => !String.IsNullOrEmpty(vm.Entry));
-            entrySelectedCondition = new LambdaCondition<DuplicatedLinesFinderConfigDialogViewModel>(this,
-                vm => vm.SelectedEntry != null);
+            entryNotNullCondition = new LambdaCondition<DuplicatedLinesFinderConfigDialogViewModel>(this, vm => !String.IsNullOrEmpty(vm.Entry), false);
+            entrySelectedCondition = new LambdaCondition<DuplicatedLinesFinderConfigDialogViewModel>(this, vm => vm.SelectedEntry != null, false);
 
             AddEntryCommand = new AppCommand(obj => DoAddEntry(), entryNotNullCondition);
             RemoveEntryCommand = new AppCommand(obj => DoRemoveEntry(), entrySelectedCondition);
