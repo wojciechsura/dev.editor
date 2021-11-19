@@ -17,22 +17,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
     {
         // Private fields -----------------------------------------------------
 
-        private readonly LambdaCondition<DocumentsManager> documentExistsCondition;
-        private readonly LambdaCondition<DocumentsManager> documentIsTextCondition;
-        private readonly LambdaCondition<DocumentsManager> canUndoCondition;
-        private readonly LambdaCondition<DocumentsManager> canRedoCondition;
-        private readonly LambdaCondition<DocumentsManager> canSaveCondition;
-        private readonly LambdaCondition<DocumentsManager> selectionAvailableCondition;
-        private readonly LambdaCondition<DocumentsManager> searchAreaAvailableCondition;
+        private readonly BaseCondition documentExistsCondition;
+        private readonly BaseCondition documentIsTextCondition;
+        private readonly BaseCondition canUndoCondition;
+        private readonly BaseCondition canRedoCondition;
+        private readonly BaseCondition canSaveCondition;
+        private readonly BaseCondition selectionAvailableCondition;
+        private readonly BaseCondition searchAreaAvailableCondition;
         private readonly BaseCondition selectionAvailableForSearchCondition;
-        private readonly LambdaCondition<DocumentsManager> regularSelectionAvailableCondition;
-        private readonly LambdaCondition<DocumentsManager> searchPerformedCondition;
-        private readonly LambdaCondition<DocumentsManager> xmlToolsetAvailableCondition;
-        private readonly LambdaCondition<DocumentsManager> markdownToolsetAvailableCondition;
-        private readonly LambdaCondition<DocumentsManager> jsonToolsetAvailableCondition;
-        private readonly LambdaCondition<DocumentsManager> documentPathVirtualCondition;
+        private readonly BaseCondition regularSelectionAvailableCondition;
+        private readonly BaseCondition searchPerformedCondition;
+        private readonly BaseCondition xmlToolsetAvailableCondition;
+        private readonly BaseCondition markdownToolsetAvailableCondition;
+        private readonly BaseCondition jsonToolsetAvailableCondition;
+        private readonly BaseCondition documentPathVirtualCondition;
         private readonly BaseCondition documentHasPathCondition;
-        private readonly LambdaCondition<DocumentsManager> diffDataAvailableCondition;
+        private readonly BaseCondition diffDataAvailableCondition;
 
         // Public properties --------------------------------------------------
 

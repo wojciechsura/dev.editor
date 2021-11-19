@@ -992,7 +992,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             canSaveCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.CanSave, false);
             selectionAvailableCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.SelectionAvailable, false);
             regularSelectionAvailableCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.RegularSelectionAvailable, false);
-            searchAreaAvailableCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => (dm.ActiveDocument as TextDocumentViewModel).FindReplaceSegment != null, false);
+            searchAreaAvailableCondition = new ChainedLambdaCondition<DocumentsManager, TextDocumentViewModel>(documentsManager, dm => (dm.ActiveDocument as TextDocumentViewModel), tdvm => tdvm.FindReplaceSegment != null, false);
             selectionAvailableForSearchCondition = regularSelectionAvailableCondition | searchAreaAvailableCondition;
             searchPerformedCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.LastSearch != null, false);
             xmlToolsetAvailableCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.HighlightingToolset == AdditionalToolset.Xml, false);
@@ -1000,7 +1000,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             jsonToolsetAvailableCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.HighlightingToolset == AdditionalToolset.Json, false);
             documentPathVirtualCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => dm.ActiveDocument.FilenameVirtual, true);
             documentHasPathCondition = documentExistsCondition & !documentPathVirtualCondition;
-            diffDataAvailableCondition = new LambdaCondition<DocumentsManager>(documentsManager, dm => (dm.ActiveDocument as TextDocumentViewModel).DiffResult != null, false);
+            diffDataAvailableCondition = new ChainedLambdaCondition<DocumentsManager, TextDocumentViewModel>(documentsManager, dm => (dm.ActiveDocument as TextDocumentViewModel), tdvm => tdvm.DiffResult != null, false);
 
             // Initializing tools
 

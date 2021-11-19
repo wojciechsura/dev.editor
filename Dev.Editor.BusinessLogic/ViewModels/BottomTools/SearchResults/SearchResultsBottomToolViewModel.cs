@@ -75,10 +75,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             searchResults = null;
             icon = imageResources.GetIconByName("Search16.png");
 
-            resultsNonEmptyCondition = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.Single() != null, false);
-            resultsAreReplaceCondition = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.SingleOrDefault() is ReplaceResultsViewModel, false);
+            resultsNonEmptyCondition = new ChainedLambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.Single() != null, false);
+            resultsAreReplaceCondition = new ChainedLambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.SingleOrDefault() is ReplaceResultsViewModel, false);
             
-            resultsCanFilterContents = new LambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.SingleOrDefault() is DuplicatedLinesResultViewModel, false);
+            resultsCanFilterContents = new ChainedLambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.SingleOrDefault() is DuplicatedLinesResultViewModel, false);
             resultsCanFilterContents.ValueChanged += (s, e) => OnPropertyChanged(() => CanFilterContents);
 
             ClearSearchResultsCommand = new AppCommand(obj => DoClearSearchResults(), resultsNonEmptyCondition);

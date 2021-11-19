@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>1.0.7.3</version>
+    <title>Spooksoft.VisualStateManager</title>
+    <authors>Wojciech "Spook" Sura</authors>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <license type="expression">MIT</license>
+    <projectUrl>https://github.com/wojciechsura/Spooksoft.VisualStateManager</projectUrl>
+    <description>A set of Command and Condition classes, which simplify command management in WPF applications</description>
+    <releaseNotes>Reintroduced old LambdaCondition as ChainedLambdaCondition.</releaseNotes>
+    <copyright>$copyright$</copyright>
+    <tags>WPF Windows-Presentation-Foundation Visual-State-Manager</tags>
+    <dependencies>
+      <group targetFramework=".NETFramework4.6.1" />
+    </dependencies>
+  </metadata>
+</package>
