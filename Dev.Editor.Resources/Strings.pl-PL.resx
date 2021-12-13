@@ -1318,10 +1318,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Message_FailedToSaveLangData" xml:space="preserve">
     <value>Nie udało się zapisać danych języka!</value>
   </data>
-  <data name="Ribbon.Text.Cipher.SubCipher" xml:space="preserve">
+  <data name="Ribbon.Miscelaneous.Cipher.SubCipher" xml:space="preserve">
     <value>Szyfr podstawieniowy</value>
   </data>
-  <data name="Ribbon.Text.Group.Cipher" xml:space="preserve">
+  <data name="Ribbon.Miscelaneous.Group.Cipher" xml:space="preserve">
     <value>Szyfrowanie</value>
   </data>
   <data name="WebBrowser.Title" xml:space="preserve">
@@ -1338,5 +1338,8 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   </data>
   <data name="Tool.Explorer.Files.Execute" xml:space="preserve">
     <value>Uruchom</value>
+  </data>
+  <data name="Ribbon.Tab.Miscelaneous" xml:space="preserve">
+    <value>Dodatki</value>
   </data>
 </root>

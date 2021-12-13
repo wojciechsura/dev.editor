@@ -800,15 +800,19 @@
                     </f:DropDownButton>
                     
                 </f:RibbonGroupBox>
+               
+            </f:RibbonTabItem>
 
-                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Text_Group_Cipher}">
-                    <f:Button Header="{x:Static p:Strings.Ribbon_Text_Cipher_SubCipher}" Command="{Binding OpenSubstitutionCipherCommand}"
+            <!-- Miscelaneous tab -->
+
+            <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_Miscelaneous}">
+                <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Miscelaneous_Group_Cipher}">
+                    <f:Button Header="{x:Static p:Strings.Ribbon_Miscelaneous_Cipher_SubCipher}" Command="{Binding OpenSubstitutionCipherCommand}"
                               LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/Abc32.png"
                               Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/Abc16.png" />
                 </f:RibbonGroupBox>
-                
             </f:RibbonTabItem>
-
+            
             <!-- XML tools tab -->
 
             <f:RibbonTabItem Header="{x:Static p:Strings.Ribbon_Tab_XmlTools}"

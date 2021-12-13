@@ -2377,6 +2377,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Substitution cipher.
+        /// </summary>
+        public static string Ribbon_Miscelaneous_Cipher_SubCipher {
+            get {
+                return ResourceManager.GetString("Ribbon.Miscelaneous.Cipher.SubCipher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cipher.
+        /// </summary>
+        public static string Ribbon_Miscelaneous_Group_Cipher {
+            get {
+                return ResourceManager.GetString("Ribbon.Miscelaneous.Group.Cipher", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Ribbon_Tab_Home {
@@ -2413,6 +2431,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Miscelaneous.
+        /// </summary>
+        public static string Ribbon_Tab_Miscelaneous {
+            get {
+                return ResourceManager.GetString("Ribbon.Tab.Miscelaneous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Text.
         /// </summary>
         public static string Ribbon_Tab_Text {
@@ -2436,15 +2463,6 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Tab_XmlTools {
             get {
                 return ResourceManager.GetString("Ribbon.Tab.XmlTools", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Substitution cipher.
-        /// </summary>
-        public static string Ribbon_Text_Cipher_SubCipher {
-            get {
-                return ResourceManager.GetString("Ribbon.Text.Cipher.SubCipher", resourceCulture);
             }
         }
         
@@ -2553,15 +2571,6 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Text_Escape_Unescape_Backslash {
             get {
                 return ResourceManager.GetString("Ribbon.Text.Escape.Unescape.Backslash", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Cipher.
-        /// </summary>
-        public static string Ribbon_Text_Group_Cipher {
-            get {
-                return ResourceManager.GetString("Ribbon.Text.Group.Cipher", resourceCulture);
             }
         }
         
