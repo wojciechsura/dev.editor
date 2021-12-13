@@ -1078,6 +1078,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             HtmlEntitiesDecodeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Htm_Decode, "ConvertHtml16.png", obj => DoHtmlEntitiesDecode(), documentIsTextCondition);
             EscapeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Escape, null, obj => DoEscape(obj), documentIsTextCondition);
             UnescapeCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Unescape, null, obj => DoUnescape(obj), documentIsTextCondition);
+            commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Escape_Backslash, null, obj => DoEscape("\\"), documentIsTextCondition);
+            commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Escape_Unescape_Backslash, null, obj => DoUnescape("\\"), documentIsTextCondition);
             OpenSubstitutionCipherCommand = commandRepositoryService.RegisterCommand("#Substitution cipher", null, obj => DoOpenSubstitutionCipher());
 
             FormatXmlCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_XmlTools_Formatting_Format, "FormatXml16.png", obj => DoFormatXml(), xmlToolsetAvailableCondition);
