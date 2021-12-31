@@ -14,6 +14,7 @@ using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
 using Microsoft.Win32;
 using Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher;
 using Dev.Editor.BusinessLogic.ViewModels.WebBrowserWindow;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace Dev.Editor.Services.Dialogs
 {
@@ -129,14 +130,6 @@ namespace Dev.Editor.Services.Dialogs
 
         public (bool result, string newLocation) ShowChooseFolderDialog(string location)
         {
-            var dialog = new System.Windows.Forms.FolderBrowserDialog();
-            dialog.SelectedPath = location;
-            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                return (true, dialog.SelectedPath);
-            else
-                return (false, null);            
-
-            /*
             var dialog = new CommonOpenFileDialog();
             dialog.IsFolderPicker = true;
             dialog.InitialDirectory = location;
@@ -147,6 +140,14 @@ namespace Dev.Editor.Services.Dialogs
                 return (true, dialog.FileName);
             else
                 return (false, null);
+
+            /*
+            var dialog = new System.Windows.Forms.FolderBrowserDialog();
+            dialog.SelectedPath = location;
+            if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                return (true, dialog.SelectedPath);
+            else
+                return (false, null);            
             */
         }
 
