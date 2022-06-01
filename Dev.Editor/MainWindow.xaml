@@ -732,7 +732,7 @@
 
                 <f:RibbonGroupBox Header="{x:Static p:Strings.Ribbon_Lines_Group_Cleanup}">
 
-                    <f:DropDownButton Header="Remove lines" 
+                    <f:DropDownButton Header="{x:Static p:Strings.Ribbon_Lines_Cleanup_RemoveLines}" 
                                       LargeIcon="pack://application:,,,/Dev.Editor;component/Resources/Images/DeleteLine32.png"
                                       Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/DeleteLine16.png"     
                                       SizeDefinition="Large">
@@ -745,7 +745,7 @@
 
                         <f:MenuItem Header="{x:Static p:Strings.Ribbon_Lines_Cleanup_RemoveDuplicatedLines}" Command="{Binding RemoveDuplicatedLinesCommand}"
                                     Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/DeleteLine16.png" />
-                        <f:MenuItem Header="Remove duplicated neighboring lines" Command="{Binding RemoveDuplicatedNeighboringLinesCommand}"
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Lines_Cleanup_RemoveDuplicatedNeighboringLines}" Command="{Binding RemoveDuplicatedNeighboringLinesCommand}"
                                     Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/DeleteLine16.png" />
 
                     </f:DropDownButton>

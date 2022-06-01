@@ -2111,7 +2111,7 @@ namespace Dev.Editor.Resources {
         /// </summary>
         public static string Ribbon_Lines_Cleanup_RemoveDuplicatedLines {
             get {
-                return ResourceManager.GetString("Ribbon_Lines_Cleanup_RemoveDuplicatedLines", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Lines.Cleanup.RemoveDuplicatedLines", resourceCulture);
             }
         }
         
@@ -2120,7 +2120,7 @@ namespace Dev.Editor.Resources {
         /// </summary>
         public static string Ribbon_Lines_Cleanup_RemoveDuplicatedNeighboringLines {
             get {
-                return ResourceManager.GetString("Ribbon_Lines_Cleanup_RemoveDuplicatedNeighboringLines", resourceCulture);
+                return ResourceManager.GetString("Ribbon.Lines.Cleanup.RemoveDuplicatedNeighboringLines", resourceCulture);
             }
         }
         
@@ -2130,6 +2130,15 @@ namespace Dev.Editor.Resources {
         public static string Ribbon_Lines_Cleanup_RemoveEmptyLines {
             get {
                 return ResourceManager.GetString("Ribbon.Lines.Cleanup.RemoveEmptyLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove lines.
+        /// </summary>
+        public static string Ribbon_Lines_Cleanup_RemoveLines {
+            get {
+                return ResourceManager.GetString("Ribbon_Lines_Cleanup_RemoveLines", resourceCulture);
             }
         }
         

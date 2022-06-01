@@ -1,0 +1,1482 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <RootPath>D:\Dokumenty\Dev\VS\dev.editor</RootPath>
+  <Items>
+    <ResourceFolderModel Name="Dev.Editor.Resources">
+      <Items>
+        <File Name="Strings.resx">
+          <Entries>
+            <LocalizedStringsModel Key="Ribbon.Home.Group.Edit">
+              <Strings Previous="Edit" Delete="false" />
+              <Strings Previous="Edycja" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Group.File">
+              <Strings Previous="File" Delete="false" />
+              <Strings Previous="Plik" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Tab.Home">
+              <Strings Previous="Home" Delete="false" />
+              <Strings Previous="Narzędzia główne" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.File.New">
+              <Strings Previous="New" Delete="false" />
+              <Strings Previous="Nowy" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.File.Open">
+              <Strings Previous="Open" Delete="false" />
+              <Strings Previous="Otwórz" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.File.Save">
+              <Strings Previous="Save" Delete="false" />
+              <Strings Previous="Zapisz" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.File.SaveAs">
+              <Strings Previous="Save as" Delete="false" />
+              <Strings Previous="Zapisz jako" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Edit.Copy">
+              <Strings Previous="Copy" Delete="false" />
+              <Strings Previous="Kopiuj" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Edit.Cut">
+              <Strings Previous="Cut" Delete="false" />
+              <Strings Previous="Wytnij" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Edit.Paste">
+              <Strings Previous="Paste" Delete="false" />
+              <Strings Previous="Wklej" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Edit.Redo">
+              <Strings Previous="Redo" Delete="false" />
+              <Strings Previous="Ponów" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Edit.Undo">
+              <Strings Previous="Undo" Delete="false" />
+              <Strings Previous="Cofnij" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BlankDocName">
+              <Strings Previous="Document" Delete="false" />
+              <Strings Previous="Dokument" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Group.Search">
+              <Strings Previous="Search" Delete="false" />
+              <Strings Previous="Szukanie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Search.Search">
+              <Strings Previous="Search" Delete="false" />
+              <Strings Previous="Szukaj" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Search.Replace">
+              <Strings Previous="Replace" Delete="false" />
+              <Strings Previous="Zamień" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DefaultDialogTitle">
+              <Strings Previous="Dev.Editor" Delete="false" />
+              <Strings Previous="Dev.Editor" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DefaultFilter">
+              <Strings Previous="All files (*.*)|*.*" Delete="false" />
+              <Strings Previous="Wszystkie pliki (*.*)|*.*" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.Search">
+              <Strings Previous="Search" Delete="false" />
+              <Strings Previous="Szukaj" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.SearchedText">
+              <Strings Previous="Text to search" Delete="false" />
+              <Strings Previous="Szukany tekst" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.CaseSensitive">
+              <Strings Previous="Case sensitive" Delete="false" />
+              <Strings Previous="Uwzględniaj wielkość liter" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.Close">
+              <Strings Previous="Close" Delete="false" />
+              <Strings Previous="Zamknij" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.FindNext">
+              <Strings Previous="Find next" Delete="false" />
+              <Strings Previous="Znajdź następny" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.OnlyFullWords">
+              <Strings Previous="Only full words" Delete="false" />
+              <Strings Previous="Tylko pełne wyrażenia" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.Replace">
+              <Strings Previous="Replace" Delete="false" />
+              <Strings Previous="Zamień" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.ReplaceWith">
+              <Strings Previous="Replace with" Delete="false" />
+              <Strings Previous="Zamień na" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.SearchMode">
+              <Strings Previous="Search mode" Delete="false" />
+              <Strings Previous="Tryb szukania" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.SearchModeExtended">
+              <Strings Previous="Extended (\n, \t etc.)" Delete="false" />
+              <Strings Previous="Rozszerzony (\n, \t itp.)" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.SearchModeNormal">
+              <Strings Previous="Normal" Delete="false" />
+              <Strings Previous="Normalny" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.SearchModeRegex">
+              <Strings Previous="Regular expressions" Delete="false" />
+              <Strings Previous="Wyrażenia regularne" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.SearchOptions">
+              <Strings Previous="Search options" Delete="false" />
+              <Strings Previous="Opcje szukania" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.Title">
+              <Strings Previous="Search" Delete="false" />
+              <Strings Previous="Szukaj" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.ReplaceAll">
+              <Strings Previous="Replace all" Delete="false" />
+              <Strings Previous="Zamień wszystkie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.SearchTab">
+              <Strings Previous="Search" Delete="false" />
+              <Strings Previous="Szukaj" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.ReplaceTab">
+              <Strings Previous="Replace" Delete="false" />
+              <Strings Previous="Zamień" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.SearchBackwards">
+              <Strings Previous="Search backwards" Delete="false" />
+              <Strings Previous="Szukaj wstecz" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Search.FindNext">
+              <Strings Previous="Find next" Delete="false" />
+              <Strings Previous="Znajdź następny" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BlankDocumentName">
+              <Strings Previous="Document" Delete="false" />
+              <Strings Previous="Dokument" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.CannotOpenFile">
+              <Strings Previous="Cannot open file {0}. Error: {1}" Delete="false" />
+              <Strings Previous="Nie mogę otworzyć pliku {0}. Błąd: {1}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.CannotSaveFile">
+              <Strings Previous="Cannot save file {0}. Error: {1}" Delete="false" />
+              <Strings Previous="Nie mogę zapisać pliku {0}. Błąd: {1}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.FileNotSaved">
+              <Strings Previous="Do you want to save document {0} before closing?" Delete="false" />
+              <Strings Previous="Czy chcesz zapisać {0} przed zamknięciem?" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Search.SearchTitle">
+              <Strings Previous="Search" Delete="false" />
+              <Strings Previous="Szukaj" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Search.ReplaceTitle">
+              <Strings Previous="Replace" Delete="false" />
+              <Strings Previous="Zamień" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DefaultMessageboxTitle">
+              <Strings Previous="Dev.Editor" Delete="false" />
+              <Strings Previous="Dev.Editor" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.InvalidSearchPattern">
+              <Strings Previous="Invalid search pattern!" Delete="false" />
+              <Strings Previous="Nieprawidłowy ciąg do wyszukania!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.NoMorePatternsFound">
+              <Strings Previous="Cannot find any occurrences of entered text." Delete="false" />
+              <Strings Previous="Nie znaleziono wystąpień wprowadzonego ciągu." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.InSelection">
+              <Strings Previous="In selection" Delete="false" />
+              <Strings Previous="W zaznaczeniu" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Tab.View">
+              <Strings Previous="View" Delete="false" />
+              <Strings Previous="Widok" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.View.Group.Editor">
+              <Strings Previous="Editor" Delete="false" />
+              <Strings Previous="Edytor" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.View.Editor.WordWrap">
+              <Strings Previous="Word wrap" Delete="false" />
+              <Strings Previous="Zawijaj wiersze" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.View.Editor.ShowLineNumbers">
+              <Strings Previous="Line numbers" Delete="false" />
+              <Strings Previous="Numery wierszy" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.CannotSaveConfiguration">
+              <Strings Previous="Cannot save configuration file. Are you sure you want to exit?" Delete="false" />
+              <Strings Previous="Nie udało się zapisać konfiguracji. Czy na pewno chcesz wyjść?" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.CannotRestoreFile">
+              <Strings Previous="Cannot restore file {0}. Error message: {1}" Delete="false" />
+              <Strings Previous="Nie mogę odtworzyć pliku {0}. Błąd: {1}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.View.View.SyntaxHighlighting">
+              <Strings Previous="Syntax highlighting" Delete="false" />
+              <Strings Previous="Kolorowanie składni" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SyntaxHighlighting.None">
+              <Strings Previous="(none)" Delete="false" />
+              <Strings Previous="(brak)" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Tab.Lines">
+              <Strings Previous="Lines" Delete="false" />
+              <Strings Previous="Linie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Lines.Group.Ordering">
+              <Strings Previous="Ordering" Delete="false" />
+              <Strings Previous="Kolejność" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Lines.Ordering.SortAscending">
+              <Strings Previous="Sort ascending" Delete="false" />
+              <Strings Previous="Sortuj rosnąco" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Lines.Ordering.SortDescending">
+              <Strings Previous="Sort descending" Delete="false" />
+              <Strings Previous="Sortuj malejąco" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Group.Navigation">
+              <Strings Previous="Navigation" Delete="false" />
+              <Strings Previous="Nawigacja" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Navigation.Navigate">
+              <Strings Previous="Navigation" Delete="false" />
+              <Strings Previous="Nawigacja" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="NavigationPopup.Header">
+              <Strings Previous="Navigation" Delete="false" />
+              <Strings Previous="Nawigacja" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Lines.Group.Cleanup">
+              <Strings Previous="Cleanup" Delete="false" />
+              <Strings Previous="Czyszczenie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Lines.Cleanup.RemoveEmptyLines">
+              <Strings Previous="Remove empty lines" Delete="false" />
+              <Strings Previous="Usuń puste linie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Lines.Cleanup.RemoveWhitespaceLines">
+              <Strings Previous="Remove whitespace lines" Delete="false" />
+              <Strings Previous="Usuń linie z białymi znakami" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Tool.Explorer.Title">
+              <Strings Previous="Files" Delete="false" />
+              <Strings Previous="Pliki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.File.NewHex">
+              <Strings Previous="New hex editor" Delete="false" />
+              <Strings Previous="Nowy hexedytor" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.File.OpenHex">
+              <Strings Previous="Open in hex editor" Delete="false" />
+              <Strings Previous="Otwórz w hexedytorze" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.Behavior">
+              <Strings Previous="Behavior" Delete="false" />
+              <Strings Previous="Zachowanie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.Title">
+              <Strings Previous="Configuration" Delete="false" />
+              <Strings Previous="Konfiguracja" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration">
+              <Strings Previous="Configuration" Delete="false" />
+              <Strings Previous="Konfiguracja" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.Behavior.ClosingBehavior">
+              <Strings Previous="Closing behavior" Delete="false" />
+              <Strings Previous="Sposób zamykania" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ok">
+              <Strings Previous="Ok" Delete="false" />
+              <Strings Previous="Ok" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Cancel">
+              <Strings Previous="Cancel" Delete="false" />
+              <Strings Previous="Anuluj" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.Behavior.ClosingBehavior.Comment">
+              <Strings Previous="Choose, how application should behave when closing:" Delete="false" />
+              <Strings Previous="Wybierz, jak aplikacja powinna zachowywać się podczas zamykania:" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.Behavior.ClosingBehavior.Standard">
+              <Strings Previous="Standard" Delete="false" />
+              <Strings Previous="Standardowo" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.Behavior.ClosingBehavior.Standard.Comment">
+              <Strings Previous="Dev.Editor will close all documents upon closing and start with blank new document" Delete="false" />
+              <Strings Previous="Dev.Editor zamknie wszystkie dokumenty podczas kończenia pracy i uruchomi się z nowym, pustym dokumentem" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.Behavior.ClosingBehavior.Fluent">
+              <Strings Previous="Fluent" Delete="false" />
+              <Strings Previous="Płynnie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.Behavior.ClosingBehavior.Fluent.Comment">
+              <Strings Previous="Dev.Editor will store all open documents and restore them on startup (including unsaved changes)" Delete="false" />
+              <Strings Previous="Dev.Editor zapisze wszystkie dokumenty i odtworzy je po ponownym uruchomieniu (łącznie z niezapisanymi zmianami)" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.View.Group.Interface">
+              <Strings Previous="Interface" Delete="false" />
+              <Strings Previous="Interfejs" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.View.Interface.SidePanel">
+              <Strings Previous="Side panel" Delete="false" />
+              <Strings Previous="Panel boczny" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.View.SidePanelPlacement.Left">
+              <Strings Previous="Left" Delete="false" />
+              <Strings Previous="Lewo" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.View.SidePanelPlacement.Right">
+              <Strings Previous="Right" Delete="false" />
+              <Strings Previous="Prawo" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.View.SidePanelPlacement.Hidden">
+              <Strings Previous="Hidden" Delete="false" />
+              <Strings Previous="Ukryj" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Tool.BinDefinitions.Title">
+              <Strings Previous="Binary definitions" Delete="false" />
+              <Strings Previous="Definicje binarne" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Dialog.BinDefinition.Title">
+              <Strings Previous="Binary definition" Delete="false" />
+              <Strings Previous="Definicja binarna" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Dialog.Name.Name">
+              <Strings Previous="Name" Delete="false" />
+              <Strings Previous="Nazwa" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="NewBinaryDefinitionContents">
+              <Strings Previous="// This is Dev.Editor's {0} binary file definition.&#xD;&#xA;" Delete="false" />
+              <Strings Previous="// To jest definicja pliku binarnego {0} Dev.Editora.&#xD;&#xA;" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.CannotAddBinDefinition">
+              <Strings Previous="Cannot add binary definition, error: {0}" Delete="false" />
+              <Strings Previous="Nie mogę dodać definicji binarnej, błąd: {0}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.BinDefinitionDeleteConfirmation">
+              <Strings Previous="Are you sure you want to delete binary definition {0}?" Delete="false" />
+              <Strings Previous="Czy jesteś pewien, że chcesz usunąć definicję binarną {0}?" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BinDefinitionSample">
+              <Strings Previous="// The following example binary definition processes a bitmap file (.BMP)&#xD;&#xA;// and provides information decoded from the bitmap header.&#xD;&#xA;&#xD;&#xA;struct BmpHeader &#xD;&#xA;{&#xD;&#xA;    char[2] descriptor;&#xD;&#xA;    int bmpSizeInBytes;&#xD;&#xA;    short reserved1;&#xD;&#xA;    short reserved2;&#xD;&#xA;    int dataOffset;&#xD;&#xA;};&#xD;&#xA;&#xD;&#xA;enum DibHeaderType : byte &#xD;&#xA;{&#xD;&#xA; BITMAPCOREHEADER = 1u,&#xD;&#xA; OS21XBITMAPHEADER = 2u,&#xD;&#xA; OS22XBITMAPHEADER_V1 = 3u,&#xD;&#xA; OS22XBITMAPHEADER_V2 = 4u,&#xD;&#xA; BITMAPINFOHEADER = 5u,&#xD;&#xA; BITMAPV2INFOHEADER = 6u,&#xD;&#xA; BITMAPV3INFOHEADER = 7u,&#xD;&#xA; BITMAPV4HEADER = 8u,&#xD;&#xA; BITMAPV5HEADER = 9u&#xD;&#xA;};&#xD;&#xA;&#xD;&#xA;enum BitmapCompressionMethod : int&#xD;&#xA;{&#xD;&#xA; BI_RGB = 0,&#xD;&#xA; BI_RLE8 = 1,&#xD;&#xA; BI_RLE4 = 2,&#xD;&#xA; BI_BITFIELDS = 3,&#xD;&#xA; BI_JPEG = 4,&#xD;&#xA; BI_PNG = 5,&#xD;&#xA; BI_ALPHABITFIELDS = 6,&#xD;&#xA; BI_CMYK = 11,&#xD;&#xA; BI_CMYKRLE8 = 12,&#xD;&#xA; BI_CMYKRLE4 = 13&#xD;&#xA;};&#xD;&#xA;&#xD;&#xA;enum HalftoningAlgorithm : short&#xD;&#xA;{&#xD;&#xA; None = 0,&#xD;&#xA; ErrorDiffusion = 1,&#xD;&#xA; PANDA = 2,&#xD;&#xA; SuperCircle = 3&#xD;&#xA;};&#xD;&#xA;&#xD;&#xA;struct DibHeader&#xD;&#xA;{&#xD;&#xA; int headerSize;&#xD;&#xA; &#xD;&#xA; if (headerSize == 12)&#xD;&#xA; {&#xD;&#xA;  show enum DibHeaderType.BITMAPCOREHEADER as headerType;&#xD;&#xA;  ushort bitmapWidth;&#xD;&#xA;  ushort bitmapHeight;&#xD;&#xA;  short colorPlaneCount;&#xD;&#xA;  short bitsPerPixel;&#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 64)&#xD;&#xA; {&#xD;&#xA;  show enum DibHeaderType.OS22XBITMAPHEADER_V1 as headerType;&#xD;&#xA;  int bitmapWidth;&#xD;&#xA;  int bitmapHeight;&#xD;&#xA;  short colorPlaneCount;&#xD;&#xA;  short bitsPerPixel;&#xD;&#xA;  BitmapCompressionMethod compressionMethod;&#xD;&#xA;  int imageSize;&#xD;&#xA;  int horizontalResolution;&#xD;&#xA;  int verticalResolution;&#xD;&#xA;  int colorsInPallette;&#xD;&#xA;  int importantColorCount;&#xD;&#xA;  &#xD;&#xA;  short resolutionUnit;&#xD;&#xA;  short padding;&#xD;&#xA;  short fillDirection;&#xD;&#xA;  HalftoningAlgorithm halftoningAlgorithm;&#xD;&#xA;  int halftoningParameter1;&#xD;&#xA;  int halftoningParameter2;&#xD;&#xA;  int colorEncoding;&#xD;&#xA;  int appDefinedIdentifier;  &#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 16)&#xD;&#xA; {&#xD;&#xA;  show enum DibHeaderType.OS22XBITMAPHEADER_V2 as headerType;&#xD;&#xA;  int bitmapWidth;&#xD;&#xA;  int bitmapHeight;&#xD;&#xA;  short colorPlaneCount;&#xD;&#xA;  short bitsPerPixel;&#xD;&#xA;  BitmapCompressionMethod compressionMethod;&#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 40)&#xD;&#xA; {&#xD;&#xA;  show enum DibHeaderType.BITMAPINFOHEADER as headerType;&#xD;&#xA;  int bitmapWidth;&#xD;&#xA;  int bitmapHeight;&#xD;&#xA;  short colorPlaneCount;&#xD;&#xA;  short bitsPerPixel;&#xD;&#xA;  BitmapCompressionMethod compressionMethod;&#xD;&#xA;  int imageSize;&#xD;&#xA;  int horizontalResolution;&#xD;&#xA;  int verticalResolution;&#xD;&#xA;  int colorsInPallette;&#xD;&#xA;  int importantColorCount;&#xD;&#xA;  &#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 52)&#xD;&#xA; {&#xD;&#xA;     show enum DibHeaderType.BITMAPV2INFOHEADER as headerType;     &#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 56)&#xD;&#xA; {&#xD;&#xA;     show enum DibHeaderType.BITMAPV3INFOHEADER as headerType; &#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 108)&#xD;&#xA; { &#xD;&#xA;  show enum DibHeaderType.BITMAPV4HEADER as headerType;&#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 124)&#xD;&#xA; {&#xD;&#xA;     show enum DibHeaderType.BITMAPV5HEADER as headerType;&#xD;&#xA; }&#xD;&#xA;};&#xD;&#xA;&#xD;&#xA;BmpHeader bmpHeader;&#xD;&#xA;DibHeader dibHeader;&#xD;&#xA;&#xD;&#xA;show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) / 8 as bitmapByteSize; " Delete="false" />
+              <Strings Previous="// Poniższa, przykładowa definicja binarna przetwarza plik bitmapy (.BMP)&#xD;&#xA;// i dostarcza informacje zdekodowane z jej nagłówka.&#xD;&#xA;&#xD;&#xA;struct BmpHeader &#xD;&#xA;{&#xD;&#xA;    char[2] descriptor;&#xD;&#xA;    int bmpSizeInBytes;&#xD;&#xA;    short reserved1;&#xD;&#xA;    short reserved2;&#xD;&#xA;    int dataOffset;&#xD;&#xA;};&#xD;&#xA;&#xD;&#xA;enum DibHeaderType : byte &#xD;&#xA;{&#xD;&#xA; BITMAPCOREHEADER = 1u,&#xD;&#xA; OS21XBITMAPHEADER = 2u,&#xD;&#xA; OS22XBITMAPHEADER_V1 = 3u,&#xD;&#xA; OS22XBITMAPHEADER_V2 = 4u,&#xD;&#xA; BITMAPINFOHEADER = 5u,&#xD;&#xA; BITMAPV2INFOHEADER = 6u,&#xD;&#xA; BITMAPV3INFOHEADER = 7u,&#xD;&#xA; BITMAPV4HEADER = 8u,&#xD;&#xA; BITMAPV5HEADER = 9u&#xD;&#xA;};&#xD;&#xA;&#xD;&#xA;enum BitmapCompressionMethod : int&#xD;&#xA;{&#xD;&#xA; BI_RGB = 0,&#xD;&#xA; BI_RLE8 = 1,&#xD;&#xA; BI_RLE4 = 2,&#xD;&#xA; BI_BITFIELDS = 3,&#xD;&#xA; BI_JPEG = 4,&#xD;&#xA; BI_PNG = 5,&#xD;&#xA; BI_ALPHABITFIELDS = 6,&#xD;&#xA; BI_CMYK = 11,&#xD;&#xA; BI_CMYKRLE8 = 12,&#xD;&#xA; BI_CMYKRLE4 = 13&#xD;&#xA;};&#xD;&#xA;&#xD;&#xA;enum HalftoningAlgorithm : short&#xD;&#xA;{&#xD;&#xA; None = 0,&#xD;&#xA; ErrorDiffusion = 1,&#xD;&#xA; PANDA = 2,&#xD;&#xA; SuperCircle = 3&#xD;&#xA;};&#xD;&#xA;&#xD;&#xA;struct DibHeader&#xD;&#xA;{&#xD;&#xA; int headerSize;&#xD;&#xA; &#xD;&#xA; if (headerSize == 12)&#xD;&#xA; {&#xD;&#xA;  show enum DibHeaderType.BITMAPCOREHEADER as headerType;&#xD;&#xA;  ushort bitmapWidth;&#xD;&#xA;  ushort bitmapHeight;&#xD;&#xA;  short colorPlaneCount;&#xD;&#xA;  short bitsPerPixel;&#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 64)&#xD;&#xA; {&#xD;&#xA;  show enum DibHeaderType.OS22XBITMAPHEADER_V1 as headerType;&#xD;&#xA;  int bitmapWidth;&#xD;&#xA;  int bitmapHeight;&#xD;&#xA;  short colorPlaneCount;&#xD;&#xA;  short bitsPerPixel;&#xD;&#xA;  BitmapCompressionMethod compressionMethod;&#xD;&#xA;  int imageSize;&#xD;&#xA;  int horizontalResolution;&#xD;&#xA;  int verticalResolution;&#xD;&#xA;  int colorsInPallette;&#xD;&#xA;  int importantColorCount;&#xD;&#xA;  &#xD;&#xA;  short resolutionUnit;&#xD;&#xA;  short padding;&#xD;&#xA;  short fillDirection;&#xD;&#xA;  HalftoningAlgorithm halftoningAlgorithm;&#xD;&#xA;  int halftoningParameter1;&#xD;&#xA;  int halftoningParameter2;&#xD;&#xA;  int colorEncoding;&#xD;&#xA;  int appDefinedIdentifier;  &#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 16)&#xD;&#xA; {&#xD;&#xA;  show enum DibHeaderType.OS22XBITMAPHEADER_V2 as headerType;&#xD;&#xA;  int bitmapWidth;&#xD;&#xA;  int bitmapHeight;&#xD;&#xA;  short colorPlaneCount;&#xD;&#xA;  short bitsPerPixel;&#xD;&#xA;  BitmapCompressionMethod compressionMethod;&#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 40)&#xD;&#xA; {&#xD;&#xA;  show enum DibHeaderType.BITMAPINFOHEADER as headerType;&#xD;&#xA;  int bitmapWidth;&#xD;&#xA;  int bitmapHeight;&#xD;&#xA;  short colorPlaneCount;&#xD;&#xA;  short bitsPerPixel;&#xD;&#xA;  BitmapCompressionMethod compressionMethod;&#xD;&#xA;  int imageSize;&#xD;&#xA;  int horizontalResolution;&#xD;&#xA;  int verticalResolution;&#xD;&#xA;  int colorsInPallette;&#xD;&#xA;  int importantColorCount;&#xD;&#xA;  &#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 52)&#xD;&#xA; {&#xD;&#xA;     show enum DibHeaderType.BITMAPV2INFOHEADER as headerType;     &#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 56)&#xD;&#xA; {&#xD;&#xA;     show enum DibHeaderType.BITMAPV3INFOHEADER as headerType; &#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 108)&#xD;&#xA; { &#xD;&#xA;  show enum DibHeaderType.BITMAPV4HEADER as headerType;&#xD;&#xA; }&#xD;&#xA; elseif (headerSize == 124)&#xD;&#xA; {&#xD;&#xA;     show enum DibHeaderType.BITMAPV5HEADER as headerType;&#xD;&#xA; }&#xD;&#xA;};&#xD;&#xA;&#xD;&#xA;BmpHeader bmpHeader;&#xD;&#xA;DibHeader dibHeader;&#xD;&#xA;&#xD;&#xA;show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) / 8 as bitmapByteSize; " Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="OpenBinaryFile.Title">
+              <Strings Previous="Open binary file {0}" Delete="false" />
+              <Strings Previous="Otwórz plik binarny {0}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.File.OpenBin">
+              <Strings Previous="Open binary file" Delete="false" />
+              <Strings Previous="Otwórz plik binarny" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.UseSidePanelToOpenBinFile">
+              <Strings Previous="Double-click binary definition to open binary file and analyze it." Delete="false" />
+              <Strings Previous="Kliknij podwójnie definicję binarną by otworzyć plik binarny i przeanalizować go." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SyntaxError.StructureAlreadyExists">
+              <Strings Previous="Struct with name {0} already exists!" Delete="false" />
+              <Strings Previous="Struktura o nazwie {0} już istnieje!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SyntaxError.InvalidIntegerValue">
+              <Strings Previous="Invalid integer value: {0} !" Delete="false" />
+              <Strings Previous="Nieprawidłowa liczba całkowita: {0}!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SyntaxError.InvalidFloatNumber">
+              <Strings Previous="Invalid floating point value: {0} !" Delete="false" />
+              <Strings Previous="Nieprawidłowa liczba zmiennoprzecinkowa: {0} !" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SyntaxError.FieldAlreadyExists">
+              <Strings Previous="Field with name {0} already exists!" Delete="false" />
+              <Strings Previous="Pole o nazwie {0} już istnieje!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SyntaxError.CannotFindTypeName">
+              <Strings Previous="Cannot find type name {0} !" Delete="false" />
+              <Strings Previous="Nie można znaleźć typu {0} !" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SyntaxError.FailedToProcessDefinition">
+              <Strings Previous="Failed to process definition!" Delete="false" />
+              <Strings Previous="Nie udało się przetworzyć definicji!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SyntaxError.SyntaxError">
+              <Strings Previous="Syntax error in definition: {0}" Delete="false" />
+              <Strings Previous="Błąd składniowy w definicji: {0}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.AnalysisError.CannotAssign">
+              <Strings Previous="Cannot perform assignment to {0}. Reason:&#xD;&#xA;{1}" Delete="false" />
+              <Strings Previous="Nie można wykonać przypisania do {0}. Powód:&#xD;&#xA;{1}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.AnalysisError.UnexpectedEndOfStream">
+              <Strings Previous="Unexpected end of file!" Delete="false" />
+              <Strings Previous="Niespodziewany koniec pliku!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.AnalysisError.FailedToReadField">
+              <Strings Previous="Failed to read field {0}. Reason:&#xD;&#xA;{1}" Delete="false" />
+              <Strings Previous="Nie udało się wczytać pola {0}. Powód:&#xD;&#xA;{1}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.AnalysisError.CannotShow">
+              <Strings Previous="Cannot add evaluated field {0}. Reason:&#xD;&#xA;{1}" Delete="false" />
+              <Strings Previous="Nie można dodać obliczonego pola {0}. Powód:&#xD;&#xA;{1}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.AnalysisError.FailedToSkip">
+              <Strings Previous="Failed to skip bytes. Reason:&#xD;&#xA;{0}" Delete="false" />
+              <Strings Previous="Nie udało się pominąć bajtów. Powód:&#xD;&#xA;{0}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.AnalysisError.FailedToReadStructArray">
+              <Strings Previous="Failed to read struct array field {0}. Reason:&#xD;&#xA;{1}" Delete="false" />
+              <Strings Previous="Nie udało się wczytać pola tablicy struktur {0}. Powód:&#xD;&#xA;{1}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.AnalysisError.FailedToReadStruct">
+              <Strings Previous="Failed to read struct field {0}. Reason:&#xD;&#xA;{1}" Delete="false" />
+              <Strings Previous="Nie udało się wczytać pola struktury {0}. Powód:&#xD;&#xA;{1}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.EvalError.CannotFindIdentifier">
+              <Strings Previous="Cannot find identifier {0} in current scope." Delete="false" />
+              <Strings Previous="Nie mogę znaleźć identyfikatora {0} w bieżącym zakresie." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.EvalError.CannotAccessMember">
+              <Strings Previous="Cannot access member {0} of field {1}." Delete="false" />
+              <Strings Previous="Nie można dostać się do składowej {0} pola {1}." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.EvalError.MemberIsNotValue">
+              <Strings Previous="Identifier {0} does not point to a value-type field." Delete="false" />
+              <Strings Previous="Identyfikator {0} nie wskazuje na pole typu wartościowego." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.EvalError.FailedToEvalBinaryOperator">
+              <Strings Previous="Failed to evaluate binary operator. Reason:&#xD;&#xA;{0}" Delete="false" />
+              <Strings Previous="Nie udało się obliczyć binarnego operatora. Powód:&#xD;&#xA;{0}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.EvalError.FailedToEvalExpression">
+              <Strings Previous="Failed to evaluate expression. Reason:&#xD;&#xA;{0}" Delete="false" />
+              <Strings Previous="Nie udało się obliczyć wyrażenia. Powód:&#xD;&#xA;{0}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool.Messages.Title">
+              <Strings Previous="Messages" Delete="false" />
+              <Strings Previous="Komunikaty" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.View.BottomPanelVisibility.Visible">
+              <Strings Previous="Visible" Delete="false" />
+              <Strings Previous="Pokaż" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.View.BottomPanelVisibility.Hidden">
+              <Strings Previous="Hidden" Delete="false" />
+              <Strings Previous="Ukryj" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.View.Interface.BottomPanel">
+              <Strings Previous="Bottom panel" Delete="false" />
+              <Strings Previous="Panel dolny" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Messages.Severity">
+              <Strings Previous="Severity" Delete="false" />
+              <Strings Previous="Ważność" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Messages.Message">
+              <Strings Previous="Message" Delete="false" />
+              <Strings Previous="Wiadomość" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Messages.File">
+              <Strings Previous="File" Delete="false" />
+              <Strings Previous="Plik" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Messages.Row">
+              <Strings Previous="Row" Delete="false" />
+              <Strings Previous="Wiersz" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Messages.Column">
+              <Strings Previous="Column" Delete="false" />
+              <Strings Previous="Kolumna" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Messages.Code">
+              <Strings Previous="Code" Delete="false" />
+              <Strings Previous="Kod" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.CannotOpenBinFile">
+              <Strings Previous="Cannot open binary file. See Messages window for details." Delete="false" />
+              <Strings Previous="Nie mogę otworzyć pliku binarnego. Szczegóły w oknie wiadomości." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SyntaxError.InvalidUnsignedIntegerValue">
+              <Strings Previous="Invalid unsigned integer value: {0}!" Delete="false" />
+              <Strings Previous="Nieprawidłowa liczba całkowita bez znaku: {0}!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SyntaxError.InvalidUnsignedEnumItem">
+              <Strings Previous="Unsigned-type enum should contain only unsigned int values (with suffix &quot;u&quot;)!" Delete="false" />
+              <Strings Previous="Typ wyliczeniowy bez znaku powinien zawierać tylko wartości bez znaku (z sufiksem &quot;u&quot;)!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SyntaxError.InvalidSignedEnumItem">
+              <Strings Previous="Signed-type enum should contain only signed int values!" Delete="false" />
+              <Strings Previous="Typ wyliczeniowy ze znakiem powinien zawierać tylko wartości ze znakiem!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SyntaxError.EnumItemValueDuplicated">
+              <Strings Previous="Enum item with value {0} already exists!" Delete="false" />
+              <Strings Previous="Element typu wyliczeniowego o wartości {0} już istnieje!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.AnalysisError.InvalidIfCondition">
+              <Strings Previous="Condition in if statement must evaluate to bool value!" Delete="false" />
+              <Strings Previous="Wyrażenie warunkowe musi obliczyć się do wartości typu bool!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.ContextGroup.Xml">
+              <Strings Previous="XML" Delete="false" />
+              <Strings Previous="XML" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Tab.XmlTools">
+              <Strings Previous="XML Tools" Delete="false" />
+              <Strings Previous="Narzędzia XML" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.XmlTools.Group.Formatting">
+              <Strings Previous="Formatting" Delete="false" />
+              <Strings Previous="Formatowanie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.XmlTools.Formatting.Format">
+              <Strings Previous="Format XML" Delete="false" />
+              <Strings Previous="Formatuj XML" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.CannotFormatInvalidXml">
+              <Strings Previous="Cannot format - XML is invalid." Delete="false" />
+              <Strings Previous="Nie mogę sformatować - XML jest nieprawidłowy." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="TextEditor.ContextMenu.Copy">
+              <Strings Previous="Copy" Delete="false" />
+              <Strings Previous="Kopiuj" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="TextEditor.ContextMenu.Cut">
+              <Strings Previous="Cut" Delete="false" />
+              <Strings Previous="Wytnij" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="TextEditor.ContextMenu.Paste">
+              <Strings Previous="Paste" Delete="false" />
+              <Strings Previous="Wklej" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.ReplacedOccurrences">
+              <Strings Previous="Replaced occurrences: {0}." Delete="false" />
+              <Strings Previous="Zamieniono wystąpień: {0}." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SearchReachedEnd">
+              <Strings Previous="Search reached end of the file. Do you want to continue from the beginning?" Delete="false" />
+              <Strings Previous="Wyszukiwanie osiągnęło koniec pliku. Czy chcesz kontynuować od początku?" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SearchReachedBeginning">
+              <Strings Previous="Search reached beginning of the file. Do you want to continue from the end?" Delete="false" />
+              <Strings Previous="Wyszukiwanie osiągnęło początek pliku. Czy chcesz kontynuować od końca?" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.EvalError.EnumDoesNotContainMember">
+              <Strings Previous="Enum {0} does not contain member {1}." Delete="false" />
+              <Strings Previous="Typ wyliczeniowy {0} nie zawiera składowej {1}." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.SyntaxError.IntegerValueOutsideRange">
+              <Strings Previous="Enum member {0} value ({1}) is outside underlying integer type range ({2})!" Delete="false" />
+              <Strings Previous="Składowa typu wyliczeniowego {0} ma wartość ({1}) spoza zakresu typu liczbowego {2}!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Tab.Text">
+              <Strings Previous="Text" Delete="false" />
+              <Strings Previous="Tekst" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Transform.Case">
+              <Strings Previous="Letter case" Delete="false" />
+              <Strings Previous="Wielkość liter" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Transform.Case.Lowercase">
+              <Strings Previous="Lowercase" Delete="false" />
+              <Strings Previous="Małe litery" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Transform.Case.Uppercase">
+              <Strings Previous="Uppercase" Delete="false" />
+              <Strings Previous="Wielkie litery" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Transform.Case.Naming">
+              <Strings Previous="As in names" Delete="false" />
+              <Strings Previous="Jak w nazwach" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Transform.Case.Sentence">
+              <Strings Previous="As in sentence" Delete="false" />
+              <Strings Previous="Jak w zdaniu" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Transform.Case.Invert">
+              <Strings Previous="Invert case" Delete="false" />
+              <Strings Previous="Odwróć" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.ReplaceOptions">
+              <Strings Previous="Replace options" Delete="false" />
+              <Strings Previous="Opcje zamiany" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.ShowSummary">
+              <Strings Previous="Show summary" Delete="false" />
+              <Strings Previous="Pokaż podsumowanie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="NameDialog.Title">
+              <Strings Previous="Enter name" Delete="false" />
+              <Strings Previous="Wprowadź nazwę" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="NameDialog.GroupBoxHeader">
+              <Strings Previous="Enter name" Delete="false" />
+              <Strings Previous="Wprowadź nazwę" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="NameDialog.Label">
+              <Strings Previous="Name" Delete="false" />
+              <Strings Previous="Nazwa" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Dialog.StoredSearch.Title">
+              <Strings Previous="Stored search" Delete="false" />
+              <Strings Previous="Zapisane wyszukiwanie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.StoredSearchDeleteConfirmation">
+              <Strings Previous="Are you sure you want to delete stored search &quot;{0}&quot;?" Delete="false" />
+              <Strings Previous="Czy na pewno usunąć zapisane wyszukiwanie &quot;{0}&quot;?" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Convert">
+              <Strings Previous="Convertion" Delete="false" />
+              <Strings Previous="Konwersja" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Convert.Base64.ToBase64">
+              <Strings Previous="Base64 Encode" Delete="false" />
+              <Strings Previous="Zakoduj Base64" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Convert.Base64.FromBase64">
+              <Strings Previous="Base64 Decode" Delete="false" />
+              <Strings Previous="Dekoduj Base64" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.InvalidBase64String">
+              <Strings Previous="Invalid Base64 string!" Delete="false" />
+              <Strings Previous="Nieprawidłowy ciąg Base64!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Convert.Base64">
+              <Strings Previous="Base64" Delete="false" />
+              <Strings Previous="Base64" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Tool.Explorer.Folders.OpenInExplorer">
+              <Strings Previous="Open in Windows Explorer" Delete="false" />
+              <Strings Previous="Otwórz w Eksploratorze Windows" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Tool.Explorer.Files.ShowInExplorer">
+              <Strings Previous="Show in Windows Explorer" Delete="false" />
+              <Strings Previous="Pokaż w Eksploratorze Windows" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SystemIntegration.OpenInDevEditor">
+              <Strings Previous="Edit in Dev.Editor" Delete="false" />
+              <Strings Previous="Edytuj w Dev.Editor" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.System">
+              <Strings Previous="System" Delete="false" />
+              <Strings Previous="System" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.System.IntegrationHeader">
+              <Strings Previous="System context menu integration" Delete="false" />
+              <Strings Previous="Integracja z systemowym menu kontekstowym" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.System.IntegrationState">
+              <Strings Previous="Integration state" Delete="false" />
+              <Strings Previous="Stan integracji" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.System.Integration.Enabled">
+              <Strings Previous="Integration is enabled" Delete="false" />
+              <Strings Previous="Integracja jest włączona" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.System.Integration.Disabled">
+              <Strings Previous="Integration is disabled" Delete="false" />
+              <Strings Previous="Integracja jest wyłączona" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.System.Integration.Enable">
+              <Strings Previous="Enable integration" Delete="false" />
+              <Strings Previous="Włącz integrację" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Configuration.System.Integration.Disable">
+              <Strings Previous="Disable integration" Delete="false" />
+              <Strings Previous="Wyłącz integrację" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Filter.Xslt">
+              <Strings Previous="XSLT sheets (*.xsl)|*.xsl" Delete="false" />
+              <Strings Previous="Arkusze XSLT (*.xsl)|*.xsl" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.CannotTransformXslt">
+              <Strings Previous="Cannot transform XML file with XSLT. See Messages window for details." Delete="false" />
+              <Strings Previous="Nie udało się przekonwertować XSL przy pomocy XSLT. Szczegóły w oknie wiadomości." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.XmlTools.Group.Transform">
+              <Strings Previous="Transform" Delete="false" />
+              <Strings Previous="Przekształcanie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.XmlTools.Transform.XSLT">
+              <Strings Previous="XSLT transform" Delete="false" />
+              <Strings Previous="Transformacja XSLT" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Command.SetHighlighting">
+              <Strings Previous="Syntax highlighting {0}" Delete="false" />
+              <Strings Previous="Kolorowanie składni {0}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.ContextGroup.Markdown">
+              <Strings Previous="Markdown" Delete="false" />
+              <Strings Previous="Markdown" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Headers.H1">
+              <Strings Previous="Header 1" Delete="false" />
+              <Strings Previous="Header 1" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Headers">
+              <Strings Previous="Headers" Delete="false" />
+              <Strings Previous="Nagłówki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Tab.MarkdownTools">
+              <Strings Previous="Markdown tools" Delete="false" />
+              <Strings Previous="Narzędzia Markdown" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Headers.H2">
+              <Strings Previous="Header 2" Delete="false" />
+              <Strings Previous="Header 2" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Headers.H3">
+              <Strings Previous="Header 3" Delete="false" />
+              <Strings Previous="Header 3" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Headers.H4">
+              <Strings Previous="Header 4" Delete="false" />
+              <Strings Previous="Header 4" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Headers.H5">
+              <Strings Previous="Header 5" Delete="false" />
+              <Strings Previous="Header 5" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Headers.H6">
+              <Strings Previous="Header 6" Delete="false" />
+              <Strings Previous="Header 6" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Command.ToggleWordWrap">
+              <Strings Previous="Toggle word wrap" Delete="false" />
+              <Strings Previous="Przełącz zawijanie wierszy" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Command.ToggleLineNumbers">
+              <Strings Previous="Toggle line numbers" Delete="false" />
+              <Strings Previous="Przełącz numerowanie wierszy" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Blocks">
+              <Strings Previous="Blocks" Delete="false" />
+              <Strings Previous="Bloki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Blocks.Blockquote">
+              <Strings Previous="Blockquote" Delete="false" />
+              <Strings Previous="Cytat" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Blocks.Code">
+              <Strings Previous="Source code" Delete="false" />
+              <Strings Previous="Kod źródłowy" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Inline.Code">
+              <Strings Previous="Source code" Delete="false" />
+              <Strings Previous="Kod źródłowy" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Inline">
+              <Strings Previous="Inline" Delete="false" />
+              <Strings Previous="Formatowanie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Inline.Emphasis">
+              <Strings Previous="Emphasis" Delete="false" />
+              <Strings Previous="Wyróżnienie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Inline.Strong">
+              <Strings Previous="Strong" Delete="false" />
+              <Strings Previous="Wzmocnienie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Blocks.UnorderedList">
+              <Strings Previous="Unordered list" Delete="false" />
+              <Strings Previous="Lista wypunktowana" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Blocks.OrderedList">
+              <Strings Previous="Ordered list" Delete="false" />
+              <Strings Previous="Lista numerowana" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Insert">
+              <Strings Previous="Insert" Delete="false" />
+              <Strings Previous="Wstaw" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Insert.Hr">
+              <Strings Previous="Horizontal rule" Delete="false" />
+              <Strings Previous="Linia pozioma" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Insert.Link">
+              <Strings Previous="Link" Delete="false" />
+              <Strings Previous="Łącze" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Insert.Picture">
+              <Strings Previous="Picture" Delete="false" />
+              <Strings Previous="Obraz" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.DocumentDeleted">
+              <Strings Previous="File {0} was deleted. Do you want to keep it in the editor?" Delete="false" />
+              <Strings Previous="Plik {0} został usunięty. Czy chcesz go zachować w edytorze?" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.DocumentModifiedOutsideEditor">
+              <Strings Previous="File {0} was modified outside the editor. Do you want to reload it?" Delete="false" />
+              <Strings Previous="Plik {0} został zmodyfikowany poza edytorem. Czy chcesz wczytać go ponownie?" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="TextEditor.Footer.Split">
+              <Strings Previous="SPLIT" Delete="false" />
+              <Strings Previous="PODZIEL" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.View.Interface.ShowSecondaryDocumentTab">
+              <Strings Previous="Second view" Delete="false" />
+              <Strings Previous="Drugi widok" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DocumentHeader.ContextMenu.TabColor">
+              <Strings Previous="Tab color" Delete="false" />
+              <Strings Previous="Kolor zakładki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DocumentHeader.ContextMenu.TabColor.Default">
+              <Strings Previous="Default" Delete="false" />
+              <Strings Previous="Domyślny" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DocumentHeader.ContextMenu.TabColor.Red">
+              <Strings Previous="Red" Delete="false" />
+              <Strings Previous="Czerwony" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DocumentHeader.ContextMenu.TabColor.Green">
+              <Strings Previous="Green" Delete="false" />
+              <Strings Previous="Zielony" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DocumentHeader.ContextMenu.TabColor.Blue">
+              <Strings Previous="Blue" Delete="false" />
+              <Strings Previous="Niebieski" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DocumentHeader.ContextMenu.TabColor.Yellow">
+              <Strings Previous="Yellow" Delete="false" />
+              <Strings Previous="Żółty" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DocumentHeader.ContextMenu.Close">
+              <Strings Previous="Close" Delete="false" />
+              <Strings Previous="Zamknij" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DocumentHeader.ContextMenu.CloseOthers">
+              <Strings Previous="Close others" Delete="false" />
+              <Strings Previous="Zamknij pozostałe" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DocumentHeader.ContextMenu.CloseAll">
+              <Strings Previous="Close all" Delete="false" />
+              <Strings Previous="Zamknij wszystkie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DocumentHeader.ContextMenu.CloseAllButPinned">
+              <Strings Previous="Close all but pinned" Delete="false" />
+              <Strings Previous="Zamknij wszystkie poza przypiętymi" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.FoundOccurrences">
+              <Strings Previous="Found occurrences: {0}." Delete="false" />
+              <Strings Previous="Znaleziono wystąpień: {0}." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.CountOccurrences">
+              <Strings Previous="Count occurrences" Delete="false" />
+              <Strings Previous="Policz wystąpienia" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Escape.Htm.Encode">
+              <Strings Previous="Encode HTML entities" Delete="false" />
+              <Strings Previous="Zakoduj HTML entities" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Escape.Htm.Decode">
+              <Strings Previous="Decode HTML entities" Delete="false" />
+              <Strings Previous="Dekoduj HTML entities" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Escape.Htm">
+              <Strings Previous="HTML entities" Delete="false" />
+              <Strings Previous="Encje HTML" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Search.StoredSearches">
+              <Strings Previous="Saved searches" Delete="false" />
+              <Strings Previous="Zapisane wyszukania" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Search.StoredReplaces">
+              <Strings Previous="Saved replaces" Delete="false" />
+              <Strings Previous="Zapisane zamiany" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DocumentHeader.ContextMenu.MoveToOtherView">
+              <Strings Previous="Move to other view" Delete="false" />
+              <Strings Previous="Przenieś do drugiego widoku" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Tool.Explorer.Files.Open">
+              <Strings Previous="Open" Delete="false" />
+              <Strings Previous="Otwórz" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Tool.Explorer.Files.OpenInHexeditor">
+              <Strings Previous="Open in hex editor" Delete="false" />
+              <Strings Previous="Otwórz w hexedytorze" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Group.Comparing">
+              <Strings Previous="Comparing" Delete="false" />
+              <Strings Previous="Porównywanie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Comparing.Compare">
+              <Strings Previous="Compare documents" Delete="false" />
+              <Strings Previous="Porównaj dokumenty" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureDiffDialog.Title">
+              <Strings Previous="Compare documents" Delete="false" />
+              <Strings Previous="Porównaj dokumenty" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureDiffDialog.Source">
+              <Strings Previous="Source" Delete="false" />
+              <Strings Previous="Źródło" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureDiffDialog.FirstDocument">
+              <Strings Previous="First document" Delete="false" />
+              <Strings Previous="Pierwszy dokument" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureDiffDialog.SecondDocument">
+              <Strings Previous="Second document" Delete="false" />
+              <Strings Previous="Drugi dokument" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureDiffDialog.Options">
+              <Strings Previous="Options" Delete="false" />
+              <Strings Previous="Opcje" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureDiffDialog.IgnoreCase">
+              <Strings Previous="Ignore case" Delete="false" />
+              <Strings Previous="Ignoruj wielkość liter" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureDiffDialog.IgnoreWhitespace">
+              <Strings Previous="Ignore whitespace" Delete="false" />
+              <Strings Previous="Ignoruj białe znaki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.DocumentsAreSame">
+              <Strings Previous="Documents have no differences." Delete="false" />
+              <Strings Previous="Dokumenty nie mają żadnych różnic." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Escape.Escape">
+              <Strings Previous="Escape..." Delete="false" />
+              <Strings Previous="Escape..." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Escape.Unescape">
+              <Strings Previous="Unescape..." Delete="false" />
+              <Strings Previous="Unescape..." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Escape">
+              <Strings Previous="Escape" Delete="false" />
+              <Strings Previous="Escape" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Transform">
+              <Strings Previous="Transformation" Delete="false" />
+              <Strings Previous="Przekształcenie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureEscapeDialog.Title.Escape">
+              <Strings Previous="Escape" Delete="false" />
+              <Strings Previous="Dodaj znaki ucieczki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureEscapeDialog.Title.Unescape">
+              <Strings Previous="Unescape" Delete="false" />
+              <Strings Previous="Usuń znaki ucieczki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureEscapeDialog.Configure">
+              <Strings Previous="Configuration" Delete="false" />
+              <Strings Previous="Konfiguracja" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureEscapeDialog.EscapeSpecialCharacters">
+              <Strings Previous="Include line breaks (\n), tabs (\t) etc." Delete="false" />
+              <Strings Previous="Uwzględnij złamanie wiersza (\n), tabulacje (\t) itp." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureEscapeDialog.EscapeSpecialCharacters.Label">
+              <Strings Previous="Special characters" Delete="false" />
+              <Strings Previous="Znaki specjalne" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureEscapeDialog.EscapeCharacter">
+              <Strings Previous="Escape character" Delete="false" />
+              <Strings Previous="Znak ucieczki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureEscapeDialog.EscapeDoubleQuotes">
+              <Strings Previous="Escape double quotes" Delete="false" />
+              <Strings Previous="Zamieniaj cudzysłowy (&quot;)" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureEscapeDialog.EscapeSingleQuotes">
+              <Strings Previous="Escape single quotes" Delete="false" />
+              <Strings Previous="Zamieniaj apostrofy (')" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureEscapeDialog.EscapeDoubleQuotes.Label">
+              <Strings Previous="Double quotes" Delete="false" />
+              <Strings Previous="Cudzysłowy" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureEscapeDialog.EscapeSingleQuotes.Label">
+              <Strings Previous="Single quotes" Delete="false" />
+              <Strings Previous="Apostrofy" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureEscapeDialog.ForwardTitle">
+              <Strings Previous="Escape" Delete="false" />
+              <Strings Previous="Dodaj znaki ucieczki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ConfigureEscapeDialog.BackwardTitle">
+              <Strings Previous="Unescape" Delete="false" />
+              <Strings Previous="Usuń znaki ucieczki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.FailedToEscapeString">
+              <Strings Previous="Failed to escape string!" Delete="false" />
+              <Strings Previous="Nie udało się dodać znaków ucieczki do ciągu!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.FailedToUnescapeString">
+              <Strings Previous="Failed to unescape string!" Delete="false" />
+              <Strings Previous="Nie udało się usunąć znaków ucieczki z ciągu!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ExceptionWindow.Title">
+              <Strings Previous="Unhandled exception" Delete="false" />
+              <Strings Previous="Nieobsłużony wyjątek" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ExceptionWindow.Header">
+              <Strings Previous="Exception details" Delete="false" />
+              <Strings Previous="Szczegóły wyjątku" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ExceptionWindow.ExceptionDetails">
+              <Strings Previous="Unhandled exception occurred in the application. You may find details below." Delete="false" />
+              <Strings Previous="W aplikacji wystąpił nieobsłużony wyjątek. Szczegóły znajdują się poniżej." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Comparing.PreviousChange">
+              <Strings Previous="Previous change" Delete="false" />
+              <Strings Previous="Poprzednia zmiana" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Comparing.NextChange">
+              <Strings Previous="Next change" Delete="false" />
+              <Strings Previous="Następna zmiana" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.SearchInFilesTab">
+              <Strings Previous="Find in files" Delete="false" />
+              <Strings Previous="Znajdź w plikach" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.Location">
+              <Strings Previous="Directory" Delete="false" />
+              <Strings Previous="Katalog" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ellipsis">
+              <Strings Previous="..." Delete="false" />
+              <Strings Previous="..." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.FileMask">
+              <Strings Previous="File mask" Delete="false" />
+              <Strings Previous="Maska plików" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.LocationInvalid">
+              <Strings Previous="Invalid folder for search!" Delete="false" />
+              <Strings Previous="Nieprawidłowy katalog do przeszukania!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool.SearchResults.Title">
+              <Strings Previous="Search results" Delete="false" />
+              <Strings Previous="Wyniki wyszukiwania" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ProgressWindow.Title">
+              <Strings Previous="Operation in progress..." Delete="false" />
+              <Strings Previous="Operacja w trakcie..." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="ProgressWindow.GroupboxTitle">
+              <Strings Previous="Operation in progress" Delete="false" />
+              <Strings Previous="Operacja w trakcie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="FindInFiles.ProcessingDirectory">
+              <Strings Previous="Processing directory {0}, files found so far: {1}" Delete="false" />
+              <Strings Previous="Przetwarzam katalog {0}, znalezionych plików: {1}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="FindInFiles.SearchingInFile">
+              <Strings Previous="Searching in file {0}..." Delete="false" />
+              <Strings Previous="Szukam w pliku {0}..." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.FindInFiles">
+              <Strings Previous="Find in files" Delete="false" />
+              <Strings Previous="Szukaj w plikach" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool.SearchResults.SearchResultsFor">
+              <Strings Previous="Search results for " Delete="false" />
+              <Strings Previous="Wyniki wyszukiwania dla " Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool.SeachResults.In">
+              <Strings Previous=" in " Delete="false" />
+              <Strings Previous=" w " Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Operation.SearchingInFiles">
+              <Strings Previous="Searching in files" Delete="false" />
+              <Strings Previous="Wyszukiwanie w plikach" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Search.FindInFiles">
+              <Strings Previous="Find in files" Delete="false" />
+              <Strings Previous="Szukaj w plikach" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Escape.Escape.Backslash">
+              <Strings Previous="Escape with \" Delete="false" />
+              <Strings Previous="Escape (znaki \ )" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Text.Escape.Unescape.Backslash">
+              <Strings Previous="Unescape with \" Delete="false" />
+              <Strings Previous="Unescape (znaki \ )" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Command.CloseCurrentDocument">
+              <Strings Previous="Close current document" Delete="false" />
+              <Strings Previous="Zamknij bieżący dokument" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.ReplaceInFilesTab">
+              <Strings Previous="Replace in files" Delete="false" />
+              <Strings Previous="Zamień w plikach" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SearchWindow.ReplaceInFiles">
+              <Strings Previous="Replace in files" Delete="false" />
+              <Strings Previous="Zamień w plikach" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Search.ReplaceInFiles">
+              <Strings Previous="Replace in files" Delete="false" />
+              <Strings Previous="Zamień w plikach" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.ContextGroup.Json">
+              <Strings Previous="Json" Delete="false" />
+              <Strings Previous="Json" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Tab.JsonTools">
+              <Strings Previous="Json" Delete="false" />
+              <Strings Previous="Json" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.JsonTools.Formatting.Format">
+              <Strings Previous="Format Json" Delete="false" />
+              <Strings Previous="Formatuj Json" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.JsonTools.Group.Formatting">
+              <Strings Previous="Formatting" Delete="false" />
+              <Strings Previous="Formatowanie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.CannotFormatInvalidJson">
+              <Strings Previous="Cannot format - Json is invalid." Delete="false" />
+              <Strings Previous="Nie mogę sformatować - Json jest nieprawidłowy." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="MainWindow.Title">
+              <Strings Previous="Dev.Editor {0}" Delete="false" />
+              <Strings Previous="Dev.Editor {0}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Tool.Project.Title">
+              <Strings Previous="Project" Delete="false" />
+              <Strings Previous="Projekt" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Group.Project">
+              <Strings Previous="Project" Delete="false" />
+              <Strings Previous="Projekt" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Home.Project.Open">
+              <Strings Previous="Open folder..." Delete="false" />
+              <Strings Previous="Otwórz folder..." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Lines.Tools.FindDuplicatedLines">
+              <Strings Previous="Find duplicated lines" Delete="false" />
+              <Strings Previous="Znajdź powielone linie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Lines.Group.Tools">
+              <Strings Previous="Tools" Delete="false" />
+              <Strings Previous="Narzędzia" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Operation.SearchingForDuplicatedLines">
+              <Strings Previous="Searching for duplicated lines" Delete="false" />
+              <Strings Previous="Wyszukiwanie powielonych linii" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="FindDuplicatedLines.FileLoadProgress">
+              <Strings Previous="Loading lines from {0}..." Delete="false" />
+              <Strings Previous="Ładuję linie z pliku {0}..." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="FindDuplicatedLines.AnalyzingProgress">
+              <Strings Previous="Analyzing line {0} from {1}..." Delete="false" />
+              <Strings Previous="Analizuję linię {0} z {1}..." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.MissingDirectoryPartForPath">
+              <Strings Previous="Missing directory part for path: {0}" Delete="false" />
+              <Strings Previous="Brakuje pełnej ścieżki dla: {0}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.MaskNotAllowedInDirectoryForPath">
+              <Strings Previous="Mask not allowed in directory part for path: {0}" Delete="false" />
+              <Strings Previous="Znaki wieloznaczne nie są dozwolone w ścieżce dla: {0}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.DirectoryDoesNotExistsForPath">
+              <Strings Previous="Directory does not exists for path: {0}" Delete="false" />
+              <Strings Previous="Ścieżka nie istnieje dla: {0}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.FailedToFindFiles">
+              <Strings Previous="Failed to find files in path {0}. Error: {1}" Delete="false" />
+              <Strings Previous="Nie udało się znaleźć plików dla ścieżki {0}. Błąd: {1}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool.SearchResults.DuplicatedLinesHeader">
+              <Strings Previous="Search results for duplicated lines. Total number of blocks: " Delete="false" />
+              <Strings Previous="Wyniki wyszukiwania powielonych linii. Liczba znalezionych bloków: " Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.Title">
+              <Strings Previous="Configure search for duplicated lines" Delete="false" />
+              <Strings Previous="Konfiguracja wyszukiwania powielonych linii" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.Group.Input">
+              <Strings Previous="Input" Delete="false" />
+              <Strings Previous="Wejście" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.Add">
+              <Strings Previous="Add..." Delete="false" />
+              <Strings Previous="Dodaj..." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.AddFiles">
+              <Strings Previous="Add files..." Delete="false" />
+              <Strings Previous="Dodaj pliki..." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.AddFolder">
+              <Strings Previous="Add folder..." Delete="false" />
+              <Strings Previous="Dodaj katalog..." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.EditHint">
+              <Strings Previous="Double-click an item to edit." Delete="false" />
+              <Strings Previous="Kliknij dwukrotnie element, by go edytować." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.MinimumLineCount">
+              <Strings Previous="Minimum line count" Delete="false" />
+              <Strings Previous="Minimalna liczba linii" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.MinimumFileCount">
+              <Strings Previous="Minimum file count" Delete="false" />
+              <Strings Previous="Minimalna liczba plików" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.Group.Analysis">
+              <Strings Previous="Analysis" Delete="false" />
+              <Strings Previous="Analiza" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.IgnoreTrailingWhitespace">
+              <Strings Previous="Ignore trailing whitespace" Delete="false" />
+              <Strings Previous="Ignoruj otaczające białe znaki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.Files">
+              <Strings Previous="Files" Delete="false" />
+              <Strings Previous="Pliki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.ExcludedFilesMasks">
+              <Strings Previous="Excluded files masks" Delete="false" />
+              <Strings Previous="Wyklucz pliki według maski" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.SearchFoldersRecursively">
+              <Strings Previous="Search folders recursively" Delete="false" />
+              <Strings Previous="Przeszukaj katalogi rekurencyjnie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.Group.Results">
+              <Strings Previous="Results" Delete="false" />
+              <Strings Previous="Wyniki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.ByLineFirst">
+              <Strings Previous="Sort by line count, then by file count" Delete="false" />
+              <Strings Previous="Sortuj według liczby linii, potem plików" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.ByFileFirst">
+              <Strings Previous="Sort by file count, then by line count" Delete="false" />
+              <Strings Previous="Sortuj według liczby plików, potem linii" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool.SearchResults.FragmentDuplicatedIn">
+              <Strings Previous="Fragment duplicated in " Delete="false" />
+              <Strings Previous="Fragment powielony w " Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool.SearchResults.FragmentDuplicatedIn2">
+              <Strings Previous=" files (line count: " Delete="false" />
+              <Strings Previous=" plikach (linii: " Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool.SearchResults.FragmentDuplicatedIn3">
+              <Strings Previous=")" Delete="false" />
+              <Strings Previous=")" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool.SearchResults.FileReference1">
+              <Strings Previous="File: " Delete="false" />
+              <Strings Previous="Plik: " Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool.SearchResults.FileReference2">
+              <Strings Previous=", lines " Delete="false" />
+              <Strings Previous=", linie " Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message.InvalidLineRegularExpression">
+              <Strings Previous="Invalid line exclusion regular expression!" Delete="false" />
+              <Strings Previous="Nieprawidłowe wyrażenie regularne wykluczania linii!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.ExcludeLinesByRegularExpression">
+              <Strings Previous="Exclude lines by regular expression" Delete="false" />
+              <Strings Previous="Wyklucz linie według wyrażenia regularnego" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool.SearchResults.FileReference3">
+              <Strings Previous=" through " Delete="false" />
+              <Strings Previous=" do " Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool_SearchResults_FilteredSuffix">
+              <Strings Previous=" (filtered)" Delete="false" />
+              <Strings Previous=" (filtrowany)" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool_SearchResults_Filter">
+              <Strings Previous="Filter" Delete="false" />
+              <Strings Previous="Filtruj" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool_SearchResults_FilterCaseSensitive">
+              <Strings Previous="Case sensitive" Delete="false" />
+              <Strings Previous="Uwzględniaj wielkość liter" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool_SearchResults_FilterExcludeMatching">
+              <Strings Previous="Exclude matching" Delete="false" />
+              <Strings Previous="Wyklucz pasujące" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool_SearchResults_FilterFiles">
+              <Strings Previous="Filter file names" Delete="false" />
+              <Strings Previous="Filtruj nazwy plików" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="BottomTool_SearchResults_FilterContents">
+              <Strings Previous="Filter contents" Delete="false" />
+              <Strings Previous="Filtruj zawartość" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.MergeCommonResults">
+              <Strings Previous="Merge common results (slow)" Delete="false" />
+              <Strings Previous="Scalaj podobne wyniki (wolne)" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="DuplicatedLinesFinderConfigWindow.AllowedDifferentLines">
+              <Strings Previous="Allowed differing lines" Delete="false" />
+              <Strings Previous="Liczba różnych linii" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="FindDuplicatedLines_MergingCommonResults">
+              <Strings Previous="Merging results {0} from {1}" Delete="false" />
+              <Strings Previous="Scalanie wyników {0} z {1}" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Navigation.Group.Commands">
+              <Strings Previous="Commands" Delete="false" />
+              <Strings Previous="Komendy" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Navigation.Group.ProjectFiles">
+              <Strings Previous="Project files" Delete="false" />
+              <Strings Previous="Pliki projektu" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.Tab.Home">
+              <Strings Previous="Home" Delete="false" />
+              <Strings Previous="Narzędzia główne" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.Home.Group.General">
+              <Strings Previous="General" Delete="false" />
+              <Strings Previous="Ogólne" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.General.SourceAlphabet">
+              <Strings Previous="Source alphabet" Delete="false" />
+              <Strings Previous="Źródłowy alfabet" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.Home.General.SourceAlphabet.ResolveFromSource">
+              <Strings Previous="Resolve from source" Delete="false" />
+              <Strings Previous="Pobierz z tekstu" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.Home.Group.Mode">
+              <Strings Previous="Mode" Delete="false" />
+              <Strings Previous="Tryb" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.Home.Mode.Ciphering">
+              <Strings Previous="Ciphering" Delete="false" />
+              <Strings Previous="Szyfrowanie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.Home.Mode.Unciphering">
+              <Strings Previous="Unciphering" Delete="false" />
+              <Strings Previous="Rozszyfrowanie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.Home.Group.LanguageData">
+              <Strings Previous="Language data" Delete="false" />
+              <Strings Previous="Dane językowe" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.Home.LanguageData.Generate">
+              <Strings Previous="Generate" Delete="false" />
+              <Strings Previous="Wygeneruj" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.Home.LanguageData.Open">
+              <Strings Previous="Open" Delete="false" />
+              <Strings Previous="Otwórz" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.Home.LanguageData.Save">
+              <Strings Previous="Save" Delete="false" />
+              <Strings Previous="Zapisz" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.Home.Group.Solve">
+              <Strings Previous="Solve" Delete="false" />
+              <Strings Previous="Rozwiąż" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.Home.Solve.UseLetterFrequency">
+              <Strings Previous="Use letter frequency" Delete="false" />
+              <Strings Previous="Użyj częstotliwości liter" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Ribbon.Home.Solve.Crack">
+              <Strings Previous="Crack" Delete="false" />
+              <Strings Previous="Złam" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Filter.LangData">
+              <Strings Previous="Language data files (*.langdata)|*.langdata" Delete="false" />
+              <Strings Previous="Pliki danych językowych (*.langdata)|*.langdata" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message_FailedToSaveLangData">
+              <Strings Previous="Failed to save language data!" Delete="false" />
+              <Strings Previous="Nie udało się zapisać danych języka!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message_FailedToLoadLangData">
+              <Strings Previous="Failed to load language data!" Delete="false" />
+              <Strings Previous="Nie udało się wczytać danych języka!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Filter.TextFiles">
+              <Strings Previous="Text files (*.txt)|*.txt|All files (*.*)|*.*" Delete="false" />
+              <Strings Previous="Pliki tekstowe (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message_FailedToOpenLangSampleFile">
+              <Strings Previous="Failed to open language sample file!" Delete="false" />
+              <Strings Previous="Nie udało się otworzyć pliku z przykładem języka!" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Alphabet.VerifyLanguageAlphabet">
+              <Strings Previous="Verify language alphabet" Delete="false" />
+              <Strings Previous="Sprawdź alfabet dla języka" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message_BuildingLangData">
+              <Strings Previous="Building language data..." Delete="false" />
+              <Strings Previous="Budowanie danych języka..." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Message_CrackingCipher">
+              <Strings Previous="Cracking cipher..." Delete="false" />
+              <Strings Previous="Łamanie szyfru..." Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="SubCipher.Title">
+              <Strings Previous="Substitution cipher processing" Delete="false" />
+              <Strings Previous="Przetwarzanie szyfru podstawieniowego" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Miscelaneous.Group.Cipher">
+              <Strings Previous="Cipher" Delete="false" />
+              <Strings Previous="Szyfrowanie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Miscelaneous.Cipher.SubCipher">
+              <Strings Previous="Substitution cipher" Delete="false" />
+              <Strings Previous="Szyfr podstawieniowy" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="WebBrowser.Title">
+              <Strings Previous="Web browser" Delete="false" />
+              <Strings Previous="Przeglądarka internetowa" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Rendering">
+              <Strings Previous="Rendering" Delete="false" />
+              <Strings Previous="Renderowanie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Markdown.Rendering.HtmlPreview">
+              <Strings Previous="Preview as HTML" Delete="false" />
+              <Strings Previous="Podgląd jako HTML" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Command.Markdown.HtmlPreview">
+              <Strings Previous="Markdown preview as HTML" Delete="false" />
+              <Strings Previous="Podgląd Markdown jako HTML" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Tool.Explorer.Files.Execute">
+              <Strings Previous="Execute" Delete="false" />
+              <Strings Previous="Uruchom" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Tab.Miscelaneous">
+              <Strings Previous="Miscelaneous" Delete="false" />
+              <Strings Previous="Dodatki" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Lines.Cleanup.RemoveDuplicatedLines">
+              <Strings Previous="Remove duplicated lines" Delete="false" />
+              <Strings Previous="Usuń powielone linie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon.Lines.Cleanup.RemoveDuplicatedNeighboringLines">
+              <Strings Previous="Remove duplicated neighboring lines" Delete="false" />
+              <Strings Previous="Usuń powielone, sąsiadujące linie" Delete="false" />
+            </LocalizedStringsModel>
+            <LocalizedStringsModel Key="Ribbon_Lines_Cleanup_RemoveLines">
+              <Strings Previous="Remove lines" Delete="false" />
+              <Strings Previous="Usuń linie" Delete="false" />
+            </LocalizedStringsModel>
+          </Entries>
+        </File>
+      </Items>
+    </ResourceFolderModel>
+  </Items>
+  <Languages>
+    <ProjectLanguageModel Code="" Index="0" />
+    <ProjectLanguageModel Code="pl-PL" Index="1" />
+  </Languages>
+</Project>

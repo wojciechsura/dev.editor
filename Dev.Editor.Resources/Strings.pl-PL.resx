@@ -1,64 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
-  <!-- 
-    Microsoft ResX Schema 
-    
-    Version 2.0
-    
-    The primary goals of this format is to allow a simple XML format 
-    that is mostly human readable. The generation and parsing of the 
-    various data types are done through the TypeConverter classes 
-    associated with the data types.
-    
-    Example:
-    
-    ... ado.net/XML headers & schema ...
-    <resheader name="resmimetype">text/microsoft-resx</resheader>
-    <resheader name="version">2.0</resheader>
-    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
-    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
-    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
-    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        <value>[base64 mime encoded serialized .NET Framework object]</value>
-    </data>
-    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
-        <comment>This is a comment</comment>
-    </data>
-                
-    There are any number of "resheader" rows that contain simple 
-    name/value pairs.
-    
-    Each data row contains a name, and value. The row also contains a 
-    type or mimetype. Type corresponds to a .NET class that support 
-    text/value conversion through the TypeConverter architecture. 
-    Classes that don't support this are serialized and stored with the 
-    mimetype set.
-    
-    The mimetype is used for serialized objects, and tells the 
-    ResXResourceReader how to depersist the object. This is currently not 
-    extensible. For a given mimetype the value must be set accordingly:
-    
-    Note - application/x-microsoft.net.object.binary.base64 is the format 
-    that the ResXResourceWriter will generate, however the reader can 
-    read any of the formats listed below.
-    
-    mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
-            : and then encoded with base64 encoding.
-    
-    mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
-            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
-            : and then encoded with base64 encoding.
-
-    mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
-            : using a System.ComponentModel.TypeConverter
-            : and then encoded with base64 encoding.
-    -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
     <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
@@ -112,11 +53,20 @@
     <value>2.0</value>
   </resheader>
   <resheader name="reader">
-    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <resheader name="writer">
-    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=6.0.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Ribbon.Home.Group.Edit" xml:space="preserve">
+    <value>Edycja</value>
+  </data>
+  <data name="Ribbon.Home.Group.File" xml:space="preserve">
+    <value>Plik</value>
+  </data>
+  <data name="Ribbon.Tab.Home" xml:space="preserve">
+    <value>Narzędzia główne</value>
+  </data>
   <data name="Ribbon.Home.File.New" xml:space="preserve">
     <value>Nowy</value>
   </data>
@@ -128,15 +78,6 @@
   </data>
   <data name="Ribbon.Home.File.SaveAs" xml:space="preserve">
     <value>Zapisz jako</value>
-  </data>
-  <data name="Ribbon.Home.Group.Edit" xml:space="preserve">
-    <value>Edycja</value>
-  </data>
-  <data name="Ribbon.Home.Group.File" xml:space="preserve">
-    <value>Plik</value>
-  </data>
-  <data name="Ribbon.Tab.Home" xml:space="preserve">
-    <value>Narzędzia główne</value>
   </data>
   <data name="Ribbon.Home.Edit.Copy" xml:space="preserve">
     <value>Kopiuj</value>
@@ -345,14 +286,14 @@
   <data name="Configuration.Behavior.ClosingBehavior.Standard" xml:space="preserve">
     <value>Standardowo</value>
   </data>
+  <data name="Configuration.Behavior.ClosingBehavior.Standard.Comment" xml:space="preserve">
+    <value>Dev.Editor zamknie wszystkie dokumenty podczas kończenia pracy i uruchomi się z nowym, pustym dokumentem</value>
+  </data>
   <data name="Configuration.Behavior.ClosingBehavior.Fluent" xml:space="preserve">
     <value>Płynnie</value>
   </data>
   <data name="Configuration.Behavior.ClosingBehavior.Fluent.Comment" xml:space="preserve">
     <value>Dev.Editor zapisze wszystkie dokumenty i odtworzy je po ponownym uruchomieniu (łącznie z niezapisanymi zmianami)</value>
-  </data>
-  <data name="Configuration.Behavior.ClosingBehavior.Standard.Comment" xml:space="preserve">
-    <value>Dev.Editor zamknie wszystkie dokumenty podczas kończenia pracy i uruchomi się z nowym, pustym dokumentem</value>
   </data>
   <data name="Ribbon.View.Group.Interface" xml:space="preserve">
     <value>Interfejs</value>
@@ -360,14 +301,14 @@
   <data name="Ribbon.View.Interface.SidePanel" xml:space="preserve">
     <value>Panel boczny</value>
   </data>
-  <data name="Ribbon.View.SidePanelPlacement.Hidden" xml:space="preserve">
-    <value>Ukryj</value>
-  </data>
   <data name="Ribbon.View.SidePanelPlacement.Left" xml:space="preserve">
     <value>Lewo</value>
   </data>
   <data name="Ribbon.View.SidePanelPlacement.Right" xml:space="preserve">
     <value>Prawo</value>
+  </data>
+  <data name="Ribbon.View.SidePanelPlacement.Hidden" xml:space="preserve">
+    <value>Ukryj</value>
   </data>
   <data name="Tool.BinDefinitions.Title" xml:space="preserve">
     <value>Definicje binarne</value>
@@ -628,11 +569,11 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Message.SyntaxError.InvalidUnsignedIntegerValue" xml:space="preserve">
     <value>Nieprawidłowa liczba całkowita bez znaku: {0}!</value>
   </data>
-  <data name="Message.SyntaxError.InvalidSignedEnumItem" xml:space="preserve">
-    <value>Typ wyliczeniowy ze znakiem powinien zawierać tylko wartości ze znakiem!</value>
-  </data>
   <data name="Message.SyntaxError.InvalidUnsignedEnumItem" xml:space="preserve">
     <value>Typ wyliczeniowy bez znaku powinien zawierać tylko wartości bez znaku (z sufiksem "u")!</value>
+  </data>
+  <data name="Message.SyntaxError.InvalidSignedEnumItem" xml:space="preserve">
+    <value>Typ wyliczeniowy ze znakiem powinien zawierać tylko wartości ze znakiem!</value>
   </data>
   <data name="Message.SyntaxError.EnumItemValueDuplicated" xml:space="preserve">
     <value>Element typu wyliczeniowego o wartości {0} już istnieje!</value>
@@ -667,11 +608,11 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Message.ReplacedOccurrences" xml:space="preserve">
     <value>Zamieniono wystąpień: {0}.</value>
   </data>
-  <data name="Message.SearchReachedBeginning" xml:space="preserve">
-    <value>Wyszukiwanie osiągnęło początek pliku. Czy chcesz kontynuować od końca?</value>
-  </data>
   <data name="Message.SearchReachedEnd" xml:space="preserve">
     <value>Wyszukiwanie osiągnęło koniec pliku. Czy chcesz kontynuować od początku?</value>
+  </data>
+  <data name="Message.SearchReachedBeginning" xml:space="preserve">
+    <value>Wyszukiwanie osiągnęło początek pliku. Czy chcesz kontynuować od końca?</value>
   </data>
   <data name="Message.EvalError.EnumDoesNotContainMember" xml:space="preserve">
     <value>Typ wyliczeniowy {0} nie zawiera składowej {1}.</value>
@@ -724,11 +665,11 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Text.Convert" xml:space="preserve">
     <value>Konwersja</value>
   </data>
-  <data name="Ribbon.Text.Convert.Base64.FromBase64" xml:space="preserve">
-    <value>Dekoduj Base64</value>
-  </data>
   <data name="Ribbon.Text.Convert.Base64.ToBase64" xml:space="preserve">
     <value>Zakoduj Base64</value>
+  </data>
+  <data name="Ribbon.Text.Convert.Base64.FromBase64" xml:space="preserve">
+    <value>Dekoduj Base64</value>
   </data>
   <data name="Message.InvalidBase64String" xml:space="preserve">
     <value>Nieprawidłowy ciąg Base64!</value>
@@ -754,17 +695,17 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Configuration.System.IntegrationState" xml:space="preserve">
     <value>Stan integracji</value>
   </data>
-  <data name="Configuration.System.Integration.Disabled" xml:space="preserve">
-    <value>Integracja jest wyłączona</value>
-  </data>
   <data name="Configuration.System.Integration.Enabled" xml:space="preserve">
     <value>Integracja jest włączona</value>
   </data>
-  <data name="Configuration.System.Integration.Disable" xml:space="preserve">
-    <value>Wyłącz integrację</value>
+  <data name="Configuration.System.Integration.Disabled" xml:space="preserve">
+    <value>Integracja jest wyłączona</value>
   </data>
   <data name="Configuration.System.Integration.Enable" xml:space="preserve">
     <value>Włącz integrację</value>
+  </data>
+  <data name="Configuration.System.Integration.Disable" xml:space="preserve">
+    <value>Wyłącz integrację</value>
   </data>
   <data name="Filter.Xslt" xml:space="preserve">
     <value>Arkusze XSLT (*.xsl)|*.xsl</value>
@@ -835,11 +776,11 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Markdown.Inline.Strong" xml:space="preserve">
     <value>Wzmocnienie</value>
   </data>
-  <data name="Ribbon.Markdown.Blocks.OrderedList" xml:space="preserve">
-    <value>Lista numerowana</value>
-  </data>
   <data name="Ribbon.Markdown.Blocks.UnorderedList" xml:space="preserve">
     <value>Lista wypunktowana</value>
+  </data>
+  <data name="Ribbon.Markdown.Blocks.OrderedList" xml:space="preserve">
+    <value>Lista numerowana</value>
   </data>
   <data name="Ribbon.Markdown.Insert" xml:space="preserve">
     <value>Wstaw</value>
@@ -865,8 +806,29 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.View.Interface.ShowSecondaryDocumentTab" xml:space="preserve">
     <value>Drugi widok</value>
   </data>
+  <data name="DocumentHeader.ContextMenu.TabColor" xml:space="preserve">
+    <value>Kolor zakładki</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Default" xml:space="preserve">
+    <value>Domyślny</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Red" xml:space="preserve">
+    <value>Czerwony</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Green" xml:space="preserve">
+    <value>Zielony</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Blue" xml:space="preserve">
+    <value>Niebieski</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.TabColor.Yellow" xml:space="preserve">
+    <value>Żółty</value>
+  </data>
   <data name="DocumentHeader.ContextMenu.Close" xml:space="preserve">
     <value>Zamknij</value>
+  </data>
+  <data name="DocumentHeader.ContextMenu.CloseOthers" xml:space="preserve">
+    <value>Zamknij pozostałe</value>
   </data>
   <data name="DocumentHeader.ContextMenu.CloseAll" xml:space="preserve">
     <value>Zamknij wszystkie</value>
@@ -874,47 +836,26 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="DocumentHeader.ContextMenu.CloseAllButPinned" xml:space="preserve">
     <value>Zamknij wszystkie poza przypiętymi</value>
   </data>
-  <data name="DocumentHeader.ContextMenu.CloseOthers" xml:space="preserve">
-    <value>Zamknij pozostałe</value>
-  </data>
-  <data name="DocumentHeader.ContextMenu.TabColor" xml:space="preserve">
-    <value>Kolor zakładki</value>
-  </data>
-  <data name="DocumentHeader.ContextMenu.TabColor.Blue" xml:space="preserve">
-    <value>Niebieski</value>
-  </data>
-  <data name="DocumentHeader.ContextMenu.TabColor.Default" xml:space="preserve">
-    <value>Domyślny</value>
-  </data>
-  <data name="DocumentHeader.ContextMenu.TabColor.Green" xml:space="preserve">
-    <value>Zielony</value>
-  </data>
-  <data name="DocumentHeader.ContextMenu.TabColor.Red" xml:space="preserve">
-    <value>Czerwony</value>
-  </data>
-  <data name="DocumentHeader.ContextMenu.TabColor.Yellow" xml:space="preserve">
-    <value>Żółty</value>
-  </data>
   <data name="Message.FoundOccurrences" xml:space="preserve">
     <value>Znaleziono wystąpień: {0}.</value>
   </data>
   <data name="SearchWindow.CountOccurrences" xml:space="preserve">
     <value>Policz wystąpienia</value>
   </data>
-  <data name="Ribbon.Text.Escape.Htm.Decode" xml:space="preserve">
-    <value>Dekoduj HTML entities</value>
-  </data>
   <data name="Ribbon.Text.Escape.Htm.Encode" xml:space="preserve">
     <value>Zakoduj HTML entities</value>
+  </data>
+  <data name="Ribbon.Text.Escape.Htm.Decode" xml:space="preserve">
+    <value>Dekoduj HTML entities</value>
   </data>
   <data name="Ribbon.Text.Escape.Htm" xml:space="preserve">
     <value>Encje HTML</value>
   </data>
-  <data name="Ribbon.Home.Search.StoredReplaces" xml:space="preserve">
-    <value>Zapisane zamiany</value>
-  </data>
   <data name="Ribbon.Home.Search.StoredSearches" xml:space="preserve">
     <value>Zapisane wyszukania</value>
+  </data>
+  <data name="Ribbon.Home.Search.StoredReplaces" xml:space="preserve">
+    <value>Zapisane zamiany</value>
   </data>
   <data name="DocumentHeader.ContextMenu.MoveToOtherView" xml:space="preserve">
     <value>Przenieś do drugiego widoku</value>
@@ -1018,11 +959,11 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="ExceptionWindow.ExceptionDetails" xml:space="preserve">
     <value>W aplikacji wystąpił nieobsłużony wyjątek. Szczegóły znajdują się poniżej.</value>
   </data>
-  <data name="Ribbon.Home.Comparing.NextChange" xml:space="preserve">
-    <value>Następna zmiana</value>
-  </data>
   <data name="Ribbon.Home.Comparing.PreviousChange" xml:space="preserve">
     <value>Poprzednia zmiana</value>
+  </data>
+  <data name="Ribbon.Home.Comparing.NextChange" xml:space="preserve">
+    <value>Następna zmiana</value>
   </data>
   <data name="SearchWindow.SearchInFilesTab" xml:space="preserve">
     <value>Znajdź w plikach</value>
@@ -1144,6 +1085,12 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="BottomTool.SearchResults.DuplicatedLinesHeader" xml:space="preserve">
     <value>Wyniki wyszukiwania powielonych linii. Liczba znalezionych bloków: </value>
   </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Title" xml:space="preserve">
+    <value>Konfiguracja wyszukiwania powielonych linii</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Group.Input" xml:space="preserve">
+    <value>Wejście</value>
+  </data>
   <data name="DuplicatedLinesFinderConfigWindow.Add" xml:space="preserve">
     <value>Dodaj...</value>
   </data>
@@ -1153,44 +1100,38 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="DuplicatedLinesFinderConfigWindow.AddFolder" xml:space="preserve">
     <value>Dodaj katalog...</value>
   </data>
-  <data name="DuplicatedLinesFinderConfigWindow.ByFileFirst" xml:space="preserve">
-    <value>Sortuj według liczby plików, potem linii</value>
-  </data>
-  <data name="DuplicatedLinesFinderConfigWindow.ByLineFirst" xml:space="preserve">
-    <value>Sortuj według liczby linii, potem plików</value>
-  </data>
   <data name="DuplicatedLinesFinderConfigWindow.EditHint" xml:space="preserve">
     <value>Kliknij dwukrotnie element, by go edytować.</value>
-  </data>
-  <data name="DuplicatedLinesFinderConfigWindow.ExcludedFilesMasks" xml:space="preserve">
-    <value>Wyklucz pliki według maski</value>
-  </data>
-  <data name="DuplicatedLinesFinderConfigWindow.Files" xml:space="preserve">
-    <value>Pliki</value>
-  </data>
-  <data name="DuplicatedLinesFinderConfigWindow.Group.Analysis" xml:space="preserve">
-    <value>Analiza</value>
-  </data>
-  <data name="DuplicatedLinesFinderConfigWindow.Group.Input" xml:space="preserve">
-    <value>Wejście</value>
-  </data>
-  <data name="DuplicatedLinesFinderConfigWindow.Group.Results" xml:space="preserve">
-    <value>Wyniki</value>
-  </data>
-  <data name="DuplicatedLinesFinderConfigWindow.IgnoreTrailingWhitespace" xml:space="preserve">
-    <value>Ignoruj otaczające białe znaki</value>
-  </data>
-  <data name="DuplicatedLinesFinderConfigWindow.MinimumFileCount" xml:space="preserve">
-    <value>Minimalna liczba plików</value>
   </data>
   <data name="DuplicatedLinesFinderConfigWindow.MinimumLineCount" xml:space="preserve">
     <value>Minimalna liczba linii</value>
   </data>
+  <data name="DuplicatedLinesFinderConfigWindow.MinimumFileCount" xml:space="preserve">
+    <value>Minimalna liczba plików</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Group.Analysis" xml:space="preserve">
+    <value>Analiza</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.IgnoreTrailingWhitespace" xml:space="preserve">
+    <value>Ignoruj otaczające białe znaki</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.Files" xml:space="preserve">
+    <value>Pliki</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.ExcludedFilesMasks" xml:space="preserve">
+    <value>Wyklucz pliki według maski</value>
+  </data>
   <data name="DuplicatedLinesFinderConfigWindow.SearchFoldersRecursively" xml:space="preserve">
     <value>Przeszukaj katalogi rekurencyjnie</value>
   </data>
-  <data name="DuplicatedLinesFinderConfigWindow.Title" xml:space="preserve">
-    <value>Konfiguracja wyszukiwania powielonych linii</value>
+  <data name="DuplicatedLinesFinderConfigWindow.Group.Results" xml:space="preserve">
+    <value>Wyniki</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.ByLineFirst" xml:space="preserve">
+    <value>Sortuj według liczby linii, potem plików</value>
+  </data>
+  <data name="DuplicatedLinesFinderConfigWindow.ByFileFirst" xml:space="preserve">
+    <value>Sortuj według liczby plików, potem linii</value>
   </data>
   <data name="BottomTool.SearchResults.FragmentDuplicatedIn" xml:space="preserve">
     <value>Fragment powielony w </value>
@@ -1216,23 +1157,23 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="BottomTool.SearchResults.FileReference3" xml:space="preserve">
     <value> do </value>
   </data>
+  <data name="BottomTool_SearchResults_FilteredSuffix" xml:space="preserve">
+    <value> (filtrowany)</value>
+  </data>
   <data name="BottomTool_SearchResults_Filter" xml:space="preserve">
     <value>Filtruj</value>
   </data>
   <data name="BottomTool_SearchResults_FilterCaseSensitive" xml:space="preserve">
     <value>Uwzględniaj wielkość liter</value>
   </data>
-  <data name="BottomTool_SearchResults_FilteredSuffix" xml:space="preserve">
-    <value> (filtrowany)</value>
-  </data>
   <data name="BottomTool_SearchResults_FilterExcludeMatching" xml:space="preserve">
     <value>Wyklucz pasujące</value>
   </data>
-  <data name="BottomTool_SearchResults_FilterContents" xml:space="preserve">
-    <value>Filtruj zawartość</value>
-  </data>
   <data name="BottomTool_SearchResults_FilterFiles" xml:space="preserve">
     <value>Filtruj nazwy plików</value>
+  </data>
+  <data name="BottomTool_SearchResults_FilterContents" xml:space="preserve">
+    <value>Filtruj zawartość</value>
   </data>
   <data name="DuplicatedLinesFinderConfigWindow.MergeCommonResults" xml:space="preserve">
     <value>Scalaj podobne wyniki (wolne)</value>
@@ -1249,23 +1190,29 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Navigation.Group.ProjectFiles" xml:space="preserve">
     <value>Pliki projektu</value>
   </data>
+  <data name="SubCipher.Ribbon.Tab.Home" xml:space="preserve">
+    <value>Narzędzia główne</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Group.General" xml:space="preserve">
+    <value>Ogólne</value>
+  </data>
   <data name="SubCipher.Ribbon.General.SourceAlphabet" xml:space="preserve">
     <value>Źródłowy alfabet</value>
   </data>
   <data name="SubCipher.Ribbon.Home.General.SourceAlphabet.ResolveFromSource" xml:space="preserve">
     <value>Pobierz z tekstu</value>
   </data>
-  <data name="SubCipher.Ribbon.Home.Group.General" xml:space="preserve">
-    <value>Ogólne</value>
-  </data>
-  <data name="SubCipher.Ribbon.Home.Group.LanguageData" xml:space="preserve">
-    <value>Dane językowe</value>
-  </data>
   <data name="SubCipher.Ribbon.Home.Group.Mode" xml:space="preserve">
     <value>Tryb</value>
   </data>
-  <data name="SubCipher.Ribbon.Home.Group.Solve" xml:space="preserve">
-    <value>Rozwiąż</value>
+  <data name="SubCipher.Ribbon.Home.Mode.Ciphering" xml:space="preserve">
+    <value>Szyfrowanie</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Mode.Unciphering" xml:space="preserve">
+    <value>Rozszyfrowanie</value>
+  </data>
+  <data name="SubCipher.Ribbon.Home.Group.LanguageData" xml:space="preserve">
+    <value>Dane językowe</value>
   </data>
   <data name="SubCipher.Ribbon.Home.LanguageData.Generate" xml:space="preserve">
     <value>Wygeneruj</value>
@@ -1276,32 +1223,32 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="SubCipher.Ribbon.Home.LanguageData.Save" xml:space="preserve">
     <value>Zapisz</value>
   </data>
-  <data name="SubCipher.Ribbon.Home.Mode.Ciphering" xml:space="preserve">
-    <value>Szyfrowanie</value>
-  </data>
-  <data name="SubCipher.Ribbon.Home.Mode.Unciphering" xml:space="preserve">
-    <value>Rozszyfrowanie</value>
-  </data>
-  <data name="SubCipher.Ribbon.Home.Solve.Crack" xml:space="preserve">
-    <value>Złam</value>
+  <data name="SubCipher.Ribbon.Home.Group.Solve" xml:space="preserve">
+    <value>Rozwiąż</value>
   </data>
   <data name="SubCipher.Ribbon.Home.Solve.UseLetterFrequency" xml:space="preserve">
     <value>Użyj częstotliwości liter</value>
   </data>
-  <data name="SubCipher.Ribbon.Tab.Home" xml:space="preserve">
-    <value>Narzędzia główne</value>
+  <data name="SubCipher.Ribbon.Home.Solve.Crack" xml:space="preserve">
+    <value>Złam</value>
   </data>
   <data name="SubCipher.Filter.LangData" xml:space="preserve">
     <value>Pliki danych językowych (*.langdata)|*.langdata</value>
   </data>
-  <data name="SubCipher.Alphabet.VerifyLanguageAlphabet" xml:space="preserve">
-    <value>Sprawdź alfabet dla języka</value>
+  <data name="Message_FailedToSaveLangData" xml:space="preserve">
+    <value>Nie udało się zapisać danych języka!</value>
+  </data>
+  <data name="Message_FailedToLoadLangData" xml:space="preserve">
+    <value>Nie udało się wczytać danych języka!</value>
   </data>
   <data name="SubCipher.Filter.TextFiles" xml:space="preserve">
     <value>Pliki tekstowe (*.txt)|*.txt|Wszystkie pliki (*.*)|*.*</value>
   </data>
-  <data name="SubCipher.Title" xml:space="preserve">
-    <value>Przetwarzanie szyfru podstawieniowego</value>
+  <data name="Message_FailedToOpenLangSampleFile" xml:space="preserve">
+    <value>Nie udało się otworzyć pliku z przykładem języka!</value>
+  </data>
+  <data name="SubCipher.Alphabet.VerifyLanguageAlphabet" xml:space="preserve">
+    <value>Sprawdź alfabet dla języka</value>
   </data>
   <data name="Message_BuildingLangData" xml:space="preserve">
     <value>Budowanie danych języka...</value>
@@ -1309,20 +1256,14 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Message_CrackingCipher" xml:space="preserve">
     <value>Łamanie szyfru...</value>
   </data>
-  <data name="Message_FailedToLoadLangData" xml:space="preserve">
-    <value>Nie udało się wczytać danych języka!</value>
-  </data>
-  <data name="Message_FailedToOpenLangSampleFile" xml:space="preserve">
-    <value>Nie udało się otworzyć pliku z przykładem języka!</value>
-  </data>
-  <data name="Message_FailedToSaveLangData" xml:space="preserve">
-    <value>Nie udało się zapisać danych języka!</value>
-  </data>
-  <data name="Ribbon.Miscelaneous.Cipher.SubCipher" xml:space="preserve">
-    <value>Szyfr podstawieniowy</value>
+  <data name="SubCipher.Title" xml:space="preserve">
+    <value>Przetwarzanie szyfru podstawieniowego</value>
   </data>
   <data name="Ribbon.Miscelaneous.Group.Cipher" xml:space="preserve">
     <value>Szyfrowanie</value>
+  </data>
+  <data name="Ribbon.Miscelaneous.Cipher.SubCipher" xml:space="preserve">
+    <value>Szyfr podstawieniowy</value>
   </data>
   <data name="WebBrowser.Title" xml:space="preserve">
     <value>Przeglądarka internetowa</value>
@@ -1341,5 +1282,14 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   </data>
   <data name="Ribbon.Tab.Miscelaneous" xml:space="preserve">
     <value>Dodatki</value>
+  </data>
+  <data name="Ribbon.Lines.Cleanup.RemoveDuplicatedLines" xml:space="preserve">
+    <value>Usuń powielone linie</value>
+  </data>
+  <data name="Ribbon.Lines.Cleanup.RemoveDuplicatedNeighboringLines" xml:space="preserve">
+    <value>Usuń powielone, sąsiadujące linie</value>
+  </data>
+  <data name="Ribbon_Lines_Cleanup_RemoveLines" xml:space="preserve">
+    <value>Usuń linie</value>
   </data>
 </root>
