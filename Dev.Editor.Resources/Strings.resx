@@ -1342,4 +1342,10 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Tab.Miscelaneous" xml:space="preserve">
     <value>Miscelaneous</value>
   </data>
+  <data name="Ribbon_Lines_Cleanup_RemoveDuplicatedLines" xml:space="preserve">
+    <value>Remove duplicated lines</value>
+  </data>
+  <data name="Ribbon_Lines_Cleanup_RemoveDuplicatedNeighboringLines" xml:space="preserve">
+    <value>Remove duplicated neighboring lines</value>
+  </data>
 </root>

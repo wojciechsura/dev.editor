@@ -2107,6 +2107,24 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Remove duplicated lines.
+        /// </summary>
+        public static string Ribbon_Lines_Cleanup_RemoveDuplicatedLines {
+            get {
+                return ResourceManager.GetString("Ribbon_Lines_Cleanup_RemoveDuplicatedLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Remove duplicated neighboring lines.
+        /// </summary>
+        public static string Ribbon_Lines_Cleanup_RemoveDuplicatedNeighboringLines {
+            get {
+                return ResourceManager.GetString("Ribbon_Lines_Cleanup_RemoveDuplicatedNeighboringLines", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove empty lines.
         /// </summary>
         public static string Ribbon_Lines_Cleanup_RemoveEmptyLines {

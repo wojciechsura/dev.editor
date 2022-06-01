@@ -565,5 +565,11 @@
     <Resource Include="Resources\Images\Filter16.png" />
     <Resource Include="Resources\Images\Filter32.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Export32.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\Export16.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -27,6 +27,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 
         private readonly BaseCondition resultsNonEmptyCondition;
         private readonly BaseCondition resultsAreReplaceCondition;
+        private readonly BaseCondition resultsAreSearchCondition;
         private readonly BaseCondition resultsCanFilterContents;
 
         private BaseSearchResultRootViewModel searchResults;
@@ -60,6 +61,34 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             }
         }
 
+        private void CollectResultsRecursive(List<BaseFilesystemSearchResultViewModel> items, List<string> strings)
+        {
+            foreach (var item in items)
+            {
+                if (item is FileSearchResultViewModel file)
+                {
+                    foreach (var result in file.Results)
+                    {
+                        strings.Add(result.Match);
+                    }
+                }
+                else if (item is FolderSearchResultViewModel folder)
+                {
+                    CollectResultsRecursive(folder.Files, strings);
+                }
+            }
+        }
+
+        private void DoExportResultsToDocument()
+        {
+            var results = this.searchResults as SearchResultsViewModel;
+
+            List<string> strings = new List<string>();
+            CollectResultsRecursive(results.Results, strings);
+
+            searchResultsHandler.CreateNewDocument(strings);
+        }
+
         public SearchResultsBottomToolViewModel(ISearchResultsHandler searchResultsHandler, IImageResources imageResources)
             : base(searchResultsHandler)
         {
@@ -77,12 +106,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 
             resultsNonEmptyCondition = new ChainedLambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.Single() != null, false);
             resultsAreReplaceCondition = new ChainedLambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.SingleOrDefault() is ReplaceResultsViewModel, false);
-            
+            resultsAreSearchCondition = new ChainedLambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.SingleOrDefault() is SearchResultsViewModel, false);
+
             resultsCanFilterContents = new ChainedLambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.SingleOrDefault() is DuplicatedLinesResultViewModel, false);
             resultsCanFilterContents.ValueChanged += (s, e) => OnPropertyChanged(() => CanFilterContents);
 
             ClearSearchResultsCommand = new AppCommand(obj => DoClearSearchResults(), resultsNonEmptyCondition);
             PerformReplaceCommand = new AppCommand(obj => DoPerformReplace(), resultsAreReplaceCondition);
+            ExportResultsToDocumentCommand = new AppCommand(obj => DoExportResultsToDocument(), resultsNonEmptyCondition & resultsAreSearchCondition);
         }
 
         public void NotifyItemDoubleClicked(object selectedResult)
@@ -154,6 +185,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
         public ICommand ClearSearchResultsCommand { get; }
 
         public ICommand PerformReplaceCommand { get; }
+
+        public ICommand ExportResultsToDocumentCommand { get; }
 
         public bool CanFilterContents => resultsCanFilterContents.GetValue();
     }

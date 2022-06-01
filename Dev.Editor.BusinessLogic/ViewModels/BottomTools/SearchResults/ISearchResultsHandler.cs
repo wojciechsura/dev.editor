@@ -13,5 +13,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
     {
         void OpenFileSearchResult(string fullPath, int line, int column, int length);
         void PerformReplaceInFiles(ReplaceResultsViewModel replaceResults);
+        void CreateNewDocument(List<string> strings);
     }
 }

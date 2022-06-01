@@ -910,6 +910,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             }
         }
 
+        void ISearchResultsHandler.CreateNewDocument(System.Collections.Generic.List<string> strings)
+        {
+            string content = string.Join("\r\n", strings);
+            DoNewTextDocument(DocumentTabKind.Primary, content);
+        }
+
         // Public methods -----------------------------------------------------
 
         public MainWindowViewModel(IMainWindowAccess access,
@@ -1064,6 +1070,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             SortLinesDescendingCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Ordering_SortDescending, "SortDescending16.png", obj => DoSortDescending(), documentIsTextCondition);
             RemoveEmptyLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveEmptyLines, "DeleteLine16.png", obj => DoRemoveEmptyLines(), documentIsTextCondition);
             RemoveWhitespaceLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveWhitespaceLines, "DeleteLine16.png", obj => DoRemoveWhitespaceLines(), documentIsTextCondition);
+            RemoveDuplicatedLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveDuplicatedLines, "DeleteLine16.png", obj => DoRemoveDuplicatedLines(), documentIsTextCondition);
+            RemoveDuplicatedNeighboringLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveDuplicatedNeighboringLines, "DeleteLine16.png", obj => DoRemoveDuplicatedNeighboringLines(), documentIsTextCondition);
+
             FindDuplicatedLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Tools_FindDuplicatedLines, "Duplicates16.png", obj => DoFindDuplicatedLines());
 
             LowercaseCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Text_Transform_Case_Lowercase, "Case16.png", obj => DoLowercase(), documentIsTextCondition);

@@ -93,6 +93,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand SortLinesDescendingCommand { get; }
         public ICommand RemoveEmptyLinesCommand { get; }
         public ICommand RemoveWhitespaceLinesCommand { get; }
+        public ICommand RemoveDuplicatedLinesCommand { get; }
+        public ICommand RemoveDuplicatedNeighboringLinesCommand { get; }
         public ICommand FindDuplicatedLinesCommand { get; }
 
         // Text

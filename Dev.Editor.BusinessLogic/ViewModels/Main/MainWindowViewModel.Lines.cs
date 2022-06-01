@@ -90,7 +90,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             });            
         }
 
-        private void RemoveLines(bool withTrim)
+        private void RemoveEmptyLines(bool withTrim)
         {
             TransformLines(textToRemove =>
             {
@@ -115,12 +115,55 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
         private void DoRemoveWhitespaceLines()
         {
-            RemoveLines(true);
+            RemoveEmptyLines(true);
         }
 
         private void DoRemoveEmptyLines()
         {
-            RemoveLines(false);
+            RemoveEmptyLines(false);
+        }
+
+        private void DoRemoveDuplicatedNeighboringLines()
+        {
+            TransformLines(text =>
+            {
+                var lines = text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None).ToList();
+
+                int i = 1;
+                while (i < lines.Count)
+                {
+                    if (string.Equals(lines[i], lines[i - 1]))
+                        lines.RemoveAt(i);
+                    else
+                        i++;
+                }
+
+                return (true, String.Join("\r\n", lines));
+            });
+        }
+
+        private void DoRemoveDuplicatedLines()
+        {
+            TransformLines(text =>
+            {
+                var lines = text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None).ToList();
+
+                HashSet<string> existingLines = new HashSet<string>();
+
+                int i = 0;
+                while (i < lines.Count)
+                {
+                    if (existingLines.Contains(lines[i]))
+                        lines.RemoveAt(i);
+                    else
+                    {
+                        existingLines.Add(lines[i]);
+                        i++;
+                    }
+                }
+
+                return (true, String.Join("\r\n", lines));
+            });
         }
 
         private void DoFindDuplicatedLines()
