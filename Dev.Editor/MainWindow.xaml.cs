@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.Types.Main;
+﻿using Autofac;
+using Dev.Editor.BusinessLogic.Types.Main;
 using Dev.Editor.BusinessLogic.Types.UI;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
 using Dev.Editor.BusinessLogic.ViewModels.Main;
@@ -31,8 +32,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using Unity;
-using Unity.Resolution;
 
 namespace Dev.Editor
 {
@@ -471,7 +470,7 @@ namespace Dev.Editor
             winAPIService = Dependencies.Container.Instance.Resolve<WinAPIService>();
             singleInstanceService = Dependencies.Container.Instance.Resolve<SingleInstanceService>();
 
-            viewModel = Dependencies.Container.Instance.Resolve<MainWindowViewModel>(new ParameterOverride("access", this));
+            viewModel = Dependencies.Container.Instance.Resolve<MainWindowViewModel>(new NamedParameter("access", this));
             DataContext = viewModel;
 
             navigationTimer = new Lazy<DispatcherTimer>(() => new DispatcherTimer(TimeSpan.FromMilliseconds(500), DispatcherPriority.Normal, NavigationSearch, this.Dispatcher));

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BusinessLogic.Services.Config
 {
-    class ConfigrationService : IConfigurationService
+    class ConfigurationService : IConfigurationService
     {
         private readonly IPathService pathService;
         private readonly ConfigModel config;
 
-        public ConfigrationService(IPathService pathService)
+        public ConfigurationService(IPathService pathService)
         {
             this.pathService = pathService;
             this.config = new ConfigModel();

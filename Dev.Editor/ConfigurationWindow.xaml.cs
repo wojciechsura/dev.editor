@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.ViewModels.Configuration;
+﻿using Autofac;
+using Dev.Editor.BusinessLogic.ViewModels.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Unity;
-using Unity.Resolution;
 
 namespace Dev.Editor
 {
@@ -32,7 +31,7 @@ namespace Dev.Editor
         {
             InitializeComponent();
 
-            viewModel = Dependencies.Container.Instance.Resolve<ConfigurationWindowViewModel>(new ParameterOverride("access", this));
+            viewModel = Dependencies.Container.Instance.Resolve<ConfigurationWindowViewModel>(new NamedParameter("access", this));
             DataContext = viewModel;
         }
 

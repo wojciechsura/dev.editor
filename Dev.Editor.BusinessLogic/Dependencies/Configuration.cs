@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.Services.Commands;
+﻿using Autofac;
+using Dev.Editor.BusinessLogic.Services.Commands;
 using Dev.Editor.BusinessLogic.Services.Config;
 using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.Services.EventBus;
@@ -17,8 +18,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Unity;
-using Unity.Lifetime;
 
 namespace Dev.Editor.BusinessLogic.Dependencies
 {
@@ -26,24 +25,24 @@ namespace Dev.Editor.BusinessLogic.Dependencies
     {
         private static bool isConfigured = false;
 
-        public static void Configure(IUnityContainer container)
+        public static void Configure(ContainerBuilder builder)
         {
             if (isConfigured)
                 return;
             isConfigured = true;
 
-            container.RegisterType<IMessagingService, MessagingService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IConfigurationService, ConfigrationService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IPathService, PathService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IStartupInfoService, StartupInfoService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IHighlightingProvider, HighlightingProvider>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ICommandRepositoryService, CommandRepositoryService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IFileIconProvider, FileIconProvider>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IEventBus, EventBus>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ISearchEncoderService, SearchEncoderService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ITextComparisonService, TextComparisonService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ITextTransformService, TextTransformService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<ISubstitutionCipherService, SubstitutionCipherService>(new ContainerControlledLifetimeManager());
+            builder.RegisterType<MessagingService>().As<IMessagingService>().SingleInstance();
+            builder.RegisterType<ConfigurationService>().As<IConfigurationService>().SingleInstance();
+            builder.RegisterType<PathService>().As<IPathService>().SingleInstance();
+            builder.RegisterType<StartupInfoService>().As<IStartupInfoService>().SingleInstance();
+            builder.RegisterType<HighlightingProvider>().As<IHighlightingProvider>().SingleInstance();
+            builder.RegisterType<CommandRepositoryService>().As<ICommandRepositoryService>().SingleInstance();
+            builder.RegisterType<FileIconProvider>().As<IFileIconProvider>().SingleInstance();
+            builder.RegisterType<EventBus>().As<IEventBus>().SingleInstance();
+            builder.RegisterType<SearchEncoderService>().As<ISearchEncoderService>().SingleInstance();
+            builder.RegisterType<TextComparisonService>().As<ITextComparisonService>().SingleInstance();
+            builder.RegisterType<TextTransformService>().As<ITextTransformService>().SingleInstance();
+            builder.RegisterType<SubstitutionCipherService>().As<ISubstitutionCipherService>().SingleInstance();
         }
     }
 }

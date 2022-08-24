@@ -1,27 +1,29 @@
-﻿using System;
+﻿using Autofac;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Unity;
 
 namespace Dev.Editor.Dependencies
 {
     public static class Container
     {
-        private static Lazy<UnityContainer> container = new Lazy<UnityContainer>(() =>
-        {
-            var container = new UnityContainer();
-            container.AddExtension(new Diagnostic());
-            return container;
-        });
+        private static IContainer instance;
 
-        public static IUnityContainer Instance
+        public static void Build(Action<ContainerBuilder> buildActions)
         {
-            get
-            {
-                return container.Value;
-            }
+            if (instance != null)
+                throw new InvalidOperationException("Container is already built!");
+
+            var builder = new ContainerBuilder();
+            builder.RegisterSource(new Autofac.Features.ResolveAnything.AnyConcreteTypeNotAlreadyRegisteredSource());
+            buildActions(builder);
+
+            instance = builder.Build();
         }
+        
+
+        public static IContainer Instance => instance;       
     }
 }

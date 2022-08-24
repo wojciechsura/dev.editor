@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher;
+﻿using Autofac;
+using Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher;
 using Fluent;
 using System;
 using System.Collections.Generic;
@@ -14,8 +15,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using Unity;
-using Unity.Resolution;
 
 namespace Dev.Editor
 {
@@ -47,8 +46,8 @@ namespace Dev.Editor
             timer.Interval = TimeSpan.FromMilliseconds(300);
             timer.Tick += HandleTimerTick;
 
-            viewModel = Dependencies.Container.Instance.Resolve<SubstitutionCipherWindowViewModel>(new ParameterOverride("host", host),
-                new ParameterOverride("access", this));
+            viewModel = Dependencies.Container.Instance.Resolve<SubstitutionCipherWindowViewModel>(new NamedParameter("host", host),
+                new NamedParameter("access", this));
             this.DataContext = viewModel;
         }
 

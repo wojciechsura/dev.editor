@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.ViewModels.ProgressWindow;
+﻿using Autofac;
+using Dev.Editor.BusinessLogic.ViewModels.ProgressWindow;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -13,8 +14,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Unity;
-using Unity.Resolution;
 
 namespace Dev.Editor
 {
@@ -30,10 +29,10 @@ namespace Dev.Editor
             InitializeComponent();
 
             viewModel = Dependencies.Container.Instance.Resolve<ProgressWindowViewModel>(
-                new ParameterOverride("operationTitle", operationTitle),
-                new ParameterOverride("worker", worker),
-                new ParameterOverride("workerParameter", workerParameter),
-                new ParameterOverride("access", this));
+                new NamedParameter("operationTitle", operationTitle),
+                new NamedParameter("worker", worker),
+                new NamedParameter("workerParameter", workerParameter),
+                new NamedParameter("access", this));
             DataContext = viewModel;
         }
 

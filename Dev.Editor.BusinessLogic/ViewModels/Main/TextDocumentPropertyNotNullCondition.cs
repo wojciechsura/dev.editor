@@ -61,7 +61,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         private void HandleTextDocumentPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName.Equals(valuePropertyName))
-                OnValueChanged(GetValue());
+                OnValueChanged();
         }
 
         private void HandleDocumentsManagerPropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -74,7 +74,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 Attach(source);
 
-                OnValueChanged(GetValue());
+                OnValueChanged();
             }
         }
 
@@ -93,9 +93,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             Attach(source);
         }
 
-        public override bool GetValue()
-        {
-            return source != null ? (getValueFunc(source) != null) : defaultValue;
-        }
+        public override bool Value =>source != null ? (getValueFunc(source) != null) : defaultValue;        
     }
 }

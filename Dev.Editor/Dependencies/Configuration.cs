@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.Services.AppVersion;
+﻿using Autofac;
+using Dev.Editor.BusinessLogic.Services.AppVersion;
 using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
 using Dev.Editor.BusinessLogic.Services.Platform;
@@ -15,31 +16,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Unity;
-using Unity.Lifetime;
 
 namespace Dev.Editor.Dependencies
 {
     public static class Configuration
     {
-        private static bool configured = false;
-
-        public static void Configure(IUnityContainer container)
+        public static void Configure(ContainerBuilder builder)
         {
-            if (configured)
-                return;
+            builder.RegisterType<DialogService>().As<IDialogService>().SingleInstance();
+            builder.RegisterType<ImageResources>().As<IImageResources>().SingleInstance();
+            builder.RegisterType<PlatformService>().As<IPlatformService>().SingleInstance();
+            builder.RegisterType<SingleInstanceService>().SingleInstance();
+            builder.RegisterType<WinAPIService>().SingleInstance();
+            builder.RegisterType<RegistryService>().As<IRegistryService>().SingleInstance();
+            builder.RegisterType<AppVersionService>().As<IAppVersionService>().SingleInstance();
 
-            container.RegisterType<IDialogService, DialogService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IImageResources, ImageResources>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IPlatformService, PlatformService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<SingleInstanceService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<WinAPIService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IRegistryService, RegistryService>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IAppVersionService, AppVersionService>(new ContainerControlledLifetimeManager());
-
-            Dev.Editor.BusinessLogic.Dependencies.Configuration.Configure(container);
-
-            configured = true;
+            Dev.Editor.BusinessLogic.Dependencies.Configuration.Configure(builder);
         }
     }
 }

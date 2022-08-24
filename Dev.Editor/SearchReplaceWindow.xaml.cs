@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.ViewModels.Search;
+﻿using Autofac;
+using Dev.Editor.BusinessLogic.ViewModels.Search;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,8 +14,6 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using Unity;
-using Unity.Resolution;
 
 namespace Dev.Editor
 {
@@ -56,8 +55,8 @@ namespace Dev.Editor
         {
             InitializeComponent();
 
-            viewModel = Dependencies.Container.Instance.Resolve<SearchReplaceWindowViewModel>(new ParameterOverride("searchHost", searchHost),
-                new ParameterOverride("access", this));
+            viewModel = Dependencies.Container.Instance.Resolve<SearchReplaceWindowViewModel>(new NamedParameter("searchHost", searchHost),
+                new NamedParameter("access", this));
 
             DataContext = viewModel;
         }

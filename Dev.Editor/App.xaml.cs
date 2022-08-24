@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.Models.Events;
+﻿using Autofac;
+using Dev.Editor.BusinessLogic.Models.Events;
 using Dev.Editor.BusinessLogic.Services.Dialogs;
 using Dev.Editor.BusinessLogic.Services.EventBus;
 using Dev.Editor.BusinessLogic.Services.StartupInfo;
@@ -15,7 +16,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
-using Unity;
 
 namespace Dev.Editor
 {
@@ -31,7 +31,7 @@ namespace Dev.Editor
 
         public App()
         {
-            Configuration.Configure(Container.Instance);
+            Dependencies.Container.Build(builder => Configuration.Configure(builder));
 
             winAPIService = Dependencies.Container.Instance.Resolve<WinAPIService>();
             singleInstanceService = Dependencies.Container.Instance.Resolve<SingleInstanceService>();

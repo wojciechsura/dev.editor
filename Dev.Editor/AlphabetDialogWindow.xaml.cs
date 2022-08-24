@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.ViewModels.Alphabet;
+﻿using Autofac;
+using Dev.Editor.BusinessLogic.ViewModels.Alphabet;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,8 +13,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Unity;
-using Unity.Resolution;
 
 namespace Dev.Editor
 {
@@ -28,9 +27,9 @@ namespace Dev.Editor
         {
             InitializeComponent();
 
-            viewModel = Dependencies.Container.Instance.Resolve<AlphabetDialogViewModel>(new ParameterOverride("access", this),
-                new ParameterOverride("message", message),
-                new ParameterOverride("previousAlphabet", previousAlphabet));
+            viewModel = Dependencies.Container.Instance.Resolve<AlphabetDialogViewModel>(new NamedParameter("access", this),
+                new NamedParameter("message", message),
+                new NamedParameter("previousAlphabet", previousAlphabet));
             this.DataContext = viewModel;
         }
 

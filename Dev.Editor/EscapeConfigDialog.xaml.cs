@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BusinessLogic.Models.Dialogs;
+﻿using Autofac;
+using Dev.Editor.BusinessLogic.Models.Dialogs;
 using Dev.Editor.BusinessLogic.ViewModels.Dialogs;
 using System;
 using System.Collections.Generic;
@@ -13,8 +14,6 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-using Unity;
-using Unity.Resolution;
 
 namespace Dev.Editor
 {
@@ -30,8 +29,8 @@ namespace Dev.Editor
             InitializeComponent();
 
             viewModel = Dependencies.Container.Instance.Resolve<EscapeConfigDialogViewModel>(
-                new ParameterOverride("access", this),
-                new ParameterOverride("model", model));
+                new NamedParameter("access", this),
+                new NamedParameter("model", model));
             DataContext = viewModel;
         }
 

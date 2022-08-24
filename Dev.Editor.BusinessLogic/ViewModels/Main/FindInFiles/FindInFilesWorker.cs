@@ -16,7 +16,6 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Web.UI.WebControls.WebParts;
 using System.Windows.Markup;
-using Unity.Injection;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main.Search
 {

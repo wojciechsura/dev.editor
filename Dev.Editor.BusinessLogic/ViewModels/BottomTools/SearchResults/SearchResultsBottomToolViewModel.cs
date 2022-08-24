@@ -109,7 +109,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
             resultsAreSearchCondition = new ChainedLambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.SingleOrDefault() is SearchResultsViewModel, false);
 
             resultsCanFilterContents = new ChainedLambdaCondition<SearchResultsBottomToolViewModel>(this, vm => vm.SearchResults.SingleOrDefault() is DuplicatedLinesResultViewModel, false);
-            resultsCanFilterContents.ValueChanged += (s, e) => OnPropertyChanged(() => CanFilterContents);
+            resultsCanFilterContents.PropertyChanged += (s, e) => OnPropertyChanged(() => CanFilterContents);
 
             ClearSearchResultsCommand = new AppCommand(obj => DoClearSearchResults(), resultsNonEmptyCondition);
             PerformReplaceCommand = new AppCommand(obj => DoPerformReplace(), resultsAreReplaceCondition);
@@ -188,6 +188,6 @@ namespace Dev.Editor.BusinessLogic.ViewModels.BottomTools.SearchResults
 
         public ICommand ExportResultsToDocumentCommand { get; }
 
-        public bool CanFilterContents => resultsCanFilterContents.GetValue();
+        public bool CanFilterContents => resultsCanFilterContents.Value;
     }
 }

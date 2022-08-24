@@ -1,4 +1,5 @@
-﻿using Dev.Editor.BinAnalyzer.Data;
+﻿using Autofac;
+using Dev.Editor.BinAnalyzer.Data;
 using Dev.Editor.BusinessLogic.Services.ImageResources;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Data;
-using Unity;
 
 namespace Dev.Editor.Converters
 {

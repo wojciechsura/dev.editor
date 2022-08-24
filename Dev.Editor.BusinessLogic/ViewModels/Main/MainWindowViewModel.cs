@@ -501,7 +501,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
                 storedSearchReplace.Operation.Value,
                 storedSearchReplace.SearchMode.Value,
                 storedSearchReplace.IsCaseSensitive.Value,
-                selectionAvailableForSearchCondition.GetValue(),
+                selectionAvailableForSearchCondition.Value,
                 storedSearchReplace.IsSearchBackwards.Value,
                 storedSearchReplace.IsWholeWordsOnly.Value,
                 storedSearchReplace.ShowReplaceSummary.Value,

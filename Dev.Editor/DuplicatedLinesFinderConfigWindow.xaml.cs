@@ -1,10 +1,9 @@
-﻿using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
+﻿using Autofac;
+using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
 using Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines;
 using Dev.Editor.Helpers;
 using System.Text.RegularExpressions;
 using System.Windows;
-using Unity;
-using Unity.Resolution;
 
 namespace Dev.Editor
 {
@@ -22,8 +21,8 @@ namespace Dev.Editor
             InitializeComponent();
 
             viewModel = Dependencies.Container.Instance.Resolve<DuplicatedLinesFinderConfigDialogViewModel>(
-                new ParameterOverride("access", this),
-                new ParameterOverride("model", model));
+                new NamedParameter("access", this),
+                new NamedParameter("model", model));
             DataContext = viewModel;
         }
 

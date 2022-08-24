@@ -22,6 +22,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using System.ComponentModel;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Search
 {
@@ -262,9 +263,9 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             storedSearchSelectedCondition.Value = SelectedStoredSearch != null;
         }
 
-        private void HandleSelectionAvailableChanged(object sender, ValueChangedEventArgs e)
+        private void HandleSelectionAvailableChanged(object sender, PropertyChangedEventArgs e)
         {
-            SelectionAvailable = searchHost.SelectionAvailableCondition.GetValue();
+            SelectionAvailable = searchHost.SelectionAvailableCondition.Value;
             if (!SelectionAvailable)
                 InSelection = false;
         }
@@ -419,8 +420,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
             searchExpressionValidCondition = new SimpleCondition(false);
             storedSearchSelectedCondition = new SimpleCondition(SelectedStoredSearch != null);
 
-            selectionAvailable = searchHost.SelectionAvailableCondition.GetValue();
-            searchHost.SelectionAvailableCondition.ValueChanged += HandleSelectionAvailableChanged;
+            selectionAvailable = searchHost.SelectionAvailableCondition.Value;
+            searchHost.SelectionAvailableCondition.PropertyChanged += HandleSelectionAvailableChanged;
 
             FindNextCommand = new AppCommand(obj => DoFindNext(), searchHost.CanSearchCondition & searchExpressionValidCondition);
             FindInFilesCommand = new AppCommand(obj => DoFindInFiles(), searchExpressionValidCondition);
@@ -438,7 +439,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Search
 
         public void ShowReplace()
         {
-            inSelection = searchHost.SelectionAvailableCondition.GetValue();
+            inSelection = searchHost.SelectionAvailableCondition.Value;
 
             CurrentOperation = SearchReplaceOperation.Replace;
             
