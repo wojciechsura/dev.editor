@@ -22,7 +22,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
             try
             {
                 dynamic value = expression.Eval(scope);
-                data = DataFactory.DataFromDynamic(identifier, value);
+                data = DataFactory.DataFromDynamic(identifier, -1, value);
             }
             catch (BaseLocalizedException e)
             {

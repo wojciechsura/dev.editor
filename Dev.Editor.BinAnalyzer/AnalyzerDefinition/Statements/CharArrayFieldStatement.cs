@@ -24,25 +24,27 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
         {
             try
-            { 
+            {
+                long arrayOffset = reader.BaseStream.Position;
+
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
 
                 if (reader.BaseStream.Position + countInt >= reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
-                StringBuilder sb = new StringBuilder();
+                List<char> chars = new List<char>();                
                 for (int i = 0; i < countInt; i++)
                 {
                     byte value = reader.ReadByte();
 
                     if (value < 128)
-                        sb.Append((char)value);
+                        chars.Add((char)value);
                     else
-                        sb.Append('?');                            
+                        chars.Add('?');                            
                 }
 
-                var item = new CharArrayData(name, sb.ToString());
+                var item = new CharArrayData(name, arrayOffset, chars.ToArray());
                 
                 result.Add(item);
 

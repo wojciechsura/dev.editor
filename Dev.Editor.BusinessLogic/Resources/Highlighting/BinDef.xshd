@@ -39,6 +39,8 @@
       <Word>uint</Word>
       <Word>ulong</Word>
 			<Word>ushort</Word>
+      <Word>string</Word>
+      <Word>bool</Word>
     </Keywords>
 
    

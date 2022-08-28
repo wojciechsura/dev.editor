@@ -705,8 +705,8 @@ namespace HexEditor.Controls
 
                 for (int i = 0; i < metrics.Control.CharPositions.HexBytes.Count; i++)
                 {
-                    AddGlyph(hexChars[i % 16], metrics.Control.CharPositions.HexBytes[i].Positions[0].TextCharX, info);
-                    AddGlyph(hexChars[i / 16], metrics.Control.CharPositions.HexBytes[i].Positions[1].TextCharX, info);
+                    AddGlyph(hexChars[i / 16], metrics.Control.CharPositions.HexBytes[i].Positions[0].TextCharX, info);
+                    AddGlyph(hexChars[i % 16], metrics.Control.CharPositions.HexBytes[i].Positions[1].TextCharX, info);
                 }
 
                 for (int i = 0; i < metrics.Control.CharPositions.CharBytes.Count; i++)

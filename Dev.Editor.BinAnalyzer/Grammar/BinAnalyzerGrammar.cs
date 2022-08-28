@@ -23,6 +23,8 @@ namespace Dev.Editor.BinAnalyzer.Grammar
         public const string TYPE_FLOAT = "float";
         public const string TYPE_DOUBLE = "double";
         public const string TYPE_CHAR = "char";
+        public const string TYPE_STRING = "string";
+        public const string TYPE_BOOL = "bool";
 
         public const string ONE_LINE_COMMENT = "oneLineComment";
         public const string MULTIPLE_LINE_COMMENT = "multipleLineComment";
@@ -139,7 +141,7 @@ namespace Dev.Editor.BinAnalyzer.Grammar
 
             intTypeName.Rule = ToTerm(TYPE_BYTE) | TYPE_SBYTE | TYPE_SHORT | TYPE_USHORT | TYPE_INT | TYPE_UINT | TYPE_LONG | TYPE_ULONG;
             floatTypeName.Rule = ToTerm(TYPE_FLOAT) | TYPE_DOUBLE;
-            specialTypeName.Rule = ToTerm(TYPE_CHAR) | TYPE_SKIP;
+            specialTypeName.Rule = ToTerm(TYPE_CHAR) | ToTerm(TYPE_STRING) | ToTerm(TYPE_BOOL) | TYPE_SKIP;
             type.Rule = intTypeName | floatTypeName | specialTypeName;
             builtinField.Rule = type + identifier + ToTerm(";");
             customField.Rule = identifier + identifier + ToTerm(";");

@@ -9,8 +9,8 @@ namespace Dev.Editor.BinAnalyzer.Data
     public class ArrayData<T> : BaseData
         where T : BaseData
     {       
-        public ArrayData(string name, string childType, T[] children) 
-            : base(name, $"{childType}[{children.Length}]")
+        public ArrayData(string name, long offset, string childType, T[] children) 
+            : base(name, offset, $"{childType}[{children.Length}]")
         {
             Children = children;
         }

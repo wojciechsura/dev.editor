@@ -8,8 +8,8 @@ namespace Dev.Editor.BinAnalyzer.Data
 {
     public class StructData : BaseData
     {
-        public StructData(string name, string type, List<BaseData> members)
-            : base(name, $"struct {type}")
+        public StructData(string name, long offset, string type, List<BaseData> members)
+            : base(name, offset, $"struct {type}")
         {
             Type = type;
             Children = members;

@@ -36,13 +36,15 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
-Source: "..\Dev.Editor\bin\Release\Dev.Editor.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Autofac.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\ControlzEx.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.BinAnalyzer.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.BusinessLogic.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.Common.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.Configuration.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.Dependencies.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Dev.Editor.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Dev.Editor.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.Resources.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Fluent.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Geometry.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -50,13 +52,21 @@ Source: "..\Dev.Editor\bin\Release\HexEditor.dll"; DestDir: "{app}"; Flags: igno
 Source: "..\Dev.Editor\bin\Release\ICSharpCode.AvalonEdit.Dev.Editor.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Irony.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Markdig.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Microsoft.Bcl.AsyncInterfaces.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Microsoft.Management.Infrastructure.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Microsoft.WindowsAPICodePack.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Dev.Editor\bin\Release\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Dev.Editor\bin\Release\Unity.Abstractions.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Dev.Editor\bin\Release\Unity.Container.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Spooksoft.VisualStateManager.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Dev.Editor\bin\Release\Dev.Editor.exe.config"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\System.Buffers.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\System.Diagnostics.DiagnosticSource.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\System.Management.Automation.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\System.Memory.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\System.Numerics.Vectors.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\System.Threading.Tasks.Extensions.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\pl-PL\Dev.Editor.Resources.resources.dll"; DestDir: "{app}\pl-PL\"; Flags: ignoreversion
 Source: "..\Changelog.txt"; DestDir: "{app}"; Flags: ignoreversion
 

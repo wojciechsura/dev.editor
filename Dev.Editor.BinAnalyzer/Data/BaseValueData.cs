@@ -8,7 +8,8 @@ namespace Dev.Editor.BinAnalyzer.Data
 {
     public abstract class BaseValueData : BaseData
     {
-        public BaseValueData(string name, string type) : base(name, type)
+        public BaseValueData(string name, long offset, string type) 
+            : base(name, offset, type)
         {
 
         }

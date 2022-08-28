@@ -26,7 +26,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Show
         {
             try
             {
-                return enumDefinition.GenerateEnumData(alias, memberName);
+                return enumDefinition.GenerateEnumData(alias, -1, memberName);
             }
             catch (ArgumentException)
             {

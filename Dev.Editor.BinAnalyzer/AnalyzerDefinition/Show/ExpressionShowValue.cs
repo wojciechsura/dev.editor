@@ -20,7 +20,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Show
         public override BaseData Eval(string alias, Scope scope)
         {
             dynamic value = expression.Eval(scope);
-            return DataFactory.DataFromDynamic(alias, value);
+            return DataFactory.DataFromDynamic(alias, -1, value);
         }
     }
 }

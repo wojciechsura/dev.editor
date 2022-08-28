@@ -21,23 +21,29 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                long arrayOffset = reader.BaseStream.Position;
+
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
 
                 StructData[] data = new StructData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
+                    long structOffset = reader.BaseStream.Position;
+
                     List<BaseData> members = new List<BaseData>();
 
                     Scope structScope = new Scope(scope);
                     for (int j = 0; j < structDef.Statements.Count; j++)
+                    {
                         structDef.Statements[j].Read(reader, members, structScope);
+                    }
 
-                    var element = new StructData(name, structDef.Name, members);
+                    var element = new StructData(name, structOffset, structDef.Name, members);
                     data[i] = element;
                 }
 
-                ArrayData<StructData> item = new ArrayData<StructData>(name, structDef.Name, data);
+                ArrayData<StructData> item = new ArrayData<StructData>(name, arrayOffset, structDef.Name, data);
 
                 result.Add(item);
                 scope.AddContent(name, item);

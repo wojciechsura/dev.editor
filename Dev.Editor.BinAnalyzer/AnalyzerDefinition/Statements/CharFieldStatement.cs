@@ -21,6 +21,8 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                long offset = reader.BaseStream.Position;
+
                 if (reader.BaseStream.Position + sizeof(byte) >= reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream!", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
@@ -28,9 +30,9 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
 
                 BaseData data;
                 if (value < 128)
-                    data = new CharData(name, (char)value);
+                    data = new CharData(name, offset, (char)value);
                 else
-                    data = new CharData(name, '?');
+                    data = new CharData(name, offset, '?');
 
                 result.Add(data);
                

@@ -24,15 +24,17 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" SharedSizeGroup="Icon" />
-                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name"/>
-                            <ColumnDefinition Width="Auto" SharedSizeGroup="Type"/>
-                            <ColumnDefinition Width="Auto" SharedSizeGroup="Value"/>
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Name" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Type" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Value" />
+                            <ColumnDefinition Width="Auto" SharedSizeGroup="Offset" />
                         </Grid.ColumnDefinitions>
 
                         <Image Grid.Column="0" Width="16" Height="16" Source="{Binding DataType, Converter={StaticResource DataTypeToImageConverter}}" />
                         <TextBlock Grid.Column="1" Text="{Binding Name}" Margin="2" />
                         <TextBlock Grid.Column="2" Text="{Binding TypeName}" Opacity="0.5" Margin="2" />
                         <TextBlock Grid.Column="3" Text="{Binding Value}" Margin="2" />
+                        <TextBlock Grid.Column="4" Text="{Binding OffsetDisplay}" Opacity="0.5" Margin="2" />
                     </Grid>
                 </Border>
             </HierarchicalDataTemplate>

@@ -8,17 +8,17 @@ namespace Dev.Editor.BinAnalyzer.Data
 {
     public class CharArrayData : BaseValueData
     {
-        private string value;
+        private char[] value;
 
-        public CharArrayData(string name, string data)
-            : base(name, $"char[{data.Length}]")
+        public CharArrayData(string name, long offset, char[] data)
+            : base(name, offset, $"char[{data.Length}]")
         {
             value = data;
         }
 
         public override dynamic GetValue()
         {
-            return value;
+            return new string(value);
         }
     }
 }

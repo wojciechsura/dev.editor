@@ -17,7 +17,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
             this.type = type;
         }
 
-        public abstract BaseData GenerateEnumData(string field, string memberName);
+        public abstract BaseData GenerateEnumData(string field, long offset, string memberName);
 
         public string Type => type;
     }

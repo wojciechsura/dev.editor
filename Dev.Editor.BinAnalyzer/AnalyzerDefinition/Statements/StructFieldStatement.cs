@@ -19,13 +19,15 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                long structOffset = reader.BaseStream.Position;
+
                 List<BaseData> members = new List<BaseData>();
 
                 Scope structScope = new Scope(scope);
                 for (int i = 0; i < structDef.Statements.Count; i++)
                     structDef.Statements[i].Read(reader, members, structScope);
 
-                var data = new StructData(name, structDef.Name, members);
+                var data = new StructData(name, structOffset, structDef.Name, members);
                 result.Add(data);
                 scope.AddContent(name, data);
             }

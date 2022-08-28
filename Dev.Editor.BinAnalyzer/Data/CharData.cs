@@ -10,8 +10,8 @@ namespace Dev.Editor.BinAnalyzer.Data
     {
         private readonly char value;
 
-        public CharData(string name, char value)
-            : base(name, "char")
+        public CharData(string name, long offset, char value)
+            : base(name, offset, "char")
         {
             this.value = value;
         }

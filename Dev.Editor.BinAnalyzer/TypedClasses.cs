@@ -33,14 +33,14 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
             this.items = items;
         }
 
-		public override BaseData GenerateEnumData(string field, string memberName)
+		public override BaseData GenerateEnumData(string field, long offset, string memberName)
 		{
 			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
 
 			if (member == null)
 				throw new ArgumentException("memberName");
 
-			return new SbyteEnumData(field, Name, member.Value, member.Name);
+			return new SbyteEnumData(field, offset, Name, member.Value, member.Name);
 		}
 
         public List<SbyteEnumItem> Items => items;
@@ -67,14 +67,14 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
             this.items = items;
         }
 
-		public override BaseData GenerateEnumData(string field, string memberName)
+		public override BaseData GenerateEnumData(string field, long offset, string memberName)
 		{
 			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
 
 			if (member == null)
 				throw new ArgumentException("memberName");
 
-			return new ShortEnumData(field, Name, member.Value, member.Name);
+			return new ShortEnumData(field, offset, Name, member.Value, member.Name);
 		}
 
         public List<ShortEnumItem> Items => items;
@@ -101,14 +101,14 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
             this.items = items;
         }
 
-		public override BaseData GenerateEnumData(string field, string memberName)
+		public override BaseData GenerateEnumData(string field, long offset, string memberName)
 		{
 			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
 
 			if (member == null)
 				throw new ArgumentException("memberName");
 
-			return new IntEnumData(field, Name, member.Value, member.Name);
+			return new IntEnumData(field, offset, Name, member.Value, member.Name);
 		}
 
         public List<IntEnumItem> Items => items;
@@ -135,14 +135,14 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
             this.items = items;
         }
 
-		public override BaseData GenerateEnumData(string field, string memberName)
+		public override BaseData GenerateEnumData(string field, long offset, string memberName)
 		{
 			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
 
 			if (member == null)
 				throw new ArgumentException("memberName");
 
-			return new LongEnumData(field, Name, member.Value, member.Name);
+			return new LongEnumData(field, offset, Name, member.Value, member.Name);
 		}
 
         public List<LongEnumItem> Items => items;
@@ -169,14 +169,14 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
             this.items = items;
         }
 
-		public override BaseData GenerateEnumData(string field, string memberName)
+		public override BaseData GenerateEnumData(string field, long offset, string memberName)
 		{
 			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
 
 			if (member == null)
 				throw new ArgumentException("memberName");
 
-			return new ByteEnumData(field, Name, member.Value, member.Name);
+			return new ByteEnumData(field, offset, Name, member.Value, member.Name);
 		}
 
         public List<ByteEnumItem> Items => items;
@@ -203,14 +203,14 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
             this.items = items;
         }
 
-		public override BaseData GenerateEnumData(string field, string memberName)
+		public override BaseData GenerateEnumData(string field, long offset, string memberName)
 		{
 			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
 
 			if (member == null)
 				throw new ArgumentException("memberName");
 
-			return new UshortEnumData(field, Name, member.Value, member.Name);
+			return new UshortEnumData(field, offset, Name, member.Value, member.Name);
 		}
 
         public List<UshortEnumItem> Items => items;
@@ -237,14 +237,14 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
             this.items = items;
         }
 
-		public override BaseData GenerateEnumData(string field, string memberName)
+		public override BaseData GenerateEnumData(string field, long offset, string memberName)
 		{
 			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
 
 			if (member == null)
 				throw new ArgumentException("memberName");
 
-			return new UintEnumData(field, Name, member.Value, member.Name);
+			return new UintEnumData(field, offset, Name, member.Value, member.Name);
 		}
 
         public List<UintEnumItem> Items => items;
@@ -271,14 +271,14 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Definitions
             this.items = items;
         }
 
-		public override BaseData GenerateEnumData(string field, string memberName)
+		public override BaseData GenerateEnumData(string field, long offset, string memberName)
 		{
 			var member = items.FirstOrDefault(i => i.Name.Equals(memberName));
 
 			if (member == null)
 				throw new ArgumentException("memberName");
 
-			return new UlongEnumData(field, Name, member.Value, member.Name);
+			return new UlongEnumData(field, offset, Name, member.Value, member.Name);
 		}
 
         public List<UlongEnumItem> Items => items;
@@ -300,12 +300,13 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(sbyte) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+                long offset = reader.BaseStream.Position;
 
+                if (reader.BaseStream.Position + sizeof(sbyte) > reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
                 sbyte value = reader.ReadSByte();
 
-                var data = new SbyteData(name, value);
+                var data = new SbyteData(name, offset, value);
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -332,12 +333,13 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(short) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+                long offset = reader.BaseStream.Position;
 
+                if (reader.BaseStream.Position + sizeof(short) > reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
                 short value = reader.ReadInt16();
 
-                var data = new ShortData(name, value);
+                var data = new ShortData(name, offset, value);
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -364,12 +366,13 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(int) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+                long offset = reader.BaseStream.Position;
 
+                if (reader.BaseStream.Position + sizeof(int) > reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
                 int value = reader.ReadInt32();
 
-                var data = new IntData(name, value);
+                var data = new IntData(name, offset, value);
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -396,12 +399,13 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(long) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+                long offset = reader.BaseStream.Position;
 
+                if (reader.BaseStream.Position + sizeof(long) > reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
                 long value = reader.ReadInt64();
 
-                var data = new LongData(name, value);
+                var data = new LongData(name, offset, value);
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -428,12 +432,13 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(byte) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+                long offset = reader.BaseStream.Position;
 
+                if (reader.BaseStream.Position + sizeof(byte) > reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
                 byte value = reader.ReadByte();
 
-                var data = new ByteData(name, value);
+                var data = new ByteData(name, offset, value);
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -460,12 +465,13 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(ushort) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+                long offset = reader.BaseStream.Position;
 
+                if (reader.BaseStream.Position + sizeof(ushort) > reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
                 ushort value = reader.ReadUInt16();
 
-                var data = new UshortData(name, value);
+                var data = new UshortData(name, offset, value);
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -492,12 +498,13 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(uint) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+                long offset = reader.BaseStream.Position;
 
+                if (reader.BaseStream.Position + sizeof(uint) > reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
                 uint value = reader.ReadUInt32();
 
-                var data = new UintData(name, value);
+                var data = new UintData(name, offset, value);
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -524,12 +531,13 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(ulong) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+                long offset = reader.BaseStream.Position;
 
+                if (reader.BaseStream.Position + sizeof(ulong) > reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
                 ulong value = reader.ReadUInt64();
 
-                var data = new UlongData(name, value);
+                var data = new UlongData(name, offset, value);
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -556,12 +564,13 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(float) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+                long offset = reader.BaseStream.Position;
 
+                if (reader.BaseStream.Position + sizeof(float) > reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
                 float value = reader.ReadSingle();
 
-                var data = new FloatData(name, value);
+                var data = new FloatData(name, offset, value);
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -588,12 +597,77 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(double) >= reader.BaseStream.Length)
-                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+                long offset = reader.BaseStream.Position;
 
+                if (reader.BaseStream.Position + sizeof(double) > reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
                 double value = reader.ReadDouble();
 
-                var data = new DoubleData(name, value);
+                var data = new DoubleData(name, offset, value);
+                result.Add(data);
+                scope.AddContent(name, data);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+    class StringFieldStatement : BaseFieldStatement
+    {
+        public StringFieldStatement(int line, int column, string name)
+            : base(line, column, name)
+        {
+            
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                long offset = reader.BaseStream.Position;
+
+                string value = reader.ReadString();
+
+                var data = new StringData(name, offset, value);
+                result.Add(data);
+                scope.AddContent(name, data);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+    class BoolFieldStatement : BaseFieldStatement
+    {
+        public BoolFieldStatement(int line, int column, string name)
+            : base(line, column, name)
+        {
+            
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                long offset = reader.BaseStream.Position;
+
+                if (reader.BaseStream.Position + sizeof(bool) > reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+                bool value = reader.ReadBoolean();
+
+                var data = new BoolData(name, offset, value);
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -622,21 +696,23 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                long arrayOffset = reader.BaseStream.Position;
+
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
-                if (reader.BaseStream.Position + sizeof(sbyte) * countInt >= reader.BaseStream.Length)
+                if (reader.BaseStream.Position + sizeof(sbyte) * countInt > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
                 var data = new SbyteData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
+                    long itemOffset = reader.BaseStream.Position;
                     sbyte value = reader.ReadSByte();
-                    var element = new SbyteData(i.ToString(), value);
+                    var element = new SbyteData(i.ToString(), itemOffset, value);
                     data[i] = element;
                 }
 
-                var item = new ArrayData<SbyteData>(name, "Sbyte", data);
+                var item = new ArrayData<SbyteData>(name, arrayOffset, "Sbyte", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -666,21 +742,23 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                long arrayOffset = reader.BaseStream.Position;
+
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
-                if (reader.BaseStream.Position + sizeof(short) * countInt >= reader.BaseStream.Length)
+                if (reader.BaseStream.Position + sizeof(short) * countInt > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
                 var data = new ShortData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
+                    long itemOffset = reader.BaseStream.Position;
                     short value = reader.ReadInt16();
-                    var element = new ShortData(i.ToString(), value);
+                    var element = new ShortData(i.ToString(), itemOffset, value);
                     data[i] = element;
                 }
 
-                var item = new ArrayData<ShortData>(name, "Short", data);
+                var item = new ArrayData<ShortData>(name, arrayOffset, "Short", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -710,21 +788,23 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                long arrayOffset = reader.BaseStream.Position;
+
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
-                if (reader.BaseStream.Position + sizeof(int) * countInt >= reader.BaseStream.Length)
+                if (reader.BaseStream.Position + sizeof(int) * countInt > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
                 var data = new IntData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
+                    long itemOffset = reader.BaseStream.Position;
                     int value = reader.ReadInt32();
-                    var element = new IntData(i.ToString(), value);
+                    var element = new IntData(i.ToString(), itemOffset, value);
                     data[i] = element;
                 }
 
-                var item = new ArrayData<IntData>(name, "Int", data);
+                var item = new ArrayData<IntData>(name, arrayOffset, "Int", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -754,21 +834,23 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                long arrayOffset = reader.BaseStream.Position;
+
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
-                if (reader.BaseStream.Position + sizeof(long) * countInt >= reader.BaseStream.Length)
+                if (reader.BaseStream.Position + sizeof(long) * countInt > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
                 var data = new LongData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
+                    long itemOffset = reader.BaseStream.Position;
                     long value = reader.ReadInt64();
-                    var element = new LongData(i.ToString(), value);
+                    var element = new LongData(i.ToString(), itemOffset, value);
                     data[i] = element;
                 }
 
-                var item = new ArrayData<LongData>(name, "Long", data);
+                var item = new ArrayData<LongData>(name, arrayOffset, "Long", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -798,21 +880,23 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                long arrayOffset = reader.BaseStream.Position;
+
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
-                if (reader.BaseStream.Position + sizeof(byte) * countInt >= reader.BaseStream.Length)
+                if (reader.BaseStream.Position + sizeof(byte) * countInt > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
                 var data = new ByteData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
+                    long itemOffset = reader.BaseStream.Position;
                     byte value = reader.ReadByte();
-                    var element = new ByteData(i.ToString(), value);
+                    var element = new ByteData(i.ToString(), itemOffset, value);
                     data[i] = element;
                 }
 
-                var item = new ArrayData<ByteData>(name, "Byte", data);
+                var item = new ArrayData<ByteData>(name, arrayOffset, "Byte", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -842,21 +926,23 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                long arrayOffset = reader.BaseStream.Position;
+
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
-                if (reader.BaseStream.Position + sizeof(ushort) * countInt >= reader.BaseStream.Length)
+                if (reader.BaseStream.Position + sizeof(ushort) * countInt > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
                 var data = new UshortData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
+                    long itemOffset = reader.BaseStream.Position;
                     ushort value = reader.ReadUInt16();
-                    var element = new UshortData(i.ToString(), value);
+                    var element = new UshortData(i.ToString(), itemOffset, value);
                     data[i] = element;
                 }
 
-                var item = new ArrayData<UshortData>(name, "Ushort", data);
+                var item = new ArrayData<UshortData>(name, arrayOffset, "Ushort", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -886,21 +972,23 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                long arrayOffset = reader.BaseStream.Position;
+
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
-                if (reader.BaseStream.Position + sizeof(uint) * countInt >= reader.BaseStream.Length)
+                if (reader.BaseStream.Position + sizeof(uint) * countInt > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
                 var data = new UintData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
+                    long itemOffset = reader.BaseStream.Position;
                     uint value = reader.ReadUInt32();
-                    var element = new UintData(i.ToString(), value);
+                    var element = new UintData(i.ToString(), itemOffset, value);
                     data[i] = element;
                 }
 
-                var item = new ArrayData<UintData>(name, "Uint", data);
+                var item = new ArrayData<UintData>(name, arrayOffset, "Uint", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -930,21 +1018,23 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                long arrayOffset = reader.BaseStream.Position;
+
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
-                if (reader.BaseStream.Position + sizeof(ulong) * countInt >= reader.BaseStream.Length)
+                if (reader.BaseStream.Position + sizeof(ulong) * countInt > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
                 var data = new UlongData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
+                    long itemOffset = reader.BaseStream.Position;
                     ulong value = reader.ReadUInt64();
-                    var element = new UlongData(i.ToString(), value);
+                    var element = new UlongData(i.ToString(), itemOffset, value);
                     data[i] = element;
                 }
 
-                var item = new ArrayData<UlongData>(name, "Ulong", data);
+                var item = new ArrayData<UlongData>(name, arrayOffset, "Ulong", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -974,21 +1064,23 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                long arrayOffset = reader.BaseStream.Position;
+
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
-                if (reader.BaseStream.Position + sizeof(float) * countInt >= reader.BaseStream.Length)
+                if (reader.BaseStream.Position + sizeof(float) * countInt > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
                 var data = new FloatData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
+                    long itemOffset = reader.BaseStream.Position;
                     float value = reader.ReadSingle();
-                    var element = new FloatData(i.ToString(), value);
+                    var element = new FloatData(i.ToString(), itemOffset, value);
                     data[i] = element;
                 }
 
-                var item = new ArrayData<FloatData>(name, "Float", data);
+                var item = new ArrayData<FloatData>(name, arrayOffset, "Float", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -1018,21 +1110,113 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
+                long arrayOffset = reader.BaseStream.Position;
+
                 dynamic countValue = count.Eval(scope);
                 int countInt = (int)countValue;
                 
-                if (reader.BaseStream.Position + sizeof(double) * countInt >= reader.BaseStream.Length)
+                if (reader.BaseStream.Position + sizeof(double) * countInt > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
-
                 var data = new DoubleData[countInt];
                 for (int i = 0; i < countInt; i++)
                 {
+                    long itemOffset = reader.BaseStream.Position;
                     double value = reader.ReadDouble();
-                    var element = new DoubleData(i.ToString(), value);
+                    var element = new DoubleData(i.ToString(), itemOffset, value);
                     data[i] = element;
                 }
 
-                var item = new ArrayData<DoubleData>(name, "Double", data);
+                var item = new ArrayData<DoubleData>(name, arrayOffset, "Double", data);
+
+                result.Add(item);
+                scope.AddContent(name, item);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+    class StringArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
+
+        public StringArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
+        {
+            this.count = count;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                long arrayOffset = reader.BaseStream.Position;
+
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                var data = new StringData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    long itemOffset = reader.BaseStream.Position;
+                    string value = reader.ReadString();
+                    var element = new StringData(i.ToString(), itemOffset, value);
+                    data[i] = element;
+                }
+
+                var item = new ArrayData<StringData>(name, arrayOffset, "String", data);
+
+                result.Add(item);
+                scope.AddContent(name, item);
+            }
+            catch (BaseLocalizedException e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.LocalizedErrorMessage));
+            }
+            catch (Exception e)
+            {
+                throw new AnalysisException(Line, Column, "Failed to load field!", string.Format(Strings.Message_AnalysisError_FailedToReadField, name, e.Message));
+            }
+        }
+    }
+
+    class BoolArrayFieldStatement : BaseFieldStatement
+    {
+        private readonly Expression count;
+
+        public BoolArrayFieldStatement(int line, int column, string name, Expression count)
+            : base(line, column, name)
+        {
+            this.count = count;
+        }
+
+        internal override void Read(BinaryReader reader, List<BaseData> result, Scope scope)
+        {
+            try
+            {
+                long arrayOffset = reader.BaseStream.Position;
+
+                dynamic countValue = count.Eval(scope);
+                int countInt = (int)countValue;
+                
+                if (reader.BaseStream.Position + sizeof(bool) * countInt > reader.BaseStream.Length)
+                    throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
+                var data = new BoolData[countInt];
+                for (int i = 0; i < countInt; i++)
+                {
+                    long itemOffset = reader.BaseStream.Position;
+                    bool value = reader.ReadBoolean();
+                    var element = new BoolData(i.ToString(), itemOffset, value);
+                    data[i] = element;
+                }
+
+                var item = new ArrayData<BoolData>(name, arrayOffset, "Bool", data);
 
                 result.Add(item);
                 scope.AddContent(name, item);
@@ -1063,14 +1247,16 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(sbyte) >= reader.BaseStream.Length)
+                long offset = reader.BaseStream.Position;
+
+                if (reader.BaseStream.Position + sizeof(sbyte) > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
                 sbyte value = reader.ReadSByte();
 
                 var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
-                var data = new SbyteEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                var data = new SbyteEnumData(name, offset, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -1100,14 +1286,16 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(short) >= reader.BaseStream.Length)
+                long offset = reader.BaseStream.Position;
+
+                if (reader.BaseStream.Position + sizeof(short) > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
                 short value = reader.ReadInt16();
 
                 var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
-                var data = new ShortEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                var data = new ShortEnumData(name, offset, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -1137,14 +1325,16 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(int) >= reader.BaseStream.Length)
+                long offset = reader.BaseStream.Position;
+
+                if (reader.BaseStream.Position + sizeof(int) > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
                 int value = reader.ReadInt32();
 
                 var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
-                var data = new IntEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                var data = new IntEnumData(name, offset, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -1174,14 +1364,16 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(long) >= reader.BaseStream.Length)
+                long offset = reader.BaseStream.Position;
+
+                if (reader.BaseStream.Position + sizeof(long) > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
                 long value = reader.ReadInt64();
 
                 var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
-                var data = new LongEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                var data = new LongEnumData(name, offset, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -1211,14 +1403,16 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(byte) >= reader.BaseStream.Length)
+                long offset = reader.BaseStream.Position;
+
+                if (reader.BaseStream.Position + sizeof(byte) > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
                 byte value = reader.ReadByte();
 
                 var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
-                var data = new ByteEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                var data = new ByteEnumData(name, offset, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -1248,14 +1442,16 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(ushort) >= reader.BaseStream.Length)
+                long offset = reader.BaseStream.Position;
+
+                if (reader.BaseStream.Position + sizeof(ushort) > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
                 ushort value = reader.ReadUInt16();
 
                 var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
-                var data = new UshortEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                var data = new UshortEnumData(name, offset, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -1285,14 +1481,16 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(uint) >= reader.BaseStream.Length)
+                long offset = reader.BaseStream.Position;
+
+                if (reader.BaseStream.Position + sizeof(uint) > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
                 uint value = reader.ReadUInt32();
 
                 var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
-                var data = new UintEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                var data = new UintEnumData(name, offset, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -1322,14 +1520,16 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
         {
             try
             {
-                if (reader.BaseStream.Position + sizeof(ulong) >= reader.BaseStream.Length)
+                long offset = reader.BaseStream.Position;
+
+                if (reader.BaseStream.Position + sizeof(ulong) > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
                 ulong value = reader.ReadUInt64();
 
                 var enumItem = enumDef.Items.FirstOrDefault(i => i.Value == value);
                 
-                var data = new UlongEnumData(name, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
+                var data = new UlongEnumData(name, offset, enumDef.Name, value, $"{enumItem?.Name ?? "Invalid enum value"} ({value})");
                 result.Add(data);
                 scope.AddContent(name, data);
             }
@@ -1371,6 +1571,10 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                     return new FloatFieldStatement(line, column, name);
                 case "double":
                     return new DoubleFieldStatement(line, column, name);
+                case "string":
+                    return new StringFieldStatement(line, column, name);
+                case "bool":
+                    return new BoolFieldStatement(line, column, name);
                 case "skip":
                     return new SkipFieldStatement(line, column, name);
                 case "char":
@@ -1432,6 +1636,10 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
                     return new FloatArrayFieldStatement(line, column, name, count);
                 case "double":
                     return new DoubleArrayFieldStatement(line, column, name, count);
+                case "string":
+                    return new StringArrayFieldStatement(line, column, name, count);
+                case "bool":
+                    return new BoolArrayFieldStatement(line, column, name, count);
                 case "skip":
                     return new SkipArrayFieldStatement(line, column, name, count);
                 case "char":
@@ -1449,8 +1657,8 @@ namespace Dev.Editor.BinAnalyzer.Data
     {       
         private readonly sbyte value;
 
-        public SbyteData(string name, sbyte value)
-            : base(name, "sbyte")
+        public SbyteData(string name, long offset, sbyte value)
+            : base(name, offset, "sbyte")
         {
             this.value = value;
         }
@@ -1465,8 +1673,8 @@ namespace Dev.Editor.BinAnalyzer.Data
     {       
         private readonly short value;
 
-        public ShortData(string name, short value)
-            : base(name, "short")
+        public ShortData(string name, long offset, short value)
+            : base(name, offset, "short")
         {
             this.value = value;
         }
@@ -1481,8 +1689,8 @@ namespace Dev.Editor.BinAnalyzer.Data
     {       
         private readonly int value;
 
-        public IntData(string name, int value)
-            : base(name, "int")
+        public IntData(string name, long offset, int value)
+            : base(name, offset, "int")
         {
             this.value = value;
         }
@@ -1497,8 +1705,8 @@ namespace Dev.Editor.BinAnalyzer.Data
     {       
         private readonly long value;
 
-        public LongData(string name, long value)
-            : base(name, "long")
+        public LongData(string name, long offset, long value)
+            : base(name, offset, "long")
         {
             this.value = value;
         }
@@ -1513,8 +1721,8 @@ namespace Dev.Editor.BinAnalyzer.Data
     {       
         private readonly byte value;
 
-        public ByteData(string name, byte value)
-            : base(name, "byte")
+        public ByteData(string name, long offset, byte value)
+            : base(name, offset, "byte")
         {
             this.value = value;
         }
@@ -1529,8 +1737,8 @@ namespace Dev.Editor.BinAnalyzer.Data
     {       
         private readonly ushort value;
 
-        public UshortData(string name, ushort value)
-            : base(name, "ushort")
+        public UshortData(string name, long offset, ushort value)
+            : base(name, offset, "ushort")
         {
             this.value = value;
         }
@@ -1545,8 +1753,8 @@ namespace Dev.Editor.BinAnalyzer.Data
     {       
         private readonly uint value;
 
-        public UintData(string name, uint value)
-            : base(name, "uint")
+        public UintData(string name, long offset, uint value)
+            : base(name, offset, "uint")
         {
             this.value = value;
         }
@@ -1561,8 +1769,8 @@ namespace Dev.Editor.BinAnalyzer.Data
     {       
         private readonly ulong value;
 
-        public UlongData(string name, ulong value)
-            : base(name, "ulong")
+        public UlongData(string name, long offset, ulong value)
+            : base(name, offset, "ulong")
         {
             this.value = value;
         }
@@ -1577,8 +1785,8 @@ namespace Dev.Editor.BinAnalyzer.Data
     {       
         private readonly float value;
 
-        public FloatData(string name, float value)
-            : base(name, "float")
+        public FloatData(string name, long offset, float value)
+            : base(name, offset, "float")
         {
             this.value = value;
         }
@@ -1593,8 +1801,40 @@ namespace Dev.Editor.BinAnalyzer.Data
     {       
         private readonly double value;
 
-        public DoubleData(string name, double value)
-            : base(name, "double")
+        public DoubleData(string name, long offset, double value)
+            : base(name, offset, "double")
+        {
+            this.value = value;
+        }
+
+        public override dynamic GetValue()
+        {
+            return value;
+        }
+    }
+
+    public class StringData : BaseValueData
+    {       
+        private readonly string value;
+
+        public StringData(string name, long offset, string value)
+            : base(name, offset, "string")
+        {
+            this.value = value;
+        }
+
+        public override dynamic GetValue()
+        {
+            return value;
+        }
+    }
+
+    public class BoolData : BaseValueData
+    {       
+        private readonly bool value;
+
+        public BoolData(string name, long offset, bool value)
+            : base(name, offset, "bool")
         {
             this.value = value;
         }
@@ -1611,8 +1851,8 @@ namespace Dev.Editor.BinAnalyzer.Data
         private readonly sbyte value;
         private readonly string enumValue;
 
-        public SbyteEnumData(string name, string enumName, sbyte value, string enumValue)
-            : base(name, $"{enumName} : byte")
+        public SbyteEnumData(string name, long offset, string enumName, sbyte value, string enumValue)
+            : base(name, offset, $"{enumName} : byte")
         {
             this.value = value;
             this.enumValue = enumValue;
@@ -1632,8 +1872,8 @@ namespace Dev.Editor.BinAnalyzer.Data
         private readonly short value;
         private readonly string enumValue;
 
-        public ShortEnumData(string name, string enumName, short value, string enumValue)
-            : base(name, $"{enumName} : byte")
+        public ShortEnumData(string name, long offset, string enumName, short value, string enumValue)
+            : base(name, offset, $"{enumName} : byte")
         {
             this.value = value;
             this.enumValue = enumValue;
@@ -1653,8 +1893,8 @@ namespace Dev.Editor.BinAnalyzer.Data
         private readonly int value;
         private readonly string enumValue;
 
-        public IntEnumData(string name, string enumName, int value, string enumValue)
-            : base(name, $"{enumName} : byte")
+        public IntEnumData(string name, long offset, string enumName, int value, string enumValue)
+            : base(name, offset, $"{enumName} : byte")
         {
             this.value = value;
             this.enumValue = enumValue;
@@ -1674,8 +1914,8 @@ namespace Dev.Editor.BinAnalyzer.Data
         private readonly long value;
         private readonly string enumValue;
 
-        public LongEnumData(string name, string enumName, long value, string enumValue)
-            : base(name, $"{enumName} : byte")
+        public LongEnumData(string name, long offset, string enumName, long value, string enumValue)
+            : base(name, offset, $"{enumName} : byte")
         {
             this.value = value;
             this.enumValue = enumValue;
@@ -1695,8 +1935,8 @@ namespace Dev.Editor.BinAnalyzer.Data
         private readonly byte value;
         private readonly string enumValue;
 
-        public ByteEnumData(string name, string enumName, byte value, string enumValue)
-            : base(name, $"{enumName} : byte")
+        public ByteEnumData(string name, long offset, string enumName, byte value, string enumValue)
+            : base(name, offset, $"{enumName} : byte")
         {
             this.value = value;
             this.enumValue = enumValue;
@@ -1716,8 +1956,8 @@ namespace Dev.Editor.BinAnalyzer.Data
         private readonly ushort value;
         private readonly string enumValue;
 
-        public UshortEnumData(string name, string enumName, ushort value, string enumValue)
-            : base(name, $"{enumName} : byte")
+        public UshortEnumData(string name, long offset, string enumName, ushort value, string enumValue)
+            : base(name, offset, $"{enumName} : byte")
         {
             this.value = value;
             this.enumValue = enumValue;
@@ -1737,8 +1977,8 @@ namespace Dev.Editor.BinAnalyzer.Data
         private readonly uint value;
         private readonly string enumValue;
 
-        public UintEnumData(string name, string enumName, uint value, string enumValue)
-            : base(name, $"{enumName} : byte")
+        public UintEnumData(string name, long offset, string enumName, uint value, string enumValue)
+            : base(name, offset, $"{enumName} : byte")
         {
             this.value = value;
             this.enumValue = enumValue;
@@ -1758,8 +1998,8 @@ namespace Dev.Editor.BinAnalyzer.Data
         private readonly ulong value;
         private readonly string enumValue;
 
-        public UlongEnumData(string name, string enumName, ulong value, string enumValue)
-            : base(name, $"{enumName} : byte")
+        public UlongEnumData(string name, long offset, string enumName, ulong value, string enumValue)
+            : base(name, offset, $"{enumName} : byte")
         {
             this.value = value;
             this.enumValue = enumValue;
@@ -1775,34 +2015,35 @@ namespace Dev.Editor.BinAnalyzer.Data
 
     public class DataFactory
     {
-        public static BaseData DataFromDynamic(string name, dynamic d)
+        public static BaseData DataFromDynamic(string name, long offset, dynamic d)
         {
             if (d is sbyte sbyteDynamic)
-                return new SbyteData(name, sbyteDynamic);
+                return new SbyteData(name, offset, sbyteDynamic);
             else if (d is short shortDynamic)
-                return new ShortData(name, shortDynamic);
+                return new ShortData(name, offset, shortDynamic);
             else if (d is int intDynamic)
-                return new IntData(name, intDynamic);
+                return new IntData(name, offset, intDynamic);
             else if (d is long longDynamic)
-                return new LongData(name, longDynamic);
+                return new LongData(name, offset, longDynamic);
             else if (d is byte byteDynamic)
-                return new ByteData(name, byteDynamic);
+                return new ByteData(name, offset, byteDynamic);
             else if (d is ushort ushortDynamic)
-                return new UshortData(name, ushortDynamic);
+                return new UshortData(name, offset, ushortDynamic);
             else if (d is uint uintDynamic)
-                return new UintData(name, uintDynamic);
+                return new UintData(name, offset, uintDynamic);
             else if (d is ulong ulongDynamic)
-                return new UlongData(name, ulongDynamic);
+                return new UlongData(name, offset, ulongDynamic);
             else if (d is float floatDynamic)
-                return new FloatData(name, floatDynamic);
+                return new FloatData(name, offset, floatDynamic);
             else if (d is double doubleDynamic)
-                return new DoubleData(name, doubleDynamic);
-            else  if (d is string str)
-                return new CharArrayData(name, str);
-            else if (d is bool b)
-                return new BoolData(name, b);
+                return new DoubleData(name, offset, doubleDynamic);
+            else if (d is string stringDynamic)
+                return new StringData(name, offset, stringDynamic);
+            else if (d is bool boolDynamic)
+                return new BoolData(name, offset, boolDynamic);
+            else  if (d is char[] chars)
+                return new CharArrayData(name, offset, chars);
             else
-
                 throw new InvalidOperationException("Unsupported type!");
         }
     }
