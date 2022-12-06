@@ -13,6 +13,7 @@ using Dev.Editor.BusinessLogic.Services.StartupInfo;
 using Dev.Editor.BusinessLogic.Services.SubstitutionCipher;
 using Dev.Editor.BusinessLogic.Services.TextComparison;
 using Dev.Editor.BusinessLogic.Services.TextTransform;
+using Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,6 +44,8 @@ namespace Dev.Editor.BusinessLogic.Dependencies
             builder.RegisterType<TextComparisonService>().As<ITextComparisonService>().SingleInstance();
             builder.RegisterType<TextTransformService>().As<ITextTransformService>().SingleInstance();
             builder.RegisterType<SubstitutionCipherService>().As<ISubstitutionCipherService>().SingleInstance();
+
+            builder.RegisterType<DuplicatedLinesFinderConfigDialogViewModel>().As<DuplicatedLinesFinderConfigDialogViewModel>().SingleInstance();
         }
     }
 }

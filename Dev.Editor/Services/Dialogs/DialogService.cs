@@ -15,6 +15,9 @@ using Microsoft.Win32;
 using Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher;
 using Dev.Editor.BusinessLogic.ViewModels.WebBrowserWindow;
 using Microsoft.WindowsAPICodePack.Dialogs;
+using Autofac;
+using Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines;
+using System.Web.Configuration;
 
 namespace Dev.Editor.Services.Dialogs
 {
@@ -165,11 +168,22 @@ namespace Dev.Editor.Services.Dialogs
 
         public (bool, DuplicatedLinesFinderConfig) ShowDuplicatedLinesFinderConfigDialog(DuplicatedLinesFinderConfigModel model)
         {
-            var dialog = new DuplicatedLinesFinderConfigDialog(model);
-            if (dialog.ShowDialog() == true)
-                return (true, dialog.Result);
-            else
-                return (false, null);
+            var viewModel = Dependencies.Container.Instance.Resolve<DuplicatedLinesFinderConfigDialogViewModel>();            
+            var dialog = new DuplicatedLinesFinderConfigDialog(viewModel);
+            viewModel.Access = dialog;
+            viewModel.DefaultFolder = model.DefaultFolder;
+
+            try
+            {
+                if (dialog.ShowDialog() == true)
+                    return (true, dialog.Result);
+                else
+                    return (false, null);
+            }
+            finally
+            {
+                viewModel.Access = null;
+            }
         }
 
         public void OpenSubstitutionCipherWindow(ISubstitutionCipherHost host)

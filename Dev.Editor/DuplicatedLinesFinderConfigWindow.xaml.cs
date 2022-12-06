@@ -16,15 +16,14 @@ namespace Dev.Editor
 
         private DuplicatedLinesFinderConfigDialogViewModel viewModel;
 
-        public DuplicatedLinesFinderConfigDialog(DuplicatedLinesFinderConfigModel model)
+        public DuplicatedLinesFinderConfigDialog(DuplicatedLinesFinderConfigDialogViewModel viewModel)
         {
             InitializeComponent();
 
-            viewModel = Dependencies.Container.Instance.Resolve<DuplicatedLinesFinderConfigDialogViewModel>(
-                new NamedParameter("access", this),
-                new NamedParameter("model", model));
+            this.viewModel = viewModel;
             DataContext = viewModel;
-        }
+            DataContext = viewModel;
+       }
 
         public void CloseDialog(DuplicatedLinesFinderConfig model, bool result)
         {

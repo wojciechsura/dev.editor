@@ -165,11 +165,15 @@
             </Grid>
         </GroupBox>
         
-        <Grid Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="{StaticResource DialogItemsMargin}">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+        <DockPanel Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Margin="{StaticResource DialogItemsMargin}">
+            <StackPanel DockPanel.Dock="Right"  Orientation="Horizontal">
                 <Button Style="{StaticResource DialogButton}" Command="{Binding OkCommand}" Content="{x:Static res:Strings.Ok}" />
                 <Button Style="{StaticResource DialogButton}" Command="{Binding CancelCommand}" Content="{x:Static res:Strings.Cancel}" IsCancel="True" />
             </StackPanel>
-        </Grid>
+
+            <StackPanel Orientation="Horizontal">
+                <Button Style="{StaticResource DialogButton}" Command="{Binding ResetCommand}" Content="{x:Static res:Strings.Reset}" />
+            </StackPanel>
+        </DockPanel>
     </Grid>
 </Window>

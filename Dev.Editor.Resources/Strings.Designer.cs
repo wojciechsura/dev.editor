@@ -1792,6 +1792,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Reset.
+        /// </summary>
+        public static string Reset {
+            get {
+                return ResourceManager.GetString("Reset", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Json.
         /// </summary>
         public static string Ribbon_ContextGroup_Json {

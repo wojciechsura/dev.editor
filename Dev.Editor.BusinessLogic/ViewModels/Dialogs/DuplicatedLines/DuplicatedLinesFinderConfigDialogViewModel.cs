@@ -20,10 +20,8 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
 {
     public class DuplicatedLinesFinderConfigDialogViewModel : BaseViewModel
     {
-        private readonly IDuplicatedLinesFinderConfigDialogAccess access;
         private readonly IDialogService dialogService;
         private readonly IMessagingService messagingService;
-        private string defaultFolder;
         private string entry;
         private SourceEntry selectedEntry;
         private int minimumLines;
@@ -37,6 +35,21 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
         private string lineExclusionRegex;
         private bool mergeCommonResults;
         private int allowedDifferentLines;
+
+        private void DoReset()
+        {
+            Sources.Clear();
+
+            MinimumFiles = 2;
+            MinimumLines = 5;
+            TrimLines = true;
+            LineExclusionRegex = String.Empty;
+            Recursive = false;
+            ExcludedFileMasks = String.Empty;
+            ResultSortKind = DuplicatedLinesResultSortKind.FirstByLinesThenByFiles;
+            MergeCommonResults = false;
+            AllowedDifferentLines = 2;
+        }
 
         private void DoAddEntry()
         {
@@ -69,14 +82,14 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
 
         private void DoAddFolder()
         {
-            (bool result, string folder) = dialogService.ShowChooseFolderDialog(defaultFolder);
+            (bool result, string folder) = dialogService.ShowChooseFolderDialog(DefaultFolder);
             if (result)
             {
                 var newEntry = new SourceEntry(Path.Combine(folder, "*.*"));
                 Sources.Add(newEntry);
                 SelectedEntry = newEntry;
 
-                defaultFolder = folder;
+                DefaultFolder = folder;
             }
         }
 
@@ -97,25 +110,17 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
             }
         }
 
-        public DuplicatedLinesFinderConfigDialogViewModel(IDuplicatedLinesFinderConfigDialogAccess access,
-            DuplicatedLinesFinderConfigModel model,
-            IDialogService dialogService, 
+        public DuplicatedLinesFinderConfigDialogViewModel(IDialogService dialogService, 
             IMessagingService messagingService)
         {
-            this.access = access;
             this.dialogService = dialogService;
             this.messagingService = messagingService;
-            this.defaultFolder = model.DefaultFolder;
 
-            minimumFiles = 2;
-            minimumLines = 5;
-            recursive = false;
-            trimLines = true;
-            resultSortKind = DuplicatedLinesResultSortKind.FirstByLinesThenByFiles;
-            mergeCommonResults = false;
-            allowedDifferentLines = 2;
+            Sources = new ObservableCollection<SourceEntry>();
 
-            entryNotNullCondition = new LambdaCondition<DuplicatedLinesFinderConfigDialogViewModel>(this, vm => !String.IsNullOrEmpty(vm.Entry), false);
+            DoReset();
+
+            entryNotNullCondition = new ChainedLambdaCondition<DuplicatedLinesFinderConfigDialogViewModel>(this, vm => !String.IsNullOrEmpty(vm.Entry), false);
             entrySelectedCondition = new LambdaCondition<DuplicatedLinesFinderConfigDialogViewModel>(this, vm => vm.SelectedEntry != null, false);
 
             AddEntryCommand = new AppCommand(obj => DoAddEntry(), entryNotNullCondition);
@@ -124,17 +129,22 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
             AddFilesCommand = new AppCommand(obj => DoAddFiles());
             OkCommand = new AppCommand(obj => DoOk());
             CancelCommand = new AppCommand(obj => DoCancel());
-
-            Sources = new ObservableCollection<SourceEntry>();
+            ResetCommand = new AppCommand(obj => DoReset());
         }
 
         private void DoCancel()
         {
-            access.CloseDialog(null, false);
+            if (Access == null)
+                throw new InvalidOperationException("ViewModel cannot work properly without access reference!");
+
+            Access.CloseDialog(null, false);
         }
 
         private void DoOk()
         {
+            if (Access == null)
+                throw new InvalidOperationException("ViewModel cannot work properly without access!");
+
             (bool result, List<string> paths) = GenerateFileList();
             if (!result)
                 return;
@@ -165,7 +175,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
                 AllowedDifferentLines = allowedDifferentLines
             };
 
-            access.CloseDialog(model, true);
+            Access.CloseDialog(model, true);
         }
 
         private (bool result, List<string> paths) GenerateFileList()
@@ -216,6 +226,10 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
             return (true, result);
         }
 
+        public IDuplicatedLinesFinderConfigDialogAccess Access { get; set; }
+
+        public string DefaultFolder { get; set; }
+
         public string Entry
         {
             get => entry;
@@ -228,6 +242,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
         public ICommand AddFilesCommand { get; }
         public ICommand OkCommand { get; }
         public ICommand CancelCommand { get; }
+        public ICommand ResetCommand { get; }
 
         public ObservableCollection<SourceEntry> Sources { get; }
 
@@ -272,6 +287,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines
             get => excludedFileMasks;
             set => Set(ref excludedFileMasks, () => ExcludedFileMasks, value);
         }
+
         public DuplicatedLinesResultSortKind ResultSortKind
         {
             get => resultSortKind; 

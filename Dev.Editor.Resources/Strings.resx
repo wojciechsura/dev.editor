@@ -1292,4 +1292,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon_Lines_Cleanup_RemoveLines" xml:space="preserve">
     <value>Remove lines</value>
   </data>
+  <data name="Reset" xml:space="preserve">
+    <value>Reset</value>
+  </data>
 </root>
