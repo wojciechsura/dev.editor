@@ -16,7 +16,7 @@
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="CommonResources.xaml" />
+                <ResourceDictionary Source="Theme/Theme.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
             <Style x:Key="CipherTextEditor" TargetType="{x:Type ae:TextEditor}">

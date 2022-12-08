@@ -11,8 +11,9 @@
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/Fluent;Component/Themes/Generic.xaml" />
-                <ResourceDictionary Source="Controls\ToolContainerStyles.xaml" />
-                <ResourceDictionary Source="Controls\DefaultControlTemplates.xaml" />
+                <ResourceDictionary Source="Controls/ToolContainerStyles.xaml" />
+                <ResourceDictionary Source="Controls/DefaultControlTemplates.xaml" />
+                <ResourceDictionary Source="Theme/Theme-Light.xaml" />
             </ResourceDictionary.MergedDictionaries>
             
             <!-- Converters -->

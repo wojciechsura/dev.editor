@@ -8,6 +8,10 @@
     <SolidColorBrush x:Key="FlatButtonDownBorderBrush" Color="#89b3dc" />
     <SolidColorBrush x:Key="FlatButtonDownBackgroundBrush" Color="#ebf2fa" />
 
+    <Style x:Key="{x:Type c:ComboBoxEx}" TargetType="{x:Type c:ComboBoxEx}" BasedOn="{StaticResource {x:Type ComboBox}}">
+        
+    </Style>
+    
     <Style x:Key="{x:Type c:TreeViewEx}" TargetType="{x:Type c:TreeViewEx}">
         <Setter Property="Background" Value="{DynamicResource {x:Static SystemColors.WindowBrushKey}}"/>
         <Setter Property="BorderThickness" Value="0"/>
