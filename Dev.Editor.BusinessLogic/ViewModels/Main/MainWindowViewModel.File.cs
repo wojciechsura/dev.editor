@@ -102,9 +102,26 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             document.FilenameVirtual = false;
             document.Highlighting = highlightingProvider.GetDefinitionByExtension(Path.GetExtension(filename));
 
+            // Some magic for disguised file types
+            if (document.Highlighting == highlightingProvider.EmptyHighlighting)
+            {
+                TryGuessHighlightingFromContent(document);
+            }
+
             var modificationDate = System.IO.File.GetLastWriteTimeUtc(document.FileName);
             document.LastModificationDate = modificationDate;
 
+        }
+
+        private void TryGuessHighlightingFromContent(TextDocumentViewModel document)
+        {
+            // XML
+
+            var firstNonEmptyLine = document.Document.Lines.Select(l => document.Document.Text.Substring(l.Offset, l.Length))
+                .FirstOrDefault(s => !string.IsNullOrWhiteSpace(s));
+
+            if (firstNonEmptyLine != null && firstNonEmptyLine.ToLower().StartsWith("<?xml"))
+                document.Highlighting = highlightingProvider.GetDefinitionByExtension(".xml");
         }
 
         private BaseDocumentViewModel LoadTextDocument(DocumentTabKind documentTabKind, string filename, int? index = null)

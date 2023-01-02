@@ -1,5 +1,6 @@
 Version 1.0.4
 * Updated dependent libraries, removed deprecated Unity in favor of AutoFac
++ Added automated guessing XML files (if <?xml header is present)
 
 Version 1.0.3
 + Added filtering in Project window

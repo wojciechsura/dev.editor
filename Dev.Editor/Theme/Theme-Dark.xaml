@@ -51,17 +51,24 @@
     <SolidColorBrush x:Key="Win11.CheckBox.Disabled.Glyph.Brush" Color="#FF707070"/>
 
     <!--button-->
-    <Color x:Key="Win11.Button.Background.Color">#373737</Color>
-    <SolidColorBrush x:Key="Win11.Button.MouseOver.Background.Brush" Color="#474747"/>
-    <SolidColorBrush x:Key="Win11.Button.MouseOver.Border.Brush" Color="#3B90DE"/>
+    <Color x:Key="Win11.Button.MouseOver.Background.Color">#474747</Color>
+    <SolidColorBrush x:Key="Win11.Button.MouseOver.Background.Brush" Color="{StaticResource Win11.Button.MouseOver.Background.Color}"/>
+    <Color x:Key="Win11.Button.MouseOver.Border.Color">#3B90DE</Color>
+    <SolidColorBrush x:Key="Win11.Button.MouseOver.Border.Brush" Color="{StaticResource Win11.Button.MouseOver.Border.Color}"/>
     <SolidColorBrush x:Key="Win11.Button.Foreground.Brush" Color="{StaticResource Win11.Foreground.Color}"/>
-    <SolidColorBrush x:Key="Win11.Button.Background.Brush" Color="#373737"/>
+    <Color x:Key="Win11.Button.Background.Color">#373737</Color>
+    <SolidColorBrush x:Key="Win11.Button.Background.Brush" Color="{StaticResource Win11.Button.Background.Color}"/>
     <SolidColorBrush x:Key="Win11.Button.Border.Brush" Color="{StaticResource Win11.Control.Border.Color}"/>
-    <SolidColorBrush x:Key="Win11.Button.IsDefault.Border.Brush" Color="#3B90DE"/>
-    <SolidColorBrush x:Key="Win11.Pressed.Button.Background.Brush" Color="#272727"/>
-    <SolidColorBrush x:Key="Win11.Disabled.Button.Background.Brush" Color="#474747"/>
-    <SolidColorBrush x:Key="Win11.Disabled.Button.Foreground.Brush" Color="#999999"/>
-    <SolidColorBrush x:Key="Win11.Disabled.Button.Border.Brush" Color="#666666"/>
+    <Color x:Key="Win11.Button.IsDefault.Border.Color">#3B90DE</Color>
+    <SolidColorBrush x:Key="Win11.Button.IsDefault.Border.Brush" Color="{StaticResource Win11.Button.IsDefault.Border.Color}"/>
+    <Color x:Key="Win11.Pressed.Button.Background.Color">#272727</Color>
+    <SolidColorBrush x:Key="Win11.Pressed.Button.Background.Brush" Color="{StaticResource Win11.Pressed.Button.Background.Color}"/>
+    <Color x:Key="Win11.Disabled.Button.Background.Color">#474747</Color>
+    <SolidColorBrush x:Key="Win11.Disabled.Button.Background.Brush" Color="{StaticResource Win11.Disabled.Button.Background.Color}"/>
+    <Color x:Key="Win11.Disabled.Button.Foreground.Color">#999999</Color>
+    <SolidColorBrush x:Key="Win11.Disabled.Button.Foreground.Brush" Color="{StaticResource Win11.Disabled.Button.Foreground.Color}"/>
+    <Color x:Key="Win11.Disabled.Button.Border.Color">#666666</Color>
+    <SolidColorBrush x:Key="Win11.Disabled.Button.Border.Brush" Color="{StaticResource Win11.Disabled.Button.Border.Color}"/>
 
     <!--scrollbars-->
     <SolidColorBrush x:Key="Win11.Scroll.Viewer.Background.Brush" Color="{StaticResource Win11.Dark.Background.Color}" />
