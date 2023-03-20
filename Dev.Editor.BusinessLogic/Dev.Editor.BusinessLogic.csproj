@@ -48,6 +48,9 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
+    <Reference Include="Spooksoft.HexEditor, Version=1.0.1.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Spooksoft.HexEditor.1.0.1\lib\net472\Spooksoft.HexEditor.dll</HintPath>
+    </Reference>
     <Reference Include="Spooksoft.VisualStateManager, Version=1.0.8.1, Culture=neutral, PublicKeyToken=c726a4605d926245, processorArchitecture=MSIL">
       <HintPath>..\packages\Spooksoft.VisualStateManager.1.0.8.2\lib\net461\Spooksoft.VisualStateManager.dll</HintPath>
     </Reference>
@@ -329,10 +332,6 @@
     <ProjectReference Include="..\Dev.Editor.Resources\Dev.Editor.Resources.csproj">
       <Project>{6f537829-9bf6-428c-95fd-00170e8acc60}</Project>
       <Name>Dev.Editor.Resources</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\HexEditor\HexEditor.csproj">
-      <Project>{ca78f85a-b71f-4afc-ba97-124d9c47c38f}</Project>
-      <Name>HexEditor</Name>
     </ProjectReference>
     <ProjectReference Include="..\ICSharpCode.AvalonEdit\ICSharpCode.AvalonEdit.csproj">
       <Project>{7df2e8a9-9eb7-442c-91b4-073dac5eb54c}</Project>

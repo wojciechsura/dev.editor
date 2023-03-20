@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using HexEditor.Models;
+using Spooksoft.HexEditor.Models;
 
 namespace Dev.Editor.BusinessLogic.Models.Documents
 {

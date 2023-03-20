@@ -1,6 +1,6 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Documents;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
-using HexEditor.Models;
+using Spooksoft.HexEditor.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

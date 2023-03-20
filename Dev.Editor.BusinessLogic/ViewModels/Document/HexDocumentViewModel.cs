@@ -1,7 +1,7 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Documents;
 using Dev.Editor.BusinessLogic.Models.Highlighting;
-using HexEditor.Infrastructure;
-using HexEditor.Models;
+using Spooksoft.HexEditor.Infrastructure;
+using Spooksoft.HexEditor.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
