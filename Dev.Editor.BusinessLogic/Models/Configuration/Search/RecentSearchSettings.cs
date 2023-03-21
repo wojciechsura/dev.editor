@@ -1,5 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Types.Search;
-using Dev.Editor.Configuration;
+using Spooksoft.Configuration;
 
 namespace Dev.Editor.BusinessLogic.Models.Configuration.Search
 {

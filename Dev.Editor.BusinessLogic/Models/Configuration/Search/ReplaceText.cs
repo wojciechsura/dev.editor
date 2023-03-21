@@ -1,4 +1,4 @@
-﻿using Dev.Editor.Configuration;
+﻿using Spooksoft.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;

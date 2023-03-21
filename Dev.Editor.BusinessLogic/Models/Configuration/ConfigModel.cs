@@ -6,7 +6,7 @@ using Dev.Editor.BusinessLogic.Models.Configuration.Search;
 using Dev.Editor.BusinessLogic.Models.Configuration.StoredDefaults;
 using Dev.Editor.BusinessLogic.Models.Configuration.Tools;
 using Dev.Editor.BusinessLogic.Models.Configuration.UI;
-using Dev.Editor.Configuration;
+using Spooksoft.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,5 +1,5 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Configuration.Tools.Explorer;
-using Dev.Editor.Configuration;
+using Spooksoft.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
