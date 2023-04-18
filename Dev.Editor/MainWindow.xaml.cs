@@ -177,6 +177,9 @@ namespace Dev.Editor
 
         private void HandleLoaded(object sender, RoutedEventArgs e)
         {
+            Uri iconUri = new Uri("pack://application:,,,/Resources/Images/icon.ico", UriKind.RelativeOrAbsolute); //make sure your path is correct, and the icon set as Resource
+            this.Icon = BitmapFrame.Create(iconUri, BitmapCreateOptions.PreservePixelFormat, BitmapCacheOption.OnLoad);
+
             interopHelper = new WindowInteropHelper(this);
             singleInstanceService.StoreMainWindowHandle(interopHelper.Handle);
             HwndSource.FromHwnd(interopHelper.Handle).AddHook(HandleWindowMessage);

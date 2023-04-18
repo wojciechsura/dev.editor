@@ -21,8 +21,7 @@
     mc:Ignorable="d"
     Title="{Binding Title}" Height="450" Width="800" UseLayoutRounding="True"
     Closing="HandleWindowClosing" Loaded="HandleLoaded" Activated="HandleWindowActivated"
-    Drop="HandleDrop" AllowDrop="True"
-    Icon="\Resources\Images\icon.ico"
+    Drop="HandleDrop" AllowDrop="True"    
     FocusManager.FocusedElement="{Binding ElementName=tcePrimary}">
 
     <!-- Resources -->
