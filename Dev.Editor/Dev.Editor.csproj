@@ -481,9 +481,6 @@
     <Resource Include="Resources\Images\Message32.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Dev.Editor.ico" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Resources\Images\FolderOfFile16.png" />
     <Resource Include="Resources\Images\FolderOfFile32.png" />
   </ItemGroup>
