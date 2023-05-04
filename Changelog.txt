@@ -1,3 +1,9 @@
+Version 1.0.5
++ Added Win11 theme
+* HexEditor was extracted from project into separate package
+* Configuration mechanism was extracted from project into separate package
+* New icon (unifying icons for all Spooksoft applications)
+
 Version 1.0.4
 * Updated dependent libraries, removed deprecated Unity in favor of AutoFac
 + Added automated guessing XML files (if <?xml header is present)

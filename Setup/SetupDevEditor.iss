@@ -2,9 +2,9 @@
 ; SEE THE DOCUMENTATION FOR DETAILS ON CREATING INNO SETUP SCRIPT FILES!
 
 #define MyAppName "Dev.Editor"
-#define MyAppVersion "1.0.1.0"
+#define MyAppVersion "1.0.5.0"
 #define MyAppPublisher "Spooksoft"
-#define MyAppURL "http://www.spooksoft.pl"
+#define MyAppURL "https://www.spooksoft.pl"
 #define MyAppExeName "dev.editor.exe"
 
 [Setup]
@@ -36,21 +36,20 @@ Name: "english"; MessagesFile: "compiler:Default.isl"
 Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked
 
 [Files]
+Source: "..\Changelog.txt"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Autofac.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\ControlzEx.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.BinAnalyzer.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.BusinessLogic.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.Common.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Dev.Editor\bin\Release\Dev.Editor.Configuration.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.Dependencies.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Dev.Editor\bin\Release\Dev.Editor.exe.config"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Dev.Editor.Resources.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Fluent.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Dev.Editor\bin\Release\Geometry.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Dev.Editor\bin\Release\HexEditor.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Fluent.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\ICSharpCode.AvalonEdit.Dev.Editor.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\ICSharpCode.AvalonEdit.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\ICSharpCode.AvalonEdit.xml"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Irony.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Markdig.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Microsoft.Bcl.AsyncInterfaces.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -59,6 +58,8 @@ Source: "..\Dev.Editor\bin\Release\Microsoft.WindowsAPICodePack.dll"; DestDir: "
 Source: "..\Dev.Editor\bin\Release\Microsoft.WindowsAPICodePack.Shell.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Microsoft.Xaml.Behaviors.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Newtonsoft.Json.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Spooksoft.Configuration.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\Spooksoft.HexEditor.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\Spooksoft.VisualStateManager.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\System.Buffers.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\System.Diagnostics.DiagnosticSource.dll"; DestDir: "{app}"; Flags: ignoreversion
@@ -67,8 +68,7 @@ Source: "..\Dev.Editor\bin\Release\System.Memory.dll"; DestDir: "{app}"; Flags: 
 Source: "..\Dev.Editor\bin\Release\System.Numerics.Vectors.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\System.Runtime.CompilerServices.Unsafe.dll"; DestDir: "{app}"; Flags: ignoreversion
 Source: "..\Dev.Editor\bin\Release\System.Threading.Tasks.Extensions.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "..\Dev.Editor\bin\Release\pl-PL\Dev.Editor.Resources.resources.dll"; DestDir: "{app}\pl-PL\"; Flags: ignoreversion
-Source: "..\Changelog.txt"; DestDir: "{app}"; Flags: ignoreversion
+Source: "..\Dev.Editor\bin\Release\pl-PL\Dev.Editor.Resources.resources.dll"; DestDir: "{app}\pl-PL"; Flags: ignoreversion
 
 [Icons]
 Name: "{group}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"
@@ -79,4 +79,4 @@ Name: "{commondesktop}\{#MyAppName}"; Filename: "{app}\{#MyAppExeName}"; Tasks: 
 Filename: "{app}\{#MyAppExeName}"; Description: "{cm:LaunchProgram,{#StringChange(MyAppName, '&', '&&')}}"; Flags: nowait postinstall skipifsilent
 
 [Dirs]
-Name: "{app}\pl-PL"
+Name: "{app}\PL-pl"
