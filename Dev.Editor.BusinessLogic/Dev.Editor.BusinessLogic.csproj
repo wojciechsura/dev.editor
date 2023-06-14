@@ -142,6 +142,7 @@
     <Compile Include="Models\Events\StoredSearchesChangedEvent.cs" />
     <Compile Include="Models\FindInFiles\FindInFilesWorkerResult.cs" />
     <Compile Include="Models\Highlighting\HighlightingInfo.cs" />
+    <Compile Include="Models\LineRegex\LineRegexResultModel.cs" />
     <Compile Include="Models\Messages\MessageModel.cs" />
     <Compile Include="Models\Navigation\FileProjectNavigationModel.cs" />
     <Compile Include="Models\SearchResults\SearchResultFilterModel.cs" />
@@ -253,6 +254,8 @@
     <Compile Include="ViewModels\FindInFiles\BaseFilesystemSearchResultViewModel.cs" />
     <Compile Include="ViewModels\FindInFiles\ReplaceResultsViewModel.cs" />
     <Compile Include="ViewModels\FindInFiles\ReplaceResultViewModel.cs" />
+    <Compile Include="ViewModels\LineRegex\ILineRegexDialogViewModelAccess.cs" />
+    <Compile Include="ViewModels\LineRegex\LineRegexDialogViewModel.cs" />
     <Compile Include="ViewModels\Main\BinDefinitionViewModel.cs" />
     <Compile Include="ViewModels\Main\Documents\DocumentsManager.cs" />
     <Compile Include="Types\Main\IReadOnlyObservableCollection.cs" />

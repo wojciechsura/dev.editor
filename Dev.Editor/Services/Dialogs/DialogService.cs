@@ -18,6 +18,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using Autofac;
 using Dev.Editor.BusinessLogic.ViewModels.Dialogs.DuplicatedLines;
 using System.Web.Configuration;
+using Dev.Editor.BusinessLogic.Models.LineRegex;
 
 namespace Dev.Editor.Services.Dialogs
 {
@@ -218,6 +219,15 @@ namespace Dev.Editor.Services.Dialogs
 
             return webBrowserWindows[webBrowserHost].ViewModel;
 
+        }
+
+        public (bool result, LineRegexResultModel data) ShowLineRegexDialog()
+        {
+            var dialog = new LineRegexDialog();
+            if (dialog.ShowDialog() == true)
+                return (true, dialog.Result);
+            else
+                return (false, null);
         }
     }
 }

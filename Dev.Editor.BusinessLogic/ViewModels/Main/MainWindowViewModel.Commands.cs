@@ -94,6 +94,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
         public ICommand RemoveEmptyLinesCommand { get; }
         public ICommand RemoveWhitespaceLinesCommand { get; }
         public ICommand RemoveDuplicatedLinesCommand { get; }
+        public ICommand RemoveLinesWithRegexCommand { get; }
         public ICommand RemoveDuplicatedNeighboringLinesCommand { get; }
         public ICommand FindDuplicatedLinesCommand { get; }
 

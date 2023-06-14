@@ -1295,4 +1295,22 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Reset" xml:space="preserve">
     <value>Resetuj</value>
   </data>
+  <data name="LineRegexDialog.BehaviorLabel" xml:space="preserve">
+    <value>Zachowanie</value>
+  </data>
+  <data name="LineRegexDialog.DeleteNotMatchingCheckbox" xml:space="preserve">
+    <value>Usuń niepasujące</value>
+  </data>
+  <data name="LineRegexDialog.GroupboxTitle" xml:space="preserve">
+    <value>Usuń linie</value>
+  </data>
+  <data name="LineRegexDialog.RegexLabel" xml:space="preserve">
+    <value>Wyrażenie regularne</value>
+  </data>
+  <data name="LineRegexDialog.Title" xml:space="preserve">
+    <value>Usuń linie według wyrażenia regularnego</value>
+  </data>
+  <data name="Ribbon.Lines.Cleanup.RemoveWithRegex" xml:space="preserve">
+    <value>Usuń według wyrażenia regularnego</value>
+  </data>
 </root>

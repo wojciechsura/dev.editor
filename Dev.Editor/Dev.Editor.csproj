@@ -152,6 +152,9 @@
     </Compile>
     <Compile Include="Helpers\ListBoxHelper.cs" />
     <Compile Include="Helpers\TreeViewHelper.cs" />
+    <Compile Include="LineRegexDialog.xaml.cs">
+      <DependentUpon>LineRegexDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Models\ArgumentInfo.cs" />
     <Compile Include="NameDialog.xaml.cs">
       <DependentUpon>NameDialog.xaml</DependentUpon>
@@ -246,6 +249,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="ExceptionWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="LineRegexDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

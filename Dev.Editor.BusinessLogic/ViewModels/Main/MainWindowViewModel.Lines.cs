@@ -13,6 +13,8 @@ using System.Threading.Tasks;
 using Dev.Editor.BusinessLogic.Types.UI;
 using Dev.Editor.BusinessLogic.Types.BottomTools;
 using Dev.Editor.BusinessLogic.Types.DuplicatedLines;
+using Dev.Editor.BusinessLogic.Models.LineRegex;
+using System.Text.RegularExpressions;
 
 namespace Dev.Editor.BusinessLogic.ViewModels.Main
 {
@@ -164,6 +166,27 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
 
                 return (true, String.Join("\r\n", lines));
             });
+        }
+
+        private void DoRemoveLinesWithRegex()
+        {
+            (bool result, LineRegexResultModel data) = dialogService.ShowLineRegexDialog();
+
+            if (result)
+            {
+                TransformLines(text =>
+                {
+                    var lines = text.Split(new[] { "\r\n", "\n" }, StringSplitOptions.None).ToList();
+
+                    var regex = new Regex(data.Regex);
+
+                    List<string> filteredLines = data.NotMatching ? 
+                        lines.Where(l => regex.IsMatch(l)).ToList() :
+                        lines.Where(l => !regex.IsMatch(l)).ToList();
+
+                    return (true, String.Join("\r\n", filteredLines));
+                });
+            }
         }
 
         private void DoFindDuplicatedLines()

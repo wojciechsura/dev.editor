@@ -740,6 +740,8 @@
                                    Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/DeleteLine16.png"  />
                         <f:MenuItem Header="{x:Static p:Strings.Ribbon_Lines_Cleanup_RemoveWhitespaceLines}" Command="{Binding RemoveWhitespaceLinesCommand}" 
                                     Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/DeleteLine16.png" />
+                        <f:MenuItem Header="{x:Static p:Strings.Ribbon_Lines_Cleanup_RemoveWithRegex}" Command="{Binding RemoveLinesWithRegexCommand}"
+                                    Icon="pack://application:,,,/Dev.Editor;component/Resources/Images/DeleteLine16.png" />
 
                         <Separator />
 

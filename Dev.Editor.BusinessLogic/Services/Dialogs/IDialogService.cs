@@ -1,5 +1,6 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Dialogs;
 using Dev.Editor.BusinessLogic.Models.DuplicatedLines;
+using Dev.Editor.BusinessLogic.Models.LineRegex;
 using Dev.Editor.BusinessLogic.ViewModels.Search;
 using Dev.Editor.BusinessLogic.ViewModels.SubstitutionCipher;
 using Dev.Editor.BusinessLogic.ViewModels.WebBrowserWindow;
@@ -33,5 +34,6 @@ namespace Dev.Editor.BusinessLogic.Services.Dialogs
         void OpenSubstitutionCipherWindow(ISubstitutionCipherHost host);
         (bool, string) ShowAlphabetDialog(string message, string previousAlphabet = null);
         WebBrowserWindowViewModel RequestWebBrowser(IWebBrowserHost webBrowserHost);
+        (bool result, LineRegexResultModel data) ShowLineRegexDialog();
     }
 }

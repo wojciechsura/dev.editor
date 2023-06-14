@@ -1071,6 +1071,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             RemoveEmptyLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveEmptyLines, "DeleteLine16.png", obj => DoRemoveEmptyLines(), documentIsTextCondition);
             RemoveWhitespaceLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveWhitespaceLines, "DeleteLine16.png", obj => DoRemoveWhitespaceLines(), documentIsTextCondition);
             RemoveDuplicatedLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveDuplicatedLines, "DeleteLine16.png", obj => DoRemoveDuplicatedLines(), documentIsTextCondition);
+            RemoveLinesWithRegexCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveWithRegex, "DeleteLine16.png", obj => DoRemoveLinesWithRegex(), documentIsTextCondition);
             RemoveDuplicatedNeighboringLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Cleanup_RemoveDuplicatedNeighboringLines, "DeleteLine16.png", obj => DoRemoveDuplicatedNeighboringLines(), documentIsTextCondition);
 
             FindDuplicatedLinesCommand = commandRepositoryService.RegisterCommand(Resources.Strings.Ribbon_Lines_Tools_FindDuplicatedLines, "Duplicates16.png", obj => DoFindDuplicatedLines());
