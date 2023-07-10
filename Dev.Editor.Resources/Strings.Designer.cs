@@ -460,6 +460,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Character by character comparison.
+        /// </summary>
+        public static string ConfigureDiffDialog_CharByChar {
+            get {
+                return ResourceManager.GetString("ConfigureDiffDialog.CharByChar", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu First document.
         /// </summary>
         public static string ConfigureDiffDialog_FirstDocument {

@@ -10,8 +10,10 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
 {
     public interface ITextComparisonService
     {
+        LineChangesResult ChangesToLineChanges(ChangesResult result, char[] textA, char[] textB);
         ChangesResult FindChanges(IReadOnlyList<string> documentA, IReadOnlyList<string> documentB, bool ignoreCase = false, bool ignoreWhitespace = false);
-        ChangesResult FindChanges(int[] aData, int[] bData);
+        ChangesResult FindChanges<TData>(TData[] aData, TData[] bData)
+            where TData : struct, IEquatable<TData>;
         ContinuousLineDiffResult GenerateContinuousLineDiff(IReadOnlyList<string> documentA, IReadOnlyList<string> documentB, bool ignoreCase = false, bool ignoreWhitespace = false);
     }
 }

@@ -36,7 +36,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
         private bool editor2Visible;
         private ActiveEditor activeEditor;
         private AnchorSegment findReplaceSegment;
-        private DiffInfo diffResult;
+        private BaseDocumentDiffInfo diffResult;
 
         private string quickSearchText;
         private bool quickSearchVisible;
@@ -273,7 +273,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Document
             set => Set(ref findReplaceSegment, () => FindReplaceSegment, value);
         }
 
-        public DiffInfo DiffResult
+        public BaseDocumentDiffInfo DiffResult
         {
             get => diffResult;
             set => Set(ref diffResult, () => DiffResult, value);

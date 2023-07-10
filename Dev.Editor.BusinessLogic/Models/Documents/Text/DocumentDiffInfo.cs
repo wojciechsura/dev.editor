@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Dev.Editor.BusinessLogic.Models.Documents.Text
 {
-    public class DiffInfo
+    public class DocumentDiffInfo : BaseDocumentDiffInfo
     {
-        public DiffInfo(bool[] changes, DiffDisplayMode mode)
+        public DocumentDiffInfo(bool[] changes, DiffDisplayMode mode)
         {
             Changes = changes;
             Mode = mode;

@@ -1313,4 +1313,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="Ribbon.Lines.Cleanup.RemoveWithRegex" xml:space="preserve">
     <value>Usuń według wyrażenia regularnego</value>
   </data>
+  <data name="ConfigureDiffDialog.CharByChar" xml:space="preserve">
+    <value>Porównaj znak po znaku</value>
+  </data>
 </root>

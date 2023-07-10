@@ -48,33 +48,86 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             {
                 ClearAllDiffs();
 
-                var diffResult = textComparisonService.FindChanges(new TextDocumentAsList(config.FirstDocument.Document), new TextDocumentAsList(config.SecondDocument.Document), config.IgnoreCase, config.IgnoreWhitespace);
+                BaseDocumentDiffInfo firstDiff = null;
+                BaseDocumentDiffInfo secondDiff = null;
 
-                if (diffResult.ChangesA.All(c => c == false) && diffResult.ChangesB.All(c => c == false))
+                if (config.CharByChar)
                 {
-                    messagingService.Inform(Resources.Strings.Message_DocumentsAreSame);
+                    char[] docA = config.FirstDocument.Document.Text.ToCharArray();
+                    char[] docB = config.SecondDocument.Document.Text.ToCharArray();
+
+                    var diffResult = textComparisonService.FindChanges(docA, docB);
+                    var lineResult = textComparisonService.ChangesToLineChanges(diffResult, docA, docB);
+
+                    if (lineResult.ChangesA.All(x => x == null) && lineResult.ChangesB.All(x => x == null))
+                    {
+                        messagingService.Inform(Resources.Strings.Message_DocumentsAreSame);
+                        return;
+                    }
+
+                    firstDiff = new DocumentLineDiffInfo(lineResult.ChangesA, DiffDisplayMode.Delete);
+                    secondDiff = new DocumentLineDiffInfo(lineResult.ChangesB, DiffDisplayMode.Insert);
                 }
                 else
                 {
-                    // Organizing view
+                    var diffResult = textComparisonService.FindChanges(new TextDocumentAsList(config.FirstDocument.Document),
+                        new TextDocumentAsList(config.SecondDocument.Document),
+                        config.IgnoreCase,
+                        config.IgnoreWhitespace);
 
-                    // Turn on split view
-                    documentsManager.ShowSecondaryDocumentTab = true;
+                    if (diffResult.ChangesA.All(c => c == false) && diffResult.ChangesB.All(c => c == false))
+                    {
+                        messagingService.Inform(Resources.Strings.Message_DocumentsAreSame);
+                        return;
+                    }
 
-                    // Show first document on primary pane
-                    if (!documentsManager.PrimaryDocuments.Contains(config.FirstDocument))
-                        documentsManager.MoveDocumentTo(config.FirstDocument, DocumentTabKind.Primary);
-                    documentsManager.SelectedPrimaryDocument = config.FirstDocument;
-
-                    // Show second document on secondary pane
-                    if (!documentsManager.SecondaryDocuments.Contains(config.SecondDocument))
-                        documentsManager.MoveDocumentTo(config.SecondDocument, DocumentTabKind.Secondary);
-                    documentsManager.SelectedSecondaryDocument = config.SecondDocument;
-
-                    // Show diffs in documents
-                    config.FirstDocument.DiffResult = new DiffInfo(diffResult.ChangesA, DiffDisplayMode.Delete);
-                    config.SecondDocument.DiffResult = new DiffInfo(diffResult.ChangesB, DiffDisplayMode.Insert);
+                    firstDiff = new DocumentDiffInfo(diffResult.ChangesA, DiffDisplayMode.Delete);
+                    secondDiff = new DocumentDiffInfo(diffResult.ChangesB, DiffDisplayMode.Insert);
                 }
+
+                // Organizing view
+
+                // Turn on split view
+                documentsManager.ShowSecondaryDocumentTab = true;
+
+                // Show first document on primary pane
+                if (!documentsManager.PrimaryDocuments.Contains(config.FirstDocument))
+                    documentsManager.MoveDocumentTo(config.FirstDocument, DocumentTabKind.Primary);
+                documentsManager.SelectedPrimaryDocument = config.FirstDocument;
+
+                // Show second document on secondary pane
+                if (!documentsManager.SecondaryDocuments.Contains(config.SecondDocument))
+                    documentsManager.MoveDocumentTo(config.SecondDocument, DocumentTabKind.Secondary);
+                documentsManager.SelectedSecondaryDocument = config.SecondDocument;
+
+                // Show diffs in documents
+                config.FirstDocument.DiffResult = firstDiff;
+                config.SecondDocument.DiffResult = secondDiff;
+            }
+        }
+
+        private bool HasChange(BaseDocumentDiffInfo docDiff, int line)
+        {
+            switch (docDiff)
+            {
+                case DocumentDiffInfo diffInfo:
+                    return diffInfo.Changes[line];
+                case DocumentLineDiffInfo lineDiffInfo:
+                    return lineDiffInfo.Changes[line] != null && lineDiffInfo.Changes[line].Any();
+                default:
+                    throw new InvalidOperationException("Unsupported document diff info!");
+            }
+        }
+
+        private bool WithinChanges(BaseDocumentDiffInfo docDiff, int line)
+        {
+            switch (docDiff)
+            {
+                case DocumentDiffInfo diffInfo:
+                    return line >= 0 && line < diffInfo.Changes.Length;
+                case DocumentLineDiffInfo lineDiffInfo:
+                    return line >= 0 && line < lineDiffInfo.Changes.Count;
+                default: throw new InvalidOperationException("Unsupported diff info!");
             }
         }
 
@@ -91,7 +144,7 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             do
             {
                 line--;
-                if (line >= 0 && diff.Changes[line])
+                if (line >= 0 && HasChange(diff, line))
                     break;
             }
             while (line >= 0);
@@ -116,12 +169,12 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Main
             do
             {
                 line++;
-                if (line < diff.Changes.Length && diff.Changes[line])
+                if (WithinChanges(diff, line) && HasChange(diff, line))
                     break;
             }
-            while (line < diff.Changes.Length);
+            while (WithinChanges(diff, line));
 
-            if (line < diff.Changes.Length)
+            if (WithinChanges(diff, line))
             {
                 var offset = doc.Document.GetOffset(line + 1, 0);
                 doc.SetSelection(offset, 0, true);

@@ -4,6 +4,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management.Automation.Runspaces;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -47,9 +48,10 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
             public LastEdit LastEdit { get; }
         }
 
-        private class TextComparisonContext
+        private class TextComparisonContext<TData>
+            where TData : struct, IEquatable<TData>
         {
-            public TextComparisonContext(int[] aData, int[] bData)
+            public TextComparisonContext(TData[] aData, TData[] bData)
             {
                 AData = aData;
                 BData = bData;
@@ -57,8 +59,8 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
                 BChanges = new bool[bData.Length];
             }
 
-            public int[] AData { get; }
-            public int[] BData { get; }
+            public TData[] AData { get; }
+            public TData[] BData { get; }
             public bool[] AChanges { get; }
             public bool[] BChanges { get; }
 
@@ -128,7 +130,8 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
             return result;
         }
 
-        private List<DiffBlock> EvalDiffBlocks(TextComparisonContext context)
+        private List<DiffBlock> EvalDiffBlocks<TData>(TextComparisonContext<TData> context)
+            where TData : struct, IEquatable<TData>
         {
             int posA = 0;
             int posB = 0;
@@ -164,7 +167,8 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
             return diffBlocks;
         }
 
-        private MiddleSnakeResult FindMiddleSnake(TextComparisonContext context, TextComparisonRange range)
+        private MiddleSnakeResult FindMiddleSnake<TData>(TextComparisonContext<TData> context, TextComparisonRange range)
+            where TData : struct, IEquatable<TData>
         {
             int N = range.EndA - range.StartA;
             int M = range.EndB - range.StartB;
@@ -205,7 +209,7 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
                     int startY = y;
 
                     // Now following the snake as far as possible
-                    while (x < N && y < M && context.AData[x + range.StartA] == context.BData[y + range.StartB])
+                    while (x < N && y < M && ((IEquatable<TData>)context.AData[x + range.StartA]).Equals(context.BData[y + range.StartB]))
                     {
                         x++;
                         y++;
@@ -249,7 +253,7 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
                     int endY = y;
 
                     // Now following the reverse snake as far as possible
-                    while (x > 0 && y > 0 && context.AData[x + range.StartA - 1] == context.BData[y + range.StartB - 1])
+                    while (x > 0 && y > 0 && ((IEquatable<TData>)context.AData[x + range.StartA - 1]).Equals(context.BData[y + range.StartB - 1]))
                     {
                         x--;
                         y--;
@@ -275,18 +279,19 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
             throw new Exception("Broken algorithm - should never reach this place.");
         }
 
-        private TextComparisonContext GenerateComparisonContext(IReadOnlyList<string> documentA, IReadOnlyList<string> documentB, bool ignoreCase, bool ignoreWhitespace)
+        private TextComparisonContext<int> GenerateLineComparisonContext(IReadOnlyList<string> documentA, IReadOnlyList<string> documentB, bool ignoreCase, bool ignoreWhitespace)
         {
             Hashtable hashedLines = new Hashtable();
 
             int[] dataA = DocumentToHashLines(documentA, hashedLines, ignoreCase, ignoreWhitespace);
             int[] dataB = DocumentToHashLines(documentB, hashedLines, ignoreCase, ignoreWhitespace);
 
-            var context = new TextComparisonContext(dataA, dataB);
+            var context = new TextComparisonContext<int>(dataA, dataB);
             return context;
         }
 
-        private void InternalEvalDiff(TextComparisonContext context, TextComparisonRange range)            
+        private void InternalEvalDiff<TData>(TextComparisonContext<TData> context, TextComparisonRange range)
+            where TData : struct, IEquatable<TData>
         {
             int startA = range.StartA;
             int startB = range.StartB;
@@ -294,14 +299,14 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
             int endB = range.EndB;
 
             // Skip first equal items
-            while (startA < endA && startB < endB && context.AData[startA] == context.BData[startB])
+            while (startA < endA && startB < endB && ((IEquatable<TData>)context.AData[startA]).Equals(context.BData[startB]))
             {
                 startA++;
                 startB++;
             }
 
             // Skip last equal items
-            while (startA < endA && startB < endB && context.AData[endA - 1] == context.BData[endB - 1])
+            while (startA < endA && startB < endB && ((IEquatable<TData>)context.AData[endA - 1]).Equals(context.BData[endB - 1]))
             {
                 endA--;
                 endB--;
@@ -360,27 +365,113 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
             }
         }
 
+        private List<List<LineChangeInstance>> GenerateLineChanges(bool[] changesA, char[] textA)
+        {
+            if (changesA.Length != textA.Length)
+                throw new ArgumentException(nameof(textA));
+
+            var result = new List<List<LineChangeInstance>>();
+
+            List<LineChangeInstance> inlineChanges = new List<LineChangeInstance>();
+            int? changeStart = null;
+            int currentChar = 0;
+            int currentLine = 0;
+
+            int i = 0;
+            while (i < changesA.Length)
+            {
+                if (textA[i] == '\n' || textA[i] == '\r')
+                {
+                    if (changeStart != null)
+                    {
+                        inlineChanges.Add(new LineChangeInstance(changeStart.Value, currentChar - 1));
+                        changeStart = 0;
+                    }
+
+                    if (inlineChanges.Any())
+                    {
+                        result.Add(inlineChanges);
+                        inlineChanges = new List<LineChangeInstance>();
+                    }
+                    else
+                    {
+                        result.Add(null);
+                    }
+
+                    // Skip additional character in \r\n sequence if any
+                    if (i < textA.Length - 1 && textA[i + 1] == '\n' || textA[i + 1] == '\r')
+                        i++;
+
+                    currentLine++;
+                    currentChar = -1;
+                }
+                else if (changesA[i] && changeStart == null)
+                {
+                    changeStart = currentChar;
+                }
+                else if (!changesA[i] && changeStart != null)
+                {
+                    if (changeStart.Value != currentChar)
+                    {
+                        inlineChanges.Add(new LineChangeInstance(changeStart.Value, currentChar - 1));
+                    }
+
+                    changeStart = null;
+                }
+
+                i++;
+                currentChar++;
+            }
+
+            // Last change (if any)
+            if (changeStart != null && changeStart.Value != currentChar)
+                inlineChanges.Add(new LineChangeInstance(changeStart.Value, currentChar - 1));
+
+            // Last line (one without \r\n)
+            if (inlineChanges.Any())
+                result.Add(inlineChanges);
+            else
+                result.Add(null);
+
+            return result;
+        }
+
+
         // Public methods -----------------------------------------------------
 
         public ChangesResult FindChanges(IReadOnlyList<string> documentA, IReadOnlyList<string> documentB, bool ignoreCase = false, bool ignoreWhitespace = false)
         {
-            TextComparisonContext context = GenerateComparisonContext(documentA, documentB, ignoreCase, ignoreWhitespace);
+            TextComparisonContext<int> context = GenerateLineComparisonContext(documentA, documentB, ignoreCase, ignoreWhitespace);
             InternalEvalDiff(context, context.FullRange);
 
             return new ChangesResult(context.AChanges, context.BChanges);
         }
 
-        public ChangesResult FindChanges(int[] aData, int[] bData)
+        public ChangesResult FindChanges<TData>(TData[] aData, TData[] bData)
+            where TData : struct, IEquatable<TData>
         {
-            TextComparisonContext context = new TextComparisonContext(aData, bData);
+            TextComparisonContext<TData> context = new TextComparisonContext<TData>(aData, bData);
             InternalEvalDiff(context, context.FullRange);
 
             return new ChangesResult(context.AChanges, context.BChanges);
+        }
+
+        public LineChangesResult ChangesToLineChanges(ChangesResult result, char[] textA, char[] textB)
+        {
+            if (result.ChangesA.Length != textA.Length)
+                throw new ArgumentException(nameof(textA));
+            if (result.ChangesB.Length != textB.Length)
+                throw new ArgumentException(nameof(textB));
+
+            List<List<LineChangeInstance>> lineChangesA = GenerateLineChanges(result.ChangesA, textA);
+            List<List<LineChangeInstance>> lineChangesB = GenerateLineChanges(result.ChangesB, textB);
+
+            return new LineChangesResult(lineChangesA, lineChangesB);
         }
 
         public ContinuousLineDiffResult GenerateContinuousLineDiff(IReadOnlyList<string> documentA, IReadOnlyList<string> documentB, bool ignoreCase = false, bool ignoreWhitespace = false)
         {
-            TextComparisonContext context = GenerateComparisonContext(documentA, documentB, ignoreCase, ignoreWhitespace);
+            TextComparisonContext<int> context = GenerateLineComparisonContext(documentA, documentB, ignoreCase, ignoreWhitespace);
             InternalEvalDiff(context, context.FullRange);
 
             var blocks = EvalDiffBlocks(context);
@@ -416,7 +507,7 @@ namespace Dev.Editor.BusinessLogic.Services.TextComparison
                 posB++;
             }
 
-            return new ContinuousLineDiffResult(result); ;
+            return new ContinuousLineDiffResult(result);
         }
     }
 }

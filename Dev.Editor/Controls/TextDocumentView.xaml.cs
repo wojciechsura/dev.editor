@@ -1,4 +1,6 @@
 ﻿using Dev.Editor.BusinessLogic.Models.Documents;
+using Dev.Editor.BusinessLogic.Models.Documents.Text;
+using Dev.Editor.BusinessLogic.Models.TextComparison;
 using Dev.Editor.BusinessLogic.Types.Document.Text;
 using Dev.Editor.BusinessLogic.Types.Folding;
 using Dev.Editor.BusinessLogic.ViewModels.Document;
@@ -11,6 +13,8 @@ using ICSharpCode.AvalonEdit.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -36,6 +40,79 @@ namespace Dev.Editor.Controls
     public partial class TextDocumentView : UserControl, ITextEditorAccess, INotifyPropertyChanged
     {
         // Private classes ----------------------------------------------------
+
+        private struct SimpleSegment : IEquatable<SimpleSegment>, ISegment
+        {
+            public static readonly SimpleSegment Invalid = new SimpleSegment(-1, -1);
+
+            public readonly int Offset, Length;
+
+            int ISegment.Offset
+            {
+                get { return Offset; }
+            }
+
+            int ISegment.Length
+            {
+                get { return Length; }
+            }
+
+            public int EndOffset
+            {
+                get
+                {
+                    return Offset + Length;
+                }
+            }
+
+            public SimpleSegment(int offset, int length)
+            {
+                this.Offset = offset;
+                this.Length = length;
+            }
+
+            public SimpleSegment(ISegment segment)
+            {
+                Debug.Assert(segment != null);
+                this.Offset = segment.Offset;
+                this.Length = segment.Length;
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    return Offset + 10301 * Length;
+                }
+            }
+
+            public override bool Equals(object obj)
+            {
+                return (obj is SimpleSegment) && Equals((SimpleSegment)obj);
+            }
+
+            public bool Equals(SimpleSegment other)
+            {
+                return this.Offset == other.Offset && this.Length == other.Length;
+            }
+
+            public static bool operator ==(SimpleSegment left, SimpleSegment right)
+            {
+                return left.Equals(right);
+            }
+
+            public static bool operator !=(SimpleSegment left, SimpleSegment right)
+            {
+                return !left.Equals(right);
+            }
+
+            /// <inheritdoc/>
+            public override string ToString()
+            {
+                return "[Offset=" + Offset.ToString(CultureInfo.InvariantCulture) + ", Length=" + Length.ToString(CultureInfo.InvariantCulture) + "]";
+            }
+        }
+
 
         private struct FoldingIndex
         {
@@ -168,18 +245,105 @@ namespace Dev.Editor.Controls
             }
         }
 
+        private class LineDiffBackgroundRenderer : IBackgroundRenderer
+        {
+            private readonly List<List<LineChangeInstance>> changes;
+            private readonly DiffDisplayMode mode;
+
+            private readonly Brush deleteBrush;
+            private readonly Brush deleteTextBrush;
+            private readonly Brush insertBrush;
+            private readonly Brush insertTextBrush;
+
+            public LineDiffBackgroundRenderer(List<List<LineChangeInstance>> changes, 
+                DiffDisplayMode mode, 
+                Brush deleteBrush, 
+                Brush deleteTextBrush,
+                Brush insertBrush,
+                Brush insertTextBrush)
+            {
+                this.changes = changes;
+                this.mode = mode;
+
+                this.deleteBrush = deleteBrush;
+                this.deleteTextBrush = deleteTextBrush;
+                this.insertBrush = insertBrush;
+                this.insertTextBrush = insertTextBrush;
+            }
+
+            public void Draw(TextView textView, DrawingContext drawingContext)
+            {
+                Brush brush, detailsBrush;
+
+                switch (mode)
+                {
+                    case DiffDisplayMode.Delete:
+                        brush = deleteBrush;
+                        detailsBrush = deleteTextBrush;
+                        break;
+                    case DiffDisplayMode.Insert:
+                        brush = insertBrush;
+                        detailsBrush = insertTextBrush;
+                        break;
+                    default:
+                        throw new InvalidOperationException("Unsupported diff mode!");
+                }
+
+                textView.EnsureVisualLines();
+
+                foreach (var line in textView.VisualLines)
+                {
+                    var docLine = line.FirstDocumentLine;
+                    do
+                    {
+                        var lineNumber = docLine.LineNumber - 1;
+
+                        if (lineNumber < changes.Count && changes[lineNumber] != null && changes[lineNumber].Any())
+                        {
+                            // General background
+                            foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, docLine, true))
+                            {
+                                var fullRect = new Rect(rect.X, rect.Y, textView.ActualWidth - rect.X, rect.Height);
+                                drawingContext.DrawRectangle(brush, null, fullRect);
+                            }
+
+                            // Detailed changes
+                            foreach (var change in changes[lineNumber])
+                            {
+                                var segment = new SimpleSegment(docLine.Offset + change.Start, change.End - change.Start + 1);
+                                foreach (var rect in BackgroundGeometryBuilder.GetRectsForSegment(textView, segment, true))
+                                {
+                                    drawingContext.DrawRectangle(detailsBrush, null, rect);
+                                }
+                            }
+                        }
+
+                        docLine = docLine.NextLine;
+                    }
+                    while (docLine != null && docLine.PreviousLine != line.LastDocumentLine);
+                }
+            }
+
+            public KnownLayer Layer
+            {
+                get { return KnownLayer.Background; }
+            }
+        }
+
         // Private fields -----------------------------------------------------
 
         private readonly Regex identifierRegex = new Regex("^[a-zA-Z_][a-zA-Z0-9_]+$");
 
         private readonly Brush deleteBrush = new SolidColorBrush(Color.FromArgb(255, 255, 210, 210));
+        private readonly Brush deleteTextBrush = new SolidColorBrush(Color.FromArgb(255, 255, 160, 160));
         private readonly Brush insertBrush = new SolidColorBrush(Color.FromArgb(255, 210, 255, 230));
+        private readonly Brush insertTextBrush = new SolidColorBrush(Color.FromArgb(255, 160, 255, 190));
 
         private readonly ContextualBackgroundColorizer contextualBackgroundColorizer;
         private readonly ContextualBackgroundColorizer contextualBackgroundColorizer2;
 
         private TextEditor currentEditor;
-        private DiffBackgroundRenderer diffRenderer;
+        private IBackgroundRenderer diffRenderer;
         private FoldingManager foldingManager;
         private FoldingManager foldingManager2;
         private BaseFoldingStrategy foldingStrategy;
@@ -255,7 +419,22 @@ namespace Dev.Editor.Controls
             if (viewModel.DiffResult == null)
                 throw new InvalidOperationException("Viewmodel does not provide DiffResult!");
 
-            diffRenderer = new DiffBackgroundRenderer(viewModel.DiffResult.Changes, viewModel.DiffResult.Mode, deleteBrush, insertBrush);
+            switch (viewModel.DiffResult)
+            {
+                case DocumentDiffInfo diffInfo:
+                    diffRenderer = new DiffBackgroundRenderer(diffInfo.Changes, diffInfo.Mode, deleteBrush, insertBrush);
+                    break;
+                case DocumentLineDiffInfo lineDiffInfo:
+                    diffRenderer = new LineDiffBackgroundRenderer(lineDiffInfo.Changes, 
+                        lineDiffInfo.Mode, 
+                        deleteBrush, 
+                        deleteTextBrush, 
+                        insertBrush, 
+                        insertTextBrush);
+                    break;
+                default:
+                    throw new InvalidOperationException("Unsupported diff result!");
+            }
         }
 
         private void DeinitializeEditor(TextDocumentViewModel viewModel)

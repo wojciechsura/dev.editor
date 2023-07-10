@@ -126,11 +126,13 @@
     <Compile Include="Models\Dialogs\OpenDialogResult.cs" />
     <Compile Include="Models\Dialogs\SaveDialogResult.cs" />
     <Compile Include="Models\Documents\BinDocumentState.cs" />
-    <Compile Include="Models\Documents\Text\DiffInfo.cs" />
+    <Compile Include="Models\Documents\Text\BaseDocumentDiffInfo.cs" />
+    <Compile Include="Models\Documents\Text\DocumentDiffInfo.cs" />
     <Compile Include="Models\Documents\HexDocumentState.cs" />
     <Compile Include="Models\Documents\TextDocumentState.cs" />
     <Compile Include="Models\Documents\TextEditorState.cs" />
     <Compile Include="Models\Documents\FoldSectionState.cs" />
+    <Compile Include="Models\Documents\Text\DocumentLineDiffInfo.cs" />
     <Compile Include="Models\DuplicatedLines\DuplicatedLinesFileInfo.cs" />
     <Compile Include="Models\DuplicatedLines\DuplicatedLinesFinderConfig.cs" />
     <Compile Include="Models\DuplicatedLines\DuplicatedLinesFinderConfigModel.cs" />
@@ -152,6 +154,8 @@
     <Compile Include="Models\SubstitutionCipher\SequenceInfoModel.cs" />
     <Compile Include="Models\TextComparison\ChangesResult.cs" />
     <Compile Include="Models\TextComparison\ContinuousLineDiffResult.cs" />
+    <Compile Include="Models\TextComparison\LineChangeInstance.cs" />
+    <Compile Include="Models\TextComparison\LineChangesResult.cs" />
     <Compile Include="Models\TextComparison\LineDiffInfo.cs" />
     <Compile Include="Models\TextTransform\EscapeConfig.cs" />
     <Compile Include="Models\UI\BottomPanelVisibilityModel.cs" />

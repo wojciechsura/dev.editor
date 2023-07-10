@@ -52,6 +52,7 @@
             <StackPanel Orientation="Vertical">
                 <CheckBox Margin="4" IsChecked="{Binding IgnoreCase}" Content="{x:Static p:Strings.ConfigureDiffDialog_IgnoreCase}" />
                 <CheckBox Margin="4" IsChecked="{Binding IgnoreWhitespace}" Content="{x:Static p:Strings.ConfigureDiffDialog_IgnoreWhitespace}" />
+                <CheckBox Margin="4" IsChecked="{Binding CharByChar}" Content="{x:Static p:Strings.ConfigureDiffDialog_CharByChar}" />
             </StackPanel>
         </GroupBox>
 

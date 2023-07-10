@@ -23,10 +23,13 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
 
         private TextDocumentViewModel firstDocument;
         private TextDocumentViewModel secondDocument;
+        private bool ignoreWhitespace;
+        private bool ignoreCase;
+        private bool charByChar;
 
         private void DoOk()
         {
-            access.Close(new DiffConfigDialogResult(firstDocument, secondDocument, IgnoreCase, IgnoreWhitespace), true);
+            access.Close(new DiffConfigDialogResult(firstDocument, secondDocument, IgnoreCase, IgnoreWhitespace, CharByChar), true);
         }
 
         private void DoCancel()
@@ -67,8 +70,23 @@ namespace Dev.Editor.BusinessLogic.ViewModels.Dialogs
             set => Set(ref secondDocument, () => SecondDocument, value, HandleDocumentsChanged);
         }
 
-        public bool IgnoreWhitespace { get; set; }
-        public bool IgnoreCase { get; set; }
+        public bool IgnoreWhitespace
+        {
+            get => ignoreWhitespace;
+            set => Set(ref ignoreWhitespace, () => IgnoreWhitespace, value);
+        }
+
+        public bool IgnoreCase 
+        { 
+            get => ignoreCase;
+            set => Set(ref ignoreCase, () => IgnoreCase, value); 
+        }
+
+        public bool CharByChar
+        {
+            get => charByChar;
+            set => Set(ref charByChar, () => CharByChar, value);
+        }
 
         public List<TextDocumentViewModel> Documents => documents;
 
