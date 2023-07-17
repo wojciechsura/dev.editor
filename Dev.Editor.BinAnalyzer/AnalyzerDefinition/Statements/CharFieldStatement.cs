@@ -23,7 +23,7 @@ namespace Dev.Editor.BinAnalyzer.AnalyzerDefinition.Statements
             {
                 long offset = reader.BaseStream.Position;
 
-                if (reader.BaseStream.Position + sizeof(byte) >= reader.BaseStream.Length)
+                if (reader.BaseStream.Position + sizeof(byte) > reader.BaseStream.Length)
                     throw new AnalysisException(Line, Column, "Unexpected end of stream!", Strings.Message_AnalysisError_UnexpectedEndOfStream);
 
                 byte value = reader.ReadByte();

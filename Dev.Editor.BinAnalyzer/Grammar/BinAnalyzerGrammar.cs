@@ -58,6 +58,7 @@ namespace Dev.Editor.BinAnalyzer.Grammar
         public const string ENUM_CONST = "enumConst";
         public const string SHOW_VALUE = "showValue";
         public const string SHOW_STATEMENT = "showStatement";
+        public const string REPEAT_STATEMENT = "repeatStatement";
         public const string STATEMENT = "statement";
         public const string STATEMENTS = "statements";
         public const string STRUCT_DEF = "structDef";
@@ -102,6 +103,7 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             var enumConst = new NonTerminal(ENUM_CONST);
             var showValue = new NonTerminal(SHOW_VALUE);
             var showStatement = new NonTerminal(SHOW_STATEMENT);
+            var repeatStatement = new NonTerminal(REPEAT_STATEMENT);
             var ifStatement = new NonTerminal(IF_STATEMENT);
             var ifCondition = new NonTerminal(IF_CONDITION);
             var elseifCondition = new NonTerminal(ELSEIF_CONDITION);
@@ -159,7 +161,8 @@ namespace Dev.Editor.BinAnalyzer.Grammar
             enumConst.Rule = ToTerm("enum") + identifier + "." + identifier;
             showValue.Rule = expression | enumConst;
             showStatement.Rule = ToTerm("show") + showValue + ToTerm("as") + identifier + ";";
-            statement.Rule = builtinField | customField | builtinArrayField | customArrayField | assignment | showStatement | ifStatement;
+            repeatStatement.Rule = ToTerm("repeat") + identifier + ToTerm("as") + identifier + ";";
+            statement.Rule = builtinField | customField | builtinArrayField | customArrayField | assignment | showStatement | ifStatement | repeatStatement;
             MakeStarRule(statements, statement);
 
             // Definitions
@@ -175,7 +178,7 @@ namespace Dev.Editor.BinAnalyzer.Grammar
 
             program.Rule = definitions + statements;
 
-            MarkPunctuation(",", ";", ":", "{", "}", "[", "]", "(", ")", "=", ".", "struct", "enum", "let", "show", "as", "if", "elseif", "else");
+            MarkPunctuation(",", ";", ":", "{", "}", "[", "]", "(", ")", "=", ".", "struct", "enum", "let", "show", "as", "if", "elseif", "else", "repeat");
 
             Root = program;
         }

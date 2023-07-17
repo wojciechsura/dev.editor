@@ -1138,6 +1138,15 @@ namespace Dev.Editor.Resources {
         }
         
         /// <summary>
+        /// Wyszukuje zlokalizowany ciąg podobny do ciągu Failed to read repeated array field {0}. Reason: {1}.
+        /// </summary>
+        public static string Message_AnalysisError_FailedToReadRepeatedArray {
+            get {
+                return ResourceManager.GetString("Message.AnalysisError.FailedToReadRepeatedArray", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Wyszukuje zlokalizowany ciąg podobny do ciągu Failed to read struct field {0}. Reason:
         ///{1}.
         /// </summary>

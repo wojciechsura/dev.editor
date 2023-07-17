@@ -52,6 +52,7 @@
     <Compile Include="AnalyzerDefinition\Statements\CharArrayFieldStatement.cs" />
     <Compile Include="AnalyzerDefinition\Statements\CharFieldStatement.cs" />
     <Compile Include="AnalyzerDefinition\Statements\IfStatement.cs" />
+    <Compile Include="AnalyzerDefinition\Statements\RepeatStatement.cs" />
     <Compile Include="Compiler.cs" />
     <Compile Include="Data\CharArrayData.cs" />
     <Compile Include="Data\CharData.cs" />

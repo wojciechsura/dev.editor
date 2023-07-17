@@ -481,6 +481,32 @@ namespace Dev.Editor.BinAnalyzer
                     var statement = new IfStatement(current.Span.Location.Line, current.Span.Location.Column, conditions, elseStatements);
                     result.Add(statement);
                 }
+                else if (current.Term.Name.Equals(BinAnalyzerGrammar.REPEAT_STATEMENT))
+                {
+                    string type = current.ChildNodes[0].Token.Text;                    
+                    string name = current.ChildNodes[1].Token.Text;
+
+                    if (result.Any(r => r is BaseFieldStatement fieldStatement && fieldStatement.Name.Equals(name)))
+                        throw new SyntaxException(current.Span.Location.Line,
+                            current.Span.Location.Column,
+                            $"Field with name {name} already exists!",
+                            string.Format(Strings.Message_SyntaxError_FieldAlreadyExists, name));
+
+                    // Struct?
+
+                    var structDef = definitions.StructDefinitions.FirstOrDefault(d => d.Name.Equals(type));
+                    if (structDef != null)
+                    {
+                        RepeatStatement statement = new RepeatStatement(current.Span.Location.Line, current.Span.Location.Column, name, structDef);
+                        result.Add(statement);
+                        continue;
+                    }
+                    else
+                        throw new SyntaxException(current.Span.Location.Line,
+                            current.Span.Location.Column,
+                            $"Cannot find type {type} !",
+                            string.Format(Strings.Message_SyntaxError_CannotFindTypeName, type));
+                }
                 else
                     throw new InvalidOperationException("Invalid statement!");
             }

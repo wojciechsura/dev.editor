@@ -1316,4 +1316,7 @@ show (dibHeader.bitmapWidth * dibHeader.bitmapHeight * dibHeader.bitsPerPixel) /
   <data name="ConfigureDiffDialog.CharByChar" xml:space="preserve">
     <value>Porównaj znak po znaku</value>
   </data>
+  <data name="Message.AnalysisError.FailedToReadRepeatedArray" xml:space="preserve">
+    <value>Nie udało się wczytać powtarzających się struktur {0}. Powód: {1}</value>
+  </data>
 </root>
