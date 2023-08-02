@@ -1,3 +1,8 @@
+Version 1.0.6
++ Added option to repeat structs in binary definition
++ Character by character file comparison
++ Added removing lines with regular expressions
+
 Version 1.0.5
 + Added Win11 theme
 * HexEditor was extracted from project into separate package
